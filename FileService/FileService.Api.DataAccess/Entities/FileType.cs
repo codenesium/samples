@@ -12,7 +12,7 @@ namespace FileServiceNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string name)
                 {
@@ -30,5 +30,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f717a19e23bee716525141578689df90</Hash>
+    <Hash>693f5bb038365bffb14e24a6bad0d824</Hash>
 </Codenesium>*/

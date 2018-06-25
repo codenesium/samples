@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLAWBuildVersionMapper : BOLAbstractAWBuildVersionMapper, IBOLAWBuildVersionMapper
+        public partial class BOLAWBuildVersionMapper : BOLAbstractAWBuildVersionMapper, IBOLAWBuildVersionMapper
         {
                 public BOLAWBuildVersionMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d8f61b84338285923f55e02d14ce43f</Hash>
+    <Hash>e256aa10b199bdd94676ef91b077abfe</Hash>
 </Codenesium>*/

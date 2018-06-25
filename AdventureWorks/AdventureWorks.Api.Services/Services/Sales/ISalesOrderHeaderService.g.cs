@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID);
 
-                Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(Nullable<int> salesPersonID);
+                Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID);
 
                 Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0);
 
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fdc3ee11063362e187c838ee446efd42</Hash>
+    <Hash>8553ad588675c305773a48b4fe5f69d7</Hash>
 </Codenesium>*/

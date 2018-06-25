@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ConcurrencyTag_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Description_Create_null()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -106,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EnvironmentId_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectId_Create_length()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -229,18 +193,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ServerNodeId_Create_length()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -262,18 +214,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
-                }
-
-                [Fact]
-                public async void ServerNodeId_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -325,18 +265,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void State_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TenantId_Create_length()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -359,21 +287,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
-
-                [Fact]
-                public async void TenantId_Delete()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b3a7d72be0f4bdd9c315347622a976ba</Hash>
+    <Hash>7b85d03bc99d4d07e04894db2f42a466</Hash>
 </Codenesium>*/

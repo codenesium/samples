@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Shelf, new string('A', 11));
                 }
-
-                [Fact]
-                public async void Shelf_Delete()
-                {
-                        Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
-                        productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
-
-                        var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d6ca7e01d5650b0f91e165cab3b1c92a</Hash>
+    <Hash>8052d7093dd07432171b0cf28c87e80a</Hash>
 </Codenesium>*/

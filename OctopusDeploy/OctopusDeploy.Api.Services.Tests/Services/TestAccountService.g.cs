@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IAccountRepository>();
                         var record = new Account();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new AccountService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.AccountModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLAccountMapperMock,
                                                          mock.DALMapperMockFactory.DALAccountMapperMock);
 
-                        ApiAccountResponseModel response = await service.GetName(default(string));
+                        ApiAccountResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IAccountRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
                         var service = new AccountService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.AccountModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLAccountMapperMock,
                                                          mock.DALMapperMockFactory.DALAccountMapperMock);
 
-                        ApiAccountResponseModel response = await service.GetName(default(string));
+                        ApiAccountResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8ac130745fc9bf7fa1a7a5ad895d3764</Hash>
+    <Hash>c79256a439f0101eb57bdcf5e38aab80</Hash>
 </Codenesium>*/

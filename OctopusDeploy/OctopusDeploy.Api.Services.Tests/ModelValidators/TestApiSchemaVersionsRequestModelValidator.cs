@@ -71,21 +71,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.ScriptName, new string('A', 256));
                 }
-
-                [Fact]
-                public async void ScriptName_Delete()
-                {
-                        Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
-                        schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
-
-                        var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cf9012e0a8322a5bd2b5b618a922d90e</Hash>
+    <Hash>9015bce4877858a908212174df32ea55</Hash>
 </Codenesium>*/

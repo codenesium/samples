@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string email,
                         string firstName,
                         string lastName,
@@ -92,5 +92,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0e8bdb7693db987362a2f635a4655221</Hash>
+    <Hash>59db39a67455c769818fc81eeaf35a24</Hash>
 </Codenesium>*/

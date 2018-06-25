@@ -187,7 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IWorkOrderRepository>();
                         var records = new List<WorkOrder>();
                         records.Add(new WorkOrder());
-                        mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<Nullable<short>>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<short?>())).Returns(Task.FromResult(records));
                         var service = new WorkOrderService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                            mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(Nullable<short>));
+                        List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(short?));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<Nullable<short>>()));
+                        mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<short?>()));
                 }
 
                 [Fact]
                 public async void ByScrapReasonID_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkOrderRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<Nullable<short>>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
+                        mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<short?>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
                         var service = new WorkOrderService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
@@ -215,10 +215,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                            mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(Nullable<short>));
+                        List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(short?));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<Nullable<short>>()));
+                        mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<short?>()));
                 }
 
                 [Fact]
@@ -264,5 +264,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2a7cce17c2510481850b367f2190c032</Hash>
+    <Hash>3850d7e9eab67ee3e9ba47a353b7e3b3</Hash>
 </Codenesium>*/

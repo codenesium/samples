@@ -11,7 +11,7 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public virtual void SetProperties(string id,
-                                                  Nullable<DateTimeOffset> archived,
+                                                  DateTimeOffset? archived,
                                                   DateTimeOffset created,
                                                   byte[] dataVersion,
                                                   string environmentIds,
@@ -37,7 +37,7 @@ namespace OctopusDeployNS.Api.Services
                         this.Thumbprint = thumbprint;
                 }
 
-                public Nullable<DateTimeOffset> Archived { get; private set; }
+                public DateTimeOffset? Archived { get; private set; }
 
                 public DateTimeOffset Created { get; private set; }
 
@@ -64,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2c0c37d01e2a308a445a4fb16f03ab1</Hash>
+    <Hash>1049dca88b74bc5c60a3263d9de74321</Hash>
 </Codenesium>*/

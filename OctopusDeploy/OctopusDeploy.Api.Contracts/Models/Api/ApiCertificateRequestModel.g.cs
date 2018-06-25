@@ -13,8 +13,8 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTimeOffset> archived,
+                public virtual void SetProperties(
+                        DateTimeOffset? archived,
                         DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
@@ -39,13 +39,13 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                private Nullable<DateTimeOffset> archived;
+                private DateTimeOffset? archived;
 
-                public Nullable<DateTimeOffset> Archived
+                public DateTimeOffset? Archived
                 {
                         get
                         {
-                                return this.archived.IsEmptyOrZeroOrNull() ? null : this.archived;
+                                return this.archived;
                         }
 
                         set
@@ -92,7 +92,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.environmentIds.IsEmptyOrZeroOrNull() ? null : this.environmentIds;
+                                return this.environmentIds;
                         }
 
                         set
@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantIds.IsEmptyOrZeroOrNull() ? null : this.tenantIds;
+                                return this.tenantIds;
                         }
 
                         set
@@ -186,7 +186,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantTags.IsEmptyOrZeroOrNull() ? null : this.tenantTags;
+                                return this.tenantTags;
                         }
 
                         set
@@ -214,5 +214,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3454b38675c9da8411b0766353e5ab43</Hash>
+    <Hash>4177448a76fab11da26e5cd475cbb0de</Hash>
 </Codenesium>*/

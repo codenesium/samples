@@ -196,13 +196,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiLifecycleResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiLifecycleResponseModel response = await this.LifecycleService.GetName(name);
+                        ApiLifecycleResponseModel response = await this.LifecycleService.ByName(name);
 
                         if (response == null)
                         {
@@ -215,12 +215,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiLifecycleResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiLifecycleResponseModel> response = await this.LifecycleService.GetDataVersion(dataVersion);
+                        List<ApiLifecycleResponseModel> response = await this.LifecycleService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
@@ -228,5 +228,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a2a24b934082da3b97902d25461c9fa6</Hash>
+    <Hash>53435bac8a68abf53a2fd04b4895bf8b</Hash>
 </Codenesium>*/

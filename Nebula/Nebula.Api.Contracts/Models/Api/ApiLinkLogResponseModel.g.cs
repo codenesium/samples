@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public class ApiLinkLogResponseModel : AbstractApiResponseModel
+        public partial class ApiLinkLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime dateEntered,
@@ -75,5 +75,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a52dc7cc52ad436b4451154acfcb990a</Hash>
+    <Hash>c9d21fa30477cf92d46a46a6e931d836</Hash>
 </Codenesium>*/

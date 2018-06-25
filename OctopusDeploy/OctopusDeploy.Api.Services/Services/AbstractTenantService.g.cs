@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiTenantResponseModel> GetName(string name)
+                public async Task<ApiTenantResponseModel> ByName(string name)
                 {
-                        Tenant record = await this.tenantRepository.GetName(name);
+                        Tenant record = await this.tenantRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiTenantResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiTenantResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<Tenant> records = await this.tenantRepository.GetDataVersion(dataVersion);
+                        List<Tenant> records = await this.tenantRepository.ByDataVersion(dataVersion);
 
                         return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e5d22a6094aedce5c7ac88ba8abfb19</Hash>
+    <Hash>c6aca114b6962766f8cfb0cb738058b5</Hash>
 </Codenesium>*/

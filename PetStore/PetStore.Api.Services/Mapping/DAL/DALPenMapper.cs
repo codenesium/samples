@@ -4,7 +4,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public class DALPenMapper : DALAbstractPenMapper, IDALPenMapper
+        public partial class DALPenMapper : DALAbstractPenMapper, IDALPenMapper
         {
                 public DALPenMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c48df6548ec7202b1a90f761298acbc</Hash>
+    <Hash>5454d6ef8c9553808ec0781cb34d3aad</Hash>
 </Codenesium>*/

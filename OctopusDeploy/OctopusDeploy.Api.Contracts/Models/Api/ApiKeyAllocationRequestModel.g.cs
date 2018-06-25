@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int allocated)
                 {
                         this.Allocated = allocated;
@@ -38,5 +38,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7541378f2d6602b30e19a6192e6eaeb6</Hash>
+    <Hash>9f11f38312ebdeb9ea2feb4023c1dada</Hash>
 </Codenesium>*/

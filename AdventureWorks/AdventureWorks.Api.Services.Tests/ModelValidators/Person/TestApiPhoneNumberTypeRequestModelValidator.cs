@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IPhoneNumberTypeRepository> phoneNumberTypeRepository = new Mock<IPhoneNumberTypeRepository>();
-                        phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
-
-                        var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>28d32ff353476862d75a889f1f9ddb34</Hash>
+    <Hash>4f0cf42b1278c95352200e0e819d7d27</Hash>
 </Codenesium>*/

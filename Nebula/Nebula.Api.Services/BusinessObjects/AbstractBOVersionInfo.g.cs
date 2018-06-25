@@ -11,7 +11,7 @@ namespace NebulaNS.Api.Services
                 }
 
                 public virtual void SetProperties(long version,
-                                                  Nullable<DateTime> appliedOn,
+                                                  DateTime? appliedOn,
                                                   string description)
                 {
                         this.AppliedOn = appliedOn;
@@ -19,7 +19,7 @@ namespace NebulaNS.Api.Services
                         this.Version = version;
                 }
 
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 public string Description { get; private set; }
 
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5d2b37e4f858fe3a855e5e74cb2bbbb</Hash>
+    <Hash>5370be04475070292f8ee0eb9b1583c9</Hash>
 </Codenesium>*/

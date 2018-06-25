@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         bool activeFlag,
                         int businessEntityID,
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d03f7ce3ec8fcf053a17af85fa9b1dc0</Hash>
+    <Hash>99306a22321d06a887d91508f79b09bc</Hash>
 </Codenesium>*/

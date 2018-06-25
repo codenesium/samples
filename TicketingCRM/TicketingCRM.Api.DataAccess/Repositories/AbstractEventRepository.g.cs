@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Event>> GetCityId(int cityId)
+                public async Task<List<Event>> ByCityId(int cityId)
                 {
                         var records = await this.Where(x => x.CityId == cityId);
 
@@ -120,5 +120,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f91b9b86b75bc1f1e7c1361bea804587</Hash>
+    <Hash>8643e3b47686af4ca2e27fd5b026665d</Hash>
 </Codenesium>*/

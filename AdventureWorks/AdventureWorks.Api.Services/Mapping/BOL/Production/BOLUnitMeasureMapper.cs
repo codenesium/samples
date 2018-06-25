@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLUnitMeasureMapper : BOLAbstractUnitMeasureMapper, IBOLUnitMeasureMapper
+        public partial class BOLUnitMeasureMapper : BOLAbstractUnitMeasureMapper, IBOLUnitMeasureMapper
         {
                 public BOLUnitMeasureMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de21612cc1fe050b207b276534fb3dde</Hash>
+    <Hash>1d6fa880e24585bed09e3273f200c14b</Hash>
 </Codenesium>*/

@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ITeamRepository>();
                         var record = new Team();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TeamService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLTeamMapperMock,
                                                       mock.DALMapperMockFactory.DALTeamMapperMock);
 
-                        ApiTeamResponseModel response = await service.GetName(default(string));
+                        ApiTeamResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITeamRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
                         var service = new TeamService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLTeamMapperMock,
                                                       mock.DALMapperMockFactory.DALTeamMapperMock);
 
-                        ApiTeamResponseModel response = await service.GetName(default(string));
+                        ApiTeamResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3d3b87ab62a5eb8d86b3050e3b404216</Hash>
+    <Hash>b1d70ac81051509a9395849988ad076e</Hash>
 </Codenesium>*/

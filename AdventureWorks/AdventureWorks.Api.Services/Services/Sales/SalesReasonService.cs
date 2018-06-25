@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SalesReasonService : AbstractSalesReasonService, ISalesReasonService
+        public partial class SalesReasonService : AbstractSalesReasonService, ISalesReasonService
         {
                 public SalesReasonService(
                         ILogger<ISalesReasonRepository> logger,
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7fa05bac05db7a9ae59188548a239ef</Hash>
+    <Hash>1f445603380b5ed095bb6d010431a6a5</Hash>
 </Codenesium>*/

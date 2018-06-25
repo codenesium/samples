@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int handlerId,
                         int pipelineStepId)
                 {
@@ -56,5 +56,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a741100b229d8ff2fa3d512222b401df</Hash>
+    <Hash>f2d0328289149ba0108a1d563f1fdc06</Hash>
 </Codenesium>*/

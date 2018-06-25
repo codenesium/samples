@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiArtifactResponseModel : AbstractApiResponseModel
+        public partial class ApiArtifactResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTimeOffset created,
@@ -123,5 +123,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0439d419e35b5ca19d1db67b59099986</Hash>
+    <Hash>e689c11772b84d18a4ee3521a9dc2af2</Hash>
 </Codenesium>*/

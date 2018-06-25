@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTimeOffset assembled,
                         string channelId,
                         string jSON,
@@ -146,5 +146,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2df88f2a6311433b2327eb7427807be9</Hash>
+    <Hash>2916541a59ecc64fe93f32f4cbd7ee18</Hash>
 </Codenesium>*/

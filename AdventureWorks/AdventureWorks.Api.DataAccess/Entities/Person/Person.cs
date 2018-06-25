@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string additionalContactInfo,
                         int businessEntityID,
                         string demographics,
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2e39adc41c62f933d158472a1b6cc5a</Hash>
+    <Hash>de02eb22948c798bc466b9210871878a</Hash>
 </Codenesium>*/

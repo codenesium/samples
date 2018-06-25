@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SetProperties(int businessEntityID,
                                                   short departmentID,
-                                                  Nullable<DateTime> endDate,
+                                                  DateTime? endDate,
                                                   DateTime modifiedDate,
                                                   int shiftID,
                                                   DateTime startDate)
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public short DepartmentID { get; private set; }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9392ac771c3855e974b035a1ab0f774</Hash>
+    <Hash>c1950b41b1ebe9652601e19c2a6fda0c</Hash>
 </Codenesium>*/

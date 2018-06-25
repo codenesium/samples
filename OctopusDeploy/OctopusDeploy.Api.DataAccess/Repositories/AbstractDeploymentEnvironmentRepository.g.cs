@@ -76,14 +76,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<DeploymentEnvironment> GetName(string name)
+                public async Task<DeploymentEnvironment> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<DeploymentEnvironment>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<DeploymentEnvironment>> ByDataVersion(byte[] dataVersion)
                 {
                         var records = await this.Where(x => x.DataVersion == dataVersion);
 
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1dc78bcecefe575d8d62b7e11d84fd8c</Hash>
+    <Hash>070989c869b5857f5314d5a9d678168d</Hash>
 </Codenesium>*/

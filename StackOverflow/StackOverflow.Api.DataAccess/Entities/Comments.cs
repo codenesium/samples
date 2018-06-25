@@ -12,13 +12,13 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime creationDate,
                         int id,
                         int postId,
-                        Nullable<int> score,
+                        int? score,
                         string text,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.CreationDate = creationDate;
                         this.Id = id;
@@ -39,16 +39,16 @@ namespace StackOverflowNS.Api.DataAccess
                 public int PostId { get; private set; }
 
                 [Column("Score")]
-                public Nullable<int> Score { get; private set; }
+                public int? Score { get; private set; }
 
                 [Column("Text")]
                 public string Text { get; private set; }
 
                 [Column("UserId")]
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0d29762a3aae70f58ad2b7936a56acf9</Hash>
+    <Hash>64754f569ef198ad6c702a68f15d5f49</Hash>
 </Codenesium>*/

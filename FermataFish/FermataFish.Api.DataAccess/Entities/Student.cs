@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime birthday,
                         string email,
                         bool emailRemindersEnabled,
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3b9fc4739dd8a032b822d080801fbab3</Hash>
+    <Hash>ac6908c87c9d061afb09a0772610525d</Hash>
 </Codenesium>*/

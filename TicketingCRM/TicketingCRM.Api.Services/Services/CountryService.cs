@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class CountryService : AbstractCountryService, ICountryService
+        public partial class CountryService : AbstractCountryService, ICountryService
         {
                 public CountryService(
                         ILogger<ICountryRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>97378322136f2be69106422bab6641d6</Hash>
+    <Hash>0fed1458d303189311f258889151e2dc</Hash>
 </Codenesium>*/

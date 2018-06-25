@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal amount,
                         string firstName,
                         string lastName,
@@ -128,5 +128,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d2840bb0473d5ad6168123bb6da3e3bf</Hash>
+    <Hash>fc9b09e4f72200cac692ed87480fd1aa</Hash>
 </Codenesium>*/

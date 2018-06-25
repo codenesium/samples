@@ -145,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Team()));
-
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectIds_Create_null()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
@@ -181,10 +169,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Exists()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTeamRequestModel());
@@ -193,10 +181,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTeamRequestModel());
@@ -205,10 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
@@ -217,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
@@ -231,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cecfd3b5901a9f427df1e1b0e4a49245</Hash>
+    <Hash>24cc770791144f6ca5ac4380c4ff58ee</Hash>
 </Codenesium>*/

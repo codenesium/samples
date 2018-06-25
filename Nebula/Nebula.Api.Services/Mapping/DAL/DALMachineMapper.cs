@@ -4,7 +4,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class DALMachineMapper : DALAbstractMachineMapper, IDALMachineMapper
+        public partial class DALMachineMapper : DALAbstractMachineMapper, IDALMachineMapper
         {
                 public DALMachineMapper()
                 {
@@ -13,5 +13,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f5037866c0ac8a80681cb0dcaf5ecab</Hash>
+    <Hash>7126b884872b3e24575281d7d63f38a1</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class ClaspService : AbstractClaspService, IClaspService
+        public partial class ClaspService : AbstractClaspService, IClaspService
         {
                 public ClaspService(
                         ILogger<IClaspRepository> logger,
@@ -30,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea3f67720f08a64c88a1654ae305860d</Hash>
+    <Hash>3e5b1d6067e5c756370eba0b397c7838</Hash>
 </Codenesium>*/

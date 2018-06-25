@@ -97,18 +97,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PcEmail_Delete()
-                {
-                        Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
-                        familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
-
-                        var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PcFirstName_Create_null()
                 {
                         Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
@@ -154,18 +142,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PcFirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void PcFirstName_Delete()
-                {
-                        Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
-                        familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
-
-                        var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -217,18 +193,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PcLastName_Delete()
-                {
-                        Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
-                        familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
-
-                        var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PcPhone_Create_null()
                 {
                         Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
@@ -274,18 +238,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PcPhone, new string('A', 129));
-                }
-
-                [Fact]
-                public async void PcPhone_Delete()
-                {
-                        Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
-                        familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
-
-                        var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -341,5 +293,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a7c0d5fc7faee342f10c3a5208aaa97f</Hash>
+    <Hash>9c2f5757ad5d8570fae4d7e44d1038ad</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALSpaceFeatureMapper : DALAbstractSpaceFeatureMapper, IDALSpaceFeatureMapper
+        public partial class DALSpaceFeatureMapper : DALAbstractSpaceFeatureMapper, IDALSpaceFeatureMapper
         {
                 public DALSpaceFeatureMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4442351906a1c3be1b63a9d9a1222337</Hash>
+    <Hash>a3ed5941387143eb0b7b85715ded2d0d</Hash>
 </Codenesium>*/

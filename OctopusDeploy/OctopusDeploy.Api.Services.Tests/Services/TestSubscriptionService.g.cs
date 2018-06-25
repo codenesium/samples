@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var record = new Subscription();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.SubscriptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.GetName(default(string));
+                        ApiSubscriptionResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.SubscriptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.GetName(default(string));
+                        ApiSubscriptionResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>561a8ff3b0111f3f856f9682eaaafa7b</Hash>
+    <Hash>0c77fa47f095a952bb11142f6e24f2c4</Hash>
 </Codenesium>*/

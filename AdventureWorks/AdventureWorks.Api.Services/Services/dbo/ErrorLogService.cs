@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ErrorLogService : AbstractErrorLogService, IErrorLogService
+        public partial class ErrorLogService : AbstractErrorLogService, IErrorLogService
         {
                 public ErrorLogService(
                         ILogger<IErrorLogRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f30960773cecd75647cebe5b910e8583</Hash>
+    <Hash>55af94f9ef9d98366a311067461a2b5d</Hash>
 </Codenesium>*/

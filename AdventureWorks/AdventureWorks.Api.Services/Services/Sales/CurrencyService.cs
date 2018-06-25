@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class CurrencyService : AbstractCurrencyService, ICurrencyService
+        public partial class CurrencyService : AbstractCurrencyService, ICurrencyService
         {
                 public CurrencyService(
                         ILogger<ICurrencyRepository> logger,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c01b3025cf957497c6223807e358f91</Hash>
+    <Hash>9e964f00f72aec140cdc409a51286d64</Hash>
 </Codenesium>*/

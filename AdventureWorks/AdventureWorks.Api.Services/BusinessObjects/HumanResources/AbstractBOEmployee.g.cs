@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Services
                                                   string maritalStatus,
                                                   DateTime modifiedDate,
                                                   string nationalIDNumber,
-                                                  Nullable<short> organizationLevel,
+                                                  short? organizationLevel,
                                                   Guid rowguid,
                                                   bool salariedFlag,
                                                   short sickLeaveHours,
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public string NationalIDNumber { get; private set; }
 
-                public Nullable<short> OrganizationLevel { get; private set; }
+                public short? OrganizationLevel { get; private set; }
 
                 public Guid Rowguid { get; private set; }
 
@@ -76,5 +76,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6100ba69ec59d5c2d705dad55e362287</Hash>
+    <Hash>2424931c97fb553f0afa87c60aafba78</Hash>
 </Codenesium>*/

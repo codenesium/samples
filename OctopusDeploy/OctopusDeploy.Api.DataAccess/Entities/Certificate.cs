@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTimeOffset> archived,
+                public virtual void SetProperties(
+                        DateTimeOffset? archived,
                         DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
@@ -41,7 +41,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("Archived")]
-                public Nullable<DateTimeOffset> Archived { get; private set; }
+                public DateTimeOffset? Archived { get; private set; }
 
                 [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
@@ -80,5 +80,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e138da48a63c97b4ea3790602252a2e6</Hash>
+    <Hash>f6c3f4983654da3c6bfb40d904fb251d</Hash>
 </Codenesium>*/

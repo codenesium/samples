@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public class ApiPipelineStepResponseModel : AbstractApiResponseModel
+        public partial class ApiPipelineStepResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int id,
@@ -78,5 +78,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1e6d6046d1f6b55a19adeba404ffde4a</Hash>
+    <Hash>2a8cea8790efe26bf2b486584ec33fe8</Hash>
 </Codenesium>*/

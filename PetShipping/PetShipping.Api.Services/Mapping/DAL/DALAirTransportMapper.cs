@@ -4,7 +4,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class DALAirTransportMapper : DALAbstractAirTransportMapper, IDALAirTransportMapper
+        public partial class DALAirTransportMapper : DALAbstractAirTransportMapper, IDALAirTransportMapper
         {
                 public DALAirTransportMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62ed88d638b53dcfdde7a035d386d016</Hash>
+    <Hash>13ead5db01cf6aaa9649b1325fa1f555</Hash>
 </Codenesium>*/

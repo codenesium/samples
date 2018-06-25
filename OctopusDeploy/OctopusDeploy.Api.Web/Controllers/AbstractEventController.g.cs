@@ -204,45 +204,45 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAutoId/{autoId}")]
+                [Route("byAutoId/{autoId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetAutoId(long autoId)
+                public async virtual Task<IActionResult> ByAutoId(long autoId)
                 {
-                        List<ApiEventResponseModel> response = await this.EventService.GetAutoId(autoId);
+                        List<ApiEventResponseModel> response = await this.EventService.ByAutoId(autoId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}")]
+                [Route("byIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
+                public async virtual Task<IActionResult> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
-                        List<ApiEventResponseModel> response = await this.EventService.GetIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId);
+                        List<ApiEventResponseModel> response = await this.EventService.ByIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}")]
+                [Route("byIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
+                public async virtual Task<IActionResult> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
-                        List<ApiEventResponseModel> response = await this.EventService.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId);
+                        List<ApiEventResponseModel> response = await this.EventService.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdOccurred/{id}/{occurred}")]
+                [Route("byIdOccurred/{id}/{occurred}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdOccurred(string id, DateTimeOffset occurred)
+                public async virtual Task<IActionResult> ByIdOccurred(string id, DateTimeOffset occurred)
                 {
-                        List<ApiEventResponseModel> response = await this.EventService.GetIdOccurred(id, occurred);
+                        List<ApiEventResponseModel> response = await this.EventService.ByIdOccurred(id, occurred);
 
                         return this.Ok(response);
                 }
@@ -264,5 +264,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f99e36bd277fb86d5151eb0c70049bef</Hash>
+    <Hash>dd8a1c30195953afb9925d20b6dbf6a4</Hash>
 </Codenesium>*/

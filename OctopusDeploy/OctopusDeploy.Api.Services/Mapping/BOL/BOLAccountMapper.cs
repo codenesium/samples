@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLAccountMapper : BOLAbstractAccountMapper, IBOLAccountMapper
+        public partial class BOLAccountMapper : BOLAbstractAccountMapper, IBOLAccountMapper
         {
                 public BOLAccountMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>905627ba4aadb74dcddd53a1dd5f9baf</Hash>
+    <Hash>6774decaf907641af4fc2b073b33bb21</Hash>
 </Codenesium>*/

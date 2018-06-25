@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiBusinessEntityResponseModel : AbstractApiResponseModel
+        public partial class ApiBusinessEntityResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int businessEntityID,
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>574f68c48accc85eae6122f0c06eefd8</Hash>
+    <Hash>c369f1ae348e4b37036235c4abe45f4a</Hash>
 </Codenesium>*/

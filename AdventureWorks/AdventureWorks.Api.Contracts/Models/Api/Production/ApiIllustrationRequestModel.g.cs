@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string diagram,
                         DateTime modifiedDate)
                 {
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.diagram.IsEmptyOrZeroOrNull() ? null : this.diagram;
+                                return this.diagram;
                         }
 
                         set
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3a545e3b2754cf622134337896e32fff</Hash>
+    <Hash>cac3f5f601b245aab5f945b601ed71c4</Hash>
 </Codenesium>*/

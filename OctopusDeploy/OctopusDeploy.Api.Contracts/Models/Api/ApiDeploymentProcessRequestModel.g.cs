@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         bool isFrozen,
                         string jSON,
                         string ownerId,
@@ -81,7 +81,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.relatedDocumentIds.IsEmptyOrZeroOrNull() ? null : this.relatedDocumentIds;
+                                return this.relatedDocumentIds;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>208e32d52bdcefebeaf975f770a3cf5a</Hash>
+    <Hash>60822ddf45afc9899853b914e1e34429</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALProxyMapper : DALAbstractProxyMapper, IDALProxyMapper
+        public partial class DALProxyMapper : DALAbstractProxyMapper, IDALProxyMapper
         {
                 public DALProxyMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>173ff2bf580fb8f546de787c5f34309d</Hash>
+    <Hash>827bca98755795dc4703828cdae7e470</Hash>
 </Codenesium>*/

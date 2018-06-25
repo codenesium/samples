@@ -251,7 +251,7 @@ namespace AdventureWorksNS.Api.Web
                 [Route("bySalesPersonID/{salesPersonID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-                public async virtual Task<IActionResult> BySalesPersonID(Nullable<int> salesPersonID)
+                public async virtual Task<IActionResult> BySalesPersonID(int? salesPersonID)
                 {
                         List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesPersonID(salesPersonID);
 
@@ -289,5 +289,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>875863883e2e26516f9781299ba8359f</Hash>
+    <Hash>0ca707b9d964a8bb0a77a64aa1762fd5</Hash>
 </Codenesium>*/

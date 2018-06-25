@@ -17,12 +17,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<TagSet> GetName(string name);
+                Task<TagSet> ByName(string name);
 
-                Task<List<TagSet>> GetDataVersion(byte[] dataVersion);
+                Task<List<TagSet>> ByDataVersion(byte[] dataVersion);
         }
 }
 
 /*<Codenesium>
-    <Hash>80dea5362ecd997347e34aa183e222ab</Hash>
+    <Hash>80f89a635cfc1a5f45e714473b92a0bf</Hash>
 </Codenesium>*/

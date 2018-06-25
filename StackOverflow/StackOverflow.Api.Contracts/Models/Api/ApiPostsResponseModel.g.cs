@@ -6,24 +6,24 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiPostsResponseModel : AbstractApiResponseModel
+        public partial class ApiPostsResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> acceptedAnswerId,
-                        Nullable<int> answerCount,
+                        int? acceptedAnswerId,
+                        int? answerCount,
                         string body,
-                        Nullable<DateTime> closedDate,
-                        Nullable<int> commentCount,
-                        Nullable<DateTime> communityOwnedDate,
+                        DateTime? closedDate,
+                        int? commentCount,
+                        DateTime? communityOwnedDate,
                         DateTime creationDate,
-                        Nullable<int> favoriteCount,
+                        int? favoriteCount,
                         int id,
                         DateTime lastActivityDate,
-                        Nullable<DateTime> lastEditDate,
+                        DateTime? lastEditDate,
                         string lastEditorDisplayName,
-                        Nullable<int> lastEditorUserId,
-                        Nullable<int> ownerUserId,
-                        Nullable<int> parentId,
+                        int? lastEditorUserId,
+                        int? ownerUserId,
+                        int? parentId,
                         int postTypeId,
                         int score,
                         string tags,
@@ -52,35 +52,35 @@ namespace StackOverflowNS.Api.Contracts
                         this.ViewCount = viewCount;
                 }
 
-                public Nullable<int> AcceptedAnswerId { get; private set; }
+                public int? AcceptedAnswerId { get; private set; }
 
-                public Nullable<int> AnswerCount { get; private set; }
+                public int? AnswerCount { get; private set; }
 
                 public string Body { get; private set; }
 
-                public Nullable<DateTime> ClosedDate { get; private set; }
+                public DateTime? ClosedDate { get; private set; }
 
-                public Nullable<int> CommentCount { get; private set; }
+                public int? CommentCount { get; private set; }
 
-                public Nullable<DateTime> CommunityOwnedDate { get; private set; }
+                public DateTime? CommunityOwnedDate { get; private set; }
 
                 public DateTime CreationDate { get; private set; }
 
-                public Nullable<int> FavoriteCount { get; private set; }
+                public int? FavoriteCount { get; private set; }
 
                 public int Id { get; private set; }
 
                 public DateTime LastActivityDate { get; private set; }
 
-                public Nullable<DateTime> LastEditDate { get; private set; }
+                public DateTime? LastEditDate { get; private set; }
 
                 public string LastEditorDisplayName { get; private set; }
 
-                public Nullable<int> LastEditorUserId { get; private set; }
+                public int? LastEditorUserId { get; private set; }
 
-                public Nullable<int> OwnerUserId { get; private set; }
+                public int? OwnerUserId { get; private set; }
 
-                public Nullable<int> ParentId { get; private set; }
+                public int? ParentId { get; private set; }
 
                 public int PostTypeId { get; private set; }
 
@@ -279,5 +279,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d87f88e0dcb575d073bb69eea07f9d4b</Hash>
+    <Hash>b60c80da012efab5e1ff182039882559</Hash>
 </Codenesium>*/

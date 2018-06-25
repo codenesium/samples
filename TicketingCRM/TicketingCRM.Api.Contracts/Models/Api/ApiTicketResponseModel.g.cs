@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public class ApiTicketResponseModel : AbstractApiResponseModel
+        public partial class ApiTicketResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int id,
@@ -62,5 +62,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c2a112a3a481a577a8194e925fd6612c</Hash>
+    <Hash>6f0b364e68d6e9f8503d32ed9b33b509</Hash>
 </Codenesium>*/

@@ -21,10 +21,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiApiKeyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiApiKeyResponseModel> GetApiKeyHashed(string apiKeyHashed);
+                Task<ApiApiKeyResponseModel> ByApiKeyHashed(string apiKeyHashed);
         }
 }
 
 /*<Codenesium>
-    <Hash>58d2082202976f0edd65f7a15786e6cf</Hash>
+    <Hash>788942a293321a721c142a32638c4642</Hash>
 </Codenesium>*/

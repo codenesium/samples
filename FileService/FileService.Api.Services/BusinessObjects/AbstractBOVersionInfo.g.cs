@@ -11,7 +11,7 @@ namespace FileServiceNS.Api.Services
                 }
 
                 public virtual void SetProperties(long version,
-                                                  Nullable<DateTime> appliedOn,
+                                                  DateTime? appliedOn,
                                                   string description)
                 {
                         this.AppliedOn = appliedOn;
@@ -19,7 +19,7 @@ namespace FileServiceNS.Api.Services
                         this.Version = version;
                 }
 
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 public string Description { get; private set; }
 
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>706107e0f9533b2120937b3905130aa9</Hash>
+    <Hash>9df218fdb081ab5dd08c4db3011a17d7</Hash>
 </Codenesium>*/

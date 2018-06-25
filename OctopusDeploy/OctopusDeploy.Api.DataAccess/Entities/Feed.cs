@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string feedType,
                         string feedUri,
                         string id,
@@ -45,5 +45,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb829b8fc76864bba4c6e23a914bfa1f</Hash>
+    <Hash>76bd55da0a4249e63ae07f269f5daa7a</Hash>
 </Codenesium>*/

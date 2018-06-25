@@ -11,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int jobCandidateID,
-                                                  Nullable<int> businessEntityID,
+                                                  int? businessEntityID,
                                                   DateTime modifiedDate,
                                                   string resume)
                 {
@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
                         this.Resume = resume;
                 }
 
-                public Nullable<int> BusinessEntityID { get; private set; }
+                public int? BusinessEntityID { get; private set; }
 
                 public int JobCandidateID { get; private set; }
 
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8e936e415b601e33c832574b630db96</Hash>
+    <Hash>21b620166f5abbffba43630f074bab76</Hash>
 </Codenesium>*/

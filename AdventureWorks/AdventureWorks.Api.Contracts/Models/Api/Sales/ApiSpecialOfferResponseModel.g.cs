@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiSpecialOfferResponseModel : AbstractApiResponseModel
+        public partial class ApiSpecialOfferResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string category,
                         string description,
                         decimal discountPct,
                         DateTime endDate,
-                        Nullable<int> maxQty,
+                        int? maxQty,
                         int minQty,
                         DateTime modifiedDate,
                         Guid rowguid,
@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public DateTime EndDate { get; private set; }
 
-                public Nullable<int> MaxQty { get; private set; }
+                public int? MaxQty { get; private set; }
 
                 public int MinQty { get; private set; }
 
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2cecc8610f23bf31019be789d49731b0</Hash>
+    <Hash>67c7faf51025dd18a2a64e82d4912311</Hash>
 </Codenesium>*/

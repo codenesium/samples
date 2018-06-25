@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
-
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProvinceId_Create_Valid_Reference()
                 {
                         Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
@@ -137,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>28db78a3bf9ba619f4ef739412465eed</Hash>
+    <Hash>3e1eff02a510ced86dc856fd7a4134fd</Hash>
 </Codenesium>*/

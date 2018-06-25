@@ -13,8 +13,8 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> endDate,
+                public virtual void SetProperties(
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         Guid rowguid,
                         DateTime startDate,
@@ -27,13 +27,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryID = territoryID;
                 }
 
-                private Nullable<DateTime> endDate;
+                private DateTime? endDate;
 
-                public Nullable<DateTime> EndDate
+                public DateTime? EndDate
                 {
                         get
                         {
-                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                                return this.endDate;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>93a8f37fe742fd81d9578cca6c48cab2</Hash>
+    <Hash>84b772182bc55f049a4f8619bdf465bc</Hash>
 </Codenesium>*/

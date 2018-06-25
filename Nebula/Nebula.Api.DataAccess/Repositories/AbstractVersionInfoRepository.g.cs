@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                public async Task<VersionInfo> GetVersion(long version)
+                public async Task<VersionInfo> ByVersion(long version)
                 {
                         var records = await this.Where(x => x.Version == version);
 
@@ -115,5 +115,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8729dcf0a2277e8bc593120db85309f2</Hash>
+    <Hash>1e0212ae7e3b41de408f4bf956db427a</Hash>
 </Codenesium>*/

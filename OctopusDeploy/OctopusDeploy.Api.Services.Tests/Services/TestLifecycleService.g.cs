@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var record = new Lifecycle();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.GetName(default(string));
+                        ApiLifecycleResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.GetName(default(string));
+                        ApiLifecycleResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var records = new List<Lifecycle>();
                         records.Add(new Lifecycle());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiLifecycleResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Lifecycle>>(new List<Lifecycle>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Lifecycle>>(new List<Lifecycle>()));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiLifecycleResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>adbd62444ef98a32b91a5b5509d0aa83</Hash>
+    <Hash>7319efaeeddfa408a64236bdb56a45ba</Hash>
 </Codenesium>*/

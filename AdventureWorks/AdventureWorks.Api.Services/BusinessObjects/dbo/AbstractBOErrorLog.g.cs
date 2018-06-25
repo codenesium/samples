@@ -11,12 +11,12 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int errorLogID,
-                                                  Nullable<int> errorLine,
+                                                  int? errorLine,
                                                   string errorMessage,
                                                   int errorNumber,
                                                   string errorProcedure,
-                                                  Nullable<int> errorSeverity,
-                                                  Nullable<int> errorState,
+                                                  int? errorSeverity,
+                                                  int? errorState,
                                                   DateTime errorTime,
                                                   string userName)
                 {
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services
                         this.UserName = userName;
                 }
 
-                public Nullable<int> ErrorLine { get; private set; }
+                public int? ErrorLine { get; private set; }
 
                 public int ErrorLogID { get; private set; }
 
@@ -41,9 +41,9 @@ namespace AdventureWorksNS.Api.Services
 
                 public string ErrorProcedure { get; private set; }
 
-                public Nullable<int> ErrorSeverity { get; private set; }
+                public int? ErrorSeverity { get; private set; }
 
-                public Nullable<int> ErrorState { get; private set; }
+                public int? ErrorState { get; private set; }
 
                 public DateTime ErrorTime { get; private set; }
 
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3a5596a548b8c5539a3c5301687112a</Hash>
+    <Hash>5b083552b2f2992ab34e9483c9b89c32</Hash>
 </Codenesium>*/

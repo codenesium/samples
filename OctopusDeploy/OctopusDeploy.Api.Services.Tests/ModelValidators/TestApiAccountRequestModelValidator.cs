@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AccountType_Delete()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EnvironmentIds_Create_null()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
@@ -181,22 +169,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Account>(new Account()));
+                        accountRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Account>(new Account()));
                         var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiAccountRequestModel());
@@ -205,10 +181,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
+                        accountRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
                         var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiAccountRequestModel());
@@ -217,10 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Account>(new Account()));
+                        accountRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Account>(new Account()));
                         var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
@@ -229,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
+                        accountRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Account>(null));
                         var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
@@ -243,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>214f056fee62cc4e483c2a15786ae9ce</Hash>
+    <Hash>0a09b0020f4cf10c2044e4146774f502</Hash>
 </Codenesium>*/

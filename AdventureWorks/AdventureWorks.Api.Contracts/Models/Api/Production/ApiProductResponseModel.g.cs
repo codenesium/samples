@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiProductResponseModel : AbstractApiResponseModel
+        public partial class ApiProductResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string @class,
                         string color,
                         int daysToManufacture,
-                        Nullable<DateTime> discontinuedDate,
+                        DateTime? discontinuedDate,
                         bool finishedGoodsFlag,
                         decimal listPrice,
                         bool makeFlag,
@@ -20,19 +20,19 @@ namespace AdventureWorksNS.Api.Contracts
                         string name,
                         int productID,
                         string productLine,
-                        Nullable<int> productModelID,
+                        int? productModelID,
                         string productNumber,
-                        Nullable<int> productSubcategoryID,
+                        int? productSubcategoryID,
                         short reorderPoint,
                         Guid rowguid,
                         short safetyStockLevel,
-                        Nullable<DateTime> sellEndDate,
+                        DateTime? sellEndDate,
                         DateTime sellStartDate,
                         string size,
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        Nullable<decimal> weight,
+                        decimal? weight,
                         string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public int DaysToManufacture { get; private set; }
 
-                public Nullable<DateTime> DiscontinuedDate { get; private set; }
+                public DateTime? DiscontinuedDate { get; private set; }
 
                 public bool FinishedGoodsFlag { get; private set; }
 
@@ -84,11 +84,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string ProductLine { get; private set; }
 
-                public Nullable<int> ProductModelID { get; private set; }
+                public int? ProductModelID { get; private set; }
 
                 public string ProductNumber { get; private set; }
 
-                public Nullable<int> ProductSubcategoryID { get; private set; }
+                public int? ProductSubcategoryID { get; private set; }
 
                 public short ReorderPoint { get; private set; }
 
@@ -96,7 +96,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public short SafetyStockLevel { get; private set; }
 
-                public Nullable<DateTime> SellEndDate { get; private set; }
+                public DateTime? SellEndDate { get; private set; }
 
                 public DateTime SellStartDate { get; private set; }
 
@@ -108,7 +108,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string Style { get; private set; }
 
-                public Nullable<decimal> Weight { get; private set; }
+                public decimal? Weight { get; private set; }
 
                 public string WeightUnitMeasureCode { get; private set; }
 
@@ -344,5 +344,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>48da0c697f234670e9143a541fd56485</Hash>
+    <Hash>41f8a8a09105f563ec0931672366b96b</Hash>
 </Codenesium>*/

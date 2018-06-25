@@ -130,77 +130,77 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetExternalId_Exists()
+                public async void ByExternalId_Exists()
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var record = new CommunityActionTemplate();
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default(Guid));
+                        ApiCommunityActionTemplateResponseModel response = await service.ByExternalId(default(Guid));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
                 }
 
                 [Fact]
-                public async void GetExternalId_Not_Exists()
+                public async void ByExternalId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default(Guid));
+                        ApiCommunityActionTemplateResponseModel response = await service.ByExternalId(default(Guid));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var record = new CommunityActionTemplate();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default(string));
+                        ApiCommunityActionTemplateResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default(string));
+                        ApiCommunityActionTemplateResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>47d62d7caed3f76b8284dcff153738ea</Hash>
+    <Hash>19ed659a8538570fc4eff3730ffc5bac</Hash>
 </Codenesium>*/

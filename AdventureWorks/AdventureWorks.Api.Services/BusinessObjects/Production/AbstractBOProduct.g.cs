@@ -14,26 +14,26 @@ namespace AdventureWorksNS.Api.Services
                                                   string @class,
                                                   string color,
                                                   int daysToManufacture,
-                                                  Nullable<DateTime> discontinuedDate,
+                                                  DateTime? discontinuedDate,
                                                   bool finishedGoodsFlag,
                                                   decimal listPrice,
                                                   bool makeFlag,
                                                   DateTime modifiedDate,
                                                   string name,
                                                   string productLine,
-                                                  Nullable<int> productModelID,
+                                                  int? productModelID,
                                                   string productNumber,
-                                                  Nullable<int> productSubcategoryID,
+                                                  int? productSubcategoryID,
                                                   short reorderPoint,
                                                   Guid rowguid,
                                                   short safetyStockLevel,
-                                                  Nullable<DateTime> sellEndDate,
+                                                  DateTime? sellEndDate,
                                                   DateTime sellStartDate,
                                                   string size,
                                                   string sizeUnitMeasureCode,
                                                   decimal standardCost,
                                                   string style,
-                                                  Nullable<decimal> weight,
+                                                  decimal? weight,
                                                   string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public int DaysToManufacture { get; private set; }
 
-                public Nullable<DateTime> DiscontinuedDate { get; private set; }
+                public DateTime? DiscontinuedDate { get; private set; }
 
                 public bool FinishedGoodsFlag { get; private set; }
 
@@ -85,11 +85,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public string ProductLine { get; private set; }
 
-                public Nullable<int> ProductModelID { get; private set; }
+                public int? ProductModelID { get; private set; }
 
                 public string ProductNumber { get; private set; }
 
-                public Nullable<int> ProductSubcategoryID { get; private set; }
+                public int? ProductSubcategoryID { get; private set; }
 
                 public short ReorderPoint { get; private set; }
 
@@ -97,7 +97,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public short SafetyStockLevel { get; private set; }
 
-                public Nullable<DateTime> SellEndDate { get; private set; }
+                public DateTime? SellEndDate { get; private set; }
 
                 public DateTime SellStartDate { get; private set; }
 
@@ -109,12 +109,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public string Style { get; private set; }
 
-                public Nullable<decimal> Weight { get; private set; }
+                public decimal? Weight { get; private set; }
 
                 public string WeightUnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>927f8413be58a42153490f116f45872a</Hash>
+    <Hash>6fb9f6756308ec1919d0b5808b90c631</Hash>
 </Codenesium>*/

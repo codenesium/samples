@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string demographics,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
-                        Nullable<int> salesPersonID)
+                        int? salesPersonID)
                 {
                         this.Demographics = demographics;
                         this.ModifiedDate = modifiedDate;
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
+                                return this.demographics;
                         }
 
                         set
@@ -90,13 +90,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> salesPersonID;
+                private int? salesPersonID;
 
-                public Nullable<int> SalesPersonID
+                public int? SalesPersonID
                 {
                         get
                         {
-                                return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
+                                return this.salesPersonID;
                         }
 
                         set
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b9f3f5f65d4931af1b3add9859b2ad7e</Hash>
+    <Hash>2e6dcc733d7de46b18929043e436d512</Hash>
 </Codenesium>*/

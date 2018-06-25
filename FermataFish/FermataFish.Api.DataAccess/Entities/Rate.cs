@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal amountPerMinute,
                         int id,
                         int teacherId,
@@ -46,5 +46,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4fa1ed456d8acdb2a2549d39586660b1</Hash>
+    <Hash>aaf65280b160ac8715081bc89290984a</Hash>
 </Codenesium>*/

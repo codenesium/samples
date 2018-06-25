@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime birthDate,
                         int businessEntityID,
                         bool currentFlag,
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         string maritalStatus,
                         DateTime modifiedDate,
                         string nationalIDNumber,
-                        Nullable<short> organizationLevel,
+                        short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("OrganizationLevel")]
-                public Nullable<short> OrganizationLevel { get; private set; }
+                public short? OrganizationLevel { get; private set; }
 
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
@@ -96,5 +96,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca7c3ed0b85b75985ba97ffc1ff29b1e</Hash>
+    <Hash>29d53197c05dc6f6f3f2abaf53fae490</Hash>
 </Codenesium>*/

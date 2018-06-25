@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string address1,
                         string address2,
                         string city,
@@ -146,5 +146,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e5f3cdbfc04d2ae63713d6cc8b2fc59a</Hash>
+    <Hash>c733ecc9c36d97e9c68ad1f93370e071</Hash>
 </Codenesium>*/

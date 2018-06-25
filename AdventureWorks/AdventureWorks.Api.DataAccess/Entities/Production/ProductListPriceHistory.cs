@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> endDate,
+                public virtual void SetProperties(
+                        DateTime? endDate,
                         decimal listPrice,
                         DateTime modifiedDate,
                         int productID,
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("EndDate")]
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 [Column("ListPrice")]
                 public decimal ListPrice { get; private set; }
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfc44dcfda80ff8c6533c1ece6499cfd</Hash>
+    <Hash>0926a0ce1a3c79c13785e7bfc34c5129</Hash>
 </Codenesium>*/

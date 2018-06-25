@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
                 }
 
-                private async Task<bool> BeValidSalesTerritory(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidSalesTerritory(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.salesPersonRepository.GetSalesTerritory(id.GetValueOrDefault());
 
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81823b334b4394e2b98f08c18978e210</Hash>
+    <Hash>1a71ac35bcbaa7cd6bcad05b345bb935</Hash>
 </Codenesium>*/

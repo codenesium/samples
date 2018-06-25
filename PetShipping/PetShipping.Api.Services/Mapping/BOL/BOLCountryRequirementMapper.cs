@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLCountryRequirementMapper : BOLAbstractCountryRequirementMapper, IBOLCountryRequirementMapper
+        public partial class BOLCountryRequirementMapper : BOLAbstractCountryRequirementMapper, IBOLCountryRequirementMapper
         {
                 public BOLCountryRequirementMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9348921c6d3bec9278529703d8da6771</Hash>
+    <Hash>73db570a177e2a7c89e06be9231d3b76</Hash>
 </Codenesium>*/

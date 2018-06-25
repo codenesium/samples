@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiBillOfMaterialsResponseModel> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async Task<ApiBillOfMaterialsResponseModel> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
                 {
                         BillOfMaterials record = await this.billOfMaterialsRepository.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
 
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>515e010bd1dd186e837808ee497beec2</Hash>
+    <Hash>1b4b782c75d37fd8dd4e1cb83a9a5bab</Hash>
 </Codenesium>*/

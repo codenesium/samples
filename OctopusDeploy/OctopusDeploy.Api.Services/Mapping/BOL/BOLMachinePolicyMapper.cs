@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLMachinePolicyMapper : BOLAbstractMachinePolicyMapper, IBOLMachinePolicyMapper
+        public partial class BOLMachinePolicyMapper : BOLAbstractMachinePolicyMapper, IBOLMachinePolicyMapper
         {
                 public BOLMachinePolicyMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa45d13a5a5d7bddfc4249ba1c40bebb</Hash>
+    <Hash>f9ce7500aa32de30a7b5497edb8fa23c</Hash>
 </Codenesium>*/

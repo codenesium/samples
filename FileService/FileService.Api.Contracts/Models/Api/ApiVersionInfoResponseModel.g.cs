@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public class ApiVersionInfoResponseModel : AbstractApiResponseModel
+        public partial class ApiVersionInfoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                        DateTime? appliedOn,
                         string description,
                         long version)
                 {
@@ -18,14 +18,14 @@ namespace FileServiceNS.Api.Contracts
                         this.Version = version;
                 }
 
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 public string Description { get; private set; }
 
                 public long Version { get; private set; }
 
                 [JsonIgnore]
-                public bool ShouldSerializeAppliedOnValue { get; set; } = false;
+                public bool ShouldSerializeAppliedOnValue { get; set; } = true;
 
                 public bool ShouldSerializeAppliedOn()
                 {
@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = false;
+                public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
                 public bool ShouldSerializeDescription()
                 {
@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeVersionValue { get; set; } = false;
+                public bool ShouldSerializeVersionValue { get; set; } = true;
 
                 public bool ShouldSerializeVersion()
                 {
@@ -58,5 +58,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1b8bcc9c65e76c8f73a77bc21874d3f7</Hash>
+    <Hash>94529f74c9636b8819269ffdb141cd8a</Hash>
 </Codenesium>*/

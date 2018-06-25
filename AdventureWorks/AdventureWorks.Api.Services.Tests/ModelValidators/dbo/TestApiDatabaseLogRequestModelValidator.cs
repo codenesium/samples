@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DatabaseUser_Delete()
-                {
-                        Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-                        databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-                        var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void @Event_Create_null()
                 {
                         Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
@@ -133,18 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void @Event_Delete()
-                {
-                        Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-                        databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-                        var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void @Object_Create_length()
                 {
                         Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
@@ -169,18 +145,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void @Object_Delete()
-                {
-                        Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-                        databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-                        var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Schema_Create_length()
                 {
                         Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
@@ -202,18 +166,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Schema, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Schema_Delete()
-                {
-                        Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-                        databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-                        var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -267,5 +219,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b916f97079703ccc7f38d67c36ba1f99</Hash>
+    <Hash>ed61f213f6772c5e67033d0cab569a90</Hash>
 </Codenesium>*/

@@ -195,13 +195,13 @@ namespace NebulaNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getVersion/{version}")]
+                [Route("byVersion/{version}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetVersion(long version)
+                public async virtual Task<IActionResult> ByVersion(long version)
                 {
-                        ApiVersionInfoResponseModel response = await this.VersionInfoService.GetVersion(version);
+                        ApiVersionInfoResponseModel response = await this.VersionInfoService.ByVersion(version);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>37e051bfe7d76298bdc260c3af61ab6c</Hash>
+    <Hash>70d6227dc9daa4917d513becd625f90c</Hash>
 </Codenesium>*/

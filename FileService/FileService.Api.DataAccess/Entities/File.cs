@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> bucketId,
+                public virtual void SetProperties(
+                        int? bucketId,
                         DateTime dateCreated,
                         string description,
                         DateTime expiration,
@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.DataAccess
                 }
 
                 [Column("bucketId")]
-                public Nullable<int> BucketId { get; private set; }
+                public int? BucketId { get; private set; }
 
                 [Column("dateCreated")]
                 public DateTime DateCreated { get; private set; }
@@ -86,5 +86,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ac8c4d03610b3ce8b01df2dd00048aa</Hash>
+    <Hash>7e3084f6b52d6880dfffa074211b6feb</Hash>
 </Codenesium>*/

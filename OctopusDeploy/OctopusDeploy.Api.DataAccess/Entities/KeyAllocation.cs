@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int allocated,
                         string collectionName)
                 {
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d9e0e064abfca71bba22ce35ab3e4aa9</Hash>
+    <Hash>b3ed1142c09bf207b3cfdb354f7e43b0</Hash>
 </Codenesium>*/

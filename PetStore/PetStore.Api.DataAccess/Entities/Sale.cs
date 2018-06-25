@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal amount,
                         string firstName,
                         int id,
@@ -61,5 +61,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af2486275eeb395c5ea407d93019c891</Hash>
+    <Hash>e6817e1cae2e16713d90468d3d3a63f1</Hash>
 </Codenesium>*/

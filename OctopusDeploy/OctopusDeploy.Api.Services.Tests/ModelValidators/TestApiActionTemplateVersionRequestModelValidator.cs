@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ActionType_Delete()
-                {
-                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
-
-                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
@@ -157,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LatestActionTemplateId_Delete()
-                {
-                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
-
-                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
@@ -217,22 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByNameVersion_Create_Exists()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
-
-                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetNameVersion_Create_Exists()
-                {
-                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
+                        actionTemplateVersionRepository.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
                         var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
@@ -241,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameVersion_Create_Not_Exists()
+                private async void BeUniqueByNameVersion_Create_Not_Exists()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
+                        actionTemplateVersionRepository.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
                         var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
@@ -253,10 +217,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameVersion_Update_Exists()
+                private async void BeUniqueByNameVersion_Update_Exists()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
+                        actionTemplateVersionRepository.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
                         var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateVersionRequestModel());
@@ -265,10 +229,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameVersion_Update_Not_Exists()
+                private async void BeUniqueByNameVersion_Update_Not_Exists()
                 {
                         Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
-                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
+                        actionTemplateVersionRepository.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
                         var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateVersionRequestModel());
@@ -279,5 +243,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>325ee26a10c26e517b64aab69b2d3730</Hash>
+    <Hash>4e18301a5cd260ece70c8f49e726445b</Hash>
 </Codenesium>*/

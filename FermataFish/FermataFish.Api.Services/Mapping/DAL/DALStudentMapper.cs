@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALStudentMapper : DALAbstractStudentMapper, IDALStudentMapper
+        public partial class DALStudentMapper : DALAbstractStudentMapper, IDALStudentMapper
         {
                 public DALStudentMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c3a429b64e17e5d49d67ab905f6003b</Hash>
+    <Hash>cfba8a3fe98c57868351aa0b02196f65</Hash>
 </Codenesium>*/

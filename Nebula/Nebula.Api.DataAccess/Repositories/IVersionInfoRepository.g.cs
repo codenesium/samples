@@ -17,10 +17,10 @@ namespace NebulaNS.Api.DataAccess
 
                 Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<VersionInfo> GetVersion(long version);
+                Task<VersionInfo> ByVersion(long version);
         }
 }
 
 /*<Codenesium>
-    <Hash>fa99f674457fcaec9c29c67ecac9bcd8</Hash>
+    <Hash>091dfd78b7bbe9f822ed308e2f2c810e</Hash>
 </Codenesium>*/

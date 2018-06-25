@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class PasswordService : AbstractPasswordService, IPasswordService
+        public partial class PasswordService : AbstractPasswordService, IPasswordService
         {
                 public PasswordService(
                         ILogger<IPasswordRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>261d18babedfa1fee0f100ca11bf4bec</Hash>
+    <Hash>2275348a57e1525cc85a553817ee57f3</Hash>
 </Codenesium>*/

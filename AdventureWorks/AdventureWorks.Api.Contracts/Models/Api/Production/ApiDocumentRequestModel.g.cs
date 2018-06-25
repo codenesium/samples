@@ -13,10 +13,10 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int changeNumber,
                         byte[] document1,
-                        Nullable<short> documentLevel,
+                        short? documentLevel,
                         string documentSummary,
                         string fileExtension,
                         string fileName,
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.document1.IsEmptyOrZeroOrNull() ? null : this.document1;
+                                return this.document1;
                         }
 
                         set
@@ -72,13 +72,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<short> documentLevel;
+                private short? documentLevel;
 
-                public Nullable<short> DocumentLevel
+                public short? DocumentLevel
                 {
                         get
                         {
-                                return this.documentLevel.IsEmptyOrZeroOrNull() ? null : this.documentLevel;
+                                return this.documentLevel;
                         }
 
                         set
@@ -93,7 +93,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.documentSummary.IsEmptyOrZeroOrNull() ? null : this.documentSummary;
+                                return this.documentSummary;
                         }
 
                         set
@@ -233,5 +233,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a8a2a63b0d2ab9a8b8fec712f222f388</Hash>
+    <Hash>79445ffe72ed473850ffeaf726d5a635</Hash>
 </Codenesium>*/

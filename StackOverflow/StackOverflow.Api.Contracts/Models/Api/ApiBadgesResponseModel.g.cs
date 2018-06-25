@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiBadgesResponseModel : AbstractApiResponseModel
+        public partial class ApiBadgesResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime date,
@@ -71,5 +71,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>141866db17961b40ee8ef6dada709b4f</Hash>
+    <Hash>516c5bd7e343de63fa8b23fdae9d351e</Hash>
 </Codenesium>*/

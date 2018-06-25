@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALOctopusServerNodeMapper : DALAbstractOctopusServerNodeMapper, IDALOctopusServerNodeMapper
+        public partial class DALOctopusServerNodeMapper : DALAbstractOctopusServerNodeMapper, IDALOctopusServerNodeMapper
         {
                 public DALOctopusServerNodeMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1035c4c0f15fd61a46c3d63bfabafeac</Hash>
+    <Hash>4111e5dd2d514e8a19fe49f09e920f98</Hash>
 </Codenesium>*/

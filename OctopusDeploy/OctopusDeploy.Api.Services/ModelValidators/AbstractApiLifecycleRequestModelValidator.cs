@@ -38,13 +38,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiLifecycleRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiLifecycleRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Lifecycle record = await this.lifecycleRepository.GetName(model.Name);
+                        Lifecycle record = await this.lifecycleRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfda3e3a7c0951b66318ddeeae1f27e3</Hash>
+    <Hash>d32558b2d7295a1c94ec3c588108673b</Hash>
 </Codenesium>*/

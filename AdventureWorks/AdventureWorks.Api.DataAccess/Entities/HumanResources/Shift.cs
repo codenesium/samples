@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         TimeSpan endTime,
                         DateTime modifiedDate,
                         string name,
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c59c731fe374f8dbe8afd3f0047c3a5a</Hash>
+    <Hash>e52a55963069db1a9dbdf5c1a152baf2</Hash>
 </Codenesium>*/

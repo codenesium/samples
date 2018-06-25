@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiProjectTriggerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProjectTriggerResponseModel> GetProjectIdName(string projectId, string name);
+                Task<ApiProjectTriggerResponseModel> ByProjectIdName(string projectId, string name);
 
-                Task<List<ApiProjectTriggerResponseModel>> GetProjectId(string projectId);
+                Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId);
         }
 }
 
 /*<Codenesium>
-    <Hash>6b72d1375d15204b71d5815b27f3ee07</Hash>
+    <Hash>6cdec392743e7d5f7cc7509bd528c977</Hash>
 </Codenesium>*/

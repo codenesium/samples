@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLCountryRegionCurrencyMapper : BOLAbstractCountryRegionCurrencyMapper, IBOLCountryRegionCurrencyMapper
+        public partial class BOLCountryRegionCurrencyMapper : BOLAbstractCountryRegionCurrencyMapper, IBOLCountryRegionCurrencyMapper
         {
                 public BOLCountryRegionCurrencyMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7ce9c449b10470a06a07d91a922d8d8</Hash>
+    <Hash>f2b526d177560710e793e2c2e93a3387</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLWorkerTaskLeaseMapper : BOLAbstractWorkerTaskLeaseMapper, IBOLWorkerTaskLeaseMapper
+        public partial class BOLWorkerTaskLeaseMapper : BOLAbstractWorkerTaskLeaseMapper, IBOLWorkerTaskLeaseMapper
         {
                 public BOLWorkerTaskLeaseMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c2c707189d9348348ca4a6cd149c1a0</Hash>
+    <Hash>7837ee3c7ab0b9301aa43d44e3516634</Hash>
 </Codenesium>*/

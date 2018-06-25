@@ -18,7 +18,7 @@ namespace StackOverflowNS.Api.Services
                                                   string revisionGUID,
                                                   string text,
                                                   string userDisplayName,
-                                                  Nullable<int> userId)
+                                                  int? userId)
                 {
                         this.Comment = comment;
                         this.CreationDate = creationDate;
@@ -47,10 +47,10 @@ namespace StackOverflowNS.Api.Services
 
                 public string UserDisplayName { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c27d42f572fdc5b1bbf77d6116ba84d2</Hash>
+    <Hash>04423dae6bc065df1f477be9dde3e419</Hash>
 </Codenesium>*/

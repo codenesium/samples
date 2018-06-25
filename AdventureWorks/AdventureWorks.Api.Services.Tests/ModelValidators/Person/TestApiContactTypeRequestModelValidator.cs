@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
-
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>22aed8e8270bbad9c00d65c178de127b</Hash>
+    <Hash>0ff2f2b67490118bdce1078189f524a0</Hash>
 </Codenesium>*/

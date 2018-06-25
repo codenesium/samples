@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class PhoneNumberTypeRepository : AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
+        public partial class PhoneNumberTypeRepository : AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
         {
                 public PhoneNumberTypeRepository(
                         ILogger<PhoneNumberTypeRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f510067d5eac9dd6ad44ee7480295bd5</Hash>
+    <Hash>8f835f57d87c2bcecc5c5fe33b2ca0a4</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class VariableSetRepository : AbstractVariableSetRepository, IVariableSetRepository
+        public partial class VariableSetRepository : AbstractVariableSetRepository, IVariableSetRepository
         {
                 public VariableSetRepository(
                         ILogger<VariableSetRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e89849ce3e83cfd24a280d4213a4df3</Hash>
+    <Hash>f133c6a43849fb7b9d775ca510c8b594</Hash>
 </Codenesium>*/

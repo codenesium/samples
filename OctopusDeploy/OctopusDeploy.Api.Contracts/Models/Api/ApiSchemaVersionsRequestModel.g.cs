@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime applied,
                         string scriptName)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f371d22fb8305ce4df735e4d60500a6f</Hash>
+    <Hash>71f0ae7a3ca1fe66de74ba81c8196dad</Hash>
 </Codenesium>*/

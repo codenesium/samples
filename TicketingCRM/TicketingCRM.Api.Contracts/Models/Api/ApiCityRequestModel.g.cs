@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name,
                         int provinceId)
                 {
@@ -56,5 +56,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3ddcae1b9aba5f5c8883e48ce61517ff</Hash>
+    <Hash>71aed4b5e89eb1853522f9e0fba0984c</Hash>
 </Codenesium>*/

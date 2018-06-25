@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class TicketStatusService : AbstractTicketStatusService, ITicketStatusService
+        public partial class TicketStatusService : AbstractTicketStatusService, ITicketStatusService
         {
                 public TicketStatusService(
                         ILogger<ITicketStatusRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07c6c0e2a3596c882ae974034caad201</Hash>
+    <Hash>b45b839d291c0c75aa70afe318d36c55</Hash>
 </Codenesium>*/

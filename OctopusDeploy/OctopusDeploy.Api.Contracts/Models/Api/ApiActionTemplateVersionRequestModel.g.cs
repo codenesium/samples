@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string actionType,
                         string jSON,
                         string latestActionTemplateId,
@@ -110,5 +110,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e76e30cc328ab6517127b584ee662dda</Hash>
+    <Hash>42f7eac57140f25ee1b71c78146cf9c6</Hash>
 </Codenesium>*/

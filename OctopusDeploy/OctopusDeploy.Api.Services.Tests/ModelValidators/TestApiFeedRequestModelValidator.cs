@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FeedType_Delete()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FeedUri_Create_null()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
@@ -130,18 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, new string('A', 513));
-                }
-
-                [Fact]
-                public async void FeedUri_Delete()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -217,22 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(new Feed()));
+                        feedRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(new Feed()));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
@@ -241,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
+                        feedRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
@@ -253,10 +217,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(new Feed()));
+                        feedRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(new Feed()));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
@@ -265,10 +229,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
+                        feedRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
@@ -279,5 +243,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>29f4b30d75548d3fd8b08da6d844d999</Hash>
+    <Hash>ede364c527dbfd031312672fbe319a3c</Hash>
 </Codenesium>*/

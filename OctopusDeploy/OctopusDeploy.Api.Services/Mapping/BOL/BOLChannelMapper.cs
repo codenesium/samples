@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLChannelMapper : BOLAbstractChannelMapper, IBOLChannelMapper
+        public partial class BOLChannelMapper : BOLAbstractChannelMapper, IBOLChannelMapper
         {
                 public BOLChannelMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9e0778ea05f16d6027d6877949537fc</Hash>
+    <Hash>ef066b31d23b8cd8d4f60789bfee126f</Hash>
 </Codenesium>*/

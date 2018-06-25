@@ -13,12 +13,12 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime creationDate,
                         int postId,
-                        Nullable<int> score,
+                        int? score,
                         string text,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.CreationDate = creationDate;
                         this.PostId = postId;
@@ -59,13 +59,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> score;
+                private int? score;
 
-                public Nullable<int> Score
+                public int? Score
                 {
                         get
                         {
-                                return this.score.IsEmptyOrZeroOrNull() ? null : this.score;
+                                return this.score;
                         }
 
                         set
@@ -90,13 +90,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> userId;
+                private int? userId;
 
-                public Nullable<int> UserId
+                public int? UserId
                 {
                         get
                         {
-                                return this.userId.IsEmptyOrZeroOrNull() ? null : this.userId;
+                                return this.userId;
                         }
 
                         set
@@ -108,5 +108,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7791b55e210361582fd22ee4b5882665</Hash>
+    <Hash>313ff07d7d07c84cf1c0415237b3ba8f</Hash>
 </Codenesium>*/

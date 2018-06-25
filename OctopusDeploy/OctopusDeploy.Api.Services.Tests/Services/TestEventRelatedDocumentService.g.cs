@@ -130,79 +130,79 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetEventId_Exists()
+                public async void ByEventId_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
                         var records = new List<EventRelatedDocument>();
                         records.Add(new EventRelatedDocument());
-                        mock.RepositoryMock.Setup(x => x.GetEventId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                                       mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.GetEventId(default(string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEventId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetEventId_Not_Exists()
+                public async void ByEventId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetEventId(It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
+                        mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
                         var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                                       mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.GetEventId(default(string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEventId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetEventIdRelatedDocumentId_Exists()
+                public async void ByEventIdRelatedDocumentId_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
                         var records = new List<EventRelatedDocument>();
                         records.Add(new EventRelatedDocument());
-                        mock.RepositoryMock.Setup(x => x.GetEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                                       mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.GetEventIdRelatedDocumentId(default(string), default(string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventIdRelatedDocumentId(default(string), default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetEventIdRelatedDocumentId_Not_Exists()
+                public async void ByEventIdRelatedDocumentId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
+                        mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
                         var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                                       mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.GetEventIdRelatedDocumentId(default(string), default(string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventIdRelatedDocumentId(default(string), default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>82c5118047669dfaac6219cc9f2449a3</Hash>
+    <Hash>64d16718bc1fd11822b3bf472d2ebfac</Hash>
 </Codenesium>*/

@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerRepository>();
                         var record = new Worker();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new WorkerService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLWorkerMapperMock,
                                                         mock.DALMapperMockFactory.DALWorkerMapperMock);
 
-                        ApiWorkerResponseModel response = await service.GetName(default(string));
+                        ApiWorkerResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
                         var service = new WorkerService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLWorkerMapperMock,
                                                         mock.DALMapperMockFactory.DALWorkerMapperMock);
 
-                        ApiWorkerResponseModel response = await service.GetName(default(string));
+                        ApiWorkerResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetMachinePolicyId_Exists()
+                public async void ByMachinePolicyId_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerRepository>();
                         var records = new List<Worker>();
                         records.Add(new Worker());
-                        mock.RepositoryMock.Setup(x => x.GetMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new WorkerService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLWorkerMapperMock,
                                                         mock.DALMapperMockFactory.DALWorkerMapperMock);
 
-                        List<ApiWorkerResponseModel> response = await service.GetMachinePolicyId(default(string));
+                        List<ApiWorkerResponseModel> response = await service.ByMachinePolicyId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetMachinePolicyId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetMachinePolicyId_Not_Exists()
+                public async void ByMachinePolicyId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult<List<Worker>>(new List<Worker>()));
+                        mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult<List<Worker>>(new List<Worker>()));
                         var service = new WorkerService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLWorkerMapperMock,
                                                         mock.DALMapperMockFactory.DALWorkerMapperMock);
 
-                        List<ApiWorkerResponseModel> response = await service.GetMachinePolicyId(default(string));
+                        List<ApiWorkerResponseModel> response = await service.ByMachinePolicyId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetMachinePolicyId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>dd498f8c4c60b638d8efd9550fe03ee2</Hash>
+    <Hash>46a61bc7f25dd67b426878e8e0042998</Hash>
 </Codenesium>*/

@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentEnvironmentRepository>();
                         var record = new DeploymentEnvironment();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new DeploymentEnvironmentService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLDeploymentEnvironmentMapperMock,
                                                                        mock.DALMapperMockFactory.DALDeploymentEnvironmentMapperMock);
 
-                        ApiDeploymentEnvironmentResponseModel response = await service.GetName(default(string));
+                        ApiDeploymentEnvironmentResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentEnvironmentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<DeploymentEnvironment>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<DeploymentEnvironment>(null));
                         var service = new DeploymentEnvironmentService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLDeploymentEnvironmentMapperMock,
                                                                        mock.DALMapperMockFactory.DALDeploymentEnvironmentMapperMock);
 
-                        ApiDeploymentEnvironmentResponseModel response = await service.GetName(default(string));
+                        ApiDeploymentEnvironmentResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentEnvironmentRepository>();
                         var records = new List<DeploymentEnvironment>();
                         records.Add(new DeploymentEnvironment());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new DeploymentEnvironmentService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLDeploymentEnvironmentMapperMock,
                                                                        mock.DALMapperMockFactory.DALDeploymentEnvironmentMapperMock);
 
-                        List<ApiDeploymentEnvironmentResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiDeploymentEnvironmentResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentEnvironmentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<DeploymentEnvironment>>(new List<DeploymentEnvironment>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<DeploymentEnvironment>>(new List<DeploymentEnvironment>()));
                         var service = new DeploymentEnvironmentService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLDeploymentEnvironmentMapperMock,
                                                                        mock.DALMapperMockFactory.DALDeploymentEnvironmentMapperMock);
 
-                        List<ApiDeploymentEnvironmentResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiDeploymentEnvironmentResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7c58d5a12ddbab3ff9c777223b4fc391</Hash>
+    <Hash>426518980f6ec385b30c212bc4df0997</Hash>
 </Codenesium>*/

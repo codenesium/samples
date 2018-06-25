@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiProjectTriggerResponseModel> GetProjectIdName(string projectId, string name)
+                public async Task<ApiProjectTriggerResponseModel> ByProjectIdName(string projectId, string name)
                 {
-                        ProjectTrigger record = await this.projectTriggerRepository.GetProjectIdName(projectId, name);
+                        ProjectTrigger record = await this.projectTriggerRepository.ByProjectIdName(projectId, name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiProjectTriggerResponseModel>> GetProjectId(string projectId)
+                public async Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId)
                 {
-                        List<ProjectTrigger> records = await this.projectTriggerRepository.GetProjectId(projectId);
+                        List<ProjectTrigger> records = await this.projectTriggerRepository.ByProjectId(projectId);
 
                         return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2cd39aeac867c3e05369bf4ef4900d49</Hash>
+    <Hash>4778116abe62fbc470d5a0223c827408</Hash>
 </Codenesium>*/

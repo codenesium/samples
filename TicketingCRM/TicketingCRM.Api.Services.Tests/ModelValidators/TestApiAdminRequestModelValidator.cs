@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -130,18 +118,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Password_Create_null()
                 {
                         Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -250,18 +214,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Password, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Password_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -313,18 +265,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Username_Create_null()
                 {
                         Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -371,21 +311,9 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Username_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6e5ed21e2c19ff0321201d73f409246a</Hash>
+    <Hash>337c2956bed517cb8b2fa5f75a71b3ce</Hash>
 </Codenesium>*/

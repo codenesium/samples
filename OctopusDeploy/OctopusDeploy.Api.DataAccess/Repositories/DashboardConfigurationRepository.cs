@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class DashboardConfigurationRepository : AbstractDashboardConfigurationRepository, IDashboardConfigurationRepository
+        public partial class DashboardConfigurationRepository : AbstractDashboardConfigurationRepository, IDashboardConfigurationRepository
         {
                 public DashboardConfigurationRepository(
                         ILogger<DashboardConfigurationRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e97eb47326aed4431e756bc080ccb3bf</Hash>
+    <Hash>6cdb79e7e3a81fe10fbef197604c3ed4</Hash>
 </Codenesium>*/

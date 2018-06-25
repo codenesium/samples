@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ILibraryVariableSetRepository>();
                         var record = new LibraryVariableSet();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new LibraryVariableSetService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.LibraryVariableSetModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLLibraryVariableSetMapperMock,
                                                                     mock.DALMapperMockFactory.DALLibraryVariableSetMapperMock);
 
-                        ApiLibraryVariableSetResponseModel response = await service.GetName(default(string));
+                        ApiLibraryVariableSetResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILibraryVariableSetRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<LibraryVariableSet>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<LibraryVariableSet>(null));
                         var service = new LibraryVariableSetService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.LibraryVariableSetModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLLibraryVariableSetMapperMock,
                                                                     mock.DALMapperMockFactory.DALLibraryVariableSetMapperMock);
 
-                        ApiLibraryVariableSetResponseModel response = await service.GetName(default(string));
+                        ApiLibraryVariableSetResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b473ee787381c91ccb53770ecf0a70c3</Hash>
+    <Hash>e1069d98d274e3f0ce8b56dd0fa15909</Hash>
 </Codenesium>*/

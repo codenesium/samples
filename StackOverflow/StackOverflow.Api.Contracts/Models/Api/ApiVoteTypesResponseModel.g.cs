@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiVoteTypesResponseModel : AbstractApiResponseModel
+        public partial class ApiVoteTypesResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int id,
@@ -45,5 +45,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fc2230598803cbd0f13c01b8af682992</Hash>
+    <Hash>e4a97ebe88f76e1d66c5a3c7a65a3c40</Hash>
 </Codenesium>*/

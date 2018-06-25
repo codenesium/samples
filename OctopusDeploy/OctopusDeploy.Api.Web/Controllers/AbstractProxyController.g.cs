@@ -195,13 +195,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProxyResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProxyResponseModel response = await this.ProxyService.GetName(name);
+                        ApiProxyResponseModel response = await this.ProxyService.ByName(name);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>89bd42fcd5b27864a6cf1e630558daf9</Hash>
+    <Hash>e4e581c83207f72185ce5c34ce44d622</Hash>
 </Codenesium>*/

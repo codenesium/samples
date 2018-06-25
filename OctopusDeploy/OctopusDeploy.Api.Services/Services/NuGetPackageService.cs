@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class NuGetPackageService : AbstractNuGetPackageService, INuGetPackageService
+        public partial class NuGetPackageService : AbstractNuGetPackageService, INuGetPackageService
         {
                 public NuGetPackageService(
                         ILogger<INuGetPackageRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9933b3c7ab3ac90c8565fc693d03ebd</Hash>
+    <Hash>e19c2e3f1c56638ac1f3a2645ba96b2a</Hash>
 </Codenesium>*/

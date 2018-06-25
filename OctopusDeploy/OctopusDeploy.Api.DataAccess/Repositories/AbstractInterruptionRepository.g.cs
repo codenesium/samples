@@ -76,7 +76,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Interruption>> GetTenantId(string tenantId)
+                public async Task<List<Interruption>> ByTenantId(string tenantId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId);
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>73832ea913368bcf74f559dadeffbcc4</Hash>
+    <Hash>579e776af5e18d6d9fa23357a55842b5</Hash>
 </Codenesium>*/

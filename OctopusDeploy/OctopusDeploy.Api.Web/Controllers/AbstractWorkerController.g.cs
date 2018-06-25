@@ -202,13 +202,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiWorkerResponseModel response = await this.WorkerService.GetName(name);
+                        ApiWorkerResponseModel response = await this.WorkerService.ByName(name);
 
                         if (response == null)
                         {
@@ -221,12 +221,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getMachinePolicyId/{machinePolicyId}")]
+                [Route("byMachinePolicyId/{machinePolicyId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetMachinePolicyId(string machinePolicyId)
+                public async virtual Task<IActionResult> ByMachinePolicyId(string machinePolicyId)
                 {
-                        List<ApiWorkerResponseModel> response = await this.WorkerService.GetMachinePolicyId(machinePolicyId);
+                        List<ApiWorkerResponseModel> response = await this.WorkerService.ByMachinePolicyId(machinePolicyId);
 
                         return this.Ok(response);
                 }
@@ -234,5 +234,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7ab27d762928d76bbe17d864e85eb619</Hash>
+    <Hash>c2f3e25e840cbf94c9917a5d06ed62a8</Hash>
 </Codenesium>*/

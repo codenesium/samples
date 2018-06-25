@@ -142,11 +142,11 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetExternalId_Exists()
+                public async void ByExternalId_Exists()
                 {
                         var mock = new ServiceMockFacade<IBucketRepository>();
                         var record = new Bucket();
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
                         var service = new BucketService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
@@ -155,17 +155,17 @@ namespace FileServiceNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                         mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiBucketResponseModel response = await service.GetExternalId(default(Guid));
+                        ApiBucketResponseModel response = await service.ByExternalId(default(Guid));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
                 }
 
                 [Fact]
-                public async void GetExternalId_Not_Exists()
+                public async void ByExternalId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBucketRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
                         var service = new BucketService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
@@ -174,18 +174,18 @@ namespace FileServiceNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                         mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiBucketResponseModel response = await service.GetExternalId(default(Guid));
+                        ApiBucketResponseModel response = await service.ByExternalId(default(Guid));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IBucketRepository>();
                         var record = new Bucket();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new BucketService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
@@ -194,17 +194,17 @@ namespace FileServiceNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                         mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiBucketResponseModel response = await service.GetName(default(string));
+                        ApiBucketResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBucketRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Bucket>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Bucket>(null));
                         var service = new BucketService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
@@ -213,10 +213,10 @@ namespace FileServiceNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                         mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiBucketResponseModel response = await service.GetName(default(string));
+                        ApiBucketResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
@@ -262,5 +262,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eebad62296cda15a6838ef8bbeff29af</Hash>
+    <Hash>3e2f41b691e65d67a14a1ba414647f3a</Hash>
 </Codenesium>*/

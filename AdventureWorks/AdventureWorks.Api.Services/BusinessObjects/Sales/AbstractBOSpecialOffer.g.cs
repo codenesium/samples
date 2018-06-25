@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                                                   string description,
                                                   decimal discountPct,
                                                   DateTime endDate,
-                                                  Nullable<int> maxQty,
+                                                  int? maxQty,
                                                   int minQty,
                                                   DateTime modifiedDate,
                                                   Guid rowguid,
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public DateTime EndDate { get; private set; }
 
-                public Nullable<int> MaxQty { get; private set; }
+                public int? MaxQty { get; private set; }
 
                 public int MinQty { get; private set; }
 
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7db1b335cb18cf5ae53addd6ca12ec35</Hash>
+    <Hash>b75de4cef91fdece7140fe4ae1e02c89</Hash>
 </Codenesium>*/

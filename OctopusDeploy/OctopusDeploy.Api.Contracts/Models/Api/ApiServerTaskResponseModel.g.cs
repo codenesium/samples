@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiServerTaskResponseModel : AbstractApiResponseModel
+        public partial class ApiServerTaskResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset? completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -23,7 +23,7 @@ namespace OctopusDeployNS.Api.Contracts
                         string projectId,
                         DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string state,
                         string tenantId)
                 {
@@ -46,7 +46,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 public string ConcurrencyTag { get; private set; }
 
@@ -74,7 +74,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ServerNodeId { get; private set; }
 
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 public string State { get; private set; }
 
@@ -240,5 +240,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8dd9c10de12023bb3c046656e2cbefa7</Hash>
+    <Hash>595cad42ae459d7684254011800607f3</Hash>
 </Codenesium>*/

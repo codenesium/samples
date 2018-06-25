@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FlightNumber_Delete()
-                {
-                        Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
-                        airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
-
-                        var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void HandlerId_Create_Valid_Reference()
                 {
                         Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
@@ -137,5 +125,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0a78387bdd2f95433f3490b85c9e1dcc</Hash>
+    <Hash>6dab2506ffa6df5db58ae14067556976</Hash>
 </Codenesium>*/

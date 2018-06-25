@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> errorLine,
+                public virtual void SetProperties(
+                        int? errorLine,
                         int errorLogID,
                         string errorMessage,
                         int errorNumber,
                         string errorProcedure,
-                        Nullable<int> errorSeverity,
-                        Nullable<int> errorState,
+                        int? errorSeverity,
+                        int? errorState,
                         DateTime errorTime,
                         string userName)
                 {
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("ErrorLine")]
-                public Nullable<int> ErrorLine { get; private set; }
+                public int? ErrorLine { get; private set; }
 
                 [Key]
                 [Column("ErrorLogID")]
@@ -51,10 +51,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string ErrorProcedure { get; private set; }
 
                 [Column("ErrorSeverity")]
-                public Nullable<int> ErrorSeverity { get; private set; }
+                public int? ErrorSeverity { get; private set; }
 
                 [Column("ErrorState")]
-                public Nullable<int> ErrorState { get; private set; }
+                public int? ErrorState { get; private set; }
 
                 [Column("ErrorTime")]
                 public DateTime ErrorTime { get; private set; }
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3293c59a5799e11e9c065db4ec45f0db</Hash>
+    <Hash>1ce61bf43e331eeb77729f8f5f27e4c2</Hash>
 </Codenesium>*/

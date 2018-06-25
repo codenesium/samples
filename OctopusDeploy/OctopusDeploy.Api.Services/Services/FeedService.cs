@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class FeedService : AbstractFeedService, IFeedService
+        public partial class FeedService : AbstractFeedService, IFeedService
         {
                 public FeedService(
                         ILogger<IFeedRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6a68844c64a0ca744c007da1e9d1f197</Hash>
+    <Hash>7e80efe9619acec57e7743c95b807a07</Hash>
 </Codenesium>*/

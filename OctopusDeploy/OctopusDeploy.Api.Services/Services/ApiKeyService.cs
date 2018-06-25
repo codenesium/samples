@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiKeyService : AbstractApiKeyService, IApiKeyService
+        public partial class ApiKeyService : AbstractApiKeyService, IApiKeyService
         {
                 public ApiKeyService(
                         ILogger<IApiKeyRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2177c05f8ee262ba3d2c4a34a45a3be6</Hash>
+    <Hash>5fbf8ddb8d838510a12404e5dd671732</Hash>
 </Codenesium>*/

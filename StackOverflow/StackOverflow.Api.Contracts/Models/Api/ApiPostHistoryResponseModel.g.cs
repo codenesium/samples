@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiPostHistoryResponseModel : AbstractApiResponseModel
+        public partial class ApiPostHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string comment,
@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Contracts
                         string revisionGUID,
                         string text,
                         string userDisplayName,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.Comment = comment;
                         this.CreationDate = creationDate;
@@ -46,7 +46,7 @@ namespace StackOverflowNS.Api.Contracts
 
                 public string UserDisplayName { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
 
                 [JsonIgnore]
                 public bool ShouldSerializeCommentValue { get; set; } = true;
@@ -136,5 +136,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>91849b1eef8e432b9c767ca99595015b</Hash>
+    <Hash>b3c6f2a8c5c640474e6628861bd04065</Hash>
 </Codenesium>*/

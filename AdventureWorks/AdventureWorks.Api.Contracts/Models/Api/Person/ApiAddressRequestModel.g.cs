@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string addressLine1,
                         string addressLine2,
                         string city,
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.addressLine2.IsEmptyOrZeroOrNull() ? null : this.addressLine2;
+                                return this.addressLine2;
                         }
 
                         set
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>230ac6480bf458901ca73a36985728b6</Hash>
+    <Hash>bbaf6bbfd0dad7c610c8cc8094048470</Hash>
 </Codenesium>*/

@@ -34,13 +34,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRoleRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRoleRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiUserRoleRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiUserRoleRequestModel model,  CancellationToken cancellationToken)
                 {
-                        UserRole record = await this.userRoleRepository.GetName(model.Name);
+                        UserRole record = await this.userRoleRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68630b16b789f6cb117b1d7405a85952</Hash>
+    <Hash>2ec0b82b0a70050658dbc72933b79163</Hash>
 </Codenesium>*/

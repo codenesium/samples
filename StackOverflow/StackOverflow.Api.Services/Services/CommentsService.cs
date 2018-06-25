@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class CommentsService : AbstractCommentsService, ICommentsService
+        public partial class CommentsService : AbstractCommentsService, ICommentsService
         {
                 public CommentsService(
                         ILogger<ICommentsRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e3b7511330237485b33cf9a22179083</Hash>
+    <Hash>237cfebb7515714f594752130709e3d4</Hash>
 </Codenesium>*/

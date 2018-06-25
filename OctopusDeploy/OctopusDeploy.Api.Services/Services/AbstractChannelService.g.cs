@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiChannelResponseModel> GetNameProjectId(string name, string projectId)
+                public async Task<ApiChannelResponseModel> ByNameProjectId(string name, string projectId)
                 {
-                        Channel record = await this.channelRepository.GetNameProjectId(name, projectId);
+                        Channel record = await this.channelRepository.ByNameProjectId(name, projectId);
 
                         if (record == null)
                         {
@@ -115,16 +115,16 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiChannelResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiChannelResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<Channel> records = await this.channelRepository.GetDataVersion(dataVersion);
+                        List<Channel> records = await this.channelRepository.ByDataVersion(dataVersion);
 
                         return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiChannelResponseModel>> GetProjectId(string projectId)
+                public async Task<List<ApiChannelResponseModel>> ByProjectId(string projectId)
                 {
-                        List<Channel> records = await this.channelRepository.GetProjectId(projectId);
+                        List<Channel> records = await this.channelRepository.ByProjectId(projectId);
 
                         return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
                 }
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0aa4f263a1b1fdcc185e21cf8bedd042</Hash>
+    <Hash>37c65d6575f256c53be6022721cdbd1c</Hash>
 </Codenesium>*/

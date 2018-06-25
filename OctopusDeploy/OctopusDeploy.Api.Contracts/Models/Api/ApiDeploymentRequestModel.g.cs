@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string channelId,
                         DateTimeOffset created,
                         string deployedBy,
@@ -95,7 +95,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.deployedToMachineIds.IsEmptyOrZeroOrNull() ? null : this.deployedToMachineIds;
+                                return this.deployedToMachineIds;
                         }
 
                         set
@@ -206,7 +206,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.taskId.IsEmptyOrZeroOrNull() ? null : this.taskId;
+                                return this.taskId;
                         }
 
                         set
@@ -221,7 +221,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantId.IsEmptyOrZeroOrNull() ? null : this.tenantId;
+                                return this.tenantId;
                         }
 
                         set
@@ -233,5 +233,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de78e60427a0bc1584b11cc3ddbd9904</Hash>
+    <Hash>399392e455cb9610fa44811b5cd7f66c</Hash>
 </Codenesium>*/

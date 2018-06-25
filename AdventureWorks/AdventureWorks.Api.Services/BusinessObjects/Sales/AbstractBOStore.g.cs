@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                                                   DateTime modifiedDate,
                                                   string name,
                                                   Guid rowguid,
-                                                  Nullable<int> salesPersonID)
+                                                  int? salesPersonID)
                 {
                         this.BusinessEntityID = businessEntityID;
                         this.Demographics = demographics;
@@ -35,10 +35,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public Guid Rowguid { get; private set; }
 
-                public Nullable<int> SalesPersonID { get; private set; }
+                public int? SalesPersonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>30ecbdcc553c771c49f39b0c54db02d9</Hash>
+    <Hash>0e6a88465191ff55f5c4cc6fee161d3e</Hash>
 </Codenesium>*/

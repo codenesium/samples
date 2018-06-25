@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiActionTemplateVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiActionTemplateVersionResponseModel> GetNameVersion(string name, int version);
+                Task<ApiActionTemplateVersionResponseModel> ByNameVersion(string name, int version);
 
-                Task<List<ApiActionTemplateVersionResponseModel>> GetLatestActionTemplateId(string latestActionTemplateId);
+                Task<List<ApiActionTemplateVersionResponseModel>> ByLatestActionTemplateId(string latestActionTemplateId);
         }
 }
 
 /*<Codenesium>
-    <Hash>e28e2a550372a64e06a0de65bec9bb9b</Hash>
+    <Hash>4a4032afee9d565a305be2d33a1a0a2f</Hash>
 </Codenesium>*/

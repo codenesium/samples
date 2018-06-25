@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime dueDate,
                         decimal lineTotal,
                         DateTime modifiedDate,
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1ead258729058dda3fc9d44f02c1cb2</Hash>
+    <Hash>5b0524653a15b02c825e77737e920e18</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Sale>> GetTransactionId(int transactionId)
+                public async Task<List<Sale>> ByTransactionId(int transactionId)
                 {
                         var records = await this.Where(x => x.TransactionId == transactionId);
 
@@ -125,5 +125,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a85d27c67ab83ace6f32e32d902dd98</Hash>
+    <Hash>7ce115c0fa165b0cc8004dd66b97fd45</Hash>
 </Codenesium>*/

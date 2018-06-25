@@ -12,16 +12,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal bonus,
                         int businessEntityID,
                         decimal commissionPct,
                         DateTime modifiedDate,
                         Guid rowguid,
                         decimal salesLastYear,
-                        Nullable<decimal> salesQuota,
+                        decimal? salesQuota,
                         decimal salesYTD,
-                        Nullable<int> territoryID)
+                        int? territoryID)
                 {
                         this.Bonus = bonus;
                         this.BusinessEntityID = businessEntityID;
@@ -54,13 +54,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal SalesLastYear { get; private set; }
 
                 [Column("SalesQuota")]
-                public Nullable<decimal> SalesQuota { get; private set; }
+                public decimal? SalesQuota { get; private set; }
 
                 [Column("SalesYTD")]
                 public decimal SalesYTD { get; private set; }
 
                 [Column("TerritoryID")]
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 [ForeignKey("TerritoryID")]
                 public virtual SalesTerritory SalesTerritory { get; set; }
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4825dc58c8141bcb690727a92c4910c5</Hash>
+    <Hash>6202b87d8194dce7a1c96461295f092a</Hash>
 </Codenesium>*/

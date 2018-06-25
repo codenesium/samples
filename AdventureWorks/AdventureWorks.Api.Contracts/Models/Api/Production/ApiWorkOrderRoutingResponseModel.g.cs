@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiWorkOrderRoutingResponseModel : AbstractApiResponseModel
+        public partial class ApiWorkOrderRoutingResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<decimal> actualCost,
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<decimal> actualResourceHrs,
-                        Nullable<DateTime> actualStartDate,
+                        decimal? actualCost,
+                        DateTime? actualEndDate,
+                        decimal? actualResourceHrs,
+                        DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
                         short operationSequence,
@@ -36,13 +36,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.WorkOrderID = workOrderID;
                 }
 
-                public Nullable<decimal> ActualCost { get; private set; }
+                public decimal? ActualCost { get; private set; }
 
-                public Nullable<DateTime> ActualEndDate { get; private set; }
+                public DateTime? ActualEndDate { get; private set; }
 
-                public Nullable<decimal> ActualResourceHrs { get; private set; }
+                public decimal? ActualResourceHrs { get; private set; }
 
-                public Nullable<DateTime> ActualStartDate { get; private set; }
+                public DateTime? ActualStartDate { get; private set; }
 
                 public short LocationID { get; private set; }
 
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3da28957b92e2e7ce7d5cc34ec387b42</Hash>
+    <Hash>ebd0ef2a04dc39ee26e59c6f4ed368a4</Hash>
 </Codenesium>*/

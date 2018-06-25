@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         byte[] dataVersion,
                         string jSON,
                         string name,
@@ -97,7 +97,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantTags.IsEmptyOrZeroOrNull() ? null : this.tenantTags;
+                                return this.tenantTags;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>25aa764541d5193d4db4dc87b988c369</Hash>
+    <Hash>faaabb316c26bc487802600b623df24c</Hash>
 </Codenesium>*/

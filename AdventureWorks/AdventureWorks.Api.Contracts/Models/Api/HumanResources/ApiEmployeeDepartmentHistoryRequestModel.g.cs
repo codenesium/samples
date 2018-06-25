@@ -13,9 +13,9 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         short departmentID,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         int shiftID,
                         DateTime startDate)
@@ -43,13 +43,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> endDate;
+                private DateTime? endDate;
 
-                public Nullable<DateTime> EndDate
+                public DateTime? EndDate
                 {
                         get
                         {
-                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                                return this.endDate;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c5b442e36612bb4878ce5848784aa889</Hash>
+    <Hash>5e57e6f22d6eb0b97f420718114c39f1</Hash>
 </Codenesium>*/

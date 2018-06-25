@@ -71,21 +71,9 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
-
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>264ed0ab156c39f7f3a92aa72b72ec0a</Hash>
+    <Hash>9510bed44d2baff015b9eda2d2ea799a</Hash>
 </Codenesium>*/

@@ -199,7 +199,7 @@ namespace AdventureWorksNS.Api.Web
                 [Route("byBusinessEntityID/{businessEntityID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByBusinessEntityID(Nullable<int> businessEntityID)
+                public async virtual Task<IActionResult> ByBusinessEntityID(int? businessEntityID)
                 {
                         List<ApiJobCandidateResponseModel> response = await this.JobCandidateService.ByBusinessEntityID(businessEntityID);
 
@@ -209,5 +209,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>92b8479d8fc4414d755add8019cda69d</Hash>
+    <Hash>ffd5fa570af90586c2ce3cb16bc5c3f2</Hash>
 </Codenesium>*/

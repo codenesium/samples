@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiDocumentResponseModel : AbstractApiResponseModel
+        public partial class ApiDocumentResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int changeNumber,
                         byte[] document1,
-                        Nullable<short> documentLevel,
+                        short? documentLevel,
                         string documentSummary,
                         string fileExtension,
                         string fileName,
@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public byte[] Document1 { get; private set; }
 
-                public Nullable<short> DocumentLevel { get; private set; }
+                public short? DocumentLevel { get; private set; }
 
                 public string DocumentSummary { get; private set; }
 
@@ -188,5 +188,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9e8a01be12bfe68cf55fe8e31e806339</Hash>
+    <Hash>2284f6822b57abacbbd947e5b7bfc0c0</Hash>
 </Codenesium>*/

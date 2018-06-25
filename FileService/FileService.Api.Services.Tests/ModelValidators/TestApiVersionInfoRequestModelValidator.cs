@@ -47,21 +47,9 @@ namespace FileServiceNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
                 }
-
-                [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
-                        versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
-
-                        var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(long));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f34348981bc6925e365f0c15e9197f6</Hash>
+    <Hash>60b8d779217e7c58e3c1ff036d223268</Hash>
 </Codenesium>*/

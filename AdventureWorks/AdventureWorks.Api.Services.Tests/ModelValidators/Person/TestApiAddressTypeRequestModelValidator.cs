@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IAddressTypeRepository> addressTypeRepository = new Mock<IAddressTypeRepository>();
-                        addressTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AddressType()));
-
-                        var validator = new ApiAddressTypeRequestModelValidator(addressTypeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IAddressTypeRepository> addressTypeRepository = new Mock<IAddressTypeRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>188294e0404496b22fafb22510f590db</Hash>
+    <Hash>146bead2b18659b0fe07cca66b7daa56</Hash>
 </Codenesium>*/

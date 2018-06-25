@@ -195,23 +195,23 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDeploymentId/{deploymentId}")]
+                [Route("byDeploymentId/{deploymentId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDeploymentId(string deploymentId)
+                public async virtual Task<IActionResult> ByDeploymentId(string deploymentId)
                 {
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.GetDeploymentId(deploymentId);
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByDeploymentId(deploymentId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getMachineId/{machineId}")]
+                [Route("byMachineId/{machineId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetMachineId(string machineId)
+                public async virtual Task<IActionResult> ByMachineId(string machineId)
                 {
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.GetMachineId(machineId);
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByMachineId(machineId);
 
                         return this.Ok(response);
                 }
@@ -219,5 +219,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>305c541b7fe49a0bbda895af4575b6ef</Hash>
+    <Hash>3ac56861bb18d96bca11f07464f984e8</Hash>
 </Codenesium>*/

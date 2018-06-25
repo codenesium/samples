@@ -130,149 +130,149 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var record = new Project();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetName(default(string));
+                        ApiProjectResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetName(default(string));
+                        ApiProjectResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetSlug_Exists()
+                public async void BySlug_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var record = new Project();
-                        mock.RepositoryMock.Setup(x => x.GetSlug(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.BySlug(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetSlug(default(string));
+                        ApiProjectResponseModel response = await service.BySlug(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetSlug(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.BySlug(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetSlug_Not_Exists()
+                public async void BySlug_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetSlug(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+                        mock.RepositoryMock.Setup(x => x.BySlug(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetSlug(default(string));
+                        ApiProjectResponseModel response = await service.BySlug(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetSlug(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.BySlug(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var records = new List<Project>();
                         records.Add(new Project());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiProjectResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiProjectResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDiscreteChannelReleaseId_Exists()
+                public async void ByDiscreteChannelReleaseId_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var records = new List<Project>();
                         records.Add(new Project());
-                        mock.RepositoryMock.Setup(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default(bool), default(string));
+                        List<ApiProjectResponseModel> response = await service.ByDiscreteChannelReleaseId(default(bool), default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDiscreteChannelReleaseId_Not_Exists()
+                public async void ByDiscreteChannelReleaseId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
+                        mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default(bool), default(string));
+                        List<ApiProjectResponseModel> response = await service.ByDiscreteChannelReleaseId(default(bool), default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0935084ec970a7b2f9a5773f81dad7a3</Hash>
+    <Hash>5dc55380d72b2ffdf2c1cc4f06163235</Hash>
 </Codenesium>*/

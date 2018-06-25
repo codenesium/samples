@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int familyId,
                         int studentId)
                 {
@@ -56,5 +56,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c3f4c787736eeab69fa82b3c90fa30e6</Hash>
+    <Hash>e7f803ff327e4128f363a97b5cd78247</Hash>
 </Codenesium>*/

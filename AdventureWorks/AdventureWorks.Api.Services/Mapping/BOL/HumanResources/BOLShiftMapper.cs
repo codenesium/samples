@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLShiftMapper : BOLAbstractShiftMapper, IBOLShiftMapper
+        public partial class BOLShiftMapper : BOLAbstractShiftMapper, IBOLShiftMapper
         {
                 public BOLShiftMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d06923269ea486ccb72cec9832fd55f</Hash>
+    <Hash>48e0208834ef39a98860cbe8b2cd339f</Hash>
 </Codenesium>*/

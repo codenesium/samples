@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int businessEntityID,
                         string emailAddress1,
                         int emailAddressID,
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7db9a74706d4504fc3532527b0bacd3a</Hash>
+    <Hash>1948eb3269db03ee435ba99b9a3979e4</Hash>
 </Codenesium>*/

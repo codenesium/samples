@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiDeploymentEnvironmentResponseModel> GetName(string name)
+                public async Task<ApiDeploymentEnvironmentResponseModel> ByName(string name)
                 {
-                        DeploymentEnvironment record = await this.deploymentEnvironmentRepository.GetName(name);
+                        DeploymentEnvironment record = await this.deploymentEnvironmentRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiDeploymentEnvironmentResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<DeploymentEnvironment> records = await this.deploymentEnvironmentRepository.GetDataVersion(dataVersion);
+                        List<DeploymentEnvironment> records = await this.deploymentEnvironmentRepository.ByDataVersion(dataVersion);
 
                         return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>28e09eec1e1438606f24df8a30017b1e</Hash>
+    <Hash>ba5ce36bdac79a3bf665c5ae0a95ac25</Hash>
 </Codenesium>*/

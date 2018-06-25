@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
-
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5059709ea4a6a4c4cbd26ef3c0f0f597</Hash>
+    <Hash>d572d46542f650464b3e147a0bbd57b8</Hash>
 </Codenesium>*/

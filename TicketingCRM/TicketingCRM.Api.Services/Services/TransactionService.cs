@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class TransactionService : AbstractTransactionService, ITransactionService
+        public partial class TransactionService : AbstractTransactionService, ITransactionService
         {
                 public TransactionService(
                         ILogger<ITransactionRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61a66f645978e3e9757df6e520ac921c</Hash>
+    <Hash>148f3cba5bcd5e9adace68b3a68d2b35</Hash>
 </Codenesium>*/

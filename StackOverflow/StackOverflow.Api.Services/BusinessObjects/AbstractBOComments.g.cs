@@ -13,9 +13,9 @@ namespace StackOverflowNS.Api.Services
                 public virtual void SetProperties(int id,
                                                   DateTime creationDate,
                                                   int postId,
-                                                  Nullable<int> score,
+                                                  int? score,
                                                   string text,
-                                                  Nullable<int> userId)
+                                                  int? userId)
                 {
                         this.CreationDate = creationDate;
                         this.Id = id;
@@ -31,14 +31,14 @@ namespace StackOverflowNS.Api.Services
 
                 public int PostId { get; private set; }
 
-                public Nullable<int> Score { get; private set; }
+                public int? Score { get; private set; }
 
                 public string Text { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccccb6314cfca0f6ce6a8176c6f17bae</Hash>
+    <Hash>5c77f035de684b68225ba4989a8c8546</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace FileServiceNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         Guid externalId,
                         int id,
                         string name)
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>87861ef52a319f9e96d11f791cc8d54f</Hash>
+    <Hash>2f97a7db1303e1060f1e21af7825cc6c</Hash>
 </Codenesium>*/

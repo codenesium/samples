@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BOLLinkTypesMapper : BOLAbstractLinkTypesMapper, IBOLLinkTypesMapper
+        public partial class BOLLinkTypesMapper : BOLAbstractLinkTypesMapper, IBOLLinkTypesMapper
         {
                 public BOLLinkTypesMapper()
                 {
@@ -14,5 +14,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f537d176bc653550f937bf86a8c216a</Hash>
+    <Hash>93a678397677db9745af8d56a4f8ea16</Hash>
 </Codenesium>*/

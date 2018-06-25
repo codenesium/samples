@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public class ApiAdminResponseModel : AbstractApiResponseModel
+        public partial class ApiAdminResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> birthday,
+                        DateTime? birthday,
                         string email,
                         string firstName,
                         int id,
@@ -28,7 +28,7 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioIdEntity = nameof(ApiResponse.Studios);
                 }
 
-                public Nullable<DateTime> Birthday { get; private set; }
+                public DateTime? Birthday { get; private set; }
 
                 public string Email { get; private set; }
 
@@ -114,5 +114,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c9b9c916966b7c0133bbcf7bc89ea6e9</Hash>
+    <Hash>97f61044b7108627c9723f928be2211c</Hash>
 </Codenesium>*/

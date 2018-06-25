@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string name,
                         int studioId)
@@ -38,5 +38,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f500fe8004dd08702f7ab75415ce37f</Hash>
+    <Hash>4a3764300c8e71702a4381e39eb97b9d</Hash>
 </Codenesium>*/

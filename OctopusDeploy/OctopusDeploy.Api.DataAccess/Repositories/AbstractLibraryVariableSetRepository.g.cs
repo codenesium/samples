@@ -76,7 +76,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<LibraryVariableSet> GetName(string name)
+                public async Task<LibraryVariableSet> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb3e3f896f32ef94f86bf7caf3b241be</Hash>
+    <Hash>668f77aeca0b4c51c920606318e89811</Hash>
 </Codenesium>*/

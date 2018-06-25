@@ -198,13 +198,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getNameVersion/{name}/{version}")]
+                [Route("byNameVersion/{name}/{version}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiActionTemplateVersionResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetNameVersion(string name, int version)
+                public async virtual Task<IActionResult> ByNameVersion(string name, int version)
                 {
-                        ApiActionTemplateVersionResponseModel response = await this.ActionTemplateVersionService.GetNameVersion(name, version);
+                        ApiActionTemplateVersionResponseModel response = await this.ActionTemplateVersionService.ByNameVersion(name, version);
 
                         if (response == null)
                         {
@@ -217,12 +217,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getLatestActionTemplateId/{latestActionTemplateId}")]
+                [Route("byLatestActionTemplateId/{latestActionTemplateId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiActionTemplateVersionResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetLatestActionTemplateId(string latestActionTemplateId)
+                public async virtual Task<IActionResult> ByLatestActionTemplateId(string latestActionTemplateId)
                 {
-                        List<ApiActionTemplateVersionResponseModel> response = await this.ActionTemplateVersionService.GetLatestActionTemplateId(latestActionTemplateId);
+                        List<ApiActionTemplateVersionResponseModel> response = await this.ActionTemplateVersionService.ByLatestActionTemplateId(latestActionTemplateId);
 
                         return this.Ok(response);
                 }
@@ -230,5 +230,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f253b6468bb57e5cf7df10bd0ed739b7</Hash>
+    <Hash>c05026951131f3308365aea25b88c977</Hash>
 </Codenesium>*/

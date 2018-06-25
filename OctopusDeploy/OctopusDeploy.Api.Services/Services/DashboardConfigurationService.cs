@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DashboardConfigurationService : AbstractDashboardConfigurationService, IDashboardConfigurationService
+        public partial class DashboardConfigurationService : AbstractDashboardConfigurationService, IDashboardConfigurationService
         {
                 public DashboardConfigurationService(
                         ILogger<IDashboardConfigurationRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>730b76222da4f987ff64c3e773f9d86e</Hash>
+    <Hash>8bc590bb7eb0c492be3e4dba07c2791e</Hash>
 </Codenesium>*/

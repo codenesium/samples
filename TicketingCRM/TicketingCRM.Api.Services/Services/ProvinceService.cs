@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class ProvinceService : AbstractProvinceService, IProvinceService
+        public partial class ProvinceService : AbstractProvinceService, IProvinceService
         {
                 public ProvinceService(
                         ILogger<IProvinceRepository> logger,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a9e2a69868f6a18f46aaafe1a6fdaf5</Hash>
+    <Hash>c238eec9d7b9080dc205b90813a18c9c</Hash>
 </Codenesium>*/

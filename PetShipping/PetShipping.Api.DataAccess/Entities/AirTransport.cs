@@ -12,7 +12,7 @@ namespace PetShippingNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int airlineId,
                         string flightNumber,
                         int handlerId,
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2be46d680c733f3f888d7b408b1ef701</Hash>
+    <Hash>fa8e3cea7fc0c7ff475887109e8290f1</Hash>
 </Codenesium>*/

@@ -6,16 +6,16 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiBillOfMaterialsResponseModel : AbstractApiResponseModel
+        public partial class ApiBillOfMaterialsResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int billOfMaterialsID,
                         short bOMLevel,
                         int componentID,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         decimal perAssemblyQty,
-                        Nullable<int> productAssemblyID,
+                        int? productAssemblyID,
                         DateTime startDate,
                         string unitMeasureCode)
                 {
@@ -36,13 +36,13 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public int ComponentID { get; private set; }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
                 public decimal PerAssemblyQty { get; private set; }
 
-                public Nullable<int> ProductAssemblyID { get; private set; }
+                public int? ProductAssemblyID { get; private set; }
 
                 public DateTime StartDate { get; private set; }
 
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>674295e081cdb69cd8338c7690143d15</Hash>
+    <Hash>87c2616ef4f4710f9ce9da7f627d8722</Hash>
 </Codenesium>*/

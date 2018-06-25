@@ -130,114 +130,114 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetNameProjectId_Exists()
+                public async void ByNameProjectId_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var record = new Channel();
-                        mock.RepositoryMock.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.GetNameProjectId(default(string), default(string));
+                        ApiChannelResponseModel response = await service.ByNameProjectId(default(string), default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetNameProjectId_Not_Exists()
+                public async void ByNameProjectId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
+                        mock.RepositoryMock.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.GetNameProjectId(default(string), default(string));
+                        ApiChannelResponseModel response = await service.ByNameProjectId(default(string), default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var records = new List<Channel>();
                         records.Add(new Channel());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiChannelResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiChannelResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetProjectId_Exists()
+                public async void ByProjectId_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var records = new List<Channel>();
                         records.Add(new Channel());
-                        mock.RepositoryMock.Setup(x => x.GetProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetProjectId(default(string));
+                        List<ApiChannelResponseModel> response = await service.ByProjectId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetProjectId_Not_Exists()
+                public async void ByProjectId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
+                        mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetProjectId(default(string));
+                        List<ApiChannelResponseModel> response = await service.ByProjectId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4fb252b55c7bd6e2d009ef537f83ccc4</Hash>
+    <Hash>f2ef8a1db19c2854bfeea90181983893</Hash>
 </Codenesium>*/

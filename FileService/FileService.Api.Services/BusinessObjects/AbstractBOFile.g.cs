@@ -11,7 +11,7 @@ namespace FileServiceNS.Api.Services
                 }
 
                 public virtual void SetProperties(int id,
-                                                  Nullable<int> bucketId,
+                                                  int? bucketId,
                                                   DateTime dateCreated,
                                                   string description,
                                                   DateTime expiration,
@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.Services
                         this.PublicKey = publicKey;
                 }
 
-                public Nullable<int> BucketId { get; private set; }
+                public int? BucketId { get; private set; }
 
                 public DateTime DateCreated { get; private set; }
 
@@ -64,5 +64,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e988a2bb51ffa6783eb51e3a157410b</Hash>
+    <Hash>d50a7f11de2b4aeab9f8f99275d68fe8</Hash>
 </Codenesium>*/

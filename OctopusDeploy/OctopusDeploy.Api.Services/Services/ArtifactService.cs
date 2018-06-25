@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ArtifactService : AbstractArtifactService, IArtifactService
+        public partial class ArtifactService : AbstractArtifactService, IArtifactService
         {
                 public ArtifactService(
                         ILogger<IArtifactRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>641eb2e0f6ebdd62e1e2cd30753a7c1b</Hash>
+    <Hash>95cc7933fc596074f1a1fbde9ab7dcad</Hash>
 </Codenesium>*/

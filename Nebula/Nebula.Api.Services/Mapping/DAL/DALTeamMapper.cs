@@ -4,7 +4,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class DALTeamMapper : DALAbstractTeamMapper, IDALTeamMapper
+        public partial class DALTeamMapper : DALAbstractTeamMapper, IDALTeamMapper
         {
                 public DALTeamMapper()
                 {
@@ -13,5 +13,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e47a9cdb0d1bbe44f369cbc8ed4b47a</Hash>
+    <Hash>4cfc40360a97ecb920a01bc632b65601</Hash>
 </Codenesium>*/

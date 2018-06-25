@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountType,
                         string environmentIds,
                         string id,
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a040ec8e9109b52c946c056c06cae758</Hash>
+    <Hash>66c0c320b224c256c0b858bbc7ed0548</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLExtensionConfigurationMapper : BOLAbstractExtensionConfigurationMapper, IBOLExtensionConfigurationMapper
+        public partial class BOLExtensionConfigurationMapper : BOLAbstractExtensionConfigurationMapper, IBOLExtensionConfigurationMapper
         {
                 public BOLExtensionConfigurationMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3894b0bb4fe48d5bbd90a28cc209f2a1</Hash>
+    <Hash>62ecf0e595810f11006bd218c976dd09</Hash>
 </Codenesium>*/

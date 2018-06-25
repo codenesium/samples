@@ -49,18 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void @Class_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Color_Create_length()
                 {
                         Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -82,18 +70,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Color, new string('A', 16));
-                }
-
-                [Fact]
-                public async void Color_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -145,18 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProductLine_Create_length()
                 {
                         Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -178,18 +142,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductLine, new string('A', 3));
-                }
-
-                [Fact]
-                public async void ProductLine_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -241,18 +193,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProductNumber_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Size_Create_length()
                 {
                         Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -274,18 +214,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Size, new string('A', 6));
-                }
-
-                [Fact]
-                public async void Size_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -313,18 +241,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void SizeUnitMeasureCode_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Style_Create_length()
                 {
                         Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -349,18 +265,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Style_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void WeightUnitMeasureCode_Create_length()
                 {
                         Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -382,18 +286,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, new string('A', 4));
-                }
-
-                [Fact]
-                public async void WeightUnitMeasureCode_Delete()
-                {
-                        Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-                        productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-                        var validator = new ApiProductRequestModelValidator(productRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -447,5 +339,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cdcaa772af8a9d9d2b398f9dac74fdbc</Hash>
+    <Hash>2db28d335a93cd76777f82d75ae46f44</Hash>
 </Codenesium>*/

@@ -46,13 +46,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiFeedRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiFeedRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiFeedRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiFeedRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Feed record = await this.feedRepository.GetName(model.Name);
+                        Feed record = await this.feedRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -67,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>256b5e72084be9704262857843211c62</Hash>
+    <Hash>fcb3ba3c37291b8778610d633f3daec9</Hash>
 </Codenesium>*/

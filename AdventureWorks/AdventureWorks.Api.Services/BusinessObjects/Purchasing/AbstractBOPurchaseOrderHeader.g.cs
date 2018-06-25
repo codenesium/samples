@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services
                                                   DateTime modifiedDate,
                                                   DateTime orderDate,
                                                   int revisionNumber,
-                                                  Nullable<DateTime> shipDate,
+                                                  DateTime? shipDate,
                                                   int shipMethodID,
                                                   int status,
                                                   decimal subTotal,
@@ -51,7 +51,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public int RevisionNumber { get; private set; }
 
-                public Nullable<DateTime> ShipDate { get; private set; }
+                public DateTime? ShipDate { get; private set; }
 
                 public int ShipMethodID { get; private set; }
 
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7027c755240574ae693268793a98d7ad</Hash>
+    <Hash>9dbdf4914fc3e970a580173fbfa342e6</Hash>
 </Codenesium>*/

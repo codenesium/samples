@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public class CountryRequirementRepository : AbstractCountryRequirementRepository, ICountryRequirementRepository
+        public partial class CountryRequirementRepository : AbstractCountryRequirementRepository, ICountryRequirementRepository
         {
                 public CountryRequirementRepository(
                         ILogger<CountryRequirementRepository> logger,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>753e28b70c86129c5fe82be09289e5e4</Hash>
+    <Hash>0ab90732fd9ae92ac6af7594e9a6f101</Hash>
 </Codenesium>*/

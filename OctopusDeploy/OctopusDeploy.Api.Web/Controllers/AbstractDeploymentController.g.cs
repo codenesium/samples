@@ -205,34 +205,34 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getChannelId/{channelId}")]
+                [Route("byChannelId/{channelId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetChannelId(string channelId)
+                public async virtual Task<IActionResult> ByChannelId(string channelId)
                 {
-                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.GetChannelId(channelId);
+                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.ByChannelId(channelId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}")]
+                [Route("byIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+                public async virtual Task<IActionResult> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
-                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
+                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getTenantId/{tenantId}")]
+                [Route("byTenantId/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTenantId(string tenantId)
+                public async virtual Task<IActionResult> ByTenantId(string tenantId)
                 {
-                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.GetTenantId(tenantId);
+                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.ByTenantId(tenantId);
 
                         return this.Ok(response);
                 }
@@ -254,5 +254,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9f1c9b969fe0e9604a4db52c40c4fa8b</Hash>
+    <Hash>0732a414659088cca72e46b47b5c0666</Hash>
 </Codenesium>*/

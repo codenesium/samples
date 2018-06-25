@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLSchemaVersionsMapper : BOLAbstractSchemaVersionsMapper, IBOLSchemaVersionsMapper
+        public partial class BOLSchemaVersionsMapper : BOLAbstractSchemaVersionsMapper, IBOLSchemaVersionsMapper
         {
                 public BOLSchemaVersionsMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94441cb9b38ab9c3be5a2ff9b46ddb4e</Hash>
+    <Hash>72dabee3d117517bf67721717d82ae2d</Hash>
 </Codenesium>*/

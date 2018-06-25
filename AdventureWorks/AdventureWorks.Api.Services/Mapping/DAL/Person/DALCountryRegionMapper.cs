@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCountryRegionMapper : DALAbstractCountryRegionMapper, IDALCountryRegionMapper
+        public partial class DALCountryRegionMapper : DALAbstractCountryRegionMapper, IDALCountryRegionMapper
         {
                 public DALCountryRegionMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5cabb1699fca38d36c94f40ddc5fc78</Hash>
+    <Hash>9fd41a071da60fbc0251d9a272eff4b2</Hash>
 </Codenesium>*/

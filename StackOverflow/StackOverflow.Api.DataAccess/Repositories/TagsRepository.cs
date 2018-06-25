@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public class TagsRepository : AbstractTagsRepository, ITagsRepository
+        public partial class TagsRepository : AbstractTagsRepository, ITagsRepository
         {
                 public TagsRepository(
                         ILogger<TagsRepository> logger,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51e92561adc6fddefa5b5acd1d61d13a</Hash>
+    <Hash>ba37f3141ca5665a1fde7edf9b881a5f</Hash>
 </Codenesium>*/

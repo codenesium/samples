@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         int nextChainId,
                         int previousChainId)
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8de8279c6dbb9255b88a51650ef79e02</Hash>
+    <Hash>28471d5c2d9657db14ace407c9d4113e</Hash>
 </Codenesium>*/

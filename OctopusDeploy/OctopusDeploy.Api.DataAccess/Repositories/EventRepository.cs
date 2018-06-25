@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class EventRepository : AbstractEventRepository, IEventRepository
+        public partial class EventRepository : AbstractEventRepository, IEventRepository
         {
                 public EventRepository(
                         ILogger<EventRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b661b58c2280a8ce6b52b7e5ce5abfc</Hash>
+    <Hash>64b24081c80d29a588662f6958548044</Hash>
 </Codenesium>*/

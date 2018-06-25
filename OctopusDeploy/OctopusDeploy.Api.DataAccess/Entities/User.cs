@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string displayName,
                         string emailAddress,
                         string externalId,
@@ -70,5 +70,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3218712a26806b7bed38b528fe6cb20</Hash>
+    <Hash>a98efde311028c6718214d798e11757e</Hash>
 </Codenesium>*/

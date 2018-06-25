@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
                 }
-
-                [Fact]
-                public async void ShoppingCartID_Delete()
-                {
-                        Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
-                        shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
-
-                        var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b2f545a12df248ed8081278eb062aa5c</Hash>
+    <Hash>dd6708a6eae4b178c9e6984b87ce4b29</Hash>
 </Codenesium>*/

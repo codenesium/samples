@@ -494,7 +494,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiJobCandidateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiJobCandidateResponseModel>> GetJobCandidateByBusinessEntityID(Nullable<int> businessEntityID)
+                public virtual async Task<List<ApiJobCandidateResponseModel>> GetJobCandidateByBusinessEntityID(int? businessEntityID)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates/byBusinessEntityID/{businessEntityID}").ConfigureAwait(false);
 
@@ -1415,7 +1415,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBillOfMaterialsResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiBillOfMaterialsResponseModel> GetBillOfMaterialsByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public virtual async Task<ApiBillOfMaterialsResponseModel> GetBillOfMaterialsByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/byProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}").ConfigureAwait(false);
 
@@ -2713,7 +2713,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderByScrapReasonID(Nullable<short> scrapReasonID)
+                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderByScrapReasonID(short? scrapReasonID)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/byScrapReasonID/{scrapReasonID}").ConfigureAwait(false);
 
@@ -3398,7 +3398,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCustomerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCustomerResponseModel>> GetCustomerByTerritoryID(Nullable<int> territoryID)
+                public virtual async Task<List<ApiCustomerResponseModel>> GetCustomerByTerritoryID(int? territoryID)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/byTerritoryID/{territoryID}").ConfigureAwait(false);
 
@@ -3571,7 +3571,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderBySalesPersonID(Nullable<int> salesPersonID)
+                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderBySalesPersonID(int? salesPersonID)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/bySalesPersonID/{salesPersonID}").ConfigureAwait(false);
 
@@ -4192,7 +4192,7 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiStoreResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> GetStoreBySalesPersonID(Nullable<int> salesPersonID)
+                public virtual async Task<List<ApiStoreResponseModel>> GetStoreBySalesPersonID(int? salesPersonID)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/bySalesPersonID/{salesPersonID}").ConfigureAwait(false);
 
@@ -4211,5 +4211,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>990dc3344042138a26d275816af93279</Hash>
+    <Hash>19ba33d3710e19707b8d183bcedcc816</Hash>
 </Codenesium>*/

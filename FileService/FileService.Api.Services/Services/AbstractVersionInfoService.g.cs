@@ -101,9 +101,9 @@ namespace FileServiceNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiVersionInfoResponseModel> GetVersion(long version)
+                public async Task<ApiVersionInfoResponseModel> ByVersion(long version)
                 {
-                        VersionInfo record = await this.versionInfoRepository.GetVersion(version);
+                        VersionInfo record = await this.versionInfoRepository.ByVersion(version);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>377118b9b4c64be5a057799c23436a16</Hash>
+    <Hash>84af98762720d0bff4084710647f3479</Hash>
 </Codenesium>*/

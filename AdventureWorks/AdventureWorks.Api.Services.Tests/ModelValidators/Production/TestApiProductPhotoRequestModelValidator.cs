@@ -49,18 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LargePhotoFileName_Delete()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
-
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ThumbnailPhotoFileName_Create_length()
                 {
                         Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
@@ -83,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
                 }
-
-                [Fact]
-                public async void ThumbnailPhotoFileName_Delete()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
-
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3e2b38bdaf8dd5ee67cfdec6bca95b45</Hash>
+    <Hash>490f3029f9d1be5e539de05cbfa52347</Hash>
 </Codenesium>*/

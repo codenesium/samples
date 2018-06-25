@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALShiftMapper : DALAbstractShiftMapper, IDALShiftMapper
+        public partial class DALShiftMapper : DALAbstractShiftMapper, IDALShiftMapper
         {
                 public DALShiftMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6f1548baa021dad48192ac88a795971</Hash>
+    <Hash>c680dd24ca986374ffcd965123c527d0</Hash>
 </Codenesium>*/

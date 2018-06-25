@@ -17,10 +17,10 @@ namespace FileServiceNS.Api.DataAccess
 
                 Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<VersionInfo> GetVersion(long version);
+                Task<VersionInfo> ByVersion(long version);
         }
 }
 
 /*<Codenesium>
-    <Hash>9a96c76032af5123fd7eb0580528841c</Hash>
+    <Hash>0407b9eb189c3fd49603c20334df605d</Hash>
 </Codenesium>*/

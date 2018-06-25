@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALJobCandidateMapper : DALAbstractJobCandidateMapper, IDALJobCandidateMapper
+        public partial class DALJobCandidateMapper : DALAbstractJobCandidateMapper, IDALJobCandidateMapper
         {
                 public DALJobCandidateMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f5d9ffa44e04776368d02b704254bf1</Hash>
+    <Hash>c0854cc2c8a1a95f794f39fad7f59908</Hash>
 </Codenesium>*/

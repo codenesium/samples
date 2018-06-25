@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLCommunityActionTemplateMapper : BOLAbstractCommunityActionTemplateMapper, IBOLCommunityActionTemplateMapper
+        public partial class BOLCommunityActionTemplateMapper : BOLAbstractCommunityActionTemplateMapper, IBOLCommunityActionTemplateMapper
         {
                 public BOLCommunityActionTemplateMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7aabc105e8a898e2469bf15d7458035f</Hash>
+    <Hash>eefff40839527e2b166678debaa19b95</Hash>
 </Codenesium>*/

@@ -196,12 +196,12 @@ namespace TicketingCRMNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTransactionStatusId/{transactionStatusId}")]
+                [Route("byTransactionStatusId/{transactionStatusId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTransactionResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTransactionStatusId(int transactionStatusId)
+                public async virtual Task<IActionResult> ByTransactionStatusId(int transactionStatusId)
                 {
-                        List<ApiTransactionResponseModel> response = await this.TransactionService.GetTransactionStatusId(transactionStatusId);
+                        List<ApiTransactionResponseModel> response = await this.TransactionService.ByTransactionStatusId(transactionStatusId);
 
                         return this.Ok(response);
                 }
@@ -223,5 +223,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>034485742bba2f79b7fd585ed164bc20</Hash>
+    <Hash>995fbbb339ba27a6c5c1b9a1510c0767</Hash>
 </Codenesium>*/

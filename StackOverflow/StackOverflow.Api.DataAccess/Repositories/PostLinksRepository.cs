@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public class PostLinksRepository : AbstractPostLinksRepository, IPostLinksRepository
+        public partial class PostLinksRepository : AbstractPostLinksRepository, IPostLinksRepository
         {
                 public PostLinksRepository(
                         ILogger<PostLinksRepository> logger,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12173f3c65e8c440ffa3c1b5f998adfc</Hash>
+    <Hash>47c4e833c7e393ea11d883dba7b0ec1a</Hash>
 </Codenesium>*/

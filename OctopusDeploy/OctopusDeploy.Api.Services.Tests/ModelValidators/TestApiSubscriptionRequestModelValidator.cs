@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Type_Create_length()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
@@ -133,22 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Type_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
+                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
                         var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
@@ -157,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
+                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
                         var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
@@ -169,10 +145,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
+                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
                         var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
@@ -181,10 +157,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
+                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
                         var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
@@ -195,5 +171,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0fa1f1a568c8c61eaf78c3159bf331b3</Hash>
+    <Hash>480c1d0526702f9d7b563aa7b97b9c00</Hash>
 </Codenesium>*/

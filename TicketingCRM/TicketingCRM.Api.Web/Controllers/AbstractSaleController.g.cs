@@ -197,12 +197,12 @@ namespace TicketingCRMNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTransactionId/{transactionId}")]
+                [Route("byTransactionId/{transactionId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTransactionId(int transactionId)
+                public async virtual Task<IActionResult> ByTransactionId(int transactionId)
                 {
-                        List<ApiSaleResponseModel> response = await this.SaleService.GetTransactionId(transactionId);
+                        List<ApiSaleResponseModel> response = await this.SaleService.ByTransactionId(transactionId);
 
                         return this.Ok(response);
                 }
@@ -224,5 +224,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>beb9e8f89b262c35641b20782207e0bc</Hash>
+    <Hash>fffc0cf75aaec83e32383a7cd99c375c</Hash>
 </Codenesium>*/

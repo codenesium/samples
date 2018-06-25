@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLLinkLogMapper : BOLAbstractLinkLogMapper, IBOLLinkLogMapper
+        public partial class BOLLinkLogMapper : BOLAbstractLinkLogMapper, IBOLLinkLogMapper
         {
                 public BOLLinkLogMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48f589e435f65339611c484bf33bca98</Hash>
+    <Hash>09c8990c9eabdd0b6a3967b7a987ab45</Hash>
 </Codenesium>*/

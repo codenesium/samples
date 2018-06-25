@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public class ApiMachineResponseModel : AbstractApiResponseModel
+        public partial class ApiMachineResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string description,
@@ -97,5 +97,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a7987f320e9708b4eaa9f9f0e2dde0d2</Hash>
+    <Hash>809550df3487c48d4e8684f1224a9138</Hash>
 </Codenesium>*/

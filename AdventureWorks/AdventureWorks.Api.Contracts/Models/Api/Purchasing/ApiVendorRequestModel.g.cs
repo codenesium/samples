@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         bool activeFlag,
                         int creditRating,
@@ -133,7 +133,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.purchasingWebServiceURL.IsEmptyOrZeroOrNull() ? null : this.purchasingWebServiceURL;
+                                return this.purchasingWebServiceURL;
                         }
 
                         set
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>475b9174d7014e99400e97ea88395ea2</Hash>
+    <Hash>3e2e85dc50dc976b75cf45dfc7317691</Hash>
 </Codenesium>*/

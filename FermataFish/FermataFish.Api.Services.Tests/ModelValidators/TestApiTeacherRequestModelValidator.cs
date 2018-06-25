@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
@@ -130,18 +118,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
@@ -250,18 +214,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -317,5 +269,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>15b205ab29486611e6d1f74080b90d24</Hash>
+    <Hash>28a70e9090f1d3d978fb70e3aa401a12</Hash>
 </Codenesium>*/

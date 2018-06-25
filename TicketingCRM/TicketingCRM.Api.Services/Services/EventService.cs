@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class EventService : AbstractEventService, IEventService
+        public partial class EventService : AbstractEventService, IEventService
         {
                 public EventService(
                         ILogger<IEventRepository> logger,
@@ -30,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eef9e75193f980105871b6279eed24bf</Hash>
+    <Hash>347081356609895a0ede4b353f078747</Hash>
 </Codenesium>*/

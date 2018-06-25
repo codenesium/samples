@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class MutexService : AbstractMutexService, IMutexService
+        public partial class MutexService : AbstractMutexService, IMutexService
         {
                 public MutexService(
                         ILogger<IMutexRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>617d7adff82e69c10725384574142bad</Hash>
+    <Hash>3a2735d8946488d7e9c361a08bf23bf9</Hash>
 </Codenesium>*/

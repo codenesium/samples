@@ -76,7 +76,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Subscription> GetName(string name)
+                public async Task<Subscription> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b665d19740f32254ab32499ad2ef668</Hash>
+    <Hash>c16d493a4006de9e3714ac60cd38c2b2</Hash>
 </Codenesium>*/

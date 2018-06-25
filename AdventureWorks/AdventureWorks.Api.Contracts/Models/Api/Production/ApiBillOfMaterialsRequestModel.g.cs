@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         short bOMLevel,
                         int componentID,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         decimal perAssemblyQty,
-                        Nullable<int> productAssemblyID,
+                        int? productAssemblyID,
                         DateTime startDate,
                         string unitMeasureCode)
                 {
@@ -65,13 +65,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> endDate;
+                private DateTime? endDate;
 
-                public Nullable<DateTime> EndDate
+                public DateTime? EndDate
                 {
                         get
                         {
-                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                                return this.endDate;
                         }
 
                         set
@@ -112,13 +112,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> productAssemblyID;
+                private int? productAssemblyID;
 
-                public Nullable<int> ProductAssemblyID
+                public int? ProductAssemblyID
                 {
                         get
                         {
-                                return this.productAssemblyID.IsEmptyOrZeroOrNull() ? null : this.productAssemblyID;
+                                return this.productAssemblyID;
                         }
 
                         set
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>28566b1e0d92831501f1477ecb266e74</Hash>
+    <Hash>537b37d4172310fabb83ef856c2ecd6c</Hash>
 </Codenesium>*/

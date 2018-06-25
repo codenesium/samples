@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISalesReasonRepository> salesReasonRepository = new Mock<ISalesReasonRepository>();
-                        salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
-
-                        var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ReasonType_Create_null()
                 {
                         Mock<ISalesReasonRepository> salesReasonRepository = new Mock<ISalesReasonRepository>();
@@ -131,21 +119,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReasonType, new string('A', 51));
                 }
-
-                [Fact]
-                public async void ReasonType_Delete()
-                {
-                        Mock<ISalesReasonRepository> salesReasonRepository = new Mock<ISalesReasonRepository>();
-                        salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
-
-                        var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d3169cc1d12736a3ed21b2dfbbae8c63</Hash>
+    <Hash>8dfa92e380e6800dd4c3fc6899014dfc</Hash>
 </Codenesium>*/

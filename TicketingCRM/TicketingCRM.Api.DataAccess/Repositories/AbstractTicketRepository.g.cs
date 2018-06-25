@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Ticket>> GetTicketStatusId(int ticketStatusId)
+                public async Task<List<Ticket>> ByTicketStatusId(int ticketStatusId)
                 {
                         var records = await this.Where(x => x.TicketStatusId == ticketStatusId);
 
@@ -125,5 +125,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bdec38abeb9bac6af7e4fc2230627538</Hash>
+    <Hash>63bb18575a63e09f9a320e3e62ac143f</Hash>
 </Codenesium>*/

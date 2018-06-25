@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLShipMethodMapper : BOLAbstractShipMethodMapper, IBOLShipMethodMapper
+        public partial class BOLShipMethodMapper : BOLAbstractShipMethodMapper, IBOLShipMethodMapper
         {
                 public BOLShipMethodMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0955031e6a869c37433d283187f30f07</Hash>
+    <Hash>cddd5f06d4dc5a8df70a21342108f51b</Hash>
 </Codenesium>*/

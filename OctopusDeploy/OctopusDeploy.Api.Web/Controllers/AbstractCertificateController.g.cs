@@ -204,45 +204,45 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCreated/{created}")]
+                [Route("byCreated/{created}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCreated(DateTimeOffset created)
+                public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
                 {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.GetCreated(created);
+                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByCreated(created);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.GetDataVersion(dataVersion);
+                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getNotAfter/{notAfter}")]
+                [Route("byNotAfter/{notAfter}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetNotAfter(DateTimeOffset notAfter)
+                public async virtual Task<IActionResult> ByNotAfter(DateTimeOffset notAfter)
                 {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.GetNotAfter(notAfter);
+                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByNotAfter(notAfter);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getThumbprint/{thumbprint}")]
+                [Route("byThumbprint/{thumbprint}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetThumbprint(string thumbprint)
+                public async virtual Task<IActionResult> ByThumbprint(string thumbprint)
                 {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.GetThumbprint(thumbprint);
+                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByThumbprint(thumbprint);
 
                         return this.Ok(response);
                 }
@@ -250,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f7986d7b09071eb6b03df81dc9503183</Hash>
+    <Hash>ad131949365a06ab6ced58760e98f057</Hash>
 </Codenesium>*/

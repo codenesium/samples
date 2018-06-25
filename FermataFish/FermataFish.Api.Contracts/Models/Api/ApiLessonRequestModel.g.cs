@@ -13,13 +13,13 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<DateTime> actualStartDate,
-                        Nullable<decimal> billAmount,
+                public virtual void SetProperties(
+                        DateTime? actualEndDate,
+                        DateTime? actualStartDate,
+                        decimal? billAmount,
                         int lessonStatusId,
-                        Nullable<DateTime> scheduledEndDate,
-                        Nullable<DateTime> scheduledStartDate,
+                        DateTime? scheduledEndDate,
+                        DateTime? scheduledStartDate,
                         string studentNotes,
                         int studioId,
                         string teacherNotes)
@@ -35,13 +35,13 @@ namespace FermataFishNS.Api.Contracts
                         this.TeacherNotes = teacherNotes;
                 }
 
-                private Nullable<DateTime> actualEndDate;
+                private DateTime? actualEndDate;
 
-                public Nullable<DateTime> ActualEndDate
+                public DateTime? ActualEndDate
                 {
                         get
                         {
-                                return this.actualEndDate.IsEmptyOrZeroOrNull() ? null : this.actualEndDate;
+                                return this.actualEndDate;
                         }
 
                         set
@@ -50,13 +50,13 @@ namespace FermataFishNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> actualStartDate;
+                private DateTime? actualStartDate;
 
-                public Nullable<DateTime> ActualStartDate
+                public DateTime? ActualStartDate
                 {
                         get
                         {
-                                return this.actualStartDate.IsEmptyOrZeroOrNull() ? null : this.actualStartDate;
+                                return this.actualStartDate;
                         }
 
                         set
@@ -65,13 +65,13 @@ namespace FermataFishNS.Api.Contracts
                         }
                 }
 
-                private Nullable<decimal> billAmount;
+                private decimal? billAmount;
 
-                public Nullable<decimal> BillAmount
+                public decimal? BillAmount
                 {
                         get
                         {
-                                return this.billAmount.IsEmptyOrZeroOrNull() ? null : this.billAmount;
+                                return this.billAmount;
                         }
 
                         set
@@ -96,13 +96,13 @@ namespace FermataFishNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> scheduledEndDate;
+                private DateTime? scheduledEndDate;
 
-                public Nullable<DateTime> ScheduledEndDate
+                public DateTime? ScheduledEndDate
                 {
                         get
                         {
-                                return this.scheduledEndDate.IsEmptyOrZeroOrNull() ? null : this.scheduledEndDate;
+                                return this.scheduledEndDate;
                         }
 
                         set
@@ -111,13 +111,13 @@ namespace FermataFishNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> scheduledStartDate;
+                private DateTime? scheduledStartDate;
 
-                public Nullable<DateTime> ScheduledStartDate
+                public DateTime? ScheduledStartDate
                 {
                         get
                         {
-                                return this.scheduledStartDate.IsEmptyOrZeroOrNull() ? null : this.scheduledStartDate;
+                                return this.scheduledStartDate;
                         }
 
                         set
@@ -132,7 +132,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                         get
                         {
-                                return this.studentNotes.IsEmptyOrZeroOrNull() ? null : this.studentNotes;
+                                return this.studentNotes;
                         }
 
                         set
@@ -163,7 +163,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                         get
                         {
-                                return this.teacherNotes.IsEmptyOrZeroOrNull() ? null : this.teacherNotes;
+                                return this.teacherNotes;
                         }
 
                         set
@@ -175,5 +175,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>213fb80c636ef27de85d840c6bb0e236</Hash>
+    <Hash>85839ace5a7077094225b72c92be5514</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
-
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void SpeciesId_Create_Valid_Reference()
                 {
                         Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
@@ -137,5 +125,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d509ad75da3ff3c75f753eb609f85434</Hash>
+    <Hash>ca438343d9ab8722d1b3f6175e685836</Hash>
 </Codenesium>*/

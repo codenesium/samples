@@ -50,7 +50,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void ProjectIdRules()
                 {
                         this.RuleFor(x => x.ProjectId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.ProjectId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByVersionProjectId).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.ProjectId));
                         this.RuleFor(x => x.ProjectId).Length(0, 150);
                 }
 
@@ -63,13 +63,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void VersionRules()
                 {
                         this.RuleFor(x => x.Version).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.Version));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByVersionProjectId).When(x => x?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.Version));
                         this.RuleFor(x => x.Version).Length(0, 100);
                 }
 
-                private async Task<bool> BeUniqueGetVersionProjectId(ApiReleaseRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByVersionProjectId(ApiReleaseRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Release record = await this.releaseRepository.GetVersionProjectId(model.Version, model.ProjectId);
+                        Release record = await this.releaseRepository.ByVersionProjectId(model.Version, model.ProjectId);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -84,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>624603bfd8739d08bb95142730af27d7</Hash>
+    <Hash>61017ee10fbd7ea5abf38d962d69fb2f</Hash>
 </Codenesium>*/

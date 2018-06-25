@@ -13,14 +13,14 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime dueDate,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         int orderQty,
                         int productID,
                         short scrappedQty,
-                        Nullable<short> scrapReasonID,
+                        short? scrapReasonID,
                         DateTime startDate,
                         int stockedQty)
                 {
@@ -51,13 +51,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> endDate;
+                private DateTime? endDate;
 
-                public Nullable<DateTime> EndDate
+                public DateTime? EndDate
                 {
                         get
                         {
-                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                                return this.endDate;
                         }
 
                         set
@@ -130,13 +130,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<short> scrapReasonID;
+                private short? scrapReasonID;
 
-                public Nullable<short> ScrapReasonID
+                public short? ScrapReasonID
                 {
                         get
                         {
-                                return this.scrapReasonID.IsEmptyOrZeroOrNull() ? null : this.scrapReasonID;
+                                return this.scrapReasonID;
                         }
 
                         set
@@ -180,5 +180,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>68ce810b9d90398b2a942f94643dd818</Hash>
+    <Hash>0b91a73c0443f70d6dd4567c34a8ed2f</Hash>
 </Codenesium>*/

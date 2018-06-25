@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string name,
                         int organizationId)
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b15a3742f67c3c21d21273cf320d9052</Hash>
+    <Hash>bed9b6342c1fe6218be76a76c83b8d0a</Hash>
 </Codenesium>*/

@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public class ApiFileResponseModel : AbstractApiResponseModel
+        public partial class ApiFileResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> bucketId,
+                        int? bucketId,
                         DateTime dateCreated,
                         string description,
                         DateTime expiration,
@@ -39,7 +39,7 @@ namespace FileServiceNS.Api.Contracts
                         this.FileTypeIdEntity = nameof(ApiResponse.FileTypes);
                 }
 
-                public Nullable<int> BucketId { get; private set; }
+                public int? BucketId { get; private set; }
 
                 public string BucketIdEntity { get; set; }
 
@@ -68,7 +68,7 @@ namespace FileServiceNS.Api.Contracts
                 public string PublicKey { get; private set; }
 
                 [JsonIgnore]
-                public bool ShouldSerializeBucketIdValue { get; set; } = false;
+                public bool ShouldSerializeBucketIdValue { get; set; } = true;
 
                 public bool ShouldSerializeBucketId()
                 {
@@ -76,7 +76,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeDateCreatedValue { get; set; } = false;
+                public bool ShouldSerializeDateCreatedValue { get; set; } = true;
 
                 public bool ShouldSerializeDateCreated()
                 {
@@ -84,7 +84,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = false;
+                public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
                 public bool ShouldSerializeDescription()
                 {
@@ -92,7 +92,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeExpirationValue { get; set; } = false;
+                public bool ShouldSerializeExpirationValue { get; set; } = true;
 
                 public bool ShouldSerializeExpiration()
                 {
@@ -100,7 +100,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeExtensionValue { get; set; } = false;
+                public bool ShouldSerializeExtensionValue { get; set; } = true;
 
                 public bool ShouldSerializeExtension()
                 {
@@ -108,7 +108,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeExternalIdValue { get; set; } = false;
+                public bool ShouldSerializeExternalIdValue { get; set; } = true;
 
                 public bool ShouldSerializeExternalId()
                 {
@@ -116,7 +116,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeFileSizeInBytesValue { get; set; } = false;
+                public bool ShouldSerializeFileSizeInBytesValue { get; set; } = true;
 
                 public bool ShouldSerializeFileSizeInBytes()
                 {
@@ -124,7 +124,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeFileTypeIdValue { get; set; } = false;
+                public bool ShouldSerializeFileTypeIdValue { get; set; } = true;
 
                 public bool ShouldSerializeFileTypeId()
                 {
@@ -132,7 +132,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = false;
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
                 public bool ShouldSerializeId()
                 {
@@ -140,7 +140,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeLocationValue { get; set; } = false;
+                public bool ShouldSerializeLocationValue { get; set; } = true;
 
                 public bool ShouldSerializeLocation()
                 {
@@ -148,7 +148,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializePrivateKeyValue { get; set; } = false;
+                public bool ShouldSerializePrivateKeyValue { get; set; } = true;
 
                 public bool ShouldSerializePrivateKey()
                 {
@@ -156,7 +156,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializePublicKeyValue { get; set; } = false;
+                public bool ShouldSerializePublicKeyValue { get; set; } = true;
 
                 public bool ShouldSerializePublicKey()
                 {
@@ -182,5 +182,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1d5376bb8898e84e36928e16d7b00a88</Hash>
+    <Hash>222d418d18c7cef09491038c2544c803</Hash>
 </Codenesium>*/

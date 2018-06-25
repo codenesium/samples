@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal costLastYear,
                         decimal costYTD,
                         string countryRegionCode,
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6d690b317398ff8909709b99804f3fe0</Hash>
+    <Hash>0ea26fb6ae7fd8869e2b8401798fbbec</Hash>
 </Codenesium>*/

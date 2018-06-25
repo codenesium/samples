@@ -28,7 +28,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void EnvironmentIdRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.EnvironmentId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.EnvironmentId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.EnvironmentId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.EnvironmentId));
                         this.RuleFor(x => x.EnvironmentId).Length(0, 50);
                 }
 
@@ -40,7 +40,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void OwnerIdRules()
                 {
                         this.RuleFor(x => x.OwnerId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.OwnerId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.OwnerId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.OwnerId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.OwnerId));
                         this.RuleFor(x => x.OwnerId).Length(0, 50);
                 }
 
@@ -51,20 +51,20 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void TenantIdRules()
                 {
                         this.RuleFor(x => x.TenantId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.TenantId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.TenantId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.TenantId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.TenantId));
                         this.RuleFor(x => x.TenantId).Length(0, 50);
                 }
 
                 public virtual void VariableTemplateIdRules()
                 {
                         this.RuleFor(x => x.VariableTemplateId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.VariableTemplateId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.VariableTemplateId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.VariableTemplateId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.VariableTemplateId));
                         this.RuleFor(x => x.VariableTemplateId).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId(ApiTenantVariableRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId(ApiTenantVariableRequestModel model,  CancellationToken cancellationToken)
                 {
-                        TenantVariable record = await this.tenantVariableRepository.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(model.TenantId, model.OwnerId, model.EnvironmentId, model.VariableTemplateId);
+                        TenantVariable record = await this.tenantVariableRepository.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(model.TenantId, model.OwnerId, model.EnvironmentId, model.VariableTemplateId);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -79,5 +79,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c43f71e856a804f7804de9306b88393</Hash>
+    <Hash>2bfb8eae0c9c34e6917b75bd5756590c</Hash>
 </Codenesium>*/

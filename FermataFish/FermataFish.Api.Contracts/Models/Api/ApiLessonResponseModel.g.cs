@@ -6,16 +6,16 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public class ApiLessonResponseModel : AbstractApiResponseModel
+        public partial class ApiLessonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<DateTime> actualStartDate,
-                        Nullable<decimal> billAmount,
+                        DateTime? actualEndDate,
+                        DateTime? actualStartDate,
+                        decimal? billAmount,
                         int id,
                         int lessonStatusId,
-                        Nullable<DateTime> scheduledEndDate,
-                        Nullable<DateTime> scheduledStartDate,
+                        DateTime? scheduledEndDate,
+                        DateTime? scheduledStartDate,
                         string studentNotes,
                         int studioId,
                         string teacherNotes)
@@ -35,11 +35,11 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioIdEntity = nameof(ApiResponse.Studios);
                 }
 
-                public Nullable<DateTime> ActualEndDate { get; private set; }
+                public DateTime? ActualEndDate { get; private set; }
 
-                public Nullable<DateTime> ActualStartDate { get; private set; }
+                public DateTime? ActualStartDate { get; private set; }
 
-                public Nullable<decimal> BillAmount { get; private set; }
+                public decimal? BillAmount { get; private set; }
 
                 public int Id { get; private set; }
 
@@ -47,9 +47,9 @@ namespace FermataFishNS.Api.Contracts
 
                 public string LessonStatusIdEntity { get; set; }
 
-                public Nullable<DateTime> ScheduledEndDate { get; private set; }
+                public DateTime? ScheduledEndDate { get; private set; }
 
-                public Nullable<DateTime> ScheduledStartDate { get; private set; }
+                public DateTime? ScheduledStartDate { get; private set; }
 
                 public string StudentNotes { get; private set; }
 
@@ -156,5 +156,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>421eeca66ee3c9c942c15b1ee2b6441d</Hash>
+    <Hash>14f7a55a37d54938c620c1f0bd4496ed</Hash>
 </Codenesium>*/

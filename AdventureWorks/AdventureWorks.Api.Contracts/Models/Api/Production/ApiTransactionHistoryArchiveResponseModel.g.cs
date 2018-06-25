@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiTransactionHistoryArchiveResponseModel : AbstractApiResponseModel
+        public partial class ApiTransactionHistoryArchiveResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal actualCost,
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>463dace5f7c75883b8bed4fdb4476b65</Hash>
+    <Hash>3fc175cca486ae728a9702e2b417b147</Hash>
 </Codenesium>*/

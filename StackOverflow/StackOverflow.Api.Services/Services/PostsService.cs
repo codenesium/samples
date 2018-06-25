@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class PostsService : AbstractPostsService, IPostsService
+        public partial class PostsService : AbstractPostsService, IPostsService
         {
                 public PostsService(
                         ILogger<IPostsRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>939db73fdceefea8257e781bab255d5d</Hash>
+    <Hash>993ac3689fe1a10bfb1b9aa27f2868ca</Hash>
 </Codenesium>*/

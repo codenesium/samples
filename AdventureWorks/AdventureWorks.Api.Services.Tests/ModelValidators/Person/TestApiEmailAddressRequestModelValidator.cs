@@ -47,21 +47,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress1, new string('A', 51));
                 }
-
-                [Fact]
-                public async void EmailAddress1_Delete()
-                {
-                        Mock<IEmailAddressRepository> emailAddressRepository = new Mock<IEmailAddressRepository>();
-                        emailAddressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmailAddress()));
-
-                        var validator = new ApiEmailAddressRequestModelValidator(emailAddressRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7c1fd8992c78bd205d8ad2539263cb90</Hash>
+    <Hash>708fbc99d70a4b1bfa4c6a5a7465edba</Hash>
 </Codenesium>*/

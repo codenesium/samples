@@ -13,8 +13,8 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> endDate,
+                public virtual void SetProperties(
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         decimal standardCost,
                         DateTime startDate)
@@ -25,13 +25,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartDate = startDate;
                 }
 
-                private Nullable<DateTime> endDate;
+                private DateTime? endDate;
 
-                public Nullable<DateTime> EndDate
+                public DateTime? EndDate
                 {
                         get
                         {
-                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                                return this.endDate;
                         }
 
                         set
@@ -91,5 +91,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>97ecbfa980d65e4edc40a077cbe210fb</Hash>
+    <Hash>1aa0b028b434eaeae94013fbdc167693</Hash>
 </Codenesium>*/

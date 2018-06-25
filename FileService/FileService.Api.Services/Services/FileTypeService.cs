@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Services
 {
-        public class FileTypeService : AbstractFileTypeService, IFileTypeService
+        public partial class FileTypeService : AbstractFileTypeService, IFileTypeService
         {
                 public FileTypeService(
                         ILogger<IFileTypeRepository> logger,
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5bbc072310d0edbb5d1d80119086e80f</Hash>
+    <Hash>95072ecccb0bb8907a31050b32e54ea6</Hash>
 </Codenesium>*/

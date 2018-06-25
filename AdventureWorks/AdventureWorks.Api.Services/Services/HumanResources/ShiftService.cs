@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ShiftService : AbstractShiftService, IShiftService
+        public partial class ShiftService : AbstractShiftService, IShiftService
         {
                 public ShiftService(
                         ILogger<IShiftRepository> logger,
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef2ff9c3d480aa0882ea8984d13281d5</Hash>
+    <Hash>f252731b5dd51cb94011b5ac12a65d9d</Hash>
 </Codenesium>*/

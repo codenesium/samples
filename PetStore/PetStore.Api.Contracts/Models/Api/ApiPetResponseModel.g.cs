@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public class ApiPetResponseModel : AbstractApiResponseModel
+        public partial class ApiPetResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime acquiredDate,
@@ -120,5 +120,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>af16cfd8a8c19b7ac16048a75dfc978e</Hash>
+    <Hash>68a1c7c3002352688722037e2dd3dac3</Hash>
 </Codenesium>*/

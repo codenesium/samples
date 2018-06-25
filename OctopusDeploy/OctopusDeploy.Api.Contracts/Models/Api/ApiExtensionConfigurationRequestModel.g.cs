@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string extensionAuthor,
                         string jSON,
                         string name)
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.extensionAuthor.IsEmptyOrZeroOrNull() ? null : this.extensionAuthor;
+                                return this.extensionAuthor;
                         }
 
                         set
@@ -60,7 +60,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.name.IsEmptyOrZeroOrNull() ? null : this.name;
+                                return this.name;
                         }
 
                         set
@@ -72,5 +72,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1f0f8da6df46bdfb1582b2c870c3d95b</Hash>
+    <Hash>bb35981c9416d81e4731b949a7901fa1</Hash>
 </Codenesium>*/

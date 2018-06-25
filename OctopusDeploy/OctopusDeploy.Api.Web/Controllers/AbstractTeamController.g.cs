@@ -201,13 +201,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiTeamResponseModel response = await this.TeamService.GetName(name);
+                        ApiTeamResponseModel response = await this.TeamService.ByName(name);
 
                         if (response == null)
                         {
@@ -222,5 +222,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a9254aa5e0773d92bc3b9e5e7a1baee2</Hash>
+    <Hash>24296eb968b45085b3ea03525e0dea52</Hash>
 </Codenesium>*/

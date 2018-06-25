@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime dueDate,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         int orderQty,
                         int productID,
                         short scrappedQty,
-                        Nullable<short> scrapReasonID,
+                        short? scrapReasonID,
                         DateTime startDate,
                         int stockedQty,
                         int workOrderID)
@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime DueDate { get; private set; }
 
                 [Column("EndDate")]
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public short ScrappedQty { get; private set; }
 
                 [Column("ScrapReasonID")]
-                public Nullable<short> ScrapReasonID { get; private set; }
+                public short? ScrapReasonID { get; private set; }
 
                 [Column("StartDate")]
                 public DateTime StartDate { get; private set; }
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7067517016a20175c02f4fa35e5b40d3</Hash>
+    <Hash>21a6bb497ad74601d7468a097b4ce404</Hash>
 </Codenesium>*/

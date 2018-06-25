@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IProductModelRepository> productModelRepository = new Mock<IProductModelRepository>();
-                        productModelRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModel()));
-
-                        var validator = new ApiProductModelRequestModelValidator(productModelRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IProductModelRepository> productModelRepository = new Mock<IProductModelRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cb2aa1800359efddfacc79491ac8c6b1</Hash>
+    <Hash>3d034f468523b679efce79b47a09125b</Hash>
 </Codenesium>*/

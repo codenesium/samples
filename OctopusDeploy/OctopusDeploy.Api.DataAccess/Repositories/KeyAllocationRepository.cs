@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class KeyAllocationRepository : AbstractKeyAllocationRepository, IKeyAllocationRepository
+        public partial class KeyAllocationRepository : AbstractKeyAllocationRepository, IKeyAllocationRepository
         {
                 public KeyAllocationRepository(
                         ILogger<KeyAllocationRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b245962660e452c0bce164065cf50de4</Hash>
+    <Hash>1de0e0e9ed9320e8ed364343b7b28254</Hash>
 </Codenesium>*/

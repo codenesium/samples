@@ -21,10 +21,10 @@ namespace TicketingCRMNS.Api.Services
 
                 Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiEventResponseModel>> GetCityId(int cityId);
+                Task<List<ApiEventResponseModel>> ByCityId(int cityId);
         }
 }
 
 /*<Codenesium>
-    <Hash>15e4ac9ebf32c6c73e66be52aac7de5e</Hash>
+    <Hash>7bb7dc331cd000201aa19d42a5704939</Hash>
 </Codenesium>*/

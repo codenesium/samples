@@ -130,43 +130,43 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetTenantId_Exists()
+                public async void ByTenantId_Exists()
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var records = new List<Artifact>();
                         records.Add(new Artifact());
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ArtifactModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiArtifactResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Not_Exists()
+                public async void ByTenantId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Artifact>>(new List<Artifact>()));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Artifact>>(new List<Artifact>()));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ArtifactModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiArtifactResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cebe193ed15d94c6757820768a330c90</Hash>
+    <Hash>92e750df219f4da8097370a0ce8bff1a</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
-                        deviceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
-
-                        var validator = new ApiDeviceRequestModelValidator(deviceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByPublicId_Create_Exists()
                 {
                         Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
@@ -135,5 +123,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b10d7c64c619ee625ff5df481b185a5</Hash>
+    <Hash>74907c8315442aa8478701f7905c98b7</Hash>
 </Codenesium>*/

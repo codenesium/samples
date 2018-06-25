@@ -196,13 +196,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProjectGroupResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProjectGroupResponseModel response = await this.ProjectGroupService.GetName(name);
+                        ApiProjectGroupResponseModel response = await this.ProjectGroupService.ByName(name);
 
                         if (response == null)
                         {
@@ -215,12 +215,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProjectGroupResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiProjectGroupResponseModel> response = await this.ProjectGroupService.GetDataVersion(dataVersion);
+                        List<ApiProjectGroupResponseModel> response = await this.ProjectGroupService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
@@ -228,5 +228,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5fd955f9e3386687622a0e082b9edd82</Hash>
+    <Hash>14cba45b5953c416641202df6f067b86</Hash>
 </Codenesium>*/

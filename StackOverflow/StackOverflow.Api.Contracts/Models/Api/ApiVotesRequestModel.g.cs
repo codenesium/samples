@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> bountyAmount,
+                public virtual void SetProperties(
+                        int? bountyAmount,
                         DateTime creationDate,
                         int postId,
-                        Nullable<int> userId,
+                        int? userId,
                         int voteTypeId)
                 {
                         this.BountyAmount = bountyAmount;
@@ -27,13 +27,13 @@ namespace StackOverflowNS.Api.Contracts
                         this.VoteTypeId = voteTypeId;
                 }
 
-                private Nullable<int> bountyAmount;
+                private int? bountyAmount;
 
-                public Nullable<int> BountyAmount
+                public int? BountyAmount
                 {
                         get
                         {
-                                return this.bountyAmount.IsEmptyOrZeroOrNull() ? null : this.bountyAmount;
+                                return this.bountyAmount;
                         }
 
                         set
@@ -74,13 +74,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> userId;
+                private int? userId;
 
-                public Nullable<int> UserId
+                public int? UserId
                 {
                         get
                         {
-                                return this.userId.IsEmptyOrZeroOrNull() ? null : this.userId;
+                                return this.userId;
                         }
 
                         set
@@ -108,5 +108,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>52f779d638e7c8777eb01ce5bb2459f3</Hash>
+    <Hash>f0b3210c40b202ee70acd6e1b53fb9ce</Hash>
 </Codenesium>*/

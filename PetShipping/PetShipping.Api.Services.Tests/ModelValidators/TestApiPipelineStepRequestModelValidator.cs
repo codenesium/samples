@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStep()));
-
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PipelineStepStatusId_Create_Valid_Reference()
                 {
                         Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
@@ -187,5 +175,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c4817a729e7c6aeaf91cbb6ca5f07b01</Hash>
+    <Hash>5479798fa855b3ebf86c1ee21fa6e5ab</Hash>
 </Codenesium>*/

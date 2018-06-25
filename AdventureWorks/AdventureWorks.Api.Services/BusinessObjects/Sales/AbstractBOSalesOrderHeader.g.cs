@@ -15,8 +15,8 @@ namespace AdventureWorksNS.Api.Services
                                                   int billToAddressID,
                                                   string comment,
                                                   string creditCardApprovalCode,
-                                                  Nullable<int> creditCardID,
-                                                  Nullable<int> currencyRateID,
+                                                  int? creditCardID,
+                                                  int? currencyRateID,
                                                   int customerID,
                                                   DateTime dueDate,
                                                   decimal freight,
@@ -27,14 +27,14 @@ namespace AdventureWorksNS.Api.Services
                                                   int revisionNumber,
                                                   Guid rowguid,
                                                   string salesOrderNumber,
-                                                  Nullable<int> salesPersonID,
-                                                  Nullable<DateTime> shipDate,
+                                                  int? salesPersonID,
+                                                  DateTime? shipDate,
                                                   int shipMethodID,
                                                   int shipToAddressID,
                                                   int status,
                                                   decimal subTotal,
                                                   decimal taxAmt,
-                                                  Nullable<int> territoryID,
+                                                  int? territoryID,
                                                   decimal totalDue)
                 {
                         this.AccountNumber = accountNumber;
@@ -73,9 +73,9 @@ namespace AdventureWorksNS.Api.Services
 
                 public string CreditCardApprovalCode { get; private set; }
 
-                public Nullable<int> CreditCardID { get; private set; }
+                public int? CreditCardID { get; private set; }
 
-                public Nullable<int> CurrencyRateID { get; private set; }
+                public int? CurrencyRateID { get; private set; }
 
                 public int CustomerID { get; private set; }
 
@@ -99,9 +99,9 @@ namespace AdventureWorksNS.Api.Services
 
                 public string SalesOrderNumber { get; private set; }
 
-                public Nullable<int> SalesPersonID { get; private set; }
+                public int? SalesPersonID { get; private set; }
 
-                public Nullable<DateTime> ShipDate { get; private set; }
+                public DateTime? ShipDate { get; private set; }
 
                 public int ShipMethodID { get; private set; }
 
@@ -113,12 +113,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public decimal TaxAmt { get; private set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 public decimal TotalDue { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d3d5740e1b3aa73d5ea2b01d3e013049</Hash>
+    <Hash>83e4cc73762876dbd2ee6c2f599ec26d</Hash>
 </Codenesium>*/

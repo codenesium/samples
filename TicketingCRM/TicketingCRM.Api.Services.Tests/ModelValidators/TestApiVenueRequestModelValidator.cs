@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Address1_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Address2_Create_null()
                 {
                         Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
@@ -130,18 +118,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Address2_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -243,18 +219,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Facebook_Create_null()
                 {
                         Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
@@ -300,18 +264,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Facebook_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -363,18 +315,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
@@ -420,18 +360,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -531,21 +459,9 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Website_Delete()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>71da8d651ba2b98c1673ad539a2fd1b5</Hash>
+    <Hash>8c27c9cee78bb67c79161e05e9bea09f</Hash>
 </Codenesium>*/

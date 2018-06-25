@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiTeamResponseModel> GetName(string name)
+                public async Task<ApiTeamResponseModel> ByName(string name)
                 {
-                        Team record = await this.teamRepository.GetName(name);
+                        Team record = await this.teamRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f685ac715a7a2c04d49ba41a201b2cd</Hash>
+    <Hash>47a03fe24239091e2977e809cd40a8df</Hash>
 </Codenesium>*/

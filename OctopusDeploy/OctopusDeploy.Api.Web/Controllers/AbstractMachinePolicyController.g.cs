@@ -196,13 +196,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiMachinePolicyResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiMachinePolicyResponseModel response = await this.MachinePolicyService.GetName(name);
+                        ApiMachinePolicyResponseModel response = await this.MachinePolicyService.ByName(name);
 
                         if (response == null)
                         {
@@ -217,5 +217,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>84f9ee3e514e6f0ea6075635f1614c58</Hash>
+    <Hash>ecfe4c9ef0c72a34b03b2a8383e2b8cd</Hash>
 </Codenesium>*/

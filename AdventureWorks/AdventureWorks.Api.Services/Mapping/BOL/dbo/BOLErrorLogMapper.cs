@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLErrorLogMapper : BOLAbstractErrorLogMapper, IBOLErrorLogMapper
+        public partial class BOLErrorLogMapper : BOLAbstractErrorLogMapper, IBOLErrorLogMapper
         {
                 public BOLErrorLogMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f14077b957bad77c05150f5d06327406</Hash>
+    <Hash>9938f767e5afd849aaffda0a888580c5</Hash>
 </Codenesium>*/

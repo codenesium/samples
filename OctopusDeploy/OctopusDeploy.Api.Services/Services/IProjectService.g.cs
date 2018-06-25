@@ -21,16 +21,16 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiProjectResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProjectResponseModel> GetName(string name);
+                Task<ApiProjectResponseModel> ByName(string name);
 
-                Task<ApiProjectResponseModel> GetSlug(string slug);
+                Task<ApiProjectResponseModel> BySlug(string slug);
 
-                Task<List<ApiProjectResponseModel>> GetDataVersion(byte[] dataVersion);
+                Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion);
 
-                Task<List<ApiProjectResponseModel>> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
+                Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
         }
 }
 
 /*<Codenesium>
-    <Hash>ff20a78ce1cb90a264e109f38f982fa7</Hash>
+    <Hash>631355a5b04a210dbe17c58166a321a6</Hash>
 </Codenesium>*/

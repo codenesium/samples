@@ -198,13 +198,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiTenantResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiTenantResponseModel response = await this.TenantService.GetName(name);
+                        ApiTenantResponseModel response = await this.TenantService.ByName(name);
 
                         if (response == null)
                         {
@@ -217,12 +217,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTenantResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiTenantResponseModel> response = await this.TenantService.GetDataVersion(dataVersion);
+                        List<ApiTenantResponseModel> response = await this.TenantService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
@@ -230,5 +230,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8fc3a0bc09197a428f0d8e097d090943</Hash>
+    <Hash>22b9e064cacad7296cead05744d31422</Hash>
 </Codenesium>*/

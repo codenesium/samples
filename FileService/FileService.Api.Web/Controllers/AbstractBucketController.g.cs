@@ -195,13 +195,13 @@ namespace FileServiceNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getExternalId/{externalId}")]
+                [Route("byExternalId/{externalId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetExternalId(Guid externalId)
+                public async virtual Task<IActionResult> ByExternalId(Guid externalId)
                 {
-                        ApiBucketResponseModel response = await this.BucketService.GetExternalId(externalId);
+                        ApiBucketResponseModel response = await this.BucketService.ByExternalId(externalId);
 
                         if (response == null)
                         {
@@ -214,13 +214,13 @@ namespace FileServiceNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiBucketResponseModel response = await this.BucketService.GetName(name);
+                        ApiBucketResponseModel response = await this.BucketService.ByName(name);
 
                         if (response == null)
                         {
@@ -249,5 +249,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d4c85205717acdda564bd1d353213fdc</Hash>
+    <Hash>9c82d516a92d921ded071a03e2f08283</Hash>
 </Codenesium>*/

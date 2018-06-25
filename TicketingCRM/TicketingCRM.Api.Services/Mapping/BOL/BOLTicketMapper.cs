@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class BOLTicketMapper : BOLAbstractTicketMapper, IBOLTicketMapper
+        public partial class BOLTicketMapper : BOLAbstractTicketMapper, IBOLTicketMapper
         {
                 public BOLTicketMapper()
                 {
@@ -14,5 +14,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>000c169f68a0e39e7798edbb9731d6d6</Hash>
+    <Hash>457b15bcffdc48f689109cc5b2d15949</Hash>
 </Codenesium>*/

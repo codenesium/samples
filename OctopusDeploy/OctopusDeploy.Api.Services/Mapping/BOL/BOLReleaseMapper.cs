@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLReleaseMapper : BOLAbstractReleaseMapper, IBOLReleaseMapper
+        public partial class BOLReleaseMapper : BOLAbstractReleaseMapper, IBOLReleaseMapper
         {
                 public BOLReleaseMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1cc1335c9a2e79163d020c80cfe0bf4</Hash>
+    <Hash>f3d22dda9b4c689ee4dffec75ebdadae</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string displayName,
                         string emailAddress,
                         string externalId,
@@ -41,7 +41,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.displayName.IsEmptyOrZeroOrNull() ? null : this.displayName;
+                                return this.displayName;
                         }
 
                         set
@@ -56,7 +56,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.emailAddress.IsEmptyOrZeroOrNull() ? null : this.emailAddress;
+                                return this.emailAddress;
                         }
 
                         set
@@ -71,7 +71,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.externalId.IsEmptyOrZeroOrNull() ? null : this.externalId;
+                                return this.externalId;
                         }
 
                         set
@@ -86,7 +86,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.externalIdentifiers.IsEmptyOrZeroOrNull() ? null : this.externalIdentifiers;
+                                return this.externalIdentifiers;
                         }
 
                         set
@@ -178,5 +178,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c881398a6881e51b017f6e77e0e0f504</Hash>
+    <Hash>a58610b77e857cdbb072b1f120b148f4</Hash>
 </Codenesium>*/

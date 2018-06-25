@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiSalesPersonResponseModel : AbstractApiResponseModel
+        public partial class ApiSalesPersonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal bonus,
@@ -15,9 +15,9 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime modifiedDate,
                         Guid rowguid,
                         decimal salesLastYear,
-                        Nullable<decimal> salesQuota,
+                        decimal? salesQuota,
                         decimal salesYTD,
-                        Nullable<int> territoryID)
+                        int? territoryID)
                 {
                         this.Bonus = bonus;
                         this.BusinessEntityID = businessEntityID;
@@ -44,11 +44,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public decimal SalesLastYear { get; private set; }
 
-                public Nullable<decimal> SalesQuota { get; private set; }
+                public decimal? SalesQuota { get; private set; }
 
                 public decimal SalesYTD { get; private set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 public string TerritoryIDEntity { get; set; }
 
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>39782a471f0b95a9da509f7f0ab72ee9</Hash>
+    <Hash>88749e13fec02cd5f42e610f3293dcdc</Hash>
 </Codenesium>*/

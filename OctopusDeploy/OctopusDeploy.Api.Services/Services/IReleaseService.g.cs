@@ -21,18 +21,18 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiReleaseResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiReleaseResponseModel> GetVersionProjectId(string version, string projectId);
+                Task<ApiReleaseResponseModel> ByVersionProjectId(string version, string projectId);
 
-                Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTimeOffset assembled);
+                Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled);
 
-                Task<List<ApiReleaseResponseModel>> GetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId);
+                Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId);
 
-                Task<List<ApiReleaseResponseModel>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled);
+                Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled);
 
-                Task<List<ApiReleaseResponseModel>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled);
+                Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled);
         }
 }
 
 /*<Codenesium>
-    <Hash>607312529684ed9b3a892f5f96c7a162</Hash>
+    <Hash>112f8e00a0e18cba3532d70cf75995f2</Hash>
 </Codenesium>*/

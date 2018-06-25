@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BOLCommentsMapper : BOLAbstractCommentsMapper, IBOLCommentsMapper
+        public partial class BOLCommentsMapper : BOLAbstractCommentsMapper, IBOLCommentsMapper
         {
                 public BOLCommentsMapper()
                 {
@@ -14,5 +14,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3fa77b2d0857e93895fb5ee3bdd4ad14</Hash>
+    <Hash>2306c412c1975c8bde64e97dbfcd9fee</Hash>
 </Codenesium>*/

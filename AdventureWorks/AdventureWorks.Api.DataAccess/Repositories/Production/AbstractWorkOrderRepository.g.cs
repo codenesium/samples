@@ -83,7 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                public async Task<List<WorkOrder>> ByScrapReasonID(Nullable<short> scrapReasonID)
+                public async Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID)
                 {
                         var records = await this.Where(x => x.ScrapReasonID == scrapReasonID);
 
@@ -127,5 +127,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3b1ff599fe418e17552c6296a3b924d5</Hash>
+    <Hash>20ef7154545c697e682a8e3cc0024117</Hash>
 </Codenesium>*/

@@ -73,22 +73,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void UnitMeasureCode_Delete()
-                {
-                        Mock<IBillOfMaterialsRepository> billOfMaterialsRepository = new Mock<IBillOfMaterialsRepository>();
-                        billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
-
-                        var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Exists()
                 {
                         Mock<IBillOfMaterialsRepository> billOfMaterialsRepository = new Mock<IBillOfMaterialsRepository>();
-                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(new BillOfMaterials()));
+                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(new BillOfMaterials()));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiBillOfMaterialsRequestModel());
@@ -100,7 +88,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Not_Exists()
                 {
                         Mock<IBillOfMaterialsRepository> billOfMaterialsRepository = new Mock<IBillOfMaterialsRepository>();
-                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
+                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiBillOfMaterialsRequestModel());
@@ -112,7 +100,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Exists()
                 {
                         Mock<IBillOfMaterialsRepository> billOfMaterialsRepository = new Mock<IBillOfMaterialsRepository>();
-                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(new BillOfMaterials()));
+                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(new BillOfMaterials()));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
@@ -124,7 +112,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Not_Exists()
                 {
                         Mock<IBillOfMaterialsRepository> billOfMaterialsRepository = new Mock<IBillOfMaterialsRepository>();
-                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
+                        billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a8d1e2afad98fb5ad81823b5e97f255e</Hash>
+    <Hash>b3c754ec66e4d956ceb3f78dbd3c02da</Hash>
 </Codenesium>*/

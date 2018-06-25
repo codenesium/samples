@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateRepository>();
                         var record = new ActionTemplate();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ActionTemplateService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ActionTemplateModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLActionTemplateMapperMock,
                                                                 mock.DALMapperMockFactory.DALActionTemplateMapperMock);
 
-                        ApiActionTemplateResponseModel response = await service.GetName(default(string));
+                        ApiActionTemplateResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ActionTemplate>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ActionTemplate>(null));
                         var service = new ActionTemplateService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ActionTemplateModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLActionTemplateMapperMock,
                                                                 mock.DALMapperMockFactory.DALActionTemplateMapperMock);
 
-                        ApiActionTemplateResponseModel response = await service.GetName(default(string));
+                        ApiActionTemplateResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>433952bbdf963500760f9c2e030a5490</Hash>
+    <Hash>658e954aa2fba9f4c6728e816d3cae48</Hash>
 </Codenesium>*/

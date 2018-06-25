@@ -12,7 +12,7 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal amount,
                         string gatewayConfirmationNumber,
                         int id,
@@ -43,5 +43,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4845841ca59b0035ff9030243826c471</Hash>
+    <Hash>7704b90d9cf849998d68d95e8964e313</Hash>
 </Codenesium>*/

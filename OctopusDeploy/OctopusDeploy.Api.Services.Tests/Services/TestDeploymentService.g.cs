@@ -142,12 +142,12 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetChannelId_Exists()
+                public async void ByChannelId_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
                         var records = new List<Deployment>();
                         records.Add(new Deployment());
-                        mock.RepositoryMock.Setup(x => x.GetChannelId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -156,17 +156,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetChannelId(default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByChannelId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetChannelId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetChannelId_Not_Exists()
+                public async void ByChannelId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetChannelId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+                        mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -175,19 +175,19 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetChannelId(default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByChannelId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetChannelId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId_Exists()
+                public async void ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
                         var records = new List<Deployment>();
                         records.Add(new Deployment());
-                        mock.RepositoryMock.Setup(x => x.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId_Not_Exists()
+                public async void ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+                        mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -215,19 +215,19 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Exists()
+                public async void ByTenantId_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
                         var records = new List<Deployment>();
                         records.Add(new Deployment());
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -236,17 +236,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Not_Exists()
+                public async void ByTenantId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
                         var service = new DeploymentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -255,10 +255,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                             mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiDeploymentResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
 
                 [Fact]
@@ -304,5 +304,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5b448e7c1baa0f07925f4566caaf477b</Hash>
+    <Hash>c408b46c23e7c78b834642afc7221563</Hash>
 </Codenesium>*/

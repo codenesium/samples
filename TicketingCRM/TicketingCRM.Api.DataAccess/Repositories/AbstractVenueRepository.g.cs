@@ -76,14 +76,14 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Venue>> GetAdminId(int adminId)
+                public async Task<List<Venue>> ByAdminId(int adminId)
                 {
                         var records = await this.Where(x => x.AdminId == adminId);
 
                         return records;
                 }
 
-                public async Task<List<Venue>> GetProvinceId(int provinceId)
+                public async Task<List<Venue>> ByProvinceId(int provinceId)
                 {
                         var records = await this.Where(x => x.ProvinceId == provinceId);
 
@@ -132,5 +132,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e501cf61e0befbd8d71859a4e1a5ba77</Hash>
+    <Hash>318d29eb416fe6dc019be627f3730de6</Hash>
 </Codenesium>*/

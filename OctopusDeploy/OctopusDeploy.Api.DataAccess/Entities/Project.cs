@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         bool autoCreateRelease,
                         byte[] dataVersion,
                         string deploymentProcessId,
@@ -85,5 +85,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>caa063f61d18376d070ad3b11c107a5e</Hash>
+    <Hash>fe4f328f36c9687c4a60f80611ef2cb4</Hash>
 </Codenesium>*/

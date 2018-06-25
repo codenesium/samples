@@ -221,7 +221,7 @@ namespace AdventureWorksNS.Api.Web
                 [Route("byTerritoryID/{territoryID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByTerritoryID(Nullable<int> territoryID)
+                public async virtual Task<IActionResult> ByTerritoryID(int? territoryID)
                 {
                         List<ApiCustomerResponseModel> response = await this.CustomerService.ByTerritoryID(territoryID);
 
@@ -245,5 +245,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b295d055acd748b63d73c572d1bae23b</Hash>
+    <Hash>2f4ec582fdbb14ac2557de89cd85a6b4</Hash>
 </Codenesium>*/

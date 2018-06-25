@@ -76,14 +76,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<EventRelatedDocument>> GetEventId(string eventId)
+                public async Task<List<EventRelatedDocument>> ByEventId(string eventId)
                 {
                         var records = await this.Where(x => x.EventId == eventId);
 
                         return records;
                 }
 
-                public async Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+                public async Task<List<EventRelatedDocument>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
                         var records = await this.Where(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId);
 
@@ -127,5 +127,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0517c05edc43203d26e8708e98cc0601</Hash>
+    <Hash>ad6842ac8f6e8f29bd33fe0051ff900e</Hash>
 </Codenesium>*/

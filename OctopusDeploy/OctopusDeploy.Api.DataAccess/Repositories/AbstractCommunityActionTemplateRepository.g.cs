@@ -76,14 +76,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<CommunityActionTemplate> GetExternalId(Guid externalId)
+                public async Task<CommunityActionTemplate> ByExternalId(Guid externalId)
                 {
                         var records = await this.Where(x => x.ExternalId == externalId);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<CommunityActionTemplate> GetName(string name)
+                public async Task<CommunityActionTemplate> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5aa51861f56185bff30517b77df9b26</Hash>
+    <Hash>17779258a6c5c4ff82c191d51a99eda4</Hash>
 </Codenesium>*/

@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DisplayName_Delete()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EmailAddress_Create_length()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
@@ -85,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EmailAddress_Delete()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ExternalId_Create_length()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
@@ -118,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExternalId, new string('A', 401));
-                }
-
-                [Fact]
-                public async void ExternalId_Delete()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -205,22 +169,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Username_Delete()
+                private async void BeUniqueByUsername_Create_Exists()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetUsername_Create_Exists()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(new User()));
+                        userRepository.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(new User()));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
@@ -229,10 +181,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetUsername_Create_Not_Exists()
+                private async void BeUniqueByUsername_Create_Not_Exists()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
+                        userRepository.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
@@ -241,10 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetUsername_Update_Exists()
+                private async void BeUniqueByUsername_Update_Exists()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(new User()));
+                        userRepository.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(new User()));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
@@ -253,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetUsername_Update_Not_Exists()
+                private async void BeUniqueByUsername_Update_Not_Exists()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
+                        userRepository.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
@@ -267,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b79610e85f68457381cd3aceb1831345</Hash>
+    <Hash>3c37842954f9d77591059b93666b125a</Hash>
 </Codenesium>*/

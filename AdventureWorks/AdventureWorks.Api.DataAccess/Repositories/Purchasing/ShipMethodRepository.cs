@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class ShipMethodRepository : AbstractShipMethodRepository, IShipMethodRepository
+        public partial class ShipMethodRepository : AbstractShipMethodRepository, IShipMethodRepository
         {
                 public ShipMethodRepository(
                         ILogger<ShipMethodRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bae59b54ded529676a94dc91f464405b</Hash>
+    <Hash>550a9c9a9e42081fe36495735e4bfd7d</Hash>
 </Codenesium>*/

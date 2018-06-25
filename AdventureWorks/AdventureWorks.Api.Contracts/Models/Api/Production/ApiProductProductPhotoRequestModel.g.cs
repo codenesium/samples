@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         bool primary,
                         int productPhotoID)
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>15c1aeee4736596894a6f4befb24eed9</Hash>
+    <Hash>cf5075472ac8a78085f6b7c38064b638</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTimeOffset> completedTime,
+                public virtual void SetProperties(
+                        DateTimeOffset? completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -27,7 +27,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         string projectId,
                         DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string state,
                         string tenantId)
                 {
@@ -51,7 +51,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("CompletedTime")]
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 [Column("ConcurrencyTag")]
                 public string ConcurrencyTag { get; private set; }
@@ -94,7 +94,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ServerNodeId { get; private set; }
 
                 [Column("StartTime")]
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 [Column("State")]
                 public string State { get; private set; }
@@ -105,5 +105,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb8332304f0d326bf9987a00b2f94ae8</Hash>
+    <Hash>ad57f6114bded5bab5e3f91154c84e87</Hash>
 </Codenesium>*/

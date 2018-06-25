@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class LinkTypesService : AbstractLinkTypesService, ILinkTypesService
+        public partial class LinkTypesService : AbstractLinkTypesService, ILinkTypesService
         {
                 public LinkTypesService(
                         ILogger<ILinkTypesRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9630671f3e9f4a784e2df63c48d57390</Hash>
+    <Hash>46ffe498277915acfc903e494e259ad4</Hash>
 </Codenesium>*/

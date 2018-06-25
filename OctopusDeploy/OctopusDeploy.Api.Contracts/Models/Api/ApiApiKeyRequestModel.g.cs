@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string apiKeyHashed,
                         DateTimeOffset created,
                         string jSON,
@@ -92,5 +92,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>be966e17af6fef7cd571e07000aa0a0e</Hash>
+    <Hash>237c1face1dc7383fc243ada543f17e6</Hash>
 </Codenesium>*/

@@ -71,21 +71,9 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
-                        transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
-
-                        var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>18ec431f467791cbc8ad797685d99efd</Hash>
+    <Hash>83c543099691d9c7facda403d3e5236f</Hash>
 </Codenesium>*/

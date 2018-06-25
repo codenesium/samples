@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ShoppingCartItemService : AbstractShoppingCartItemService, IShoppingCartItemService
+        public partial class ShoppingCartItemService : AbstractShoppingCartItemService, IShoppingCartItemService
         {
                 public ShoppingCartItemService(
                         ILogger<IShoppingCartItemRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d2eafbf5cf31236f831cd5a199636f9</Hash>
+    <Hash>4d3e0abd4fa8ebd5c21ab9d46deb83a7</Hash>
 </Codenesium>*/

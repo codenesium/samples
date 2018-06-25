@@ -4,7 +4,7 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class DALBadgesMapper : DALAbstractBadgesMapper, IDALBadgesMapper
+        public partial class DALBadgesMapper : DALAbstractBadgesMapper, IDALBadgesMapper
         {
                 public DALBadgesMapper()
                 {
@@ -13,5 +13,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d6152138b6a0cc3ceda5a7d6342845f</Hash>
+    <Hash>303857c6b84a340cc4ae7203f503f255</Hash>
 </Codenesium>*/

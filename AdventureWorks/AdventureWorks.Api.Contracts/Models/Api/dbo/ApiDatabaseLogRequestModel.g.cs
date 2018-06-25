@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string databaseUser,
                         string @event,
                         string @object,
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.@object.IsEmptyOrZeroOrNull() ? null : this.@object;
+                                return this.@object;
                         }
 
                         set
@@ -100,7 +100,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.schema.IsEmptyOrZeroOrNull() ? null : this.schema;
+                                return this.schema;
                         }
 
                         set
@@ -144,5 +144,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f565e798c0a039e48757e10c7fd4054a</Hash>
+    <Hash>b20b7528c880afa59af8ed1e20c15b11</Hash>
 </Codenesium>*/

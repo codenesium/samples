@@ -13,7 +13,7 @@ namespace ESPIOTNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int deviceId,
                         string name,
                         string @value)
@@ -74,5 +74,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8e276afaded4abbef450ca4fa469f7fe</Hash>
+    <Hash>4e4ddfcf1c04ebccf0e722894f96896e</Hash>
 </Codenesium>*/

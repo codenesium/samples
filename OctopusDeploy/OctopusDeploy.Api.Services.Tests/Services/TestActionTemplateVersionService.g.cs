@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetNameVersion_Exists()
+                public async void ByNameVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var record = new ActionTemplateVersion();
-                        mock.RepositoryMock.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default(string), default(int));
+                        ApiActionTemplateVersionResponseModel response = await service.ByNameVersion(default(string), default(int));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetNameVersion_Not_Exists()
+                public async void ByNameVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
+                        mock.RepositoryMock.Setup(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default(string), default(int));
+                        ApiActionTemplateVersionResponseModel response = await service.ByNameVersion(default(string), default(int));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByNameVersion(It.IsAny<string>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetLatestActionTemplateId_Exists()
+                public async void ByLatestActionTemplateId_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var records = new List<ActionTemplateVersion>();
                         records.Add(new ActionTemplateVersion());
-                        mock.RepositoryMock.Setup(x => x.GetLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default(string));
+                        List<ApiActionTemplateVersionResponseModel> response = await service.ByLatestActionTemplateId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetLatestActionTemplateId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetLatestActionTemplateId_Not_Exists()
+                public async void ByLatestActionTemplateId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult<List<ActionTemplateVersion>>(new List<ActionTemplateVersion>()));
+                        mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult<List<ActionTemplateVersion>>(new List<ActionTemplateVersion>()));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default(string));
+                        List<ApiActionTemplateVersionResponseModel> response = await service.ByLatestActionTemplateId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetLatestActionTemplateId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3153fe2b24cf1d0c950f13970528243e</Hash>
+    <Hash>ea7698bcb4c7f349eb6eb40f59afc83f</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string comment,
                         DateTime creationDate,
                         int id,
@@ -21,7 +21,7 @@ namespace StackOverflowNS.Api.DataAccess
                         string revisionGUID,
                         string text,
                         string userDisplayName,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.Comment = comment;
                         this.CreationDate = creationDate;
@@ -60,10 +60,10 @@ namespace StackOverflowNS.Api.DataAccess
                 public string UserDisplayName { get; private set; }
 
                 [Column("UserId")]
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c6ec9a64e003a988aab9392433ac601c</Hash>
+    <Hash>7c35b79a4d16fdd3e1470eb17ff85792</Hash>
 </Codenesium>*/

@@ -101,17 +101,17 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiBucketResponseModel> GetBucketGetExternalId(Guid externalId)
+                public virtual async Task<ApiBucketResponseModel> GetBucketByExternalId(Guid externalId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getExternalId/{externalId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/byExternalId/{externalId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiBucketResponseModel> GetBucketGetName(string name)
+                public virtual async Task<ApiBucketResponseModel> GetBucketByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -266,9 +266,9 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoGetVersion(long version)
+                public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoByVersion(long version)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/getVersion/{version}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/byVersion/{version}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -277,5 +277,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c217ffd069e0ffb7aa494e50a253b708</Hash>
+    <Hash>0de28ff392f8adab59b31038ac92dd3a</Hash>
 </Codenesium>*/

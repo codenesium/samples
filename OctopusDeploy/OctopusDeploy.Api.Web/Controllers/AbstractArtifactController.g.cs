@@ -200,12 +200,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTenantId/{tenantId}")]
+                [Route("byTenantId/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiArtifactResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTenantId(string tenantId)
+                public async virtual Task<IActionResult> ByTenantId(string tenantId)
                 {
-                        List<ApiArtifactResponseModel> response = await this.ArtifactService.GetTenantId(tenantId);
+                        List<ApiArtifactResponseModel> response = await this.ArtifactService.ByTenantId(tenantId);
 
                         return this.Ok(response);
                 }
@@ -213,5 +213,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>06541c63340486cd9735f467cefa5225</Hash>
+    <Hash>2b0aedac696a6abef0f10114f6550408</Hash>
 </Codenesium>*/

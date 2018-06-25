@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICertificateRepository> certificateRepository = new Mock<ICertificateRepository>();
-                        certificateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Certificate()));
-
-                        var validator = new ApiCertificateRequestModelValidator(certificateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Subject_Create_null()
                 {
                         Mock<ICertificateRepository> certificateRepository = new Mock<ICertificateRepository>();
@@ -179,21 +167,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Thumbprint_Delete()
-                {
-                        Mock<ICertificateRepository> certificateRepository = new Mock<ICertificateRepository>();
-                        certificateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Certificate()));
-
-                        var validator = new ApiCertificateRequestModelValidator(certificateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3e97f9479a0f40974a2edb06b74598c8</Hash>
+    <Hash>bb4dd66a606945b5d20138ab2b3fd93e</Hash>
 </Codenesium>*/

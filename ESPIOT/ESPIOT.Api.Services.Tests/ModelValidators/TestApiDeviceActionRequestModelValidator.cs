@@ -123,18 +123,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
-
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void @Value_Create_null()
                 {
                         Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
@@ -181,21 +169,9 @@ namespace ESPIOTNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
                 }
-
-                [Fact]
-                public async void @Value_Delete()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
-
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>38388d0c53d647348372ac1bbcfa6d83</Hash>
+    <Hash>b6a559a5ae74ac2328bafa375c0d9f14</Hash>
 </Codenesium>*/

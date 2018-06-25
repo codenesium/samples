@@ -76,28 +76,28 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Certificate>> GetCreated(DateTimeOffset created)
+                public async Task<List<Certificate>> ByCreated(DateTimeOffset created)
                 {
                         var records = await this.Where(x => x.Created == created);
 
                         return records;
                 }
 
-                public async Task<List<Certificate>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<Certificate>> ByDataVersion(byte[] dataVersion)
                 {
                         var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
 
-                public async Task<List<Certificate>> GetNotAfter(DateTimeOffset notAfter)
+                public async Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter)
                 {
                         var records = await this.Where(x => x.NotAfter == notAfter);
 
                         return records;
                 }
 
-                public async Task<List<Certificate>> GetThumbprint(string thumbprint)
+                public async Task<List<Certificate>> ByThumbprint(string thumbprint)
                 {
                         var records = await this.Where(x => x.Thumbprint == thumbprint);
 
@@ -136,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58e0f899c1524da970b0a2f4634f95d5</Hash>
+    <Hash>346fea44c570c5b2c815eff4b74038f3</Hash>
 </Codenesium>*/

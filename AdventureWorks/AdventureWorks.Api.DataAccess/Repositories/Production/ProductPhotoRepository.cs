@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class ProductPhotoRepository : AbstractProductPhotoRepository, IProductPhotoRepository
+        public partial class ProductPhotoRepository : AbstractProductPhotoRepository, IProductPhotoRepository
         {
                 public ProductPhotoRepository(
                         ILogger<ProductPhotoRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6adc689718110a06e2107032cec95da5</Hash>
+    <Hash>4ee6f24e04edf7ee4c06daa4d183269e</Hash>
 </Codenesium>*/

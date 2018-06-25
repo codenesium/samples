@@ -21,14 +21,14 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiChannelResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiChannelResponseModel> GetNameProjectId(string name, string projectId);
+                Task<ApiChannelResponseModel> ByNameProjectId(string name, string projectId);
 
-                Task<List<ApiChannelResponseModel>> GetDataVersion(byte[] dataVersion);
+                Task<List<ApiChannelResponseModel>> ByDataVersion(byte[] dataVersion);
 
-                Task<List<ApiChannelResponseModel>> GetProjectId(string projectId);
+                Task<List<ApiChannelResponseModel>> ByProjectId(string projectId);
         }
 }
 
 /*<Codenesium>
-    <Hash>8e9353cfd13dd53c17fd5ed2836ae52d</Hash>
+    <Hash>2e543226e4f8ad0369b4e5278eda78da</Hash>
 </Codenesium>*/

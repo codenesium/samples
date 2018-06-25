@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PublicId_Delete()
-                {
-                        Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-                        ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
-
-                        var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TicketStatusId_Create_Valid_Reference()
                 {
                         Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
@@ -137,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>00c0c57c104c851b2e90ea00aa47c8ee</Hash>
+    <Hash>377c8732f14fbe7c352c39e389f37795</Hash>
 </Codenesium>*/

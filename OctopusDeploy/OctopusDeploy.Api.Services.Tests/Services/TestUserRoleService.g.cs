@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRoleRepository>();
                         var record = new UserRole();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new UserRoleService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.UserRoleModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLUserRoleMapperMock,
                                                           mock.DALMapperMockFactory.DALUserRoleMapperMock);
 
-                        ApiUserRoleResponseModel response = await service.GetName(default(string));
+                        ApiUserRoleResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRoleRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
                         var service = new UserRoleService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.UserRoleModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLUserRoleMapperMock,
                                                           mock.DALMapperMockFactory.DALUserRoleMapperMock);
 
-                        ApiUserRoleResponseModel response = await service.GetName(default(string));
+                        ApiUserRoleResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4d38737ede1a6a4564810de453980717</Hash>
+    <Hash>291688653a95d6834fb14b67d661cc43</Hash>
 </Codenesium>*/

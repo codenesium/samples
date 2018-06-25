@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiMutexResponseModel : AbstractApiResponseModel
+        public partial class ApiMutexResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string id,
@@ -45,5 +45,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a54321b3dab91a4decacaed7467e87e8</Hash>
+    <Hash>3ace748754ff15308746554a2b6749ab</Hash>
 </Codenesium>*/

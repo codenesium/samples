@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int employeeID,
                         decimal freight,
                         DateTime modifiedDate,
                         DateTime orderDate,
                         int purchaseOrderID,
                         int revisionNumber,
-                        Nullable<DateTime> shipDate,
+                        DateTime? shipDate,
                         int shipMethodID,
                         int status,
                         decimal subTotal,
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int RevisionNumber { get; private set; }
 
                 [Column("ShipDate")]
-                public Nullable<DateTime> ShipDate { get; private set; }
+                public DateTime? ShipDate { get; private set; }
 
                 [Column("ShipMethodID")]
                 public int ShipMethodID { get; private set; }
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6e58101f1ca0123d9b8ba7bc74a81f0</Hash>
+    <Hash>ba0a5531d0f75abfb9e344d9a9eb2484</Hash>
 </Codenesium>*/

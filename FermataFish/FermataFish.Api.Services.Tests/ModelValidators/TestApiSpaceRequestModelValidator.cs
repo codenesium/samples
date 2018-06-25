@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
-
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
@@ -130,18 +118,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
-
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -197,5 +173,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>37d8c30caba73cd7b70f7aea4c20b75d</Hash>
+    <Hash>5dd0b8f883a39001341d7708a56f0d4b</Hash>
 </Codenesium>*/

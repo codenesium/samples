@@ -17,14 +17,14 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<EventRelatedDocument>> GetEventId(string eventId);
+                Task<List<EventRelatedDocument>> ByEventId(string eventId);
 
-                Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
+                Task<List<EventRelatedDocument>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
 
                 Task<Event> GetEvent(string eventId);
         }
 }
 
 /*<Codenesium>
-    <Hash>7dd618ed62e48cb188aac84baf10a81f</Hash>
+    <Hash>6fc2bf630fb60da8a150df97d41be2db</Hash>
 </Codenesium>*/

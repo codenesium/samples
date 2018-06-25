@@ -6,17 +6,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiProductVendorResponseModel : AbstractApiResponseModel
+        public partial class ApiProductVendorResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int averageLeadTime,
                         int businessEntityID,
-                        Nullable<decimal> lastReceiptCost,
-                        Nullable<DateTime> lastReceiptDate,
+                        decimal? lastReceiptCost,
+                        DateTime? lastReceiptDate,
                         int maxOrderQty,
                         int minOrderQty,
                         DateTime modifiedDate,
-                        Nullable<int> onOrderQty,
+                        int? onOrderQty,
                         int productID,
                         decimal standardPrice,
                         string unitMeasureCode)
@@ -38,9 +38,9 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public int BusinessEntityID { get; private set; }
 
-                public Nullable<decimal> LastReceiptCost { get; private set; }
+                public decimal? LastReceiptCost { get; private set; }
 
-                public Nullable<DateTime> LastReceiptDate { get; private set; }
+                public DateTime? LastReceiptDate { get; private set; }
 
                 public int MaxOrderQty { get; private set; }
 
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public DateTime ModifiedDate { get; private set; }
 
-                public Nullable<int> OnOrderQty { get; private set; }
+                public int? OnOrderQty { get; private set; }
 
                 public int ProductID { get; private set; }
 
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a8a21639371d8e595fbe33b5d87d9e8d</Hash>
+    <Hash>5f7ed2e4c0df2f8bb4b883516c8bab3a</Hash>
 </Codenesium>*/

@@ -195,13 +195,13 @@ namespace FileServiceNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getVersion/{version}")]
+                [Route("byVersion/{version}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetVersion(long version)
+                public async virtual Task<IActionResult> ByVersion(long version)
                 {
-                        ApiVersionInfoResponseModel response = await this.VersionInfoService.GetVersion(version);
+                        ApiVersionInfoResponseModel response = await this.VersionInfoService.ByVersion(version);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>40ceef3fbe1ad13dade924c3a0a812c7</Hash>
+    <Hash>ad1d95b5db43e9c6f16c6a169c0348c2</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string contentType,
                         string jSON,
                         string name,
@@ -79,7 +79,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.variableSetId.IsEmptyOrZeroOrNull() ? null : this.variableSetId;
+                                return this.variableSetId;
                         }
 
                         set
@@ -91,5 +91,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>da3fa0c5e2d12167e2ce6b7da3e777ad</Hash>
+    <Hash>6f351505f3159e18bbcb16cf57603c8c</Hash>
 </Codenesium>*/

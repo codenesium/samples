@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class CityService : AbstractCityService, ICityService
+        public partial class CityService : AbstractCityService, ICityService
         {
                 public CityService(
                         ILogger<ICityRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4de453720c8c40a080490098b50e291b</Hash>
+    <Hash>0f02b56ee5d95f764af4d272388566bc</Hash>
 </Codenesium>*/

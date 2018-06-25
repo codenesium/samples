@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiSubscriptionResponseModel> GetName(string name)
+                public async Task<ApiSubscriptionResponseModel> ByName(string name)
                 {
-                        Subscription record = await this.subscriptionRepository.GetName(name);
+                        Subscription record = await this.subscriptionRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>147f6fb442f97adda5ab4834e500019d</Hash>
+    <Hash>eaa2c9549e0e511097056301335f0eec</Hash>
 </Codenesium>*/

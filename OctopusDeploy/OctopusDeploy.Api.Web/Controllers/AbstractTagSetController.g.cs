@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiTagSetResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiTagSetResponseModel response = await this.TagSetService.GetName(name);
+                        ApiTagSetResponseModel response = await this.TagSetService.ByName(name);
 
                         if (response == null)
                         {
@@ -216,12 +216,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTagSetResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiTagSetResponseModel> response = await this.TagSetService.GetDataVersion(dataVersion);
+                        List<ApiTagSetResponseModel> response = await this.TagSetService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
@@ -229,5 +229,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0358ac1b575d32ae6c4093bdeff48c34</Hash>
+    <Hash>4c63d4ce5d4f74b22af03bc2112fa58f</Hash>
 </Codenesium>*/

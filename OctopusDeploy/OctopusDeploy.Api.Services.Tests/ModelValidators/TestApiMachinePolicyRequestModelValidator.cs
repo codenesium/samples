@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
-
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
+                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
                         var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
+                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
                         var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
+                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
                         var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
+                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
                         var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e7b70051dbd00aa00c14ac6d38e2ffea</Hash>
+    <Hash>07d56f1d205e49e5612e0cea3b980c84</Hash>
 </Codenesium>*/

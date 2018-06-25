@@ -13,7 +13,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string type)
                 {
                         this.Type = type;
@@ -38,5 +38,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4d8c1471e0930c4ffc5a4709cd387328</Hash>
+    <Hash>52db034b6ff075484234efb0b5b26652</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string additionalContactInfo,
                         string demographics,
                         int emailPromotion,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.additionalContactInfo.IsEmptyOrZeroOrNull() ? null : this.additionalContactInfo;
+                                return this.additionalContactInfo;
                         }
 
                         set
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
+                                return this.demographics;
                         }
 
                         set
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.middleName.IsEmptyOrZeroOrNull() ? null : this.middleName;
+                                return this.middleName;
                         }
 
                         set
@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.suffix.IsEmptyOrZeroOrNull() ? null : this.suffix;
+                                return this.suffix;
                         }
 
                         set
@@ -219,7 +219,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.title.IsEmptyOrZeroOrNull() ? null : this.title;
+                                return this.title;
                         }
 
                         set
@@ -231,5 +231,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>680fd18e7ec00dde8cb4f24ab29a912e</Hash>
+    <Hash>18945906a6d2e025b0d3608430c7e5c7</Hash>
 </Codenesium>*/

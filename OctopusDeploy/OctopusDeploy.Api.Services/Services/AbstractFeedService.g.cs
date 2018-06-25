@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiFeedResponseModel> GetName(string name)
+                public async Task<ApiFeedResponseModel> ByName(string name)
                 {
-                        Feed record = await this.feedRepository.GetName(name);
+                        Feed record = await this.feedRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7f4d266c1bdeb67647f5eaeafda4df5</Hash>
+    <Hash>e460212d8821b9865f7f6b2e95104f9c</Hash>
 </Codenesium>*/

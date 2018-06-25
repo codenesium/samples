@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetApiKeyHashed_Exists()
+                public async void ByApiKeyHashed_Exists()
                 {
                         var mock = new ServiceMockFacade<IApiKeyRepository>();
                         var record = new ApiKey();
-                        mock.RepositoryMock.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ApiKeyService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ApiKeyModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLApiKeyMapperMock,
                                                         mock.DALMapperMockFactory.DALApiKeyMapperMock);
 
-                        ApiApiKeyResponseModel response = await service.GetApiKeyHashed(default(string));
+                        ApiApiKeyResponseModel response = await service.ByApiKeyHashed(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetApiKeyHashed(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByApiKeyHashed(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetApiKeyHashed_Not_Exists()
+                public async void ByApiKeyHashed_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IApiKeyRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
+                        mock.RepositoryMock.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
                         var service = new ApiKeyService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ApiKeyModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLApiKeyMapperMock,
                                                         mock.DALMapperMockFactory.DALApiKeyMapperMock);
 
-                        ApiApiKeyResponseModel response = await service.GetApiKeyHashed(default(string));
+                        ApiApiKeyResponseModel response = await service.ByApiKeyHashed(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetApiKeyHashed(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByApiKeyHashed(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>26302dc3cf1c18b79bb0294353a5ae09</Hash>
+    <Hash>b6e64165a5e7656b3c9e3ef4573ffddc</Hash>
 </Codenesium>*/

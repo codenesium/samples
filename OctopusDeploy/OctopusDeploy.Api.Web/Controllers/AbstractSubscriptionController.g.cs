@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiSubscriptionResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiSubscriptionResponseModel response = await this.SubscriptionService.GetName(name);
+                        ApiSubscriptionResponseModel response = await this.SubscriptionService.ByName(name);
 
                         if (response == null)
                         {
@@ -218,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>80aa62749bf651f6921e384d43418028</Hash>
+    <Hash>c9fa12ed4388115eaf5f4b58ef509d54</Hash>
 </Codenesium>*/

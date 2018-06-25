@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         string name)
                 {
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>44811ece920dbe462cede3c1418ba46c</Hash>
+    <Hash>6f3b95e3fe2eb66961e128e07a12315c</Hash>
 </Codenesium>*/

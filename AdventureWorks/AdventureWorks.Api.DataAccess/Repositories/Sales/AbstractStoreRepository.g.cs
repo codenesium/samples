@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Store>> BySalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<Store>> BySalesPersonID(int? salesPersonID)
                 {
                         var records = await this.Where(x => x.SalesPersonID == salesPersonID);
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         return await this.Context.Set<Customer>().Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
                 }
 
-                public async virtual Task<SalesPerson> GetSalesPerson(int salesPersonID)
+                public async virtual Task<SalesPerson> GetSalesPerson(int? salesPersonID)
                 {
                         return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
                 }
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b1c23bb55b7dc03b434e23268541cdd8</Hash>
+    <Hash>3d046fc35458c1c1a30916dc838f349e</Hash>
 </Codenesium>*/

@@ -65,13 +65,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void UsernameRules()
                 {
                         this.RuleFor(x => x.Username).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetUsername).When(x => x?.Username != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRequestModel.Username));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByUsername).When(x => x?.Username != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRequestModel.Username));
                         this.RuleFor(x => x.Username).Length(0, 200);
                 }
 
-                private async Task<bool> BeUniqueGetUsername(ApiUserRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByUsername(ApiUserRequestModel model,  CancellationToken cancellationToken)
                 {
-                        User record = await this.userRepository.GetUsername(model.Username);
+                        User record = await this.userRepository.ByUsername(model.Username);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -86,5 +86,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34c28a36108f5dd4df7559b17fa46d8a</Hash>
+    <Hash>2978ba0484e654f4a364e69b95cc14c2</Hash>
 </Codenesium>*/

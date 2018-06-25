@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var record = new Proxy();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ProxyModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.GetName(default(string));
+                        ApiProxyResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ProxyModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.GetName(default(string));
+                        ApiProxyResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1c98ac05b4b93a96ff21f6db819a624</Hash>
+    <Hash>770c501e02fadad68a2162e156dba5a5</Hash>
 </Codenesium>*/

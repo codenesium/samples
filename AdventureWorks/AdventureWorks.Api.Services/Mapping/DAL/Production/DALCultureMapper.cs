@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCultureMapper : DALAbstractCultureMapper, IDALCultureMapper
+        public partial class DALCultureMapper : DALAbstractCultureMapper, IDALCultureMapper
         {
                 public DALCultureMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e182a3d7012912797006b86498a80f2b</Hash>
+    <Hash>00053b5e3c5c574d8266f97644ed3c8d</Hash>
 </Codenesium>*/

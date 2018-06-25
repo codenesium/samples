@@ -101,9 +101,9 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiVersionInfoResponseModel> GetVersion(long version)
+                public async Task<ApiVersionInfoResponseModel> ByVersion(long version)
                 {
-                        VersionInfo record = await this.versionInfoRepository.GetVersion(version);
+                        VersionInfo record = await this.versionInfoRepository.ByVersion(version);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>931969e47143517d564b0f29d3e18061</Hash>
+    <Hash>14991b4d7511842c6a53527c7e259574</Hash>
 </Codenesium>*/

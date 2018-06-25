@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALScrapReasonMapper : DALAbstractScrapReasonMapper, IDALScrapReasonMapper
+        public partial class DALScrapReasonMapper : DALAbstractScrapReasonMapper, IDALScrapReasonMapper
         {
                 public DALScrapReasonMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ebc1127aed9ece9b7273817dd49c2ed</Hash>
+    <Hash>edec7f82bd15a8df6632136abb2dce85</Hash>
 </Codenesium>*/

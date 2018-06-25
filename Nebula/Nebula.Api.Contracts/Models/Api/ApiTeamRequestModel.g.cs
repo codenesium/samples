@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name,
                         int organizationId)
                 {
@@ -56,5 +56,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6220acd2e0e39d7031bcd51424f2b0ac</Hash>
+    <Hash>2eb92d8ffb591a68710bde816cef9887</Hash>
 </Codenesium>*/

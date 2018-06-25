@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLApiKeyMapper : BOLAbstractApiKeyMapper, IBOLApiKeyMapper
+        public partial class BOLApiKeyMapper : BOLAbstractApiKeyMapper, IBOLApiKeyMapper
         {
                 public BOLApiKeyMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53fbb218e4c5fb8755b93bca5bf2c8db</Hash>
+    <Hash>201baca88d06e3eba902f9fed507dc32</Hash>
 </Codenesium>*/

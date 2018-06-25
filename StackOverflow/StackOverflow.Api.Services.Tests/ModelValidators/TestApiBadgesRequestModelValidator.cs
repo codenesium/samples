@@ -71,21 +71,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 41));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
-                        badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
-
-                        var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>66a9e7ec3cbd29085473222f606e2b3a</Hash>
+    <Hash>c141bc8a15f2c5e673c02d51f965b6b8</Hash>
 </Codenesium>*/

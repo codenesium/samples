@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BadgesService : AbstractBadgesService, IBadgesService
+        public partial class BadgesService : AbstractBadgesService, IBadgesService
         {
                 public BadgesService(
                         ILogger<IBadgesRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>936621462b7caefc39da3e97d1af6f9d</Hash>
+    <Hash>7c64583bc66ef812c05b1e78de7ddbf7</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FromCurrencyCode_Delete()
-                {
-                        Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-                        currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
-
-                        var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FromCurrencyCode_Create_Valid_Reference()
                 {
                         Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
@@ -180,18 +168,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, new string('A', 4));
-                }
-
-                [Fact]
-                public async void ToCurrencyCode_Delete()
-                {
-                        Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-                        currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
-
-                        var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -295,5 +271,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>01997848ed29bd2c14f1ee54894a74a1</Hash>
+    <Hash>716a81250f9e8cbdb3fe78bbf82b3354</Hash>
 </Codenesium>*/

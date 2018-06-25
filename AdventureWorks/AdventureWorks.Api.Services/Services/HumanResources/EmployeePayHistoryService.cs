@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class EmployeePayHistoryService : AbstractEmployeePayHistoryService, IEmployeePayHistoryService
+        public partial class EmployeePayHistoryService : AbstractEmployeePayHistoryService, IEmployeePayHistoryService
         {
                 public EmployeePayHistoryService(
                         ILogger<IEmployeePayHistoryRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df0afd09be2dc208a5bee3b69dbac5c9</Hash>
+    <Hash>463c2ecd6bd3aaccc2aa70743aca9a24</Hash>
 </Codenesium>*/

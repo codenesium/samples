@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<decimal> actualCost,
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<decimal> actualResourceHrs,
-                        Nullable<DateTime> actualStartDate,
+                public virtual void SetProperties(
+                        decimal? actualCost,
+                        DateTime? actualEndDate,
+                        decimal? actualResourceHrs,
+                        DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
                         short operationSequence,
@@ -39,13 +39,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ScheduledStartDate = scheduledStartDate;
                 }
 
-                private Nullable<decimal> actualCost;
+                private decimal? actualCost;
 
-                public Nullable<decimal> ActualCost
+                public decimal? ActualCost
                 {
                         get
                         {
-                                return this.actualCost.IsEmptyOrZeroOrNull() ? null : this.actualCost;
+                                return this.actualCost;
                         }
 
                         set
@@ -54,13 +54,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> actualEndDate;
+                private DateTime? actualEndDate;
 
-                public Nullable<DateTime> ActualEndDate
+                public DateTime? ActualEndDate
                 {
                         get
                         {
-                                return this.actualEndDate.IsEmptyOrZeroOrNull() ? null : this.actualEndDate;
+                                return this.actualEndDate;
                         }
 
                         set
@@ -69,13 +69,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<decimal> actualResourceHrs;
+                private decimal? actualResourceHrs;
 
-                public Nullable<decimal> ActualResourceHrs
+                public decimal? ActualResourceHrs
                 {
                         get
                         {
-                                return this.actualResourceHrs.IsEmptyOrZeroOrNull() ? null : this.actualResourceHrs;
+                                return this.actualResourceHrs;
                         }
 
                         set
@@ -84,13 +84,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> actualStartDate;
+                private DateTime? actualStartDate;
 
-                public Nullable<DateTime> ActualStartDate
+                public DateTime? ActualStartDate
                 {
                         get
                         {
-                                return this.actualStartDate.IsEmptyOrZeroOrNull() ? null : this.actualStartDate;
+                                return this.actualStartDate;
                         }
 
                         set
@@ -214,5 +214,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6e90ab723b84f2cfd8b5944cf0eb1260</Hash>
+    <Hash>503e8b46d3d5515e52ed4e1a0ef365c9</Hash>
 </Codenesium>*/

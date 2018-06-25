@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string countryRegionCode,
                         bool isOnlyStateProvinceFlag,
                         DateTime modifiedDate,
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65e1c97cccbf6a7e35e43a230579364d</Hash>
+    <Hash>5d25e0fbd15273f3f3f60ea97210fa34</Hash>
 </Codenesium>*/

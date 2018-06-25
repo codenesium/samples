@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiVotesResponseModel : AbstractApiResponseModel
+        public partial class ApiVotesResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> bountyAmount,
+                        int? bountyAmount,
                         DateTime creationDate,
                         int id,
                         int postId,
-                        Nullable<int> userId,
+                        int? userId,
                         int voteTypeId)
                 {
                         this.BountyAmount = bountyAmount;
@@ -24,7 +24,7 @@ namespace StackOverflowNS.Api.Contracts
                         this.VoteTypeId = voteTypeId;
                 }
 
-                public Nullable<int> BountyAmount { get; private set; }
+                public int? BountyAmount { get; private set; }
 
                 public DateTime CreationDate { get; private set; }
 
@@ -32,7 +32,7 @@ namespace StackOverflowNS.Api.Contracts
 
                 public int PostId { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
 
                 public int VoteTypeId { get; private set; }
 
@@ -97,5 +97,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9e55b3011007962087daa9a2646efad5</Hash>
+    <Hash>7c44fd0c7d668087fc9c8680ab3e67fb</Hash>
 </Codenesium>*/

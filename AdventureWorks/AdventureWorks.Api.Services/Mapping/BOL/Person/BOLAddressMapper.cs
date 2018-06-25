@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLAddressMapper : BOLAbstractAddressMapper, IBOLAddressMapper
+        public partial class BOLAddressMapper : BOLAbstractAddressMapper, IBOLAddressMapper
         {
                 public BOLAddressMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a76f3cc8404d17f65c1b1e8ac9e7085</Hash>
+    <Hash>f9875bb533d9ca058af99df80b1c6518</Hash>
 </Codenesium>*/

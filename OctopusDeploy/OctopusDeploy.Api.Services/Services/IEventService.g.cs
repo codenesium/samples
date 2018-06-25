@@ -21,18 +21,18 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiEventResponseModel>> GetAutoId(long autoId);
+                Task<List<ApiEventResponseModel>> ByAutoId(long autoId);
 
-                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
+                Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
 
-                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId);
+                Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId);
 
-                Task<List<ApiEventResponseModel>> GetIdOccurred(string id, DateTimeOffset occurred);
+                Task<List<ApiEventResponseModel>> ByIdOccurred(string id, DateTimeOffset occurred);
 
                 Task<List<ApiEventRelatedDocumentResponseModel>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>ef870a484c014bab36fb3c10653a4bb2</Hash>
+    <Hash>b580b31aa3ffaa00b5c829db7d45f36f</Hash>
 </Codenesium>*/

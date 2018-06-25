@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void LastName_Create_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
@@ -131,21 +119,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
                 }
-
-                [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>221df7f4c327fc3b6f148b78479418f5</Hash>
+    <Hash>2a456ac6c1976f119b2faa517fee56ae</Hash>
 </Codenesium>*/

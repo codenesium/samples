@@ -199,13 +199,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTenantIdOwnerIdEnvironmentIdVariableTemplateId/{tenantId}/{ownerId}/{environmentId}/{variableTemplateId}")]
+                [Route("byTenantIdOwnerIdEnvironmentIdVariableTemplateId/{tenantId}/{ownerId}/{environmentId}/{variableTemplateId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiTenantVariableResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
+                public async virtual Task<IActionResult> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
                 {
-                        ApiTenantVariableResponseModel response = await this.TenantVariableService.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
+                        ApiTenantVariableResponseModel response = await this.TenantVariableService.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
 
                         if (response == null)
                         {
@@ -218,12 +218,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTenantId/{tenantId}")]
+                [Route("byTenantId/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTenantVariableResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTenantId(string tenantId)
+                public async virtual Task<IActionResult> ByTenantId(string tenantId)
                 {
-                        List<ApiTenantVariableResponseModel> response = await this.TenantVariableService.GetTenantId(tenantId);
+                        List<ApiTenantVariableResponseModel> response = await this.TenantVariableService.ByTenantId(tenantId);
 
                         return this.Ok(response);
                 }
@@ -231,5 +231,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a82af005e7e0b24d09255635aaadbfb6</Hash>
+    <Hash>db48277cdbfe2aa7204083e3c464217c</Hash>
 </Codenesium>*/

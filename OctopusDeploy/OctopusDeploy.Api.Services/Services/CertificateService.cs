@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class CertificateService : AbstractCertificateService, ICertificateService
+        public partial class CertificateService : AbstractCertificateService, ICertificateService
         {
                 public CertificateService(
                         ILogger<ICertificateRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ab6fdddd8e08b5e2c3bdae443588078</Hash>
+    <Hash>3f3216d346d05e563ff889fee941a922</Hash>
 </Codenesium>*/

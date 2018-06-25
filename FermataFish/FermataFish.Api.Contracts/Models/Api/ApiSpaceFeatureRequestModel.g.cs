@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name,
                         int studioId)
                 {
@@ -56,5 +56,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4aa570b0e16d6cd4cd655b90f5459f0e</Hash>
+    <Hash>f1e0138f80f4d47f7bb66a40b9cbc95e</Hash>
 </Codenesium>*/

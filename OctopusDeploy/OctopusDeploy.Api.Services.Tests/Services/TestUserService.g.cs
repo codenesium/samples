@@ -130,150 +130,150 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetUsername_Exists()
+                public async void ByUsername_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var record = new User();
-                        mock.RepositoryMock.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.GetUsername(default(string));
+                        ApiUserResponseModel response = await service.ByUsername(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetUsername(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByUsername(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetUsername_Not_Exists()
+                public async void ByUsername_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
+                        mock.RepositoryMock.Setup(x => x.ByUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.GetUsername(default(string));
+                        ApiUserResponseModel response = await service.ByUsername(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetUsername(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByUsername(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDisplayName_Exists()
+                public async void ByDisplayName_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var records = new List<User>();
                         records.Add(new User());
-                        mock.RepositoryMock.Setup(x => x.GetDisplayName(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetDisplayName(default(string));
+                        List<ApiUserResponseModel> response = await service.ByDisplayName(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDisplayName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDisplayName_Not_Exists()
+                public async void ByDisplayName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDisplayName(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+                        mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetDisplayName(default(string));
+                        List<ApiUserResponseModel> response = await service.ByDisplayName(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDisplayName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetEmailAddress_Exists()
+                public async void ByEmailAddress_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var records = new List<User>();
                         records.Add(new User());
-                        mock.RepositoryMock.Setup(x => x.GetEmailAddress(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default(string));
+                        List<ApiUserResponseModel> response = await service.ByEmailAddress(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEmailAddress(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetEmailAddress_Not_Exists()
+                public async void ByEmailAddress_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetEmailAddress(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+                        mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default(string));
+                        List<ApiUserResponseModel> response = await service.ByEmailAddress(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetEmailAddress(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetExternalId_Exists()
+                public async void ByExternalId_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var records = new List<User>();
                         records.Add(new User());
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetExternalId(default(string));
+                        List<ApiUserResponseModel> response = await service.ByExternalId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetExternalId_Not_Exists()
+                public async void ByExternalId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+                        mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetExternalId(default(string));
+                        List<ApiUserResponseModel> response = await service.ByExternalId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e024c571f0987dc49a72ccb3881e1cad</Hash>
+    <Hash>81b79ddd1a4c6ad02e41323192434cf3</Hash>
 </Codenesium>*/

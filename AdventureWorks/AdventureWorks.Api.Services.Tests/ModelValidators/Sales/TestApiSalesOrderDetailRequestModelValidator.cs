@@ -49,18 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CarrierTrackingNumber_Delete()
-                {
-                        Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-                        salesOrderDetailRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderDetail()));
-
-                        var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProductID_Create_Valid_Reference()
                 {
                         Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
@@ -163,5 +151,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d13171b1d6c7f4a24af617d22d538061</Hash>
+    <Hash>4c0f50d7f9856b3f105b60a154dbf2a5</Hash>
 </Codenesium>*/

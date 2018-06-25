@@ -195,13 +195,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiUserRoleResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiUserRoleResponseModel response = await this.UserRoleService.GetName(name);
+                        ApiUserRoleResponseModel response = await this.UserRoleService.ByName(name);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a8bd9078dfbee6efecf2fd56533f519e</Hash>
+    <Hash>b86d23a9bae029855918135387efad86</Hash>
 </Codenesium>*/

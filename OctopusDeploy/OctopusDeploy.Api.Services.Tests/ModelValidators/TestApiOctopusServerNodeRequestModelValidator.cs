@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Rank_Create_null()
                 {
                         Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
@@ -155,21 +143,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Rank, new string('A', 51));
                 }
-
-                [Fact]
-                public async void Rank_Delete()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>22085432a2a34b26b09b631878b2cee2</Hash>
+    <Hash>63757c8c9a955be3bd5abaf40789cc86</Hash>
 </Codenesium>*/

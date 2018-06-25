@@ -13,21 +13,21 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> acceptedAnswerId,
-                        Nullable<int> answerCount,
+                public virtual void SetProperties(
+                        int? acceptedAnswerId,
+                        int? answerCount,
                         string body,
-                        Nullable<DateTime> closedDate,
-                        Nullable<int> commentCount,
-                        Nullable<DateTime> communityOwnedDate,
+                        DateTime? closedDate,
+                        int? commentCount,
+                        DateTime? communityOwnedDate,
                         DateTime creationDate,
-                        Nullable<int> favoriteCount,
+                        int? favoriteCount,
                         DateTime lastActivityDate,
-                        Nullable<DateTime> lastEditDate,
+                        DateTime? lastEditDate,
                         string lastEditorDisplayName,
-                        Nullable<int> lastEditorUserId,
-                        Nullable<int> ownerUserId,
-                        Nullable<int> parentId,
+                        int? lastEditorUserId,
+                        int? ownerUserId,
+                        int? parentId,
                         int postTypeId,
                         int score,
                         string tags,
@@ -55,13 +55,13 @@ namespace StackOverflowNS.Api.Contracts
                         this.ViewCount = viewCount;
                 }
 
-                private Nullable<int> acceptedAnswerId;
+                private int? acceptedAnswerId;
 
-                public Nullable<int> AcceptedAnswerId
+                public int? AcceptedAnswerId
                 {
                         get
                         {
-                                return this.acceptedAnswerId.IsEmptyOrZeroOrNull() ? null : this.acceptedAnswerId;
+                                return this.acceptedAnswerId;
                         }
 
                         set
@@ -70,13 +70,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> answerCount;
+                private int? answerCount;
 
-                public Nullable<int> AnswerCount
+                public int? AnswerCount
                 {
                         get
                         {
-                                return this.answerCount.IsEmptyOrZeroOrNull() ? null : this.answerCount;
+                                return this.answerCount;
                         }
 
                         set
@@ -101,13 +101,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> closedDate;
+                private DateTime? closedDate;
 
-                public Nullable<DateTime> ClosedDate
+                public DateTime? ClosedDate
                 {
                         get
                         {
-                                return this.closedDate.IsEmptyOrZeroOrNull() ? null : this.closedDate;
+                                return this.closedDate;
                         }
 
                         set
@@ -116,13 +116,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> commentCount;
+                private int? commentCount;
 
-                public Nullable<int> CommentCount
+                public int? CommentCount
                 {
                         get
                         {
-                                return this.commentCount.IsEmptyOrZeroOrNull() ? null : this.commentCount;
+                                return this.commentCount;
                         }
 
                         set
@@ -131,13 +131,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> communityOwnedDate;
+                private DateTime? communityOwnedDate;
 
-                public Nullable<DateTime> CommunityOwnedDate
+                public DateTime? CommunityOwnedDate
                 {
                         get
                         {
-                                return this.communityOwnedDate.IsEmptyOrZeroOrNull() ? null : this.communityOwnedDate;
+                                return this.communityOwnedDate;
                         }
 
                         set
@@ -162,13 +162,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> favoriteCount;
+                private int? favoriteCount;
 
-                public Nullable<int> FavoriteCount
+                public int? FavoriteCount
                 {
                         get
                         {
-                                return this.favoriteCount.IsEmptyOrZeroOrNull() ? null : this.favoriteCount;
+                                return this.favoriteCount;
                         }
 
                         set
@@ -193,13 +193,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> lastEditDate;
+                private DateTime? lastEditDate;
 
-                public Nullable<DateTime> LastEditDate
+                public DateTime? LastEditDate
                 {
                         get
                         {
-                                return this.lastEditDate.IsEmptyOrZeroOrNull() ? null : this.lastEditDate;
+                                return this.lastEditDate;
                         }
 
                         set
@@ -214,7 +214,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.lastEditorDisplayName.IsEmptyOrZeroOrNull() ? null : this.lastEditorDisplayName;
+                                return this.lastEditorDisplayName;
                         }
 
                         set
@@ -223,13 +223,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> lastEditorUserId;
+                private int? lastEditorUserId;
 
-                public Nullable<int> LastEditorUserId
+                public int? LastEditorUserId
                 {
                         get
                         {
-                                return this.lastEditorUserId.IsEmptyOrZeroOrNull() ? null : this.lastEditorUserId;
+                                return this.lastEditorUserId;
                         }
 
                         set
@@ -238,13 +238,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> ownerUserId;
+                private int? ownerUserId;
 
-                public Nullable<int> OwnerUserId
+                public int? OwnerUserId
                 {
                         get
                         {
-                                return this.ownerUserId.IsEmptyOrZeroOrNull() ? null : this.ownerUserId;
+                                return this.ownerUserId;
                         }
 
                         set
@@ -253,13 +253,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> parentId;
+                private int? parentId;
 
-                public Nullable<int> ParentId
+                public int? ParentId
                 {
                         get
                         {
-                                return this.parentId.IsEmptyOrZeroOrNull() ? null : this.parentId;
+                                return this.parentId;
                         }
 
                         set
@@ -306,7 +306,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tags.IsEmptyOrZeroOrNull() ? null : this.tags;
+                                return this.tags;
                         }
 
                         set
@@ -321,7 +321,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.title.IsEmptyOrZeroOrNull() ? null : this.title;
+                                return this.title;
                         }
 
                         set
@@ -349,5 +349,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>45fca81f7727255d605629af8310cc1b</Hash>
+    <Hash>1727df80426d84e274b849a61f40517c</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiUsersResponseModel : AbstractApiResponseModel
+        public partial class ApiUsersResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string aboutMe,
-                        Nullable<int> accountId,
-                        Nullable<int> age,
+                        int? accountId,
+                        int? age,
                         DateTime creationDate,
                         string displayName,
                         int downVotes,
@@ -42,9 +42,9 @@ namespace StackOverflowNS.Api.Contracts
 
                 public string AboutMe { get; private set; }
 
-                public Nullable<int> AccountId { get; private set; }
+                public int? AccountId { get; private set; }
 
-                public Nullable<int> Age { get; private set; }
+                public int? Age { get; private set; }
 
                 public DateTime CreationDate { get; private set; }
 
@@ -201,5 +201,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7ef7ab12d6b44542c02053a5698829fa</Hash>
+    <Hash>dcfc7c8d8a4e54a73681c509ec711883</Hash>
 </Codenesium>*/

@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int billOfMaterialsID,
                         short bOMLevel,
                         int componentID,
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         decimal perAssemblyQty,
-                        Nullable<int> productAssemblyID,
+                        int? productAssemblyID,
                         DateTime startDate,
                         string unitMeasureCode)
                 {
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int ComponentID { get; private set; }
 
                 [Column("EndDate")]
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal PerAssemblyQty { get; private set; }
 
                 [Column("ProductAssemblyID")]
-                public Nullable<int> ProductAssemblyID { get; private set; }
+                public int? ProductAssemblyID { get; private set; }
 
                 [Column("StartDate")]
                 public DateTime StartDate { get; private set; }
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>03aa9fc22e83c14cfde5a38782338c47</Hash>
+    <Hash>dc1a8a5f72c438036b308f00101a3f61</Hash>
 </Codenesium>*/

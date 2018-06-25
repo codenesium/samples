@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLVariableSetMapper : BOLAbstractVariableSetMapper, IBOLVariableSetMapper
+        public partial class BOLVariableSetMapper : BOLAbstractVariableSetMapper, IBOLVariableSetMapper
         {
                 public BOLVariableSetMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>425033afef8d55d44c59fc154572ceee</Hash>
+    <Hash>cacf1655ccfe758fefad21c70b905621</Hash>
 </Codenesium>*/

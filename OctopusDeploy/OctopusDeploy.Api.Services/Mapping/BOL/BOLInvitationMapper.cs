@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLInvitationMapper : BOLAbstractInvitationMapper, IBOLInvitationMapper
+        public partial class BOLInvitationMapper : BOLAbstractInvitationMapper, IBOLInvitationMapper
         {
                 public BOLInvitationMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>78552c72fe44a9247707a6d1a1dfa23e</Hash>
+    <Hash>5c580c133f9fb8e3efcf26ea37f68088</Hash>
 </Codenesium>*/

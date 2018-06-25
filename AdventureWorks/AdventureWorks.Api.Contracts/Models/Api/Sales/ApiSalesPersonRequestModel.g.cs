@@ -13,15 +13,15 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal bonus,
                         decimal commissionPct,
                         DateTime modifiedDate,
                         Guid rowguid,
                         decimal salesLastYear,
-                        Nullable<decimal> salesQuota,
+                        decimal? salesQuota,
                         decimal salesYTD,
-                        Nullable<int> territoryID)
+                        int? territoryID)
                 {
                         this.Bonus = bonus;
                         this.CommissionPct = commissionPct;
@@ -113,13 +113,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<decimal> salesQuota;
+                private decimal? salesQuota;
 
-                public Nullable<decimal> SalesQuota
+                public decimal? SalesQuota
                 {
                         get
                         {
-                                return this.salesQuota.IsEmptyOrZeroOrNull() ? null : this.salesQuota;
+                                return this.salesQuota;
                         }
 
                         set
@@ -144,13 +144,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> territoryID;
+                private int? territoryID;
 
-                public Nullable<int> TerritoryID
+                public int? TerritoryID
                 {
                         get
                         {
-                                return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
+                                return this.territoryID;
                         }
 
                         set
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8cd9b0a56188244ce55ce7301d163705</Hash>
+    <Hash>d1ca17eb06fa5095125eee9aea698f06</Hash>
 </Codenesium>*/

@@ -71,21 +71,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IPipelineStepStatusRepository> pipelineStepStatusRepository = new Mock<IPipelineStepStatusRepository>();
-                        pipelineStepStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStatus()));
-
-                        var validator = new ApiPipelineStepStatusRequestModelValidator(pipelineStepStatusRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>61ba851929c4c88cc97e4a3a2e8e3653</Hash>
+    <Hash>354efafb2506870b818c03eae58609a6</Hash>
 </Codenesium>*/

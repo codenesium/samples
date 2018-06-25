@@ -130,79 +130,79 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetAdminId_Exists()
+                public async void ByAdminId_Exists()
                 {
                         var mock = new ServiceMockFacade<IVenueRepository>();
                         var records = new List<Venue>();
                         records.Add(new Venue());
-                        mock.RepositoryMock.Setup(x => x.GetAdminId(It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new VenueService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                        mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiVenueResponseModel> response = await service.GetAdminId(default(int));
+                        List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetAdminId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetAdminId_Not_Exists()
+                public async void ByAdminId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IVenueRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetAdminId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+                        mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
                         var service = new VenueService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                        mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiVenueResponseModel> response = await service.GetAdminId(default(int));
+                        List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetAdminId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetProvinceId_Exists()
+                public async void ByProvinceId_Exists()
                 {
                         var mock = new ServiceMockFacade<IVenueRepository>();
                         var records = new List<Venue>();
                         records.Add(new Venue());
-                        mock.RepositoryMock.Setup(x => x.GetProvinceId(It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new VenueService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                        mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiVenueResponseModel> response = await service.GetProvinceId(default(int));
+                        List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProvinceId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetProvinceId_Not_Exists()
+                public async void ByProvinceId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IVenueRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetProvinceId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+                        mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
                         var service = new VenueService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                        mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiVenueResponseModel> response = await service.GetProvinceId(default(int));
+                        List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProvinceId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>914cc74cab0d75f583c1e9ed300821f7</Hash>
+    <Hash>3004d2c0b3784f0ebacef00816b30d8c</Hash>
 </Codenesium>*/

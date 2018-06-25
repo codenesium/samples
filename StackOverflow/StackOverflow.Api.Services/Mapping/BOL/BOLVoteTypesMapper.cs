@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BOLVoteTypesMapper : BOLAbstractVoteTypesMapper, IBOLVoteTypesMapper
+        public partial class BOLVoteTypesMapper : BOLAbstractVoteTypesMapper, IBOLVoteTypesMapper
         {
                 public BOLVoteTypesMapper()
                 {
@@ -14,5 +14,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61529e19b2cc4ad28cd95b106ab0e0eb</Hash>
+    <Hash>bf3868325a5e33ad93d74e57c5ae800a</Hash>
 </Codenesium>*/

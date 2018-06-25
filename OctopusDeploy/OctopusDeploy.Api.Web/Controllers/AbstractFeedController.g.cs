@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiFeedResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiFeedResponseModel response = await this.FeedService.GetName(name);
+                        ApiFeedResponseModel response = await this.FeedService.ByName(name);
 
                         if (response == null)
                         {
@@ -218,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f11643a18f14b04feb60b6e69f0bc8be</Hash>
+    <Hash>f729fa4dfb754b7eff55da24bdc95095</Hash>
 </Codenesium>*/

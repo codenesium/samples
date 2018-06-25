@@ -11,10 +11,10 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int workOrderID,
-                                                  Nullable<decimal> actualCost,
-                                                  Nullable<DateTime> actualEndDate,
-                                                  Nullable<decimal> actualResourceHrs,
-                                                  Nullable<DateTime> actualStartDate,
+                                                  decimal? actualCost,
+                                                  DateTime? actualEndDate,
+                                                  decimal? actualResourceHrs,
+                                                  DateTime? actualStartDate,
                                                   short locationID,
                                                   DateTime modifiedDate,
                                                   short operationSequence,
@@ -37,13 +37,13 @@ namespace AdventureWorksNS.Api.Services
                         this.WorkOrderID = workOrderID;
                 }
 
-                public Nullable<decimal> ActualCost { get; private set; }
+                public decimal? ActualCost { get; private set; }
 
-                public Nullable<DateTime> ActualEndDate { get; private set; }
+                public DateTime? ActualEndDate { get; private set; }
 
-                public Nullable<decimal> ActualResourceHrs { get; private set; }
+                public decimal? ActualResourceHrs { get; private set; }
 
-                public Nullable<DateTime> ActualStartDate { get; private set; }
+                public DateTime? ActualStartDate { get; private set; }
 
                 public short LocationID { get; private set; }
 
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83222c38eee034fb30090880f34f967c</Hash>
+    <Hash>ab4aa285a878cf45ca28264f2e171d99</Hash>
 </Codenesium>*/

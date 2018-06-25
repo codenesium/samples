@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALPersonCreditCardMapper : DALAbstractPersonCreditCardMapper, IDALPersonCreditCardMapper
+        public partial class DALPersonCreditCardMapper : DALAbstractPersonCreditCardMapper, IDALPersonCreditCardMapper
         {
                 public DALPersonCreditCardMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3eca559f8fe2301ec286c90b6b1e0ae0</Hash>
+    <Hash>cb9807ca7fc99eb4028ac4529d5d893e</Hash>
 </Codenesium>*/

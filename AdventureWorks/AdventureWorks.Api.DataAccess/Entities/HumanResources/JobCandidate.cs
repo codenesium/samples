@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> businessEntityID,
+                public virtual void SetProperties(
+                        int? businessEntityID,
                         int jobCandidateID,
                         DateTime modifiedDate,
                         string resume)
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("BusinessEntityID")]
-                public Nullable<int> BusinessEntityID { get; private set; }
+                public int? BusinessEntityID { get; private set; }
 
                 [Key]
                 [Column("JobCandidateID")]
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>42a66af25273ba748b13a4b36830b675</Hash>
+    <Hash>24f3e489da8f127394909b0ad3bcdc27</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         byte[] largePhoto,
                         string largePhotoFileName,
                         DateTime modifiedDate,
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>499d6f6a08188f813246a343e2047c6b</Hash>
+    <Hash>f4233f5366f99ed60c36fb58e6a83ec1</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTimeOffset created,
                         string environmentId,
                         string jSON,
@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantId.IsEmptyOrZeroOrNull() ? null : this.tenantId;
+                                return this.tenantId;
                         }
 
                         set
@@ -199,5 +199,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b468e25a953a8a28b9900380f13ecd1c</Hash>
+    <Hash>59d6360658d619d7f7961f9e74f3f578</Hash>
 </Codenesium>*/

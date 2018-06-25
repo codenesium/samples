@@ -205,7 +205,7 @@ namespace AdventureWorksNS.Api.Web
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async virtual Task<IActionResult> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
                 {
                         ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
 
@@ -233,5 +233,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>26e2f7d38b79f6aa31084a2b03f8d704</Hash>
+    <Hash>c2123c4e38e8552dbc616dc21c4f467a</Hash>
 </Codenesium>*/

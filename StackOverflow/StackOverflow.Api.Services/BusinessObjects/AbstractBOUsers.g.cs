@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void SetProperties(int id,
                                                   string aboutMe,
-                                                  Nullable<int> accountId,
-                                                  Nullable<int> age,
+                                                  int? accountId,
+                                                  int? age,
                                                   DateTime creationDate,
                                                   string displayName,
                                                   int downVotes,
@@ -43,9 +43,9 @@ namespace StackOverflowNS.Api.Services
 
                 public string AboutMe { get; private set; }
 
-                public Nullable<int> AccountId { get; private set; }
+                public int? AccountId { get; private set; }
 
-                public Nullable<int> Age { get; private set; }
+                public int? Age { get; private set; }
 
                 public DateTime CreationDate { get; private set; }
 
@@ -72,5 +72,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1868e41c95bd4f9c132bb909e0410d71</Hash>
+    <Hash>153220401f199e7f2c3d3669e36ee498</Hash>
 </Codenesium>*/

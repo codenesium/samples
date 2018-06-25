@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Tenant()));
-
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectIds_Create_null()
                 {
                         Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Exists()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
+                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
                         var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTenantRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
+                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
                         var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTenantRequestModel());
@@ -157,10 +145,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
+                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
                         var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
@@ -169,10 +157,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
+                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
                         var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
@@ -183,5 +171,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c525d199c8338675d28621018c9c56f9</Hash>
+    <Hash>eea75587449a53eaaf44aa50449e9b75</Hash>
 </Codenesium>*/

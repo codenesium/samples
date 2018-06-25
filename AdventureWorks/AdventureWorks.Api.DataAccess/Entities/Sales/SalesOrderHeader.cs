@@ -12,13 +12,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         int billToAddressID,
                         string comment,
                         string creditCardApprovalCode,
-                        Nullable<int> creditCardID,
-                        Nullable<int> currencyRateID,
+                        int? creditCardID,
+                        int? currencyRateID,
                         int customerID,
                         DateTime dueDate,
                         decimal freight,
@@ -30,14 +30,14 @@ namespace AdventureWorksNS.Api.DataAccess
                         Guid rowguid,
                         int salesOrderID,
                         string salesOrderNumber,
-                        Nullable<int> salesPersonID,
-                        Nullable<DateTime> shipDate,
+                        int? salesPersonID,
+                        DateTime? shipDate,
                         int shipMethodID,
                         int shipToAddressID,
                         int status,
                         decimal subTotal,
                         decimal taxAmt,
-                        Nullable<int> territoryID,
+                        int? territoryID,
                         decimal totalDue)
                 {
                         this.AccountNumber = accountNumber;
@@ -81,10 +81,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string CreditCardApprovalCode { get; private set; }
 
                 [Column("CreditCardID")]
-                public Nullable<int> CreditCardID { get; private set; }
+                public int? CreditCardID { get; private set; }
 
                 [Column("CurrencyRateID")]
-                public Nullable<int> CurrencyRateID { get; private set; }
+                public int? CurrencyRateID { get; private set; }
 
                 [Column("CustomerID")]
                 public int CustomerID { get; private set; }
@@ -122,10 +122,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string SalesOrderNumber { get; private set; }
 
                 [Column("SalesPersonID")]
-                public Nullable<int> SalesPersonID { get; private set; }
+                public int? SalesPersonID { get; private set; }
 
                 [Column("ShipDate")]
-                public Nullable<DateTime> ShipDate { get; private set; }
+                public DateTime? ShipDate { get; private set; }
 
                 [Column("ShipMethodID")]
                 public int ShipMethodID { get; private set; }
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal TaxAmt { get; private set; }
 
                 [Column("TerritoryID")]
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("TotalDue")]
@@ -167,5 +167,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d059b9fd46f25680a3de2b3eca3c5184</Hash>
+    <Hash>fa237f33102925a8348a9956ea60f712</Hash>
 </Codenesium>*/

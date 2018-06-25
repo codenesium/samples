@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public class LinkRepository : AbstractLinkRepository, ILinkRepository
+        public partial class LinkRepository : AbstractLinkRepository, ILinkRepository
         {
                 public LinkRepository(
                         ILogger<LinkRepository> logger,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>06a7f6f4e001ab3974ce63e4ea8a535a</Hash>
+    <Hash>cf5accfa3f3e5d54f37c74b95003bf73</Hash>
 </Codenesium>*/

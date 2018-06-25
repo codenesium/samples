@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiActionTemplateResponseModel> GetName(string name)
+                public async Task<ApiActionTemplateResponseModel> ByName(string name)
                 {
-                        ActionTemplate record = await this.actionTemplateRepository.GetName(name);
+                        ActionTemplate record = await this.actionTemplateRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>040af830c37d73e16fb3de6c3bded464</Hash>
+    <Hash>725da36571bae9c3a7711e5f35d7fe5c</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALPurchaseOrderHeaderMapper : DALAbstractPurchaseOrderHeaderMapper, IDALPurchaseOrderHeaderMapper
+        public partial class DALPurchaseOrderHeaderMapper : DALAbstractPurchaseOrderHeaderMapper, IDALPurchaseOrderHeaderMapper
         {
                 public DALPurchaseOrderHeaderMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b090601e6c6a009c976d715ca2829edf</Hash>
+    <Hash>d400d986d1cb87f7e9eec0b02df587ac</Hash>
 </Codenesium>*/

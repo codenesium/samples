@@ -81,7 +81,7 @@ namespace FileServiceNS.Api.Services
                         this.RuleFor(x => x.PublicKey).Length(0, 64);
                 }
 
-                private async Task<bool> BeValidBucket(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidBucket(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.fileRepository.GetBucket(id.GetValueOrDefault());
 
@@ -98,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e41212d6be465409fd0de2e589a6c7a4</Hash>
+    <Hash>bd788e1850950ca75a409f1c65e3bd10</Hash>
 </Codenesium>*/

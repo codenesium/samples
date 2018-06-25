@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
-
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void StudioId_Create_Valid_Reference()
                 {
                         Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
@@ -137,5 +125,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>778b04bbb80975669b8eeddc061effa9</Hash>
+    <Hash>a90cd49ad5e44f715d0f5de1d08fca15</Hash>
 </Codenesium>*/

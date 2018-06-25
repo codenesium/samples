@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALFeedMapper : DALAbstractFeedMapper, IDALFeedMapper
+        public partial class DALFeedMapper : DALAbstractFeedMapper, IDALFeedMapper
         {
                 public DALFeedMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f39b8260f88455da229903549acae837</Hash>
+    <Hash>fc7982c06a0206db3077cc1ffc052f0d</Hash>
 </Codenesium>*/

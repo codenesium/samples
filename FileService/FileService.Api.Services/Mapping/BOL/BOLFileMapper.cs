@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public class BOLFileMapper : BOLAbstractFileMapper, IBOLFileMapper
+        public partial class BOLFileMapper : BOLAbstractFileMapper, IBOLFileMapper
         {
                 public BOLFileMapper()
                 {
@@ -14,5 +14,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d16c57351933433b5c6129b0f8fc94a</Hash>
+    <Hash>5fdfa8c3debda8849b372f0d7c11222c</Hash>
 </Codenesium>*/

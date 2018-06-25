@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ScrapReasonService : AbstractScrapReasonService, IScrapReasonService
+        public partial class ScrapReasonService : AbstractScrapReasonService, IScrapReasonService
         {
                 public ScrapReasonService(
                         ILogger<IScrapReasonRepository> logger,
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>520d65eeecc8c3cf962a76c03c28aaf0</Hash>
+    <Hash>f95f2587ba144ca1a80cc4885b17969b</Hash>
 </Codenesium>*/

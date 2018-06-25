@@ -11,10 +11,10 @@ namespace NebulaNS.Api.Services
                 }
 
                 public virtual void SetProperties(int id,
-                                                  Nullable<int> assignedMachineId,
+                                                  int? assignedMachineId,
                                                   int chainId,
-                                                  Nullable<DateTime> dateCompleted,
-                                                  Nullable<DateTime> dateStarted,
+                                                  DateTime? dateCompleted,
+                                                  DateTime? dateStarted,
                                                   string dynamicParameters,
                                                   Guid externalId,
                                                   int linkStatusId,
@@ -39,13 +39,13 @@ namespace NebulaNS.Api.Services
                         this.TimeoutInSeconds = timeoutInSeconds;
                 }
 
-                public Nullable<int> AssignedMachineId { get; private set; }
+                public int? AssignedMachineId { get; private set; }
 
                 public int ChainId { get; private set; }
 
-                public Nullable<DateTime> DateCompleted { get; private set; }
+                public DateTime? DateCompleted { get; private set; }
 
-                public Nullable<DateTime> DateStarted { get; private set; }
+                public DateTime? DateStarted { get; private set; }
 
                 public string DynamicParameters { get; private set; }
 
@@ -68,5 +68,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0d12c7a4abca5b5a443782587d8ea9ea</Hash>
+    <Hash>279ccfbac28f4541388887fef0f11115</Hash>
 </Codenesium>*/

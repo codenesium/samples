@@ -19,16 +19,16 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Customer> ByAccountNumber(string accountNumber);
 
-                Task<List<Customer>> ByTerritoryID(Nullable<int> territoryID);
+                Task<List<Customer>> ByTerritoryID(int? territoryID);
 
                 Task<List<SalesOrderHeader>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0);
 
-                Task<Store> GetStore(int storeID);
+                Task<Store> GetStore(int? storeID);
 
-                Task<SalesTerritory> GetSalesTerritory(int territoryID);
+                Task<SalesTerritory> GetSalesTerritory(int? territoryID);
         }
 }
 
 /*<Codenesium>
-    <Hash>6f19db0e3d002e7cc86831da7637bf45</Hash>
+    <Hash>0d7d50129939ede8a6b63913494bf7c2</Hash>
 </Codenesium>*/

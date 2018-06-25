@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int count,
                         int excerptPostId,
                         int id,
@@ -45,5 +45,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e6e49e9e5cc7c332544b82063e10886f</Hash>
+    <Hash>2891634f5c7a1eee8edc278640f5c63d</Hash>
 </Codenesium>*/

@@ -13,10 +13,10 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string aboutMe,
-                        Nullable<int> accountId,
-                        Nullable<int> age,
+                        int? accountId,
+                        int? age,
                         DateTime creationDate,
                         string displayName,
                         int downVotes,
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.aboutMe.IsEmptyOrZeroOrNull() ? null : this.aboutMe;
+                                return this.aboutMe;
                         }
 
                         set
@@ -58,13 +58,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> accountId;
+                private int? accountId;
 
-                public Nullable<int> AccountId
+                public int? AccountId
                 {
                         get
                         {
-                                return this.accountId.IsEmptyOrZeroOrNull() ? null : this.accountId;
+                                return this.accountId;
                         }
 
                         set
@@ -73,13 +73,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> age;
+                private int? age;
 
-                public Nullable<int> Age
+                public int? Age
                 {
                         get
                         {
-                                return this.age.IsEmptyOrZeroOrNull() ? null : this.age;
+                                return this.age;
                         }
 
                         set
@@ -142,7 +142,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.emailHash.IsEmptyOrZeroOrNull() ? null : this.emailHash;
+                                return this.emailHash;
                         }
 
                         set
@@ -173,7 +173,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.location.IsEmptyOrZeroOrNull() ? null : this.location;
+                                return this.location;
                         }
 
                         set
@@ -236,7 +236,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.websiteUrl.IsEmptyOrZeroOrNull() ? null : this.websiteUrl;
+                                return this.websiteUrl;
                         }
 
                         set
@@ -248,5 +248,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e89ea4a586b40aab932a7e5d4cb9501d</Hash>
+    <Hash>5f1c9ea8d747d362a4df81e9514af6c6</Hash>
 </Codenesium>*/

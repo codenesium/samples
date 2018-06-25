@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IMachinePolicyRepository>();
                         var record = new MachinePolicy();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new MachinePolicyService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.MachinePolicyModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLMachinePolicyMapperMock,
                                                                mock.DALMapperMockFactory.DALMachinePolicyMapperMock);
 
-                        ApiMachinePolicyResponseModel response = await service.GetName(default(string));
+                        ApiMachinePolicyResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IMachinePolicyRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
                         var service = new MachinePolicyService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.MachinePolicyModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLMachinePolicyMapperMock,
                                                                mock.DALMapperMockFactory.DALMachinePolicyMapperMock);
 
-                        ApiMachinePolicyResponseModel response = await service.GetName(default(string));
+                        ApiMachinePolicyResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3696bf885bc9e506829f561c57bc73d0</Hash>
+    <Hash>0faeaf212c4f9dff505d4adc9d56f756</Hash>
 </Codenesium>*/

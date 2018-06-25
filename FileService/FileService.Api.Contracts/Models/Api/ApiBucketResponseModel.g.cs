@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public class ApiBucketResponseModel : AbstractApiResponseModel
+        public partial class ApiBucketResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Guid externalId,
@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Contracts
                 public string Name { get; private set; }
 
                 [JsonIgnore]
-                public bool ShouldSerializeExternalIdValue { get; set; } = false;
+                public bool ShouldSerializeExternalIdValue { get; set; } = true;
 
                 public bool ShouldSerializeExternalId()
                 {
@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = false;
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
                 public bool ShouldSerializeId()
                 {
@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = false;
+                public bool ShouldSerializeNameValue { get; set; } = true;
 
                 public bool ShouldSerializeName()
                 {
@@ -58,5 +58,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cea8641bf9022f9f8b8171aa36872c2a</Hash>
+    <Hash>49e86c6f4bcf5b4d75f3f328b960d24e</Hash>
 </Codenesium>*/

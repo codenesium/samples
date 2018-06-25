@@ -4,7 +4,7 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class DALPostsMapper : DALAbstractPostsMapper, IDALPostsMapper
+        public partial class DALPostsMapper : DALAbstractPostsMapper, IDALPostsMapper
         {
                 public DALPostsMapper()
                 {
@@ -13,5 +13,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1063e9bc1b8735f640cf2284d3fefc58</Hash>
+    <Hash>954fd4ed99f4187aaafff8bd94f17518</Hash>
 </Codenesium>*/

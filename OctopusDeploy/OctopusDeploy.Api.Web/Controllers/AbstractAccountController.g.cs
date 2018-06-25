@@ -199,13 +199,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiAccountResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiAccountResponseModel response = await this.AccountService.GetName(name);
+                        ApiAccountResponseModel response = await this.AccountService.ByName(name);
 
                         if (response == null)
                         {
@@ -220,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>06422ba3606695f1070eaf3df0319675</Hash>
+    <Hash>7a34741d38ba8889979c43563f854ac2</Hash>
 </Codenesium>*/

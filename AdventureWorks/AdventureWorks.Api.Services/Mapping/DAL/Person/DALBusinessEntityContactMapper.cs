@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALBusinessEntityContactMapper : DALAbstractBusinessEntityContactMapper, IDALBusinessEntityContactMapper
+        public partial class DALBusinessEntityContactMapper : DALAbstractBusinessEntityContactMapper, IDALBusinessEntityContactMapper
         {
                 public DALBusinessEntityContactMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b51757ce14a940c2d08b3bf07339a88</Hash>
+    <Hash>683d14c25587d5dcd024786ebb3a3cea</Hash>
 </Codenesium>*/

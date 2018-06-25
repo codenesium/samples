@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime applied,
                         int id,
                         string scriptName)
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>61272a53dfee165bd586d2c08c11ee9b</Hash>
+    <Hash>76ffb00619e65998039b2d8669647979</Hash>
 </Codenesium>*/

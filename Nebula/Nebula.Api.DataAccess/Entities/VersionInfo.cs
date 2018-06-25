@@ -12,8 +12,8 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                public virtual void SetProperties(
+                        DateTime? appliedOn,
                         string description,
                         long version)
                 {
@@ -23,7 +23,7 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Column("AppliedOn")]
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 [Column("Description")]
                 public string Description { get; private set; }
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cd2a74f16af58934b30a7c7a5b91ef82</Hash>
+    <Hash>db85402ac523c8c4001898815e075d2b</Hash>
 </Codenesium>*/

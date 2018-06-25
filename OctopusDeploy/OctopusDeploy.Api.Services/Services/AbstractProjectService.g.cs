@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiProjectResponseModel> GetName(string name)
+                public async Task<ApiProjectResponseModel> ByName(string name)
                 {
-                        Project record = await this.projectRepository.GetName(name);
+                        Project record = await this.projectRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<ApiProjectResponseModel> GetSlug(string slug)
+                public async Task<ApiProjectResponseModel> BySlug(string slug)
                 {
-                        Project record = await this.projectRepository.GetSlug(slug);
+                        Project record = await this.projectRepository.BySlug(slug);
 
                         if (record == null)
                         {
@@ -129,16 +129,16 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiProjectResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<Project> records = await this.projectRepository.GetDataVersion(dataVersion);
+                        List<Project> records = await this.projectRepository.ByDataVersion(dataVersion);
 
                         return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiProjectResponseModel>> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+                public async Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
                 {
-                        List<Project> records = await this.projectRepository.GetDiscreteChannelReleaseId(discreteChannelRelease, id);
+                        List<Project> records = await this.projectRepository.ByDiscreteChannelReleaseId(discreteChannelRelease, id);
 
                         return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
                 }
@@ -146,5 +146,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>385a61281dbafeae7f5cb4f9ef837dba</Hash>
+    <Hash>d8beae93396e11c748ccf315c9b06ec4</Hash>
 </Codenesium>*/

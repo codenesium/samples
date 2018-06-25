@@ -116,7 +116,7 @@ namespace AdventureWorksNS.Api.Services
                         return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(Nullable<short> scrapReasonID)
+                public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID)
                 {
                         List<WorkOrder> records = await this.workOrderRepository.ByScrapReasonID(scrapReasonID);
 
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dd882ebc42a9b74da8c1ea878ce1058</Hash>
+    <Hash>dd9e7e5cb2ff8209bea5f19b977b1ded</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class TagsService : AbstractTagsService, ITagsService
+        public partial class TagsService : AbstractTagsService, ITagsService
         {
                 public TagsService(
                         ILogger<ITagsRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>036ccc7a5fe64b2a4f1ccfb20821824c</Hash>
+    <Hash>949248c31d3b8f0bbbae09785614dc5a</Hash>
 </Codenesium>*/

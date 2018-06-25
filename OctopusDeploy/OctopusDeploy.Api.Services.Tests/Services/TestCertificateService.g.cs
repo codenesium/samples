@@ -130,151 +130,151 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetCreated_Exists()
+                public async void ByCreated_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var records = new List<Certificate>();
                         records.Add(new Certificate());
-                        mock.RepositoryMock.Setup(x => x.GetCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetCreated(default(DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetCreated_Not_Exists()
+                public async void ByCreated_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+                        mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetCreated(default(DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var records = new List<Certificate>();
                         records.Add(new Certificate());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiCertificateResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiCertificateResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetNotAfter_Exists()
+                public async void ByNotAfter_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var records = new List<Certificate>();
                         records.Add(new Certificate());
-                        mock.RepositoryMock.Setup(x => x.GetNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default(DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.ByNotAfter(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetNotAfter(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetNotAfter_Not_Exists()
+                public async void ByNotAfter_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+                        mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default(DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.ByNotAfter(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetNotAfter(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetThumbprint_Exists()
+                public async void ByThumbprint_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var records = new List<Certificate>();
                         records.Add(new Certificate());
-                        mock.RepositoryMock.Setup(x => x.GetThumbprint(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default(string));
+                        List<ApiCertificateResponseModel> response = await service.ByThumbprint(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetThumbprint(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetThumbprint_Not_Exists()
+                public async void ByThumbprint_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetThumbprint(It.IsAny<string>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+                        mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default(string));
+                        List<ApiCertificateResponseModel> response = await service.ByThumbprint(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetThumbprint(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>575cadde11bb22fa12862b8ecd10dda0</Hash>
+    <Hash>0a559a035900bd40f2d19efa9174d696</Hash>
 </Codenesium>*/

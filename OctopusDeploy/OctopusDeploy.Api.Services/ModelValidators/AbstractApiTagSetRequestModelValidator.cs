@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTagSetRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTagSetRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -46,9 +46,9 @@ namespace OctopusDeployNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiTagSetRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiTagSetRequestModel model,  CancellationToken cancellationToken)
                 {
-                        TagSet record = await this.tagSetRepository.GetName(model.Name);
+                        TagSet record = await this.tagSetRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ecdf15d1a7ce7085483c638ad9eada58</Hash>
+    <Hash>122b6eeb368362d8b9a9c21486ad6c45</Hash>
 </Codenesium>*/

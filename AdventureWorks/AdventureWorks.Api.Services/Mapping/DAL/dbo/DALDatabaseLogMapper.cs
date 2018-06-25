@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALDatabaseLogMapper : DALAbstractDatabaseLogMapper, IDALDatabaseLogMapper
+        public partial class DALDatabaseLogMapper : DALAbstractDatabaseLogMapper, IDALDatabaseLogMapper
         {
                 public DALDatabaseLogMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>370589ed5a6a0871f7bd35a93947504c</Hash>
+    <Hash>37d09234d4c22d291b72739c7461cb98</Hash>
 </Codenesium>*/

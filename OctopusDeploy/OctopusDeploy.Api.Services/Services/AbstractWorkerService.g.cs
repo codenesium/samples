@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiWorkerResponseModel> GetName(string name)
+                public async Task<ApiWorkerResponseModel> ByName(string name)
                 {
-                        Worker record = await this.workerRepository.GetName(name);
+                        Worker record = await this.workerRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiWorkerResponseModel>> GetMachinePolicyId(string machinePolicyId)
+                public async Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId)
                 {
-                        List<Worker> records = await this.workerRepository.GetMachinePolicyId(machinePolicyId);
+                        List<Worker> records = await this.workerRepository.ByMachinePolicyId(machinePolicyId);
 
                         return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>050b7df2a9429387d76cec757c21c74c</Hash>
+    <Hash>4f3ecc27185172ce20c6e31d49b63d4a</Hash>
 </Codenesium>*/

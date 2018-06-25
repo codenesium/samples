@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class PersonCreditCardService : AbstractPersonCreditCardService, IPersonCreditCardService
+        public partial class PersonCreditCardService : AbstractPersonCreditCardService, IPersonCreditCardService
         {
                 public PersonCreditCardService(
                         ILogger<IPersonCreditCardRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c223a043412baa4d46e7cd2fd24d8eac</Hash>
+    <Hash>c08f011ee4ebc78620ed54f8b2fe2199</Hash>
 </Codenesium>*/

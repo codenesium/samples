@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ChannelId_Delete()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -157,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectDeploymentProcessSnapshotId_Delete()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectId_Create_null()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -214,18 +190,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
-                }
-
-                [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -277,18 +241,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectVariableSetSnapshotId_Delete()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Version_Create_null()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -337,22 +289,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Version_Delete()
+                private async void BeUniqueByVersionProjectId_Create_Exists()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetVersionProjectId_Create_Exists()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
+                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
@@ -361,10 +301,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetVersionProjectId_Create_Not_Exists()
+                private async void BeUniqueByVersionProjectId_Create_Not_Exists()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
+                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
@@ -373,10 +313,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetVersionProjectId_Update_Exists()
+                private async void BeUniqueByVersionProjectId_Update_Exists()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
+                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
@@ -385,10 +325,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetVersionProjectId_Update_Not_Exists()
+                private async void BeUniqueByVersionProjectId_Update_Not_Exists()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
+                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
@@ -399,5 +339,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a17c593f2e4fa239a58d070a6c4181b8</Hash>
+    <Hash>c2c7797cbb9c9edcb0f91767d3d7228a</Hash>
 </Codenesium>*/

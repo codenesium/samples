@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiProductCostHistoryResponseModel : AbstractApiResponseModel
+        public partial class ApiProductCostHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> endDate,
+                        DateTime? endDate,
                         DateTime modifiedDate,
                         int productID,
                         decimal standardCost,
@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartDate = startDate;
                 }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>56b1cd7c645d07adfaf1f3612117d4b4</Hash>
+    <Hash>0a83f89d18c8f8dfe95d2bb1657e1b15</Hash>
 </Codenesium>*/

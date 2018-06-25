@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class UnitMeasureService : AbstractUnitMeasureService, IUnitMeasureService
+        public partial class UnitMeasureService : AbstractUnitMeasureService, IUnitMeasureService
         {
                 public UnitMeasureService(
                         ILogger<IUnitMeasureRepository> logger,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>398f0cfc069de6be4b8a92550d0678ba</Hash>
+    <Hash>a6ca0b0eecd8221e6c495d0442724063</Hash>
 </Codenesium>*/

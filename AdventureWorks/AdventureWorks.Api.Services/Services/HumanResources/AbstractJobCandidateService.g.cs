@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(Nullable<int> businessEntityID)
+                public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID)
                 {
                         List<JobCandidate> records = await this.jobCandidateRepository.ByBusinessEntityID(businessEntityID);
 
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6875048548365ea04d05e0a296e64134</Hash>
+    <Hash>9c899c27cff332e064726d80cea29aac</Hash>
 </Codenesium>*/

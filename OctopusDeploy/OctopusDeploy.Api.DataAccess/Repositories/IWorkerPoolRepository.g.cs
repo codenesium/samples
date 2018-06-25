@@ -17,10 +17,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<WorkerPool>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<WorkerPool> GetName(string name);
+                Task<WorkerPool> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>2b0c53236ecdf235cfc71932e1bae14f</Hash>
+    <Hash>6689c1cc841ae4b42e021bc355f8d4a9</Hash>
 </Codenesium>*/

@@ -198,13 +198,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProjectIdName/{projectId}/{name}")]
+                [Route("byProjectIdName/{projectId}/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProjectTriggerResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetProjectIdName(string projectId, string name)
+                public async virtual Task<IActionResult> ByProjectIdName(string projectId, string name)
                 {
-                        ApiProjectTriggerResponseModel response = await this.ProjectTriggerService.GetProjectIdName(projectId, name);
+                        ApiProjectTriggerResponseModel response = await this.ProjectTriggerService.ByProjectIdName(projectId, name);
 
                         if (response == null)
                         {
@@ -217,12 +217,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProjectId/{projectId}")]
+                [Route("byProjectId/{projectId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProjectTriggerResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProjectId(string projectId)
+                public async virtual Task<IActionResult> ByProjectId(string projectId)
                 {
-                        List<ApiProjectTriggerResponseModel> response = await this.ProjectTriggerService.GetProjectId(projectId);
+                        List<ApiProjectTriggerResponseModel> response = await this.ProjectTriggerService.ByProjectId(projectId);
 
                         return this.Ok(response);
                 }
@@ -230,5 +230,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f3a8a4e4da526e246a1491e892f967bc</Hash>
+    <Hash>ec3ded1eef521a8cb65bd388958beffb</Hash>
 </Codenesium>*/

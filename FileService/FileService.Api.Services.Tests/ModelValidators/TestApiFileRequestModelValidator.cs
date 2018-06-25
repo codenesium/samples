@@ -99,18 +99,6 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-                        fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
-
-                        var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Extension_Create_null()
                 {
                         Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
@@ -156,18 +144,6 @@ namespace FileServiceNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Extension, new string('A', 33));
-                }
-
-                [Fact]
-                public async void Extension_Delete()
-                {
-                        Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-                        fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
-
-                        var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -269,18 +245,6 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Location_Delete()
-                {
-                        Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-                        fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
-
-                        var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PrivateKey_Create_null()
                 {
                         Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
@@ -326,18 +290,6 @@ namespace FileServiceNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, new string('A', 65));
-                }
-
-                [Fact]
-                public async void PrivateKey_Delete()
-                {
-                        Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-                        fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
-
-                        var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -387,21 +339,9 @@ namespace FileServiceNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicKey, new string('A', 65));
                 }
-
-                [Fact]
-                public async void PublicKey_Delete()
-                {
-                        Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-                        fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
-
-                        var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f591add009d754cf903ac611f83fe7ee</Hash>
+    <Hash>c8fbbeff6fdbe08089ad830cfee0d1da</Hash>
 </Codenesium>*/

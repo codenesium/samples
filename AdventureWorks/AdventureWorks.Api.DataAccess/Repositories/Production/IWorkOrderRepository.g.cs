@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<List<WorkOrder>> ByProductID(int productID);
 
-                Task<List<WorkOrder>> ByScrapReasonID(Nullable<short> scrapReasonID);
+                Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID);
 
                 Task<List<WorkOrderRouting>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>bc88f34f6bc8978019c1aa934529cb4c</Hash>
+    <Hash>f8fd197a78e0c19b90ceb8640e337032</Hash>
 </Codenesium>*/

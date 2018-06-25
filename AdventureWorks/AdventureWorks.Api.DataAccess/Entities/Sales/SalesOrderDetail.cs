@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string carrierTrackingNumber,
                         decimal lineTotal,
                         DateTime modifiedDate,
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2ea26f456b94d7fdec6620b53b1d9e0</Hash>
+    <Hash>30c1a0756c6ba1e8cc7ec10f86b9adba</Hash>
 </Codenesium>*/

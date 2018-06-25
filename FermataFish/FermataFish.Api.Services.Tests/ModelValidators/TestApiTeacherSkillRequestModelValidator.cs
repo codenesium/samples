@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ITeacherSkillRepository> teacherSkillRepository = new Mock<ITeacherSkillRepository>();
-                        teacherSkillRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TeacherSkill()));
-
-                        var validator = new ApiTeacherSkillRequestModelValidator(teacherSkillRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void StudioId_Create_Valid_Reference()
                 {
                         Mock<ITeacherSkillRepository> teacherSkillRepository = new Mock<ITeacherSkillRepository>();
@@ -137,5 +125,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1775593acf1346d3b3ecde308ef55c77</Hash>
+    <Hash>96ce2ca6bab3ce8b52ae054f96679d8c</Hash>
 </Codenesium>*/

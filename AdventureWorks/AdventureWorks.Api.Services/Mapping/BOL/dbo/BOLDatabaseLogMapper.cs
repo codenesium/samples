@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLDatabaseLogMapper : BOLAbstractDatabaseLogMapper, IBOLDatabaseLogMapper
+        public partial class BOLDatabaseLogMapper : BOLAbstractDatabaseLogMapper, IBOLDatabaseLogMapper
         {
                 public BOLDatabaseLogMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bf56c36530a73991c10e8bf69a792e5</Hash>
+    <Hash>2fcfe9ec73b7b9348017ef12dcf17797</Hash>
 </Codenesium>*/

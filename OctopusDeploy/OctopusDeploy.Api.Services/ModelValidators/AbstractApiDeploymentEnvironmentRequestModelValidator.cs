@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeploymentEnvironmentRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeploymentEnvironmentRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -46,9 +46,9 @@ namespace OctopusDeployNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiDeploymentEnvironmentRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiDeploymentEnvironmentRequestModel model,  CancellationToken cancellationToken)
                 {
-                        DeploymentEnvironment record = await this.deploymentEnvironmentRepository.GetName(model.Name);
+                        DeploymentEnvironment record = await this.deploymentEnvironmentRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22db0a68844c78efadf6e23db803487f</Hash>
+    <Hash>093f9766207f544c013370a9a7fe5634</Hash>
 </Codenesium>*/

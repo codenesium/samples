@@ -109,9 +109,9 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiTicketResponseModel>> GetTicketStatusId(int ticketStatusId)
+                public async Task<List<ApiTicketResponseModel>> ByTicketStatusId(int ticketStatusId)
                 {
-                        List<Ticket> records = await this.ticketRepository.GetTicketStatusId(ticketStatusId);
+                        List<Ticket> records = await this.ticketRepository.ByTicketStatusId(ticketStatusId);
 
                         return this.bolTicketMapper.MapBOToModel(this.dalTicketMapper.MapEFToBO(records));
                 }
@@ -126,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73d7735f39ce2821b34307f39c2d227c</Hash>
+    <Hash>3fc115a875c0e4116bd3bb668647049e</Hash>
 </Codenesium>*/

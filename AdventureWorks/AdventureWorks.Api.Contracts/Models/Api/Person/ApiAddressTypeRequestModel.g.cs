@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid)
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f36d3465e7810d49a16c62700c7f41fa</Hash>
+    <Hash>35a7a6fc509b2e2db7328fcf271168b1</Hash>
 </Codenesium>*/

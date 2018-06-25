@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Province>> GetCountryId(int countryId)
+                public async Task<List<Province>> ByCountryId(int countryId)
                 {
                         var records = await this.Where(x => x.CountryId == countryId);
 
@@ -130,5 +130,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>08780f9ba40a49a13388a5a94c147a7f</Hash>
+    <Hash>240a7b1f620101a65eb986acf3f0a67b</Hash>
 </Codenesium>*/

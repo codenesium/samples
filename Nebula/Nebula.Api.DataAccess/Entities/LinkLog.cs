@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime dateEntered,
                         int id,
                         int linkId,
@@ -43,5 +43,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>219035bb2fa4e798526fffb993e6a95f</Hash>
+    <Hash>133850217091f139bbd3001c17269cfb</Hash>
 </Codenesium>*/

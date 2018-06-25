@@ -130,79 +130,79 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetDeploymentId_Exists()
+                public async void ByDeploymentId_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var records = new List<DeploymentRelatedMachine>();
                         records.Add(new DeploymentRelatedMachine());
-                        mock.RepositoryMock.Setup(x => x.GetDeploymentId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
                                                                           mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default(string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByDeploymentId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDeploymentId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDeploymentId_Not_Exists()
+                public async void ByDeploymentId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDeploymentId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
+                        mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
                                                                           mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default(string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByDeploymentId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDeploymentId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetMachineId_Exists()
+                public async void ByMachineId_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var records = new List<DeploymentRelatedMachine>();
                         records.Add(new DeploymentRelatedMachine());
-                        mock.RepositoryMock.Setup(x => x.GetMachineId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
                                                                           mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default(string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByMachineId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetMachineId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetMachineId_Not_Exists()
+                public async void ByMachineId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetMachineId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
+                        mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
                                                                           mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default(string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByMachineId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetMachineId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9a55e8c8712329551279a83480bed03f</Hash>
+    <Hash>1d1ef18f7032d0763a82a82f1a2d3d90</Hash>
 </Codenesium>*/

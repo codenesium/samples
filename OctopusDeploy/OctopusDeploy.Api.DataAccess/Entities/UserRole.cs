@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string id,
                         string jSON,
                         string name)
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d30e80d4d3618143624b0b71f844481</Hash>
+    <Hash>d39b7cb895899cd2739fedcb017b46e0</Hash>
 </Codenesium>*/

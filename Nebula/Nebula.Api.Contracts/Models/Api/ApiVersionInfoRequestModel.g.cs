@@ -13,21 +13,21 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                public virtual void SetProperties(
+                        DateTime? appliedOn,
                         string description)
                 {
                         this.AppliedOn = appliedOn;
                         this.Description = description;
                 }
 
-                private Nullable<DateTime> appliedOn;
+                private DateTime? appliedOn;
 
-                public Nullable<DateTime> AppliedOn
+                public DateTime? AppliedOn
                 {
                         get
                         {
-                                return this.appliedOn.IsEmptyOrZeroOrNull() ? null : this.appliedOn;
+                                return this.appliedOn;
                         }
 
                         set
@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Contracts
                 {
                         get
                         {
-                                return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
+                                return this.description;
                         }
 
                         set
@@ -54,5 +54,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c8fee6f9d661b9fd2e0cc3b94e44b7de</Hash>
+    <Hash>6f4307c0264bcfcda449631774cce588</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALAddressTypeMapper : DALAbstractAddressTypeMapper, IDALAddressTypeMapper
+        public partial class DALAddressTypeMapper : DALAbstractAddressTypeMapper, IDALAddressTypeMapper
         {
                 public DALAddressTypeMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9a1279f4fad4c44e7620281cd8a2b04</Hash>
+    <Hash>80f0643a04d6b2a3eac153c1240e19d8</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ApiKeyHashed_Delete()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
@@ -157,22 +145,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void UserId_Delete()
+                private async void BeUniqueByApiKeyHashed_Create_Exists()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetApiKeyHashed_Create_Exists()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(new ApiKey()));
+                        apiKeyRepository.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(new ApiKey()));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
@@ -181,10 +157,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetApiKeyHashed_Create_Not_Exists()
+                private async void BeUniqueByApiKeyHashed_Create_Not_Exists()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
+                        apiKeyRepository.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
@@ -193,10 +169,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetApiKeyHashed_Update_Exists()
+                private async void BeUniqueByApiKeyHashed_Update_Exists()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(new ApiKey()));
+                        apiKeyRepository.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(new ApiKey()));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
@@ -205,10 +181,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetApiKeyHashed_Update_Not_Exists()
+                private async void BeUniqueByApiKeyHashed_Update_Not_Exists()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
+                        apiKeyRepository.Setup(x => x.ByApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
@@ -219,5 +195,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1364fe73f078cc88fa0edccad9d4ca3e</Hash>
+    <Hash>fdb001c355b29f22e664506919c86302</Hash>
 </Codenesium>*/

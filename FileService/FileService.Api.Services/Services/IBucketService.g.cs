@@ -21,14 +21,14 @@ namespace FileServiceNS.Api.Services
 
                 Task<List<ApiBucketResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiBucketResponseModel> GetExternalId(Guid externalId);
+                Task<ApiBucketResponseModel> ByExternalId(Guid externalId);
 
-                Task<ApiBucketResponseModel> GetName(string name);
+                Task<ApiBucketResponseModel> ByName(string name);
 
                 Task<List<ApiFileResponseModel>> Files(int bucketId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>b39e86b091f5b4f53da44a562911a295</Hash>
+    <Hash>e908ca4be029574d2cac3b0a540bdedd</Hash>
 </Codenesium>*/

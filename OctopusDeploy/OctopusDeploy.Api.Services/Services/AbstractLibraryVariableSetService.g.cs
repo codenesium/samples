@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiLibraryVariableSetResponseModel> GetName(string name)
+                public async Task<ApiLibraryVariableSetResponseModel> ByName(string name)
                 {
-                        LibraryVariableSet record = await this.libraryVariableSetRepository.GetName(name);
+                        LibraryVariableSet record = await this.libraryVariableSetRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>674fbbe3f0e06d333a54c67e1c394468</Hash>
+    <Hash>a5c6f7413ef509b6ba151f420a379ea9</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProjectIdName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProjectIdName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void ProjectIdRules()
                 {
                         this.RuleFor(x => x.ProjectId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProjectIdName).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.ProjectId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProjectIdName).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.ProjectId));
                         this.RuleFor(x => x.ProjectId).Length(0, 50);
                 }
 
@@ -54,9 +54,9 @@ namespace OctopusDeployNS.Api.Services
                         this.RuleFor(x => x.TriggerType).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetProjectIdName(ApiProjectTriggerRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByProjectIdName(ApiProjectTriggerRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ProjectTrigger record = await this.projectTriggerRepository.GetProjectIdName(model.ProjectId, model.Name);
+                        ProjectTrigger record = await this.projectTriggerRepository.ByProjectIdName(model.ProjectId, model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -71,5 +71,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6a520fc87aaa4cad067bb100e46ed51</Hash>
+    <Hash>8b649cdd7bfb6f3b18d5e60e573e2347</Hash>
 </Codenesium>*/

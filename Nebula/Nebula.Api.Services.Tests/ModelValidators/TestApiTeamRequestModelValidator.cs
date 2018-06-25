@@ -73,18 +73,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
-
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void OrganizationId_Create_Valid_Reference()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
@@ -137,5 +125,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4201364e73b6281de92a0d526c764275</Hash>
+    <Hash>3a827fcf8e9bb7d66d973c5485cd593a</Hash>
 </Codenesium>*/

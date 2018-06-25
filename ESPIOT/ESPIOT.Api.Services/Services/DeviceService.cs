@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class DeviceService : AbstractDeviceService, IDeviceService
+        public partial class DeviceService : AbstractDeviceService, IDeviceService
         {
                 public DeviceService(
                         ILogger<IDeviceRepository> logger,
@@ -34,5 +34,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e5124648a91734276b2330c42de2ccf</Hash>
+    <Hash>1129c473c68dc74838e321596fbce911</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public class SpeciesRepository : AbstractSpeciesRepository, ISpeciesRepository
+        public partial class SpeciesRepository : AbstractSpeciesRepository, ISpeciesRepository
         {
                 public SpeciesRepository(
                         ILogger<SpeciesRepository> logger,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4aaaf436e658e7533ebd8f8d62cb88bb</Hash>
+    <Hash>7b2e2db831987d824664f646a8ca1f86</Hash>
 </Codenesium>*/

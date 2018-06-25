@@ -123,18 +123,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
-
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TeamId_Create_Valid_Reference()
                 {
                         Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
@@ -187,5 +175,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>694fd375b44adffceb602b572ff3372c</Hash>
+    <Hash>6fb9810c2e8d5dfbab554bdcce101862</Hash>
 </Codenesium>*/

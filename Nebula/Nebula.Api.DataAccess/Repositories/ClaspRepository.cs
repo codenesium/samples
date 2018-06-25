@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public class ClaspRepository : AbstractClaspRepository, IClaspRepository
+        public partial class ClaspRepository : AbstractClaspRepository, IClaspRepository
         {
                 public ClaspRepository(
                         ILogger<ClaspRepository> logger,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fbb5d3bf036ce06243689a1c2373686e</Hash>
+    <Hash>d5e006d197b15baf087b040949af31bf</Hash>
 </Codenesium>*/

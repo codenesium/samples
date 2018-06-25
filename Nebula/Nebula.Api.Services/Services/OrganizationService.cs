@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class OrganizationService : AbstractOrganizationService, IOrganizationService
+        public partial class OrganizationService : AbstractOrganizationService, IOrganizationService
         {
                 public OrganizationService(
                         ILogger<IOrganizationRepository> logger,
@@ -34,5 +34,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>399cc9ce2cbb7c3042cf8970f2d233be</Hash>
+    <Hash>deb3dbdead5e48ac127131b5a1148d18</Hash>
 </Codenesium>*/

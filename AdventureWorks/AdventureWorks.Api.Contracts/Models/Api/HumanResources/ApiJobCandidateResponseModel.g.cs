@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiJobCandidateResponseModel : AbstractApiResponseModel
+        public partial class ApiJobCandidateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> businessEntityID,
+                        int? businessEntityID,
                         int jobCandidateID,
                         DateTime modifiedDate,
                         string resume)
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Resume = resume;
                 }
 
-                public Nullable<int> BusinessEntityID { get; private set; }
+                public int? BusinessEntityID { get; private set; }
 
                 public int JobCandidateID { get; private set; }
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>546c2a2a8e2cefa8e3fb7bf20196811e</Hash>
+    <Hash>823266f759202e7bf75dfb2d0d3681b3</Hash>
 </Codenesium>*/

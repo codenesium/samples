@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
@@ -130,18 +118,6 @@ namespace PetShippingNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
@@ -251,21 +215,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 11));
                 }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>884e2eec3fb469b730384fb64419ab3c</Hash>
+    <Hash>319f26c1644113f1c4d0aca4fd32f04f</Hash>
 </Codenesium>*/

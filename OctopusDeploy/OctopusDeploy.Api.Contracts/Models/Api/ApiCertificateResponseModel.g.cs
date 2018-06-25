@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiCertificateResponseModel : AbstractApiResponseModel
+        public partial class ApiCertificateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTimeOffset> archived,
+                        DateTimeOffset? archived,
                         DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
@@ -36,7 +36,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                public Nullable<DateTimeOffset> Archived { get; private set; }
+                public DateTimeOffset? Archived { get; private set; }
 
                 public DateTimeOffset Created { get; private set; }
 
@@ -175,5 +175,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d969f6f693fe9c8e14b4ed7f328e640e</Hash>
+    <Hash>a66cc712aea65f0a0b7a6025c8a3705a</Hash>
 </Codenesium>*/

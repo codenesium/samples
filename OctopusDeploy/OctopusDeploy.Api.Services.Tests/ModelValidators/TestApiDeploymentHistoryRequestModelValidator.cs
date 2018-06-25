@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ChannelId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ChannelName_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -85,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ChannelName_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void DeployedBy_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -118,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeployedBy, new string('A', 201));
-                }
-
-                [Fact]
-                public async void DeployedBy_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -181,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DeploymentName_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EnvironmentId_Create_null()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -238,18 +190,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EnvironmentId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -301,18 +241,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EnvironmentName_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectId_Create_null()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -358,18 +286,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -421,18 +337,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectName_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ProjectSlug_Create_null()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -478,18 +382,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, new string('A', 211));
-                }
-
-                [Fact]
-                public async void ProjectSlug_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -541,18 +433,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ReleaseId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ReleaseVersion_Create_null()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -598,18 +478,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, new string('A', 101));
-                }
-
-                [Fact]
-                public async void ReleaseVersion_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -661,18 +529,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TaskId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TaskState_Create_null()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -721,18 +577,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TaskState_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TenantId_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -754,18 +598,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void TenantId_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -791,21 +623,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantName, new string('A', 201));
                 }
-
-                [Fact]
-                public async void TenantName_Delete()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>537760e5e117620b7cc2eef634e19dba</Hash>
+    <Hash>dc98fbba05e3d5421aa6e4eef98626ee</Hash>
 </Codenesium>*/

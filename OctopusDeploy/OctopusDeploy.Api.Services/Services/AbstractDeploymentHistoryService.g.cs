@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiDeploymentHistoryResponseModel>> GetCreated(DateTimeOffset created)
+                public async Task<List<ApiDeploymentHistoryResponseModel>> ByCreated(DateTimeOffset created)
                 {
-                        List<DeploymentHistory> records = await this.deploymentHistoryRepository.GetCreated(created);
+                        List<DeploymentHistory> records = await this.deploymentHistoryRepository.ByCreated(created);
 
                         return this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(records));
                 }
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a50a79374b3b940d0c271cc81f9e531</Hash>
+    <Hash>1ff59b2ed93b79d235c0bfb630385284</Hash>
 </Codenesium>*/

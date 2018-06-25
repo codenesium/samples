@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime acquiredDate,
                         int breedId,
                         string description,
@@ -64,5 +64,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>89a33b2e45b4561bf300b0bf23ecd298</Hash>
+    <Hash>b37246047eff6a6d82ef3448866283fe</Hash>
 </Codenesium>*/

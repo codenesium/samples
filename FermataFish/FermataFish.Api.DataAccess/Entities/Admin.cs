@@ -12,8 +12,8 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> birthday,
+                public virtual void SetProperties(
+                        DateTime? birthday,
                         string email,
                         string firstName,
                         int id,
@@ -31,7 +31,7 @@ namespace FermataFishNS.Api.DataAccess
                 }
 
                 [Column("birthday")]
-                public Nullable<DateTime> Birthday { get; private set; }
+                public DateTime? Birthday { get; private set; }
 
                 [Column("email")]
                 public string Email { get; private set; }
@@ -58,5 +58,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d50cba1f964b7d1b069db6fe5e08daa</Hash>
+    <Hash>fafba53314d76178ae760ecca5d2873e</Hash>
 </Codenesium>*/

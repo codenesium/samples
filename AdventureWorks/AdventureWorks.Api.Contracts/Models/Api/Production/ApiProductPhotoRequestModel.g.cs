@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         byte[] largePhoto,
                         string largePhotoFileName,
                         DateTime modifiedDate,
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.largePhoto.IsEmptyOrZeroOrNull() ? null : this.largePhoto;
+                                return this.largePhoto;
                         }
 
                         set
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.largePhotoFileName.IsEmptyOrZeroOrNull() ? null : this.largePhotoFileName;
+                                return this.largePhotoFileName;
                         }
 
                         set
@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.thumbNailPhoto.IsEmptyOrZeroOrNull() ? null : this.thumbNailPhoto;
+                                return this.thumbNailPhoto;
                         }
 
                         set
@@ -94,7 +94,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.thumbnailPhotoFileName.IsEmptyOrZeroOrNull() ? null : this.thumbnailPhotoFileName;
+                                return this.thumbnailPhotoFileName;
                         }
 
                         set
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d06a10d5127e9524f487902a3a3dedbd</Hash>
+    <Hash>e4a4727fc20f6d2d3a3727451db16388</Hash>
 </Codenesium>*/

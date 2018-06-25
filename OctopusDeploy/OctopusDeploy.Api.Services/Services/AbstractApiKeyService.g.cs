@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiApiKeyResponseModel> GetApiKeyHashed(string apiKeyHashed)
+                public async Task<ApiApiKeyResponseModel> ByApiKeyHashed(string apiKeyHashed)
                 {
-                        ApiKey record = await this.apiKeyRepository.GetApiKeyHashed(apiKeyHashed);
+                        ApiKey record = await this.apiKeyRepository.ByApiKeyHashed(apiKeyHashed);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59e85bc96c0951aeca86677fded202bc</Hash>
+    <Hash>4bbdbd0410ed051bac41d87b19006775</Hash>
 </Codenesium>*/

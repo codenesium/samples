@@ -13,10 +13,10 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void SetProperties(int billOfMaterialsID,
                                                   short bOMLevel,
                                                   int componentID,
-                                                  Nullable<DateTime> endDate,
+                                                  DateTime? endDate,
                                                   DateTime modifiedDate,
                                                   decimal perAssemblyQty,
-                                                  Nullable<int> productAssemblyID,
+                                                  int? productAssemblyID,
                                                   DateTime startDate,
                                                   string unitMeasureCode)
                 {
@@ -37,13 +37,13 @@ namespace AdventureWorksNS.Api.Services
 
                 public int ComponentID { get; private set; }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
                 public decimal PerAssemblyQty { get; private set; }
 
-                public Nullable<int> ProductAssemblyID { get; private set; }
+                public int? ProductAssemblyID { get; private set; }
 
                 public DateTime StartDate { get; private set; }
 
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef84e8ccfda9665a4571205ea56fcfcf</Hash>
+    <Hash>98a67bf7e14ef2edffed511a6ceba5b0</Hash>
 </Codenesium>*/

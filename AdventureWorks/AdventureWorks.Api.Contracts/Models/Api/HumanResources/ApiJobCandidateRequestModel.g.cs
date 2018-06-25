@@ -13,8 +13,8 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> businessEntityID,
+                public virtual void SetProperties(
+                        int? businessEntityID,
                         DateTime modifiedDate,
                         string resume)
                 {
@@ -23,13 +23,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Resume = resume;
                 }
 
-                private Nullable<int> businessEntityID;
+                private int? businessEntityID;
 
-                public Nullable<int> BusinessEntityID
+                public int? BusinessEntityID
                 {
                         get
                         {
-                                return this.businessEntityID.IsEmptyOrZeroOrNull() ? null : this.businessEntityID;
+                                return this.businessEntityID;
                         }
 
                         set
@@ -60,7 +60,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.resume.IsEmptyOrZeroOrNull() ? null : this.resume;
+                                return this.resume;
                         }
 
                         set
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>025e99bcdc684b1ead4764a8ef11d24b</Hash>
+    <Hash>45bc44d9bcc6a9e7b5beaf16fbe0b86f</Hash>
 </Codenesium>*/

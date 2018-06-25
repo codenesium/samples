@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                public async Task<List<SalesOrderHeader>> BySalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<SalesOrderHeader>> BySalesPersonID(int? salesPersonID)
                 {
                         var records = await this.Where(x => x.SalesPersonID == salesPersonID);
 
@@ -107,12 +107,12 @@ namespace AdventureWorksNS.Api.DataAccess
                         return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesOrderID == salesOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
                 }
 
-                public async virtual Task<CreditCard> GetCreditCard(int creditCardID)
+                public async virtual Task<CreditCard> GetCreditCard(int? creditCardID)
                 {
                         return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
                 }
 
-                public async virtual Task<CurrencyRate> GetCurrencyRate(int currencyRateID)
+                public async virtual Task<CurrencyRate> GetCurrencyRate(int? currencyRateID)
                 {
                         return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateID == currencyRateID);
                 }
@@ -122,12 +122,12 @@ namespace AdventureWorksNS.Api.DataAccess
                         return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.CustomerID == customerID);
                 }
 
-                public async virtual Task<SalesPerson> GetSalesPerson(int salesPersonID)
+                public async virtual Task<SalesPerson> GetSalesPerson(int? salesPersonID)
                 {
                         return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
                 }
 
-                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int? territoryID)
                 {
                         return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
                 }
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>14c36d092cf55319b7f940509aa892c4</Hash>
+    <Hash>2c9532fd75e680be6f05f549b9177589</Hash>
 </Codenesium>*/

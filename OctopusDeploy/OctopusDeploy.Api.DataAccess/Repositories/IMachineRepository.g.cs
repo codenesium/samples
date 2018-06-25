@@ -17,12 +17,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Machine> GetName(string name);
+                Task<Machine> ByName(string name);
 
-                Task<List<Machine>> GetMachinePolicyId(string machinePolicyId);
+                Task<List<Machine>> ByMachinePolicyId(string machinePolicyId);
         }
 }
 
 /*<Codenesium>
-    <Hash>dfb40bd2b22a9d85f367e89621505ff1</Hash>
+    <Hash>8ff1e56298f97bea3ff2c3fe7336b5a0</Hash>
 </Codenesium>*/

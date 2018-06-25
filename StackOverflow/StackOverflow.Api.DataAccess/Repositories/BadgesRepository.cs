@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public class BadgesRepository : AbstractBadgesRepository, IBadgesRepository
+        public partial class BadgesRepository : AbstractBadgesRepository, IBadgesRepository
         {
                 public BadgesRepository(
                         ILogger<BadgesRepository> logger,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>32097d4d5d2c63b574644b818f5c94a4</Hash>
+    <Hash>134c8c6e79ffd6859fb78a114f3046cd</Hash>
 </Codenesium>*/

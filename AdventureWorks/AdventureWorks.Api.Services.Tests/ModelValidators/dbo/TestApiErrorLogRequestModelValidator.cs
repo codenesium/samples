@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ErrorMessage_Delete()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
-
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void ErrorProcedure_Create_length()
                 {
                         Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
@@ -106,18 +94,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
-                }
-
-                [Fact]
-                public async void ErrorProcedure_Delete()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
-
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -167,21 +143,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
                 }
-
-                [Fact]
-                public async void UserName_Delete()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
-
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2bcce4b712efb1714ab39de82c678d48</Hash>
+    <Hash>a6d64f8f34817c12d15d6c0468702988</Hash>
 </Codenesium>*/

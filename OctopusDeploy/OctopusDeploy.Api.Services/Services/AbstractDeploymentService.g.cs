@@ -109,23 +109,23 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiDeploymentResponseModel>> GetChannelId(string channelId)
+                public async Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId)
                 {
-                        List<Deployment> records = await this.deploymentRepository.GetChannelId(channelId);
+                        List<Deployment> records = await this.deploymentRepository.ByChannelId(channelId);
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiDeploymentResponseModel>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+                public async Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
-                        List<Deployment> records = await this.deploymentRepository.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
+                        List<Deployment> records = await this.deploymentRepository.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiDeploymentResponseModel>> GetTenantId(string tenantId)
+                public async Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId)
                 {
-                        List<Deployment> records = await this.deploymentRepository.GetTenantId(tenantId);
+                        List<Deployment> records = await this.deploymentRepository.ByTenantId(tenantId);
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
@@ -140,5 +140,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69c7a778ad447f8655462a0e3a3a56ea</Hash>
+    <Hash>4b63585ba5096d63a5748f41b0d13d9d</Hash>
 </Codenesium>*/

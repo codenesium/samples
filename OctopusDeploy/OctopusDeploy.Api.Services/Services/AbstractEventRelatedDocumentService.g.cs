@@ -101,16 +101,16 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventId(string eventId)
+                public async Task<List<ApiEventRelatedDocumentResponseModel>> ByEventId(string eventId)
                 {
-                        List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.GetEventId(eventId);
+                        List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.ByEventId(eventId);
 
                         return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+                public async Task<List<ApiEventRelatedDocumentResponseModel>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
-                        List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.GetEventIdRelatedDocumentId(eventId, relatedDocumentId);
+                        List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.ByEventIdRelatedDocumentId(eventId, relatedDocumentId);
 
                         return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
                 }
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bf23660a723373fd91b076be88c65c2c</Hash>
+    <Hash>1c5993aa106433db89972490a549a38f</Hash>
 </Codenesium>*/

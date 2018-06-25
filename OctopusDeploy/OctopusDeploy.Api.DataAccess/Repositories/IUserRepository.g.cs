@@ -17,16 +17,16 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<User>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<User> GetUsername(string username);
+                Task<User> ByUsername(string username);
 
-                Task<List<User>> GetDisplayName(string displayName);
+                Task<List<User>> ByDisplayName(string displayName);
 
-                Task<List<User>> GetEmailAddress(string emailAddress);
+                Task<List<User>> ByEmailAddress(string emailAddress);
 
-                Task<List<User>> GetExternalId(string externalId);
+                Task<List<User>> ByExternalId(string externalId);
         }
 }
 
 /*<Codenesium>
-    <Hash>ea0ea78ab69ccbbfa1dab742d8ebdd64</Hash>
+    <Hash>e445b0699cf7e2fcec93b92e6208d97b</Hash>
 </Codenesium>*/

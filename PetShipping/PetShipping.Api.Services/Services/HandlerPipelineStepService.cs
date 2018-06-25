@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public class HandlerPipelineStepService : AbstractHandlerPipelineStepService, IHandlerPipelineStepService
+        public partial class HandlerPipelineStepService : AbstractHandlerPipelineStepService, IHandlerPipelineStepService
         {
                 public HandlerPipelineStepService(
                         ILogger<IHandlerPipelineStepRepository> logger,
@@ -30,5 +30,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55831750f2dbe90e0db473744fd96cfb</Hash>
+    <Hash>0f7387e44f51160ff79e149419ae9a4b</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
-
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByStartTimeEndTime_Create_Exists()
                 {
                         Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fcc53d524f5643aee5075b6962b06150</Hash>
+    <Hash>83d2a99c1801462d06e80465110fa505</Hash>
 </Codenesium>*/

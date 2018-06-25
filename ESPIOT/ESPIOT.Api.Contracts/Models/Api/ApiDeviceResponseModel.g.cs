@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public class ApiDeviceResponseModel : AbstractApiResponseModel
+        public partial class ApiDeviceResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int id,
@@ -58,5 +58,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dc671f3d2a8c4181d362af05b93a873a</Hash>
+    <Hash>33d0ee9a7d6a909888bcddb4195988ea</Hash>
 </Codenesium>*/

@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
                 }
-
-                [Fact]
-                public async void UnitMeasureCode_Delete()
-                {
-                        Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
-                        productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
-
-                        var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>18f954d77b550b79d604215d53659405</Hash>
+    <Hash>de6669c25a6745a0f13090546f895f33</Hash>
 </Codenesium>*/

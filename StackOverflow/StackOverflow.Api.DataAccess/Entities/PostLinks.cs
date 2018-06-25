@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime creationDate,
                         int id,
                         int linkTypeId,
@@ -45,5 +45,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1d7c725f4e9bec8f63a135eb920ca2f</Hash>
+    <Hash>1fdc9b05e3ce9a3ba10d7d088787c0d2</Hash>
 </Codenesium>*/

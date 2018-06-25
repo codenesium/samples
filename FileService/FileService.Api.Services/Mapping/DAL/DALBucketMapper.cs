@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FileServiceNS.Api.Services
 {
-        public class DALBucketMapper : DALAbstractBucketMapper, IDALBucketMapper
+        public partial class DALBucketMapper : DALAbstractBucketMapper, IDALBucketMapper
         {
                 public DALBucketMapper()
                 {
@@ -13,5 +13,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bab1e5091101acc1e87abe94d8416f43</Hash>
+    <Hash>19e5ca1d8a18fbe0a9c115e8e75bd21a</Hash>
 </Codenesium>*/

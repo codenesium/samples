@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal averageRate,
                         DateTime currencyRateDate,
                         int currencyRateID,
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>63ecb8ee0cce856073f26930f39cf0f8</Hash>
+    <Hash>863f45e066c7a0ef505943ae66ae9816</Hash>
 </Codenesium>*/

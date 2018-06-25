@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string cardNumber,
                         string cardType,
                         int creditCardID,
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b15a7a200d06b563f770da61937391ab</Hash>
+    <Hash>119cefa57c2bb2b78814d2ea73c7b5ee</Hash>
 </Codenesium>*/

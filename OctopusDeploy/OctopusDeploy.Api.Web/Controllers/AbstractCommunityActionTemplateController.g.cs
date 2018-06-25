@@ -196,13 +196,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getExternalId/{externalId}")]
+                [Route("byExternalId/{externalId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCommunityActionTemplateResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetExternalId(Guid externalId)
+                public async virtual Task<IActionResult> ByExternalId(Guid externalId)
                 {
-                        ApiCommunityActionTemplateResponseModel response = await this.CommunityActionTemplateService.GetExternalId(externalId);
+                        ApiCommunityActionTemplateResponseModel response = await this.CommunityActionTemplateService.ByExternalId(externalId);
 
                         if (response == null)
                         {
@@ -215,13 +215,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCommunityActionTemplateResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiCommunityActionTemplateResponseModel response = await this.CommunityActionTemplateService.GetName(name);
+                        ApiCommunityActionTemplateResponseModel response = await this.CommunityActionTemplateService.ByName(name);
 
                         if (response == null)
                         {
@@ -236,5 +236,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ae01324f67167b4490ce584ef60fb1ae</Hash>
+    <Hash>d96c7c114e340bdfb1e6893e23e9703f</Hash>
 </Codenesium>*/

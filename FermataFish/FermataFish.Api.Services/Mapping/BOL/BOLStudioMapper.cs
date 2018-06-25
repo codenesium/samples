@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLStudioMapper : BOLAbstractStudioMapper, IBOLStudioMapper
+        public partial class BOLStudioMapper : BOLAbstractStudioMapper, IBOLStudioMapper
         {
                 public BOLStudioMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7f8e4177909e467b8a4f73cc8cfe7a9</Hash>
+    <Hash>7afcf0ba2b58e55523c0096d47e412f3</Hash>
 </Codenesium>*/

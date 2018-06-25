@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class WorkerTaskLeaseService : AbstractWorkerTaskLeaseService, IWorkerTaskLeaseService
+        public partial class WorkerTaskLeaseService : AbstractWorkerTaskLeaseService, IWorkerTaskLeaseService
         {
                 public WorkerTaskLeaseService(
                         ILogger<IWorkerTaskLeaseRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ef5b39bb9c8fa2b185a05954c509dff</Hash>
+    <Hash>b93234a7787e31a2e5a6565fb6e4d95d</Hash>
 </Codenesium>*/

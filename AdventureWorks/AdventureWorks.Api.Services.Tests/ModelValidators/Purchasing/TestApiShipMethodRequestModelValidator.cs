@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
-
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a17412f26ea6d1264d34a35157fd91b2</Hash>
+    <Hash>809b3497d0e2f6513ebcf40e178193b4</Hash>
 </Codenesium>*/

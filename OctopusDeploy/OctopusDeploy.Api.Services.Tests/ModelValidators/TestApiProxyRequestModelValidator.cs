@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
-
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
+                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
                         var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProxyRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
+                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
                         var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProxyRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
+                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
                         var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
+                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
                         var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>004ca83855274ac6ef9b145a8f92fc35</Hash>
+    <Hash>08836215daab26521c9a990f74de6c3b</Hash>
 </Codenesium>*/

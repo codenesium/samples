@@ -83,7 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<Customer>> ByTerritoryID(Nullable<int> territoryID)
+                public async Task<List<Customer>> ByTerritoryID(int? territoryID)
                 {
                         var records = await this.Where(x => x.TerritoryID == territoryID);
 
@@ -95,12 +95,12 @@ namespace AdventureWorksNS.Api.DataAccess
                         return await this.Context.Set<SalesOrderHeader>().Where(x => x.CustomerID == customerID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
                 }
 
-                public async virtual Task<Store> GetStore(int storeID)
+                public async virtual Task<Store> GetStore(int? storeID)
                 {
                         return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.BusinessEntityID == storeID);
                 }
 
-                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int? territoryID)
                 {
                         return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
                 }
@@ -137,5 +137,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5641cd807b6aa4903f3eaa8863521ade</Hash>
+    <Hash>2ca7e59fe8f6cb507b5ee38c7b6ca0a9</Hash>
 </Codenesium>*/

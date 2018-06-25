@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EnvironmentId_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
@@ -154,18 +142,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -265,18 +241,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Status_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TaskId_Create_null()
                 {
                         Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
@@ -325,18 +289,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TaskId_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TenantId_Create_length()
                 {
                         Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
@@ -358,18 +310,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void TenantId_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -419,21 +359,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 201));
                 }
-
-                [Fact]
-                public async void Title_Delete()
-                {
-                        Mock<IInterruptionRepository> interruptionRepository = new Mock<IInterruptionRepository>();
-                        interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
-
-                        var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a17b4e3d5913a477336acb7cc2c87a6d</Hash>
+    <Hash>5d59ef520a4b2755ece82091e8a5c142</Hash>
 </Codenesium>*/

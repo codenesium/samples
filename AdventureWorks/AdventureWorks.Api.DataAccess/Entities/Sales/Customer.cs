@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         int customerID,
                         DateTime modifiedDate,
-                        Nullable<int> personID,
+                        int? personID,
                         Guid rowguid,
-                        Nullable<int> storeID,
-                        Nullable<int> territoryID)
+                        int? storeID,
+                        int? territoryID)
                 {
                         this.AccountNumber = accountNumber;
                         this.CustomerID = customerID;
@@ -42,16 +42,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime ModifiedDate { get; private set; }
 
                 [Column("PersonID")]
-                public Nullable<int> PersonID { get; private set; }
+                public int? PersonID { get; private set; }
 
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
                 [Column("StoreID")]
-                public Nullable<int> StoreID { get; private set; }
+                public int? StoreID { get; private set; }
 
                 [Column("TerritoryID")]
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 [ForeignKey("StoreID")]
                 public virtual Store Store { get; set; }
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e96330ff9ade83e2480164a10b975c0</Hash>
+    <Hash>51295eace81888ff33bbcf518b3bdb8b</Hash>
 </Codenesium>*/

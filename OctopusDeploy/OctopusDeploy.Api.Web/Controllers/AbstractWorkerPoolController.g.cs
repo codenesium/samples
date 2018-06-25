@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiWorkerPoolResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiWorkerPoolResponseModel response = await this.WorkerPoolService.GetName(name);
+                        ApiWorkerPoolResponseModel response = await this.WorkerPoolService.ByName(name);
 
                         if (response == null)
                         {
@@ -218,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1ee6e4e8b1cd6be7118207fd6331895e</Hash>
+    <Hash>8d2eafe7dfc480dbcc63f9daa514f158</Hash>
 </Codenesium>*/

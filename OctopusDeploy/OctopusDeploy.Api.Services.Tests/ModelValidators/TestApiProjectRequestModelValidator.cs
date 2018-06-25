@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DeploymentProcessId_Delete()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -133,18 +121,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LifecycleId_Delete()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -190,18 +166,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -253,18 +217,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectGroupId_Delete()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Slug_Create_null()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -313,18 +265,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Slug_Delete()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void VariableSetId_Create_length()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -349,22 +289,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void VariableSetId_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
+                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
                         var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProjectRequestModel());
@@ -373,10 +301,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
                         var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProjectRequestModel());
@@ -385,10 +313,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
+                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
                         var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
@@ -397,10 +325,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
                         var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
@@ -411,5 +339,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>948db10398ab714cc664a215fcb4bbfc</Hash>
+    <Hash>31e5e2042542339db4c889d71cd393ae</Hash>
 </Codenesium>*/

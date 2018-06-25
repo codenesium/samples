@@ -73,18 +73,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastEditorDisplayName_Delete()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
-
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Tags_Create_length()
                 {
                         Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
@@ -106,18 +94,6 @@ namespace StackOverflowNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Tags, new string('A', 151));
-                }
-
-                [Fact]
-                public async void Tags_Delete()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
-
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -143,21 +119,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 251));
                 }
-
-                [Fact]
-                public async void Title_Delete()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
-
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3d0050717da16f50d18e57fe685329a8</Hash>
+    <Hash>26fe0b91a76099bb7286249e5ff020f2</Hash>
 </Codenesium>*/

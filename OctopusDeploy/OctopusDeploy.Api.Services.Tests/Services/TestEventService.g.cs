@@ -142,12 +142,12 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetAutoId_Exists()
+                public async void ByAutoId_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var records = new List<Event>();
                         records.Add(new Event());
-                        mock.RepositoryMock.Setup(x => x.GetAutoId(It.IsAny<long>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByAutoId(It.IsAny<long>())).Returns(Task.FromResult(records));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -156,17 +156,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetAutoId(default(long));
+                        List<ApiEventResponseModel> response = await service.ByAutoId(default(long));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetAutoId(It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByAutoId(It.IsAny<long>()));
                 }
 
                 [Fact]
-                public async void GetAutoId_Not_Exists()
+                public async void ByAutoId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetAutoId(It.IsAny<long>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+                        mock.RepositoryMock.Setup(x => x.ByAutoId(It.IsAny<long>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -175,19 +175,19 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetAutoId(default(long));
+                        List<ApiEventResponseModel> response = await service.ByAutoId(default(long));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetAutoId(It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByAutoId(It.IsAny<long>()));
                 }
 
                 [Fact]
-                public async void GetIdRelatedDocumentIdsOccurredCategoryAutoId_Exists()
+                public async void ByIdRelatedDocumentIdsOccurredCategoryAutoId_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var records = new List<Event>();
                         records.Add(new Event());
-                        mock.RepositoryMock.Setup(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>())).Returns(Task.FromResult(records));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
+                        List<ApiEventResponseModel> response = await service.ByIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
                 }
 
                 [Fact]
-                public async void GetIdRelatedDocumentIdsOccurredCategoryAutoId_Not_Exists()
+                public async void ByIdRelatedDocumentIdsOccurredCategoryAutoId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+                        mock.RepositoryMock.Setup(x => x.ByIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -215,19 +215,19 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
+                        List<ApiEventResponseModel> response = await service.ByIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
                 }
 
                 [Fact]
-                public async void GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId_Exists()
+                public async void ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var records = new List<Event>();
                         records.Add(new Event());
-                        mock.RepositoryMock.Setup(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -236,17 +236,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
+                        List<ApiEventResponseModel> response = await service.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId_Not_Exists()
+                public async void ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+                        mock.RepositoryMock.Setup(x => x.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -255,19 +255,19 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
+                        List<ApiEventResponseModel> response = await service.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetIdOccurred_Exists()
+                public async void ByIdOccurred_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var records = new List<Event>();
                         records.Add(new Event());
-                        mock.RepositoryMock.Setup(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -276,17 +276,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default(string), default(DateTimeOffset));
+                        List<ApiEventResponseModel> response = await service.ByIdOccurred(default(string), default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetIdOccurred_Not_Exists()
+                public async void ByIdOccurred_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+                        mock.RepositoryMock.Setup(x => x.ByIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -295,10 +295,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default(string), default(DateTimeOffset));
+                        List<ApiEventResponseModel> response = await service.ByIdOccurred(default(string), default(DateTimeOffset));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
@@ -344,5 +344,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>38b6790fc3d308a1fe0a14e2797be095</Hash>
+    <Hash>566a387b0940077aa0b67d7f18b0b1ed</Hash>
 </Codenesium>*/

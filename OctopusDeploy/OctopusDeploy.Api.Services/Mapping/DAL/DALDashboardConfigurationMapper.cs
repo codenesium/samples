@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALDashboardConfigurationMapper : DALAbstractDashboardConfigurationMapper, IDALDashboardConfigurationMapper
+        public partial class DALDashboardConfigurationMapper : DALAbstractDashboardConfigurationMapper, IDALDashboardConfigurationMapper
         {
                 public DALDashboardConfigurationMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fdff080435d3ee0d7a43bb23e3a00cb8</Hash>
+    <Hash>6f0f3a368f040c4b900eabe8056c6a6b</Hash>
 </Codenesium>*/

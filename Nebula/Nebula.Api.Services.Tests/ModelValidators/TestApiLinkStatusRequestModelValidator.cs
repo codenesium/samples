@@ -71,21 +71,9 @@ namespace NebulaNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
-                        linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
-
-                        var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2d2543214672f6d15d43ac2f644ac606</Hash>
+    <Hash>9be3d3bdfdea0460436b86476bf461d1</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace PetStoreNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
-
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void LastName_Create_null()
                 {
                         Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
@@ -130,18 +118,6 @@ namespace PetStoreNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 91));
-                }
-
-                [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
-
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -291,21 +267,9 @@ namespace PetStoreNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 11));
                 }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
-
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1c4a95f7462b14eeadd06dc388e9ce96</Hash>
+    <Hash>264a55fd33a1cb20f8412151fb9260e3</Hash>
 </Codenesium>*/

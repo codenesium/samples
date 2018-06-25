@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public class RateService : AbstractRateService, IRateService
+        public partial class RateService : AbstractRateService, IRateService
         {
                 public RateService(
                         ILogger<IRateRepository> logger,
@@ -30,5 +30,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56ddf42dee473ddf4b45e12058e7fe44</Hash>
+    <Hash>30f6866e37a1d78f44d02426fe14aa4a</Hash>
 </Codenesium>*/

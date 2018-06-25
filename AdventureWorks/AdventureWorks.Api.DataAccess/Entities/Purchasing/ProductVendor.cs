@@ -12,15 +12,15 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int averageLeadTime,
                         int businessEntityID,
-                        Nullable<decimal> lastReceiptCost,
-                        Nullable<DateTime> lastReceiptDate,
+                        decimal? lastReceiptCost,
+                        DateTime? lastReceiptDate,
                         int maxOrderQty,
                         int minOrderQty,
                         DateTime modifiedDate,
-                        Nullable<int> onOrderQty,
+                        int? onOrderQty,
                         int productID,
                         decimal standardPrice,
                         string unitMeasureCode)
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int BusinessEntityID { get; private set; }
 
                 [Column("LastReceiptCost")]
-                public Nullable<decimal> LastReceiptCost { get; private set; }
+                public decimal? LastReceiptCost { get; private set; }
 
                 [Column("LastReceiptDate")]
-                public Nullable<DateTime> LastReceiptDate { get; private set; }
+                public DateTime? LastReceiptDate { get; private set; }
 
                 [Column("MaxOrderQty")]
                 public int MaxOrderQty { get; private set; }
@@ -60,7 +60,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime ModifiedDate { get; private set; }
 
                 [Column("OnOrderQty")]
-                public Nullable<int> OnOrderQty { get; private set; }
+                public int? OnOrderQty { get; private set; }
 
                 [Key]
                 [Column("ProductID")]
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3b71012bf0ee536ea1650d7cbfb3cb3d</Hash>
+    <Hash>39d5fbee33174bd9eaeba0b592afccb3</Hash>
 </Codenesium>*/

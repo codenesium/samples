@@ -21,10 +21,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiProxyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProxyResponseModel> GetName(string name);
+                Task<ApiProxyResponseModel> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>a938d3e6671369749fc9d3b0d550bb00</Hash>
+    <Hash>7458f79185700309ee5c8e5e24f98987</Hash>
 </Codenesium>*/

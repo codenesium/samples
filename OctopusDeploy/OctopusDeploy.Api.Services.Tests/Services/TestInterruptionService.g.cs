@@ -130,43 +130,43 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetTenantId_Exists()
+                public async void ByTenantId_Exists()
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var records = new List<Interruption>();
                         records.Add(new Interruption());
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiInterruptionResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Not_Exists()
+                public async void ByTenantId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Interruption>>(new List<Interruption>()));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Interruption>>(new List<Interruption>()));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiInterruptionResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>54b7794f1b1bdfed2301d6286790db06</Hash>
+    <Hash>bf2f846e604c7dfe44d526d4928e441b</Hash>
 </Codenesium>*/

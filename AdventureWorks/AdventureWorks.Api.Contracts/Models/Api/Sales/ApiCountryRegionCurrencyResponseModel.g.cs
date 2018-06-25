@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiCountryRegionCurrencyResponseModel : AbstractApiResponseModel
+        public partial class ApiCountryRegionCurrencyResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string countryRegionCode,
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a8f798657988c32a555aa2fb1a09663e</Hash>
+    <Hash>ccd3ba515e014dbc27700190a0a3f54c</Hash>
 </Codenesium>*/

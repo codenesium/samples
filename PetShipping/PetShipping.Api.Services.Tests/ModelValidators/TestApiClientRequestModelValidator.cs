@@ -73,18 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
-                        clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
-
-                        var validator = new ApiClientRequestModelValidator(clientRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
@@ -130,18 +118,6 @@ namespace PetShippingNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
-                        clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
-
-                        var validator = new ApiClientRequestModelValidator(clientRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
-                        clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
-
-                        var validator = new ApiClientRequestModelValidator(clientRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
@@ -251,21 +215,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 11));
                 }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
-                        clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
-
-                        var validator = new ApiClientRequestModelValidator(clientRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f6abfd41d1f93e364db052dd64cc207c</Hash>
+    <Hash>b9ec0f7e2e14582d13b0b4128a11fba4</Hash>
 </Codenesium>*/

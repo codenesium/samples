@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         byte[] dataVersion,
                         string jSON,
                         string lifecycleId,
@@ -67,7 +67,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.lifecycleId.IsEmptyOrZeroOrNull() ? null : this.lifecycleId;
+                                return this.lifecycleId;
                         }
 
                         set
@@ -114,7 +114,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantTags.IsEmptyOrZeroOrNull() ? null : this.tenantTags;
+                                return this.tenantTags;
                         }
 
                         set
@@ -126,5 +126,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2b1c78c8d1ef4dc3fee6c46fab112603</Hash>
+    <Hash>de4b7cdecd890295722a61f93890b7e0</Hash>
 </Codenesium>*/

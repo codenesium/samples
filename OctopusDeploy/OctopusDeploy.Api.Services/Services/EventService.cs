@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class EventService : AbstractEventService, IEventService
+        public partial class EventService : AbstractEventService, IEventService
         {
                 public EventService(
                         ILogger<IEventRepository> logger,
@@ -34,5 +34,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f3fc3bd9d65dc3e9f67505df2243804</Hash>
+    <Hash>7b218fd90674461ec234483935db0f01</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         Guid externalId,
                         string jSON,
                         string name)
@@ -74,5 +74,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2ba91ff62b811ff88f15c39b7ef63a25</Hash>
+    <Hash>db8f171ec061d59d7d4ef336f50dafd5</Hash>
 </Codenesium>*/

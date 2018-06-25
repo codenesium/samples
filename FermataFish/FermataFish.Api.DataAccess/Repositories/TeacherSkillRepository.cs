@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public class TeacherSkillRepository : AbstractTeacherSkillRepository, ITeacherSkillRepository
+        public partial class TeacherSkillRepository : AbstractTeacherSkillRepository, ITeacherSkillRepository
         {
                 public TeacherSkillRepository(
                         ILogger<TeacherSkillRepository> logger,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>625272097b02b454b8f34d9b115e3884</Hash>
+    <Hash>2c8ff79f30a6ebe5f8991ba00a9ce760</Hash>
 </Codenesium>*/

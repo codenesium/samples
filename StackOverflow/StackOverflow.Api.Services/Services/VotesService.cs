@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class VotesService : AbstractVotesService, IVotesService
+        public partial class VotesService : AbstractVotesService, IVotesService
         {
                 public VotesService(
                         ILogger<IVotesRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70d99d363caea314ed28f469d4726f66</Hash>
+    <Hash>435678db7be47b3cdc3cccacb86e2e4a</Hash>
 </Codenesium>*/

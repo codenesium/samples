@@ -76,28 +76,28 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Event>> GetAutoId(long autoId)
+                public async Task<List<Event>> ByAutoId(long autoId)
                 {
                         var records = await this.Where(x => x.AutoId == autoId);
 
                         return records;
                 }
 
-                public async Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
+                public async Task<List<Event>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
                         var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId);
 
                         return records;
                 }
 
-                public async Task<List<Event>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
+                public async Task<List<Event>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
                         var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId);
 
                         return records;
                 }
 
-                public async Task<List<Event>> GetIdOccurred(string id, DateTimeOffset occurred)
+                public async Task<List<Event>> ByIdOccurred(string id, DateTimeOffset occurred)
                 {
                         var records = await this.Where(x => x.Id == id && x.Occurred == occurred);
 
@@ -141,5 +141,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8febcf5d793bab25c270e1dfeba8dd31</Hash>
+    <Hash>171fc1459f795826f96b2567e27914ac</Hash>
 </Codenesium>*/

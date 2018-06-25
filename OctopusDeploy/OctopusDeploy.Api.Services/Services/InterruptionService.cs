@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class InterruptionService : AbstractInterruptionService, IInterruptionService
+        public partial class InterruptionService : AbstractInterruptionService, IInterruptionService
         {
                 public InterruptionService(
                         ILogger<IInterruptionRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b5e18a001db228358cb6f7da50f649f</Hash>
+    <Hash>f39c96d6eb1fe1280c317ac8814343a6</Hash>
 </Codenesium>*/

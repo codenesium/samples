@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiSalesOrderHeaderSalesReasonResponseModel : AbstractApiResponseModel
+        public partial class ApiSalesOrderHeaderSalesReasonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime modifiedDate,
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>96c197ced4bb06d7b8ba20c8e4aeb602</Hash>
+    <Hash>b91cd4a956b90174be26af044b61fe77</Hash>
 </Codenesium>*/

@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TaskId_Create_null()
                 {
                         Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
@@ -154,18 +142,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void TaskId_Delete()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -215,21 +191,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.WorkerId, new string('A', 51));
                 }
-
-                [Fact]
-                public async void WorkerId_Delete()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>578ff7ea6c641c97bc234807b1a68b13</Hash>
+    <Hash>43efc66b1240e472ec87a2001c8cf681</Hash>
 </Codenesium>*/

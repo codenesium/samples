@@ -203,12 +203,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTenantId/{tenantId}")]
+                [Route("byTenantId/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiInterruptionResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTenantId(string tenantId)
+                public async virtual Task<IActionResult> ByTenantId(string tenantId)
                 {
-                        List<ApiInterruptionResponseModel> response = await this.InterruptionService.GetTenantId(tenantId);
+                        List<ApiInterruptionResponseModel> response = await this.InterruptionService.ByTenantId(tenantId);
 
                         return this.Ok(response);
                 }
@@ -216,5 +216,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>783e686e26954b4dffd185b846862d66</Hash>
+    <Hash>e9b85c62f214cf5f5d5e7fa9a854bd06</Hash>
 </Codenesium>*/

@@ -11,10 +11,10 @@ namespace StackOverflowNS.Api.Services
                 }
 
                 public virtual void SetProperties(int id,
-                                                  Nullable<int> bountyAmount,
+                                                  int? bountyAmount,
                                                   DateTime creationDate,
                                                   int postId,
-                                                  Nullable<int> userId,
+                                                  int? userId,
                                                   int voteTypeId)
                 {
                         this.BountyAmount = bountyAmount;
@@ -25,7 +25,7 @@ namespace StackOverflowNS.Api.Services
                         this.VoteTypeId = voteTypeId;
                 }
 
-                public Nullable<int> BountyAmount { get; private set; }
+                public int? BountyAmount { get; private set; }
 
                 public DateTime CreationDate { get; private set; }
 
@@ -33,12 +33,12 @@ namespace StackOverflowNS.Api.Services
 
                 public int PostId { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
 
                 public int VoteTypeId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>dba7f883acc96aa40f53d18b61ea1ec4</Hash>
+    <Hash>76aa4d2f13c0dc4e90b0fb0baa2ef3df</Hash>
 </Codenesium>*/

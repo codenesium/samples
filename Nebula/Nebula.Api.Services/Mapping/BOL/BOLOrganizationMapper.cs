@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLOrganizationMapper : BOLAbstractOrganizationMapper, IBOLOrganizationMapper
+        public partial class BOLOrganizationMapper : BOLAbstractOrganizationMapper, IBOLOrganizationMapper
         {
                 public BOLOrganizationMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36217b1206356702db59a7b009fc70a8</Hash>
+    <Hash>f2f053ace034117d5e533488ff6de110</Hash>
 </Codenesium>*/

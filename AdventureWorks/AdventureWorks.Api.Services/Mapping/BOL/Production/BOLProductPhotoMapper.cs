@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLProductPhotoMapper : BOLAbstractProductPhotoMapper, IBOLProductPhotoMapper
+        public partial class BOLProductPhotoMapper : BOLAbstractProductPhotoMapper, IBOLProductPhotoMapper
         {
                 public BOLProductPhotoMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f4be4a37b4dde22ddaeb2836dcbffd4</Hash>
+    <Hash>336c55506ec2459fb244f64ff6aebd73</Hash>
 </Codenesium>*/

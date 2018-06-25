@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class LibraryVariableSetService : AbstractLibraryVariableSetService, ILibraryVariableSetService
+        public partial class LibraryVariableSetService : AbstractLibraryVariableSetService, ILibraryVariableSetService
         {
                 public LibraryVariableSetService(
                         ILogger<ILibraryVariableSetRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f7a45157e2aabf3cf07d5df97d839e5</Hash>
+    <Hash>24e966981d01c2695958ed2d2562b49c</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLBusinessEntityContactMapper : BOLAbstractBusinessEntityContactMapper, IBOLBusinessEntityContactMapper
+        public partial class BOLBusinessEntityContactMapper : BOLAbstractBusinessEntityContactMapper, IBOLBusinessEntityContactMapper
         {
                 public BOLBusinessEntityContactMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c257fa672327830aac1ec4ed5348d4ee</Hash>
+    <Hash>e9f430737a65ad32422c03e736a9300e</Hash>
 </Codenesium>*/

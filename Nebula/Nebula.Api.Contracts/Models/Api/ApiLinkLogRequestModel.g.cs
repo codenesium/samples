@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime dateEntered,
                         int linkId,
                         string log)
@@ -74,5 +74,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>368e37592bcea672315a4810d747d4e0</Hash>
+    <Hash>76ae90bbdb5b434d64ffc2e29d642688</Hash>
 </Codenesium>*/

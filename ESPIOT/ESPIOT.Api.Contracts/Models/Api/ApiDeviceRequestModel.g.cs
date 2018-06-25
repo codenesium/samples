@@ -13,7 +13,7 @@ namespace ESPIOTNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name,
                         Guid publicId)
                 {
@@ -56,5 +56,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>419ee465d520482c81c5199447946c3a</Hash>
+    <Hash>df4182a6561531c793b89b0edfbfacb4</Hash>
 </Codenesium>*/

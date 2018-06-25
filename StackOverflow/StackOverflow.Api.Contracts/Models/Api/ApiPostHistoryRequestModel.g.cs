@@ -13,7 +13,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string comment,
                         DateTime creationDate,
                         int postHistoryTypeId,
@@ -21,7 +21,7 @@ namespace StackOverflowNS.Api.Contracts
                         string revisionGUID,
                         string text,
                         string userDisplayName,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.Comment = comment;
                         this.CreationDate = creationDate;
@@ -39,7 +39,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.comment.IsEmptyOrZeroOrNull() ? null : this.comment;
+                                return this.comment;
                         }
 
                         set
@@ -118,7 +118,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.text.IsEmptyOrZeroOrNull() ? null : this.text;
+                                return this.text;
                         }
 
                         set
@@ -133,7 +133,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                         get
                         {
-                                return this.userDisplayName.IsEmptyOrZeroOrNull() ? null : this.userDisplayName;
+                                return this.userDisplayName;
                         }
 
                         set
@@ -142,13 +142,13 @@ namespace StackOverflowNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> userId;
+                private int? userId;
 
-                public Nullable<int> UserId
+                public int? UserId
                 {
                         get
                         {
-                                return this.userId.IsEmptyOrZeroOrNull() ? null : this.userId;
+                                return this.userId;
                         }
 
                         set
@@ -160,5 +160,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a7159ba6549be4ed76992fe5200fe3d1</Hash>
+    <Hash>bb56365c65726ec6e0cd4802756c0a66</Hash>
 </Codenesium>*/

@@ -76,35 +76,35 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Release> GetVersionProjectId(string version, string projectId)
+                public async Task<Release> ByVersionProjectId(string version, string projectId)
                 {
                         var records = await this.Where(x => x.Version == version && x.ProjectId == projectId);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<Release>> GetIdAssembled(string id, DateTimeOffset assembled)
+                public async Task<List<Release>> ByIdAssembled(string id, DateTimeOffset assembled)
                 {
                         var records = await this.Where(x => x.Id == id && x.Assembled == assembled);
 
                         return records;
                 }
 
-                public async Task<List<Release>> GetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
+                public async Task<List<Release>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
                 {
                         var records = await this.Where(x => x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId);
 
                         return records;
                 }
 
-                public async Task<List<Release>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
+                public async Task<List<Release>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
                         var records = await this.Where(x => x.Id == id && x.Version == version && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.ChannelId == channelId && x.Assembled == assembled);
 
                         return records;
                 }
 
-                public async Task<List<Release>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
+                public async Task<List<Release>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
                         var records = await this.Where(x => x.Id == id && x.ChannelId == channelId && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.Version == version && x.Assembled == assembled);
 
@@ -143,5 +143,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2afb2e75a455e8df1e3a0f108bfca247</Hash>
+    <Hash>5177522c9c3b4e6387b48b3335795538</Hash>
 </Codenesium>*/

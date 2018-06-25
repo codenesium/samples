@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class AdminService : AbstractAdminService, IAdminService
+        public partial class AdminService : AbstractAdminService, IAdminService
         {
                 public AdminService(
                         ILogger<IAdminRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43961d2f9007e9649d3e9b90b5fd0c07</Hash>
+    <Hash>8243f632e4683b20ad01f78ba90a00c6</Hash>
 </Codenesium>*/

@@ -13,10 +13,10 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void SetProperties(int customerID,
                                                   string accountNumber,
                                                   DateTime modifiedDate,
-                                                  Nullable<int> personID,
+                                                  int? personID,
                                                   Guid rowguid,
-                                                  Nullable<int> storeID,
-                                                  Nullable<int> territoryID)
+                                                  int? storeID,
+                                                  int? territoryID)
                 {
                         this.AccountNumber = accountNumber;
                         this.CustomerID = customerID;
@@ -33,16 +33,16 @@ namespace AdventureWorksNS.Api.Services
 
                 public DateTime ModifiedDate { get; private set; }
 
-                public Nullable<int> PersonID { get; private set; }
+                public int? PersonID { get; private set; }
 
                 public Guid Rowguid { get; private set; }
 
-                public Nullable<int> StoreID { get; private set; }
+                public int? StoreID { get; private set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b8c2cc28e1242b10c4321d7ef76253d1</Hash>
+    <Hash>a77b9574f93f6f5fe9d537fe7f4702d2</Hash>
 </Codenesium>*/

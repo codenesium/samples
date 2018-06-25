@@ -34,13 +34,13 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProxyRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProxyRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiProxyRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiProxyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Proxy record = await this.proxyRepository.GetName(model.Name);
+                        Proxy record = await this.proxyRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2f91a2631ae84d3367709991ee99090</Hash>
+    <Hash>10e5e36d80267946740c0c3231fd25e2</Hash>
 </Codenesium>*/

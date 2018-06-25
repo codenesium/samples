@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLRateMapper : BOLAbstractRateMapper, IBOLRateMapper
+        public partial class BOLRateMapper : BOLAbstractRateMapper, IBOLRateMapper
         {
                 public BOLRateMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fef99c2dbe33bdf96438b1991a99242</Hash>
+    <Hash>e1ecbb98bb1bfc179df0e440a96e43ba</Hash>
 </Codenesium>*/

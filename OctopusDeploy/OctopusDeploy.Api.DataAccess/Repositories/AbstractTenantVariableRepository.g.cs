@@ -76,14 +76,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<TenantVariable> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
+                public async Task<TenantVariable> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId && x.OwnerId == ownerId && x.EnvironmentId == environmentId && x.VariableTemplateId == variableTemplateId);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<TenantVariable>> GetTenantId(string tenantId)
+                public async Task<List<TenantVariable>> ByTenantId(string tenantId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId);
 
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc98972c32689acfe7c0a9f2d2b40f49</Hash>
+    <Hash>cb7b64a37b91a837b33ac3f530388a33</Hash>
 </Codenesium>*/

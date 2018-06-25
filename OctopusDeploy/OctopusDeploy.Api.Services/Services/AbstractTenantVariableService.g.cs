@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiTenantVariableResponseModel> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
+                public async Task<ApiTenantVariableResponseModel> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
                 {
-                        TenantVariable record = await this.tenantVariableRepository.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
+                        TenantVariable record = await this.tenantVariableRepository.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiTenantVariableResponseModel>> GetTenantId(string tenantId)
+                public async Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId)
                 {
-                        List<TenantVariable> records = await this.tenantVariableRepository.GetTenantId(tenantId);
+                        List<TenantVariable> records = await this.tenantVariableRepository.ByTenantId(tenantId);
 
                         return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ffa78cc7615ef8318041ad22cce38f06</Hash>
+    <Hash>dfc93a40db5ef09cffaddad8e8cb66f9</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void RevisionGUID_Delete()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
-
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void UserDisplayName_Create_length()
                 {
                         Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
@@ -107,21 +95,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserDisplayName, new string('A', 41));
                 }
-
-                [Fact]
-                public async void UserDisplayName_Delete()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
-
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6f7cfe2c91cf3daf51d3ba789433aafa</Hash>
+    <Hash>a01d64e2ebf4ff45f48efe325bdd3cba</Hash>
 </Codenesium>*/

@@ -130,42 +130,42 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetVersion_Exists()
+                public async void ByVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var record = new VersionInfo();
-                        mock.RepositoryMock.Setup(x => x.GetVersion(It.IsAny<long>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByVersion(It.IsAny<long>())).Returns(Task.FromResult(record));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.GetVersion(default(long));
+                        ApiVersionInfoResponseModel response = await service.ByVersion(default(long));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetVersion(It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByVersion(It.IsAny<long>()));
                 }
 
                 [Fact]
-                public async void GetVersion_Not_Exists()
+                public async void ByVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetVersion(It.IsAny<long>())).Returns(Task.FromResult<VersionInfo>(null));
+                        mock.RepositoryMock.Setup(x => x.ByVersion(It.IsAny<long>())).Returns(Task.FromResult<VersionInfo>(null));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.GetVersion(default(long));
+                        ApiVersionInfoResponseModel response = await service.ByVersion(default(long));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetVersion(It.IsAny<long>()));
+                        mock.RepositoryMock.Verify(x => x.ByVersion(It.IsAny<long>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4252811a63dfdb7ca82087394daad9f5</Hash>
+    <Hash>d7b7a97e5a93cde80342f5392b3b1eb4</Hash>
 </Codenesium>*/

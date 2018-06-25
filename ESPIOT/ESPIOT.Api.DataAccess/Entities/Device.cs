@@ -12,7 +12,7 @@ namespace ESPIOTNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string name,
                         Guid publicId)
@@ -35,5 +35,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70772be0ac2478467b8f118afd54d5a8</Hash>
+    <Hash>b5f20838fcffd7d805de9042bd42db77</Hash>
 </Codenesium>*/

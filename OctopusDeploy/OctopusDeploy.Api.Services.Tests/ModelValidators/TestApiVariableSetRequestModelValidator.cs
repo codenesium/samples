@@ -95,21 +95,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
                 }
-
-                [Fact]
-                public async void OwnerId_Delete()
-                {
-                        Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
-                        variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-
-                        var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d149b2e899d0f99a507180d07be55304</Hash>
+    <Hash>81802206eb5a3baf7814f5e0cea483e3</Hash>
 </Codenesium>*/

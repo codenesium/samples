@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CardNumber_Delete()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
-
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void CardType_Create_null()
                 {
                         Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
@@ -130,18 +118,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CardType, new string('A', 51));
-                }
-
-                [Fact]
-                public async void CardType_Delete()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
-
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -195,5 +171,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f09346f5d4b9e1e144202a749af21b7d</Hash>
+    <Hash>6bfb7eacdfedefe4d388903d7b182c9c</Hash>
 </Codenesium>*/

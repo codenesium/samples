@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class LifecycleService : AbstractLifecycleService, ILifecycleService
+        public partial class LifecycleService : AbstractLifecycleService, ILifecycleService
         {
                 public LifecycleService(
                         ILogger<ILifecycleRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e98c74002ef84fdac3a5ae314e36b06</Hash>
+    <Hash>5a4e90fe10eca7ead2c778d85a676000</Hash>
 </Codenesium>*/

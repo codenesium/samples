@@ -4,7 +4,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class DALTicketStatusMapper : DALAbstractTicketStatusMapper, IDALTicketStatusMapper
+        public partial class DALTicketStatusMapper : DALAbstractTicketStatusMapper, IDALTicketStatusMapper
         {
                 public DALTicketStatusMapper()
                 {
@@ -13,5 +13,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3704e5ae36e2ce1dd6a57bd3680b1b1e</Hash>
+    <Hash>983e35e0be5ed36ce1f27361005c0586</Hash>
 </Codenesium>*/

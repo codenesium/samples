@@ -135,38 +135,38 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IJobCandidateRepository>();
                         var records = new List<JobCandidate>();
                         records.Add(new JobCandidate());
-                        mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<Nullable<int>>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int?>())).Returns(Task.FromResult(records));
                         var service = new JobCandidateService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
                                                               mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-                        List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(Nullable<int>));
+                        List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(int?));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<Nullable<int>>()));
+                        mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int?>()));
                 }
 
                 [Fact]
                 public async void ByBusinessEntityID_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IJobCandidateRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<Nullable<int>>())).Returns(Task.FromResult<List<JobCandidate>>(new List<JobCandidate>()));
+                        mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int?>())).Returns(Task.FromResult<List<JobCandidate>>(new List<JobCandidate>()));
                         var service = new JobCandidateService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
                                                               mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-                        List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(Nullable<int>));
+                        List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(int?));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<Nullable<int>>()));
+                        mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int?>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>13400e5014a35683b0ae5ea64d6c6769</Hash>
+    <Hash>987887f601cadd4880589d5e018d78a6</Hash>
 </Codenesium>*/

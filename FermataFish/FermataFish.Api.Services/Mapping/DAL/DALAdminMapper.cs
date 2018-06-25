@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALAdminMapper : DALAbstractAdminMapper, IDALAdminMapper
+        public partial class DALAdminMapper : DALAbstractAdminMapper, IDALAdminMapper
         {
                 public DALAdminMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef9c01d1aa8b7ae236db41c48fd254e2</Hash>
+    <Hash>f34ff82f7232515741218eac1a295eeb</Hash>
 </Codenesium>*/

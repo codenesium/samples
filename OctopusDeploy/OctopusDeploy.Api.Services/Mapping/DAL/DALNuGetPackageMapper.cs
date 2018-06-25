@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALNuGetPackageMapper : DALAbstractNuGetPackageMapper, IDALNuGetPackageMapper
+        public partial class DALNuGetPackageMapper : DALAbstractNuGetPackageMapper, IDALNuGetPackageMapper
         {
                 public DALNuGetPackageMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>03450037cc94b17a3fd4eb6af1fe4b23</Hash>
+    <Hash>d68a7d7d3ecb49a9715a530002b2353b</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
-
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByStateProvinceIDTaxType_Create_Exists()
                 {
                         Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5bad6f665dedf26239a0766b074a9641</Hash>
+    <Hash>851df6566d02f28fa740b17ab426b04c</Hash>
 </Codenesium>*/

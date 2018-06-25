@@ -71,21 +71,9 @@ namespace FermataFishNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 3));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IStateRepository> stateRepository = new Mock<IStateRepository>();
-                        stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
-
-                        var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7fcca0f7795481dfad63f70d8a055101</Hash>
+    <Hash>73f7ce4525477fdbac2004e72dc58ab6</Hash>
 </Codenesium>*/

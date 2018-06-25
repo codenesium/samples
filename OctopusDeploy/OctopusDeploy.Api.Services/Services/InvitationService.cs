@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class InvitationService : AbstractInvitationService, IInvitationService
+        public partial class InvitationService : AbstractInvitationService, IInvitationService
         {
                 public InvitationService(
                         ILogger<IInvitationRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42f758f6f39d844d7f3f06d3c736ac7f</Hash>
+    <Hash>dc587a8ae7c98cdf6b7fce85ec38bbe9</Hash>
 </Codenesium>*/

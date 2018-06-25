@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class DepartmentRepository : AbstractDepartmentRepository, IDepartmentRepository
+        public partial class DepartmentRepository : AbstractDepartmentRepository, IDepartmentRepository
         {
                 public DepartmentRepository(
                         ILogger<DepartmentRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74f25060fe5214591fbabe1f472dd64a</Hash>
+    <Hash>37abd31b5263f04be35f2ce4ded3fb27</Hash>
 </Codenesium>*/

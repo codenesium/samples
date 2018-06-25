@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class VendorService : AbstractVendorService, IVendorService
+        public partial class VendorService : AbstractVendorService, IVendorService
         {
                 public VendorService(
                         ILogger<IVendorRepository> logger,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>387eb027d2c9b25baf96ead8eab5ed9a</Hash>
+    <Hash>e1a5eabb53c4bab2322439a8649cb297</Hash>
 </Codenesium>*/

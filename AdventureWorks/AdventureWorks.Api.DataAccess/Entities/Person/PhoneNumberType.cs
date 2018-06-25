@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         string name,
                         int phoneNumberTypeID)
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a05325732eb72c7bb69abe42be098bce</Hash>
+    <Hash>c4cc1b1c4c2149c4aae2c92dad64a074</Hash>
 </Codenesium>*/

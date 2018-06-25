@@ -6,17 +6,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiDeploymentHistoryResponseModel : AbstractApiResponseModel
+        public partial class ApiDeploymentHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string channelId,
                         string channelName,
-                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset? completedTime,
                         DateTimeOffset created,
                         string deployedBy,
                         string deploymentId,
                         string deploymentName,
-                        Nullable<int> durationSeconds,
+                        int? durationSeconds,
                         string environmentId,
                         string environmentName,
                         string projectId,
@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Contracts
                         DateTimeOffset queueTime,
                         string releaseId,
                         string releaseVersion,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string taskId,
                         string taskState,
                         string tenantId,
@@ -58,7 +58,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ChannelName { get; private set; }
 
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 public DateTimeOffset Created { get; private set; }
 
@@ -68,7 +68,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string DeploymentName { get; private set; }
 
-                public Nullable<int> DurationSeconds { get; private set; }
+                public int? DurationSeconds { get; private set; }
 
                 public string EnvironmentId { get; private set; }
 
@@ -86,7 +86,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ReleaseVersion { get; private set; }
 
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 public string TaskId { get; private set; }
 
@@ -292,5 +292,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>863b3e8d90d59531556bfe5e6d4c7139</Hash>
+    <Hash>abe951af9050828cde060e40b2a4bbec</Hash>
 </Codenesium>*/

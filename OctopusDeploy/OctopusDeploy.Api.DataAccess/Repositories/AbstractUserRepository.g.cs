@@ -76,28 +76,28 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<User> GetUsername(string username)
+                public async Task<User> ByUsername(string username)
                 {
                         var records = await this.Where(x => x.Username == username);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<User>> GetDisplayName(string displayName)
+                public async Task<List<User>> ByDisplayName(string displayName)
                 {
                         var records = await this.Where(x => x.DisplayName == displayName);
 
                         return records;
                 }
 
-                public async Task<List<User>> GetEmailAddress(string emailAddress)
+                public async Task<List<User>> ByEmailAddress(string emailAddress)
                 {
                         var records = await this.Where(x => x.EmailAddress == emailAddress);
 
                         return records;
                 }
 
-                public async Task<List<User>> GetExternalId(string externalId)
+                public async Task<List<User>> ByExternalId(string externalId)
                 {
                         var records = await this.Where(x => x.ExternalId == externalId);
 
@@ -136,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c47d722d9f814d5575c62053f1ac94b4</Hash>
+    <Hash>3776dd677485fa5f657a9818051d2839</Hash>
 </Codenesium>*/

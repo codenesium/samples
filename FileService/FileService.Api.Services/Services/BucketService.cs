@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Services
 {
-        public class BucketService : AbstractBucketService, IBucketService
+        public partial class BucketService : AbstractBucketService, IBucketService
         {
                 public BucketService(
                         ILogger<IBucketRepository> logger,
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1b4b295f98aa300beb6a4c9ce8dbec8</Hash>
+    <Hash>f82afeb22532cf8e3ff3fba981800d31</Hash>
 </Codenesium>*/

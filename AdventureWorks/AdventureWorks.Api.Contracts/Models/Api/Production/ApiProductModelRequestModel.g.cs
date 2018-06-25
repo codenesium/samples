@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string catalogDescription,
                         string instructions,
                         DateTime modifiedDate,
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.catalogDescription.IsEmptyOrZeroOrNull() ? null : this.catalogDescription;
+                                return this.catalogDescription;
                         }
 
                         set
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.instructions.IsEmptyOrZeroOrNull() ? null : this.instructions;
+                                return this.instructions;
                         }
 
                         set
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bc3ebc00141d46cc057e7277dea382fd</Hash>
+    <Hash>2f65d04c6ca0fb1b9240ecc624758bcd</Hash>
 </Codenesium>*/

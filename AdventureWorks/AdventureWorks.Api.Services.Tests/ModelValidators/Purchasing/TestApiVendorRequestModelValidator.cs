@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AccountNumber_Delete()
-                {
-                        Mock<IVendorRepository> vendorRepository = new Mock<IVendorRepository>();
-                        vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
-
-                        var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IVendorRepository> vendorRepository = new Mock<IVendorRepository>();
@@ -133,18 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IVendorRepository> vendorRepository = new Mock<IVendorRepository>();
-                        vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
-
-                        var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PurchasingWebServiceURL_Create_length()
                 {
                         Mock<IVendorRepository> vendorRepository = new Mock<IVendorRepository>();
@@ -166,18 +142,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PurchasingWebServiceURL, new string('A', 1025));
-                }
-
-                [Fact]
-                public async void PurchasingWebServiceURL_Delete()
-                {
-                        Mock<IVendorRepository> vendorRepository = new Mock<IVendorRepository>();
-                        vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
-
-                        var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -231,5 +195,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b518d338f01d08b0bd7f859f6f13015</Hash>
+    <Hash>dd8acaaea9180838b346e7118c5f8739</Hash>
 </Codenesium>*/

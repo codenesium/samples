@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiAccountResponseModel> GetName(string name)
+                public async Task<ApiAccountResponseModel> ByName(string name)
                 {
-                        Account record = await this.accountRepository.GetName(name);
+                        Account record = await this.accountRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e74322e753703086204bc4d244fea1e</Hash>
+    <Hash>e5502e177107c212044262eaa03fdce3</Hash>
 </Codenesium>*/

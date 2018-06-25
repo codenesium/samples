@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
                 }
-
-                [Fact]
-                public async void TransactionType_Delete()
-                {
-                        Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
-                        transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
-
-                        var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>48941468d76418e85e113cfc1e3e6600</Hash>
+    <Hash>717748ad5a58cf18cc726f643bd12ca2</Hash>
 </Codenesium>*/

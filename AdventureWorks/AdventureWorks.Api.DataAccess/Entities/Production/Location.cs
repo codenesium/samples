@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal availability,
                         decimal costRate,
                         short locationID,
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a95e635d0a8e4853d124c5491484fb0c</Hash>
+    <Hash>747e13898b14d929af02161327eb9130</Hash>
 </Codenesium>*/

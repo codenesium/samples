@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
                 }
-
-                [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
-                        productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
-
-                        var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>509f10ebf098089e53b12ee378ea455e</Hash>
+    <Hash>c08ef77d6f40d77a0001e6f9552486f8</Hash>
 </Codenesium>*/

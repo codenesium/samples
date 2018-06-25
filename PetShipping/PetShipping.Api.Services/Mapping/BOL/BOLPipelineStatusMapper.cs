@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLPipelineStatusMapper : BOLAbstractPipelineStatusMapper, IBOLPipelineStatusMapper
+        public partial class BOLPipelineStatusMapper : BOLAbstractPipelineStatusMapper, IBOLPipelineStatusMapper
         {
                 public BOLPipelineStatusMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e25ea49dca67b73835064e82a6aa81fe</Hash>
+    <Hash>52073af8f2e85337689821329cf181ce</Hash>
 </Codenesium>*/

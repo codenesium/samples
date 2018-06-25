@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiLibraryVariableSetResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiLibraryVariableSetResponseModel response = await this.LibraryVariableSetService.GetName(name);
+                        ApiLibraryVariableSetResponseModel response = await this.LibraryVariableSetService.ByName(name);
 
                         if (response == null)
                         {
@@ -218,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0cdf85960ac27218fab321f255aaa9d4</Hash>
+    <Hash>0d418699498eb5290ec23970723b2f79</Hash>
 </Codenesium>*/

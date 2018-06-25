@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string emailAddress1,
                         int emailAddressID,
                         DateTime modifiedDate,
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.emailAddress1.IsEmptyOrZeroOrNull() ? null : this.emailAddress1;
+                                return this.emailAddress1;
                         }
 
                         set
@@ -91,5 +91,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d22cbe5d736494c11df3b3c10cc79559</Hash>
+    <Hash>2d23746883e1d72020d773c7b152f957</Hash>
 </Codenesium>*/

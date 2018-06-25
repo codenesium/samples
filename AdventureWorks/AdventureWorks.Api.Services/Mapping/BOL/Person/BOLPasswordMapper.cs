@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLPasswordMapper : BOLAbstractPasswordMapper, IBOLPasswordMapper
+        public partial class BOLPasswordMapper : BOLAbstractPasswordMapper, IBOLPasswordMapper
         {
                 public BOLPasswordMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d89572df1487b79a64299c6dcbd1206</Hash>
+    <Hash>a8d7e14e8dc69d0a79012ede8e994729</Hash>
 </Codenesium>*/

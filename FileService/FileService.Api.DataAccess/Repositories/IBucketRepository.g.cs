@@ -17,14 +17,14 @@ namespace FileServiceNS.Api.DataAccess
 
                 Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Bucket> GetExternalId(Guid externalId);
+                Task<Bucket> ByExternalId(Guid externalId);
 
-                Task<Bucket> GetName(string name);
+                Task<Bucket> ByName(string name);
 
                 Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>d1b812f6b1d73e616da3f5f3423908b5</Hash>
+    <Hash>235f19944d425b53fe47dd5885965771</Hash>
 </Codenesium>*/

@@ -21,10 +21,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiAccountResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiAccountResponseModel> GetName(string name);
+                Task<ApiAccountResponseModel> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>9ee9462201df9cf3bd7321b72d33d0e6</Hash>
+    <Hash>1512232b208a3b4c1a96dd87de2aa0b6</Hash>
 </Codenesium>*/

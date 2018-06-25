@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.Services
                                                   DateTime modifiedDate,
                                                   Guid rowguid,
                                                   decimal salesLastYear,
-                                                  Nullable<decimal> salesQuota,
+                                                  decimal? salesQuota,
                                                   decimal salesYTD,
-                                                  Nullable<int> territoryID)
+                                                  int? territoryID)
                 {
                         this.Bonus = bonus;
                         this.BusinessEntityID = businessEntityID;
@@ -43,14 +43,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public decimal SalesLastYear { get; private set; }
 
-                public Nullable<decimal> SalesQuota { get; private set; }
+                public decimal? SalesQuota { get; private set; }
 
                 public decimal SalesYTD { get; private set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d0329ac0def872a7bb56d07bad1063af</Hash>
+    <Hash>099aba517a74e09ee991ada2852d3313</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public class AdminService : AbstractAdminService, IAdminService
+        public partial class AdminService : AbstractAdminService, IAdminService
         {
                 public AdminService(
                         ILogger<IAdminRepository> logger,
@@ -30,5 +30,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66d8265df0148bc7f134afd9f3581621</Hash>
+    <Hash>9deb23fab6e9a5684125001b32bfcc60</Hash>
 </Codenesium>*/

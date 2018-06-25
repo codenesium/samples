@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Services
 {
-        public class PaymentTypeService : AbstractPaymentTypeService, IPaymentTypeService
+        public partial class PaymentTypeService : AbstractPaymentTypeService, IPaymentTypeService
         {
                 public PaymentTypeService(
                         ILogger<IPaymentTypeRepository> logger,
@@ -34,5 +34,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e35da928f7ece30016cd9686c0959ad</Hash>
+    <Hash>5a16cde454444a0d25c4cd7fa5681a13</Hash>
 </Codenesium>*/

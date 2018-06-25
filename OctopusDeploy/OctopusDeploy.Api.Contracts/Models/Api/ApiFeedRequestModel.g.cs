@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string feedType,
                         string feedUri,
                         string jSON,
@@ -92,5 +92,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fb6a4c4ecdbbe9cbd8453e7e834a7838</Hash>
+    <Hash>e56b5450f7a7c911bcb77d6b9690517b</Hash>
 </Codenesium>*/

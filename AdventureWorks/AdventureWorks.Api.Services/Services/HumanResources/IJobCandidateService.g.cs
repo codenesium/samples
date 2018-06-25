@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<List<ApiJobCandidateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(Nullable<int> businessEntityID);
+                Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID);
         }
 }
 
 /*<Codenesium>
-    <Hash>8b5d45cbb887e6d53d509710bbe254ec</Hash>
+    <Hash>e97b3c542bccb90c5941afcf94a3f267</Hash>
 </Codenesium>*/

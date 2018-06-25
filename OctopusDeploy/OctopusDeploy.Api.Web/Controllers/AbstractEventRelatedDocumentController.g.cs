@@ -195,23 +195,23 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getEventId/{eventId}")]
+                [Route("byEventId/{eventId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetEventId(string eventId)
+                public async virtual Task<IActionResult> ByEventId(string eventId)
                 {
-                        List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.GetEventId(eventId);
+                        List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventId(eventId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getEventIdRelatedDocumentId/{eventId}/{relatedDocumentId}")]
+                [Route("byEventIdRelatedDocumentId/{eventId}/{relatedDocumentId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+                public async virtual Task<IActionResult> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
-                        List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.GetEventIdRelatedDocumentId(eventId, relatedDocumentId);
+                        List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventIdRelatedDocumentId(eventId, relatedDocumentId);
 
                         return this.Ok(response);
                 }
@@ -219,5 +219,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>54678fbeda8f059eac572d64db0968fa</Hash>
+    <Hash>7fded50e36b0d0e36a2540d1c49bb769</Hash>
 </Codenesium>*/

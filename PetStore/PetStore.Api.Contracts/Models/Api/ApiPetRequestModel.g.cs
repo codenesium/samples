@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime acquiredDate,
                         int breedId,
                         string description,
@@ -128,5 +128,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e34b1f1352edc436e444d0072ba0e6ce</Hash>
+    <Hash>9070a714d36618d13ba4d329595dd3cd</Hash>
 </Codenesium>*/

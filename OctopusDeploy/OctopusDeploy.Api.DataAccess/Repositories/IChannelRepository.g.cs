@@ -17,14 +17,14 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<Channel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Channel> GetNameProjectId(string name, string projectId);
+                Task<Channel> ByNameProjectId(string name, string projectId);
 
-                Task<List<Channel>> GetDataVersion(byte[] dataVersion);
+                Task<List<Channel>> ByDataVersion(byte[] dataVersion);
 
-                Task<List<Channel>> GetProjectId(string projectId);
+                Task<List<Channel>> ByProjectId(string projectId);
         }
 }
 
 /*<Codenesium>
-    <Hash>03bb3ba1c39159f185cbef5920a94241</Hash>
+    <Hash>038e9578e25092ff5b28372b115c68e2</Hash>
 </Codenesium>*/

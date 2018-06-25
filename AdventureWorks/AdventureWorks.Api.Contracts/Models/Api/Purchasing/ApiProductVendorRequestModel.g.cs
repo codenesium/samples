@@ -13,15 +13,15 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int averageLeadTime,
                         int businessEntityID,
-                        Nullable<decimal> lastReceiptCost,
-                        Nullable<DateTime> lastReceiptDate,
+                        decimal? lastReceiptCost,
+                        DateTime? lastReceiptDate,
                         int maxOrderQty,
                         int minOrderQty,
                         DateTime modifiedDate,
-                        Nullable<int> onOrderQty,
+                        int? onOrderQty,
                         decimal standardPrice,
                         string unitMeasureCode)
                 {
@@ -69,13 +69,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<decimal> lastReceiptCost;
+                private decimal? lastReceiptCost;
 
-                public Nullable<decimal> LastReceiptCost
+                public decimal? LastReceiptCost
                 {
                         get
                         {
-                                return this.lastReceiptCost.IsEmptyOrZeroOrNull() ? null : this.lastReceiptCost;
+                                return this.lastReceiptCost;
                         }
 
                         set
@@ -84,13 +84,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> lastReceiptDate;
+                private DateTime? lastReceiptDate;
 
-                public Nullable<DateTime> LastReceiptDate
+                public DateTime? LastReceiptDate
                 {
                         get
                         {
-                                return this.lastReceiptDate.IsEmptyOrZeroOrNull() ? null : this.lastReceiptDate;
+                                return this.lastReceiptDate;
                         }
 
                         set
@@ -147,13 +147,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> onOrderQty;
+                private int? onOrderQty;
 
-                public Nullable<int> OnOrderQty
+                public int? OnOrderQty
                 {
                         get
                         {
-                                return this.onOrderQty.IsEmptyOrZeroOrNull() ? null : this.onOrderQty;
+                                return this.onOrderQty;
                         }
 
                         set
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9d83b9e242200cf882347a2e2579b0ad</Hash>
+    <Hash>07cf3558f068ebbd02b1cacb2e7129e9</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AddressLine1_Delete()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
-
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void AddressLine2_Create_length()
                 {
                         Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
@@ -106,18 +94,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
-                }
-
-                [Fact]
-                public async void AddressLine2_Delete()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
-
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -169,18 +145,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void City_Delete()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
-
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PostalCode_Create_null()
                 {
                         Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
@@ -226,18 +190,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
-                }
-
-                [Fact]
-                public async void PostalCode_Delete()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
-
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -291,5 +243,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8c909c4372f6431bc2a8e2f659ee480f</Hash>
+    <Hash>bfc0b5b3104753aa0505dea8ead569e7</Hash>
 </Codenesium>*/

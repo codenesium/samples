@@ -71,21 +71,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Text, new string('A', 701));
                 }
-
-                [Fact]
-                public async void Text_Delete()
-                {
-                        Mock<ICommentsRepository> commentsRepository = new Mock<ICommentsRepository>();
-                        commentsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Comments()));
-
-                        var validator = new ApiCommentsRequestModelValidator(commentsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f0a73afb0dc7af4d95cfc56875b750d4</Hash>
+    <Hash>c938c4d206fa73f2cc6ee1e08282a97f</Hash>
 </Codenesium>*/

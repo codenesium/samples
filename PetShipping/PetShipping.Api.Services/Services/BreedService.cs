@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BreedService : AbstractBreedService, IBreedService
+        public partial class BreedService : AbstractBreedService, IBreedService
         {
                 public BreedService(
                         ILogger<IBreedRepository> logger,
@@ -34,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e224aab483bd55d5bf0a9b7db5c1b1ca</Hash>
+    <Hash>21f0cbe79715398030dc5c0b0984854b</Hash>
 </Codenesium>*/

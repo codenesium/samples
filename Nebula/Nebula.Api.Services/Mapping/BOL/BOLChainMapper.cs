@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLChainMapper : BOLAbstractChainMapper, IBOLChainMapper
+        public partial class BOLChainMapper : BOLAbstractChainMapper, IBOLChainMapper
         {
                 public BOLChainMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>714ebe7ca3b5e7a397c7b831816afdcb</Hash>
+    <Hash>16b3d9f3e4699473c2977ccc6cd10034</Hash>
 </Codenesium>*/

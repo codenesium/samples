@@ -71,21 +71,9 @@ namespace PetStoreNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ISpeciesRepository> speciesRepository = new Mock<ISpeciesRepository>();
-                        speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
-
-                        var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>88de280dc6123d84bd2f5eb2d1d1a21b</Hash>
+    <Hash>7fdb6a09a7e24b513b3daed5223c9864</Hash>
 </Codenesium>*/

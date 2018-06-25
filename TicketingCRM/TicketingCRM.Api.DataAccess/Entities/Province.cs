@@ -12,7 +12,7 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int countryId,
                         int id,
                         string name)
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>333afc4f786237641d4ff1e96a76dc49</Hash>
+    <Hash>867aa000f3fe30aa08609adbc91d3816</Hash>
 </Codenesium>*/

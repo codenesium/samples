@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int employeeID,
                         decimal freight,
                         DateTime modifiedDate,
                         DateTime orderDate,
                         int revisionNumber,
-                        Nullable<DateTime> shipDate,
+                        DateTime? shipDate,
                         int shipMethodID,
                         int status,
                         decimal subTotal,
@@ -121,13 +121,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> shipDate;
+                private DateTime? shipDate;
 
-                public Nullable<DateTime> ShipDate
+                public DateTime? ShipDate
                 {
                         get
                         {
-                                return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
+                                return this.shipDate;
                         }
 
                         set
@@ -235,5 +235,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4cb199a32e1d118c1f1d7bc8c93c09ea</Hash>
+    <Hash>e62c4119777252ba52eec6e78061aa59</Hash>
 </Codenesium>*/

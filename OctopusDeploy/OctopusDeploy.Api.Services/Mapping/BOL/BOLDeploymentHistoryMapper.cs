@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLDeploymentHistoryMapper : BOLAbstractDeploymentHistoryMapper, IBOLDeploymentHistoryMapper
+        public partial class BOLDeploymentHistoryMapper : BOLAbstractDeploymentHistoryMapper, IBOLDeploymentHistoryMapper
         {
                 public BOLDeploymentHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8a830a406bb0ed91fa58fa3d92fb4a1</Hash>
+    <Hash>edd57ff1c012d2af2185d02f37a36450</Hash>
 </Codenesium>*/

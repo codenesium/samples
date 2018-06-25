@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getApiKeyHashed/{apiKeyHashed}")]
+                [Route("byApiKeyHashed/{apiKeyHashed}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiApiKeyResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetApiKeyHashed(string apiKeyHashed)
+                public async virtual Task<IActionResult> ByApiKeyHashed(string apiKeyHashed)
                 {
-                        ApiApiKeyResponseModel response = await this.ApiKeyService.GetApiKeyHashed(apiKeyHashed);
+                        ApiApiKeyResponseModel response = await this.ApiKeyService.ByApiKeyHashed(apiKeyHashed);
 
                         if (response == null)
                         {
@@ -218,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6d9577569ed18b8da39539227fbbf3ac</Hash>
+    <Hash>da892bd9a965e40fbf22ad1a33c37433</Hash>
 </Codenesium>*/

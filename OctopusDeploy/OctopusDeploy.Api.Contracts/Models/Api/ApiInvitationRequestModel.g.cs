@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string invitationCode,
                         string jSON)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>96c8c4891162701aff27ab55e629b18b</Hash>
+    <Hash>c07805b4ffffc0defde9ec5ea99ab3d7</Hash>
 </Codenesium>*/

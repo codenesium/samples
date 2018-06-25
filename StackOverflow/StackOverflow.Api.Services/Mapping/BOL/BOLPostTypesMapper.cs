@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BOLPostTypesMapper : BOLAbstractPostTypesMapper, IBOLPostTypesMapper
+        public partial class BOLPostTypesMapper : BOLAbstractPostTypesMapper, IBOLPostTypesMapper
         {
                 public BOLPostTypesMapper()
                 {
@@ -14,5 +14,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a76c0dd5b49d135a72157926d827103d</Hash>
+    <Hash>735cfd8c821af9e6c406825ff7a0e2ef</Hash>
 </Codenesium>*/

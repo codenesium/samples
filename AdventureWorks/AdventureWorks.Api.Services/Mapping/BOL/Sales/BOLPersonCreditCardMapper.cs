@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLPersonCreditCardMapper : BOLAbstractPersonCreditCardMapper, IBOLPersonCreditCardMapper
+        public partial class BOLPersonCreditCardMapper : BOLAbstractPersonCreditCardMapper, IBOLPersonCreditCardMapper
         {
                 public BOLPersonCreditCardMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e51a7ed1e9ca9ac6af3b02062036565e</Hash>
+    <Hash>f21806c20a8e4db89d3744daa77a6976</Hash>
 </Codenesium>*/

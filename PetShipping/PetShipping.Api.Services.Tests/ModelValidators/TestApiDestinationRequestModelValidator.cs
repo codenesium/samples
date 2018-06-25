@@ -121,21 +121,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IDestinationRepository> destinationRepository = new Mock<IDestinationRepository>();
-                        destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
-
-                        var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8957f7fd63385737783712cd637f5e27</Hash>
+    <Hash>fb455e134138483bba4fc42a33987a5c</Hash>
 </Codenesium>*/

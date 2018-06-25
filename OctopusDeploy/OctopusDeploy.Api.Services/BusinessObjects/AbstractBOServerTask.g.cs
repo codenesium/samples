@@ -11,7 +11,7 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public virtual void SetProperties(string id,
-                                                  Nullable<DateTimeOffset> completedTime,
+                                                  DateTimeOffset? completedTime,
                                                   string concurrencyTag,
                                                   string description,
                                                   int durationSeconds,
@@ -24,7 +24,7 @@ namespace OctopusDeployNS.Api.Services
                                                   string projectId,
                                                   DateTimeOffset queueTime,
                                                   string serverNodeId,
-                                                  Nullable<DateTimeOffset> startTime,
+                                                  DateTimeOffset? startTime,
                                                   string state,
                                                   string tenantId)
                 {
@@ -47,7 +47,7 @@ namespace OctopusDeployNS.Api.Services
                         this.TenantId = tenantId;
                 }
 
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 public string ConcurrencyTag { get; private set; }
 
@@ -75,7 +75,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ServerNodeId { get; private set; }
 
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 public string State { get; private set; }
 
@@ -84,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a44a50b7b2915601efcca18314e7b927</Hash>
+    <Hash>02f3d233baeae7562862f6b0ca6efaab</Hash>
 </Codenesium>*/

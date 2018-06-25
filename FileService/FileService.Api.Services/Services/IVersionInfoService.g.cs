@@ -21,10 +21,10 @@ namespace FileServiceNS.Api.Services
 
                 Task<List<ApiVersionInfoResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiVersionInfoResponseModel> GetVersion(long version);
+                Task<ApiVersionInfoResponseModel> ByVersion(long version);
         }
 }
 
 /*<Codenesium>
-    <Hash>3a7dc9087bf4256d47b2d41402b50160</Hash>
+    <Hash>8df968515132404a54cf2d8483825361</Hash>
 </Codenesium>*/

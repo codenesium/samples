@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCurrencyRateMapper : DALAbstractCurrencyRateMapper, IDALCurrencyRateMapper
+        public partial class DALCurrencyRateMapper : DALAbstractCurrencyRateMapper, IDALCurrencyRateMapper
         {
                 public DALCurrencyRateMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c23dbe7a121cefa67c731481c35d7c6d</Hash>
+    <Hash>6f9c034047198189124981ba52dbcbb1</Hash>
 </Codenesium>*/

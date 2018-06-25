@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         bool autoCreateRelease,
                         byte[] dataVersion,
                         string deploymentProcessId,
@@ -79,7 +79,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.deploymentProcessId.IsEmptyOrZeroOrNull() ? null : this.deploymentProcessId;
+                                return this.deploymentProcessId;
                         }
 
                         set
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.includedLibraryVariableSetIds.IsEmptyOrZeroOrNull() ? null : this.includedLibraryVariableSetIds;
+                                return this.includedLibraryVariableSetIds;
                         }
 
                         set
@@ -221,7 +221,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.variableSetId.IsEmptyOrZeroOrNull() ? null : this.variableSetId;
+                                return this.variableSetId;
                         }
 
                         set
@@ -233,5 +233,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c062f8166595b7513bb9e8479130e32a</Hash>
+    <Hash>e1b3f20aacb217b8ae46355c75cf9bd8</Hash>
 </Codenesium>*/

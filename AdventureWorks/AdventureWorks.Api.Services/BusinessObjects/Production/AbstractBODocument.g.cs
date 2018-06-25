@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void SetProperties(Guid rowguid,
                                                   int changeNumber,
                                                   byte[] document1,
-                                                  Nullable<short> documentLevel,
+                                                  short? documentLevel,
                                                   string documentSummary,
                                                   string fileExtension,
                                                   string fileName,
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public byte[] Document1 { get; private set; }
 
-                public Nullable<short> DocumentLevel { get; private set; }
+                public short? DocumentLevel { get; private set; }
 
                 public string DocumentSummary { get; private set; }
 
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0d4c409ca69193ac214d2489910a42ba</Hash>
+    <Hash>f7b8c415832fa0b58b6bd335e5b95c69</Hash>
 </Codenesium>*/

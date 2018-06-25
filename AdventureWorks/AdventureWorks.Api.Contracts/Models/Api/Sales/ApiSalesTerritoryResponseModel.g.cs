@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiSalesTerritoryResponseModel : AbstractApiResponseModel
+        public partial class ApiSalesTerritoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal costLastYear,
@@ -149,5 +149,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1c0eca1b6de95978a7da5a3fcc17495f</Hash>
+    <Hash>dcef30378d5235350c979c904fd19926</Hash>
 </Codenesium>*/

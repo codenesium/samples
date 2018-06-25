@@ -197,13 +197,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiDeploymentEnvironmentResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiDeploymentEnvironmentResponseModel response = await this.DeploymentEnvironmentService.GetName(name);
+                        ApiDeploymentEnvironmentResponseModel response = await this.DeploymentEnvironmentService.ByName(name);
 
                         if (response == null)
                         {
@@ -216,12 +216,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentEnvironmentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiDeploymentEnvironmentResponseModel> response = await this.DeploymentEnvironmentService.GetDataVersion(dataVersion);
+                        List<ApiDeploymentEnvironmentResponseModel> response = await this.DeploymentEnvironmentService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
@@ -229,5 +229,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>acd60b61d702ca0011f06057f0b55799</Hash>
+    <Hash>85caa5050a49bd06d5b3eaf7da25c803</Hash>
 </Codenesium>*/

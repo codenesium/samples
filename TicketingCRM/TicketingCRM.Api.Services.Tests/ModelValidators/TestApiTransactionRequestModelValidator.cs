@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GatewayConfirmationNumber_Delete()
-                {
-                        Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-                        transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
-
-                        var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void TransactionStatusId_Create_Valid_Reference()
                 {
                         Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
@@ -137,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a64dd0fa2ea1e95ce521d585ad2fccf2</Hash>
+    <Hash>6c906aabc91797a13ab0a490844701e8</Hash>
 </Codenesium>*/

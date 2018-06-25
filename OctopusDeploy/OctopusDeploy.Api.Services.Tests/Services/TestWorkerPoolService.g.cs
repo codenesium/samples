@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerPoolRepository>();
                         var record = new WorkerPool();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new WorkerPoolService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.WorkerPoolModelValidatorMock.Object,
                                                             mock.BOLMapperMockFactory.BOLWorkerPoolMapperMock,
                                                             mock.DALMapperMockFactory.DALWorkerPoolMapperMock);
 
-                        ApiWorkerPoolResponseModel response = await service.GetName(default(string));
+                        ApiWorkerPoolResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IWorkerPoolRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<WorkerPool>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<WorkerPool>(null));
                         var service = new WorkerPoolService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.WorkerPoolModelValidatorMock.Object,
                                                             mock.BOLMapperMockFactory.BOLWorkerPoolMapperMock,
                                                             mock.DALMapperMockFactory.DALWorkerPoolMapperMock);
 
-                        ApiWorkerPoolResponseModel response = await service.GetName(default(string));
+                        ApiWorkerPoolResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>45564dba887b7dda3e143ea886fec1b8</Hash>
+    <Hash>aed366a454dc54d8ecffd9520e27beac</Hash>
 </Codenesium>*/

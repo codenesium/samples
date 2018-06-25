@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class ProxyRepository : AbstractProxyRepository, IProxyRepository
+        public partial class ProxyRepository : AbstractProxyRepository, IProxyRepository
         {
                 public ProxyRepository(
                         ILogger<ProxyRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d4e11654cd56fc5edd90d5db6cfbc4a7</Hash>
+    <Hash>a2d0c4ece478bbc874a6f619b78db7b5</Hash>
 </Codenesium>*/

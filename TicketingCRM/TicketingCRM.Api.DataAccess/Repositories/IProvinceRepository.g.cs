@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 Task<List<Province>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Province>> GetCountryId(int countryId);
+                Task<List<Province>> ByCountryId(int countryId);
 
                 Task<List<City>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91eaae1b01f8e2c47ed28d3597248761</Hash>
+    <Hash>989de66eeb2250836914bc0e494f212d</Hash>
 </Codenesium>*/

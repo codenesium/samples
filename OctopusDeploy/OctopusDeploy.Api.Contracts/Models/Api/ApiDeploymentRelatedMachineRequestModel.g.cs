@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string deploymentId,
                         string machineId)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee1e9644f403a16de6e1c02499454d01</Hash>
+    <Hash>18e91909de3eb7b9153abc8860d6d721</Hash>
 </Codenesium>*/

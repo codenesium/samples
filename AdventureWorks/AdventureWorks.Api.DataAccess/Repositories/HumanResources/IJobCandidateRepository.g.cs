@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<JobCandidate>> ByBusinessEntityID(Nullable<int> businessEntityID);
+                Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID);
         }
 }
 
 /*<Codenesium>
-    <Hash>53cbffd403a5b8e2961a111d8dbb1eac</Hash>
+    <Hash>94d7606219edac3898bd26acc228e72e</Hash>
 </Codenesium>*/

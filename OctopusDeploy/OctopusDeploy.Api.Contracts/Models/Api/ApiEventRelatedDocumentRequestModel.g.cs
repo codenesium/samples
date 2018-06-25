@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string eventId,
                         string relatedDocumentId)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8d5e693607407877205618d6d67fabac</Hash>
+    <Hash>d3207aff8163650036593efd7ab04069</Hash>
 </Codenesium>*/

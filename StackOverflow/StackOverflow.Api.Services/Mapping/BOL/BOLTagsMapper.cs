@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class BOLTagsMapper : BOLAbstractTagsMapper, IBOLTagsMapper
+        public partial class BOLTagsMapper : BOLAbstractTagsMapper, IBOLTagsMapper
         {
                 public BOLTagsMapper()
                 {
@@ -14,5 +14,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e12a6aff7c00443b8c31cd730d581e88</Hash>
+    <Hash>79f81a0a0b3055990a2a4c6471101a37</Hash>
 </Codenesium>*/

@@ -65,7 +65,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -78,7 +78,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void SlugRules()
                 {
                         this.RuleFor(x => x.Slug).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetSlug).When(x => x?.Slug != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Slug));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueBySlug).When(x => x?.Slug != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Slug));
                         this.RuleFor(x => x.Slug).Length(0, 210);
                 }
 
@@ -87,9 +87,9 @@ namespace OctopusDeployNS.Api.Services
                         this.RuleFor(x => x.VariableSetId).Length(0, 150);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiProjectRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiProjectRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Project record = await this.projectRepository.GetName(model.Name);
+                        Project record = await this.projectRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                private async Task<bool> BeUniqueGetSlug(ApiProjectRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueBySlug(ApiProjectRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Project record = await this.projectRepository.GetSlug(model.Slug);
+                        Project record = await this.projectRepository.BySlug(model.Slug);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b86a5af52e14c726b808ebe659c1c1fd</Hash>
+    <Hash>bcecbc7a64825e6d0a38b6d5186d50ff</Hash>
 </Codenesium>*/

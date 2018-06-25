@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Services
 {
-        public class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
+        public partial class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
         {
                 public VersionInfoService(
                         ILogger<IVersionInfoRepository> logger,
@@ -30,5 +30,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0eba0cd45e13b6d737bf29c936e69925</Hash>
+    <Hash>bd38ef84fe8b33c3bf09c87192ad9357</Hash>
 </Codenesium>*/

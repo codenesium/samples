@@ -130,43 +130,43 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetCreated_Exists()
+                public async void ByCreated_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var records = new List<DeploymentHistory>();
                         records.Add(new DeploymentHistory());
-                        mock.RepositoryMock.Setup(x => x.GetCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Object,
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default(DateTimeOffset));
+                        List<ApiDeploymentHistoryResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
                 }
 
                 [Fact]
-                public async void GetCreated_Not_Exists()
+                public async void ByCreated_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<DeploymentHistory>>(new List<DeploymentHistory>()));
+                        mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<DeploymentHistory>>(new List<DeploymentHistory>()));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Object,
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default(DateTimeOffset));
+                        List<ApiDeploymentHistoryResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
+                        mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c826c7b2ab91ad38fa8586b68df2fee6</Hash>
+    <Hash>86ca79ec3b9769e3d619a88bbf770c1d</Hash>
 </Codenesium>*/

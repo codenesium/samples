@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AccountNumber_Delete()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
-
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void StoreID_Create_Valid_Reference()
                 {
                         Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
@@ -235,5 +223,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>73196f689201fa7a6a17123863c73a8c</Hash>
+    <Hash>4babe61bfdc40de9fcade2fa2d2ce2fc</Hash>
 </Codenesium>*/

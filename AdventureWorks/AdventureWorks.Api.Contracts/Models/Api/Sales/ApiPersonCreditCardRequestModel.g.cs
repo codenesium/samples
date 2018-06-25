@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int creditCardID,
                         DateTime modifiedDate)
                 {
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e2475a3f634f6795c60537b7fc542dc1</Hash>
+    <Hash>13789e75492043ba73565812232f71c9</Hash>
 </Codenesium>*/

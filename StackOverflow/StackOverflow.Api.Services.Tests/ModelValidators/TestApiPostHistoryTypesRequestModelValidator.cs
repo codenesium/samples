@@ -71,21 +71,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
                 }
-
-                [Fact]
-                public async void Type_Delete()
-                {
-                        Mock<IPostHistoryTypesRepository> postHistoryTypesRepository = new Mock<IPostHistoryTypesRepository>();
-                        postHistoryTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistoryTypes()));
-
-                        var validator = new ApiPostHistoryTypesRequestModelValidator(postHistoryTypesRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>82ed7d9d790c686a90aa2da2c7a138f6</Hash>
+    <Hash>bd5c095f5f271b4953bc702a07ef5dea</Hash>
 </Codenesium>*/

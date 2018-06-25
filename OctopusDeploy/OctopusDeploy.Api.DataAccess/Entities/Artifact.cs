@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTimeOffset created,
                         string environmentId,
                         string filename,
@@ -60,5 +60,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ba61f743f99639780d1df98eeb30512</Hash>
+    <Hash>cb8f7163b9a8cee6144ca512ec6f5e28</Hash>
 </Codenesium>*/

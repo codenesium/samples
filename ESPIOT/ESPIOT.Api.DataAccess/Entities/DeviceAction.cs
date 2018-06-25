@@ -12,7 +12,7 @@ namespace ESPIOTNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int deviceId,
                         int id,
                         string name,
@@ -43,5 +43,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47eb008d5141d71a51ec484ffe812cc0</Hash>
+    <Hash>1a53e1b0e0504f8b68a1e2f5b7f31dea</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class SubscriptionService : AbstractSubscriptionService, ISubscriptionService
+        public partial class SubscriptionService : AbstractSubscriptionService, ISubscriptionService
         {
                 public SubscriptionService(
                         ILogger<ISubscriptionRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>502dfd1deb23a19e7486a56b99dd53f6</Hash>
+    <Hash>4389a0e728a9b3e2880cb899fa5c8136</Hash>
 </Codenesium>*/

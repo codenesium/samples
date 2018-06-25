@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiShiftResponseModel : AbstractApiResponseModel
+        public partial class ApiShiftResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         TimeSpan endTime,
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>232e1995501a4fff7a2e4684bad0991c</Hash>
+    <Hash>0ed034a8d47d799a603fe5a0fe259ee9</Hash>
 </Codenesium>*/

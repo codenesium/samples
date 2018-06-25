@@ -95,21 +95,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
                 }
-
-                [Fact]
-                public async void OwnerId_Delete()
-                {
-                        Mock<IDeploymentProcessRepository> deploymentProcessRepository = new Mock<IDeploymentProcessRepository>();
-                        deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
-
-                        var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7e012bfeb9849bcb6d3814d1e4c302d6</Hash>
+    <Hash>2d542536350950a3286dd496bc5e71a5</Hash>
 </Codenesium>*/

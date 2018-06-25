@@ -13,8 +13,8 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> birthday,
+                public virtual void SetProperties(
+                        DateTime? birthday,
                         string email,
                         string firstName,
                         string lastName,
@@ -29,13 +29,13 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioId = studioId;
                 }
 
-                private Nullable<DateTime> birthday;
+                private DateTime? birthday;
 
-                public Nullable<DateTime> Birthday
+                public DateTime? Birthday
                 {
                         get
                         {
-                                return this.birthday.IsEmptyOrZeroOrNull() ? null : this.birthday;
+                                return this.birthday;
                         }
 
                         set
@@ -127,5 +127,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>85b265a1c1ec1fa9d143f3fdacf61bfb</Hash>
+    <Hash>c2a9e0501b53bad6cee38fb470280f56</Hash>
 </Codenesium>*/

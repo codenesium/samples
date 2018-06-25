@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALPasswordMapper : DALAbstractPasswordMapper, IDALPasswordMapper
+        public partial class DALPasswordMapper : DALAbstractPasswordMapper, IDALPasswordMapper
         {
                 public DALPasswordMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93136f95dff1d8fb6fc559c3666f0a52</Hash>
+    <Hash>a7e735f2f011c0b25d72313f322add1f</Hash>
 </Codenesium>*/

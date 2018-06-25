@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALAWBuildVersionMapper : DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
+        public partial class DALAWBuildVersionMapper : DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
         {
                 public DALAWBuildVersionMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6b823e2bd80bf04be322280e7b1efd5</Hash>
+    <Hash>351dd8965778b50b8159e3deb0a23f0c</Hash>
 </Codenesium>*/

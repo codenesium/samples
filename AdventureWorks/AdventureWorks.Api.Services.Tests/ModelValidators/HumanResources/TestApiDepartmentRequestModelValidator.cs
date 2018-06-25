@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GroupName_Delete()
-                {
-                        Mock<IDepartmentRepository> departmentRepository = new Mock<IDepartmentRepository>();
-                        departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
-
-                        var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IDepartmentRepository> departmentRepository = new Mock<IDepartmentRepository>();
@@ -130,18 +118,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IDepartmentRepository> departmentRepository = new Mock<IDepartmentRepository>();
-                        departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
-
-                        var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -195,5 +171,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d7c3e52820dc6de4b01cf75d1c447713</Hash>
+    <Hash>5efe037eebd4f2c08fafc83222e6ca70</Hash>
 </Codenesium>*/

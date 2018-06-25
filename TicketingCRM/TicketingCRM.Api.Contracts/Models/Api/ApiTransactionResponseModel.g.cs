@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public class ApiTransactionResponseModel : AbstractApiResponseModel
+        public partial class ApiTransactionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal amount,
@@ -75,5 +75,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cfee9c6c9eda8aed64ec2acd4594f396</Hash>
+    <Hash>97728def4139692e00050fc17505d4b1</Hash>
 </Codenesium>*/

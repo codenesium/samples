@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string actionType,
                         string communityActionTemplateId,
                         string jSON,
@@ -49,7 +49,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.communityActionTemplateId.IsEmptyOrZeroOrNull() ? null : this.communityActionTemplateId;
+                                return this.communityActionTemplateId;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d75a8d66b57f8c887e90953ff284187a</Hash>
+    <Hash>33780d3c9e0b3c1c9c13eaf4c276369d</Hash>
 </Codenesium>*/

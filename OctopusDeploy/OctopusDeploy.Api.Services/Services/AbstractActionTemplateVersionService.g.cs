@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiActionTemplateVersionResponseModel> GetNameVersion(string name, int version)
+                public async Task<ApiActionTemplateVersionResponseModel> ByNameVersion(string name, int version)
                 {
-                        ActionTemplateVersion record = await this.actionTemplateVersionRepository.GetNameVersion(name, version);
+                        ActionTemplateVersion record = await this.actionTemplateVersionRepository.ByNameVersion(name, version);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiActionTemplateVersionResponseModel>> GetLatestActionTemplateId(string latestActionTemplateId)
+                public async Task<List<ApiActionTemplateVersionResponseModel>> ByLatestActionTemplateId(string latestActionTemplateId)
                 {
-                        List<ActionTemplateVersion> records = await this.actionTemplateVersionRepository.GetLatestActionTemplateId(latestActionTemplateId);
+                        List<ActionTemplateVersion> records = await this.actionTemplateVersionRepository.ByLatestActionTemplateId(latestActionTemplateId);
 
                         return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>952d1ec9aa1e7e9abfc3d0ecb7d0c1b9</Hash>
+    <Hash>b1955e632128b9dedead7448b870a141</Hash>
 </Codenesium>*/

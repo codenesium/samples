@@ -12,11 +12,11 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> assignedMachineId,
+                public virtual void SetProperties(
+                        int? assignedMachineId,
                         int chainId,
-                        Nullable<DateTime> dateCompleted,
-                        Nullable<DateTime> dateStarted,
+                        DateTime? dateCompleted,
+                        DateTime? dateStarted,
                         string dynamicParameters,
                         Guid externalId,
                         int id,
@@ -43,16 +43,16 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Column("assignedMachineId")]
-                public Nullable<int> AssignedMachineId { get; private set; }
+                public int? AssignedMachineId { get; private set; }
 
                 [Column("chainId")]
                 public int ChainId { get; private set; }
 
                 [Column("dateCompleted")]
-                public Nullable<DateTime> DateCompleted { get; private set; }
+                public DateTime? DateCompleted { get; private set; }
 
                 [Column("dateStarted")]
-                public Nullable<DateTime> DateStarted { get; private set; }
+                public DateTime? DateStarted { get; private set; }
 
                 [Column("dynamicParameters")]
                 public string DynamicParameters { get; private set; }
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>049aa7d4ef0641d3cac4e5d7e7ef727f</Hash>
+    <Hash>77f32fead076458e72f2516a583ac7ea</Hash>
 </Codenesium>*/

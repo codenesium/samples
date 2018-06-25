@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         decimal amount,
                         string gatewayConfirmationNumber,
                         int transactionStatusId)
@@ -74,5 +74,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>795f497fd48ad4ea40daae1840310065</Hash>
+    <Hash>b3e0a375f0ca843bb059c4f322fcdc08</Hash>
 </Codenesium>*/

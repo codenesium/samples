@@ -12,12 +12,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SetProperties(int workOrderID,
                                                   DateTime dueDate,
-                                                  Nullable<DateTime> endDate,
+                                                  DateTime? endDate,
                                                   DateTime modifiedDate,
                                                   int orderQty,
                                                   int productID,
                                                   short scrappedQty,
-                                                  Nullable<short> scrapReasonID,
+                                                  short? scrapReasonID,
                                                   DateTime startDate,
                                                   int stockedQty)
                 {
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public DateTime DueDate { get; private set; }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public short ScrappedQty { get; private set; }
 
-                public Nullable<short> ScrapReasonID { get; private set; }
+                public short? ScrapReasonID { get; private set; }
 
                 public DateTime StartDate { get; private set; }
 
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95c2e55243108844623c8054a32d8e12</Hash>
+    <Hash>7abcac8c3882504e369eaafe906158db</Hash>
 </Codenesium>*/

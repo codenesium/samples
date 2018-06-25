@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantRepository>();
                         var record = new Tenant();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TenantService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTenantMapperMock,
                                                         mock.DALMapperMockFactory.DALTenantMapperMock);
 
-                        ApiTenantResponseModel response = await service.GetName(default(string));
+                        ApiTenantResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
                         var service = new TenantService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTenantMapperMock,
                                                         mock.DALMapperMockFactory.DALTenantMapperMock);
 
-                        ApiTenantResponseModel response = await service.GetName(default(string));
+                        ApiTenantResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantRepository>();
                         var records = new List<Tenant>();
                         records.Add(new Tenant());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new TenantService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTenantMapperMock,
                                                         mock.DALMapperMockFactory.DALTenantMapperMock);
 
-                        List<ApiTenantResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiTenantResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Tenant>>(new List<Tenant>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Tenant>>(new List<Tenant>()));
                         var service = new TenantService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTenantMapperMock,
                                                         mock.DALMapperMockFactory.DALTenantMapperMock);
 
-                        List<ApiTenantResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiTenantResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>608fec86f9d559b687e563f4c8a120ca</Hash>
+    <Hash>980a49f318d2b72f32e81bfde1abe390</Hash>
 </Codenesium>*/

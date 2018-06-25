@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiLocationResponseModel : AbstractApiResponseModel
+        public partial class ApiLocationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal availability,
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>670724a0d8e111949583ce793b4bcf66</Hash>
+    <Hash>55353b9327a9bbf3ed18c2102f58f7f8</Hash>
 </Codenesium>*/

@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiTagSetResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiTagSetResponseModel> GetName(string name);
+                Task<ApiTagSetResponseModel> ByName(string name);
 
-                Task<List<ApiTagSetResponseModel>> GetDataVersion(byte[] dataVersion);
+                Task<List<ApiTagSetResponseModel>> ByDataVersion(byte[] dataVersion);
         }
 }
 
 /*<Codenesium>
-    <Hash>ebe4e679efebd065e7cf166923fa57fd</Hash>
+    <Hash>d483696d8a2478830ab47dc72fabecc8</Hash>
 </Codenesium>*/

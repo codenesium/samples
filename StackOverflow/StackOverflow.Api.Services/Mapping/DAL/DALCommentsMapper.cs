@@ -4,7 +4,7 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class DALCommentsMapper : DALAbstractCommentsMapper, IDALCommentsMapper
+        public partial class DALCommentsMapper : DALAbstractCommentsMapper, IDALCommentsMapper
         {
                 public DALCommentsMapper()
                 {
@@ -13,5 +13,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c80e47bf8bbb6d997b7cf1a44f683db1</Hash>
+    <Hash>c358458a25a7a04b76403e37b5e272cc</Hash>
 </Codenesium>*/

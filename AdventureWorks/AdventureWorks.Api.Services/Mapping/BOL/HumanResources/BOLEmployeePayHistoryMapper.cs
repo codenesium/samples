@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLEmployeePayHistoryMapper : BOLAbstractEmployeePayHistoryMapper, IBOLEmployeePayHistoryMapper
+        public partial class BOLEmployeePayHistoryMapper : BOLAbstractEmployeePayHistoryMapper, IBOLEmployeePayHistoryMapper
         {
                 public BOLEmployeePayHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f82683dbf3e46ba60abb9dc8291715f</Hash>
+    <Hash>27d666e0f97ce879603b3dcf31a05bcc</Hash>
 </Codenesium>*/

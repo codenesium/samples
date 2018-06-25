@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<BillOfMaterials> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async Task<BillOfMaterials> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
                 {
                         var records = await this.Where(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
 
@@ -122,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>92d97885fff6c98741b436cbef310ad8</Hash>
+    <Hash>33c86abd5e2a4b6a5430e5390cc46d07</Hash>
 </Codenesium>*/

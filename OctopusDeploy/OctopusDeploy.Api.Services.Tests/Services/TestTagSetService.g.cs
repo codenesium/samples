@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<ITagSetRepository>();
                         var record = new TagSet();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TagSetService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTagSetMapperMock,
                                                         mock.DALMapperMockFactory.DALTagSetMapperMock);
 
-                        ApiTagSetResponseModel response = await service.GetName(default(string));
+                        ApiTagSetResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITagSetRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
                         var service = new TagSetService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTagSetMapperMock,
                                                         mock.DALMapperMockFactory.DALTagSetMapperMock);
 
-                        ApiTagSetResponseModel response = await service.GetName(default(string));
+                        ApiTagSetResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Exists()
+                public async void ByDataVersion_Exists()
                 {
                         var mock = new ServiceMockFacade<ITagSetRepository>();
                         var records = new List<TagSet>();
                         records.Add(new TagSet());
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
                         var service = new TagSetService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTagSetMapperMock,
                                                         mock.DALMapperMockFactory.DALTagSetMapperMock);
 
-                        List<ApiTagSetResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiTagSetResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
 
                 [Fact]
-                public async void GetDataVersion_Not_Exists()
+                public async void ByDataVersion_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITagSetRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<TagSet>>(new List<TagSet>()));
+                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<TagSet>>(new List<TagSet>()));
                         var service = new TagSetService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTagSetMapperMock,
                                                         mock.DALMapperMockFactory.DALTagSetMapperMock);
 
-                        List<ApiTagSetResponseModel> response = await service.GetDataVersion(default(byte[]));
+                        List<ApiTagSetResponseModel> response = await service.ByDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
+                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>49386f0f6f3e4a5843ab361613e9ea00</Hash>
+    <Hash>17ab5d2ce885f3cb7a497bb76ac1ec43</Hash>
 </Codenesium>*/

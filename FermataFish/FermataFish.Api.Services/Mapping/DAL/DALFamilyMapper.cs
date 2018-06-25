@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALFamilyMapper : DALAbstractFamilyMapper, IDALFamilyMapper
+        public partial class DALFamilyMapper : DALAbstractFamilyMapper, IDALFamilyMapper
         {
                 public DALFamilyMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc68893b519bf1b4d4b91af96ac38c8e</Hash>
+    <Hash>39f6f4eb4dc3c9db3bb947d5facdc255</Hash>
 </Codenesium>*/

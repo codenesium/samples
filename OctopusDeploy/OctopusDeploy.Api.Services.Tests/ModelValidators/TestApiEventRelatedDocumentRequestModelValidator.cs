@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EventId_Delete()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EventId_Create_Valid_Reference()
                 {
                         Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
@@ -181,21 +169,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
                 }
-
-                [Fact]
-                public async void RelatedDocumentId_Delete()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5bec8104c5a78b46f7901c42f00e1139</Hash>
+    <Hash>19fb392c7ffbc2933ec59d0f425e7623</Hash>
 </Codenesium>*/

@@ -12,22 +12,22 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> acceptedAnswerId,
-                        Nullable<int> answerCount,
+                public virtual void SetProperties(
+                        int? acceptedAnswerId,
+                        int? answerCount,
                         string body,
-                        Nullable<DateTime> closedDate,
-                        Nullable<int> commentCount,
-                        Nullable<DateTime> communityOwnedDate,
+                        DateTime? closedDate,
+                        int? commentCount,
+                        DateTime? communityOwnedDate,
                         DateTime creationDate,
-                        Nullable<int> favoriteCount,
+                        int? favoriteCount,
                         int id,
                         DateTime lastActivityDate,
-                        Nullable<DateTime> lastEditDate,
+                        DateTime? lastEditDate,
                         string lastEditorDisplayName,
-                        Nullable<int> lastEditorUserId,
-                        Nullable<int> ownerUserId,
-                        Nullable<int> parentId,
+                        int? lastEditorUserId,
+                        int? ownerUserId,
+                        int? parentId,
                         int postTypeId,
                         int score,
                         string tags,
@@ -57,28 +57,28 @@ namespace StackOverflowNS.Api.DataAccess
                 }
 
                 [Column("AcceptedAnswerId")]
-                public Nullable<int> AcceptedAnswerId { get; private set; }
+                public int? AcceptedAnswerId { get; private set; }
 
                 [Column("AnswerCount")]
-                public Nullable<int> AnswerCount { get; private set; }
+                public int? AnswerCount { get; private set; }
 
                 [Column("Body")]
                 public string Body { get; private set; }
 
                 [Column("ClosedDate")]
-                public Nullable<DateTime> ClosedDate { get; private set; }
+                public DateTime? ClosedDate { get; private set; }
 
                 [Column("CommentCount")]
-                public Nullable<int> CommentCount { get; private set; }
+                public int? CommentCount { get; private set; }
 
                 [Column("CommunityOwnedDate")]
-                public Nullable<DateTime> CommunityOwnedDate { get; private set; }
+                public DateTime? CommunityOwnedDate { get; private set; }
 
                 [Column("CreationDate")]
                 public DateTime CreationDate { get; private set; }
 
                 [Column("FavoriteCount")]
-                public Nullable<int> FavoriteCount { get; private set; }
+                public int? FavoriteCount { get; private set; }
 
                 [Key]
                 [Column("Id")]
@@ -88,19 +88,19 @@ namespace StackOverflowNS.Api.DataAccess
                 public DateTime LastActivityDate { get; private set; }
 
                 [Column("LastEditDate")]
-                public Nullable<DateTime> LastEditDate { get; private set; }
+                public DateTime? LastEditDate { get; private set; }
 
                 [Column("LastEditorDisplayName")]
                 public string LastEditorDisplayName { get; private set; }
 
                 [Column("LastEditorUserId")]
-                public Nullable<int> LastEditorUserId { get; private set; }
+                public int? LastEditorUserId { get; private set; }
 
                 [Column("OwnerUserId")]
-                public Nullable<int> OwnerUserId { get; private set; }
+                public int? OwnerUserId { get; private set; }
 
                 [Column("ParentId")]
-                public Nullable<int> ParentId { get; private set; }
+                public int? ParentId { get; private set; }
 
                 [Column("PostTypeId")]
                 public int PostTypeId { get; private set; }
@@ -120,5 +120,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3839a005098d8a65daa18ba3f160c78b</Hash>
+    <Hash>0ff4e0a8371183830089e9c68333e7aa</Hash>
 </Codenesium>*/

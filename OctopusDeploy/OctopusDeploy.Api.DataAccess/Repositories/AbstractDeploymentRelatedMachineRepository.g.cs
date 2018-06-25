@@ -76,14 +76,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<DeploymentRelatedMachine>> GetDeploymentId(string deploymentId)
+                public async Task<List<DeploymentRelatedMachine>> ByDeploymentId(string deploymentId)
                 {
                         var records = await this.Where(x => x.DeploymentId == deploymentId);
 
                         return records;
                 }
 
-                public async Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId)
+                public async Task<List<DeploymentRelatedMachine>> ByMachineId(string machineId)
                 {
                         var records = await this.Where(x => x.MachineId == machineId);
 
@@ -127,5 +127,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e91e2589f421651f14bc3b9c4eed817</Hash>
+    <Hash>b38756e65c4aa6093d8c00f2554ae767</Hash>
 </Codenesium>*/

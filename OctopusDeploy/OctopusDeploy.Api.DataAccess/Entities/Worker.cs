@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string communicationStyle,
                         string fingerprint,
                         string id,
@@ -70,5 +70,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>021d15b4e3623d2dd2d7832edb237091</Hash>
+    <Hash>96299df263ec126ee970712c8e3abc30</Hash>
 </Codenesium>*/

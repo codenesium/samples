@@ -130,42 +130,42 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetName_Exists()
+                public async void ByName_Exists()
                 {
                         var mock = new ServiceMockFacade<IFeedRepository>();
                         var record = new Feed();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new FeedService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.FeedModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLFeedMapperMock,
                                                       mock.DALMapperMockFactory.DALFeedMapperMock);
 
-                        ApiFeedResponseModel response = await service.GetName(default(string));
+                        ApiFeedResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetName_Not_Exists()
+                public async void ByName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IFeedRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
+                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
                         var service = new FeedService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.FeedModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLFeedMapperMock,
                                                       mock.DALMapperMockFactory.DALFeedMapperMock);
 
-                        ApiFeedResponseModel response = await service.GetName(default(string));
+                        ApiFeedResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>16406984fd36c044cc2236846c10708c</Hash>
+    <Hash>1ff991bd4549ee061ede12eab5d1e912</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CountryRegionCode_Delete()
-                {
-                        Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-                        stateProvinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
-
-                        var validator = new ApiStateProvinceRequestModelValidator(stateProvinceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
@@ -133,18 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-                        stateProvinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
-
-                        var validator = new ApiStateProvinceRequestModelValidator(stateProvinceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void StateProvinceCode_Create_null()
                 {
                         Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
@@ -190,18 +166,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStateProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.StateProvinceCode, new string('A', 4));
-                }
-
-                [Fact]
-                public async void StateProvinceCode_Delete()
-                {
-                        Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-                        stateProvinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
-
-                        var validator = new ApiStateProvinceRequestModelValidator(stateProvinceRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -255,5 +219,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e58d065ff062ebb222345bb76ad3eab5</Hash>
+    <Hash>a572afbdb13bfbdda783a4f9219d03ca</Hash>
 </Codenesium>*/

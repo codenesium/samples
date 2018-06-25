@@ -17,10 +17,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<Proxy>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Proxy> GetName(string name);
+                Task<Proxy> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>9292f7e28fb90ebc495ad8ee8cd3775e</Hash>
+    <Hash>370b18dea30b213d39bcdaa35dd9a831</Hash>
 </Codenesium>*/

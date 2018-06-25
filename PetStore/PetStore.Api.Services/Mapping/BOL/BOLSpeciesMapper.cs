@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public class BOLSpeciesMapper : BOLAbstractSpeciesMapper, IBOLSpeciesMapper
+        public partial class BOLSpeciesMapper : BOLAbstractSpeciesMapper, IBOLSpeciesMapper
         {
                 public BOLSpeciesMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2602d77d6d41aebdb2ac18f9f683923</Hash>
+    <Hash>93b6a14ffcd6f85d516a5cf3ce99d179</Hash>
 </Codenesium>*/

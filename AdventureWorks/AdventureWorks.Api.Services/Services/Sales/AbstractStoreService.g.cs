@@ -109,7 +109,7 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiStoreResponseModel>> BySalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<ApiStoreResponseModel>> BySalesPersonID(int? salesPersonID)
                 {
                         List<Store> records = await this.storeRepository.BySalesPersonID(salesPersonID);
 
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>408c4024d2473a72e596ed593a7c3c8b</Hash>
+    <Hash>22683dc6f8837488d4362a0a6db63ab3</Hash>
 </Codenesium>*/

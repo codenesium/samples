@@ -134,34 +134,34 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IBillOfMaterialsRepository>();
                         var record = new BillOfMaterials();
-                        mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult(record));
                         var service = new BillOfMaterialsService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.BillOfMaterialsModelValidatorMock.Object,
                                                                  mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
                                                                  mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock);
 
-                        ApiBillOfMaterialsResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(Nullable<int>), default(int), default(DateTime));
+                        ApiBillOfMaterialsResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(int?), default(int), default(DateTime));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>()));
+                        mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>()));
                 }
 
                 [Fact]
                 public async void ByProductAssemblyIDComponentIDStartDate_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBillOfMaterialsRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
+                        mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
                         var service = new BillOfMaterialsService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.BillOfMaterialsModelValidatorMock.Object,
                                                                  mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
                                                                  mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock);
 
-                        ApiBillOfMaterialsResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(Nullable<int>), default(int), default(DateTime));
+                        ApiBillOfMaterialsResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(int?), default(int), default(DateTime));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>()));
+                        mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>()));
                 }
 
                 [Fact]
@@ -203,5 +203,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4b080ea62cd57ec097c0a1b3d6220c25</Hash>
+    <Hash>c0f80713873469206d8a37811da2f9dd</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void SetProperties(int productID,
                                                   int averageLeadTime,
                                                   int businessEntityID,
-                                                  Nullable<decimal> lastReceiptCost,
-                                                  Nullable<DateTime> lastReceiptDate,
+                                                  decimal? lastReceiptCost,
+                                                  DateTime? lastReceiptDate,
                                                   int maxOrderQty,
                                                   int minOrderQty,
                                                   DateTime modifiedDate,
-                                                  Nullable<int> onOrderQty,
+                                                  int? onOrderQty,
                                                   decimal standardPrice,
                                                   string unitMeasureCode)
                 {
@@ -39,9 +39,9 @@ namespace AdventureWorksNS.Api.Services
 
                 public int BusinessEntityID { get; private set; }
 
-                public Nullable<decimal> LastReceiptCost { get; private set; }
+                public decimal? LastReceiptCost { get; private set; }
 
-                public Nullable<DateTime> LastReceiptDate { get; private set; }
+                public DateTime? LastReceiptDate { get; private set; }
 
                 public int MaxOrderQty { get; private set; }
 
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public DateTime ModifiedDate { get; private set; }
 
-                public Nullable<int> OnOrderQty { get; private set; }
+                public int? OnOrderQty { get; private set; }
 
                 public int ProductID { get; private set; }
 
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4eeb42592d2aadc03cc329a3f6996baa</Hash>
+    <Hash>1d66674e16568f24ac600b3628bd0c83</Hash>
 </Codenesium>*/

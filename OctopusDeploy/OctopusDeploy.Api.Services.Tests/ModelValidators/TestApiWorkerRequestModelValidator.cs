@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CommunicationStyle_Delete()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
-
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Fingerprint_Create_length()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
@@ -106,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Fingerprint_Delete()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
-
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void MachinePolicyId_Delete()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
-
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
@@ -253,18 +217,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
-
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Thumbprint_Create_length()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
@@ -289,22 +241,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Thumbprint_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
-
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
+                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
                         var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
@@ -313,10 +253,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
+                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
                         var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
@@ -325,10 +265,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
+                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
                         var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
@@ -337,10 +277,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
+                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
                         var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
@@ -351,5 +291,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d77849ed063c424b08b3c42c580e0fd5</Hash>
+    <Hash>722ba30d1ee4fcce14b81a532b06efab</Hash>
 </Codenesium>*/

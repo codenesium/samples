@@ -4,7 +4,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class DALCountryMapper : DALAbstractCountryMapper, IDALCountryMapper
+        public partial class DALCountryMapper : DALAbstractCountryMapper, IDALCountryMapper
         {
                 public DALCountryMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1bdd41e9f0422a48103fb241a96628c5</Hash>
+    <Hash>16c59aa39a575ea37e4a9135492534b4</Hash>
 </Codenesium>*/

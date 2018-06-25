@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         bool isInMaintenanceMode,
                         string jSON,
                         DateTimeOffset lastSeen,
@@ -128,5 +128,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6185863cfdfec0c9b09ab576aef6a499</Hash>
+    <Hash>f4f460e7983b896c36e7690f2eecd706</Hash>
 </Codenesium>*/

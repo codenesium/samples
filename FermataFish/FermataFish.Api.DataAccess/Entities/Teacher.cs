@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime birthday,
                         string email,
                         string firstName,
@@ -58,5 +58,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>53d33b0031081186e5ac8f619daccf4b</Hash>
+    <Hash>c0191b98b33dfde0a57232a943266976</Hash>
 </Codenesium>*/

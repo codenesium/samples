@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FileServiceNS.Api.Services
 {
-        public class DALFileTypeMapper : DALAbstractFileTypeMapper, IDALFileTypeMapper
+        public partial class DALFileTypeMapper : DALAbstractFileTypeMapper, IDALFileTypeMapper
         {
                 public DALFileTypeMapper()
                 {
@@ -13,5 +13,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f83aca1801d837da30585815042e8da</Hash>
+    <Hash>dc0c7f9ec1d0134436db57b7266e1a2d</Hash>
 </Codenesium>*/

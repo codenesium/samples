@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALUnitMeasureMapper : DALAbstractUnitMeasureMapper, IDALUnitMeasureMapper
+        public partial class DALUnitMeasureMapper : DALAbstractUnitMeasureMapper, IDALUnitMeasureMapper
         {
                 public DALUnitMeasureMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0861bd1f23136d77a4bc1374f71f2ff9</Hash>
+    <Hash>efe77548e8f750c72c80d402ca4bf92c</Hash>
 </Codenesium>*/

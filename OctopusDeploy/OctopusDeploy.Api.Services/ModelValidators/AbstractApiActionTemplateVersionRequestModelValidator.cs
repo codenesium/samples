@@ -46,18 +46,18 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetNameVersion).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateVersionRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByNameVersion).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateVersionRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void VersionRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetNameVersion).When(x => x?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateVersionRequestModel.Version));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByNameVersion).When(x => x?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateVersionRequestModel.Version));
                 }
 
-                private async Task<bool> BeUniqueGetNameVersion(ApiActionTemplateVersionRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByNameVersion(ApiActionTemplateVersionRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ActionTemplateVersion record = await this.actionTemplateVersionRepository.GetNameVersion(model.Name, model.Version);
+                        ActionTemplateVersion record = await this.actionTemplateVersionRepository.ByNameVersion(model.Name, model.Version);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -72,5 +72,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbeca8a8b6b088ba33b12b7f896d0dda</Hash>
+    <Hash>99269fc8bc1192298a2e2bf13eacbc06</Hash>
 </Codenesium>*/

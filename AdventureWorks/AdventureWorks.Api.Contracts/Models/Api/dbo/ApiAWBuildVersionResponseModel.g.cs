@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiAWBuildVersionResponseModel : AbstractApiResponseModel
+        public partial class ApiAWBuildVersionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string database_Version,
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>540f44dc623592f975ce9f9af70174f5</Hash>
+    <Hash>e57515fc64c12a79aae76d45a6648457</Hash>
 </Codenesium>*/

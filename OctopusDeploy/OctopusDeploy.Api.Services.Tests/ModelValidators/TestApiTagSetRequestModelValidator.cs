@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
-
-                        var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(new TagSet()));
+                        tagSetRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(new TagSet()));
                         var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTagSetRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
+                        tagSetRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
                         var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiTagSetRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(new TagSet()));
+                        tagSetRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(new TagSet()));
                         var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTagSetRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
+                        tagSetRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<TagSet>(null));
                         var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiTagSetRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c441b605493c4ffb55458cbafe7f0751</Hash>
+    <Hash>b5c123171cd9001d191f83fbcc4dde7f</Hash>
 </Codenesium>*/

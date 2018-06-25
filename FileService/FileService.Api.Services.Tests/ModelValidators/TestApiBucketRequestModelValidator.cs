@@ -73,22 +73,10 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByExternalId_Create_Exists()
                 {
                         Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
-
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetExternalId_Create_Exists()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiBucketRequestModel());
@@ -97,10 +85,10 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Create_Not_Exists()
+                private async void BeUniqueByExternalId_Create_Not_Exists()
                 {
                         Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
+                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiBucketRequestModel());
@@ -109,10 +97,10 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Update_Exists()
+                private async void BeUniqueByExternalId_Update_Exists()
                 {
                         Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
@@ -121,10 +109,10 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Update_Not_Exists()
+                private async void BeUniqueByExternalId_Update_Not_Exists()
                 {
                         Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
+                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
@@ -135,5 +123,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>67591dcde02b0cd06ce7bc319da59c8e</Hash>
+    <Hash>2b3d04e6a0d93a0ca4874a7eb74a0fca</Hash>
 </Codenesium>*/

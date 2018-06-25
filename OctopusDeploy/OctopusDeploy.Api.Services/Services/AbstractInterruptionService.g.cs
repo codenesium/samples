@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiInterruptionResponseModel>> GetTenantId(string tenantId)
+                public async Task<List<ApiInterruptionResponseModel>> ByTenantId(string tenantId)
                 {
-                        List<Interruption> records = await this.interruptionRepository.GetTenantId(tenantId);
+                        List<Interruption> records = await this.interruptionRepository.ByTenantId(tenantId);
 
                         return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(records));
                 }
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ff292c7a80ab8c22691c74ca6bd356a</Hash>
+    <Hash>fb1ff23d1dd3d07998d49ef07ce3e29e</Hash>
 </Codenesium>*/

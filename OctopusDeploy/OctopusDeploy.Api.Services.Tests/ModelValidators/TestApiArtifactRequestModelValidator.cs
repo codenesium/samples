@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EnvironmentId_Delete()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Filename_Create_null()
                 {
                         Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
@@ -106,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Filename, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Filename_Delete()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -169,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void RelatedDocumentIds_Create_null()
                 {
                         Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
@@ -227,21 +191,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
-
-                [Fact]
-                public async void TenantId_Delete()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>91264d1ba2d95261982868128401c96f</Hash>
+    <Hash>26039295e5270a9d72efdda651355bd5</Hash>
 </Codenesium>*/

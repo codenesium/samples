@@ -4,7 +4,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class DALCityMapper : DALAbstractCityMapper, IDALCityMapper
+        public partial class DALCityMapper : DALAbstractCityMapper, IDALCityMapper
         {
                 public DALCityMapper()
                 {
@@ -13,5 +13,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85d1e14d492169198d3665c286ddf326</Hash>
+    <Hash>f2d06f4bf0963e57d2789ef3a0e6965b</Hash>
 </Codenesium>*/

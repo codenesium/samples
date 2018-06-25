@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> assignedMachineId,
+                public virtual void SetProperties(
+                        int? assignedMachineId,
                         int chainId,
-                        Nullable<DateTime> dateCompleted,
-                        Nullable<DateTime> dateStarted,
+                        DateTime? dateCompleted,
+                        DateTime? dateStarted,
                         string dynamicParameters,
                         Guid externalId,
                         int linkStatusId,
@@ -41,13 +41,13 @@ namespace NebulaNS.Api.Contracts
                         this.TimeoutInSeconds = timeoutInSeconds;
                 }
 
-                private Nullable<int> assignedMachineId;
+                private int? assignedMachineId;
 
-                public Nullable<int> AssignedMachineId
+                public int? AssignedMachineId
                 {
                         get
                         {
-                                return this.assignedMachineId.IsEmptyOrZeroOrNull() ? null : this.assignedMachineId;
+                                return this.assignedMachineId;
                         }
 
                         set
@@ -72,13 +72,13 @@ namespace NebulaNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> dateCompleted;
+                private DateTime? dateCompleted;
 
-                public Nullable<DateTime> DateCompleted
+                public DateTime? DateCompleted
                 {
                         get
                         {
-                                return this.dateCompleted.IsEmptyOrZeroOrNull() ? null : this.dateCompleted;
+                                return this.dateCompleted;
                         }
 
                         set
@@ -87,13 +87,13 @@ namespace NebulaNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> dateStarted;
+                private DateTime? dateStarted;
 
-                public Nullable<DateTime> DateStarted
+                public DateTime? DateStarted
                 {
                         get
                         {
-                                return this.dateStarted.IsEmptyOrZeroOrNull() ? null : this.dateStarted;
+                                return this.dateStarted;
                         }
 
                         set
@@ -108,7 +108,7 @@ namespace NebulaNS.Api.Contracts
                 {
                         get
                         {
-                                return this.dynamicParameters.IsEmptyOrZeroOrNull() ? null : this.dynamicParameters;
+                                return this.dynamicParameters;
                         }
 
                         set
@@ -187,7 +187,7 @@ namespace NebulaNS.Api.Contracts
                 {
                         get
                         {
-                                return this.response.IsEmptyOrZeroOrNull() ? null : this.response;
+                                return this.response;
                         }
 
                         set
@@ -202,7 +202,7 @@ namespace NebulaNS.Api.Contracts
                 {
                         get
                         {
-                                return this.staticParameters.IsEmptyOrZeroOrNull() ? null : this.staticParameters;
+                                return this.staticParameters;
                         }
 
                         set
@@ -230,5 +230,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b4c00206a4b9b3a52648225950ca6224</Hash>
+    <Hash>16688b7cfd1d5bf2ef563d9f07cf2524</Hash>
 </Codenesium>*/

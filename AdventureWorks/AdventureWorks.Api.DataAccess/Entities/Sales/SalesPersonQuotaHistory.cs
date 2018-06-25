@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int businessEntityID,
                         DateTime modifiedDate,
                         DateTime quotaDate,
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8b6221be68e4929e775bc0c11cf7ac9</Hash>
+    <Hash>47107b710ddc9a20947099d21ba24642</Hash>
 </Codenesium>*/

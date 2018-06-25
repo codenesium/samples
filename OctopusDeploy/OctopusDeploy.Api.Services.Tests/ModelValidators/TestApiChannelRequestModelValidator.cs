@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LifecycleId_Delete()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
@@ -130,18 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,22 +169,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectId_Delete()
+                private async void BeUniqueByNameProjectId_Create_Exists()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetNameProjectId_Create_Exists()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(new Channel()));
+                        channelRepository.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(new Channel()));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
@@ -217,10 +181,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameProjectId_Create_Not_Exists()
+                private async void BeUniqueByNameProjectId_Create_Not_Exists()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
+                        channelRepository.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
@@ -229,10 +193,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameProjectId_Update_Exists()
+                private async void BeUniqueByNameProjectId_Update_Exists()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(new Channel()));
+                        channelRepository.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(new Channel()));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
@@ -241,10 +205,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetNameProjectId_Update_Not_Exists()
+                private async void BeUniqueByNameProjectId_Update_Not_Exists()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
+                        channelRepository.Setup(x => x.ByNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
@@ -255,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c3911686de955d45e550ba7b0234d207</Hash>
+    <Hash>787c3eff0ab1bb362ad680a1b6ec603e</Hash>
 </Codenesium>*/

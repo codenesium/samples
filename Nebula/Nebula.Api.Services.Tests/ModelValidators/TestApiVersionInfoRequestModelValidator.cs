@@ -47,21 +47,9 @@ namespace NebulaNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
                 }
-
-                [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
-                        versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
-
-                        var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(long));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>093c7f60bcca279381941135a5c0ed29</Hash>
+    <Hash>ce71879ad8498ae5684b2fa39b2444d6</Hash>
 </Codenesium>*/

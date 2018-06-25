@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLScrapReasonMapper : BOLAbstractScrapReasonMapper, IBOLScrapReasonMapper
+        public partial class BOLScrapReasonMapper : BOLAbstractScrapReasonMapper, IBOLScrapReasonMapper
         {
                 public BOLScrapReasonMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>09f892e121b2bce634bf7eefa6754626</Hash>
+    <Hash>98446c605430723cf33c0ec78c8103dc</Hash>
 </Codenesium>*/

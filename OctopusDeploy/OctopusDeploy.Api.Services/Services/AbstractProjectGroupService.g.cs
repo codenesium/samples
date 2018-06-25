@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiProjectGroupResponseModel> GetName(string name)
+                public async Task<ApiProjectGroupResponseModel> ByName(string name)
                 {
-                        ProjectGroup record = await this.projectGroupRepository.GetName(name);
+                        ProjectGroup record = await this.projectGroupRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiProjectGroupResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiProjectGroupResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ProjectGroup> records = await this.projectGroupRepository.GetDataVersion(dataVersion);
+                        List<ProjectGroup> records = await this.projectGroupRepository.ByDataVersion(dataVersion);
 
                         return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e8836ddaa9a924b9f4b48c84a177dad</Hash>
+    <Hash>a28f908b68409241c1964058f139ae73</Hash>
 </Codenesium>*/

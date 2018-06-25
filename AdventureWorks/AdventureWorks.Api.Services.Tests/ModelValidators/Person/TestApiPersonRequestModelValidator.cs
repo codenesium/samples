@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void LastName_Create_null()
                 {
                         Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
@@ -133,18 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void MiddleName_Create_length()
                 {
                         Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
@@ -166,18 +142,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MiddleName, new string('A', 51));
-                }
-
-                [Fact]
-                public async void MiddleName_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -229,18 +193,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PersonType_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Suffix_Create_length()
                 {
                         Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
@@ -262,18 +214,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Suffix, new string('A', 11));
-                }
-
-                [Fact]
-                public async void Suffix_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -299,21 +239,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 9));
                 }
-
-                [Fact]
-                public async void Title_Delete()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
-
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5180dcd911dd596d38ce8b769a5a36ff</Hash>
+    <Hash>d803a447e04a2db51006eb9f8976bacd</Hash>
 </Codenesium>*/

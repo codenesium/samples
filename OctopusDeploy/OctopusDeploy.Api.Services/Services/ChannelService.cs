@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ChannelService : AbstractChannelService, IChannelService
+        public partial class ChannelService : AbstractChannelService, IChannelService
         {
                 public ChannelService(
                         ILogger<IChannelRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e51b8ccd6441d92ff7cad8c0cb1fe001</Hash>
+    <Hash>c6722f4eceed1b8e1e54d8bae73e2c9a</Hash>
 </Codenesium>*/

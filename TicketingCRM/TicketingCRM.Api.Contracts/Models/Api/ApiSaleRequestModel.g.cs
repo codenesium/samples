@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string ipAddress,
                         string notes,
                         DateTime saleDate,
@@ -92,5 +92,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>06e7920c196ef5dc4a4360db5ae20dda</Hash>
+    <Hash>ba2eb5bfe3e2a59c97102d0cdb79c6e4</Hash>
 </Codenesium>*/

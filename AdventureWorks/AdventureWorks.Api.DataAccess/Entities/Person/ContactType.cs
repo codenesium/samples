@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int contactTypeID,
                         DateTime modifiedDate,
                         string name)
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d852ddc19c18eba58cdeb31aba6fb6c</Hash>
+    <Hash>fecde850530e04674eb107b9c6e629d3</Hash>
 </Codenesium>*/

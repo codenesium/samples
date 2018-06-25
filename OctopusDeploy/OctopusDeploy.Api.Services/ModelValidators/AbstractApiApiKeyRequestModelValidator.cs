@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void ApiKeyHashedRules()
                 {
                         this.RuleFor(x => x.ApiKeyHashed).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetApiKeyHashed).When(x => x?.ApiKeyHashed != null).WithMessage("Violates unique constraint").WithName(nameof(ApiApiKeyRequestModel.ApiKeyHashed));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByApiKeyHashed).When(x => x?.ApiKeyHashed != null).WithMessage("Violates unique constraint").WithName(nameof(ApiApiKeyRequestModel.ApiKeyHashed));
                         this.RuleFor(x => x.ApiKeyHashed).Length(0, 200);
                 }
 
@@ -48,9 +48,9 @@ namespace OctopusDeployNS.Api.Services
                         this.RuleFor(x => x.UserId).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetApiKeyHashed(ApiApiKeyRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByApiKeyHashed(ApiApiKeyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ApiKey record = await this.apiKeyRepository.GetApiKeyHashed(model.ApiKeyHashed);
+                        ApiKey record = await this.apiKeyRepository.ByApiKeyHashed(model.ApiKeyHashed);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -65,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d080a3cb4866a80fb4988b2aac1ff96d</Hash>
+    <Hash>c166386f447b9ef89e9e4dd147efcaaa</Hash>
 </Codenesium>*/

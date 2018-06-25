@@ -203,12 +203,12 @@ namespace TicketingCRMNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCityId/{cityId}")]
+                [Route("byCityId/{cityId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCityId(int cityId)
+                public async virtual Task<IActionResult> ByCityId(int cityId)
                 {
-                        List<ApiEventResponseModel> response = await this.EventService.GetCityId(cityId);
+                        List<ApiEventResponseModel> response = await this.EventService.ByCityId(cityId);
 
                         return this.Ok(response);
                 }
@@ -216,5 +216,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5e92f1bfb969ed976d74729aa585db3f</Hash>
+    <Hash>4036a8dad904b391a688aa03b6347b3e</Hash>
 </Codenesium>*/

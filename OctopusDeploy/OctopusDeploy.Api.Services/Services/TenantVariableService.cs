@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class TenantVariableService : AbstractTenantVariableService, ITenantVariableService
+        public partial class TenantVariableService : AbstractTenantVariableService, ITenantVariableService
         {
                 public TenantVariableService(
                         ILogger<ITenantVariableRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a48683a726e6c061abe603492cd9a478</Hash>
+    <Hash>cd8ef6b9ef0ee311202d61e5cd894c21</Hash>
 </Codenesium>*/

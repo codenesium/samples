@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiTagSetResponseModel> GetName(string name)
+                public async Task<ApiTagSetResponseModel> ByName(string name)
                 {
-                        TagSet record = await this.tagSetRepository.GetName(name);
+                        TagSet record = await this.tagSetRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiTagSetResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiTagSetResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<TagSet> records = await this.tagSetRepository.GetDataVersion(dataVersion);
+                        List<TagSet> records = await this.tagSetRepository.ByDataVersion(dataVersion);
 
                         return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ac08a6015f1f3df70c07584d2c7b06e</Hash>
+    <Hash>b54b26a6490ddbe7da69a93246a8d4f9</Hash>
 </Codenesium>*/

@@ -154,12 +154,12 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetCountryId_Exists()
+                public async void ByCountryId_Exists()
                 {
                         var mock = new ServiceMockFacade<IProvinceRepository>();
                         var records = new List<Province>();
                         records.Add(new Province());
-                        mock.RepositoryMock.Setup(x => x.GetCountryId(It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ProvinceService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -170,17 +170,17 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                           mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiProvinceResponseModel> response = await service.GetCountryId(default(int));
+                        List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCountryId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void GetCountryId_Not_Exists()
+                public async void ByCountryId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProvinceRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetCountryId(It.IsAny<int>())).Returns(Task.FromResult<List<Province>>(new List<Province>()));
+                        mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>())).Returns(Task.FromResult<List<Province>>(new List<Province>()));
                         var service = new ProvinceService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -191,10 +191,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                           mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        List<ApiProvinceResponseModel> response = await service.GetCountryId(default(int));
+                        List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetCountryId(It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -288,5 +288,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>de4196326cd02db04dfed91c815cb322</Hash>
+    <Hash>a26c4128a7710d4be9f6a19639ce6e80</Hash>
 </Codenesium>*/

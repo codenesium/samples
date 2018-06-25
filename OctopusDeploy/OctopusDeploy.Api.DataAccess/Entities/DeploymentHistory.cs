@@ -12,15 +12,15 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string channelId,
                         string channelName,
-                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset? completedTime,
                         DateTimeOffset created,
                         string deployedBy,
                         string deploymentId,
                         string deploymentName,
-                        Nullable<int> durationSeconds,
+                        int? durationSeconds,
                         string environmentId,
                         string environmentName,
                         string projectId,
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         DateTimeOffset queueTime,
                         string releaseId,
                         string releaseVersion,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string taskId,
                         string taskState,
                         string tenantId,
@@ -65,7 +65,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ChannelName { get; private set; }
 
                 [Column("CompletedTime")]
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
@@ -81,7 +81,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string DeploymentName { get; private set; }
 
                 [Column("DurationSeconds")]
-                public Nullable<int> DurationSeconds { get; private set; }
+                public int? DurationSeconds { get; private set; }
 
                 [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
@@ -108,7 +108,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ReleaseVersion { get; private set; }
 
                 [Column("StartTime")]
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 [Column("TaskId")]
                 public string TaskId { get; private set; }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4febc746796a733a0e8d0ed8fae2fd47</Hash>
+    <Hash>9656c5d9cd80ea4ebe8ff8925895c250</Hash>
 </Codenesium>*/

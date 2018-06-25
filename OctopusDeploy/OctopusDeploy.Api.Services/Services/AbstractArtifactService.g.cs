@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiArtifactResponseModel>> GetTenantId(string tenantId)
+                public async Task<List<ApiArtifactResponseModel>> ByTenantId(string tenantId)
                 {
-                        List<Artifact> records = await this.artifactRepository.GetTenantId(tenantId);
+                        List<Artifact> records = await this.artifactRepository.ByTenantId(tenantId);
 
                         return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(records));
                 }
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3000080530d350fa66b63a0975e2497c</Hash>
+    <Hash>244f69ed6987e203bac86e04a7a7c2df</Hash>
 </Codenesium>*/

@@ -195,12 +195,12 @@ namespace TicketingCRMNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProvinceId/{provinceId}")]
+                [Route("byProvinceId/{provinceId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProvinceId(int provinceId)
+                public async virtual Task<IActionResult> ByProvinceId(int provinceId)
                 {
-                        List<ApiCityResponseModel> response = await this.CityService.GetProvinceId(provinceId);
+                        List<ApiCityResponseModel> response = await this.CityService.ByProvinceId(provinceId);
 
                         return this.Ok(response);
                 }
@@ -222,5 +222,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8874ac7f67b10e3f8516bbb8c98b0f3b</Hash>
+    <Hash>5eea45cbb068f2bf7f92275025f770e0</Hash>
 </Codenesium>*/

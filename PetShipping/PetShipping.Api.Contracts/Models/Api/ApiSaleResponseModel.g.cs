@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public class ApiSaleResponseModel : AbstractApiResponseModel
+        public partial class ApiSaleResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal amount,
@@ -117,5 +117,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>194c38887290a359683a28dbddac9b93</Hash>
+    <Hash>0c260d50d520ae34d7cc677f777f1158</Hash>
 </Codenesium>*/

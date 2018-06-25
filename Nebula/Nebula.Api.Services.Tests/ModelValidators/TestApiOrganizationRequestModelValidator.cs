@@ -71,21 +71,9 @@ namespace NebulaNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
-                        organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
-
-                        var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bcd643485b55afb0cd20adbbd322d61c</Hash>
+    <Hash>86fdb85c1c9008542e98567dff09c177</Hash>
 </Codenesium>*/

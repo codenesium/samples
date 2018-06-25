@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLCurrencyRateMapper : BOLAbstractCurrencyRateMapper, IBOLCurrencyRateMapper
+        public partial class BOLCurrencyRateMapper : BOLAbstractCurrencyRateMapper, IBOLCurrencyRateMapper
         {
                 public BOLCurrencyRateMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e15f0235f7bc8dc0ab265a9d2861b87d</Hash>
+    <Hash>572961d537046636c175281c599f2b71</Hash>
 </Codenesium>*/

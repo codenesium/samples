@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
+        public partial class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
         {
                 public VersionInfoService(
                         ILogger<IVersionInfoRepository> logger,
@@ -30,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>78842087d81328837d380ccfa33e4193</Hash>
+    <Hash>b7fe60f8a2c90a443efaf9a39790e44b</Hash>
 </Codenesium>*/

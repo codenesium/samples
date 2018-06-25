@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLSubscriptionMapper : BOLAbstractSubscriptionMapper, IBOLSubscriptionMapper
+        public partial class BOLSubscriptionMapper : BOLAbstractSubscriptionMapper, IBOLSubscriptionMapper
         {
                 public BOLSubscriptionMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ce1f004e2f99e80dcedd675e44e8fb5</Hash>
+    <Hash>6b32df983e3515db8bcf9eebe8382587</Hash>
 </Codenesium>*/

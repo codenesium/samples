@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLProjectMapper : BOLAbstractProjectMapper, IBOLProjectMapper
+        public partial class BOLProjectMapper : BOLAbstractProjectMapper, IBOLProjectMapper
         {
                 public BOLProjectMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fc86d20ddb7b97fadf1470b78b0a520</Hash>
+    <Hash>ee8e581d8dbfeddb9b3bc1682022ed67</Hash>
 </Codenesium>*/

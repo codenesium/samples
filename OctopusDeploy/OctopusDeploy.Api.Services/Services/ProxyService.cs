@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ProxyService : AbstractProxyService, IProxyService
+        public partial class ProxyService : AbstractProxyService, IProxyService
         {
                 public ProxyService(
                         ILogger<IProxyRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ca835f75c65c8c9ec85b15325362ad2</Hash>
+    <Hash>d068416a5b8151e5f838579eb5725074</Hash>
 </Codenesium>*/

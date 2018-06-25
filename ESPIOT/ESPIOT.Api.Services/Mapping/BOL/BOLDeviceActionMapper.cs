@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class BOLDeviceActionMapper : BOLAbstractDeviceActionMapper, IBOLDeviceActionMapper
+        public partial class BOLDeviceActionMapper : BOLAbstractDeviceActionMapper, IBOLDeviceActionMapper
         {
                 public BOLDeviceActionMapper()
                 {
@@ -14,5 +14,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e518ddb328e96e7c49c33a5ba377c1c</Hash>
+    <Hash>672fb4aa343cb5f11b0e377a0a8df0d4</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name)
                 {
                         this.Name = name;
@@ -38,5 +38,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d5af4eb3e5fc20448e87c17adfa2a4e1</Hash>
+    <Hash>2e30c1898ae00eee445365c1f5a1b4fb</Hash>
 </Codenesium>*/

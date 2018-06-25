@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
-
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
+                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
                         var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
+                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
                         var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
+                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
                         var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
+                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
                         var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3773b5c87848c7a209ea949b6aac0ee3</Hash>
+    <Hash>299921ed1fced65f85303a69f4e8d63c</Hash>
 </Codenesium>*/

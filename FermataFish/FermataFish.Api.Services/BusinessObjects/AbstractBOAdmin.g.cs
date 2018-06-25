@@ -11,7 +11,7 @@ namespace FermataFishNS.Api.Services
                 }
 
                 public virtual void SetProperties(int id,
-                                                  Nullable<DateTime> birthday,
+                                                  DateTime? birthday,
                                                   string email,
                                                   string firstName,
                                                   string lastName,
@@ -27,7 +27,7 @@ namespace FermataFishNS.Api.Services
                         this.StudioId = studioId;
                 }
 
-                public Nullable<DateTime> Birthday { get; private set; }
+                public DateTime? Birthday { get; private set; }
 
                 public string Email { get; private set; }
 
@@ -44,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16d1eadeb43fe3076b1401566b03f274</Hash>
+    <Hash>cc1dc535d6ffb6b9acbc4805875cc402</Hash>
 </Codenesium>*/

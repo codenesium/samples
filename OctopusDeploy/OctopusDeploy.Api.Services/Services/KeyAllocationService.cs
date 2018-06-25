@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class KeyAllocationService : AbstractKeyAllocationService, IKeyAllocationService
+        public partial class KeyAllocationService : AbstractKeyAllocationService, IKeyAllocationService
         {
                 public KeyAllocationService(
                         ILogger<IKeyAllocationRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0833878c5c406fc862277065217df86d</Hash>
+    <Hash>c9bc59e23a53f04840a121dafeb07a35</Hash>
 </Codenesium>*/

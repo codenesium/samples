@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string environmentId,
                         string jSON,
                         string ownerId,
@@ -35,7 +35,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.environmentId.IsEmptyOrZeroOrNull() ? null : this.environmentId;
+                                return this.environmentId;
                         }
 
                         set
@@ -82,7 +82,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.relatedDocumentId.IsEmptyOrZeroOrNull() ? null : this.relatedDocumentId;
+                                return this.relatedDocumentId;
                         }
 
                         set
@@ -126,5 +126,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f1fe66ce795500444504a8698520c958</Hash>
+    <Hash>c532bea0a7e093fc991b0ef743e58d24</Hash>
 </Codenesium>*/

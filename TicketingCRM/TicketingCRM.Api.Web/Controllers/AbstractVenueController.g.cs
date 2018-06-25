@@ -202,23 +202,23 @@ namespace TicketingCRMNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAdminId/{adminId}")]
+                [Route("byAdminId/{adminId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetAdminId(int adminId)
+                public async virtual Task<IActionResult> ByAdminId(int adminId)
                 {
-                        List<ApiVenueResponseModel> response = await this.VenueService.GetAdminId(adminId);
+                        List<ApiVenueResponseModel> response = await this.VenueService.ByAdminId(adminId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getProvinceId/{provinceId}")]
+                [Route("byProvinceId/{provinceId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProvinceId(int provinceId)
+                public async virtual Task<IActionResult> ByProvinceId(int provinceId)
                 {
-                        List<ApiVenueResponseModel> response = await this.VenueService.GetProvinceId(provinceId);
+                        List<ApiVenueResponseModel> response = await this.VenueService.ByProvinceId(provinceId);
 
                         return this.Ok(response);
                 }
@@ -226,5 +226,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f58e02b91d8508d56a8e12ff6ac7a8e1</Hash>
+    <Hash>94216a8412fb9580f909c689a3ce3f94</Hash>
 </Codenesium>*/

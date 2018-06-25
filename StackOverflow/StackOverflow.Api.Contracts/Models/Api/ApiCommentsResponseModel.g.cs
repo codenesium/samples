@@ -6,15 +6,15 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public class ApiCommentsResponseModel : AbstractApiResponseModel
+        public partial class ApiCommentsResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime creationDate,
                         int id,
                         int postId,
-                        Nullable<int> score,
+                        int? score,
                         string text,
-                        Nullable<int> userId)
+                        int? userId)
                 {
                         this.CreationDate = creationDate;
                         this.Id = id;
@@ -30,11 +30,11 @@ namespace StackOverflowNS.Api.Contracts
 
                 public int PostId { get; private set; }
 
-                public Nullable<int> Score { get; private set; }
+                public int? Score { get; private set; }
 
                 public string Text { get; private set; }
 
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
 
                 [JsonIgnore]
                 public bool ShouldSerializeCreationDateValue { get; set; } = true;
@@ -97,5 +97,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>046f0824d69f5a29ba795b6d2af38aa0</Hash>
+    <Hash>9d3f73ad8140fa5f849e2c7e5ca80807</Hash>
 </Codenesium>*/

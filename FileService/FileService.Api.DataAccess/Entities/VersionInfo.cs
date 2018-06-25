@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                public virtual void SetProperties(
+                        DateTime? appliedOn,
                         string description,
                         long version)
                 {
@@ -23,7 +23,7 @@ namespace FileServiceNS.Api.DataAccess
                 }
 
                 [Column("AppliedOn")]
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 [Column("Description")]
                 public string Description { get; private set; }
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3aa70059deda5f79bcaec837239b124c</Hash>
+    <Hash>b2e0aaae9eea05c19a2a4a6c02650d4d</Hash>
 </Codenesium>*/

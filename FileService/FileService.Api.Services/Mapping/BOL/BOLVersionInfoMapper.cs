@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
+        public partial class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
         {
                 public BOLVersionInfoMapper()
                 {
@@ -14,5 +14,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1be1e50d9da41d0a05675f007a36ea1</Hash>
+    <Hash>be1093384707948d6abba9d2a2ee7621</Hash>
 </Codenesium>*/

@@ -109,9 +109,9 @@ namespace FileServiceNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiBucketResponseModel> GetExternalId(Guid externalId)
+                public async Task<ApiBucketResponseModel> ByExternalId(Guid externalId)
                 {
-                        Bucket record = await this.bucketRepository.GetExternalId(externalId);
+                        Bucket record = await this.bucketRepository.ByExternalId(externalId);
 
                         if (record == null)
                         {
@@ -123,9 +123,9 @@ namespace FileServiceNS.Api.Services
                         }
                 }
 
-                public async Task<ApiBucketResponseModel> GetName(string name)
+                public async Task<ApiBucketResponseModel> ByName(string name)
                 {
-                        Bucket record = await this.bucketRepository.GetName(name);
+                        Bucket record = await this.bucketRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -147,5 +147,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>106153169bb9508bbeb774a981c0b003</Hash>
+    <Hash>0424a560c38a08a7636ed4bd84ca46c0</Hash>
 </Codenesium>*/

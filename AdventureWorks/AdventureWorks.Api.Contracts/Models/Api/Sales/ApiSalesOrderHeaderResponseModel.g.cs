@@ -6,15 +6,15 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiSalesOrderHeaderResponseModel : AbstractApiResponseModel
+        public partial class ApiSalesOrderHeaderResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string accountNumber,
                         int billToAddressID,
                         string comment,
                         string creditCardApprovalCode,
-                        Nullable<int> creditCardID,
-                        Nullable<int> currencyRateID,
+                        int? creditCardID,
+                        int? currencyRateID,
                         int customerID,
                         DateTime dueDate,
                         decimal freight,
@@ -26,14 +26,14 @@ namespace AdventureWorksNS.Api.Contracts
                         Guid rowguid,
                         int salesOrderID,
                         string salesOrderNumber,
-                        Nullable<int> salesPersonID,
-                        Nullable<DateTime> shipDate,
+                        int? salesPersonID,
+                        DateTime? shipDate,
                         int shipMethodID,
                         int shipToAddressID,
                         int status,
                         decimal subTotal,
                         decimal taxAmt,
-                        Nullable<int> territoryID,
+                        int? territoryID,
                         decimal totalDue)
                 {
                         this.AccountNumber = accountNumber;
@@ -78,11 +78,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string CreditCardApprovalCode { get; private set; }
 
-                public Nullable<int> CreditCardID { get; private set; }
+                public int? CreditCardID { get; private set; }
 
                 public string CreditCardIDEntity { get; set; }
 
-                public Nullable<int> CurrencyRateID { get; private set; }
+                public int? CurrencyRateID { get; private set; }
 
                 public string CurrencyRateIDEntity { get; set; }
 
@@ -110,11 +110,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string SalesOrderNumber { get; private set; }
 
-                public Nullable<int> SalesPersonID { get; private set; }
+                public int? SalesPersonID { get; private set; }
 
                 public string SalesPersonIDEntity { get; set; }
 
-                public Nullable<DateTime> ShipDate { get; private set; }
+                public DateTime? ShipDate { get; private set; }
 
                 public int ShipMethodID { get; private set; }
 
@@ -126,7 +126,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public decimal TaxAmt { get; private set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 public string TerritoryIDEntity { get; set; }
 
@@ -373,5 +373,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>50169cda0331541186f7ca59919f97dd</Hash>
+    <Hash>3a5e5e28073cbade2d59d4fd347d87cf</Hash>
 </Codenesium>*/

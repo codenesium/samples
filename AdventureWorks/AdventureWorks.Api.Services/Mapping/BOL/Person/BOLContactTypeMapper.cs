@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLContactTypeMapper : BOLAbstractContactTypeMapper, IBOLContactTypeMapper
+        public partial class BOLContactTypeMapper : BOLAbstractContactTypeMapper, IBOLContactTypeMapper
         {
                 public BOLContactTypeMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3698b105214ff9b0638b2c0298af0098</Hash>
+    <Hash>d530f740258a883f41de6ad3ea4302c8</Hash>
 </Codenesium>*/

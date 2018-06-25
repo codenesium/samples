@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int spaceFeatureId,
                         int spaceId)
                 {
@@ -56,5 +56,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dc37ecc7b5429ea18919a471e6fe55c7</Hash>
+    <Hash>56f413b3283c18c01540fcc2109a9e84</Hash>
 </Codenesium>*/

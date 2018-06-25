@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public class FileTypeRepository : AbstractFileTypeRepository, IFileTypeRepository
+        public partial class FileTypeRepository : AbstractFileTypeRepository, IFileTypeRepository
         {
                 public FileTypeRepository(
                         ILogger<FileTypeRepository> logger,
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fdbbc8246b5ce48d3dfc879fb6ac74d8</Hash>
+    <Hash>497696996d68a4f3bdba6e4222fab40c</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BusinessEntityAddressService : AbstractBusinessEntityAddressService, IBusinessEntityAddressService
+        public partial class BusinessEntityAddressService : AbstractBusinessEntityAddressService, IBusinessEntityAddressService
         {
                 public BusinessEntityAddressService(
                         ILogger<IBusinessEntityAddressRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>010fd63a1d5a8dd56f197b7b902363eb</Hash>
+    <Hash>8cf42cad94c33546d1b6e8626bad70a2</Hash>
 </Codenesium>*/

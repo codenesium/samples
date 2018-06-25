@@ -76,14 +76,14 @@ namespace FileServiceNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Bucket> GetExternalId(Guid externalId)
+                public async Task<Bucket> ByExternalId(Guid externalId)
                 {
                         var records = await this.Where(x => x.ExternalId == externalId);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<Bucket> GetName(string name)
+                public async Task<Bucket> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
@@ -127,5 +127,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>545cb768ae68c24e061e2449839bc9bb</Hash>
+    <Hash>c82f28061d8f2aa78495add4cd7000ea</Hash>
 </Codenesium>*/

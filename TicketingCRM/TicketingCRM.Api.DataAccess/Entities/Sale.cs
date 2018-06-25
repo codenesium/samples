@@ -12,7 +12,7 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string ipAddress,
                         string notes,
@@ -48,5 +48,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ebc9a69c63a18a1b89c7c6d95d4c0d3</Hash>
+    <Hash>314dc2f1432c68e869e17c71cf04e51a</Hash>
 </Codenesium>*/

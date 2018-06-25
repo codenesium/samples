@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class MachineService : AbstractMachineService, IMachineService
+        public partial class MachineService : AbstractMachineService, IMachineService
         {
                 public MachineService(
                         ILogger<IMachineRepository> logger,
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b66a98d5853397ea2457d23f7fba5b1</Hash>
+    <Hash>c7b764ad39b7b0b6294d91c850c6c547</Hash>
 </Codenesium>*/

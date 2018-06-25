@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string cardNumber,
                         string cardType,
                         int expMonth,
@@ -110,5 +110,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>773a83baf811be08bd4b31e1ac94d254</Hash>
+    <Hash>dce18ece2c9cf47be68e9e7222646f13</Hash>
 </Codenesium>*/

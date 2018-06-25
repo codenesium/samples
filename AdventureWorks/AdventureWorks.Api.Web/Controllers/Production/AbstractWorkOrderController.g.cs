@@ -216,7 +216,7 @@ namespace AdventureWorksNS.Api.Web
                 [Route("byScrapReasonID/{scrapReasonID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByScrapReasonID(Nullable<short> scrapReasonID)
+                public async virtual Task<IActionResult> ByScrapReasonID(short? scrapReasonID)
                 {
                         List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID);
 
@@ -240,5 +240,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>676a6b288a005e0d5b5c8e765262f5e2</Hash>
+    <Hash>5baa4eb7dbd814773c6ee61f695fcf6c</Hash>
 </Codenesium>*/

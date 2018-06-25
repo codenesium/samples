@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLFeedMapper : BOLAbstractFeedMapper, IBOLFeedMapper
+        public partial class BOLFeedMapper : BOLAbstractFeedMapper, IBOLFeedMapper
         {
                 public BOLFeedMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>99ca8d703d5ac57ba1bc541a3af2cd8a</Hash>
+    <Hash>3e0d009b8f1e140031754535423b3c70</Hash>
 </Codenesium>*/

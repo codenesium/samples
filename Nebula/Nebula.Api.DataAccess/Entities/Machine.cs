@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string description,
                         int id,
                         string jwtKey,
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8236302e8238dd0e28700d8fe34d5ef6</Hash>
+    <Hash>ffd626ccdc3148f50c1e91894f21f995</Hash>
 </Codenesium>*/

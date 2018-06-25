@@ -13,14 +13,14 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string channelId,
                         string channelName,
-                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset? completedTime,
                         DateTimeOffset created,
                         string deployedBy,
                         string deploymentName,
-                        Nullable<int> durationSeconds,
+                        int? durationSeconds,
                         string environmentId,
                         string environmentName,
                         string projectId,
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Contracts
                         DateTimeOffset queueTime,
                         string releaseId,
                         string releaseVersion,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string taskId,
                         string taskState,
                         string tenantId,
@@ -63,7 +63,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.channelId.IsEmptyOrZeroOrNull() ? null : this.channelId;
+                                return this.channelId;
                         }
 
                         set
@@ -78,7 +78,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.channelName.IsEmptyOrZeroOrNull() ? null : this.channelName;
+                                return this.channelName;
                         }
 
                         set
@@ -87,13 +87,13 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTimeOffset> completedTime;
+                private DateTimeOffset? completedTime;
 
-                public Nullable<DateTimeOffset> CompletedTime
+                public DateTimeOffset? CompletedTime
                 {
                         get
                         {
-                                return this.completedTime.IsEmptyOrZeroOrNull() ? null : this.completedTime;
+                                return this.completedTime;
                         }
 
                         set
@@ -124,7 +124,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.deployedBy.IsEmptyOrZeroOrNull() ? null : this.deployedBy;
+                                return this.deployedBy;
                         }
 
                         set
@@ -149,13 +149,13 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> durationSeconds;
+                private int? durationSeconds;
 
-                public Nullable<int> DurationSeconds
+                public int? DurationSeconds
                 {
                         get
                         {
-                                return this.durationSeconds.IsEmptyOrZeroOrNull() ? null : this.durationSeconds;
+                                return this.durationSeconds;
                         }
 
                         set
@@ -292,13 +292,13 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTimeOffset> startTime;
+                private DateTimeOffset? startTime;
 
-                public Nullable<DateTimeOffset> StartTime
+                public DateTimeOffset? StartTime
                 {
                         get
                         {
-                                return this.startTime.IsEmptyOrZeroOrNull() ? null : this.startTime;
+                                return this.startTime;
                         }
 
                         set
@@ -345,7 +345,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantId.IsEmptyOrZeroOrNull() ? null : this.tenantId;
+                                return this.tenantId;
                         }
 
                         set
@@ -360,7 +360,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantName.IsEmptyOrZeroOrNull() ? null : this.tenantName;
+                                return this.tenantName;
                         }
 
                         set
@@ -372,5 +372,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a5ecbc04af50997130ae660c7e91871</Hash>
+    <Hash>d8c796455d785d4cd1975e88f2590b9d</Hash>
 </Codenesium>*/

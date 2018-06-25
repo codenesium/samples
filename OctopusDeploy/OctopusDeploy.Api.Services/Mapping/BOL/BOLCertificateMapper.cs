@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLCertificateMapper : BOLAbstractCertificateMapper, IBOLCertificateMapper
+        public partial class BOLCertificateMapper : BOLAbstractCertificateMapper, IBOLCertificateMapper
         {
                 public BOLCertificateMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6ef5b0cb155b7bc826c3c48860da25da</Hash>
+    <Hash>9535aeb4a34c5a447f911f85d88f6b93</Hash>
 </Codenesium>*/

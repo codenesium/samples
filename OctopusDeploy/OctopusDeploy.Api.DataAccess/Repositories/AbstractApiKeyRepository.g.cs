@@ -76,7 +76,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ApiKey> GetApiKeyHashed(string apiKeyHashed)
+                public async Task<ApiKey> ByApiKeyHashed(string apiKeyHashed)
                 {
                         var records = await this.Where(x => x.ApiKeyHashed == apiKeyHashed);
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e2372a73d8dbc4daea269d68f61898b</Hash>
+    <Hash>e7b0322e27750d01a427cec9867f72ae</Hash>
 </Codenesium>*/

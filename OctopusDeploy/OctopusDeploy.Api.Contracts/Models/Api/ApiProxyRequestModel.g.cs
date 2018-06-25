@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string jSON,
                         string name)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b97759caa003ee5695a201c11838246e</Hash>
+    <Hash>b705c97d2e5a81e32a9de5b1e1852844</Hash>
 </Codenesium>*/

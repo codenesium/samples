@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public class ApiVersionInfoResponseModel : AbstractApiResponseModel
+        public partial class ApiVersionInfoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                        DateTime? appliedOn,
                         string description,
                         long version)
                 {
@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Contracts
                         this.Version = version;
                 }
 
-                public Nullable<DateTime> AppliedOn { get; private set; }
+                public DateTime? AppliedOn { get; private set; }
 
                 public string Description { get; private set; }
 
@@ -58,5 +58,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>03a969b719eccb459756f4fe3160bd93</Hash>
+    <Hash>fde440877506317b2e8a66d13f0136c9</Hash>
 </Codenesium>*/

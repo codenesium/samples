@@ -12,11 +12,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string @class,
                         string color,
                         int daysToManufacture,
-                        Nullable<DateTime> discontinuedDate,
+                        DateTime? discontinuedDate,
                         bool finishedGoodsFlag,
                         decimal listPrice,
                         bool makeFlag,
@@ -24,19 +24,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         string name,
                         int productID,
                         string productLine,
-                        Nullable<int> productModelID,
+                        int? productModelID,
                         string productNumber,
-                        Nullable<int> productSubcategoryID,
+                        int? productSubcategoryID,
                         short reorderPoint,
                         Guid rowguid,
                         short safetyStockLevel,
-                        Nullable<DateTime> sellEndDate,
+                        DateTime? sellEndDate,
                         DateTime sellStartDate,
                         string size,
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        Nullable<decimal> weight,
+                        decimal? weight,
                         string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int DaysToManufacture { get; private set; }
 
                 [Column("DiscontinuedDate")]
-                public Nullable<DateTime> DiscontinuedDate { get; private set; }
+                public DateTime? DiscontinuedDate { get; private set; }
 
                 [Column("FinishedGoodsFlag")]
                 public bool FinishedGoodsFlag { get; private set; }
@@ -101,13 +101,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string ProductLine { get; private set; }
 
                 [Column("ProductModelID")]
-                public Nullable<int> ProductModelID { get; private set; }
+                public int? ProductModelID { get; private set; }
 
                 [Column("ProductNumber")]
                 public string ProductNumber { get; private set; }
 
                 [Column("ProductSubcategoryID")]
-                public Nullable<int> ProductSubcategoryID { get; private set; }
+                public int? ProductSubcategoryID { get; private set; }
 
                 [Column("ReorderPoint")]
                 public short ReorderPoint { get; private set; }
@@ -119,7 +119,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public short SafetyStockLevel { get; private set; }
 
                 [Column("SellEndDate")]
-                public Nullable<DateTime> SellEndDate { get; private set; }
+                public DateTime? SellEndDate { get; private set; }
 
                 [Column("SellStartDate")]
                 public DateTime SellStartDate { get; private set; }
@@ -137,7 +137,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Style { get; private set; }
 
                 [Column("Weight")]
-                public Nullable<decimal> Weight { get; private set; }
+                public decimal? Weight { get; private set; }
 
                 [Column("WeightUnitMeasureCode")]
                 public string WeightUnitMeasureCode { get; private set; }
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e850c232f2d1297fb34bf35e225a81bd</Hash>
+    <Hash>cd8be240c355b7f02190f73fb7df09fb</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
-
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ef6cd2492b6e2e52accaf2e369ad198b</Hash>
+    <Hash>5240d7513d51038d3854a5c09d2a361f</Hash>
 </Codenesium>*/

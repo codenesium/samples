@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class SaleService : AbstractSaleService, ISaleService
+        public partial class SaleService : AbstractSaleService, ISaleService
         {
                 public SaleService(
                         ILogger<ISaleRepository> logger,
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c4af150bad68086ebd9bec18c1056fc</Hash>
+    <Hash>e9f3289ade8de96b794c68fe6501761a</Hash>
 </Codenesium>*/

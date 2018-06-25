@@ -97,18 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PackageId_Delete()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Version_Create_null()
                 {
                         Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
@@ -157,18 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Version_Delete()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void VersionSpecial_Create_length()
                 {
                         Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
@@ -191,21 +167,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.VersionSpecial, new string('A', 251));
                 }
-
-                [Fact]
-                public async void VersionSpecial_Delete()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>830a487343cb40aa6b98b740af6176ea</Hash>
+    <Hash>6b87709f0ec51a04db1536b95c29b90b</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CurrencyCode_Delete()
-                {
-                        Mock<ICountryRegionCurrencyRepository> countryRegionCurrencyRepository = new Mock<ICountryRegionCurrencyRepository>();
-                        countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
-
-                        var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void CurrencyCode_Create_Valid_Reference()
                 {
                         Mock<ICountryRegionCurrencyRepository> countryRegionCurrencyRepository = new Mock<ICountryRegionCurrencyRepository>();
@@ -137,5 +125,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f9682dcaad749a4b3064b51e4fae6efe</Hash>
+    <Hash>541c9b555e55abb3dfc18483a86b22c7</Hash>
 </Codenesium>*/

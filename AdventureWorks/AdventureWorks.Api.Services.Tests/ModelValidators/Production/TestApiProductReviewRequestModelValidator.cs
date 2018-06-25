@@ -49,18 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Comments_Delete()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
-
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EmailAddress_Create_null()
                 {
                         Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
@@ -106,18 +94,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EmailAddress_Delete()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
-
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -167,21 +143,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, new string('A', 51));
                 }
-
-                [Fact]
-                public async void ReviewerName_Delete()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
-
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>73c056c6aead5c4b083f061b555b3a74</Hash>
+    <Hash>c4168491ed227985e3b5686d40018c0e</Hash>
 </Codenesium>*/

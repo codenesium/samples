@@ -13,21 +13,21 @@ namespace FileServiceNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> appliedOn,
+                public virtual void SetProperties(
+                        DateTime? appliedOn,
                         string description)
                 {
                         this.AppliedOn = appliedOn;
                         this.Description = description;
                 }
 
-                private Nullable<DateTime> appliedOn;
+                private DateTime? appliedOn;
 
-                public Nullable<DateTime> AppliedOn
+                public DateTime? AppliedOn
                 {
                         get
                         {
-                                return this.appliedOn.IsEmptyOrZeroOrNull() ? null : this.appliedOn;
+                                return this.appliedOn;
                         }
 
                         set
@@ -42,7 +42,7 @@ namespace FileServiceNS.Api.Contracts
                 {
                         get
                         {
-                                return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
+                                return this.description;
                         }
 
                         set
@@ -54,5 +54,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cc80e4ddcbf5dfdda7b4cd9cab4b2451</Hash>
+    <Hash>3a0b1041c0042f10f0f16975a57f9218</Hash>
 </Codenesium>*/

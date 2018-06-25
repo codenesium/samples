@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Address1_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Address2_Create_null()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -130,18 +118,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Address2_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void City_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -250,18 +214,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -363,18 +315,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Website_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Zip_Create_null()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -421,21 +361,9 @@ namespace FermataFishNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Zip, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Zip_Delete()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>38b6a7e9acceab89930f689dbbbf16d3</Hash>
+    <Hash>534f4a5514b3787d61cfdee4e0db4e20</Hash>
 </Codenesium>*/

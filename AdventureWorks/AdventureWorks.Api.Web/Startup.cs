@@ -262,6 +262,7 @@ namespace AdventureWorksNS.Api.Web
         // ConfigureServices. You can use IApplicationBuilder.ApplicationServices
         // here if you need to resolve things from the container.
         public void Configure(
+		  IHostingEnvironment env,
           IApplicationBuilder app,
           ILoggerFactory loggerFactory,
           IApplicationLifetime appLifetime,
@@ -287,7 +288,10 @@ namespace AdventureWorksNS.Api.Web
 
             app.UseMvc();
 
-			app.UseDeveloperExceptionPage();
+			if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             // If you want to dispose of resources that have been resolved in the
             // application container, register for the "ApplicationStopped" event.

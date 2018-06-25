@@ -13,30 +13,30 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string @class,
                         string color,
                         int daysToManufacture,
-                        Nullable<DateTime> discontinuedDate,
+                        DateTime? discontinuedDate,
                         bool finishedGoodsFlag,
                         decimal listPrice,
                         bool makeFlag,
                         DateTime modifiedDate,
                         string name,
                         string productLine,
-                        Nullable<int> productModelID,
+                        int? productModelID,
                         string productNumber,
-                        Nullable<int> productSubcategoryID,
+                        int? productSubcategoryID,
                         short reorderPoint,
                         Guid rowguid,
                         short safetyStockLevel,
-                        Nullable<DateTime> sellEndDate,
+                        DateTime? sellEndDate,
                         DateTime sellStartDate,
                         string size,
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        Nullable<decimal> weight,
+                        decimal? weight,
                         string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -71,7 +71,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.@class.IsEmptyOrZeroOrNull() ? null : this.@class;
+                                return this.@class;
                         }
 
                         set
@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.color.IsEmptyOrZeroOrNull() ? null : this.color;
+                                return this.color;
                         }
 
                         set
@@ -111,13 +111,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> discontinuedDate;
+                private DateTime? discontinuedDate;
 
-                public Nullable<DateTime> DiscontinuedDate
+                public DateTime? DiscontinuedDate
                 {
                         get
                         {
-                                return this.discontinuedDate.IsEmptyOrZeroOrNull() ? null : this.discontinuedDate;
+                                return this.discontinuedDate;
                         }
 
                         set
@@ -212,7 +212,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.productLine.IsEmptyOrZeroOrNull() ? null : this.productLine;
+                                return this.productLine;
                         }
 
                         set
@@ -221,13 +221,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> productModelID;
+                private int? productModelID;
 
-                public Nullable<int> ProductModelID
+                public int? ProductModelID
                 {
                         get
                         {
-                                return this.productModelID.IsEmptyOrZeroOrNull() ? null : this.productModelID;
+                                return this.productModelID;
                         }
 
                         set
@@ -252,13 +252,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> productSubcategoryID;
+                private int? productSubcategoryID;
 
-                public Nullable<int> ProductSubcategoryID
+                public int? ProductSubcategoryID
                 {
                         get
                         {
-                                return this.productSubcategoryID.IsEmptyOrZeroOrNull() ? null : this.productSubcategoryID;
+                                return this.productSubcategoryID;
                         }
 
                         set
@@ -315,13 +315,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> sellEndDate;
+                private DateTime? sellEndDate;
 
-                public Nullable<DateTime> SellEndDate
+                public DateTime? SellEndDate
                 {
                         get
                         {
-                                return this.sellEndDate.IsEmptyOrZeroOrNull() ? null : this.sellEndDate;
+                                return this.sellEndDate;
                         }
 
                         set
@@ -352,7 +352,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.size.IsEmptyOrZeroOrNull() ? null : this.size;
+                                return this.size;
                         }
 
                         set
@@ -367,7 +367,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.sizeUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.sizeUnitMeasureCode;
+                                return this.sizeUnitMeasureCode;
                         }
 
                         set
@@ -398,7 +398,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.style.IsEmptyOrZeroOrNull() ? null : this.style;
+                                return this.style;
                         }
 
                         set
@@ -407,13 +407,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<decimal> weight;
+                private decimal? weight;
 
-                public Nullable<decimal> Weight
+                public decimal? Weight
                 {
                         get
                         {
-                                return this.weight.IsEmptyOrZeroOrNull() ? null : this.weight;
+                                return this.weight;
                         }
 
                         set
@@ -428,7 +428,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.weightUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.weightUnitMeasureCode;
+                                return this.weightUnitMeasureCode;
                         }
 
                         set
@@ -440,5 +440,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c8c12163a853f8d47f7d723c2ff7bc9d</Hash>
+    <Hash>a683b5e8eb67cf205bc8fd5fd25f5192</Hash>
 </Codenesium>*/

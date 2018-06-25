@@ -6,16 +6,16 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiCustomerResponseModel : AbstractApiResponseModel
+        public partial class ApiCustomerResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string accountNumber,
                         int customerID,
                         DateTime modifiedDate,
-                        Nullable<int> personID,
+                        int? personID,
                         Guid rowguid,
-                        Nullable<int> storeID,
-                        Nullable<int> territoryID)
+                        int? storeID,
+                        int? territoryID)
                 {
                         this.AccountNumber = accountNumber;
                         this.CustomerID = customerID;
@@ -35,15 +35,15 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public DateTime ModifiedDate { get; private set; }
 
-                public Nullable<int> PersonID { get; private set; }
+                public int? PersonID { get; private set; }
 
                 public Guid Rowguid { get; private set; }
 
-                public Nullable<int> StoreID { get; private set; }
+                public int? StoreID { get; private set; }
 
                 public string StoreIDEntity { get; set; }
 
-                public Nullable<int> TerritoryID { get; private set; }
+                public int? TerritoryID { get; private set; }
 
                 public string TerritoryIDEntity { get; set; }
 
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2b77c0e6c85d34d2ccce9ce2e90132a2</Hash>
+    <Hash>8a8f7f444963cf5f9837675fa34e3b7b</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTimeOffset assembled,
                         string channelId,
                         string id,
@@ -60,5 +60,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e53a1b787f33190a51da7fbe7c28f61</Hash>
+    <Hash>9b5fc9086b750c7903a1a68b8d3a12aa</Hash>
 </Codenesium>*/

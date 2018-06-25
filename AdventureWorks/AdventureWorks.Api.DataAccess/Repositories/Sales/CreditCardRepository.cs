@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class CreditCardRepository : AbstractCreditCardRepository, ICreditCardRepository
+        public partial class CreditCardRepository : AbstractCreditCardRepository, ICreditCardRepository
         {
                 public CreditCardRepository(
                         ILogger<CreditCardRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9c9af35fa3f90e4cb77a810a88afd5fb</Hash>
+    <Hash>48dbe5f7fd59ccf7ef65eb95aec163a2</Hash>
 </Codenesium>*/

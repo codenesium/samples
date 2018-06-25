@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string description,
                         string jwtKey,
                         string lastIpAddress,
@@ -110,5 +110,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>394e120638d422f3db65a0043dc7772c</Hash>
+    <Hash>05454323e62a039f53a4e5402bb7b3d7</Hash>
 </Codenesium>*/

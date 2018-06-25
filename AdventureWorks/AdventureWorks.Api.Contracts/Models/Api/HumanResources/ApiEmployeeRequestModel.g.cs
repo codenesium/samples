@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime birthDate,
                         bool currentFlag,
                         string gender,
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string maritalStatus,
                         DateTime modifiedDate,
                         string nationalIDNumber,
-                        Nullable<short> organizationLevel,
+                        short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -189,13 +189,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<short> organizationLevel;
+                private short? organizationLevel;
 
-                public Nullable<short> OrganizationLevel
+                public short? OrganizationLevel
                 {
                         get
                         {
-                                return this.organizationLevel.IsEmptyOrZeroOrNull() ? null : this.organizationLevel;
+                                return this.organizationLevel;
                         }
 
                         set
@@ -271,5 +271,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e9ffa47372eb4a4e151bddcb9d92a510</Hash>
+    <Hash>1734725d381f80fe7e6676ecfa6dec6c</Hash>
 </Codenesium>*/

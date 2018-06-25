@@ -23,12 +23,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCustomerResponseModel> ByAccountNumber(string accountNumber);
 
-                Task<List<ApiCustomerResponseModel>> ByTerritoryID(Nullable<int> territoryID);
+                Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID);
 
                 Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>45d37281fcab910af65f4a9ca619c239</Hash>
+    <Hash>61a75b05ff1a377ea61265507ba02790</Hash>
 </Codenesium>*/

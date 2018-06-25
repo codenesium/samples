@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class LinkStatusService : AbstractLinkStatusService, ILinkStatusService
+        public partial class LinkStatusService : AbstractLinkStatusService, ILinkStatusService
         {
                 public LinkStatusService(
                         ILogger<ILinkStatusRepository> logger,
@@ -34,5 +34,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e614645db4ebad480712cbafa2eac041</Hash>
+    <Hash>5fd516475f485ca96544a09509da0d8a</Hash>
 </Codenesium>*/

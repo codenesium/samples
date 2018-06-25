@@ -205,13 +205,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProjectResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProjectResponseModel response = await this.ProjectService.GetName(name);
+                        ApiProjectResponseModel response = await this.ProjectService.ByName(name);
 
                         if (response == null)
                         {
@@ -224,13 +224,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getSlug/{slug}")]
+                [Route("bySlug/{slug}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProjectResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetSlug(string slug)
+                public async virtual Task<IActionResult> BySlug(string slug)
                 {
-                        ApiProjectResponseModel response = await this.ProjectService.GetSlug(slug);
+                        ApiProjectResponseModel response = await this.ProjectService.BySlug(slug);
 
                         if (response == null)
                         {
@@ -243,23 +243,23 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProjectResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiProjectResponseModel> response = await this.ProjectService.GetDataVersion(dataVersion);
+                        List<ApiProjectResponseModel> response = await this.ProjectService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getDiscreteChannelReleaseId/{discreteChannelRelease}/{id}")]
+                [Route("byDiscreteChannelReleaseId/{discreteChannelRelease}/{id}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProjectResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+                public async virtual Task<IActionResult> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
                 {
-                        List<ApiProjectResponseModel> response = await this.ProjectService.GetDiscreteChannelReleaseId(discreteChannelRelease, id);
+                        List<ApiProjectResponseModel> response = await this.ProjectService.ByDiscreteChannelReleaseId(discreteChannelRelease, id);
 
                         return this.Ok(response);
                 }
@@ -267,5 +267,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8e8fb736b2d5e445d3b3643021be13ea</Hash>
+    <Hash>acf5d92257e79c1a4ec661ebed556ff8</Hash>
 </Codenesium>*/

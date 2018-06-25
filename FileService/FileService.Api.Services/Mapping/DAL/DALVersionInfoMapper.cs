@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FileServiceNS.Api.Services
 {
-        public class DALVersionInfoMapper : DALAbstractVersionInfoMapper, IDALVersionInfoMapper
+        public partial class DALVersionInfoMapper : DALAbstractVersionInfoMapper, IDALVersionInfoMapper
         {
                 public DALVersionInfoMapper()
                 {
@@ -13,5 +13,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5732e33442312a7e9b21c22974de63b</Hash>
+    <Hash>59a2e5006b4728eca13c95067c5a120f</Hash>
 </Codenesium>*/

@@ -28,19 +28,19 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.ExternalId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.ExternalId));
                 }
 
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 255);
                 }
 
-                private async Task<bool> BeUniqueGetExternalId(ApiBucketRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByExternalId(ApiBucketRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Bucket record = await this.bucketRepository.GetExternalId(model.ExternalId);
+                        Bucket record = await this.bucketRepository.ByExternalId(model.ExternalId);
 
                         if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
                         {
@@ -52,9 +52,9 @@ namespace FileServiceNS.Api.Services
                         }
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiBucketRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiBucketRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Bucket record = await this.bucketRepository.GetName(model.Name);
+                        Bucket record = await this.bucketRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
                         {
@@ -69,5 +69,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2bd95ab9d63751a5a88f96f64e2239d5</Hash>
+    <Hash>ad00ed1942f743bdd077f5fe723e256c</Hash>
 </Codenesium>*/

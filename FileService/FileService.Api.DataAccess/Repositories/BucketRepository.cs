@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public class BucketRepository : AbstractBucketRepository, IBucketRepository
+        public partial class BucketRepository : AbstractBucketRepository, IBucketRepository
         {
                 public BucketRepository(
                         ILogger<BucketRepository> logger,
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e1c8be34afff413393cd6e2ccf4e69d</Hash>
+    <Hash>0c3e133ae1d91f727ce038e3fd18a990</Hash>
 </Codenesium>*/

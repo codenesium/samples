@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Database_Version, new string('A', 26));
                 }
-
-                [Fact]
-                public async void Database_Version_Delete()
-                {
-                        Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
-                        aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
-
-                        var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cd52a9ae023efdde56882d1299e75578</Hash>
+    <Hash>67d896646ebe0e772a4d337d2f42a860</Hash>
 </Codenesium>*/

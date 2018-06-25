@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class PostHistoryService : AbstractPostHistoryService, IPostHistoryService
+        public partial class PostHistoryService : AbstractPostHistoryService, IPostHistoryService
         {
                 public PostHistoryService(
                         ILogger<IPostHistoryRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>786ccaae05b8bbc9319f8cb791cc3dbe</Hash>
+    <Hash>83efc6cf987d7d5a7f91d732ae288879</Hash>
 </Codenesium>*/

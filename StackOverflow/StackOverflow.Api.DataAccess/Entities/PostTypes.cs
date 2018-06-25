@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int id,
                         string type)
                 {
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>763f43316d7dc271039cddbfdbd58e21</Hash>
+    <Hash>ed8df394bd9714f70679a810094cea55</Hash>
 </Codenesium>*/

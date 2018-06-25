@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALProductInventoryMapper : DALAbstractProductInventoryMapper, IDALProductInventoryMapper
+        public partial class DALProductInventoryMapper : DALAbstractProductInventoryMapper, IDALProductInventoryMapper
         {
                 public DALProductInventoryMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c65690f38defdfa755aeb7b3d2c030a</Hash>
+    <Hash>c80d0682240d47743cdab222fa67a1e5</Hash>
 </Codenesium>*/

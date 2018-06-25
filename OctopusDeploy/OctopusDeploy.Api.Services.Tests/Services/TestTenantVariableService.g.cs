@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetTenantIdOwnerIdEnvironmentIdVariableTemplateId_Exists()
+                public async void ByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var record = new TenantVariable();
-                        mock.RepositoryMock.Setup(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
+                        ApiTenantVariableResponseModel response = await service.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantIdOwnerIdEnvironmentIdVariableTemplateId_Not_Exists()
+                public async void ByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
+                        mock.RepositoryMock.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
+                        ApiTenantVariableResponseModel response = await service.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Exists()
+                public async void ByTenantId_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var records = new List<TenantVariable>();
                         records.Add(new TenantVariable());
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiTenantVariableResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetTenantId_Not_Exists()
+                public async void ByTenantId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<TenantVariable>>(new List<TenantVariable>()));
+                        mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<TenantVariable>>(new List<TenantVariable>()));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default(string));
+                        List<ApiTenantVariableResponseModel> response = await service.ByTenantId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1609fd4516743f6c73796452474d7712</Hash>
+    <Hash>9b1ae0b9da4a84c51c710254a767ca6a</Hash>
 </Codenesium>*/

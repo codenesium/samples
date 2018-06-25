@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public class ApiStudentResponseModel : AbstractApiResponseModel
+        public partial class ApiStudentResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime birthday,
@@ -169,5 +169,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>059f3e2ed479702cada7441a560f1cc0</Hash>
+    <Hash>8034704bef7cbf3c306d65102bd05400</Hash>
 </Codenesium>*/

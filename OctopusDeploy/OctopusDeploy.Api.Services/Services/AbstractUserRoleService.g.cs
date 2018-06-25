@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiUserRoleResponseModel> GetName(string name)
+                public async Task<ApiUserRoleResponseModel> ByName(string name)
                 {
-                        UserRole record = await this.userRoleRepository.GetName(name);
+                        UserRole record = await this.userRoleRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10cb4abad2b5cb7e39e2656d83ce8c2f</Hash>
+    <Hash>e37dd57344582c9867a2af3e09c99a96</Hash>
 </Codenesium>*/

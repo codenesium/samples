@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int databaseLogID,
                         string databaseUser,
                         string @event,
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>28901bc7cd6851ce554233a14db6c4d8</Hash>
+    <Hash>07487de8181fc5e18fa0d1a276e1ee4f</Hash>
 </Codenesium>*/

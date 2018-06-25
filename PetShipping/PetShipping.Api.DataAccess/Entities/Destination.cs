@@ -12,7 +12,7 @@ namespace PetShippingNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int countryId,
                         int id,
                         string name,
@@ -43,5 +43,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5025a978a355d79c7f7591e6993f33a1</Hash>
+    <Hash>6154ae5d07295776c88c32986b7d2f41</Hash>
 </Codenesium>*/

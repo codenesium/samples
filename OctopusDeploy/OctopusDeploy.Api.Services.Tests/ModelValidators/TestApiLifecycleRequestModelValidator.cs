@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
-
-                        var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(new Lifecycle()));
+                        lifecycleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(new Lifecycle()));
                         var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiLifecycleRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
+                        lifecycleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
                         var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiLifecycleRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(new Lifecycle()));
+                        lifecycleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(new Lifecycle()));
                         var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiLifecycleRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
+                        lifecycleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Lifecycle>(null));
                         var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiLifecycleRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>404a5c72a3c25ff135acc66b54c6ae17</Hash>
+    <Hash>4737ffb2adfefcd897ddd24bd28d116b</Hash>
 </Codenesium>*/

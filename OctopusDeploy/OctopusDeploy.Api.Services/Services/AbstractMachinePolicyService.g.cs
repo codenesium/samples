@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiMachinePolicyResponseModel> GetName(string name)
+                public async Task<ApiMachinePolicyResponseModel> ByName(string name)
                 {
-                        MachinePolicy record = await this.machinePolicyRepository.GetName(name);
+                        MachinePolicy record = await this.machinePolicyRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f7003e70768302a4bad4a8f4da27a145</Hash>
+    <Hash>51573e84aadae085df4bc0c7c384dad3</Hash>
 </Codenesium>*/

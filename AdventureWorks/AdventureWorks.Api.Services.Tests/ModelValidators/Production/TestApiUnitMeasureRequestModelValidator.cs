@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
-
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>33a4f5c3ad3b2441f10cb5fb29830f22</Hash>
+    <Hash>86cb9ff21cd8bf669b8dd04395146c7e</Hash>
 </Codenesium>*/

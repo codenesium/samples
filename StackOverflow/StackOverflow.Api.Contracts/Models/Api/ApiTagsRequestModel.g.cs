@@ -13,7 +13,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int count,
                         int excerptPostId,
                         string tagName,
@@ -92,5 +92,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e7fe0ead2968cfd6747da6fb73522df3</Hash>
+    <Hash>4b0dd959398ab1f2686e6ea5adf9765b</Hash>
 </Codenesium>*/

@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByExternalId_Create_Exists()
                 {
                         Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
-
-                        var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetExternalId_Create_Exists()
-                {
-                        Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(new CommunityActionTemplate()));
+                        communityActionTemplateRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(new CommunityActionTemplate()));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Create_Not_Exists()
+                private async void BeUniqueByExternalId_Create_Not_Exists()
                 {
                         Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
+                        communityActionTemplateRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Update_Exists()
+                private async void BeUniqueByExternalId_Update_Exists()
                 {
                         Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(new CommunityActionTemplate()));
+                        communityActionTemplateRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(new CommunityActionTemplate()));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetExternalId_Update_Not_Exists()
+                private async void BeUniqueByExternalId_Update_Not_Exists()
                 {
                         Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
+                        communityActionTemplateRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1bd9ac53be8a25e4afb0ad6de8cfacee</Hash>
+    <Hash>d64ff94695d03fc775334ba5f6d2c8ad</Hash>
 </Codenesium>*/

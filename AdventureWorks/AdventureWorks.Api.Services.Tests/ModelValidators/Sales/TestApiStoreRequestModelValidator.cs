@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
-                        storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
-
-                        var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void SalesPersonID_Create_Valid_Reference()
                 {
                         Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
@@ -137,5 +125,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e84ca5d94fce198d4a790add31cc35e</Hash>
+    <Hash>eec8be3c930b200c5232b4e56634156b</Hash>
 </Codenesium>*/

@@ -13,8 +13,8 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTimeOffset> completedTime,
+                public virtual void SetProperties(
+                        DateTimeOffset? completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -27,7 +27,7 @@ namespace OctopusDeployNS.Api.Contracts
                         string projectId,
                         DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTimeOffset> startTime,
+                        DateTimeOffset? startTime,
                         string state,
                         string tenantId)
                 {
@@ -49,13 +49,13 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                private Nullable<DateTimeOffset> completedTime;
+                private DateTimeOffset? completedTime;
 
-                public Nullable<DateTimeOffset> CompletedTime
+                public DateTimeOffset? CompletedTime
                 {
                         get
                         {
-                                return this.completedTime.IsEmptyOrZeroOrNull() ? null : this.completedTime;
+                                return this.completedTime;
                         }
 
                         set
@@ -70,7 +70,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.concurrencyTag.IsEmptyOrZeroOrNull() ? null : this.concurrencyTag;
+                                return this.concurrencyTag;
                         }
 
                         set
@@ -117,7 +117,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.environmentId.IsEmptyOrZeroOrNull() ? null : this.environmentId;
+                                return this.environmentId;
                         }
 
                         set
@@ -132,7 +132,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.errorMessage.IsEmptyOrZeroOrNull() ? null : this.errorMessage;
+                                return this.errorMessage;
                         }
 
                         set
@@ -211,7 +211,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.projectId.IsEmptyOrZeroOrNull() ? null : this.projectId;
+                                return this.projectId;
                         }
 
                         set
@@ -242,7 +242,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.serverNodeId.IsEmptyOrZeroOrNull() ? null : this.serverNodeId;
+                                return this.serverNodeId;
                         }
 
                         set
@@ -251,13 +251,13 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTimeOffset> startTime;
+                private DateTimeOffset? startTime;
 
-                public Nullable<DateTimeOffset> StartTime
+                public DateTimeOffset? StartTime
                 {
                         get
                         {
-                                return this.startTime.IsEmptyOrZeroOrNull() ? null : this.startTime;
+                                return this.startTime;
                         }
 
                         set
@@ -288,7 +288,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantId.IsEmptyOrZeroOrNull() ? null : this.tenantId;
+                                return this.tenantId;
                         }
 
                         set
@@ -300,5 +300,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3d13ae0989ae43aba7c0d53c70051cd2</Hash>
+    <Hash>20e201f5c6613a0f45dafc95344d4779</Hash>
 </Codenesium>*/

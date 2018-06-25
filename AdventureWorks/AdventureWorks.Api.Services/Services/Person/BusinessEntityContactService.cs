@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BusinessEntityContactService : AbstractBusinessEntityContactService, IBusinessEntityContactService
+        public partial class BusinessEntityContactService : AbstractBusinessEntityContactService, IBusinessEntityContactService
         {
                 public BusinessEntityContactService(
                         ILogger<IBusinessEntityContactRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7912b9cf50fbe495bdc0666e63973d78</Hash>
+    <Hash>4ca21f3eb31e9b5c8fb4cf0e36dad9db</Hash>
 </Codenesium>*/

@@ -97,22 +97,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
-
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
+                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
                         var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
@@ -121,10 +109,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
                         var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
@@ -133,10 +121,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
+                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
                         var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
@@ -145,10 +133,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
                         var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
@@ -159,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>03c90044546410ef67d5fae12fd76027</Hash>
+    <Hash>6f6353bab5981639b6dfea46be1bfb31</Hash>
 </Codenesium>*/

@@ -76,28 +76,28 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Project> GetName(string name)
+                public async Task<Project> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<Project> GetSlug(string slug)
+                public async Task<Project> BySlug(string slug)
                 {
                         var records = await this.Where(x => x.Slug == slug);
 
                         return records.FirstOrDefault();
                 }
 
-                public async Task<List<Project>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<Project>> ByDataVersion(byte[] dataVersion)
                 {
                         var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
 
-                public async Task<List<Project>> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+                public async Task<List<Project>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
                 {
                         var records = await this.Where(x => x.DiscreteChannelRelease == discreteChannelRelease && x.Id == id);
 
@@ -136,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d5f55b1a4caa720c8b46039a936c5da</Hash>
+    <Hash>3c6dca9656455f7b1496ce881e19ae4f</Hash>
 </Codenesium>*/

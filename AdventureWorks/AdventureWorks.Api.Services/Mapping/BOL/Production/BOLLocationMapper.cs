@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLLocationMapper : BOLAbstractLocationMapper, IBOLLocationMapper
+        public partial class BOLLocationMapper : BOLAbstractLocationMapper, IBOLLocationMapper
         {
                 public BOLLocationMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fd4417199631a8be924edd39c74f18c</Hash>
+    <Hash>c88fa6a363cc81a655a1c959fa96d9ba</Hash>
 </Codenesium>*/

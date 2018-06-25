@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLTeamMapper : BOLAbstractTeamMapper, IBOLTeamMapper
+        public partial class BOLTeamMapper : BOLAbstractTeamMapper, IBOLTeamMapper
         {
                 public BOLTeamMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35f0ee8f4911eba55ac35713c1b988c6</Hash>
+    <Hash>25302ec0b684307b52678f1d67c6c4a4</Hash>
 </Codenesium>*/

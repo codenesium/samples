@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string communicationStyle,
                         string environmentIds,
                         string fingerprint,
@@ -79,7 +79,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.fingerprint.IsEmptyOrZeroOrNull() ? null : this.fingerprint;
+                                return this.fingerprint;
                         }
 
                         set
@@ -126,7 +126,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.machinePolicyId.IsEmptyOrZeroOrNull() ? null : this.machinePolicyId;
+                                return this.machinePolicyId;
                         }
 
                         set
@@ -157,7 +157,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.relatedDocumentIds.IsEmptyOrZeroOrNull() ? null : this.relatedDocumentIds;
+                                return this.relatedDocumentIds;
                         }
 
                         set
@@ -188,7 +188,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantIds.IsEmptyOrZeroOrNull() ? null : this.tenantIds;
+                                return this.tenantIds;
                         }
 
                         set
@@ -203,7 +203,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantTags.IsEmptyOrZeroOrNull() ? null : this.tenantTags;
+                                return this.tenantTags;
                         }
 
                         set
@@ -218,7 +218,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.thumbprint.IsEmptyOrZeroOrNull() ? null : this.thumbprint;
+                                return this.thumbprint;
                         }
 
                         set
@@ -230,5 +230,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>11ceb6ca2b9f87e74350783827b7c1f3</Hash>
+    <Hash>d3dd14147795f94a1d597f403bb4764e</Hash>
 </Codenesium>*/

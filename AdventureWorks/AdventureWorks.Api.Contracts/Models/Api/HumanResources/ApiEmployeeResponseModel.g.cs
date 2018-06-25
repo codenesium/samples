@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiEmployeeResponseModel : AbstractApiResponseModel
+        public partial class ApiEmployeeResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime birthDate,
@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string maritalStatus,
                         DateTime modifiedDate,
                         string nationalIDNumber,
-                        Nullable<short> organizationLevel,
+                        short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string NationalIDNumber { get; private set; }
 
-                public Nullable<short> OrganizationLevel { get; private set; }
+                public short? OrganizationLevel { get; private set; }
 
                 public Guid Rowguid { get; private set; }
 
@@ -214,5 +214,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>80bfbdc6f2670926a4675dae8a753ea5</Hash>
+    <Hash>b7af1ee235c03abdf48bda83b3fe0568</Hash>
 </Codenesium>*/

@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> errorLine,
+                public virtual void SetProperties(
+                        int? errorLine,
                         string errorMessage,
                         int errorNumber,
                         string errorProcedure,
-                        Nullable<int> errorSeverity,
-                        Nullable<int> errorState,
+                        int? errorSeverity,
+                        int? errorState,
                         DateTime errorTime,
                         string userName)
                 {
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UserName = userName;
                 }
 
-                private Nullable<int> errorLine;
+                private int? errorLine;
 
-                public Nullable<int> ErrorLine
+                public int? ErrorLine
                 {
                         get
                         {
-                                return this.errorLine.IsEmptyOrZeroOrNull() ? null : this.errorLine;
+                                return this.errorLine;
                         }
 
                         set
@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.errorProcedure.IsEmptyOrZeroOrNull() ? null : this.errorProcedure;
+                                return this.errorProcedure;
                         }
 
                         set
@@ -95,13 +95,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> errorSeverity;
+                private int? errorSeverity;
 
-                public Nullable<int> ErrorSeverity
+                public int? ErrorSeverity
                 {
                         get
                         {
-                                return this.errorSeverity.IsEmptyOrZeroOrNull() ? null : this.errorSeverity;
+                                return this.errorSeverity;
                         }
 
                         set
@@ -110,13 +110,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> errorState;
+                private int? errorState;
 
-                public Nullable<int> ErrorState
+                public int? ErrorState
                 {
                         get
                         {
-                                return this.errorState.IsEmptyOrZeroOrNull() ? null : this.errorState;
+                                return this.errorState;
                         }
 
                         set
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>354759728dd5933b7b8a8dd78461ef7a</Hash>
+    <Hash>07cae07709fc0242c9f2b64280242a3e</Hash>
 </Codenesium>*/

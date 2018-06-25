@@ -137,7 +137,7 @@ namespace AdventureWorksNS.Api.Services
                         return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID)
                 {
                         List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.BySalesPersonID(salesPersonID);
 
@@ -161,5 +161,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>504e91360634fa019cc4fdb5be9673b2</Hash>
+    <Hash>775449309ec93095d3b9a7489b020f8f</Hash>
 </Codenesium>*/

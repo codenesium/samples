@@ -49,18 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ExtensionAuthor_Delete()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
-
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
@@ -107,21 +95,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
-
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e715f3e6a1ce68d7f9d4be7eca5cfb91</Hash>
+    <Hash>86033326099c36ad45753fe0de27fab7</Hash>
 </Codenesium>*/

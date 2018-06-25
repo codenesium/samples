@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         Guid externalId,
                         string name)
                 {
@@ -56,5 +56,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5ff8006736386655e4f93fa42867c2c9</Hash>
+    <Hash>b0d6dfb505c33d5b882747d65e2fdeec</Hash>
 </Codenesium>*/

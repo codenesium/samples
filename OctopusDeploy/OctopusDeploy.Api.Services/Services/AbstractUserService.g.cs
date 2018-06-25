@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiUserResponseModel> GetUsername(string username)
+                public async Task<ApiUserResponseModel> ByUsername(string username)
                 {
-                        User record = await this.userRepository.GetUsername(username);
+                        User record = await this.userRepository.ByUsername(username);
 
                         if (record == null)
                         {
@@ -115,23 +115,23 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiUserResponseModel>> GetDisplayName(string displayName)
+                public async Task<List<ApiUserResponseModel>> ByDisplayName(string displayName)
                 {
-                        List<User> records = await this.userRepository.GetDisplayName(displayName);
+                        List<User> records = await this.userRepository.ByDisplayName(displayName);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiUserResponseModel>> GetEmailAddress(string emailAddress)
+                public async Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress)
                 {
-                        List<User> records = await this.userRepository.GetEmailAddress(emailAddress);
+                        List<User> records = await this.userRepository.ByEmailAddress(emailAddress);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiUserResponseModel>> GetExternalId(string externalId)
+                public async Task<List<ApiUserResponseModel>> ByExternalId(string externalId)
                 {
-                        List<User> records = await this.userRepository.GetExternalId(externalId);
+                        List<User> records = await this.userRepository.ByExternalId(externalId);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
@@ -139,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bae3c14a65e913b79799fdc7df1d3df</Hash>
+    <Hash>b4cabd325e0c5cbefda0f70575102b4c</Hash>
 </Codenesium>*/

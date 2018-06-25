@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICurrencyRepository> currencyRepository = new Mock<ICurrencyRepository>();
-                        currencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Currency()));
-
-                        var validator = new ApiCurrencyRequestModelValidator(currencyRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ICurrencyRepository> currencyRepository = new Mock<ICurrencyRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ee4a07a0dff60da032bc2500bf742121</Hash>
+    <Hash>5ef69927216e415f34611573507e1783</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void SetProperties(string deploymentId,
                                                   string channelId,
                                                   string channelName,
-                                                  Nullable<DateTimeOffset> completedTime,
+                                                  DateTimeOffset? completedTime,
                                                   DateTimeOffset created,
                                                   string deployedBy,
                                                   string deploymentName,
-                                                  Nullable<int> durationSeconds,
+                                                  int? durationSeconds,
                                                   string environmentId,
                                                   string environmentName,
                                                   string projectId,
@@ -26,7 +26,7 @@ namespace OctopusDeployNS.Api.Services
                                                   DateTimeOffset queueTime,
                                                   string releaseId,
                                                   string releaseVersion,
-                                                  Nullable<DateTimeOffset> startTime,
+                                                  DateTimeOffset? startTime,
                                                   string taskId,
                                                   string taskState,
                                                   string tenantId,
@@ -59,7 +59,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ChannelName { get; private set; }
 
-                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
+                public DateTimeOffset? CompletedTime { get; private set; }
 
                 public DateTimeOffset Created { get; private set; }
 
@@ -69,7 +69,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string DeploymentName { get; private set; }
 
-                public Nullable<int> DurationSeconds { get; private set; }
+                public int? DurationSeconds { get; private set; }
 
                 public string EnvironmentId { get; private set; }
 
@@ -87,7 +87,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ReleaseVersion { get; private set; }
 
-                public Nullable<DateTimeOffset> StartTime { get; private set; }
+                public DateTimeOffset? StartTime { get; private set; }
 
                 public string TaskId { get; private set; }
 
@@ -100,5 +100,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>78c437b90300a73d2f8f5a29637d0d30</Hash>
+    <Hash>1f462ab135a51a7a7dacd1265d5413ab</Hash>
 </Codenesium>*/

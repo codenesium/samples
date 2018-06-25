@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class CountryRegionService : AbstractCountryRegionService, ICountryRegionService
+        public partial class CountryRegionService : AbstractCountryRegionService, ICountryRegionService
         {
                 public CountryRegionService(
                         ILogger<ICountryRegionRepository> logger,
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9667d77b10a11d6c3491b9c2e999eea4</Hash>
+    <Hash>affcb015b7ca428ddca0283abe2cb687</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void InvitationCode_Delete()
-                {
-                        Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
-                        invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
-
-                        var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JSON_Create_null()
                 {
                         Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
@@ -111,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c1231f15760e9a15497d5aabc51579e7</Hash>
+    <Hash>7544b79b7ed7b671a3ecbc6b94eab7f9</Hash>
 </Codenesium>*/

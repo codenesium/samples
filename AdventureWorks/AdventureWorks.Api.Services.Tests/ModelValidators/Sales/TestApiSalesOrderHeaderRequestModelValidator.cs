@@ -49,18 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AccountNumber_Delete()
-                {
-                        Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-                        salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
-
-                        var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Comment_Create_length()
                 {
                         Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
@@ -85,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Comment_Delete()
-                {
-                        Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-                        salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
-
-                        var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void CreditCardApprovalCode_Create_length()
                 {
                         Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
@@ -118,18 +94,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CreditCardApprovalCode, new string('A', 16));
-                }
-
-                [Fact]
-                public async void CreditCardApprovalCode_Delete()
-                {
-                        Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-                        salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
-
-                        var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -307,18 +271,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PurchaseOrderNumber_Delete()
-                {
-                        Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-                        salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
-
-                        var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void SalesOrderNumber_Create_null()
                 {
                         Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
@@ -364,18 +316,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, new string('A', 26));
-                }
-
-                [Fact]
-                public async void SalesOrderNumber_Delete()
-                {
-                        Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-                        salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
-
-                        var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -529,5 +469,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8976e5db459465d62bca2b74e09799fc</Hash>
+    <Hash>3a6af37e3a754895e676b2e9b4c90c59</Hash>
 </Codenesium>*/

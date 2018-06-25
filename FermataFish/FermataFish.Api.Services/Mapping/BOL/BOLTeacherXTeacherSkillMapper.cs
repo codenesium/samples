@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLTeacherXTeacherSkillMapper : BOLAbstractTeacherXTeacherSkillMapper, IBOLTeacherXTeacherSkillMapper
+        public partial class BOLTeacherXTeacherSkillMapper : BOLAbstractTeacherXTeacherSkillMapper, IBOLTeacherXTeacherSkillMapper
         {
                 public BOLTeacherXTeacherSkillMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7277ee76445627abdc13b4fa13a43dd</Hash>
+    <Hash>f520286f38ab7baecc8ccdebce9df113</Hash>
 </Codenesium>*/

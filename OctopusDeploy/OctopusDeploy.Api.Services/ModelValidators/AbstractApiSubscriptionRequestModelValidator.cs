@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -47,9 +47,9 @@ namespace OctopusDeployNS.Api.Services
                         this.RuleFor(x => x.Type).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiSubscriptionRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiSubscriptionRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Subscription record = await this.subscriptionRepository.GetName(model.Name);
+                        Subscription record = await this.subscriptionRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -64,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d5750d134763728f1ee88035e48141a</Hash>
+    <Hash>dc8faa1269d5f665784cfc5e2b84f2d8</Hash>
 </Codenesium>*/

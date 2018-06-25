@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public class ApiProjectGroupResponseModel : AbstractApiResponseModel
+        public partial class ApiProjectGroupResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         byte[] dataVersion,
@@ -71,5 +71,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4bfd28c07c3ec0a88b2b0bdf5c63be78</Hash>
+    <Hash>3486ec2e7176ebc6d336de6e80b0a9d3</Hash>
 </Codenesium>*/

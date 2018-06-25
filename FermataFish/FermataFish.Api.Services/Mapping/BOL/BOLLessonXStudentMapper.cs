@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLLessonXStudentMapper : BOLAbstractLessonXStudentMapper, IBOLLessonXStudentMapper
+        public partial class BOLLessonXStudentMapper : BOLAbstractLessonXStudentMapper, IBOLLessonXStudentMapper
         {
                 public BOLLessonXStudentMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fed5385181e5a4829e5610c0a6f78d75</Hash>
+    <Hash>61f7dadadf161e429ee2dd5f15ecd8ff</Hash>
 </Codenesium>*/

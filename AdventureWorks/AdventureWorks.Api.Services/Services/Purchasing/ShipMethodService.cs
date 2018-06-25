@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ShipMethodService : AbstractShipMethodService, IShipMethodService
+        public partial class ShipMethodService : AbstractShipMethodService, IShipMethodService
         {
                 public ShipMethodService(
                         ILogger<IShipMethodRepository> logger,
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c508e572e60fe9bd8df067e63115113f</Hash>
+    <Hash>32497a326fec7f4a7975b977ccdc72f3</Hash>
 </Codenesium>*/

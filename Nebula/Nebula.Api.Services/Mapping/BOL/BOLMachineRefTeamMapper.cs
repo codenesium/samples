@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLMachineRefTeamMapper : BOLAbstractMachineRefTeamMapper, IBOLMachineRefTeamMapper
+        public partial class BOLMachineRefTeamMapper : BOLAbstractMachineRefTeamMapper, IBOLMachineRefTeamMapper
         {
                 public BOLMachineRefTeamMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08572fe22b20b8aa953b03595f5527a2</Hash>
+    <Hash>1236832afe0eb75c335878b6448ed047</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int nextChainId,
                         int previousChainId)
                 {
@@ -56,5 +56,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a1bcd4739f8a8cf0378495fe6e39281d</Hash>
+    <Hash>74b7b68b3553cec3b3ec675a9bd3f42f</Hash>
 </Codenesium>*/

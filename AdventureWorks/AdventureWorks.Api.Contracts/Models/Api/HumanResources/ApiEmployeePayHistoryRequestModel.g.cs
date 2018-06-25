@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         int payFrequency,
                         decimal rate,
@@ -92,5 +92,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ce40636bbebf8679c63778009580ff75</Hash>
+    <Hash>fd5f1e3b71557714fa74d340965edba3</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALSalesTerritoryMapper : DALAbstractSalesTerritoryMapper, IDALSalesTerritoryMapper
+        public partial class DALSalesTerritoryMapper : DALAbstractSalesTerritoryMapper, IDALSalesTerritoryMapper
         {
                 public DALSalesTerritoryMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76c2f38800ca6ad47aa42fb56ca66350</Hash>
+    <Hash>e215b221c0625ae0f523858b7641f753</Hash>
 </Codenesium>*/

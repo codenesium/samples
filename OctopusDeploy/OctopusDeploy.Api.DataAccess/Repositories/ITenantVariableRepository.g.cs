@@ -17,12 +17,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<TenantVariable>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<TenantVariable> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
+                Task<TenantVariable> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
 
-                Task<List<TenantVariable>> GetTenantId(string tenantId);
+                Task<List<TenantVariable>> ByTenantId(string tenantId);
         }
 }
 
 /*<Codenesium>
-    <Hash>f60e240fff9b835bfed66021794506e1</Hash>
+    <Hash>1d8767e1181b8f4ced1e9ed67656595f</Hash>
 </Codenesium>*/

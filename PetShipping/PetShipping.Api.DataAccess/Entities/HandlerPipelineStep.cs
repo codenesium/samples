@@ -12,7 +12,7 @@ namespace PetShippingNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int handlerId,
                         int id,
                         int pipelineStepId)
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e880f7e3aae2a5c3c82700071bcd7408</Hash>
+    <Hash>8f544a25097634a8dfd69488b793e52d</Hash>
 </Codenesium>*/

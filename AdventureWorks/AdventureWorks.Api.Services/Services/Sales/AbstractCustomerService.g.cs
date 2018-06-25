@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(Nullable<int> territoryID)
+                public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID)
                 {
                         List<Customer> records = await this.customerRepository.ByTerritoryID(territoryID);
 
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>158b906fcc00c2a8d5154cb2bf7c4c2d</Hash>
+    <Hash>5b4c37fece3605e8787779877f4ae9fe</Hash>
 </Codenesium>*/

@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiAccountResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiAccountResponseModel> GetAccountGetName(string name)
+                public virtual async Task<ApiAccountResponseModel> GetAccountByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Accounts/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Accounts/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiAccountResponseModel>(httpResponse.Content.ContentToString());
@@ -156,9 +156,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiActionTemplateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiActionTemplateResponseModel> GetActionTemplateGetName(string name)
+                public virtual async Task<ApiActionTemplateResponseModel> GetActionTemplateByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplates/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplates/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiActionTemplateResponseModel>(httpResponse.Content.ContentToString());
@@ -211,17 +211,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiActionTemplateVersionResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiActionTemplateVersionResponseModel> GetActionTemplateVersionGetNameVersion(string name, int version)
+                public virtual async Task<ApiActionTemplateVersionResponseModel> GetActionTemplateVersionByNameVersion(string name, int version)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions/getNameVersion/{name}/{version}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions/byNameVersion/{name}/{version}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiActionTemplateVersionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> GetActionTemplateVersionGetLatestActionTemplateId(string latestActionTemplateId)
+                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> GetActionTemplateVersionByLatestActionTemplateId(string latestActionTemplateId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions/getLatestActionTemplateId/{latestActionTemplateId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions/byLatestActionTemplateId/{latestActionTemplateId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiActionTemplateVersionResponseModel>>(httpResponse.Content.ContentToString());
@@ -274,9 +274,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiApiKeyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiApiKeyResponseModel> GetApiKeyGetApiKeyHashed(string apiKeyHashed)
+                public virtual async Task<ApiApiKeyResponseModel> GetApiKeyByApiKeyHashed(string apiKeyHashed)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ApiKeys/getApiKeyHashed/{apiKeyHashed}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ApiKeys/byApiKeyHashed/{apiKeyHashed}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiApiKeyResponseModel>(httpResponse.Content.ContentToString());
@@ -329,9 +329,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiArtifactResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiArtifactResponseModel>> GetArtifactGetTenantId(string tenantId)
+                public virtual async Task<List<ApiArtifactResponseModel>> GetArtifactByTenantId(string tenantId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Artifacts/getTenantId/{tenantId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Artifacts/byTenantId/{tenantId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiArtifactResponseModel>>(httpResponse.Content.ContentToString());
@@ -384,33 +384,33 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetCreated(DateTimeOffset created)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateByCreated(DateTimeOffset created)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getCreated/{created}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/byCreated/{created}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetNotAfter(DateTimeOffset notAfter)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateByNotAfter(DateTimeOffset notAfter)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getNotAfter/{notAfter}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/byNotAfter/{notAfter}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetThumbprint(string thumbprint)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateByThumbprint(string thumbprint)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getThumbprint/{thumbprint}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/byThumbprint/{thumbprint}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
@@ -463,25 +463,25 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiChannelResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiChannelResponseModel> GetChannelGetNameProjectId(string name, string projectId)
+                public virtual async Task<ApiChannelResponseModel> GetChannelByNameProjectId(string name, string projectId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/getNameProjectId/{name}/{projectId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/byNameProjectId/{name}/{projectId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiChannelResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiChannelResponseModel>> GetChannelGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiChannelResponseModel>> GetChannelByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiChannelResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiChannelResponseModel>> GetChannelGetProjectId(string projectId)
+                public virtual async Task<List<ApiChannelResponseModel>> GetChannelByProjectId(string projectId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/getProjectId/{projectId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels/byProjectId/{projectId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiChannelResponseModel>>(httpResponse.Content.ContentToString());
@@ -534,17 +534,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCommunityActionTemplateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCommunityActionTemplateResponseModel> GetCommunityActionTemplateGetExternalId(Guid externalId)
+                public virtual async Task<ApiCommunityActionTemplateResponseModel> GetCommunityActionTemplateByExternalId(Guid externalId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates/getExternalId/{externalId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates/byExternalId/{externalId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCommunityActionTemplateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCommunityActionTemplateResponseModel> GetCommunityActionTemplateGetName(string name)
+                public virtual async Task<ApiCommunityActionTemplateResponseModel> GetCommunityActionTemplateByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCommunityActionTemplateResponseModel>(httpResponse.Content.ContentToString());
@@ -691,25 +691,25 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentGetChannelId(string channelId)
+                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentByChannelId(string channelId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/getChannelId/{channelId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/byChannelId/{channelId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentGetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/getIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/byIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentGetTenantId(string tenantId)
+                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentByTenantId(string tenantId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/getTenantId/{tenantId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/byTenantId/{tenantId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
@@ -770,17 +770,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentEnvironmentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiDeploymentEnvironmentResponseModel> GetDeploymentEnvironmentGetName(string name)
+                public virtual async Task<ApiDeploymentEnvironmentResponseModel> GetDeploymentEnvironmentByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeploymentEnvironmentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> GetDeploymentEnvironmentGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> GetDeploymentEnvironmentByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentEnvironmentResponseModel>>(httpResponse.Content.ContentToString());
@@ -833,9 +833,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> GetDeploymentHistoryGetCreated(DateTimeOffset created)
+                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> GetDeploymentHistoryByCreated(DateTimeOffset created)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentHistories/getCreated/{created}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentHistories/byCreated/{created}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -935,17 +935,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentRelatedMachineResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentRelatedMachineGetDeploymentId(string deploymentId)
+                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentRelatedMachineByDeploymentId(string deploymentId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines/getDeploymentId/{deploymentId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines/byDeploymentId/{deploymentId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentRelatedMachineResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentRelatedMachineGetMachineId(string machineId)
+                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentRelatedMachineByMachineId(string machineId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines/getMachineId/{machineId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines/byMachineId/{machineId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentRelatedMachineResponseModel>>(httpResponse.Content.ContentToString());
@@ -998,33 +998,33 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetAutoId(long autoId)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventByAutoId(long autoId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getAutoId/{autoId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/byAutoId/{autoId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/byIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/byIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdOccurred(string id, DateTimeOffset occurred)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventByIdOccurred(string id, DateTimeOffset occurred)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdOccurred/{id}/{occurred}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/byIdOccurred/{id}/{occurred}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
@@ -1085,17 +1085,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEventRelatedDocumentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventRelatedDocumentGetEventId(string eventId)
+                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventRelatedDocumentByEventId(string eventId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments/getEventId/{eventId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments/byEventId/{eventId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventRelatedDocumentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventRelatedDocumentGetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventRelatedDocumentByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments/getEventIdRelatedDocumentId/{eventId}/{relatedDocumentId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments/byEventIdRelatedDocumentId/{eventId}/{relatedDocumentId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventRelatedDocumentResponseModel>>(httpResponse.Content.ContentToString());
@@ -1195,9 +1195,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiFeedResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiFeedResponseModel> GetFeedGetName(string name)
+                public virtual async Task<ApiFeedResponseModel> GetFeedByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Feeds/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Feeds/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFeedResponseModel>(httpResponse.Content.ContentToString());
@@ -1250,9 +1250,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiInterruptionResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiInterruptionResponseModel>> GetInterruptionGetTenantId(string tenantId)
+                public virtual async Task<List<ApiInterruptionResponseModel>> GetInterruptionByTenantId(string tenantId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Interruptions/getTenantId/{tenantId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Interruptions/byTenantId/{tenantId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiInterruptionResponseModel>>(httpResponse.Content.ContentToString());
@@ -1399,9 +1399,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiLibraryVariableSetResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiLibraryVariableSetResponseModel> GetLibraryVariableSetGetName(string name)
+                public virtual async Task<ApiLibraryVariableSetResponseModel> GetLibraryVariableSetByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LibraryVariableSets/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LibraryVariableSets/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiLibraryVariableSetResponseModel>(httpResponse.Content.ContentToString());
@@ -1454,17 +1454,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiLifecycleResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiLifecycleResponseModel> GetLifecycleGetName(string name)
+                public virtual async Task<ApiLifecycleResponseModel> GetLifecycleByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiLifecycleResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLifecycleResponseModel>> GetLifecycleGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiLifecycleResponseModel>> GetLifecycleByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLifecycleResponseModel>>(httpResponse.Content.ContentToString());
@@ -1517,17 +1517,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiMachineResponseModel> GetMachineGetName(string name)
+                public virtual async Task<ApiMachineResponseModel> GetMachineByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> GetMachineGetMachinePolicyId(string machinePolicyId)
+                public virtual async Task<List<ApiMachineResponseModel>> GetMachineByMachinePolicyId(string machinePolicyId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/getMachinePolicyId/{machinePolicyId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/byMachinePolicyId/{machinePolicyId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
@@ -1580,9 +1580,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiMachinePolicyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiMachinePolicyResponseModel> GetMachinePolicyGetName(string name)
+                public virtual async Task<ApiMachinePolicyResponseModel> GetMachinePolicyByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachinePolicies/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachinePolicies/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiMachinePolicyResponseModel>(httpResponse.Content.ContentToString());
@@ -1776,33 +1776,33 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProjectResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProjectResponseModel> GetProjectGetName(string name)
+                public virtual async Task<ApiProjectResponseModel> GetProjectByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProjectResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProjectResponseModel> GetProjectGetSlug(string slug)
+                public virtual async Task<ApiProjectResponseModel> GetProjectBySlug(string slug)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/getSlug/{slug}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/bySlug/{slug}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProjectResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectResponseModel>> GetProjectGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiProjectResponseModel>> GetProjectByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectResponseModel>> GetProjectGetDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+                public virtual async Task<List<ApiProjectResponseModel>> GetProjectByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/getDiscreteChannelReleaseId/{discreteChannelRelease}/{id}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects/byDiscreteChannelReleaseId/{discreteChannelRelease}/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectResponseModel>>(httpResponse.Content.ContentToString());
@@ -1855,17 +1855,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProjectGroupResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProjectGroupResponseModel> GetProjectGroupGetName(string name)
+                public virtual async Task<ApiProjectGroupResponseModel> GetProjectGroupByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProjectGroupResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectGroupResponseModel>> GetProjectGroupGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiProjectGroupResponseModel>> GetProjectGroupByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectGroupResponseModel>>(httpResponse.Content.ContentToString());
@@ -1918,17 +1918,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProjectTriggerResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProjectTriggerResponseModel> GetProjectTriggerGetProjectIdName(string projectId, string name)
+                public virtual async Task<ApiProjectTriggerResponseModel> GetProjectTriggerByProjectIdName(string projectId, string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers/getProjectIdName/{projectId}/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers/byProjectIdName/{projectId}/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProjectTriggerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectTriggerResponseModel>> GetProjectTriggerGetProjectId(string projectId)
+                public virtual async Task<List<ApiProjectTriggerResponseModel>> GetProjectTriggerByProjectId(string projectId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers/getProjectId/{projectId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers/byProjectId/{projectId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectTriggerResponseModel>>(httpResponse.Content.ContentToString());
@@ -1981,9 +1981,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProxyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProxyResponseModel> GetProxyGetName(string name)
+                public virtual async Task<ApiProxyResponseModel> GetProxyByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Proxies/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Proxies/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProxyResponseModel>(httpResponse.Content.ContentToString());
@@ -2036,41 +2036,41 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiReleaseResponseModel> GetReleaseGetVersionProjectId(string version, string projectId)
+                public virtual async Task<ApiReleaseResponseModel> GetReleaseByVersionProjectId(string version, string projectId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getVersionProjectId/{version}/{projectId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/byVersionProjectId/{version}/{projectId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiReleaseResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdAssembled(string id, DateTimeOffset assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseByIdAssembled(string id, DateTimeOffset assembled)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdAssembled/{id}/{assembled}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/byIdAssembled/{id}/{assembled}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getProjectDeploymentProcessSnapshotId/{projectDeploymentProcessSnapshotId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/byProjectDeploymentProcessSnapshotId/{projectDeploymentProcessSnapshotId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/byIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/byIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
@@ -2170,25 +2170,25 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
+                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/getDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId/{description}/{queueTime}/{startTime}/{completedTime}/{errorMessage}/{concurrencyTag}/{hasPendingInterruptions}/{hasWarningsOrErrors}/{durationSeconds}/{jSON}/{state}/{name}/{projectId}/{environmentId}/{tenantId}/{serverNodeId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/byDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId/{description}/{queueTime}/{startTime}/{completedTime}/{errorMessage}/{concurrencyTag}/{hasPendingInterruptions}/{hasWarningsOrErrors}/{durationSeconds}/{jSON}/{state}/{name}/{projectId}/{environmentId}/{tenantId}/{serverNodeId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetStateConcurrencyTag(string state, string concurrencyTag)
+                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskByStateConcurrencyTag(string state, string concurrencyTag)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/getStateConcurrencyTag/{state}/{concurrencyTag}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/byStateConcurrencyTag/{state}/{concurrencyTag}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
+                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/getNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId/{name}/{description}/{startTime}/{completedTime}/{errorMessage}/{hasWarningsOrErrors}/{projectId}/{environmentId}/{tenantId}/{durationSeconds}/{jSON}/{queueTime}/{state}/{concurrencyTag}/{hasPendingInterruptions}/{serverNodeId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/byNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId/{name}/{description}/{startTime}/{completedTime}/{errorMessage}/{hasWarningsOrErrors}/{projectId}/{environmentId}/{tenantId}/{durationSeconds}/{jSON}/{queueTime}/{state}/{concurrencyTag}/{hasPendingInterruptions}/{serverNodeId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
@@ -2241,9 +2241,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSubscriptionResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiSubscriptionResponseModel> GetSubscriptionGetName(string name)
+                public virtual async Task<ApiSubscriptionResponseModel> GetSubscriptionByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Subscriptions/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Subscriptions/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiSubscriptionResponseModel>(httpResponse.Content.ContentToString());
@@ -2296,17 +2296,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTagSetResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiTagSetResponseModel> GetTagSetGetName(string name)
+                public virtual async Task<ApiTagSetResponseModel> GetTagSetByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiTagSetResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTagSetResponseModel>> GetTagSetGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiTagSetResponseModel>> GetTagSetByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTagSetResponseModel>>(httpResponse.Content.ContentToString());
@@ -2359,9 +2359,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiTeamResponseModel> GetTeamGetName(string name)
+                public virtual async Task<ApiTeamResponseModel> GetTeamByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
@@ -2414,17 +2414,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTenantResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiTenantResponseModel> GetTenantGetName(string name)
+                public virtual async Task<ApiTenantResponseModel> GetTenantByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiTenantResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTenantResponseModel>> GetTenantGetDataVersion(byte[] dataVersion)
+                public virtual async Task<List<ApiTenantResponseModel>> GetTenantByDataVersion(byte[] dataVersion)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants/getDataVersion/{dataVersion}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants/byDataVersion/{dataVersion}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTenantResponseModel>>(httpResponse.Content.ContentToString());
@@ -2477,17 +2477,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTenantVariableResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiTenantVariableResponseModel> GetTenantVariableGetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
+                public virtual async Task<ApiTenantVariableResponseModel> GetTenantVariableByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables/getTenantIdOwnerIdEnvironmentIdVariableTemplateId/{tenantId}/{ownerId}/{environmentId}/{variableTemplateId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables/byTenantIdOwnerIdEnvironmentIdVariableTemplateId/{tenantId}/{ownerId}/{environmentId}/{variableTemplateId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiTenantVariableResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTenantVariableResponseModel>> GetTenantVariableGetTenantId(string tenantId)
+                public virtual async Task<List<ApiTenantVariableResponseModel>> GetTenantVariableByTenantId(string tenantId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables/getTenantId/{tenantId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables/byTenantId/{tenantId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTenantVariableResponseModel>>(httpResponse.Content.ContentToString());
@@ -2540,33 +2540,33 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiUserResponseModel> GetUserGetUsername(string username)
+                public virtual async Task<ApiUserResponseModel> GetUserByUsername(string username)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/getUsername/{username}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/byUsername/{username}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiUserResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> GetUserGetDisplayName(string displayName)
+                public virtual async Task<List<ApiUserResponseModel>> GetUserByDisplayName(string displayName)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/getDisplayName/{displayName}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/byDisplayName/{displayName}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> GetUserGetEmailAddress(string emailAddress)
+                public virtual async Task<List<ApiUserResponseModel>> GetUserByEmailAddress(string emailAddress)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/getEmailAddress/{emailAddress}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/byEmailAddress/{emailAddress}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> GetUserGetExternalId(string externalId)
+                public virtual async Task<List<ApiUserResponseModel>> GetUserByExternalId(string externalId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/getExternalId/{externalId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/byExternalId/{externalId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
@@ -2619,9 +2619,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiUserRoleResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiUserRoleResponseModel> GetUserRoleGetName(string name)
+                public virtual async Task<ApiUserRoleResponseModel> GetUserRoleByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UserRoles/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UserRoles/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiUserRoleResponseModel>(httpResponse.Content.ContentToString());
@@ -2721,17 +2721,17 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiWorkerResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiWorkerResponseModel> GetWorkerGetName(string name)
+                public virtual async Task<ApiWorkerResponseModel> GetWorkerByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiWorkerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkerResponseModel>> GetWorkerGetMachinePolicyId(string machinePolicyId)
+                public virtual async Task<List<ApiWorkerResponseModel>> GetWorkerByMachinePolicyId(string machinePolicyId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers/getMachinePolicyId/{machinePolicyId}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers/byMachinePolicyId/{machinePolicyId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkerResponseModel>>(httpResponse.Content.ContentToString());
@@ -2784,9 +2784,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiWorkerPoolResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiWorkerPoolResponseModel> GetWorkerPoolGetName(string name)
+                public virtual async Task<ApiWorkerPoolResponseModel> GetWorkerPoolByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerPools/getName/{name}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerPools/byName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiWorkerPoolResponseModel>(httpResponse.Content.ContentToString());
@@ -2842,5 +2842,5 @@ namespace OctopusDeployNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9dfd80a08cef8c03761629aad7ca81c3</Hash>
+    <Hash>c3665acd977d7f56d8b2fa8517ab5d3d</Hash>
 </Codenesium>*/

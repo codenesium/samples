@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiEventRelatedDocumentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiEventRelatedDocumentResponseModel>> GetEventId(string eventId);
+                Task<List<ApiEventRelatedDocumentResponseModel>> ByEventId(string eventId);
 
-                Task<List<ApiEventRelatedDocumentResponseModel>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
+                Task<List<ApiEventRelatedDocumentResponseModel>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
         }
 }
 
 /*<Codenesium>
-    <Hash>7fde54af0cdacc7a6d04999606cc7357</Hash>
+    <Hash>5cb82e8b3f26427ec945409881c3c41f</Hash>
 </Codenesium>*/

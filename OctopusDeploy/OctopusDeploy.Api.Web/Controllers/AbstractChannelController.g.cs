@@ -199,13 +199,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getNameProjectId/{name}/{projectId}")]
+                [Route("byNameProjectId/{name}/{projectId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiChannelResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetNameProjectId(string name, string projectId)
+                public async virtual Task<IActionResult> ByNameProjectId(string name, string projectId)
                 {
-                        ApiChannelResponseModel response = await this.ChannelService.GetNameProjectId(name, projectId);
+                        ApiChannelResponseModel response = await this.ChannelService.ByNameProjectId(name, projectId);
 
                         if (response == null)
                         {
@@ -218,23 +218,23 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDataVersion/{dataVersion}")]
+                [Route("byDataVersion/{dataVersion}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiChannelResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDataVersion(byte[] dataVersion)
+                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
                 {
-                        List<ApiChannelResponseModel> response = await this.ChannelService.GetDataVersion(dataVersion);
+                        List<ApiChannelResponseModel> response = await this.ChannelService.ByDataVersion(dataVersion);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getProjectId/{projectId}")]
+                [Route("byProjectId/{projectId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiChannelResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProjectId(string projectId)
+                public async virtual Task<IActionResult> ByProjectId(string projectId)
                 {
-                        List<ApiChannelResponseModel> response = await this.ChannelService.GetProjectId(projectId);
+                        List<ApiChannelResponseModel> response = await this.ChannelService.ByProjectId(projectId);
 
                         return this.Ok(response);
                 }
@@ -242,5 +242,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>98a59a1baa05a0f9c1689b9d1c9536ef</Hash>
+    <Hash>1f5c83e87eade325d26a7c60895954af</Hash>
 </Codenesium>*/

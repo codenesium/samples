@@ -12,10 +12,10 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string aboutMe,
-                        Nullable<int> accountId,
-                        Nullable<int> age,
+                        int? accountId,
+                        int? age,
                         DateTime creationDate,
                         string displayName,
                         int downVotes,
@@ -48,10 +48,10 @@ namespace StackOverflowNS.Api.DataAccess
                 public string AboutMe { get; private set; }
 
                 [Column("AccountId")]
-                public Nullable<int> AccountId { get; private set; }
+                public int? AccountId { get; private set; }
 
                 [Column("Age")]
-                public Nullable<int> Age { get; private set; }
+                public int? Age { get; private set; }
 
                 [Column("CreationDate")]
                 public DateTime CreationDate { get; private set; }
@@ -90,5 +90,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>183303b63cd5e1d6310dd568e8ff6662</Hash>
+    <Hash>3d9a5eb6eff758cc7763b98bcdb4b676</Hash>
 </Codenesium>*/

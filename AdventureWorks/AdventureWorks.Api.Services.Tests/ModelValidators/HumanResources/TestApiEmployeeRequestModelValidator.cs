@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Gender_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void JobTitle_Create_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
@@ -130,18 +118,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JobTitle, new string('A', 51));
-                }
-
-                [Fact]
-                public async void JobTitle_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LoginID_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void MaritalStatus_Create_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
@@ -253,18 +217,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void MaritalStatus_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void NationalIDNumber_Create_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
@@ -310,18 +262,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NationalIDNumber, new string('A', 16));
-                }
-
-                [Fact]
-                public async void NationalIDNumber_Delete()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -375,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>427007e77b01269967951d6ec943898f</Hash>
+    <Hash>e28d99beafee3eef05aaa45b0d4c6155</Hash>
 </Codenesium>*/

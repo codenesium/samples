@@ -619,9 +619,9 @@ namespace NebulaNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoGetVersion(long version)
+                public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoByVersion(long version)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/getVersion/{version}").ConfigureAwait(false);
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/byVersion/{version}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -630,5 +630,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>daa444b6b7c47b05f80bd78dc6aced8c</Hash>
+    <Hash>22b94747351d93f20443787873cf596e</Hash>
 </Codenesium>*/

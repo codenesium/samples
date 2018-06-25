@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int saleId,
                         int ticketId)
                 {
@@ -56,5 +56,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>228dd857e47942ff9c0f45256d3f8af0</Hash>
+    <Hash>71a245ab9de18482f6e12f04018cba89</Hash>
 </Codenesium>*/

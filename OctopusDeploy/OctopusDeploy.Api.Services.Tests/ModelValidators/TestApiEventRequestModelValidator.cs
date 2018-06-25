@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Category_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EnvironmentId_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -106,18 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EnvironmentId_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectId_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void RelatedDocumentIds_Create_null()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -250,18 +214,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void TenantId_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -313,18 +265,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void UserId_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Username_Create_null()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -371,21 +311,9 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 201));
                 }
-
-                [Fact]
-                public async void Username_Delete()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>91753cee93fa17d9dff9c4ff0d3d15dd</Hash>
+    <Hash>dc3855055cd5380a10ec1431bc9625c8</Hash>
 </Codenesium>*/

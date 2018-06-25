@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALApiKeyMapper : DALAbstractApiKeyMapper, IDALApiKeyMapper
+        public partial class DALApiKeyMapper : DALAbstractApiKeyMapper, IDALApiKeyMapper
         {
                 public DALApiKeyMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb2054a48fa961f23f9b7e330761cdd3</Hash>
+    <Hash>f5e9122ee8ef24191f75b648abaae5cc</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALDeploymentRelatedMachineMapper : DALAbstractDeploymentRelatedMachineMapper, IDALDeploymentRelatedMachineMapper
+        public partial class DALDeploymentRelatedMachineMapper : DALAbstractDeploymentRelatedMachineMapper, IDALDeploymentRelatedMachineMapper
         {
                 public DALDeploymentRelatedMachineMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ad45468a25e3283a581fd5b4f6da38d</Hash>
+    <Hash>5b93181712134e8a82e5e2d51df5bf7a</Hash>
 </Codenesium>*/

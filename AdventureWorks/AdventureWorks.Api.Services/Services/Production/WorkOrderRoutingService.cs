@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class WorkOrderRoutingService : AbstractWorkOrderRoutingService, IWorkOrderRoutingService
+        public partial class WorkOrderRoutingService : AbstractWorkOrderRoutingService, IWorkOrderRoutingService
         {
                 public WorkOrderRoutingService(
                         ILogger<IWorkOrderRoutingRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bf1a4ab546f65a650935a809c65e788a</Hash>
+    <Hash>3f2fbafb76da990617994a30ed28e92d</Hash>
 </Codenesium>*/

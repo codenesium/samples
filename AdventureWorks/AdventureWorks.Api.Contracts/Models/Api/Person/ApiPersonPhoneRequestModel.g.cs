@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime modifiedDate,
                         string phoneNumber,
                         int phoneNumberTypeID)
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>75a0742d9c35e39d6fb195fddc157e85</Hash>
+    <Hash>ed156c9d23a0ecea60178181744a02da</Hash>
 </Codenesium>*/

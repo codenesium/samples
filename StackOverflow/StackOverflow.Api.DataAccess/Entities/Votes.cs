@@ -12,12 +12,12 @@ namespace StackOverflowNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> bountyAmount,
+                public virtual void SetProperties(
+                        int? bountyAmount,
                         DateTime creationDate,
                         int id,
                         int postId,
-                        Nullable<int> userId,
+                        int? userId,
                         int voteTypeId)
                 {
                         this.BountyAmount = bountyAmount;
@@ -29,7 +29,7 @@ namespace StackOverflowNS.Api.DataAccess
                 }
 
                 [Column("BountyAmount")]
-                public Nullable<int> BountyAmount { get; private set; }
+                public int? BountyAmount { get; private set; }
 
                 [Column("CreationDate")]
                 public DateTime CreationDate { get; private set; }
@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.DataAccess
                 public int PostId { get; private set; }
 
                 [Column("UserId")]
-                public Nullable<int> UserId { get; private set; }
+                public int? UserId { get; private set; }
 
                 [Column("VoteTypeId")]
                 public int VoteTypeId { get; private set; }
@@ -50,5 +50,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>41757a48476a79eaa5c19ad36b141809</Hash>
+    <Hash>531016f04a271a422c24522e3fbec6a8</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public class SpaceXSpaceFeatureService : AbstractSpaceXSpaceFeatureService, ISpaceXSpaceFeatureService
+        public partial class SpaceXSpaceFeatureService : AbstractSpaceXSpaceFeatureService, ISpaceXSpaceFeatureService
         {
                 public SpaceXSpaceFeatureService(
                         ILogger<ISpaceXSpaceFeatureRepository> logger,
@@ -30,5 +30,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef145d7ec613034219569e3bff533fa7</Hash>
+    <Hash>80ba443ef53abb395136c4b9c6d91034</Hash>
 </Codenesium>*/

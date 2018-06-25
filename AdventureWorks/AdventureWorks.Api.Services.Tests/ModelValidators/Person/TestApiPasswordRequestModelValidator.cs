@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PasswordHash_Delete()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
-
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void PasswordSalt_Create_null()
                 {
                         Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
@@ -131,21 +119,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
                 }
-
-                [Fact]
-                public async void PasswordSalt_Delete()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
-
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5cfcb21b8b5303470baf0eb91d6f8a89</Hash>
+    <Hash>18edad86ad4b5b78b70071fb90e776a2</Hash>
 </Codenesium>*/

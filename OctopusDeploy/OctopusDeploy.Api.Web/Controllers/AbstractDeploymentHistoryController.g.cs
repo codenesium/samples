@@ -213,12 +213,12 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCreated/{created}")]
+                [Route("byCreated/{created}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentHistoryResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCreated(DateTimeOffset created)
+                public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
                 {
-                        List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.GetCreated(created);
+                        List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.ByCreated(created);
 
                         return this.Ok(response);
                 }
@@ -226,5 +226,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8dfe2ec30f507b52e1fd017cbf1e33df</Hash>
+    <Hash>e1802ecb879cf7b70e4c43ec63e855b8</Hash>
 </Codenesium>*/

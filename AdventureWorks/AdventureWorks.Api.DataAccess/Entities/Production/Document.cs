@@ -12,10 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         int changeNumber,
                         byte[] document1,
-                        Nullable<short> documentLevel,
+                        short? documentLevel,
                         string documentSummary,
                         string fileExtension,
                         string fileName,
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("DocumentLevel")]
-                public Nullable<short> DocumentLevel { get; private set; }
+                public short? DocumentLevel { get; private set; }
 
                 [Column("DocumentSummary")]
                 public string DocumentSummary { get; private set; }
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ec2ba9ede3742773884c2974ccfca9a</Hash>
+    <Hash>fc6dd1a1f709cede414152715c19bd43</Hash>
 </Codenesium>*/

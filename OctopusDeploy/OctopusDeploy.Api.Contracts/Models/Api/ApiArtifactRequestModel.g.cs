@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTimeOffset created,
                         string environmentId,
                         string filename,
@@ -53,7 +53,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.environmentId.IsEmptyOrZeroOrNull() ? null : this.environmentId;
+                                return this.environmentId;
                         }
 
                         set
@@ -100,7 +100,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.projectId.IsEmptyOrZeroOrNull() ? null : this.projectId;
+                                return this.projectId;
                         }
 
                         set
@@ -131,7 +131,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.tenantId.IsEmptyOrZeroOrNull() ? null : this.tenantId;
+                                return this.tenantId;
                         }
 
                         set
@@ -143,5 +143,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f5f6057dfe3f61f459649bc457132b29</Hash>
+    <Hash>f81e778f2185928fc74503dba8cdb384</Hash>
 </Codenesium>*/

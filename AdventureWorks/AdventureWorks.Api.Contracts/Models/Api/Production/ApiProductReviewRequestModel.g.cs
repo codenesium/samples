@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string comments,
                         string emailAddress,
                         DateTime modifiedDate,
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
+                                return this.comments;
                         }
 
                         set
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e4879b1cdc75fc01a0b30aa3d539a9cd</Hash>
+    <Hash>a7ee5f93934d0d114bb8b01f78eed24a</Hash>
 </Codenesium>*/

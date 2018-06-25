@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public class BOLPaymentTypeMapper : BOLAbstractPaymentTypeMapper, IBOLPaymentTypeMapper
+        public partial class BOLPaymentTypeMapper : BOLAbstractPaymentTypeMapper, IBOLPaymentTypeMapper
         {
                 public BOLPaymentTypeMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>269b188af3bb8d6274a488e40bebf24e</Hash>
+    <Hash>a6b2566306bc263516ef8adf00b34295</Hash>
 </Codenesium>*/

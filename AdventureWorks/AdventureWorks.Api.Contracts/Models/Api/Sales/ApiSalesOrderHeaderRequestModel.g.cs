@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         int billToAddressID,
                         string comment,
                         string creditCardApprovalCode,
-                        Nullable<int> creditCardID,
-                        Nullable<int> currencyRateID,
+                        int? creditCardID,
+                        int? currencyRateID,
                         int customerID,
                         DateTime dueDate,
                         decimal freight,
@@ -30,14 +30,14 @@ namespace AdventureWorksNS.Api.Contracts
                         int revisionNumber,
                         Guid rowguid,
                         string salesOrderNumber,
-                        Nullable<int> salesPersonID,
-                        Nullable<DateTime> shipDate,
+                        int? salesPersonID,
+                        DateTime? shipDate,
                         int shipMethodID,
                         int shipToAddressID,
                         int status,
                         decimal subTotal,
                         decimal taxAmt,
-                        Nullable<int> territoryID,
+                        int? territoryID,
                         decimal totalDue)
                 {
                         this.AccountNumber = accountNumber;
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.accountNumber.IsEmptyOrZeroOrNull() ? null : this.accountNumber;
+                                return this.accountNumber;
                         }
 
                         set
@@ -104,7 +104,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.comment.IsEmptyOrZeroOrNull() ? null : this.comment;
+                                return this.comment;
                         }
 
                         set
@@ -119,7 +119,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.creditCardApprovalCode.IsEmptyOrZeroOrNull() ? null : this.creditCardApprovalCode;
+                                return this.creditCardApprovalCode;
                         }
 
                         set
@@ -128,13 +128,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> creditCardID;
+                private int? creditCardID;
 
-                public Nullable<int> CreditCardID
+                public int? CreditCardID
                 {
                         get
                         {
-                                return this.creditCardID.IsEmptyOrZeroOrNull() ? null : this.creditCardID;
+                                return this.creditCardID;
                         }
 
                         set
@@ -143,13 +143,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> currencyRateID;
+                private int? currencyRateID;
 
-                public Nullable<int> CurrencyRateID
+                public int? CurrencyRateID
                 {
                         get
                         {
-                                return this.currencyRateID.IsEmptyOrZeroOrNull() ? null : this.currencyRateID;
+                                return this.currencyRateID;
                         }
 
                         set
@@ -260,7 +260,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.purchaseOrderNumber.IsEmptyOrZeroOrNull() ? null : this.purchaseOrderNumber;
+                                return this.purchaseOrderNumber;
                         }
 
                         set
@@ -317,13 +317,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> salesPersonID;
+                private int? salesPersonID;
 
-                public Nullable<int> SalesPersonID
+                public int? SalesPersonID
                 {
                         get
                         {
-                                return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
+                                return this.salesPersonID;
                         }
 
                         set
@@ -332,13 +332,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> shipDate;
+                private DateTime? shipDate;
 
-                public Nullable<DateTime> ShipDate
+                public DateTime? ShipDate
                 {
                         get
                         {
-                                return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
+                                return this.shipDate;
                         }
 
                         set
@@ -427,13 +427,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> territoryID;
+                private int? territoryID;
 
-                public Nullable<int> TerritoryID
+                public int? TerritoryID
                 {
                         get
                         {
-                                return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
+                                return this.territoryID;
                         }
 
                         set
@@ -461,5 +461,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>08085d62b6f8ca4c5972e3f201f403bf</Hash>
+    <Hash>1fade49fdcb6c58dc7f67d50c8be7a01</Hash>
 </Codenesium>*/

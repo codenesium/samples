@@ -138,14 +138,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeValidCreditCard(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidCreditCard(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.salesOrderHeaderRepository.GetCreditCard(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
-                private async Task<bool> BeValidCurrencyRate(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidCurrencyRate(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.salesOrderHeaderRepository.GetCurrencyRate(id.GetValueOrDefault());
 
@@ -159,14 +159,14 @@ namespace AdventureWorksNS.Api.Services
                         return record != null;
                 }
 
-                private async Task<bool> BeValidSalesPerson(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidSalesPerson(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.salesOrderHeaderRepository.GetSalesPerson(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
-                private async Task<bool> BeValidSalesTerritory(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidSalesTerritory(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.salesOrderHeaderRepository.GetSalesTerritory(id.GetValueOrDefault());
 
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d8edcd9fa8a1385fac7e5bb1bbc9391</Hash>
+    <Hash>84d53084f3fe518466acfa69c8158051</Hash>
 </Codenesium>*/

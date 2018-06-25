@@ -11,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int productID,
-                                                  Nullable<DateTime> endDate,
+                                                  DateTime? endDate,
                                                   decimal listPrice,
                                                   DateTime modifiedDate,
                                                   DateTime startDate)
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
                         this.StartDate = startDate;
                 }
 
-                public Nullable<DateTime> EndDate { get; private set; }
+                public DateTime? EndDate { get; private set; }
 
                 public decimal ListPrice { get; private set; }
 
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1346610a92f27d2c9efccfef5e843949</Hash>
+    <Hash>9318528bb9878dce7dbf7c17dfb8e48e</Hash>
 </Codenesium>*/

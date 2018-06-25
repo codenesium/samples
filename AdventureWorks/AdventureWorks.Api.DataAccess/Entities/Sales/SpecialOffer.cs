@@ -12,12 +12,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string category,
                         string description,
                         decimal discountPct,
                         DateTime endDate,
-                        Nullable<int> maxQty,
+                        int? maxQty,
                         int minQty,
                         DateTime modifiedDate,
                         Guid rowguid,
@@ -51,7 +51,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime EndDate { get; private set; }
 
                 [Column("MaxQty")]
-                public Nullable<int> MaxQty { get; private set; }
+                public int? MaxQty { get; private set; }
 
                 [Column("MinQty")]
                 public int MinQty { get; private set; }
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f645198d10d7be6f59bfb842bb73df1</Hash>
+    <Hash>3521669538fbf54de28a54cb5875c974</Hash>
 </Codenesium>*/

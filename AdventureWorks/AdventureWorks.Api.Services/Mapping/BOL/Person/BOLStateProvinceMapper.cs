@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLStateProvinceMapper : BOLAbstractStateProvinceMapper, IBOLStateProvinceMapper
+        public partial class BOLStateProvinceMapper : BOLAbstractStateProvinceMapper, IBOLStateProvinceMapper
         {
                 public BOLStateProvinceMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae821d8049978fceb75e5ee62aca52cb</Hash>
+    <Hash>b698208c004b14732fc93d9c6bbf7235</Hash>
 </Codenesium>*/

@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiLifecycleResponseModel> GetName(string name)
+                public async Task<ApiLifecycleResponseModel> ByName(string name)
                 {
-                        Lifecycle record = await this.lifecycleRepository.GetName(name);
+                        Lifecycle record = await this.lifecycleRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiLifecycleResponseModel>> GetDataVersion(byte[] dataVersion)
+                public async Task<List<ApiLifecycleResponseModel>> ByDataVersion(byte[] dataVersion)
                 {
-                        List<Lifecycle> records = await this.lifecycleRepository.GetDataVersion(dataVersion);
+                        List<Lifecycle> records = await this.lifecycleRepository.ByDataVersion(dataVersion);
 
                         return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>32da0cc70a10997d59900b2d066f58dc</Hash>
+    <Hash>6c67ab8d28d3eafcb92ad8d43e863971</Hash>
 </Codenesium>*/

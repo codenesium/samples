@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -65,9 +65,9 @@ namespace OctopusDeployNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Team record = await this.teamRepository.GetName(model.Name);
+                        Team record = await this.teamRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd2e9b01f25049323b97b61587fe81c4</Hash>
+    <Hash>a6be91f5df2082d39b078273496fe1fe</Hash>
 </Codenesium>*/

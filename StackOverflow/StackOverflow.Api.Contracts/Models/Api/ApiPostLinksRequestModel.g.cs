@@ -13,7 +13,7 @@ namespace StackOverflowNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         DateTime creationDate,
                         int linkTypeId,
                         int postId,
@@ -92,5 +92,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e382ede5eb6e8bece23c47d32651b36f</Hash>
+    <Hash>b083e16ecc87f6024b43aaf91bcf3e77</Hash>
 </Codenesium>*/

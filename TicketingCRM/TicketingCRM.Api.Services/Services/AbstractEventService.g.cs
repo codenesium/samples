@@ -101,9 +101,9 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiEventResponseModel>> GetCityId(int cityId)
+                public async Task<List<ApiEventResponseModel>> ByCityId(int cityId)
                 {
-                        List<Event> records = await this.eventRepository.GetCityId(cityId);
+                        List<Event> records = await this.eventRepository.ByCityId(cityId);
 
                         return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
                 }
@@ -111,5 +111,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2011435e160ee44ff4f11754db424e9</Hash>
+    <Hash>36dd07032a76f9b92da4779c36d26a25</Hash>
 </Codenesium>*/

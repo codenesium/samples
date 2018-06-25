@@ -4,7 +4,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class DALPipelineStepDestinationMapper : DALAbstractPipelineStepDestinationMapper, IDALPipelineStepDestinationMapper
+        public partial class DALPipelineStepDestinationMapper : DALAbstractPipelineStepDestinationMapper, IDALPipelineStepDestinationMapper
         {
                 public DALPipelineStepDestinationMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd1c74f359e4e3d97506468a8fe669b0</Hash>
+    <Hash>6580e63a258fc6fb6e168e1eb873f152</Hash>
 </Codenesium>*/

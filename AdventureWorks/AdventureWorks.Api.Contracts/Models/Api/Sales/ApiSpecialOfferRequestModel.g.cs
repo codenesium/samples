@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string category,
                         string description,
                         decimal discountPct,
                         DateTime endDate,
-                        Nullable<int> maxQty,
+                        int? maxQty,
                         int minQty,
                         DateTime modifiedDate,
                         Guid rowguid,
@@ -101,13 +101,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> maxQty;
+                private int? maxQty;
 
-                public Nullable<int> MaxQty
+                public int? MaxQty
                 {
                         get
                         {
-                                return this.maxQty.IsEmptyOrZeroOrNull() ? null : this.maxQty;
+                                return this.maxQty;
                         }
 
                         set
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fb8c71dbb7a3ffb79cae7578735440e5</Hash>
+    <Hash>5c798fd43cd97bc11041c9ab2413f990</Hash>
 </Codenesium>*/

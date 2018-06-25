@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLProjectTriggerMapper : BOLAbstractProjectTriggerMapper, IBOLProjectTriggerMapper
+        public partial class BOLProjectTriggerMapper : BOLAbstractProjectTriggerMapper, IBOLProjectTriggerMapper
         {
                 public BOLProjectTriggerMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da226189de607b9908e4edef37851043</Hash>
+    <Hash>69eea901450dd1a2c1ad78dd4f33287a</Hash>
 </Codenesium>*/

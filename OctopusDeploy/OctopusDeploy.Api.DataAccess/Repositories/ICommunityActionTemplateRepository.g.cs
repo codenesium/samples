@@ -17,12 +17,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<CommunityActionTemplate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<CommunityActionTemplate> GetExternalId(Guid externalId);
+                Task<CommunityActionTemplate> ByExternalId(Guid externalId);
 
-                Task<CommunityActionTemplate> GetName(string name);
+                Task<CommunityActionTemplate> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>11c59d370f70413aeb785013d2a1612c</Hash>
+    <Hash>4da5cd70e52dd106f7788ecd932ba35d</Hash>
 </Codenesium>*/

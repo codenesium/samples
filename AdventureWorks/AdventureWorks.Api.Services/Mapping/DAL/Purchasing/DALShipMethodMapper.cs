@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALShipMethodMapper : DALAbstractShipMethodMapper, IDALShipMethodMapper
+        public partial class DALShipMethodMapper : DALAbstractShipMethodMapper, IDALShipMethodMapper
         {
                 public DALShipMethodMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95b57e52e00833aa410a3133c2abbc86</Hash>
+    <Hash>4cd5d5c1184324829019ed74a91d554b</Hash>
 </Codenesium>*/

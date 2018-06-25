@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiProvinceResponseModel>> GetCountryId(int countryId)
+                public async Task<List<ApiProvinceResponseModel>> ByCountryId(int countryId)
                 {
-                        List<Province> records = await this.provinceRepository.GetCountryId(countryId);
+                        List<Province> records = await this.provinceRepository.ByCountryId(countryId);
 
                         return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(records));
                 }
@@ -140,5 +140,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>baa5a9c41d2b9becd5736cb46d72ad4f</Hash>
+    <Hash>e2ecfa86cebe2a78cdfefafb5fe882c8</Hash>
 </Codenesium>*/

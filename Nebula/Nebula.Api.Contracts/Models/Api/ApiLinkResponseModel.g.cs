@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public class ApiLinkResponseModel : AbstractApiResponseModel
+        public partial class ApiLinkResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> assignedMachineId,
+                        int? assignedMachineId,
                         int chainId,
-                        Nullable<DateTime> dateCompleted,
-                        Nullable<DateTime> dateStarted,
+                        DateTime? dateCompleted,
+                        DateTime? dateStarted,
                         string dynamicParameters,
                         Guid externalId,
                         int id,
@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Contracts
                         this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatus);
                 }
 
-                public Nullable<int> AssignedMachineId { get; private set; }
+                public int? AssignedMachineId { get; private set; }
 
                 public string AssignedMachineIdEntity { get; set; }
 
@@ -50,9 +50,9 @@ namespace NebulaNS.Api.Contracts
 
                 public string ChainIdEntity { get; set; }
 
-                public Nullable<DateTime> DateCompleted { get; private set; }
+                public DateTime? DateCompleted { get; private set; }
 
-                public Nullable<DateTime> DateStarted { get; private set; }
+                public DateTime? DateStarted { get; private set; }
 
                 public string DynamicParameters { get; private set; }
 
@@ -198,5 +198,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c8bc42c9f5c21a1c9d9a262e489732f3</Hash>
+    <Hash>ba10a10f4436027caaa220efb5bc4037</Hash>
 </Codenesium>*/

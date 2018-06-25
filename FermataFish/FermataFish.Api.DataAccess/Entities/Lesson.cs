@@ -12,14 +12,14 @@ namespace FermataFishNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<DateTime> actualStartDate,
-                        Nullable<decimal> billAmount,
+                public virtual void SetProperties(
+                        DateTime? actualEndDate,
+                        DateTime? actualStartDate,
+                        decimal? billAmount,
                         int id,
                         int lessonStatusId,
-                        Nullable<DateTime> scheduledEndDate,
-                        Nullable<DateTime> scheduledStartDate,
+                        DateTime? scheduledEndDate,
+                        DateTime? scheduledStartDate,
                         string studentNotes,
                         int studioId,
                         string teacherNotes)
@@ -37,13 +37,13 @@ namespace FermataFishNS.Api.DataAccess
                 }
 
                 [Column("actualEndDate")]
-                public Nullable<DateTime> ActualEndDate { get; private set; }
+                public DateTime? ActualEndDate { get; private set; }
 
                 [Column("actualStartDate")]
-                public Nullable<DateTime> ActualStartDate { get; private set; }
+                public DateTime? ActualStartDate { get; private set; }
 
                 [Column("billAmount")]
-                public Nullable<decimal> BillAmount { get; private set; }
+                public decimal? BillAmount { get; private set; }
 
                 [Key]
                 [Column("id")]
@@ -53,10 +53,10 @@ namespace FermataFishNS.Api.DataAccess
                 public int LessonStatusId { get; private set; }
 
                 [Column("scheduledEndDate")]
-                public Nullable<DateTime> ScheduledEndDate { get; private set; }
+                public DateTime? ScheduledEndDate { get; private set; }
 
                 [Column("scheduledStartDate")]
-                public Nullable<DateTime> ScheduledStartDate { get; private set; }
+                public DateTime? ScheduledStartDate { get; private set; }
 
                 [Column("studentNotes")]
                 public string StudentNotes { get; private set; }
@@ -76,5 +76,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7ea9ef325f4e51759098ac7c12a41732</Hash>
+    <Hash>d9f063917dbe477de8f417ae63d9692d</Hash>
 </Codenesium>*/

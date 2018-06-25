@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLActionTemplateVersionMapper : BOLAbstractActionTemplateVersionMapper, IBOLActionTemplateVersionMapper
+        public partial class BOLActionTemplateVersionMapper : BOLAbstractActionTemplateVersionMapper, IBOLActionTemplateVersionMapper
         {
                 public BOLActionTemplateVersionMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f94dae8a56dc4516265673b2845ecab8</Hash>
+    <Hash>4389fca49cb80dab5294b1e5135f0a7b</Hash>
 </Codenesium>*/

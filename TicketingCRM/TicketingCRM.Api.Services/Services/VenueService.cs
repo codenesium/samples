@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class VenueService : AbstractVenueService, IVenueService
+        public partial class VenueService : AbstractVenueService, IVenueService
         {
                 public VenueService(
                         ILogger<IVenueRepository> logger,
@@ -30,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b66f4f6b9e1a4a18f9185663d9608a50</Hash>
+    <Hash>519637885cea5a954473a6cf4f1acc06</Hash>
 </Codenesium>*/

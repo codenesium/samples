@@ -101,16 +101,16 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentId(string deploymentId)
+                public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByDeploymentId(string deploymentId)
                 {
-                        List<DeploymentRelatedMachine> records = await this.deploymentRelatedMachineRepository.GetDeploymentId(deploymentId);
+                        List<DeploymentRelatedMachine> records = await this.deploymentRelatedMachineRepository.ByDeploymentId(deploymentId);
 
                         return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetMachineId(string machineId)
+                public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByMachineId(string machineId)
                 {
-                        List<DeploymentRelatedMachine> records = await this.deploymentRelatedMachineRepository.GetMachineId(machineId);
+                        List<DeploymentRelatedMachine> records = await this.deploymentRelatedMachineRepository.ByMachineId(machineId);
 
                         return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
                 }
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad137a6c56c884f7c3793a513068261a</Hash>
+    <Hash>f9f50974af9437b8b306feaf9d58c4e2</Hash>
 </Codenesium>*/

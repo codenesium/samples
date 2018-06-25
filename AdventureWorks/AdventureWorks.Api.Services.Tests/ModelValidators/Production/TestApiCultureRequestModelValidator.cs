@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<ICultureRepository> cultureRepository = new Mock<ICultureRepository>();
-                        cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
-
-                        var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<ICultureRepository> cultureRepository = new Mock<ICultureRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dc5c8eef40b3e0b443a5f101adf9ab03</Hash>
+    <Hash>41d916b9e945505d4b211b68acb10845</Hash>
 </Codenesium>*/

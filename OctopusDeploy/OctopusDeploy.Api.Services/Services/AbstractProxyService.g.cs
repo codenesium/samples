@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiProxyResponseModel> GetName(string name)
+                public async Task<ApiProxyResponseModel> ByName(string name)
                 {
-                        Proxy record = await this.proxyRepository.GetName(name);
+                        Proxy record = await this.proxyRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05cf4068dcdba87980f307b1160aea79</Hash>
+    <Hash>556b978bba8d3380127a0933308e4539</Hash>
 </Codenesium>*/

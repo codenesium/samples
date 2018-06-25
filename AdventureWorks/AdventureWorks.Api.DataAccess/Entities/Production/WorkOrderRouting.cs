@@ -12,11 +12,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<decimal> actualCost,
-                        Nullable<DateTime> actualEndDate,
-                        Nullable<decimal> actualResourceHrs,
-                        Nullable<DateTime> actualStartDate,
+                public virtual void SetProperties(
+                        decimal? actualCost,
+                        DateTime? actualEndDate,
+                        decimal? actualResourceHrs,
+                        DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
                         short operationSequence,
@@ -41,16 +41,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("ActualCost")]
-                public Nullable<decimal> ActualCost { get; private set; }
+                public decimal? ActualCost { get; private set; }
 
                 [Column("ActualEndDate")]
-                public Nullable<DateTime> ActualEndDate { get; private set; }
+                public DateTime? ActualEndDate { get; private set; }
 
                 [Column("ActualResourceHrs")]
-                public Nullable<decimal> ActualResourceHrs { get; private set; }
+                public decimal? ActualResourceHrs { get; private set; }
 
                 [Column("ActualStartDate")]
-                public Nullable<DateTime> ActualStartDate { get; private set; }
+                public DateTime? ActualStartDate { get; private set; }
 
                 [Column("LocationID")]
                 public short LocationID { get; private set; }
@@ -80,5 +80,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>293c53e6ee610f40e2489e1bc67ff4ee</Hash>
+    <Hash>4d77fc6c952cb29ee1723920b8007106</Hash>
 </Codenesium>*/

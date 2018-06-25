@@ -76,7 +76,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<WorkerPool> GetName(string name)
+                public async Task<WorkerPool> ByName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8098011fde6229ae4842ad01cf823893</Hash>
+    <Hash>a5b1ea20390a18f1dc2f5ba3851ce372</Hash>
 </Codenesium>*/

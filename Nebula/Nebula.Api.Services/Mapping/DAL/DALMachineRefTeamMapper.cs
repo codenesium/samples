@@ -4,7 +4,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class DALMachineRefTeamMapper : DALAbstractMachineRefTeamMapper, IDALMachineRefTeamMapper
+        public partial class DALMachineRefTeamMapper : DALAbstractMachineRefTeamMapper, IDALMachineRefTeamMapper
         {
                 public DALMachineRefTeamMapper()
                 {
@@ -13,5 +13,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>273ec9635f16a08b593e864670ccd9f0</Hash>
+    <Hash>3fdb1f08c5ee21404042e26b500062e6</Hash>
 </Codenesium>*/

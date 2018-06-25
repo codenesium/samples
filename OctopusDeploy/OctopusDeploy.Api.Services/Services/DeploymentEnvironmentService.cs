@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DeploymentEnvironmentService : AbstractDeploymentEnvironmentService, IDeploymentEnvironmentService
+        public partial class DeploymentEnvironmentService : AbstractDeploymentEnvironmentService, IDeploymentEnvironmentService
         {
                 public DeploymentEnvironmentService(
                         ILogger<IDeploymentEnvironmentRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad6e9c8820e811ce21a00737b1b0b2ed</Hash>
+    <Hash>456abc608432d5c8794c67cec8834423</Hash>
 </Codenesium>*/

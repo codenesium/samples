@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALStateProvinceMapper : DALAbstractStateProvinceMapper, IDALStateProvinceMapper
+        public partial class DALStateProvinceMapper : DALAbstractStateProvinceMapper, IDALStateProvinceMapper
         {
                 public DALStateProvinceMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c19c56e9c67c4cbb62de931b8ff0596</Hash>
+    <Hash>c6e01511dd9eaac32ae6ed033bffbdd9</Hash>
 </Codenesium>*/

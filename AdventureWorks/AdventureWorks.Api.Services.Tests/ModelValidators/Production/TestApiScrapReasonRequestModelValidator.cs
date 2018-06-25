@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IScrapReasonRepository> scrapReasonRepository = new Mock<IScrapReasonRepository>();
-                        scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
-
-                        var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IScrapReasonRepository> scrapReasonRepository = new Mock<IScrapReasonRepository>();
@@ -135,5 +123,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>980feeb3f95739f8e7cce7fbf40acc7f</Hash>
+    <Hash>bcda1e6cbb4e2edbce8ee15f871590d6</Hash>
 </Codenesium>*/

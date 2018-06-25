@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALEventRelatedDocumentMapper : DALAbstractEventRelatedDocumentMapper, IDALEventRelatedDocumentMapper
+        public partial class DALEventRelatedDocumentMapper : DALAbstractEventRelatedDocumentMapper, IDALEventRelatedDocumentMapper
         {
                 public DALEventRelatedDocumentMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff6e060a325bfb028c343564f00650ba</Hash>
+    <Hash>a74dbcde6c785005f9aaf9b901ea6c62</Hash>
 </Codenesium>*/

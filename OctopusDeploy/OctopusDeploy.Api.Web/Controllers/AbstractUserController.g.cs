@@ -202,13 +202,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getUsername/{username}")]
+                [Route("byUsername/{username}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiUserResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetUsername(string username)
+                public async virtual Task<IActionResult> ByUsername(string username)
                 {
-                        ApiUserResponseModel response = await this.UserService.GetUsername(username);
+                        ApiUserResponseModel response = await this.UserService.ByUsername(username);
 
                         if (response == null)
                         {
@@ -221,34 +221,34 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDisplayName/{displayName}")]
+                [Route("byDisplayName/{displayName}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDisplayName(string displayName)
+                public async virtual Task<IActionResult> ByDisplayName(string displayName)
                 {
-                        List<ApiUserResponseModel> response = await this.UserService.GetDisplayName(displayName);
+                        List<ApiUserResponseModel> response = await this.UserService.ByDisplayName(displayName);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getEmailAddress/{emailAddress}")]
+                [Route("byEmailAddress/{emailAddress}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetEmailAddress(string emailAddress)
+                public async virtual Task<IActionResult> ByEmailAddress(string emailAddress)
                 {
-                        List<ApiUserResponseModel> response = await this.UserService.GetEmailAddress(emailAddress);
+                        List<ApiUserResponseModel> response = await this.UserService.ByEmailAddress(emailAddress);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getExternalId/{externalId}")]
+                [Route("byExternalId/{externalId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetExternalId(string externalId)
+                public async virtual Task<IActionResult> ByExternalId(string externalId)
                 {
-                        List<ApiUserResponseModel> response = await this.UserService.GetExternalId(externalId);
+                        List<ApiUserResponseModel> response = await this.UserService.ByExternalId(externalId);
 
                         return this.Ok(response);
                 }
@@ -256,5 +256,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b338160361c49b00b44f01bc3a748a28</Hash>
+    <Hash>f4b3da96385e8428d9e0fa8f50ed4c14</Hash>
 </Codenesium>*/

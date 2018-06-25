@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string name)
                 {
                         this.Name = name;
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2c829536fa0dda4039f41ac60a3a63e1</Hash>
+    <Hash>b59858c200a38e2723174339fb2e3dda</Hash>
 </Codenesium>*/

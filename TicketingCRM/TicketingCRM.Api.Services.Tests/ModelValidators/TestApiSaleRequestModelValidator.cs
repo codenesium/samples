@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void IpAddress_Delete()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
-
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Notes_Create_null()
                 {
                         Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
@@ -161,5 +149,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c9ad7c7edb3eed27aa156c7cf45b498b</Hash>
+    <Hash>d9edb09f524df3e7c05473fe9b5a4fc3</Hash>
 </Codenesium>*/

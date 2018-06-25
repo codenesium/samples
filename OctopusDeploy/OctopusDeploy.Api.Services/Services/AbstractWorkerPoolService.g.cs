@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiWorkerPoolResponseModel> GetName(string name)
+                public async Task<ApiWorkerPoolResponseModel> ByName(string name)
                 {
-                        WorkerPool record = await this.workerPoolRepository.GetName(name);
+                        WorkerPool record = await this.workerPoolRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4be4d9bb106e768a4d450165299500f4</Hash>
+    <Hash>291eb90f84aae4e67b3f7a68eaa9cc7e</Hash>
 </Codenesium>*/

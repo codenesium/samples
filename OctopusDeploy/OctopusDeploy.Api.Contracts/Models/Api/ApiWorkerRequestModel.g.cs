@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string communicationStyle,
                         string fingerprint,
                         bool isDisabled,
@@ -57,7 +57,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.fingerprint.IsEmptyOrZeroOrNull() ? null : this.fingerprint;
+                                return this.fingerprint;
                         }
 
                         set
@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.relatedDocumentIds.IsEmptyOrZeroOrNull() ? null : this.relatedDocumentIds;
+                                return this.relatedDocumentIds;
                         }
 
                         set
@@ -151,7 +151,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.thumbprint.IsEmptyOrZeroOrNull() ? null : this.thumbprint;
+                                return this.thumbprint;
                         }
 
                         set
@@ -166,7 +166,7 @@ namespace OctopusDeployNS.Api.Contracts
                 {
                         get
                         {
-                                return this.workerPoolIds.IsEmptyOrZeroOrNull() ? null : this.workerPoolIds;
+                                return this.workerPoolIds;
                         }
 
                         set
@@ -178,5 +178,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5df3e071dbf73e611b06859c2d4c5eba</Hash>
+    <Hash>701ee526db3e9b97f48569df04cb38ee</Hash>
 </Codenesium>*/

@@ -4,7 +4,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class DALEmployeeMapper : DALAbstractEmployeeMapper, IDALEmployeeMapper
+        public partial class DALEmployeeMapper : DALAbstractEmployeeMapper, IDALEmployeeMapper
         {
                 public DALEmployeeMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e86b079e84e8a8f4e25809d7434b681</Hash>
+    <Hash>dd111e74c08d30db15a602e02397eb99</Hash>
 </Codenesium>*/

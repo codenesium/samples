@@ -12,7 +12,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string actionType,
                         string communityActionTemplateId,
                         string id,
@@ -50,5 +50,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a3c4a52c34a75d6742a7e8f4ade7beef</Hash>
+    <Hash>ef7b26d375b38eb3199b9d4876965cf3</Hash>
 </Codenesium>*/

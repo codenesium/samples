@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiCommunityActionTemplateResponseModel> GetExternalId(Guid externalId);
+                Task<ApiCommunityActionTemplateResponseModel> ByExternalId(Guid externalId);
 
-                Task<ApiCommunityActionTemplateResponseModel> GetName(string name);
+                Task<ApiCommunityActionTemplateResponseModel> ByName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>43b9edd2898288d32ee56fd358d62ad8</Hash>
+    <Hash>3c3aec0287c671b01094959087e69563</Hash>
 </Codenesium>*/

@@ -73,18 +73,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
-
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
@@ -130,18 +118,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
-
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
-
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
@@ -251,21 +215,9 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
-
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>70b6116dfb8cdb24fc96864735927cbd</Hash>
+    <Hash>e8d5d261cc2bf5b3e91ccc5f51900a97</Hash>
 </Codenesium>*/

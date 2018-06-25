@@ -71,21 +71,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.TagName, new string('A', 151));
                 }
-
-                [Fact]
-                public async void TagName_Delete()
-                {
-                        Mock<ITagsRepository> tagsRepository = new Mock<ITagsRepository>();
-                        tagsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tags()));
-
-                        var validator = new ApiTagsRequestModelValidator(tagsRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f4e6f66350352f9d36585e4997bce0af</Hash>
+    <Hash>ff46ebee404ebc19ab2f0b8d6afbfdbb</Hash>
 </Codenesium>*/

@@ -101,16 +101,16 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiVenueResponseModel>> GetAdminId(int adminId)
+                public async Task<List<ApiVenueResponseModel>> ByAdminId(int adminId)
                 {
-                        List<Venue> records = await this.venueRepository.GetAdminId(adminId);
+                        List<Venue> records = await this.venueRepository.ByAdminId(adminId);
 
                         return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiVenueResponseModel>> GetProvinceId(int provinceId)
+                public async Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId)
                 {
-                        List<Venue> records = await this.venueRepository.GetProvinceId(provinceId);
+                        List<Venue> records = await this.venueRepository.ByProvinceId(provinceId);
 
                         return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
                 }
@@ -118,5 +118,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46d5da074699933d0942acf54fe94064</Hash>
+    <Hash>b5c043ec9631662395ccc9516a0caa29</Hash>
 </Codenesium>*/

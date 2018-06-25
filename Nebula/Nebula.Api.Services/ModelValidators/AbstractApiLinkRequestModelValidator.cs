@@ -82,7 +82,7 @@ namespace NebulaNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeValidMachine(Nullable<int> id,  CancellationToken cancellationToken)
+                private async Task<bool> BeValidMachine(int? id,  CancellationToken cancellationToken)
                 {
                         var record = await this.linkRepository.GetMachine(id.GetValueOrDefault());
 
@@ -106,5 +106,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8880ea7f1fe70750e11490d88929c09f</Hash>
+    <Hash>b5c905f1b5a94e16b3ede120b7398e21</Hash>
 </Codenesium>*/

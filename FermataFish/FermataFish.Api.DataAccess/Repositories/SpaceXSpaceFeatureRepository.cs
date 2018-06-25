@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public class SpaceXSpaceFeatureRepository : AbstractSpaceXSpaceFeatureRepository, ISpaceXSpaceFeatureRepository
+        public partial class SpaceXSpaceFeatureRepository : AbstractSpaceXSpaceFeatureRepository, ISpaceXSpaceFeatureRepository
         {
                 public SpaceXSpaceFeatureRepository(
                         ILogger<SpaceXSpaceFeatureRepository> logger,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c0102b400f435b39a75ee84e664d3c6</Hash>
+    <Hash>cde763ca67c15263f5ea50699651db6d</Hash>
 </Codenesium>*/

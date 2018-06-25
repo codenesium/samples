@@ -76,21 +76,21 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<Deployment>> GetChannelId(string channelId)
+                public async Task<List<Deployment>> ByChannelId(string channelId)
                 {
                         var records = await this.Where(x => x.ChannelId == channelId);
 
                         return records;
                 }
 
-                public async Task<List<Deployment>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+                public async Task<List<Deployment>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         var records = await this.Where(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId);
 
                         return records;
                 }
 
-                public async Task<List<Deployment>> GetTenantId(string tenantId)
+                public async Task<List<Deployment>> ByTenantId(string tenantId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId);
 
@@ -134,5 +134,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>467feee0dc9f3161c80f9921f8d46b66</Hash>
+    <Hash>ada9d7f85ba0d54c79c08adc43a46b5e</Hash>
 </Codenesium>*/

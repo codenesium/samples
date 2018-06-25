@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public class SaleTicketsRepository : AbstractSaleTicketsRepository, ISaleTicketsRepository
+        public partial class SaleTicketsRepository : AbstractSaleTicketsRepository, ISaleTicketsRepository
         {
                 public SaleTicketsRepository(
                         ILogger<SaleTicketsRepository> logger,
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f51c7e12492e1bc3d1e1f1896c09c8e</Hash>
+    <Hash>64431e5af94f455a9550ec36a6fff270</Hash>
 </Codenesium>*/

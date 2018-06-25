@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<JobCandidate>> ByBusinessEntityID(Nullable<int> businessEntityID)
+                public async Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID)
                 {
                         var records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>555b7da11c3218f9561b4b050b5ded9f</Hash>
+    <Hash>9e12340657a4d2b7275a34f6ceb3a168</Hash>
 </Codenesium>*/

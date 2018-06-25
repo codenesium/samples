@@ -71,21 +71,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.CultureID, new string('A', 7));
                 }
-
-                [Fact]
-                public async void CultureID_Delete()
-                {
-                        Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
-                        productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
-
-                        var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7bfb8c314eb3125c65bad64cb9d2ef62</Hash>
+    <Hash>2c6d298868fa9b304daaa56fe20e47e4</Hash>
 </Codenesium>*/

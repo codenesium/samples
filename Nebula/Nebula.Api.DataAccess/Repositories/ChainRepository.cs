@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public class ChainRepository : AbstractChainRepository, IChainRepository
+        public partial class ChainRepository : AbstractChainRepository, IChainRepository
         {
                 public ChainRepository(
                         ILogger<ChainRepository> logger,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4ec64b8e21fc9c917b6571a76b1bb88e</Hash>
+    <Hash>92dca753010fe051eae3c764e6de1502</Hash>
 </Codenesium>*/

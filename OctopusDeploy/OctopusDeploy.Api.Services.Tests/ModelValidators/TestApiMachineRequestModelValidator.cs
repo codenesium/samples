@@ -73,18 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CommunicationStyle_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EnvironmentIds_Create_null()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -130,18 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Fingerprint_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void MachinePolicyId_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Name_Create_null()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -250,18 +214,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -313,22 +265,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Thumbprint_Delete()
+                private async void BeUniqueByName_Create_Exists()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
-                private async void BeUniqueGetName_Create_Exists()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
+                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
@@ -337,10 +277,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Create_Not_Exists()
+                private async void BeUniqueByName_Create_Not_Exists()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
+                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
@@ -349,10 +289,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Exists()
+                private async void BeUniqueByName_Update_Exists()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
+                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
@@ -361,10 +301,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                private async void BeUniqueGetName_Update_Not_Exists()
+                private async void BeUniqueByName_Update_Not_Exists()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
+                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
@@ -375,5 +315,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a742f058d936b802f852c38c2f9bc497</Hash>
+    <Hash>42021e20cdcafa971c2d8acf1c5f36d4</Hash>
 </Codenesium>*/

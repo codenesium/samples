@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public class UsersService : AbstractUsersService, IUsersService
+        public partial class UsersService : AbstractUsersService, IUsersService
         {
                 public UsersService(
                         ILogger<IUsersRepository> logger,
@@ -30,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82d0716f2ca5d075770accaa9e135126</Hash>
+    <Hash>921d338db3904e1960d620f0a30a3000</Hash>
 </Codenesium>*/

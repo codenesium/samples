@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string cultureID,
                         DateTime modifiedDate,
                         string name)
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f95ce0c74dc1bfd341874fe77c59cbbb</Hash>
+    <Hash>3a94715f1cb655f570c349223dd3ff86</Hash>
 </Codenesium>*/

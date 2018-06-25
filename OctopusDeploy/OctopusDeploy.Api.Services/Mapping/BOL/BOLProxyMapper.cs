@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLProxyMapper : BOLAbstractProxyMapper, IBOLProxyMapper
+        public partial class BOLProxyMapper : BOLAbstractProxyMapper, IBOLProxyMapper
         {
                 public BOLProxyMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e6f7421cf8701f1e7b867f91568a011</Hash>
+    <Hash>05fc9dc0ea1cb10db6f80dafdc5e0072</Hash>
 </Codenesium>*/

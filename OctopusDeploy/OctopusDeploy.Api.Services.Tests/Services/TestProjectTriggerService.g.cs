@@ -130,78 +130,78 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GetProjectIdName_Exists()
+                public async void ByProjectIdName_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectTriggerRepository>();
                         var record = new ProjectTrigger();
-                        mock.RepositoryMock.Setup(x => x.GetProjectIdName(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
+                        mock.RepositoryMock.Setup(x => x.ByProjectIdName(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectTriggerService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLProjectTriggerMapperMock,
                                                                 mock.DALMapperMockFactory.DALProjectTriggerMapperMock);
 
-                        ApiProjectTriggerResponseModel response = await service.GetProjectIdName(default(string), default(string));
+                        ApiProjectTriggerResponseModel response = await service.ByProjectIdName(default(string), default(string));
 
                         response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.GetProjectIdName(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectIdName(It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetProjectIdName_Not_Exists()
+                public async void ByProjectIdName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectTriggerRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetProjectIdName(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<ProjectTrigger>(null));
+                        mock.RepositoryMock.Setup(x => x.ByProjectIdName(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<ProjectTrigger>(null));
                         var service = new ProjectTriggerService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLProjectTriggerMapperMock,
                                                                 mock.DALMapperMockFactory.DALProjectTriggerMapperMock);
 
-                        ApiProjectTriggerResponseModel response = await service.GetProjectIdName(default(string), default(string));
+                        ApiProjectTriggerResponseModel response = await service.ByProjectIdName(default(string), default(string));
 
                         response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.GetProjectIdName(It.IsAny<string>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectIdName(It.IsAny<string>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetProjectId_Exists()
+                public async void ByProjectId_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectTriggerRepository>();
                         var records = new List<ProjectTrigger>();
                         records.Add(new ProjectTrigger());
-                        mock.RepositoryMock.Setup(x => x.GetProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ProjectTriggerService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLProjectTriggerMapperMock,
                                                                 mock.DALMapperMockFactory.DALProjectTriggerMapperMock);
 
-                        List<ApiProjectTriggerResponseModel> response = await service.GetProjectId(default(string));
+                        List<ApiProjectTriggerResponseModel> response = await service.ByProjectId(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void GetProjectId_Not_Exists()
+                public async void ByProjectId_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProjectTriggerRepository>();
-                        mock.RepositoryMock.Setup(x => x.GetProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<ProjectTrigger>>(new List<ProjectTrigger>()));
+                        mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<ProjectTrigger>>(new List<ProjectTrigger>()));
                         var service = new ProjectTriggerService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLProjectTriggerMapperMock,
                                                                 mock.DALMapperMockFactory.DALProjectTriggerMapperMock);
 
-                        List<ApiProjectTriggerResponseModel> response = await service.GetProjectId(default(string));
+                        List<ApiProjectTriggerResponseModel> response = await service.ByProjectId(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3c1d5a652ef1a2e85120cee9b4a2a087</Hash>
+    <Hash>aa58fa5e71f9bfce6c679fa555d4d610</Hash>
 </Codenesium>*/

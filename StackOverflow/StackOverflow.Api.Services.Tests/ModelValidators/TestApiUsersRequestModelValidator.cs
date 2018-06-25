@@ -73,18 +73,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DisplayName_Delete()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void EmailHash_Create_length()
                 {
                         Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
@@ -106,18 +94,6 @@ namespace StackOverflowNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailHash, new string('A', 41));
-                }
-
-                [Fact]
-                public async void EmailHash_Delete()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -145,18 +121,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Location_Delete()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void WebsiteUrl_Create_length()
                 {
                         Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
@@ -179,21 +143,9 @@ namespace StackOverflowNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.WebsiteUrl, new string('A', 201));
                 }
-
-                [Fact]
-                public async void WebsiteUrl_Delete()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>65ee9055bfd3a41e0e98f9177a462e8b</Hash>
+    <Hash>d0ccf731cb02e7f4593f3f0937b2cd35</Hash>
 </Codenesium>*/

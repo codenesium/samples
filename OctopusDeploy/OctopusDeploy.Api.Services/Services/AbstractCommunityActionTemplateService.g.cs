@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiCommunityActionTemplateResponseModel> GetExternalId(Guid externalId)
+                public async Task<ApiCommunityActionTemplateResponseModel> ByExternalId(Guid externalId)
                 {
-                        CommunityActionTemplate record = await this.communityActionTemplateRepository.GetExternalId(externalId);
+                        CommunityActionTemplate record = await this.communityActionTemplateRepository.ByExternalId(externalId);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<ApiCommunityActionTemplateResponseModel> GetName(string name)
+                public async Task<ApiCommunityActionTemplateResponseModel> ByName(string name)
                 {
-                        CommunityActionTemplate record = await this.communityActionTemplateRepository.GetName(name);
+                        CommunityActionTemplate record = await this.communityActionTemplateRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>681d2385d0462a67df60ec4fe12ff968</Hash>
+    <Hash>8fcd145f9f6b0ab29868fd282d58ad36</Hash>
 </Codenesium>*/

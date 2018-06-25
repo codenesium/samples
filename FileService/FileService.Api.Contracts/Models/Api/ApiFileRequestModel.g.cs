@@ -13,8 +13,8 @@ namespace FileServiceNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
-                        Nullable<int> bucketId,
+                public virtual void SetProperties(
+                        int? bucketId,
                         DateTime dateCreated,
                         string description,
                         DateTime expiration,
@@ -39,13 +39,13 @@ namespace FileServiceNS.Api.Contracts
                         this.PublicKey = publicKey;
                 }
 
-                private Nullable<int> bucketId;
+                private int? bucketId;
 
-                public Nullable<int> BucketId
+                public int? BucketId
                 {
                         get
                         {
-                                return this.bucketId.IsEmptyOrZeroOrNull() ? null : this.bucketId;
+                                return this.bucketId;
                         }
 
                         set
@@ -76,7 +76,7 @@ namespace FileServiceNS.Api.Contracts
                 {
                         get
                         {
-                                return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
+                                return this.description;
                         }
 
                         set
@@ -216,5 +216,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>401203221557905eefbd925f26ed4c52</Hash>
+    <Hash>c8ad9130744fb02a0f622a9d8ef80402</Hash>
 </Codenesium>*/

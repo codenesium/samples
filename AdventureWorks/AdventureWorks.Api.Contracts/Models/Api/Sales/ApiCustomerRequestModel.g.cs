@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string accountNumber,
                         DateTime modifiedDate,
-                        Nullable<int> personID,
+                        int? personID,
                         Guid rowguid,
-                        Nullable<int> storeID,
-                        Nullable<int> territoryID)
+                        int? storeID,
+                        int? territoryID)
                 {
                         this.AccountNumber = accountNumber;
                         this.ModifiedDate = modifiedDate;
@@ -61,13 +61,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> personID;
+                private int? personID;
 
-                public Nullable<int> PersonID
+                public int? PersonID
                 {
                         get
                         {
-                                return this.personID.IsEmptyOrZeroOrNull() ? null : this.personID;
+                                return this.personID;
                         }
 
                         set
@@ -92,13 +92,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> storeID;
+                private int? storeID;
 
-                public Nullable<int> StoreID
+                public int? StoreID
                 {
                         get
                         {
-                                return this.storeID.IsEmptyOrZeroOrNull() ? null : this.storeID;
+                                return this.storeID;
                         }
 
                         set
@@ -107,13 +107,13 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<int> territoryID;
+                private int? territoryID;
 
-                public Nullable<int> TerritoryID
+                public int? TerritoryID
                 {
                         get
                         {
-                                return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
+                                return this.territoryID;
                         }
 
                         set
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fdb26fd0800594a3bb3cfbf5007948b3</Hash>
+    <Hash>5b64ad05e64338c232862553090af182</Hash>
 </Codenesium>*/

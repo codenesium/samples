@@ -17,16 +17,16 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<List<Certificate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Certificate>> GetCreated(DateTimeOffset created);
+                Task<List<Certificate>> ByCreated(DateTimeOffset created);
 
-                Task<List<Certificate>> GetDataVersion(byte[] dataVersion);
+                Task<List<Certificate>> ByDataVersion(byte[] dataVersion);
 
-                Task<List<Certificate>> GetNotAfter(DateTimeOffset notAfter);
+                Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter);
 
-                Task<List<Certificate>> GetThumbprint(string thumbprint);
+                Task<List<Certificate>> ByThumbprint(string thumbprint);
         }
 }
 
 /*<Codenesium>
-    <Hash>1abd8001d4e8a36594fbecf9b57d8758</Hash>
+    <Hash>f3f2976cb88c66bf6b75fb35bb96ed07</Hash>
 </Codenesium>*/

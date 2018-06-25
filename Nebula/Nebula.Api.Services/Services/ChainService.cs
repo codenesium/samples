@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public class ChainService : AbstractChainService, IChainService
+        public partial class ChainService : AbstractChainService, IChainService
         {
                 public ChainService(
                         ILogger<IChainRepository> logger,
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5104dcc54a66f28c4a9643dbb5b3446</Hash>
+    <Hash>1323dc1fed263d01b07ada983754a978</Hash>
 </Codenesium>*/

@@ -45,7 +45,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAccountRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAccountRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -57,9 +57,9 @@ namespace OctopusDeployNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiAccountRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiAccountRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Account record = await this.accountRepository.GetName(model.Name);
+                        Account record = await this.accountRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
@@ -74,5 +74,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce761c55ef00422c228888a5fdd35d8f</Hash>
+    <Hash>f1df153342884c19f0b389eb39041960</Hash>
 </Codenesium>*/

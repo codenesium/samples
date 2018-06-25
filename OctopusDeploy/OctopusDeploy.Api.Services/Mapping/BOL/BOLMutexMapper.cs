@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLMutexMapper : BOLAbstractMutexMapper, IBOLMutexMapper
+        public partial class BOLMutexMapper : BOLAbstractMutexMapper, IBOLMutexMapper
         {
                 public BOLMutexMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71fc4442e3f140ad499cfaaa5435ef33</Hash>
+    <Hash>4028978bf96306ef18169f0f0eb9ceea</Hash>
 </Codenesium>*/

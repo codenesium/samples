@@ -97,18 +97,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JwtKey_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void LastIpAddress_Create_null()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -154,18 +142,6 @@ namespace NebulaNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, new string('A', 129));
-                }
-
-                [Fact]
-                public async void LastIpAddress_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -215,21 +191,9 @@ namespace NebulaNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
-
-                [Fact]
-                public async void Name_Delete()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fd056d4783994b156b1f64d66a58ebac</Hash>
+    <Hash>90fe11893a89363e495a3c2ea3222f44</Hash>
 </Codenesium>*/

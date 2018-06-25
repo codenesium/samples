@@ -101,9 +101,9 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiMachineResponseModel> GetName(string name)
+                public async Task<ApiMachineResponseModel> ByName(string name)
                 {
-                        Machine record = await this.machineRepository.GetName(name);
+                        Machine record = await this.machineRepository.ByName(name);
 
                         if (record == null)
                         {
@@ -115,9 +115,9 @@ namespace OctopusDeployNS.Api.Services
                         }
                 }
 
-                public async Task<List<ApiMachineResponseModel>> GetMachinePolicyId(string machinePolicyId)
+                public async Task<List<ApiMachineResponseModel>> ByMachinePolicyId(string machinePolicyId)
                 {
-                        List<Machine> records = await this.machineRepository.GetMachinePolicyId(machinePolicyId);
+                        List<Machine> records = await this.machineRepository.ByMachinePolicyId(machinePolicyId);
 
                         return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
                 }
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36ac8f8e204589ebc17fdbada5eee487</Hash>
+    <Hash>92faacf80f3c68b2121ce8b5810f9aaf</Hash>
 </Codenesium>*/

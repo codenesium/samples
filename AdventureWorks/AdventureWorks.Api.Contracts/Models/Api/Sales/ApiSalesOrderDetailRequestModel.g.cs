@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string carrierTrackingNumber,
                         decimal lineTotal,
                         DateTime modifiedDate,
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         get
                         {
-                                return this.carrierTrackingNumber.IsEmptyOrZeroOrNull() ? null : this.carrierTrackingNumber;
+                                return this.carrierTrackingNumber;
                         }
 
                         set
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>041a889f48fb201193cdb3b0f1071e03</Hash>
+    <Hash>05f3af08d2155217a690f2152ff4f399</Hash>
 </Codenesium>*/

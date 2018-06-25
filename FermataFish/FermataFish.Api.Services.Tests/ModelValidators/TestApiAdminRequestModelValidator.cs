@@ -73,18 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void FirstName_Create_null()
                 {
                         Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -130,18 +118,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -193,18 +169,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Phone_Create_null()
                 {
                         Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -250,18 +214,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Phone_Delete()
-                {
-                        Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-                        adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
-
-                        var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -317,5 +269,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b95c2544c1c3d7905d1c6f30d5df5dae</Hash>
+    <Hash>2f7d49c6d8eb9ff51cec7bee32c693f0</Hash>
 </Codenesium>*/

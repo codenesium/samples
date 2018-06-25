@@ -4,7 +4,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public class DALBreedMapper : DALAbstractBreedMapper, IDALBreedMapper
+        public partial class DALBreedMapper : DALAbstractBreedMapper, IDALBreedMapper
         {
                 public DALBreedMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7c3d7bdafd3c343c11cb06474e25d84</Hash>
+    <Hash>c88cdc06e43d059466f786d24db9ee47</Hash>
 </Codenesium>*/

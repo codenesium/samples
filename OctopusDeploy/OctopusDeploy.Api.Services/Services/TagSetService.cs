@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class TagSetService : AbstractTagSetService, ITagSetService
+        public partial class TagSetService : AbstractTagSetService, ITagSetService
         {
                 public TagSetService(
                         ILogger<ITagSetRepository> logger,
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20a8163e5dd3dffd07ee9e9693f56ef0</Hash>
+    <Hash>044b7aa679cd1e2e93502ac136cf60bd</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class AWBuildVersionService : AbstractAWBuildVersionService, IAWBuildVersionService
+        public partial class AWBuildVersionService : AbstractAWBuildVersionService, IAWBuildVersionService
         {
                 public AWBuildVersionService(
                         ILogger<IAWBuildVersionRepository> logger,
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f245cbdce00464db2d9219d9d19e2120</Hash>
+    <Hash>6c1ec3c744dbeebddb6ca92692297079</Hash>
 </Codenesium>*/

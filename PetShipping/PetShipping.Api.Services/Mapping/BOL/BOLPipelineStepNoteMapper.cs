@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLPipelineStepNoteMapper : BOLAbstractPipelineStepNoteMapper, IBOLPipelineStepNoteMapper
+        public partial class BOLPipelineStepNoteMapper : BOLAbstractPipelineStepNoteMapper, IBOLPipelineStepNoteMapper
         {
                 public BOLPipelineStepNoteMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9573183757faf4cbb3ddfc021d129137</Hash>
+    <Hash>a1a1bef3b1913b7281c9377f1be5c173</Hash>
 </Codenesium>*/

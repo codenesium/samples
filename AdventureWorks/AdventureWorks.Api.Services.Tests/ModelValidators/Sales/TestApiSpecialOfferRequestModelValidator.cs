@@ -73,18 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Category_Delete()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
-
-                [Fact]
                 public async void Description_Create_null()
                 {
                         Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
@@ -130,18 +118,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
-                }
-
-                [Fact]
-                public async void Description_Delete()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
                 }
 
                 [Fact]
@@ -191,21 +167,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
                 }
-
-                [Fact]
-                public async void Type_Delete()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
-
-                        response.Should().BeOfType(typeof(ValidationResult));
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>120f44155d193744770ac88a55efa826</Hash>
+    <Hash>643919a83efdd00ed94d91326c27c68a</Hash>
 </Codenesium>*/

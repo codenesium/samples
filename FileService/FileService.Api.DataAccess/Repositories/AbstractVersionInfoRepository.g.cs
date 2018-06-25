@@ -76,7 +76,7 @@ namespace FileServiceNS.Api.DataAccess
                         }
                 }
 
-                public async Task<VersionInfo> GetVersion(long version)
+                public async Task<VersionInfo> ByVersion(long version)
                 {
                         var records = await this.Where(x => x.Version == version);
 
@@ -115,5 +115,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b6ee6b6a98927fa2c6d605581f56f15</Hash>
+    <Hash>ab27a76b79b28c4417cfdc4ee14b4d2d</Hash>
 </Codenesium>*/

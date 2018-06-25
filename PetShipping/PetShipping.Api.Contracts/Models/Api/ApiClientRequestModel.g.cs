@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
                 {
                 }
 
-                public void SetProperties(
+                public virtual void SetProperties(
                         string email,
                         string firstName,
                         string lastName,
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Contracts
                 {
                         get
                         {
-                                return this.notes.IsEmptyOrZeroOrNull() ? null : this.notes;
+                                return this.notes;
                         }
 
                         set
@@ -109,5 +109,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d4aa59c64cb8862e5a92e2edf639f23f</Hash>
+    <Hash>3549754295399c68645c83f43e8df508</Hash>
 </Codenesium>*/

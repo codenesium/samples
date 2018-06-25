@@ -198,13 +198,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiActionTemplateResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiActionTemplateResponseModel response = await this.ActionTemplateService.GetName(name);
+                        ApiActionTemplateResponseModel response = await this.ActionTemplateService.ByName(name);
 
                         if (response == null)
                         {
@@ -219,5 +219,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b878826e6b98bbf2bf61621a6f9391f1</Hash>
+    <Hash>bfab7d1eb8c70948fd18edd2127bd673</Hash>
 </Codenesium>*/

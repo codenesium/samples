@@ -200,13 +200,13 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getVersionProjectId/{version}/{projectId}")]
+                [Route("byVersionProjectId/{version}/{projectId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiReleaseResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetVersionProjectId(string version, string projectId)
+                public async virtual Task<IActionResult> ByVersionProjectId(string version, string projectId)
                 {
-                        ApiReleaseResponseModel response = await this.ReleaseService.GetVersionProjectId(version, projectId);
+                        ApiReleaseResponseModel response = await this.ReleaseService.ByVersionProjectId(version, projectId);
 
                         if (response == null)
                         {
@@ -219,45 +219,45 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getIdAssembled/{id}/{assembled}")]
+                [Route("byIdAssembled/{id}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdAssembled(string id, DateTimeOffset assembled)
+                public async virtual Task<IActionResult> ByIdAssembled(string id, DateTimeOffset assembled)
                 {
-                        List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdAssembled(id, assembled);
+                        List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdAssembled(id, assembled);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getProjectDeploymentProcessSnapshotId/{projectDeploymentProcessSnapshotId}")]
+                [Route("byProjectDeploymentProcessSnapshotId/{projectDeploymentProcessSnapshotId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
+                public async virtual Task<IActionResult> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
                 {
-                        List<ApiReleaseResponseModel> response = await this.ReleaseService.GetProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
+                        List<ApiReleaseResponseModel> response = await this.ReleaseService.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}")]
+                [Route("byIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
+                public async virtual Task<IActionResult> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
-                        List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
+                        List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}")]
+                [Route("byIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
+                public async virtual Task<IActionResult> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
-                        List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
+                        List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
 
                         return this.Ok(response);
                 }
@@ -265,5 +265,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3bab0501844beabc3a4e78f9e41d2781</Hash>
+    <Hash>bc6758f634abf23b7da8c04b155a2cb1</Hash>
 </Codenesium>*/

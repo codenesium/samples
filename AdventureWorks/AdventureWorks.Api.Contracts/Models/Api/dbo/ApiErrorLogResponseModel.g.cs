@@ -6,16 +6,16 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ApiErrorLogResponseModel : AbstractApiResponseModel
+        public partial class ApiErrorLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<int> errorLine,
+                        int? errorLine,
                         int errorLogID,
                         string errorMessage,
                         int errorNumber,
                         string errorProcedure,
-                        Nullable<int> errorSeverity,
-                        Nullable<int> errorState,
+                        int? errorSeverity,
+                        int? errorState,
                         DateTime errorTime,
                         string userName)
                 {
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UserName = userName;
                 }
 
-                public Nullable<int> ErrorLine { get; private set; }
+                public int? ErrorLine { get; private set; }
 
                 public int ErrorLogID { get; private set; }
 
@@ -40,9 +40,9 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public string ErrorProcedure { get; private set; }
 
-                public Nullable<int> ErrorSeverity { get; private set; }
+                public int? ErrorSeverity { get; private set; }
 
-                public Nullable<int> ErrorState { get; private set; }
+                public int? ErrorState { get; private set; }
 
                 public DateTime ErrorTime { get; private set; }
 
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bfe3a18d4918102c2972f441bbfaf43e</Hash>
+    <Hash>95a4db0256c8d17632db3203a2cb402a</Hash>
 </Codenesium>*/
