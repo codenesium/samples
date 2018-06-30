@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netstandard2.0;net461</TargetFrameworks>
+  </PropertyGroup>
+
+ <ItemGroup>
+    <ProjectReference Include="../PetShipping.Api.Contracts/PetShipping.Api.Contracts.csproj" />
+  </ItemGroup>
+
+   <ItemGroup>
+	<PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
+	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4" />
+	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>PetShipping.Api.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>PetShipping.Api.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+</Project>
