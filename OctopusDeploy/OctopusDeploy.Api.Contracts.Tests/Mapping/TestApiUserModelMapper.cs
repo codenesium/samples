@@ -1,0 +1,57 @@
+using FluentAssertions;
+using OctopusDeployNS.Api.Contracts;
+using System;
+using System.Collections.Generic;
+using Xunit;
+
+namespace OctopusDeployNS.Api.Contracts.Tests
+{
+        [Trait("Type", "Unit")]
+        [Trait("Table", "User")]
+        [Trait("Area", "ApiModel")]
+        public class TestApiUserModelMapper
+        {
+                [Fact]
+                public void MapRequestToResponse()
+                {
+                        var mapper = new ApiUserModelMapper();
+                        var model = new ApiUserRequestModel();
+                        model.SetProperties("A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
+                        ApiUserResponseModel response = mapper.MapRequestToResponse("A", model);
+
+                        response.DisplayName.Should().Be("A");
+                        response.EmailAddress.Should().Be("A");
+                        response.ExternalId.Should().Be("A");
+                        response.ExternalIdentifiers.Should().Be("A");
+                        response.Id.Should().Be("A");
+                        response.IdentificationToken.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.IsActive.Should().Be(true);
+                        response.IsService.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.Username.Should().Be("A");
+                }
+
+                [Fact]
+                public void MapResponseToRequest()
+                {
+                        var mapper = new ApiUserModelMapper();
+                        var model = new ApiUserResponseModel();
+                        model.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
+                        ApiUserRequestModel response = mapper.MapResponseToRequest(model);
+
+                        response.DisplayName.Should().Be("A");
+                        response.EmailAddress.Should().Be("A");
+                        response.ExternalId.Should().Be("A");
+                        response.ExternalIdentifiers.Should().Be("A");
+                        response.IdentificationToken.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.IsActive.Should().Be(true);
+                        response.IsService.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.Username.Should().Be("A");
+                }
+        }
+}
+
+/*<Codenesium>
+    <Hash>037f07710eb6d300a8d96b0b8bf6c2db</Hash>
+</Codenesium>*/
