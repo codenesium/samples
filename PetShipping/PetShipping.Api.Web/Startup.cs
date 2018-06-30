@@ -234,6 +234,12 @@ namespace PetShippingNS.Api.Web
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
 
+			var contractsAssembly = typeof(AbstractApiRequestModel).Assembly;
+		    builder.RegisterAssemblyTypes(contractsAssembly)
+                .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Mapper"))
+                .AsImplementedInterfaces()
+			    .PropertiesAutowired();
+			
 			var servicesAssembly = typeof(ValidationError).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
