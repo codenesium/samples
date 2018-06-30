@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -56,5 +57,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b0d6dfb505c33d5b882747d65e2fdeec</Hash>
+    <Hash>04642a7b540426812918230659d420fd</Hash>
 </Codenesium>*/

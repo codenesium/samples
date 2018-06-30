@@ -9,18 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiVendorResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int businessEntityID,
                         string accountNumber,
                         bool activeFlag,
-                        int businessEntityID,
                         int creditRating,
                         DateTime modifiedDate,
                         string name,
                         bool preferredVendorStatus,
                         string purchasingWebServiceURL)
                 {
+                        this.BusinessEntityID = businessEntityID;
                         this.AccountNumber = accountNumber;
                         this.ActiveFlag = activeFlag;
-                        this.BusinessEntityID = businessEntityID;
                         this.CreditRating = creditRating;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>40cfdd1f1048e3d24503c86fccba49d0</Hash>
+    <Hash>f7207f03decd20e90085de277b5f7ef5</Hash>
 </Codenesium>*/

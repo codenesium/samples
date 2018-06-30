@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiPhoneNumberTypeResponseModel();
 
-                        model.SetProperties(boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name, boPhoneNumberType.PhoneNumberTypeID);
+                        model.SetProperties(boPhoneNumberType.PhoneNumberTypeID, boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36beb4bbb28fe019d57e28e9bae2cfc9</Hash>
+    <Hash>1df73583c78cb84e27335edc08cba61b</Hash>
 </Codenesium>*/

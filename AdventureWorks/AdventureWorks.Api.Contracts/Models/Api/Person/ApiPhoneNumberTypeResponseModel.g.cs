@@ -9,13 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiPhoneNumberTypeResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int phoneNumberTypeID,
                         DateTime modifiedDate,
-                        string name,
-                        int phoneNumberTypeID)
+                        string name)
                 {
+                        this.PhoneNumberTypeID = phoneNumberTypeID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.PhoneNumberTypeID = phoneNumberTypeID;
                 }
 
                 public DateTime ModifiedDate { get; private set; }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>11b43545f089284d3cf91beacbc7a301</Hash>
+    <Hash>128000cfb396486e3110374b961465f2</Hash>
 </Codenesium>*/

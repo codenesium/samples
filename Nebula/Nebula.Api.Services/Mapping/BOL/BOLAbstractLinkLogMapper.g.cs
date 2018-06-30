@@ -26,7 +26,7 @@ namespace NebulaNS.Api.Services
                 {
                         var model = new ApiLinkLogResponseModel();
 
-                        model.SetProperties(boLinkLog.DateEntered, boLinkLog.Id, boLinkLog.LinkId, boLinkLog.Log);
+                        model.SetProperties(boLinkLog.Id, boLinkLog.DateEntered, boLinkLog.LinkId, boLinkLog.Log);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e627e6972a53df1bcaca8696b214855b</Hash>
+    <Hash>b4a80157f94ed4acf81deb6d84737092</Hash>
 </Codenesium>*/

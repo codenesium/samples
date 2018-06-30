@@ -9,13 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiJobCandidateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        int? businessEntityID,
                         int jobCandidateID,
+                        int? businessEntityID,
                         DateTime modifiedDate,
                         string resume)
                 {
-                        this.BusinessEntityID = businessEntityID;
                         this.JobCandidateID = jobCandidateID;
+                        this.BusinessEntityID = businessEntityID;
                         this.ModifiedDate = modifiedDate;
                         this.Resume = resume;
                 }
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>823266f759202e7bf75dfb2d0d3681b3</Hash>
+    <Hash>34c7ec6a038299ce8e492ec505bb7765</Hash>
 </Codenesium>*/

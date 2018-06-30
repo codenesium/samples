@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IScrapReasonService ScrapReasonService { get; private set; }
 
+                protected IApiScrapReasonModelMapper ScrapReasonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractScrapReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IScrapReasonService scrapReasonService
+                        IScrapReasonService scrapReasonService,
+                        IApiScrapReasonModelMapper scrapReasonModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ScrapReasonService = scrapReasonService;
+                        this.ScrapReasonModelMapper = scrapReasonModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiScrapReasonRequestModel model = new ApiScrapReasonRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiScrapReasonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ScrapReasonService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonRequestModel model)
                 {
-                        ActionResponse result = await this.ScrapReasonService.Update(id, model);
+                        ApiScrapReasonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiScrapReasonResponseModel response = await this.ScrapReasonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ScrapReasonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiScrapReasonResponseModel response = await this.ScrapReasonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -226,9 +237,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiScrapReasonRequestModel> CreatePatch(ApiScrapReasonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiScrapReasonRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiScrapReasonRequestModel> PatchModel(short id, JsonPatchDocument<ApiScrapReasonRequestModel> patch)
+                {
+                        var record = await this.ScrapReasonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiScrapReasonRequestModel request = this.ScrapReasonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c7c5abb2322b122a1bf59f1348f9b3b</Hash>
+    <Hash>f1853513224b8c6bb5575be312dc11d8</Hash>
 </Codenesium>*/

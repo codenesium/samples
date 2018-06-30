@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IContactTypeService ContactTypeService { get; private set; }
 
+                protected IApiContactTypeModelMapper ContactTypeModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractContactTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IContactTypeService contactTypeService
+                        IContactTypeService contactTypeService,
+                        IApiContactTypeModelMapper contactTypeModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ContactTypeService = contactTypeService;
+                        this.ContactTypeModelMapper = contactTypeModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiContactTypeRequestModel model = new ApiContactTypeRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiContactTypeRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ContactTypeService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiContactTypeRequestModel model)
                 {
-                        ActionResponse result = await this.ContactTypeService.Update(id, model);
+                        ApiContactTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiContactTypeResponseModel response = await this.ContactTypeService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ContactTypeService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiContactTypeResponseModel response = await this.ContactTypeService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -226,9 +237,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiContactTypeRequestModel> CreatePatch(ApiContactTypeRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiContactTypeRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiContactTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiContactTypeRequestModel> patch)
+                {
+                        var record = await this.ContactTypeService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiContactTypeRequestModel request = this.ContactTypeModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>78ff8da7090961d6cebc3246ac640e27</Hash>
+    <Hash>d56c958425abf3de2ca7b755ea35b690</Hash>
 </Codenesium>*/

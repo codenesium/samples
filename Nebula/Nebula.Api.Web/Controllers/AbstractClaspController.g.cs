@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IClaspService ClaspService { get; private set; }
 
+                protected IApiClaspModelMapper ClaspModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractClaspController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IClaspService claspService
+                        IClaspService claspService,
+                        IApiClaspModelMapper claspModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ClaspService = claspService;
+                        this.ClaspModelMapper = claspModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiClaspRequestModel model = new ApiClaspRequestModel();
-                                model.SetProperties(model.NextChainId,
-                                                    model.PreviousChainId);
-                                patch.ApplyTo(model);
+                                ApiClaspRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ClaspService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClaspRequestModel model)
                 {
-                        ActionResponse result = await this.ClaspService.Update(id, model);
+                        ApiClaspRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiClaspResponseModel response = await this.ClaspService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ClaspService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiClaspResponseModel response = await this.ClaspService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiClaspRequestModel> CreatePatch(ApiClaspRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiClaspRequestModel>();
+                        patch.Replace(x => x.NextChainId, model.NextChainId);
+                        patch.Replace(x => x.PreviousChainId, model.PreviousChainId);
+                        return patch;
+                }
+
+                private async Task<ApiClaspRequestModel> PatchModel(int id, JsonPatchDocument<ApiClaspRequestModel> patch)
+                {
+                        var record = await this.ClaspService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiClaspRequestModel request = this.ClaspModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f0cfa1354161a941c07203107d35e91b</Hash>
+    <Hash>d56b616b1ceb974485c68320a20f9ba7</Hash>
 </Codenesium>*/

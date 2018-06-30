@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<StudentXFamilyController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStudentXFamilyService studentXFamilyService
+                        IStudentXFamilyService studentXFamilyService,
+                        IApiStudentXFamilyModelMapper studentXFamilyModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               studentXFamilyService)
+                               studentXFamilyService,
+                               studentXFamilyModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>adf6a1105a8f50a0b0222d79d103bc8f</Hash>
+    <Hash>cb0d3756b171926fa9cd33c1a20c2038</Hash>
 </Codenesium>*/

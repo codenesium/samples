@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IAddressService AddressService { get; private set; }
 
+                protected IApiAddressModelMapper AddressModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAddressService addressService
+                        IAddressService addressService,
+                        IApiAddressModelMapper addressModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.AddressService = addressService;
+                        this.AddressModelMapper = addressModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiAddressRequestModel model = new ApiAddressRequestModel();
-                                model.SetProperties(model.AddressLine1,
-                                                    model.AddressLine2,
-                                                    model.City,
-                                                    model.ModifiedDate,
-                                                    model.PostalCode,
-                                                    model.Rowguid,
-                                                    model.StateProvinceID);
-                                patch.ApplyTo(model);
+                                ApiAddressRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.AddressService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressRequestModel model)
                 {
-                        ActionResponse result = await this.AddressService.Update(id, model);
+                        ApiAddressRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiAddressResponseModel response = await this.AddressService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.AddressService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiAddressResponseModel response = await this.AddressService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -242,9 +248,38 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiAddressRequestModel> CreatePatch(ApiAddressRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiAddressRequestModel>();
+                        patch.Replace(x => x.AddressLine1, model.AddressLine1);
+                        patch.Replace(x => x.AddressLine2, model.AddressLine2);
+                        patch.Replace(x => x.City, model.City);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PostalCode, model.PostalCode);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StateProvinceID, model.StateProvinceID);
+                        return patch;
+                }
+
+                private async Task<ApiAddressRequestModel> PatchModel(int id, JsonPatchDocument<ApiAddressRequestModel> patch)
+                {
+                        var record = await this.AddressService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiAddressRequestModel request = this.AddressModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f96de67177605a0afe6f40f78f832f75</Hash>
+    <Hash>dc789466728dcae12f8f2ccf45b52238</Hash>
 </Codenesium>*/

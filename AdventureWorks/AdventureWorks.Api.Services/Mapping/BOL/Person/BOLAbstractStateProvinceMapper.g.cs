@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiStateProvinceResponseModel();
 
-                        model.SetProperties(boStateProvince.CountryRegionCode, boStateProvince.IsOnlyStateProvinceFlag, boStateProvince.ModifiedDate, boStateProvince.Name, boStateProvince.Rowguid, boStateProvince.StateProvinceCode, boStateProvince.StateProvinceID, boStateProvince.TerritoryID);
+                        model.SetProperties(boStateProvince.StateProvinceID, boStateProvince.CountryRegionCode, boStateProvince.IsOnlyStateProvinceFlag, boStateProvince.ModifiedDate, boStateProvince.Name, boStateProvince.Rowguid, boStateProvince.StateProvinceCode, boStateProvince.TerritoryID);
 
                         return model;
                 }
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4a0857f710c704095f49bc6b1204679</Hash>
+    <Hash>7830cbad5ce170f154d3e33faa746a43</Hash>
 </Codenesium>*/

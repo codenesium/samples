@@ -9,15 +9,15 @@ namespace NebulaNS.Api.Contracts
         public partial class ApiChainResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         int chainStatusId,
                         Guid externalId,
-                        int id,
                         string name,
                         int teamId)
                 {
+                        this.Id = id;
                         this.ChainStatusId = chainStatusId;
                         this.ExternalId = externalId;
-                        this.Id = id;
                         this.Name = name;
                         this.TeamId = teamId;
 
@@ -91,5 +91,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>278260bce27974ae5646587e4f926abe</Hash>
+    <Hash>2d0edecccd262d7715d6eff5ab10076d</Hash>
 </Codenesium>*/

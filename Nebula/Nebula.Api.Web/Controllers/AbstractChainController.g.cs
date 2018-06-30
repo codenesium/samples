@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IChainService ChainService { get; private set; }
 
+                protected IApiChainModelMapper ChainModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractChainController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IChainService chainService
+                        IChainService chainService,
+                        IApiChainModelMapper chainModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ChainService = chainService;
+                        this.ChainModelMapper = chainModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiChainRequestModel model = new ApiChainRequestModel();
-                                model.SetProperties(model.ChainStatusId,
-                                                    model.ExternalId,
-                                                    model.Name,
-                                                    model.TeamId);
-                                patch.ApplyTo(model);
+                                ApiChainRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ChainService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainRequestModel model)
                 {
-                        ActionResponse result = await this.ChainService.Update(id, model);
+                        ApiChainRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiChainResponseModel response = await this.ChainService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ChainService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiChainResponseModel response = await this.ChainService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -223,9 +232,35 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiChainRequestModel> CreatePatch(ApiChainRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiChainRequestModel>();
+                        patch.Replace(x => x.ChainStatusId, model.ChainStatusId);
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.TeamId, model.TeamId);
+                        return patch;
+                }
+
+                private async Task<ApiChainRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainRequestModel> patch)
+                {
+                        var record = await this.ChainService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiChainRequestModel request = this.ChainModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c0e1d6ffbf5d65d9991a26300f8022d6</Hash>
+    <Hash>a5a6897039c3d289126abaeb32ef1e43</Hash>
 </Codenesium>*/

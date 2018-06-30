@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var records = new List<ApiBusinessEntityContactResponseModel>();
                         records.Add(record);
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBusinessEntityContactResponseModel>>(new List<ApiBusinessEntityContactResponseModel>()));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBusinessEntityContactResponseModel()));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBusinessEntityContactResponseModel>(null));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiBusinessEntityContactResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiBusinessEntityContactResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBusinessEntityContactResponseModel>>(mockResponse));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBusinessEntityContactResponseModel>>(mockResponse.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -146,7 +146,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiBusinessEntityContactResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiBusinessEntityContactResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBusinessEntityContactResponseModel>>(mockResponse));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -171,7 +171,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBusinessEntityContactResponseModel>>(mockResponse.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -194,9 +194,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                                 (id, model) => model.ContactTypeID.Should().Be(1)
                                 )
                         .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBusinessEntityContactResponseModel>(new ApiBusinessEntityContactResponseModel()));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBusinessEntityContactModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -216,7 +215,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBusinessEntityContactResponseModel>(null));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -237,7 +236,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBusinessEntityContactResponseModel()));
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBusinessEntityContactModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -255,7 +255,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBusinessEntityContactResponseModel()));
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBusinessEntityContactModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -267,13 +268,32 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Update_NotFound()
+                {
+                        BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBusinessEntityContactRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBusinessEntityContactResponseModel>(null));
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBusinessEntityContactModelMapper());
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiBusinessEntityContactRequestModel());
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Delete_No_Errors()
                 {
                         BusinessEntityContactControllerMockFacade mock = new BusinessEntityContactControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -291,7 +311,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        BusinessEntityContactController controller = new BusinessEntityContactController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -312,9 +332,11 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
                 public Mock<IBusinessEntityContactService> ServiceMock { get; set; } = new Mock<IBusinessEntityContactService>();
+
+                public Mock<IApiBusinessEntityContactModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBusinessEntityContactModelMapper>();
         }
 }
 
 /*<Codenesium>
-    <Hash>f95061d68d0f3eaf5218860d023d8507</Hash>
+    <Hash>42dd733d32a7808fc12c0c0cbd585b8e</Hash>
 </Codenesium>*/

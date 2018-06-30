@@ -28,7 +28,7 @@ namespace FermataFishNS.Api.Web.Tests
                         var records = new List<ApiTeacherXTeacherSkillResponseModel>();
                         records.Add(record);
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -46,7 +46,7 @@ namespace FermataFishNS.Api.Web.Tests
                 {
                         TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTeacherXTeacherSkillResponseModel>>(new List<ApiTeacherXTeacherSkillResponseModel>()));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -64,7 +64,7 @@ namespace FermataFishNS.Api.Web.Tests
                 {
                         TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherXTeacherSkillResponseModel()));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -82,7 +82,7 @@ namespace FermataFishNS.Api.Web.Tests
                 {
                         TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherXTeacherSkillResponseModel>(null));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -101,7 +101,7 @@ namespace FermataFishNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiTeacherXTeacherSkillResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherXTeacherSkillResponseModel>>(mockResponse));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherXTeacherSkillResponseModel>>(mockResponse.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -146,7 +146,7 @@ namespace FermataFishNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiTeacherXTeacherSkillResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherXTeacherSkillResponseModel>>(mockResponse));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -171,7 +171,7 @@ namespace FermataFishNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherXTeacherSkillResponseModel>>(mockResponse.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -194,9 +194,8 @@ namespace FermataFishNS.Api.Web.Tests
                                 (id, model) => model.TeacherId.Should().Be(1)
                                 )
                         .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherXTeacherSkillResponseModel>(new ApiTeacherXTeacherSkillResponseModel()));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherXTeacherSkillModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -216,7 +215,7 @@ namespace FermataFishNS.Api.Web.Tests
                         TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherXTeacherSkillResponseModel>(null));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -237,7 +236,8 @@ namespace FermataFishNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherXTeacherSkillResponseModel()));
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherXTeacherSkillModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -255,7 +255,8 @@ namespace FermataFishNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherXTeacherSkillResponseModel()));
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherXTeacherSkillModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -267,13 +268,32 @@ namespace FermataFishNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Update_NotFound()
+                {
+                        TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherXTeacherSkillRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherXTeacherSkillResponseModel>(null));
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherXTeacherSkillModelMapper());
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiTeacherXTeacherSkillRequestModel());
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Delete_No_Errors()
                 {
                         TeacherXTeacherSkillControllerMockFacade mock = new TeacherXTeacherSkillControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -291,7 +311,7 @@ namespace FermataFishNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        TeacherXTeacherSkillController controller = new TeacherXTeacherSkillController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -312,9 +332,11 @@ namespace FermataFishNS.Api.Web.Tests
                 public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
                 public Mock<ITeacherXTeacherSkillService> ServiceMock { get; set; } = new Mock<ITeacherXTeacherSkillService>();
+
+                public Mock<IApiTeacherXTeacherSkillModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTeacherXTeacherSkillModelMapper>();
         }
 }
 
 /*<Codenesium>
-    <Hash>233dfab2638b0f60f990a86503861352</Hash>
+    <Hash>9c4bccb22ffa342e053e451173fe975c</Hash>
 </Codenesium>*/

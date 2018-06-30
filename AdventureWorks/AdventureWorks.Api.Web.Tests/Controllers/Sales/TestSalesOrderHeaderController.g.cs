@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var records = new List<ApiSalesOrderHeaderResponseModel>();
                         records.Add(record);
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSalesOrderHeaderResponseModel>>(new List<ApiSalesOrderHeaderResponseModel>()));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesOrderHeaderResponseModel()));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesOrderHeaderResponseModel>(null));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiSalesOrderHeaderResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiSalesOrderHeaderResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesOrderHeaderResponseModel>>(mockResponse));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesOrderHeaderResponseModel>>(mockResponse.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -146,7 +146,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiSalesOrderHeaderResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiSalesOrderHeaderResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesOrderHeaderResponseModel>>(mockResponse));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -171,7 +171,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesOrderHeaderResponseModel>>(mockResponse.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -194,9 +194,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                                 (id, model) => model.AccountNumber.Should().Be("A")
                                 )
                         .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesOrderHeaderResponseModel>(new ApiSalesOrderHeaderResponseModel()));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesOrderHeaderModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -216,7 +215,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesOrderHeaderResponseModel>(null));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -237,7 +236,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesOrderHeaderResponseModel()));
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesOrderHeaderModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -255,7 +255,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesOrderHeaderResponseModel()));
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesOrderHeaderModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -267,13 +268,32 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Update_NotFound()
+                {
+                        SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesOrderHeaderResponseModel>(null));
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesOrderHeaderModelMapper());
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiSalesOrderHeaderRequestModel());
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Delete_No_Errors()
                 {
                         SalesOrderHeaderControllerMockFacade mock = new SalesOrderHeaderControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -291,7 +311,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        SalesOrderHeaderController controller = new SalesOrderHeaderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -312,9 +332,11 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
                 public Mock<ISalesOrderHeaderService> ServiceMock { get; set; } = new Mock<ISalesOrderHeaderService>();
+
+                public Mock<IApiSalesOrderHeaderModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSalesOrderHeaderModelMapper>();
         }
 }
 
 /*<Codenesium>
-    <Hash>fbc059a8a55353b137e61b4e6dbb1e92</Hash>
+    <Hash>dc89c6b2b6bbfd6b67cbb61438ff92de</Hash>
 </Codenesium>*/

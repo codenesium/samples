@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiErrorLogResponseModel();
 
-                        model.SetProperties(boErrorLog.ErrorLine, boErrorLog.ErrorLogID, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
+                        model.SetProperties(boErrorLog.ErrorLogID, boErrorLog.ErrorLine, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
 
                         return model;
                 }
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f3610cab5e6a93a2c6841af4d8f64b7e</Hash>
+    <Hash>f3b8fd138d7e909584882671cb33f726</Hash>
 </Codenesium>*/

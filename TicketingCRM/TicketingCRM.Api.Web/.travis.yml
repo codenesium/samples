@@ -1,9 +1,0 @@
-language: csharp
-mono: none
-dotnet: 2.1
-script:
-   -  dotnet build TicketingCRM.Api.Web.csproj
-   -  dotnet test TicketingCRM.Api.DataAccess.csproj
-   -  dotnet test TicketingCRM.Api.Servicea.csproj
-   -  dotnet test TicketingCRM.Api.Client.csproj
-   -  dotnet test TicketingCRM.Api.Web.csproj

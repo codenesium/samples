@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductCategoryService ProductCategoryService { get; private set; }
 
+                protected IApiProductCategoryModelMapper ProductCategoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductCategoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductCategoryService productCategoryService
+                        IProductCategoryService productCategoryService,
+                        IApiProductCategoryModelMapper productCategoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductCategoryService = productCategoryService;
+                        this.ProductCategoryModelMapper = productCategoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductCategoryRequestModel model = new ApiProductCategoryRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiProductCategoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductCategoryService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductCategoryRequestModel model)
                 {
-                        ActionResponse result = await this.ProductCategoryService.Update(id, model);
+                        ApiProductCategoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductCategoryResponseModel response = await this.ProductCategoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductCategoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductCategoryResponseModel response = await this.ProductCategoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -227,9 +237,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiProductCategoryRequestModel> CreatePatch(ApiProductCategoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductCategoryRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiProductCategoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductCategoryRequestModel> patch)
+                {
+                        var record = await this.ProductCategoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductCategoryRequestModel request = this.ProductCategoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e84f7e4fab8d9a27f5b7b14d54d258e9</Hash>
+    <Hash>6598a25188c36b7d1dda7dabb97dd401</Hash>
 </Codenesium>*/

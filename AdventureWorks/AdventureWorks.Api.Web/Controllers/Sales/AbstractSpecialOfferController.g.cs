@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISpecialOfferService SpecialOfferService { get; private set; }
 
+                protected IApiSpecialOfferModelMapper SpecialOfferModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSpecialOfferController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISpecialOfferService specialOfferService
+                        ISpecialOfferService specialOfferService,
+                        IApiSpecialOfferModelMapper specialOfferModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SpecialOfferService = specialOfferService;
+                        this.SpecialOfferModelMapper = specialOfferModelMapper;
                 }
 
                 [HttpGet]
@@ -134,18 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSpecialOfferRequestModel model = new ApiSpecialOfferRequestModel();
-                                model.SetProperties(model.Category,
-                                                    model.Description,
-                                                    model.DiscountPct,
-                                                    model.EndDate,
-                                                    model.MaxQty,
-                                                    model.MinQty,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid,
-                                                    model.StartDate,
-                                                    model.Type);
-                                patch.ApplyTo(model);
+                                ApiSpecialOfferRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SpecialOfferService.Update(id, model);
 
                                 if (result.Success)
@@ -169,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferRequestModel model)
                 {
-                        ActionResponse result = await this.SpecialOfferService.Update(id, model);
+                        ApiSpecialOfferRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSpecialOfferResponseModel response = await this.SpecialOfferService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SpecialOfferService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSpecialOfferResponseModel response = await this.SpecialOfferService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -215,9 +218,41 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSpecialOfferRequestModel> CreatePatch(ApiSpecialOfferRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSpecialOfferRequestModel>();
+                        patch.Replace(x => x.Category, model.Category);
+                        patch.Replace(x => x.Description, model.Description);
+                        patch.Replace(x => x.DiscountPct, model.DiscountPct);
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.MaxQty, model.MaxQty);
+                        patch.Replace(x => x.MinQty, model.MinQty);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        patch.Replace(x => x.Type, model.Type);
+                        return patch;
+                }
+
+                private async Task<ApiSpecialOfferRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferRequestModel> patch)
+                {
+                        var record = await this.SpecialOfferService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSpecialOfferRequestModel request = this.SpecialOfferModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0deb7aca3947e4a3fef57651749d47a5</Hash>
+    <Hash>80ff77845cf47a2d045fa1dc899b158e</Hash>
 </Codenesium>*/

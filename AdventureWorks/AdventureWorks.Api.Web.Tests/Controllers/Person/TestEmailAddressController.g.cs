@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var records = new List<ApiEmailAddressResponseModel>();
                         records.Add(record);
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiEmailAddressResponseModel>>(new List<ApiEmailAddressResponseModel>()));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmailAddressResponseModel()));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmailAddressResponseModel>(null));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiEmailAddressResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiEmailAddressResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmailAddressResponseModel>>(mockResponse));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmailAddressResponseModel>>(mockResponse.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -146,7 +146,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiEmailAddressResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiEmailAddressResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmailAddressResponseModel>>(mockResponse));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -171,7 +171,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmailAddressResponseModel>>(mockResponse.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -194,9 +194,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                                 (id, model) => model.EmailAddress1.Should().Be("A")
                                 )
                         .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmailAddressResponseModel>(new ApiEmailAddressResponseModel()));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmailAddressModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -216,7 +215,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmailAddressResponseModel>(null));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -237,7 +236,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmailAddressResponseModel()));
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmailAddressModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -255,7 +255,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmailAddressResponseModel()));
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmailAddressModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -267,13 +268,32 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Update_NotFound()
+                {
+                        EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmailAddressRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmailAddressResponseModel>(null));
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmailAddressModelMapper());
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiEmailAddressRequestModel());
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Delete_No_Errors()
                 {
                         EmailAddressControllerMockFacade mock = new EmailAddressControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -291,7 +311,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        EmailAddressController controller = new EmailAddressController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -312,9 +332,11 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
                 public Mock<IEmailAddressService> ServiceMock { get; set; } = new Mock<IEmailAddressService>();
+
+                public Mock<IApiEmailAddressModelMapper> ModelMapperMock { get; set; } = new Mock<IApiEmailAddressModelMapper>();
         }
 }
 
 /*<Codenesium>
-    <Hash>4f66ff247734a746ddf506eb91ec4a2e</Hash>
+    <Hash>b6266a7be7c22bd79af0f8a9974c23df</Hash>
 </Codenesium>*/

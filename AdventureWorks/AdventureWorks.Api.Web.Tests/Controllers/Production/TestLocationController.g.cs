@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var records = new List<ApiLocationResponseModel>();
                         records.Add(record);
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         LocationControllerMockFacade mock = new LocationControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLocationResponseModel>>(new List<ApiLocationResponseModel>()));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         LocationControllerMockFacade mock = new LocationControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                 {
                         LocationControllerMockFacade mock = new LocationControllerMockFacade();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -101,7 +101,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiLocationResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiLocationResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -146,7 +146,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResponse = new CreateResponse<ApiLocationResponseModel>(new FluentValidation.Results.ValidationResult());
                         mockResponse.SetRecord(new ApiLocationResponseModel());
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -171,7 +171,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResponse.SetupGet(x => x.Success).Returns(false);
 
                         mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -194,9 +194,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                                 (id, model) => model.Availability.Should().Be(1)
                                 )
                         .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiLocationResponseModel>(new ApiLocationResponseModel()));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -216,7 +215,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         LocationControllerMockFacade mock = new LocationControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -237,7 +236,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -255,7 +255,8 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -267,13 +268,32 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Update_NotFound()
+                {
+                        LocationControllerMockFacade mock = new LocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(short), new ApiLocationRequestModel());
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<short>()));
+                }
+
+                [Fact]
                 public async void Delete_No_Errors()
                 {
                         LocationControllerMockFacade mock = new LocationControllerMockFacade();
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -291,7 +311,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         var mockResult = new Mock<ActionResponse>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
                         mock.ServiceMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -312,9 +332,11 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
                 public Mock<ILocationService> ServiceMock { get; set; } = new Mock<ILocationService>();
+
+                public Mock<IApiLocationModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLocationModelMapper>();
         }
 }
 
 /*<Codenesium>
-    <Hash>00dd9bf3ea767dcd6afdd678bb250446</Hash>
+    <Hash>4b4bd0f4a95a33887434c09b62a6b0b1</Hash>
 </Codenesium>*/

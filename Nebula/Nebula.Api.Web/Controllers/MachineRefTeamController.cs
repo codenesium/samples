@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<MachineRefTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IMachineRefTeamService machineRefTeamService
+                        IMachineRefTeamService machineRefTeamService,
+                        IApiMachineRefTeamModelMapper machineRefTeamModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               machineRefTeamService)
+                               machineRefTeamService,
+                               machineRefTeamModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>79624d7b8cbce888630071062aa0245a</Hash>
+    <Hash>e3d0b4a3e3a550820732224d388f53c1</Hash>
 </Codenesium>*/

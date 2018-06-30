@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ShoppingCartItemController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShoppingCartItemService shoppingCartItemService
+                        IShoppingCartItemService shoppingCartItemService,
+                        IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               shoppingCartItemService)
+                               shoppingCartItemService,
+                               shoppingCartItemModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1355ea1e49db66230b74ec1dcd5305b6</Hash>
+    <Hash>b9edf4cd2593fb024afe373110ab5ece</Hash>
 </Codenesium>*/

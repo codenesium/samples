@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiVendorResponseModel();
 
-                        model.SetProperties(boVendor.AccountNumber, boVendor.ActiveFlag, boVendor.BusinessEntityID, boVendor.CreditRating, boVendor.ModifiedDate, boVendor.Name, boVendor.PreferredVendorStatus, boVendor.PurchasingWebServiceURL);
+                        model.SetProperties(boVendor.BusinessEntityID, boVendor.AccountNumber, boVendor.ActiveFlag, boVendor.CreditRating, boVendor.ModifiedDate, boVendor.Name, boVendor.PreferredVendorStatus, boVendor.PurchasingWebServiceURL);
 
                         return model;
                 }
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9d95da041584905c224f4a670074237</Hash>
+    <Hash>a37f7d1b6eba865b1039c0836ab9f148</Hash>
 </Codenesium>*/

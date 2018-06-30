@@ -1,9 +1,0 @@
-language: csharp
-mono: none
-dotnet: 2.1
-script:
-   -  dotnet build StackOverflow.Api.Web.csproj
-   -  dotnet test StackOverflow.Api.DataAccess.csproj
-   -  dotnet test StackOverflow.Api.Servicea.csproj
-   -  dotnet test StackOverflow.Api.Client.csproj
-   -  dotnet test StackOverflow.Api.Web.csproj

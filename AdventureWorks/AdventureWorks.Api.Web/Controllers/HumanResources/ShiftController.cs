@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ShiftController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShiftService shiftService
+                        IShiftService shiftService,
+                        IApiShiftModelMapper shiftModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               shiftService)
+                               shiftService,
+                               shiftModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>75344f40945ea6ee1cf7377168db2db1</Hash>
+    <Hash>76f18484145faa37c6af97e3d6f5153e</Hash>
 </Codenesium>*/

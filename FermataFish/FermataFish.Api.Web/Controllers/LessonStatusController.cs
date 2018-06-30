@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<LessonStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILessonStatusService lessonStatusService
+                        ILessonStatusService lessonStatusService,
+                        IApiLessonStatusModelMapper lessonStatusModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               lessonStatusService)
+                               lessonStatusService,
+                               lessonStatusModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8171895d7940ce1dfbc82fffb8b77472</Hash>
+    <Hash>3c67c2172402c0b6a80cb8e05aab6b06</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<FileController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IFileService fileService
+                        IFileService fileService,
+                        IApiFileModelMapper fileModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               fileService)
+                               fileService,
+                               fileModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>45765752994dba0978eeef8fc10ee55a</Hash>
+    <Hash>68d40e0ae742b26d9bc45657af2cfdc4</Hash>
 </Codenesium>*/

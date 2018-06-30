@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiShiftResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int shiftID,
                         TimeSpan endTime,
                         DateTime modifiedDate,
                         string name,
-                        int shiftID,
                         TimeSpan startTime)
                 {
+                        this.ShiftID = shiftID;
                         this.EndTime = endTime;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.ShiftID = shiftID;
                         this.StartTime = startTime;
                 }
 
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0ed034a8d47d799a603fe5a0fe259ee9</Hash>
+    <Hash>6f02355525c581ce9c8557e5a82a3b1a</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ITransactionHistoryService TransactionHistoryService { get; private set; }
 
+                protected IApiTransactionHistoryModelMapper TransactionHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractTransactionHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITransactionHistoryService transactionHistoryService
+                        ITransactionHistoryService transactionHistoryService,
+                        IApiTransactionHistoryModelMapper transactionHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.TransactionHistoryService = transactionHistoryService;
+                        this.TransactionHistoryModelMapper = transactionHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,16 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiTransactionHistoryRequestModel model = new ApiTransactionHistoryRequestModel();
-                                model.SetProperties(model.ActualCost,
-                                                    model.ModifiedDate,
-                                                    model.ProductID,
-                                                    model.Quantity,
-                                                    model.ReferenceOrderID,
-                                                    model.ReferenceOrderLineID,
-                                                    model.TransactionDate,
-                                                    model.TransactionType);
-                                patch.ApplyTo(model);
+                                ApiTransactionHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.TransactionHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -167,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.TransactionHistoryService.Update(id, model);
+                        ApiTransactionHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiTransactionHistoryResponseModel response = await this.TransactionHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.TransactionHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiTransactionHistoryResponseModel response = await this.TransactionHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -221,9 +226,39 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiTransactionHistoryRequestModel> CreatePatch(ApiTransactionHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTransactionHistoryRequestModel>();
+                        patch.Replace(x => x.ActualCost, model.ActualCost);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Quantity, model.Quantity);
+                        patch.Replace(x => x.ReferenceOrderID, model.ReferenceOrderID);
+                        patch.Replace(x => x.ReferenceOrderLineID, model.ReferenceOrderLineID);
+                        patch.Replace(x => x.TransactionDate, model.TransactionDate);
+                        patch.Replace(x => x.TransactionType, model.TransactionType);
+                        return patch;
+                }
+
+                private async Task<ApiTransactionHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryRequestModel> patch)
+                {
+                        var record = await this.TransactionHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiTransactionHistoryRequestModel request = this.TransactionHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d1eb89f785b43a6c517288667fe93177</Hash>
+    <Hash>c439d404610a375d2789a81d9e9242b9</Hash>
 </Codenesium>*/

@@ -27,7 +27,7 @@ namespace NebulaNS.Api.Services
                 {
                         var model = new ApiChainResponseModel();
 
-                        model.SetProperties(boChain.ChainStatusId, boChain.ExternalId, boChain.Id, boChain.Name, boChain.TeamId);
+                        model.SetProperties(boChain.Id, boChain.ChainStatusId, boChain.ExternalId, boChain.Name, boChain.TeamId);
 
                         return model;
                 }
@@ -48,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7b52dc829f5925981ab956384bb9fa1b</Hash>
+    <Hash>9d7bb2a1b81570b375c322949dbd1d4a</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductService ProductService { get; private set; }
 
+                protected IApiProductModelMapper ProductModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductService productService
+                        IProductService productService,
+                        IApiProductModelMapper productModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductService = productService;
+                        this.ProductModelMapper = productModelMapper;
                 }
 
                 [HttpGet]
@@ -134,32 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductRequestModel model = new ApiProductRequestModel();
-                                model.SetProperties(model.@Class,
-                                                    model.Color,
-                                                    model.DaysToManufacture,
-                                                    model.DiscontinuedDate,
-                                                    model.FinishedGoodsFlag,
-                                                    model.ListPrice,
-                                                    model.MakeFlag,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.ProductLine,
-                                                    model.ProductModelID,
-                                                    model.ProductNumber,
-                                                    model.ProductSubcategoryID,
-                                                    model.ReorderPoint,
-                                                    model.Rowguid,
-                                                    model.SafetyStockLevel,
-                                                    model.SellEndDate,
-                                                    model.SellStartDate,
-                                                    model.Size,
-                                                    model.SizeUnitMeasureCode,
-                                                    model.StandardCost,
-                                                    model.Style,
-                                                    model.Weight,
-                                                    model.WeightUnitMeasureCode);
-                                patch.ApplyTo(model);
+                                ApiProductRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductService.Update(id, model);
 
                                 if (result.Success)
@@ -183,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductRequestModel model)
                 {
-                        ActionResponse result = await this.ProductService.Update(id, model);
+                        ApiProductRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductResponseModel response = await this.ProductService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductResponseModel response = await this.ProductService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -365,9 +354,55 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiProductRequestModel> CreatePatch(ApiProductRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductRequestModel>();
+                        patch.Replace(x => x.@Class, model.@Class);
+                        patch.Replace(x => x.Color, model.Color);
+                        patch.Replace(x => x.DaysToManufacture, model.DaysToManufacture);
+                        patch.Replace(x => x.DiscontinuedDate, model.DiscontinuedDate);
+                        patch.Replace(x => x.FinishedGoodsFlag, model.FinishedGoodsFlag);
+                        patch.Replace(x => x.ListPrice, model.ListPrice);
+                        patch.Replace(x => x.MakeFlag, model.MakeFlag);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.ProductLine, model.ProductLine);
+                        patch.Replace(x => x.ProductModelID, model.ProductModelID);
+                        patch.Replace(x => x.ProductNumber, model.ProductNumber);
+                        patch.Replace(x => x.ProductSubcategoryID, model.ProductSubcategoryID);
+                        patch.Replace(x => x.ReorderPoint, model.ReorderPoint);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SafetyStockLevel, model.SafetyStockLevel);
+                        patch.Replace(x => x.SellEndDate, model.SellEndDate);
+                        patch.Replace(x => x.SellStartDate, model.SellStartDate);
+                        patch.Replace(x => x.Size, model.Size);
+                        patch.Replace(x => x.SizeUnitMeasureCode, model.SizeUnitMeasureCode);
+                        patch.Replace(x => x.StandardCost, model.StandardCost);
+                        patch.Replace(x => x.Style, model.Style);
+                        patch.Replace(x => x.Weight, model.Weight);
+                        patch.Replace(x => x.WeightUnitMeasureCode, model.WeightUnitMeasureCode);
+                        return patch;
+                }
+
+                private async Task<ApiProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductRequestModel> patch)
+                {
+                        var record = await this.ProductService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductRequestModel request = this.ProductModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>20396cf5091739eb44d93310bf0b1c0a</Hash>
+    <Hash>33e01e83565cbfbf85af58fef75237af</Hash>
 </Codenesium>*/

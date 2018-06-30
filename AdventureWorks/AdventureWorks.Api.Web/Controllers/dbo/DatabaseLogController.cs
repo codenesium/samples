@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<DatabaseLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDatabaseLogService databaseLogService
+                        IDatabaseLogService databaseLogService,
+                        IApiDatabaseLogModelMapper databaseLogModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               databaseLogService)
+                               databaseLogService,
+                               databaseLogModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>714960b554874fa96fbb8401cbb006cc</Hash>
+    <Hash>05cd894d6202f55b9e8affdaec9fb729</Hash>
 </Codenesium>*/

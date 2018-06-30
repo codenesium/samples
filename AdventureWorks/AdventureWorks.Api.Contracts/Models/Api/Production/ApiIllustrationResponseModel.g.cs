@@ -9,12 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiIllustrationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        string diagram,
                         int illustrationID,
+                        string diagram,
                         DateTime modifiedDate)
                 {
-                        this.Diagram = diagram;
                         this.IllustrationID = illustrationID;
+                        this.Diagram = diagram;
                         this.ModifiedDate = modifiedDate;
                 }
 
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8858fd70dedf9391e75354007dfe6b60</Hash>
+    <Hash>bdbfac038e62d8f1ca316a28b3ff0c9d</Hash>
 </Codenesium>*/

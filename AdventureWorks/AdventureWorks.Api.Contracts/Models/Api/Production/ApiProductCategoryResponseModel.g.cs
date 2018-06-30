@@ -9,14 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductCategoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productCategoryID,
                         DateTime modifiedDate,
                         string name,
-                        int productCategoryID,
                         Guid rowguid)
                 {
+                        this.ProductCategoryID = productCategoryID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.ProductCategoryID = productCategoryID;
                         this.Rowguid = rowguid;
                 }
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1eda49cfe227deff2ca2fec5fa98bc78</Hash>
+    <Hash>f6c4cc1a710783ca71d0ef2691f2704e</Hash>
 </Codenesium>*/

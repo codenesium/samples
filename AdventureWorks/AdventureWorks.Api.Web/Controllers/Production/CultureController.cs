@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<CultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICultureService cultureService
+                        ICultureService cultureService,
+                        IApiCultureModelMapper cultureModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               cultureService)
+                               cultureService,
+                               cultureModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ff2548f31a5a1cde981597eafcf8feb8</Hash>
+    <Hash>92cd003d83c01ede6f8c634c1e694204</Hash>
 </Codenesium>*/

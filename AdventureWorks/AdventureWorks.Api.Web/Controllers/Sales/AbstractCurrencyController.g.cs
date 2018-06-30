@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICurrencyService CurrencyService { get; private set; }
 
+                protected IApiCurrencyModelMapper CurrencyModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICurrencyService currencyService
+                        ICurrencyService currencyService,
+                        IApiCurrencyModelMapper currencyModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CurrencyService = currencyService;
+                        this.CurrencyModelMapper = currencyModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCurrencyRequestModel model = new ApiCurrencyRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiCurrencyRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CurrencyService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCurrencyRequestModel model)
                 {
-                        ActionResponse result = await this.CurrencyService.Update(id, model);
+                        ApiCurrencyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCurrencyResponseModel response = await this.CurrencyService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CurrencyService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCurrencyResponseModel response = await this.CurrencyService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -240,9 +251,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCurrencyRequestModel> CreatePatch(ApiCurrencyRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCurrencyRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiCurrencyRequestModel> PatchModel(string id, JsonPatchDocument<ApiCurrencyRequestModel> patch)
+                {
+                        var record = await this.CurrencyService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCurrencyRequestModel request = this.CurrencyModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>09de752201cd8d2048bca2ea4bf1d27c</Hash>
+    <Hash>f7101f85aff8445188de21cf711c2a78</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IDatabaseLogService DatabaseLogService { get; private set; }
 
+                protected IApiDatabaseLogModelMapper DatabaseLogModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractDatabaseLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDatabaseLogService databaseLogService
+                        IDatabaseLogService databaseLogService,
+                        IApiDatabaseLogModelMapper databaseLogModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.DatabaseLogService = databaseLogService;
+                        this.DatabaseLogModelMapper = databaseLogModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiDatabaseLogRequestModel model = new ApiDatabaseLogRequestModel();
-                                model.SetProperties(model.DatabaseUser,
-                                                    model.@Event,
-                                                    model.@Object,
-                                                    model.PostTime,
-                                                    model.Schema,
-                                                    model.TSQL,
-                                                    model.XmlEvent);
-                                patch.ApplyTo(model);
+                                ApiDatabaseLogRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.DatabaseLogService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogRequestModel model)
                 {
-                        ActionResponse result = await this.DatabaseLogService.Update(id, model);
+                        ApiDatabaseLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiDatabaseLogResponseModel response = await this.DatabaseLogService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.DatabaseLogService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiDatabaseLogResponseModel response = await this.DatabaseLogService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -198,9 +204,38 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiDatabaseLogRequestModel> CreatePatch(ApiDatabaseLogRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDatabaseLogRequestModel>();
+                        patch.Replace(x => x.DatabaseUser, model.DatabaseUser);
+                        patch.Replace(x => x.@Event, model.@Event);
+                        patch.Replace(x => x.@Object, model.@Object);
+                        patch.Replace(x => x.PostTime, model.PostTime);
+                        patch.Replace(x => x.Schema, model.Schema);
+                        patch.Replace(x => x.TSQL, model.TSQL);
+                        patch.Replace(x => x.XmlEvent, model.XmlEvent);
+                        return patch;
+                }
+
+                private async Task<ApiDatabaseLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiDatabaseLogRequestModel> patch)
+                {
+                        var record = await this.DatabaseLogService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiDatabaseLogRequestModel request = this.DatabaseLogModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>85d150e1266f80a3db1b3fc557b98e78</Hash>
+    <Hash>b9738acaac694dfe2c1aa821492517ed</Hash>
 </Codenesium>*/

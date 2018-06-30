@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiCurrencyRateResponseModel();
 
-                        model.SetProperties(boCurrencyRate.AverageRate, boCurrencyRate.CurrencyRateDate, boCurrencyRate.CurrencyRateID, boCurrencyRate.EndOfDayRate, boCurrencyRate.FromCurrencyCode, boCurrencyRate.ModifiedDate, boCurrencyRate.ToCurrencyCode);
+                        model.SetProperties(boCurrencyRate.CurrencyRateID, boCurrencyRate.AverageRate, boCurrencyRate.CurrencyRateDate, boCurrencyRate.EndOfDayRate, boCurrencyRate.FromCurrencyCode, boCurrencyRate.ModifiedDate, boCurrencyRate.ToCurrencyCode);
 
                         return model;
                 }
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25396f14746f406fc9825b204fb59e26</Hash>
+    <Hash>478e7245141a468cada02f6317b6b45a</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IWorkOrderService WorkOrderService { get; private set; }
 
+                protected IApiWorkOrderModelMapper WorkOrderModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractWorkOrderController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IWorkOrderService workOrderService
+                        IWorkOrderService workOrderService,
+                        IApiWorkOrderModelMapper workOrderModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.WorkOrderService = workOrderService;
+                        this.WorkOrderModelMapper = workOrderModelMapper;
                 }
 
                 [HttpGet]
@@ -134,17 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiWorkOrderRequestModel model = new ApiWorkOrderRequestModel();
-                                model.SetProperties(model.DueDate,
-                                                    model.EndDate,
-                                                    model.ModifiedDate,
-                                                    model.OrderQty,
-                                                    model.ProductID,
-                                                    model.ScrappedQty,
-                                                    model.ScrapReasonID,
-                                                    model.StartDate,
-                                                    model.StockedQty);
-                                patch.ApplyTo(model);
+                                ApiWorkOrderRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.WorkOrderService.Update(id, model);
 
                                 if (result.Success)
@@ -168,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRequestModel model)
                 {
-                        ActionResponse result = await this.WorkOrderService.Update(id, model);
+                        ApiWorkOrderRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.WorkOrderService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -236,9 +240,40 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiWorkOrderRequestModel> CreatePatch(ApiWorkOrderRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiWorkOrderRequestModel>();
+                        patch.Replace(x => x.DueDate, model.DueDate);
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OrderQty, model.OrderQty);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.ScrappedQty, model.ScrappedQty);
+                        patch.Replace(x => x.ScrapReasonID, model.ScrapReasonID);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        patch.Replace(x => x.StockedQty, model.StockedQty);
+                        return patch;
+                }
+
+                private async Task<ApiWorkOrderRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderRequestModel> patch)
+                {
+                        var record = await this.WorkOrderService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiWorkOrderRequestModel request = this.WorkOrderModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5baa4eb7dbd814773c6ee61f695fcf6c</Hash>
+    <Hash>f9a0c2e8c467356e621b90f497210ff9</Hash>
 </Codenesium>*/

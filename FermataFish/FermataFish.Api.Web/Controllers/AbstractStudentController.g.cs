@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IStudentService StudentService { get; private set; }
 
+                protected IApiStudentModelMapper StudentModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractStudentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStudentService studentService
+                        IStudentService studentService,
+                        IApiStudentModelMapper studentModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.StudentService = studentService;
+                        this.StudentModelMapper = studentModelMapper;
                 }
 
                 [HttpGet]
@@ -134,18 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiStudentRequestModel model = new ApiStudentRequestModel();
-                                model.SetProperties(model.Birthday,
-                                                    model.Email,
-                                                    model.EmailRemindersEnabled,
-                                                    model.FamilyId,
-                                                    model.FirstName,
-                                                    model.IsAdult,
-                                                    model.LastName,
-                                                    model.Phone,
-                                                    model.SmsRemindersEnabled,
-                                                    model.StudioId);
-                                patch.ApplyTo(model);
+                                ApiStudentRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.StudentService.Update(id, model);
 
                                 if (result.Success)
@@ -169,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentRequestModel model)
                 {
-                        ActionResponse result = await this.StudentService.Update(id, model);
+                        ApiStudentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiStudentResponseModel response = await this.StudentService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.StudentService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiStudentResponseModel response = await this.StudentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -243,9 +246,41 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiStudentRequestModel> CreatePatch(ApiStudentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStudentRequestModel>();
+                        patch.Replace(x => x.Birthday, model.Birthday);
+                        patch.Replace(x => x.Email, model.Email);
+                        patch.Replace(x => x.EmailRemindersEnabled, model.EmailRemindersEnabled);
+                        patch.Replace(x => x.FamilyId, model.FamilyId);
+                        patch.Replace(x => x.FirstName, model.FirstName);
+                        patch.Replace(x => x.IsAdult, model.IsAdult);
+                        patch.Replace(x => x.LastName, model.LastName);
+                        patch.Replace(x => x.Phone, model.Phone);
+                        patch.Replace(x => x.SmsRemindersEnabled, model.SmsRemindersEnabled);
+                        patch.Replace(x => x.StudioId, model.StudioId);
+                        return patch;
+                }
+
+                private async Task<ApiStudentRequestModel> PatchModel(int id, JsonPatchDocument<ApiStudentRequestModel> patch)
+                {
+                        var record = await this.StudentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiStudentRequestModel request = this.StudentModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>67303a6786a05b37151c908a82d39ff7</Hash>
+    <Hash>8b9c26a073c9f4217e5616816011b9ae</Hash>
 </Codenesium>*/

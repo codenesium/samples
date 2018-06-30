@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<PhoneNumberTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPhoneNumberTypeService phoneNumberTypeService
+                        IPhoneNumberTypeService phoneNumberTypeService,
+                        IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               phoneNumberTypeService)
+                               phoneNumberTypeService,
+                               phoneNumberTypeModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>842a3d3d173582fb6fb8bc115d52e244</Hash>
+    <Hash>3c1b0bd62f974ef544d05ec797f56428</Hash>
 </Codenesium>*/

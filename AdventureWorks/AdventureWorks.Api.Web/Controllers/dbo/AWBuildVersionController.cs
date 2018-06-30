@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AWBuildVersionController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAWBuildVersionService aWBuildVersionService
+                        IAWBuildVersionService aWBuildVersionService,
+                        IApiAWBuildVersionModelMapper aWBuildVersionModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               aWBuildVersionService)
+                               aWBuildVersionService,
+                               aWBuildVersionModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3f6e5ad70274bfbf38dfc9fd3428064c</Hash>
+    <Hash>9b07d6dbca6bf565369032fd764d8356</Hash>
 </Codenesium>*/

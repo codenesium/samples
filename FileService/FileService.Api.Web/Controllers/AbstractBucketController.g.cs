@@ -19,6 +19,8 @@ namespace FileServiceNS.Api.Web
         {
                 protected IBucketService BucketService { get; private set; }
 
+                protected IApiBucketModelMapper BucketModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractBucketController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBucketService bucketService
+                        IBucketService bucketService,
+                        IApiBucketModelMapper bucketModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.BucketService = bucketService;
+                        this.BucketModelMapper = bucketModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace FileServiceNS.Api.Web
                         }
                         else
                         {
-                                ApiBucketRequestModel model = new ApiBucketRequestModel();
-                                model.SetProperties(model.ExternalId,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiBucketRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.BucketService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace FileServiceNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketRequestModel model)
                 {
-                        ActionResponse result = await this.BucketService.Update(id, model);
+                        ApiBucketRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiBucketResponseModel response = await this.BucketService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.BucketService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiBucketResponseModel response = await this.BucketService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -245,9 +256,33 @@ namespace FileServiceNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBucketRequestModel>();
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiBucketRequestModel> PatchModel(int id, JsonPatchDocument<ApiBucketRequestModel> patch)
+                {
+                        var record = await this.BucketService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiBucketRequestModel request = this.BucketModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9c82d516a92d921ded071a03e2f08283</Hash>
+    <Hash>f4362bcd2f57975e6733c5194283fc46</Hash>
 </Codenesium>*/

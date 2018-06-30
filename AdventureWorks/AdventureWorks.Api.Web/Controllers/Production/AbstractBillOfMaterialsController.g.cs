@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IBillOfMaterialsService BillOfMaterialsService { get; private set; }
 
+                protected IApiBillOfMaterialsModelMapper BillOfMaterialsModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractBillOfMaterialsController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBillOfMaterialsService billOfMaterialsService
+                        IBillOfMaterialsService billOfMaterialsService,
+                        IApiBillOfMaterialsModelMapper billOfMaterialsModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.BillOfMaterialsService = billOfMaterialsService;
+                        this.BillOfMaterialsModelMapper = billOfMaterialsModelMapper;
                 }
 
                 [HttpGet]
@@ -134,16 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiBillOfMaterialsRequestModel model = new ApiBillOfMaterialsRequestModel();
-                                model.SetProperties(model.BOMLevel,
-                                                    model.ComponentID,
-                                                    model.EndDate,
-                                                    model.ModifiedDate,
-                                                    model.PerAssemblyQty,
-                                                    model.ProductAssemblyID,
-                                                    model.StartDate,
-                                                    model.UnitMeasureCode);
-                                patch.ApplyTo(model);
+                                ApiBillOfMaterialsRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.BillOfMaterialsService.Update(id, model);
 
                                 if (result.Success)
@@ -167,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBillOfMaterialsRequestModel model)
                 {
-                        ActionResponse result = await this.BillOfMaterialsService.Update(id, model);
+                        ApiBillOfMaterialsRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.BillOfMaterialsService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -229,9 +234,39 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiBillOfMaterialsRequestModel> CreatePatch(ApiBillOfMaterialsRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBillOfMaterialsRequestModel>();
+                        patch.Replace(x => x.BOMLevel, model.BOMLevel);
+                        patch.Replace(x => x.ComponentID, model.ComponentID);
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PerAssemblyQty, model.PerAssemblyQty);
+                        patch.Replace(x => x.ProductAssemblyID, model.ProductAssemblyID);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        patch.Replace(x => x.UnitMeasureCode, model.UnitMeasureCode);
+                        return patch;
+                }
+
+                private async Task<ApiBillOfMaterialsRequestModel> PatchModel(int id, JsonPatchDocument<ApiBillOfMaterialsRequestModel> patch)
+                {
+                        var record = await this.BillOfMaterialsService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiBillOfMaterialsRequestModel request = this.BillOfMaterialsModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c2123c4e38e8552dbc616dc21c4f467a</Hash>
+    <Hash>5331740360dc02918e2f3110f060761f</Hash>
 </Codenesium>*/

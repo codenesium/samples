@@ -1,9 +1,0 @@
-language: csharp
-mono: none
-dotnet: 2.1
-script:
-   -  dotnet build PetStore.Api.Web.csproj
-   -  dotnet test PetStore.Api.DataAccess.csproj
-   -  dotnet test PetStore.Api.Servicea.csproj
-   -  dotnet test PetStore.Api.Client.csproj
-   -  dotnet test PetStore.Api.Web.csproj

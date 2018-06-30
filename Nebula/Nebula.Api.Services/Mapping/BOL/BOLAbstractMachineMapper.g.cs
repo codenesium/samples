@@ -28,7 +28,7 @@ namespace NebulaNS.Api.Services
                 {
                         var model = new ApiMachineResponseModel();
 
-                        model.SetProperties(boMachine.Description, boMachine.Id, boMachine.JwtKey, boMachine.LastIpAddress, boMachine.MachineGuid, boMachine.Name);
+                        model.SetProperties(boMachine.Id, boMachine.Description, boMachine.JwtKey, boMachine.LastIpAddress, boMachine.MachineGuid, boMachine.Name);
 
                         return model;
                 }
@@ -49,5 +49,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4681be9ac6cb1d32624922eff5e71e73</Hash>
+    <Hash>ec400c20a2903c4ce813683e4e4a57f3</Hash>
 </Codenesium>*/

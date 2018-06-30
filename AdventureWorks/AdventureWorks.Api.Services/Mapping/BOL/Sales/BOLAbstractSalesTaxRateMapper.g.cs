@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiSalesTaxRateResponseModel();
 
-                        model.SetProperties(boSalesTaxRate.ModifiedDate, boSalesTaxRate.Name, boSalesTaxRate.Rowguid, boSalesTaxRate.SalesTaxRateID, boSalesTaxRate.StateProvinceID, boSalesTaxRate.TaxRate, boSalesTaxRate.TaxType);
+                        model.SetProperties(boSalesTaxRate.SalesTaxRateID, boSalesTaxRate.ModifiedDate, boSalesTaxRate.Name, boSalesTaxRate.Rowguid, boSalesTaxRate.StateProvinceID, boSalesTaxRate.TaxRate, boSalesTaxRate.TaxType);
 
                         return model;
                 }
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cf3a59e01cc4f1483bf3007079f0e2e</Hash>
+    <Hash>66b355fa5482e0771c456c3fc6fc2ef9</Hash>
 </Codenesium>*/

@@ -9,8 +9,8 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiErrorLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        int? errorLine,
                         int errorLogID,
+                        int? errorLine,
                         string errorMessage,
                         int errorNumber,
                         string errorProcedure,
@@ -19,8 +19,8 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime errorTime,
                         string userName)
                 {
-                        this.ErrorLine = errorLine;
                         this.ErrorLogID = errorLogID;
+                        this.ErrorLine = errorLine;
                         this.ErrorMessage = errorMessage;
                         this.ErrorNumber = errorNumber;
                         this.ErrorProcedure = errorProcedure;
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>95a4db0256c8d17632db3203a2cb402a</Hash>
+    <Hash>d0b49f28e1b06be360dc029f8a1d369f</Hash>
 </Codenesium>*/

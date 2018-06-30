@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiShipMethodResponseModel();
 
-                        model.SetProperties(boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipMethodID, boShipMethod.ShipRate);
+                        model.SetProperties(boShipMethod.ShipMethodID, boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipRate);
 
                         return model;
                 }
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf64ee7924440611343b7c0fc053dd04</Hash>
+    <Hash>f511d588fa4ffb99d35560a4f4344423</Hash>
 </Codenesium>*/

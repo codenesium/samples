@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<VersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IVersionInfoService versionInfoService
+                        IVersionInfoService versionInfoService,
+                        IApiVersionInfoModelMapper versionInfoModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               versionInfoService)
+                               versionInfoService,
+                               versionInfoModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a7fb6ad4f04962b456082880b91b95cd</Hash>
+    <Hash>8bab551a9b50bc5b1238636240a22798</Hash>
 </Codenesium>*/

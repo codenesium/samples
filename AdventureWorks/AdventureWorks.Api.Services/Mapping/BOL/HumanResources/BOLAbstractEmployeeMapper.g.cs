@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiEmployeeResponseModel();
 
-                        model.SetProperties(boEmployee.BirthDate, boEmployee.BusinessEntityID, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
+                        model.SetProperties(boEmployee.BusinessEntityID, boEmployee.BirthDate, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
 
                         return model;
                 }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30309bf0c33952cdf730cdf78486d390</Hash>
+    <Hash>db9b70c675dff96e924b4e4753b4819f</Hash>
 </Codenesium>*/

@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiTransactionHistoryArchiveResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int transactionID,
                         decimal actualCost,
                         DateTime modifiedDate,
                         int productID,
@@ -16,9 +17,9 @@ namespace AdventureWorksNS.Api.Contracts
                         int referenceOrderID,
                         int referenceOrderLineID,
                         DateTime transactionDate,
-                        int transactionID,
                         string transactionType)
                 {
+                        this.TransactionID = transactionID;
                         this.ActualCost = actualCost;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
@@ -26,7 +27,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ReferenceOrderID = referenceOrderID;
                         this.ReferenceOrderLineID = referenceOrderLineID;
                         this.TransactionDate = transactionDate;
-                        this.TransactionID = transactionID;
                         this.TransactionType = transactionType;
                 }
 
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3fc175cca486ae728a9702e2b417b147</Hash>
+    <Hash>1d8c00c6dfc9a51e056f95590252d9ed</Hash>
 </Codenesium>*/

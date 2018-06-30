@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSpecialOfferResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int specialOfferID,
                         string category,
                         string description,
                         decimal discountPct,
@@ -17,10 +18,10 @@ namespace AdventureWorksNS.Api.Contracts
                         int minQty,
                         DateTime modifiedDate,
                         Guid rowguid,
-                        int specialOfferID,
                         DateTime startDate,
                         string type)
                 {
+                        this.SpecialOfferID = specialOfferID;
                         this.Category = category;
                         this.Description = description;
                         this.DiscountPct = discountPct;
@@ -29,7 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.MinQty = minQty;
                         this.ModifiedDate = modifiedDate;
                         this.Rowguid = rowguid;
-                        this.SpecialOfferID = specialOfferID;
                         this.StartDate = startDate;
                         this.Type = type;
                 }
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>67c7faf51025dd18a2a64e82d4912311</Hash>
+    <Hash>b641558f694d6a0a2544968bd3e66417</Hash>
 </Codenesium>*/

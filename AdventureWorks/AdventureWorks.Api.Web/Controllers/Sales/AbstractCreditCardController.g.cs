@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICreditCardService CreditCardService { get; private set; }
 
+                protected IApiCreditCardModelMapper CreditCardModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICreditCardService creditCardService
+                        ICreditCardService creditCardService,
+                        IApiCreditCardModelMapper creditCardModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CreditCardService = creditCardService;
+                        this.CreditCardModelMapper = creditCardModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCreditCardRequestModel model = new ApiCreditCardRequestModel();
-                                model.SetProperties(model.CardNumber,
-                                                    model.CardType,
-                                                    model.ExpMonth,
-                                                    model.ExpYear,
-                                                    model.ModifiedDate);
-                                patch.ApplyTo(model);
+                                ApiCreditCardRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CreditCardService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardRequestModel model)
                 {
-                        ActionResponse result = await this.CreditCardService.Update(id, model);
+                        ApiCreditCardRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CreditCardService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -243,9 +251,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCreditCardRequestModel>();
+                        patch.Replace(x => x.CardNumber, model.CardNumber);
+                        patch.Replace(x => x.CardType, model.CardType);
+                        patch.Replace(x => x.ExpMonth, model.ExpMonth);
+                        patch.Replace(x => x.ExpYear, model.ExpYear);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        return patch;
+                }
+
+                private async Task<ApiCreditCardRequestModel> PatchModel(int id, JsonPatchDocument<ApiCreditCardRequestModel> patch)
+                {
+                        var record = await this.CreditCardService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCreditCardRequestModel request = this.CreditCardModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1c25a97791b22244f023f62c308227dc</Hash>
+    <Hash>ad5bb275043dbf69815c1a83138a9852</Hash>
 </Codenesium>*/

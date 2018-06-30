@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiDocumentResponseModel();
 
-                        model.SetProperties(boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Rowguid, boDocument.Status, boDocument.Title);
+                        model.SetProperties(boDocument.Rowguid, boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Status, boDocument.Title);
 
                         return model;
                 }
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c0a5741e59f673f846e099c5aa5e512</Hash>
+    <Hash>dacc31f2291b0226abe16ef714f36632</Hash>
 </Codenesium>*/

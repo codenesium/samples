@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ProductCategoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductCategoryService productCategoryService
+                        IProductCategoryService productCategoryService,
+                        IApiProductCategoryModelMapper productCategoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               productCategoryService)
+                               productCategoryService,
+                               productCategoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>de388ca92e02969e1a10410c30b543ce</Hash>
+    <Hash>ce9178d1915425afdaf74642daa29143</Hash>
 </Codenesium>*/

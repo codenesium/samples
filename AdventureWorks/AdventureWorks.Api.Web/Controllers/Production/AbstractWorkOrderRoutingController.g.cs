@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IWorkOrderRoutingService WorkOrderRoutingService { get; private set; }
 
+                protected IApiWorkOrderRoutingModelMapper WorkOrderRoutingModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractWorkOrderRoutingController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IWorkOrderRoutingService workOrderRoutingService
+                        IWorkOrderRoutingService workOrderRoutingService,
+                        IApiWorkOrderRoutingModelMapper workOrderRoutingModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.WorkOrderRoutingService = workOrderRoutingService;
+                        this.WorkOrderRoutingModelMapper = workOrderRoutingModelMapper;
                 }
 
                 [HttpGet]
@@ -134,19 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiWorkOrderRoutingRequestModel model = new ApiWorkOrderRoutingRequestModel();
-                                model.SetProperties(model.ActualCost,
-                                                    model.ActualEndDate,
-                                                    model.ActualResourceHrs,
-                                                    model.ActualStartDate,
-                                                    model.LocationID,
-                                                    model.ModifiedDate,
-                                                    model.OperationSequence,
-                                                    model.PlannedCost,
-                                                    model.ProductID,
-                                                    model.ScheduledEndDate,
-                                                    model.ScheduledStartDate);
-                                patch.ApplyTo(model);
+                                ApiWorkOrderRoutingRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.WorkOrderRoutingService.Update(id, model);
 
                                 if (result.Success)
@@ -170,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRoutingRequestModel model)
                 {
-                        ActionResponse result = await this.WorkOrderRoutingService.Update(id, model);
+                        ApiWorkOrderRoutingRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiWorkOrderRoutingResponseModel response = await this.WorkOrderRoutingService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.WorkOrderRoutingService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiWorkOrderRoutingResponseModel response = await this.WorkOrderRoutingService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -213,9 +215,42 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiWorkOrderRoutingRequestModel> CreatePatch(ApiWorkOrderRoutingRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiWorkOrderRoutingRequestModel>();
+                        patch.Replace(x => x.ActualCost, model.ActualCost);
+                        patch.Replace(x => x.ActualEndDate, model.ActualEndDate);
+                        patch.Replace(x => x.ActualResourceHrs, model.ActualResourceHrs);
+                        patch.Replace(x => x.ActualStartDate, model.ActualStartDate);
+                        patch.Replace(x => x.LocationID, model.LocationID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OperationSequence, model.OperationSequence);
+                        patch.Replace(x => x.PlannedCost, model.PlannedCost);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
+                        patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
+                        return patch;
+                }
+
+                private async Task<ApiWorkOrderRoutingRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderRoutingRequestModel> patch)
+                {
+                        var record = await this.WorkOrderRoutingService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiWorkOrderRoutingRequestModel request = this.WorkOrderRoutingModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>557d09fb94414241ef4b73145b0a2b35</Hash>
+    <Hash>5cdcc2085e5a90eb4ef1944e7c06f201</Hash>
 </Codenesium>*/

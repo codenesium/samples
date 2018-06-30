@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesTerritoryHistoryService SalesTerritoryHistoryService { get; private set; }
 
+                protected IApiSalesTerritoryHistoryModelMapper SalesTerritoryHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesTerritoryHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesTerritoryHistoryService salesTerritoryHistoryService
+                        ISalesTerritoryHistoryService salesTerritoryHistoryService,
+                        IApiSalesTerritoryHistoryModelMapper salesTerritoryHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesTerritoryHistoryService = salesTerritoryHistoryService;
+                        this.SalesTerritoryHistoryModelMapper = salesTerritoryHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesTerritoryHistoryRequestModel model = new ApiSalesTerritoryHistoryRequestModel();
-                                model.SetProperties(model.EndDate,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid,
-                                                    model.StartDate,
-                                                    model.TerritoryID);
-                                patch.ApplyTo(model);
+                                ApiSalesTerritoryHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesTerritoryHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.SalesTerritoryHistoryService.Update(id, model);
+                        ApiSalesTerritoryHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesTerritoryHistoryResponseModel response = await this.SalesTerritoryHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesTerritoryHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesTerritoryHistoryResponseModel response = await this.SalesTerritoryHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -196,9 +204,36 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel> CreatePatch(ApiSalesTerritoryHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel>();
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        return patch;
+                }
+
+                private async Task<ApiSalesTerritoryHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel> patch)
+                {
+                        var record = await this.SalesTerritoryHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesTerritoryHistoryRequestModel request = this.SalesTerritoryHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7604d334440311748232f26c3ed595af</Hash>
+    <Hash>c48a15824a3dd45e28a57f637e0061c4</Hash>
 </Codenesium>*/

@@ -26,7 +26,7 @@ namespace FermataFishNS.Api.Services
                 {
                         var model = new ApiRateResponseModel();
 
-                        model.SetProperties(boRate.AmountPerMinute, boRate.Id, boRate.TeacherId, boRate.TeacherSkillId);
+                        model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c088ff6577c8b4a24f89f234123b9089</Hash>
+    <Hash>977fb1ace661baf07d0c0e2203d47073</Hash>
 </Codenesium>*/

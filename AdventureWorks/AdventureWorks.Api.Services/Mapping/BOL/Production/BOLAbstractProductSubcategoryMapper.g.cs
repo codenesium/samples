@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiProductSubcategoryResponseModel();
 
-                        model.SetProperties(boProductSubcategory.ModifiedDate, boProductSubcategory.Name, boProductSubcategory.ProductCategoryID, boProductSubcategory.ProductSubcategoryID, boProductSubcategory.Rowguid);
+                        model.SetProperties(boProductSubcategory.ProductSubcategoryID, boProductSubcategory.ModifiedDate, boProductSubcategory.Name, boProductSubcategory.ProductCategoryID, boProductSubcategory.Rowguid);
 
                         return model;
                 }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7522906e7c8eaec87302b3c7ea93a417</Hash>
+    <Hash>1930167c337a2819fe9bac78a9fbaa9e</Hash>
 </Codenesium>*/

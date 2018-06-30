@@ -9,8 +9,8 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiPersonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        string additionalContactInfo,
                         int businessEntityID,
+                        string additionalContactInfo,
                         string demographics,
                         int emailPromotion,
                         string firstName,
@@ -23,8 +23,8 @@ namespace AdventureWorksNS.Api.Contracts
                         string suffix,
                         string title)
                 {
-                        this.AdditionalContactInfo = additionalContactInfo;
                         this.BusinessEntityID = businessEntityID;
+                        this.AdditionalContactInfo = additionalContactInfo;
                         this.Demographics = demographics;
                         this.EmailPromotion = emailPromotion;
                         this.FirstName = firstName;
@@ -188,5 +188,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f23d2df64b531b1c7a8384e9dd71bb88</Hash>
+    <Hash>4429f58a1d32f306a2a83a70c08a9512</Hash>
 </Codenesium>*/

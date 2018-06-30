@@ -20,12 +20,14 @@ namespace ESPIOTNS.Api.Web
                         ApiSettings settings,
                         ILogger<DeviceController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDeviceService deviceService
+                        IDeviceService deviceService,
+                        IApiDeviceModelMapper deviceModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               deviceService)
+                               deviceService,
+                               deviceModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d83909c7644db4d18091b6d2642859cd</Hash>
+    <Hash>eb3006d795218adc1d3ce2deb46785ce</Hash>
 </Codenesium>*/

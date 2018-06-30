@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IStateProvinceService StateProvinceService { get; private set; }
 
+                protected IApiStateProvinceModelMapper StateProvinceModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractStateProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStateProvinceService stateProvinceService
+                        IStateProvinceService stateProvinceService,
+                        IApiStateProvinceModelMapper stateProvinceModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.StateProvinceService = stateProvinceService;
+                        this.StateProvinceModelMapper = stateProvinceModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiStateProvinceRequestModel model = new ApiStateProvinceRequestModel();
-                                model.SetProperties(model.CountryRegionCode,
-                                                    model.IsOnlyStateProvinceFlag,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid,
-                                                    model.StateProvinceCode,
-                                                    model.TerritoryID);
-                                patch.ApplyTo(model);
+                                ApiStateProvinceRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.StateProvinceService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateProvinceRequestModel model)
                 {
-                        ActionResponse result = await this.StateProvinceService.Update(id, model);
+                        ApiStateProvinceRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiStateProvinceResponseModel response = await this.StateProvinceService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.StateProvinceService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiStateProvinceResponseModel response = await this.StateProvinceService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -250,9 +256,38 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiStateProvinceRequestModel> CreatePatch(ApiStateProvinceRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStateProvinceRequestModel>();
+                        patch.Replace(x => x.CountryRegionCode, model.CountryRegionCode);
+                        patch.Replace(x => x.IsOnlyStateProvinceFlag, model.IsOnlyStateProvinceFlag);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StateProvinceCode, model.StateProvinceCode);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        return patch;
+                }
+
+                private async Task<ApiStateProvinceRequestModel> PatchModel(int id, JsonPatchDocument<ApiStateProvinceRequestModel> patch)
+                {
+                        var record = await this.StateProvinceService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiStateProvinceRequestModel request = this.StateProvinceModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>33c6a766afe61ba2344fa53d2d8433a4</Hash>
+    <Hash>01681023155bd05243fed3323f6f077d</Hash>
 </Codenesium>*/

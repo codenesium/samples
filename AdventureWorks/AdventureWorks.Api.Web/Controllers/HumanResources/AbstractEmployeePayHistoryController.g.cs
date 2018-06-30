@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IEmployeePayHistoryService EmployeePayHistoryService { get; private set; }
 
+                protected IApiEmployeePayHistoryModelMapper EmployeePayHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractEmployeePayHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeePayHistoryService employeePayHistoryService
+                        IEmployeePayHistoryService employeePayHistoryService,
+                        IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.EmployeePayHistoryService = employeePayHistoryService;
+                        this.EmployeePayHistoryModelMapper = employeePayHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiEmployeePayHistoryRequestModel model = new ApiEmployeePayHistoryRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.PayFrequency,
-                                                    model.Rate,
-                                                    model.RateChangeDate);
-                                patch.ApplyTo(model);
+                                ApiEmployeePayHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.EmployeePayHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.EmployeePayHistoryService.Update(id, model);
+                        ApiEmployeePayHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.EmployeePayHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -195,9 +204,35 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiEmployeePayHistoryRequestModel> CreatePatch(ApiEmployeePayHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiEmployeePayHistoryRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PayFrequency, model.PayFrequency);
+                        patch.Replace(x => x.Rate, model.Rate);
+                        patch.Replace(x => x.RateChangeDate, model.RateChangeDate);
+                        return patch;
+                }
+
+                private async Task<ApiEmployeePayHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
+                {
+                        var record = await this.EmployeePayHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiEmployeePayHistoryRequestModel request = this.EmployeePayHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>029f3a5806d028af7dadbc9251f65d71</Hash>
+    <Hash>b0ce517cdd928511703b377dd33c64e4</Hash>
 </Codenesium>*/

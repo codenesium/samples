@@ -26,7 +26,7 @@ namespace FermataFishNS.Api.Services
                 {
                         var model = new ApiSpaceResponseModel();
 
-                        model.SetProperties(boSpace.Description, boSpace.Id, boSpace.Name, boSpace.StudioId);
+                        model.SetProperties(boSpace.Id, boSpace.Description, boSpace.Name, boSpace.StudioId);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6b780fb9f1fb4ad0317c2101ad41808</Hash>
+    <Hash>6f2ca2188e9fbf3e3b841cbdf5b85c0c</Hash>
 </Codenesium>*/

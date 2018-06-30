@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiWorkOrderResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int workOrderID,
                         DateTime dueDate,
                         DateTime? endDate,
                         DateTime modifiedDate,
@@ -17,9 +18,9 @@ namespace AdventureWorksNS.Api.Contracts
                         short scrappedQty,
                         short? scrapReasonID,
                         DateTime startDate,
-                        int stockedQty,
-                        int workOrderID)
+                        int stockedQty)
                 {
+                        this.WorkOrderID = workOrderID;
                         this.DueDate = dueDate;
                         this.EndDate = endDate;
                         this.ModifiedDate = modifiedDate;
@@ -29,7 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ScrapReasonID = scrapReasonID;
                         this.StartDate = startDate;
                         this.StockedQty = stockedQty;
-                        this.WorkOrderID = workOrderID;
                 }
 
                 public DateTime DueDate { get; private set; }
@@ -149,5 +149,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0f46640542da22c6a63bacd6a0db220b</Hash>
+    <Hash>52f35ac6e209b934d46cbe88cb02fbe4</Hash>
 </Codenesium>*/

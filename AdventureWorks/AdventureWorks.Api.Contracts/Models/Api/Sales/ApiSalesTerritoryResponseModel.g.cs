@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesTerritoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int territoryID,
                         decimal costLastYear,
                         decimal costYTD,
                         string countryRegionCode,
@@ -17,9 +18,9 @@ namespace AdventureWorksNS.Api.Contracts
                         string name,
                         Guid rowguid,
                         decimal salesLastYear,
-                        decimal salesYTD,
-                        int territoryID)
+                        decimal salesYTD)
                 {
+                        this.TerritoryID = territoryID;
                         this.CostLastYear = costLastYear;
                         this.CostYTD = costYTD;
                         this.CountryRegionCode = countryRegionCode;
@@ -29,7 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Rowguid = rowguid;
                         this.SalesLastYear = salesLastYear;
                         this.SalesYTD = salesYTD;
-                        this.TerritoryID = territoryID;
                 }
 
                 public decimal CostLastYear { get; private set; }
@@ -149,5 +149,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dcef30378d5235350c979c904fd19926</Hash>
+    <Hash>2d671efb0380f470fb3a0364ef74fa8d</Hash>
 </Codenesium>*/

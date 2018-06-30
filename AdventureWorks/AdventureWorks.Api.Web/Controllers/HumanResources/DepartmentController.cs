@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<DepartmentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDepartmentService departmentService
+                        IDepartmentService departmentService,
+                        IApiDepartmentModelMapper departmentModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               departmentService)
+                               departmentService,
+                               departmentModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fac5442cb5f3237b3ddf15625060c5d0</Hash>
+    <Hash>74441348fc4ddf0d68cd0ee6b00063bc</Hash>
 </Codenesium>*/

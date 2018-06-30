@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICountryRegionService CountryRegionService { get; private set; }
 
+                protected IApiCountryRegionModelMapper CountryRegionModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCountryRegionController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICountryRegionService countryRegionService
+                        ICountryRegionService countryRegionService,
+                        IApiCountryRegionModelMapper countryRegionModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CountryRegionService = countryRegionService;
+                        this.CountryRegionModelMapper = countryRegionModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCountryRegionRequestModel model = new ApiCountryRegionRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiCountryRegionRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CountryRegionService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionRequestModel model)
                 {
-                        ActionResponse result = await this.CountryRegionService.Update(id, model);
+                        ApiCountryRegionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCountryRegionResponseModel response = await this.CountryRegionService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CountryRegionService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCountryRegionResponseModel response = await this.CountryRegionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -226,9 +237,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCountryRegionRequestModel> CreatePatch(ApiCountryRegionRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCountryRegionRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiCountryRegionRequestModel> PatchModel(string id, JsonPatchDocument<ApiCountryRegionRequestModel> patch)
+                {
+                        var record = await this.CountryRegionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCountryRegionRequestModel request = this.CountryRegionModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f571af3baa6e0117bd1d370601c1f3a0</Hash>
+    <Hash>55fb9f0998451eb4281b087797f31fc4</Hash>
 </Codenesium>*/

@@ -9,15 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiLocationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        short locationID,
                         decimal availability,
                         decimal costRate,
-                        short locationID,
                         DateTime modifiedDate,
                         string name)
                 {
+                        this.LocationID = locationID;
                         this.Availability = availability;
                         this.CostRate = costRate;
-                        this.LocationID = locationID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                 }
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>55353b9327a9bbf3ed18c2102f58f7f8</Hash>
+    <Hash>fa5ddf45b0962ee8a30043889c975e42</Hash>
 </Codenesium>*/

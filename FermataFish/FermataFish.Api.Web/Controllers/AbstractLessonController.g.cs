@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected ILessonService LessonService { get; private set; }
 
+                protected IApiLessonModelMapper LessonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLessonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILessonService lessonService
+                        ILessonService lessonService,
+                        IApiLessonModelMapper lessonModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LessonService = lessonService;
+                        this.LessonModelMapper = lessonModelMapper;
                 }
 
                 [HttpGet]
@@ -134,17 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiLessonRequestModel model = new ApiLessonRequestModel();
-                                model.SetProperties(model.ActualEndDate,
-                                                    model.ActualStartDate,
-                                                    model.BillAmount,
-                                                    model.LessonStatusId,
-                                                    model.ScheduledEndDate,
-                                                    model.ScheduledStartDate,
-                                                    model.StudentNotes,
-                                                    model.StudioId,
-                                                    model.TeacherNotes);
-                                patch.ApplyTo(model);
+                                ApiLessonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LessonService.Update(id, model);
 
                                 if (result.Success)
@@ -168,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonRequestModel model)
                 {
-                        ActionResponse result = await this.LessonService.Update(id, model);
+                        ApiLessonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLessonResponseModel response = await this.LessonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LessonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLessonResponseModel response = await this.LessonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -228,9 +232,40 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiLessonRequestModel> CreatePatch(ApiLessonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLessonRequestModel>();
+                        patch.Replace(x => x.ActualEndDate, model.ActualEndDate);
+                        patch.Replace(x => x.ActualStartDate, model.ActualStartDate);
+                        patch.Replace(x => x.BillAmount, model.BillAmount);
+                        patch.Replace(x => x.LessonStatusId, model.LessonStatusId);
+                        patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
+                        patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
+                        patch.Replace(x => x.StudentNotes, model.StudentNotes);
+                        patch.Replace(x => x.StudioId, model.StudioId);
+                        patch.Replace(x => x.TeacherNotes, model.TeacherNotes);
+                        return patch;
+                }
+
+                private async Task<ApiLessonRequestModel> PatchModel(int id, JsonPatchDocument<ApiLessonRequestModel> patch)
+                {
+                        var record = await this.LessonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLessonRequestModel request = this.LessonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f68dfd67ea4c45ef006514226181073a</Hash>
+    <Hash>b91c2c06ff2685a86e13183c0f8c3329</Hash>
 </Codenesium>*/

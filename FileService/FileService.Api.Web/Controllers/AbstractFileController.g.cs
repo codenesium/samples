@@ -19,6 +19,8 @@ namespace FileServiceNS.Api.Web
         {
                 protected IFileService FileService { get; private set; }
 
+                protected IApiFileModelMapper FileModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractFileController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IFileService fileService
+                        IFileService fileService,
+                        IApiFileModelMapper fileModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.FileService = fileService;
+                        this.FileModelMapper = fileModelMapper;
                 }
 
                 [HttpGet]
@@ -134,19 +138,8 @@ namespace FileServiceNS.Api.Web
                         }
                         else
                         {
-                                ApiFileRequestModel model = new ApiFileRequestModel();
-                                model.SetProperties(model.BucketId,
-                                                    model.DateCreated,
-                                                    model.Description,
-                                                    model.Expiration,
-                                                    model.Extension,
-                                                    model.ExternalId,
-                                                    model.FileSizeInBytes,
-                                                    model.FileTypeId,
-                                                    model.Location,
-                                                    model.PrivateKey,
-                                                    model.PublicKey);
-                                patch.ApplyTo(model);
+                                ApiFileRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.FileService.Update(id, model);
 
                                 if (result.Success)
@@ -170,17 +163,26 @@ namespace FileServiceNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileRequestModel model)
                 {
-                        ActionResponse result = await this.FileService.Update(id, model);
+                        ApiFileRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiFileResponseModel response = await this.FileService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.FileService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiFileResponseModel response = await this.FileService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -202,9 +204,42 @@ namespace FileServiceNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiFileRequestModel> CreatePatch(ApiFileRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiFileRequestModel>();
+                        patch.Replace(x => x.BucketId, model.BucketId);
+                        patch.Replace(x => x.DateCreated, model.DateCreated);
+                        patch.Replace(x => x.Description, model.Description);
+                        patch.Replace(x => x.Expiration, model.Expiration);
+                        patch.Replace(x => x.Extension, model.Extension);
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.FileSizeInBytes, model.FileSizeInBytes);
+                        patch.Replace(x => x.FileTypeId, model.FileTypeId);
+                        patch.Replace(x => x.Location, model.Location);
+                        patch.Replace(x => x.PrivateKey, model.PrivateKey);
+                        patch.Replace(x => x.PublicKey, model.PublicKey);
+                        return patch;
+                }
+
+                private async Task<ApiFileRequestModel> PatchModel(int id, JsonPatchDocument<ApiFileRequestModel> patch)
+                {
+                        var record = await this.FileService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiFileRequestModel request = this.FileModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e22d260b64e3a46d4776b596e9b712d6</Hash>
+    <Hash>803a33998e789efee6fec7997552d6be</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<SpaceFeatureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISpaceFeatureService spaceFeatureService
+                        ISpaceFeatureService spaceFeatureService,
+                        IApiSpaceFeatureModelMapper spaceFeatureModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               spaceFeatureService)
+                               spaceFeatureService,
+                               spaceFeatureModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd7d8e75f93989108bb6892f18849088</Hash>
+    <Hash>4068144c7f77bfa32db7162f72c8317d</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<StudioController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStudioService studioService
+                        IStudioService studioService,
+                        IApiStudioModelMapper studioModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               studioService)
+                               studioService,
+                               studioModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1a3133b13281ad182bb23a917ea2afd4</Hash>
+    <Hash>4a90ee508357cfb6a6fb642cbf9f0ce1</Hash>
 </Codenesium>*/

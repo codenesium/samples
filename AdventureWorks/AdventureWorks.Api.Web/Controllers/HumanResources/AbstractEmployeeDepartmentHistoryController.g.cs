@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IEmployeeDepartmentHistoryService EmployeeDepartmentHistoryService { get; private set; }
 
+                protected IApiEmployeeDepartmentHistoryModelMapper EmployeeDepartmentHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractEmployeeDepartmentHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
+                        IEmployeeDepartmentHistoryService employeeDepartmentHistoryService,
+                        IApiEmployeeDepartmentHistoryModelMapper employeeDepartmentHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.EmployeeDepartmentHistoryService = employeeDepartmentHistoryService;
+                        this.EmployeeDepartmentHistoryModelMapper = employeeDepartmentHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiEmployeeDepartmentHistoryRequestModel model = new ApiEmployeeDepartmentHistoryRequestModel();
-                                model.SetProperties(model.DepartmentID,
-                                                    model.EndDate,
-                                                    model.ModifiedDate,
-                                                    model.ShiftID,
-                                                    model.StartDate);
-                                patch.ApplyTo(model);
+                                ApiEmployeeDepartmentHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.EmployeeDepartmentHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeDepartmentHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.EmployeeDepartmentHistoryService.Update(id, model);
+                        ApiEmployeeDepartmentHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiEmployeeDepartmentHistoryResponseModel response = await this.EmployeeDepartmentHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.EmployeeDepartmentHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiEmployeeDepartmentHistoryResponseModel response = await this.EmployeeDepartmentHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -218,9 +226,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel> CreatePatch(ApiEmployeeDepartmentHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel>();
+                        patch.Replace(x => x.DepartmentID, model.DepartmentID);
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ShiftID, model.ShiftID);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        return patch;
+                }
+
+                private async Task<ApiEmployeeDepartmentHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel> patch)
+                {
+                        var record = await this.EmployeeDepartmentHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiEmployeeDepartmentHistoryRequestModel request = this.EmployeeDepartmentHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0194ea4f843cfb6ca8a4e954740e3289</Hash>
+    <Hash>203775913ca261c7e64506481c8d8f43</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected ISpaceFeatureService SpaceFeatureService { get; private set; }
 
+                protected IApiSpaceFeatureModelMapper SpaceFeatureModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSpaceFeatureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISpaceFeatureService spaceFeatureService
+                        ISpaceFeatureService spaceFeatureService,
+                        IApiSpaceFeatureModelMapper spaceFeatureModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SpaceFeatureService = spaceFeatureService;
+                        this.SpaceFeatureModelMapper = spaceFeatureModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiSpaceFeatureRequestModel model = new ApiSpaceFeatureRequestModel();
-                                model.SetProperties(model.Name,
-                                                    model.StudioId);
-                                patch.ApplyTo(model);
+                                ApiSpaceFeatureRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SpaceFeatureService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceFeatureRequestModel model)
                 {
-                        ActionResponse result = await this.SpaceFeatureService.Update(id, model);
+                        ApiSpaceFeatureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSpaceFeatureResponseModel response = await this.SpaceFeatureService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SpaceFeatureService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSpaceFeatureResponseModel response = await this.SpaceFeatureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -207,9 +218,33 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSpaceFeatureRequestModel> CreatePatch(ApiSpaceFeatureRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSpaceFeatureRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.StudioId, model.StudioId);
+                        return patch;
+                }
+
+                private async Task<ApiSpaceFeatureRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceFeatureRequestModel> patch)
+                {
+                        var record = await this.SpaceFeatureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSpaceFeatureRequestModel request = this.SpaceFeatureModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f4a1a79328975e2cf57f37e57fc5fd1</Hash>
+    <Hash>929d278759a42797f70a80799d8dfa68</Hash>
 </Codenesium>*/

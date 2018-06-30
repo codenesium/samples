@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IStoreService StoreService { get; private set; }
 
+                protected IApiStoreModelMapper StoreModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractStoreController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStoreService storeService
+                        IStoreService storeService,
+                        IApiStoreModelMapper storeModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.StoreService = storeService;
+                        this.StoreModelMapper = storeModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiStoreRequestModel model = new ApiStoreRequestModel();
-                                model.SetProperties(model.Demographics,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid,
-                                                    model.SalesPersonID);
-                                patch.ApplyTo(model);
+                                ApiStoreRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.StoreService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreRequestModel model)
                 {
-                        ActionResponse result = await this.StoreService.Update(id, model);
+                        ApiStoreRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiStoreResponseModel response = await this.StoreService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.StoreService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiStoreResponseModel response = await this.StoreService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -232,9 +240,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiStoreRequestModel> CreatePatch(ApiStoreRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStoreRequestModel>();
+                        patch.Replace(x => x.Demographics, model.Demographics);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
+                        return patch;
+                }
+
+                private async Task<ApiStoreRequestModel> PatchModel(int id, JsonPatchDocument<ApiStoreRequestModel> patch)
+                {
+                        var record = await this.StoreService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiStoreRequestModel request = this.StoreModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a3d11044c89aaa796b808ee7f548116b</Hash>
+    <Hash>d5bd1644bb694201e71e469c14580ec0</Hash>
 </Codenesium>*/

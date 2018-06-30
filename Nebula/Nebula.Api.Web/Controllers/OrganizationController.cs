@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<OrganizationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IOrganizationService organizationService
+                        IOrganizationService organizationService,
+                        IApiOrganizationModelMapper organizationModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               organizationService)
+                               organizationService,
+                               organizationModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f5afa55d0f2064442164f9fb190fbd20</Hash>
+    <Hash>d0a5984b6b8100b04b79f87eda00e654</Hash>
 </Codenesium>*/

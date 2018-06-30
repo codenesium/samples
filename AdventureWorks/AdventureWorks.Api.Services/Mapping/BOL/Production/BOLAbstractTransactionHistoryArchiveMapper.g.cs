@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiTransactionHistoryArchiveResponseModel();
 
-                        model.SetProperties(boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.TransactionType);
+                        model.SetProperties(boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionType);
 
                         return model;
                 }
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a0b796fb17d5a7bd81a3d4f02c59d24</Hash>
+    <Hash>17c9b58b4dfb8c3adb06577f0839dfda</Hash>
 </Codenesium>*/

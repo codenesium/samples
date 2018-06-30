@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiUnitMeasureResponseModel();
 
-                        model.SetProperties(boUnitMeasure.ModifiedDate, boUnitMeasure.Name, boUnitMeasure.UnitMeasureCode);
+                        model.SetProperties(boUnitMeasure.UnitMeasureCode, boUnitMeasure.ModifiedDate, boUnitMeasure.Name);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd62471ea5d17f9f2cd81a62b92d85ca</Hash>
+    <Hash>dfde303b2a40207d743bc72ddd045b6e</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<SalesTaxRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesTaxRateService salesTaxRateService
+                        ISalesTaxRateService salesTaxRateService,
+                        IApiSalesTaxRateModelMapper salesTaxRateModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               salesTaxRateService)
+                               salesTaxRateService,
+                               salesTaxRateModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8336e85e98168ffa26cf6bcfc9e3b21d</Hash>
+    <Hash>dd5baa34296854d56b8fd4abd1e2d5c1</Hash>
 </Codenesium>*/

@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiSalesTerritoryResponseModel();
 
-                        model.SetProperties(boSalesTerritory.CostLastYear, boSalesTerritory.CostYTD, boSalesTerritory.CountryRegionCode, boSalesTerritory.@Group, boSalesTerritory.ModifiedDate, boSalesTerritory.Name, boSalesTerritory.Rowguid, boSalesTerritory.SalesLastYear, boSalesTerritory.SalesYTD, boSalesTerritory.TerritoryID);
+                        model.SetProperties(boSalesTerritory.TerritoryID, boSalesTerritory.CostLastYear, boSalesTerritory.CostYTD, boSalesTerritory.CountryRegionCode, boSalesTerritory.@Group, boSalesTerritory.ModifiedDate, boSalesTerritory.Name, boSalesTerritory.Rowguid, boSalesTerritory.SalesLastYear, boSalesTerritory.SalesYTD);
 
                         return model;
                 }
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9eeeff7b53c61979db21455a3d437289</Hash>
+    <Hash>9c2248fad9a43d3c1b051e81bbcf21aa</Hash>
 </Codenesium>*/

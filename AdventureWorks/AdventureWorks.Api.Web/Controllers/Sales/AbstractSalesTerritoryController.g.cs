@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesTerritoryService SalesTerritoryService { get; private set; }
 
+                protected IApiSalesTerritoryModelMapper SalesTerritoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesTerritoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesTerritoryService salesTerritoryService
+                        ISalesTerritoryService salesTerritoryService,
+                        IApiSalesTerritoryModelMapper salesTerritoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesTerritoryService = salesTerritoryService;
+                        this.SalesTerritoryModelMapper = salesTerritoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,17 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesTerritoryRequestModel model = new ApiSalesTerritoryRequestModel();
-                                model.SetProperties(model.CostLastYear,
-                                                    model.CostYTD,
-                                                    model.CountryRegionCode,
-                                                    model.@Group,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid,
-                                                    model.SalesLastYear,
-                                                    model.SalesYTD);
-                                patch.ApplyTo(model);
+                                ApiSalesTerritoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesTerritoryService.Update(id, model);
 
                                 if (result.Success)
@@ -168,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryRequestModel model)
                 {
-                        ActionResponse result = await this.SalesTerritoryService.Update(id, model);
+                        ApiSalesTerritoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesTerritoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -275,9 +279,40 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSalesTerritoryRequestModel> CreatePatch(ApiSalesTerritoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesTerritoryRequestModel>();
+                        patch.Replace(x => x.CostLastYear, model.CostLastYear);
+                        patch.Replace(x => x.CostYTD, model.CostYTD);
+                        patch.Replace(x => x.CountryRegionCode, model.CountryRegionCode);
+                        patch.Replace(x => x.@Group, model.@Group);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesLastYear, model.SalesLastYear);
+                        patch.Replace(x => x.SalesYTD, model.SalesYTD);
+                        return patch;
+                }
+
+                private async Task<ApiSalesTerritoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTerritoryRequestModel> patch)
+                {
+                        var record = await this.SalesTerritoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesTerritoryRequestModel request = this.SalesTerritoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b8f3600513133024a98f8d0c2553fb2b</Hash>
+    <Hash>b031ccaa9990b08f1e979b4f50dea34b</Hash>
 </Codenesium>*/

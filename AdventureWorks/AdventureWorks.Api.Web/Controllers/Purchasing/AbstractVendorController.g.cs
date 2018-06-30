@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IVendorService VendorService { get; private set; }
 
+                protected IApiVendorModelMapper VendorModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractVendorController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IVendorService vendorService
+                        IVendorService vendorService,
+                        IApiVendorModelMapper vendorModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.VendorService = vendorService;
+                        this.VendorModelMapper = vendorModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiVendorRequestModel model = new ApiVendorRequestModel();
-                                model.SetProperties(model.AccountNumber,
-                                                    model.ActiveFlag,
-                                                    model.CreditRating,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.PreferredVendorStatus,
-                                                    model.PurchasingWebServiceURL);
-                                patch.ApplyTo(model);
+                                ApiVendorRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.VendorService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorRequestModel model)
                 {
-                        ActionResponse result = await this.VendorService.Update(id, model);
+                        ApiVendorRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiVendorResponseModel response = await this.VendorService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.VendorService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiVendorResponseModel response = await this.VendorService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -245,9 +251,38 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiVendorRequestModel> CreatePatch(ApiVendorRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiVendorRequestModel>();
+                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
+                        patch.Replace(x => x.ActiveFlag, model.ActiveFlag);
+                        patch.Replace(x => x.CreditRating, model.CreditRating);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.PreferredVendorStatus, model.PreferredVendorStatus);
+                        patch.Replace(x => x.PurchasingWebServiceURL, model.PurchasingWebServiceURL);
+                        return patch;
+                }
+
+                private async Task<ApiVendorRequestModel> PatchModel(int id, JsonPatchDocument<ApiVendorRequestModel> patch)
+                {
+                        var record = await this.VendorService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiVendorRequestModel request = this.VendorModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a8c66d319d3e590df3c8e8753bb3f810</Hash>
+    <Hash>93eabd973332ac0a60bd7a18ab92b4a2</Hash>
 </Codenesium>*/

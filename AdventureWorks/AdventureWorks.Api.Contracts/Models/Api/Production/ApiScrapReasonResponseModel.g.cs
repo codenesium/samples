@@ -9,13 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiScrapReasonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        short scrapReasonID,
                         DateTime modifiedDate,
-                        string name,
-                        short scrapReasonID)
+                        string name)
                 {
+                        this.ScrapReasonID = scrapReasonID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.ScrapReasonID = scrapReasonID;
                 }
 
                 public DateTime ModifiedDate { get; private set; }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4f17eed0a0c67831c290569c4cd7d5a4</Hash>
+    <Hash>3d0f8accd39200831d88e43370fab765</Hash>
 </Codenesium>*/

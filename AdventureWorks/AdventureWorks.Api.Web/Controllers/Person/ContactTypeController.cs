@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ContactTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IContactTypeService contactTypeService
+                        IContactTypeService contactTypeService,
+                        IApiContactTypeModelMapper contactTypeModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               contactTypeService)
+                               contactTypeService,
+                               contactTypeModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6d1c81845cbe18384c299b39b4f1bcff</Hash>
+    <Hash>8dbf6c2d5404f1cd99159d9e52175ced</Hash>
 </Codenesium>*/

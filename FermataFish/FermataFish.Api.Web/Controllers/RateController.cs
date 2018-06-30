@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<RateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IRateService rateService
+                        IRateService rateService,
+                        IApiRateModelMapper rateModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               rateService)
+                               rateService,
+                               rateModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2acd24e16d4c83dedaceb3f0cf10e5db</Hash>
+    <Hash>d25280afaa4ce10e5144748b02c8011f</Hash>
 </Codenesium>*/

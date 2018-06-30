@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductCostHistoryService ProductCostHistoryService { get; private set; }
 
+                protected IApiProductCostHistoryModelMapper ProductCostHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductCostHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductCostHistoryService productCostHistoryService
+                        IProductCostHistoryService productCostHistoryService,
+                        IApiProductCostHistoryModelMapper productCostHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductCostHistoryService = productCostHistoryService;
+                        this.ProductCostHistoryModelMapper = productCostHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductCostHistoryRequestModel model = new ApiProductCostHistoryRequestModel();
-                                model.SetProperties(model.EndDate,
-                                                    model.ModifiedDate,
-                                                    model.StandardCost,
-                                                    model.StartDate);
-                                patch.ApplyTo(model);
+                                ApiProductCostHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductCostHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductCostHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.ProductCostHistoryService.Update(id, model);
+                        ApiProductCostHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductCostHistoryResponseModel response = await this.ProductCostHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductCostHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductCostHistoryResponseModel response = await this.ProductCostHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -195,9 +204,35 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductCostHistoryRequestModel> CreatePatch(ApiProductCostHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductCostHistoryRequestModel>();
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.StandardCost, model.StandardCost);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        return patch;
+                }
+
+                private async Task<ApiProductCostHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductCostHistoryRequestModel> patch)
+                {
+                        var record = await this.ProductCostHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductCostHistoryRequestModel request = this.ProductCostHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>80275f4d99c234d92f1bfa298c63b211</Hash>
+    <Hash>0058b108730dc1e9137cc163c279c290</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IRateService RateService { get; private set; }
 
+                protected IApiRateModelMapper RateModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IRateService rateService
+                        IRateService rateService,
+                        IApiRateModelMapper rateModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.RateService = rateService;
+                        this.RateModelMapper = rateModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiRateRequestModel model = new ApiRateRequestModel();
-                                model.SetProperties(model.AmountPerMinute,
-                                                    model.TeacherId,
-                                                    model.TeacherSkillId);
-                                patch.ApplyTo(model);
+                                ApiRateRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.RateService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateRequestModel model)
                 {
-                        ActionResponse result = await this.RateService.Update(id, model);
+                        ApiRateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiRateResponseModel response = await this.RateService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.RateService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiRateResponseModel response = await this.RateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -194,9 +204,34 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiRateRequestModel> CreatePatch(ApiRateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiRateRequestModel>();
+                        patch.Replace(x => x.AmountPerMinute, model.AmountPerMinute);
+                        patch.Replace(x => x.TeacherId, model.TeacherId);
+                        patch.Replace(x => x.TeacherSkillId, model.TeacherSkillId);
+                        return patch;
+                }
+
+                private async Task<ApiRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiRateRequestModel> patch)
+                {
+                        var record = await this.RateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiRateRequestModel request = this.RateModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c9d21d003e000bcbd2bf14700c2467fb</Hash>
+    <Hash>9989024d38ee7874d93e84e3701f6d1b</Hash>
 </Codenesium>*/

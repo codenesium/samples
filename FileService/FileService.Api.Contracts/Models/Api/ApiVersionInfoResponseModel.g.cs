@@ -9,13 +9,13 @@ namespace FileServiceNS.Api.Contracts
         public partial class ApiVersionInfoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        long version,
                         DateTime? appliedOn,
-                        string description,
-                        long version)
+                        string description)
                 {
+                        this.Version = version;
                         this.AppliedOn = appliedOn;
                         this.Description = description;
-                        this.Version = version;
                 }
 
                 public DateTime? AppliedOn { get; private set; }
@@ -58,5 +58,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>94529f74c9636b8819269ffdb141cd8a</Hash>
+    <Hash>046726f579bcc92289185acf7811b221</Hash>
 </Codenesium>*/

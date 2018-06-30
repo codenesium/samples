@@ -9,15 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiBusinessEntityAddressResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int businessEntityID,
                         int addressID,
                         int addressTypeID,
-                        int businessEntityID,
                         DateTime modifiedDate,
                         Guid rowguid)
                 {
+                        this.BusinessEntityID = businessEntityID;
                         this.AddressID = addressID;
                         this.AddressTypeID = addressTypeID;
-                        this.BusinessEntityID = businessEntityID;
                         this.ModifiedDate = modifiedDate;
                         this.Rowguid = rowguid;
                 }
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fd3b1e6f3da5718d1feddfb44c4535ee</Hash>
+    <Hash>63cc7a5d51d581c3f2b969b94725cc51</Hash>
 </Codenesium>*/

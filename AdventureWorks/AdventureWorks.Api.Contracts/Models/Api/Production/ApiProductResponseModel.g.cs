@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productID,
                         string @class,
                         string color,
                         int daysToManufacture,
@@ -18,7 +19,6 @@ namespace AdventureWorksNS.Api.Contracts
                         bool makeFlag,
                         DateTime modifiedDate,
                         string name,
-                        int productID,
                         string productLine,
                         int? productModelID,
                         string productNumber,
@@ -35,6 +35,7 @@ namespace AdventureWorksNS.Api.Contracts
                         decimal? weight,
                         string weightUnitMeasureCode)
                 {
+                        this.ProductID = productID;
                         this.@Class = @class;
                         this.Color = color;
                         this.DaysToManufacture = daysToManufacture;
@@ -44,7 +45,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.MakeFlag = makeFlag;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.ProductID = productID;
                         this.ProductLine = productLine;
                         this.ProductModelID = productModelID;
                         this.ProductNumber = productNumber;
@@ -344,5 +344,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>41f8a8a09105f563ec0931672366b96b</Hash>
+    <Hash>aee4efe06587e9c88953a59f7bc178f6</Hash>
 </Codenesium>*/

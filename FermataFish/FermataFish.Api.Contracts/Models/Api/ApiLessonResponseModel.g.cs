@@ -9,10 +9,10 @@ namespace FermataFishNS.Api.Contracts
         public partial class ApiLessonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         DateTime? actualEndDate,
                         DateTime? actualStartDate,
                         decimal? billAmount,
-                        int id,
                         int lessonStatusId,
                         DateTime? scheduledEndDate,
                         DateTime? scheduledStartDate,
@@ -20,10 +20,10 @@ namespace FermataFishNS.Api.Contracts
                         int studioId,
                         string teacherNotes)
                 {
+                        this.Id = id;
                         this.ActualEndDate = actualEndDate;
                         this.ActualStartDate = actualStartDate;
                         this.BillAmount = billAmount;
-                        this.Id = id;
                         this.LessonStatusId = lessonStatusId;
                         this.ScheduledEndDate = scheduledEndDate;
                         this.ScheduledStartDate = scheduledStartDate;
@@ -156,5 +156,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>14f7a55a37d54938c620c1f0bd4496ed</Hash>
+    <Hash>67dd83a50156fc20b78dc98ddf9289fb</Hash>
 </Codenesium>*/

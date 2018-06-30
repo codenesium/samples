@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ErrorLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IErrorLogService errorLogService
+                        IErrorLogService errorLogService,
+                        IApiErrorLogModelMapper errorLogModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               errorLogService)
+                               errorLogService,
+                               errorLogModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3438015c9b2cf4c01b455abd95728de7</Hash>
+    <Hash>296eddb12267c75ee062dde3d09eab3e</Hash>
 </Codenesium>*/

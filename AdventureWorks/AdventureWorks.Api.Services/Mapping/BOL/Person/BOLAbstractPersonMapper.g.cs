@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiPersonResponseModel();
 
-                        model.SetProperties(boPerson.AdditionalContactInfo, boPerson.BusinessEntityID, boPerson.Demographics, boPerson.EmailPromotion, boPerson.FirstName, boPerson.LastName, boPerson.MiddleName, boPerson.ModifiedDate, boPerson.NameStyle, boPerson.PersonType, boPerson.Rowguid, boPerson.Suffix, boPerson.Title);
+                        model.SetProperties(boPerson.BusinessEntityID, boPerson.AdditionalContactInfo, boPerson.Demographics, boPerson.EmailPromotion, boPerson.FirstName, boPerson.LastName, boPerson.MiddleName, boPerson.ModifiedDate, boPerson.NameStyle, boPerson.PersonType, boPerson.Rowguid, boPerson.Suffix, boPerson.Title);
 
                         return model;
                 }
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad3cf0be54ba980506f86f8b3fdb1e06</Hash>
+    <Hash>a4c3fc204ae915034be4b30016aa05a6</Hash>
 </Codenesium>*/

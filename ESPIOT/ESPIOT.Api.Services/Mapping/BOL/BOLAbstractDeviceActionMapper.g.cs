@@ -26,7 +26,7 @@ namespace ESPIOTNS.Api.Services
                 {
                         var model = new ApiDeviceActionResponseModel();
 
-                        model.SetProperties(boDeviceAction.DeviceId, boDeviceAction.Id, boDeviceAction.Name, boDeviceAction.@Value);
+                        model.SetProperties(boDeviceAction.Id, boDeviceAction.DeviceId, boDeviceAction.Name, boDeviceAction.@Value);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0cc70e50dc60fc9936050c8f9248bc10</Hash>
+    <Hash>212e7368acc1e65a867285fafd668cf0</Hash>
 </Codenesium>*/

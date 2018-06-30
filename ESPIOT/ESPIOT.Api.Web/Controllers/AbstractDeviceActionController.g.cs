@@ -19,6 +19,8 @@ namespace ESPIOTNS.Api.Web
         {
                 protected IDeviceActionService DeviceActionService { get; private set; }
 
+                protected IApiDeviceActionModelMapper DeviceActionModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace ESPIOTNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractDeviceActionController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDeviceActionService deviceActionService
+                        IDeviceActionService deviceActionService,
+                        IApiDeviceActionModelMapper deviceActionModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.DeviceActionService = deviceActionService;
+                        this.DeviceActionModelMapper = deviceActionModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace ESPIOTNS.Api.Web
                         }
                         else
                         {
-                                ApiDeviceActionRequestModel model = new ApiDeviceActionRequestModel();
-                                model.SetProperties(model.DeviceId,
-                                                    model.Name,
-                                                    model.@Value);
-                                patch.ApplyTo(model);
+                                ApiDeviceActionRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.DeviceActionService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace ESPIOTNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceActionRequestModel model)
                 {
-                        ActionResponse result = await this.DeviceActionService.Update(id, model);
+                        ApiDeviceActionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiDeviceActionResponseModel response = await this.DeviceActionService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.DeviceActionService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiDeviceActionResponseModel response = await this.DeviceActionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -205,9 +215,34 @@ namespace ESPIOTNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiDeviceActionRequestModel> CreatePatch(ApiDeviceActionRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDeviceActionRequestModel>();
+                        patch.Replace(x => x.DeviceId, model.DeviceId);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.@Value, model.@Value);
+                        return patch;
+                }
+
+                private async Task<ApiDeviceActionRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeviceActionRequestModel> patch)
+                {
+                        var record = await this.DeviceActionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiDeviceActionRequestModel request = this.DeviceActionModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>43154fb973087616ff9f0275005be86b</Hash>
+    <Hash>06cf18d5091e88c66c220203dccbf618</Hash>
 </Codenesium>*/

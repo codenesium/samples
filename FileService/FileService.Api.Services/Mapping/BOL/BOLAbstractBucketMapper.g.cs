@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Services
                 {
                         var model = new ApiBucketResponseModel();
 
-                        model.SetProperties(boBucket.ExternalId, boBucket.Id, boBucket.Name);
+                        model.SetProperties(boBucket.Id, boBucket.ExternalId, boBucket.Name);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ccc3eeae485e3aa7c3a23157644f8f3</Hash>
+    <Hash>b8e27829f8c666fd06a78d32f4b72cde</Hash>
 </Codenesium>*/

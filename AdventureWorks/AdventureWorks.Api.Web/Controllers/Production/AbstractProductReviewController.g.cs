@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductReviewService ProductReviewService { get; private set; }
 
+                protected IApiProductReviewModelMapper ProductReviewModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductReviewController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductReviewService productReviewService
+                        IProductReviewService productReviewService,
+                        IApiProductReviewModelMapper productReviewModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductReviewService = productReviewService;
+                        this.ProductReviewModelMapper = productReviewModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductReviewRequestModel model = new ApiProductReviewRequestModel();
-                                model.SetProperties(model.Comments,
-                                                    model.EmailAddress,
-                                                    model.ModifiedDate,
-                                                    model.ProductID,
-                                                    model.Rating,
-                                                    model.ReviewDate,
-                                                    model.ReviewerName);
-                                patch.ApplyTo(model);
+                                ApiProductReviewRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductReviewService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewRequestModel model)
                 {
-                        ActionResponse result = await this.ProductReviewService.Update(id, model);
+                        ApiProductReviewRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductReviewResponseModel response = await this.ProductReviewService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductReviewService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductReviewResponseModel response = await this.ProductReviewService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -209,9 +215,38 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiProductReviewRequestModel> CreatePatch(ApiProductReviewRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductReviewRequestModel>();
+                        patch.Replace(x => x.Comments, model.Comments);
+                        patch.Replace(x => x.EmailAddress, model.EmailAddress);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Rating, model.Rating);
+                        patch.Replace(x => x.ReviewDate, model.ReviewDate);
+                        patch.Replace(x => x.ReviewerName, model.ReviewerName);
+                        return patch;
+                }
+
+                private async Task<ApiProductReviewRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductReviewRequestModel> patch)
+                {
+                        var record = await this.ProductReviewService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductReviewRequestModel request = this.ProductReviewModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bf342f667138badc11b70e6415d52670</Hash>
+    <Hash>718382e907ed00c78946fa10320e90ec</Hash>
 </Codenesium>*/

@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiWorkOrderResponseModel();
 
-                        model.SetProperties(boWorkOrder.DueDate, boWorkOrder.EndDate, boWorkOrder.ModifiedDate, boWorkOrder.OrderQty, boWorkOrder.ProductID, boWorkOrder.ScrappedQty, boWorkOrder.ScrapReasonID, boWorkOrder.StartDate, boWorkOrder.StockedQty, boWorkOrder.WorkOrderID);
+                        model.SetProperties(boWorkOrder.WorkOrderID, boWorkOrder.DueDate, boWorkOrder.EndDate, boWorkOrder.ModifiedDate, boWorkOrder.OrderQty, boWorkOrder.ProductID, boWorkOrder.ScrappedQty, boWorkOrder.ScrapReasonID, boWorkOrder.StartDate, boWorkOrder.StockedQty);
 
                         return model;
                 }
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73bf12738b70c555cdb06b92e33db8bb</Hash>
+    <Hash>639d0400619d81a1f61b743fb2b7c513</Hash>
 </Codenesium>*/

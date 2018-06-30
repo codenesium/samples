@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected ILessonXStudentService LessonXStudentService { get; private set; }
 
+                protected IApiLessonXStudentModelMapper LessonXStudentModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLessonXStudentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILessonXStudentService lessonXStudentService
+                        ILessonXStudentService lessonXStudentService,
+                        IApiLessonXStudentModelMapper lessonXStudentModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LessonXStudentService = lessonXStudentService;
+                        this.LessonXStudentModelMapper = lessonXStudentModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiLessonXStudentRequestModel model = new ApiLessonXStudentRequestModel();
-                                model.SetProperties(model.LessonId,
-                                                    model.StudentId);
-                                patch.ApplyTo(model);
+                                ApiLessonXStudentRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LessonXStudentService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonXStudentRequestModel model)
                 {
-                        ActionResponse result = await this.LessonXStudentService.Update(id, model);
+                        ApiLessonXStudentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLessonXStudentResponseModel response = await this.LessonXStudentService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LessonXStudentService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLessonXStudentResponseModel response = await this.LessonXStudentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiLessonXStudentRequestModel> CreatePatch(ApiLessonXStudentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLessonXStudentRequestModel>();
+                        patch.Replace(x => x.LessonId, model.LessonId);
+                        patch.Replace(x => x.StudentId, model.StudentId);
+                        return patch;
+                }
+
+                private async Task<ApiLessonXStudentRequestModel> PatchModel(int id, JsonPatchDocument<ApiLessonXStudentRequestModel> patch)
+                {
+                        var record = await this.LessonXStudentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLessonXStudentRequestModel request = this.LessonXStudentModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f3a005ba527f7c406f78cb41e2293f0</Hash>
+    <Hash>07921dcc399e6aa11a18fa61ddfc7965</Hash>
 </Codenesium>*/

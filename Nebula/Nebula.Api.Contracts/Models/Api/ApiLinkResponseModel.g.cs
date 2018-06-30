@@ -9,13 +9,13 @@ namespace NebulaNS.Api.Contracts
         public partial class ApiLinkResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         int? assignedMachineId,
                         int chainId,
                         DateTime? dateCompleted,
                         DateTime? dateStarted,
                         string dynamicParameters,
                         Guid externalId,
-                        int id,
                         int linkStatusId,
                         string name,
                         int order,
@@ -23,13 +23,13 @@ namespace NebulaNS.Api.Contracts
                         string staticParameters,
                         int timeoutInSeconds)
                 {
+                        this.Id = id;
                         this.AssignedMachineId = assignedMachineId;
                         this.ChainId = chainId;
                         this.DateCompleted = dateCompleted;
                         this.DateStarted = dateStarted;
                         this.DynamicParameters = dynamicParameters;
                         this.ExternalId = externalId;
-                        this.Id = id;
                         this.LinkStatusId = linkStatusId;
                         this.Name = name;
                         this.Order = order;
@@ -198,5 +198,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ba10a10f4436027caaa220efb5bc4037</Hash>
+    <Hash>f7fa26f65ed5b066574c4381ba4e7245</Hash>
 </Codenesium>*/

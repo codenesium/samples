@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesOrderHeaderService SalesOrderHeaderService { get; private set; }
 
+                protected IApiSalesOrderHeaderModelMapper SalesOrderHeaderModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesOrderHeaderController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderHeaderService salesOrderHeaderService
+                        ISalesOrderHeaderService salesOrderHeaderService,
+                        IApiSalesOrderHeaderModelMapper salesOrderHeaderModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesOrderHeaderService = salesOrderHeaderService;
+                        this.SalesOrderHeaderModelMapper = salesOrderHeaderModelMapper;
                 }
 
                 [HttpGet]
@@ -134,33 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesOrderHeaderRequestModel model = new ApiSalesOrderHeaderRequestModel();
-                                model.SetProperties(model.AccountNumber,
-                                                    model.BillToAddressID,
-                                                    model.Comment,
-                                                    model.CreditCardApprovalCode,
-                                                    model.CreditCardID,
-                                                    model.CurrencyRateID,
-                                                    model.CustomerID,
-                                                    model.DueDate,
-                                                    model.Freight,
-                                                    model.ModifiedDate,
-                                                    model.OnlineOrderFlag,
-                                                    model.OrderDate,
-                                                    model.PurchaseOrderNumber,
-                                                    model.RevisionNumber,
-                                                    model.Rowguid,
-                                                    model.SalesOrderNumber,
-                                                    model.SalesPersonID,
-                                                    model.ShipDate,
-                                                    model.ShipMethodID,
-                                                    model.ShipToAddressID,
-                                                    model.Status,
-                                                    model.SubTotal,
-                                                    model.TaxAmt,
-                                                    model.TerritoryID,
-                                                    model.TotalDue);
-                                patch.ApplyTo(model);
+                                ApiSalesOrderHeaderRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesOrderHeaderService.Update(id, model);
 
                                 if (result.Success)
@@ -184,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderRequestModel model)
                 {
-                        ActionResponse result = await this.SalesOrderHeaderService.Update(id, model);
+                        ApiSalesOrderHeaderRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesOrderHeaderService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -285,9 +273,56 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSalesOrderHeaderRequestModel> CreatePatch(ApiSalesOrderHeaderRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesOrderHeaderRequestModel>();
+                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
+                        patch.Replace(x => x.BillToAddressID, model.BillToAddressID);
+                        patch.Replace(x => x.Comment, model.Comment);
+                        patch.Replace(x => x.CreditCardApprovalCode, model.CreditCardApprovalCode);
+                        patch.Replace(x => x.CreditCardID, model.CreditCardID);
+                        patch.Replace(x => x.CurrencyRateID, model.CurrencyRateID);
+                        patch.Replace(x => x.CustomerID, model.CustomerID);
+                        patch.Replace(x => x.DueDate, model.DueDate);
+                        patch.Replace(x => x.Freight, model.Freight);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OnlineOrderFlag, model.OnlineOrderFlag);
+                        patch.Replace(x => x.OrderDate, model.OrderDate);
+                        patch.Replace(x => x.PurchaseOrderNumber, model.PurchaseOrderNumber);
+                        patch.Replace(x => x.RevisionNumber, model.RevisionNumber);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesOrderNumber, model.SalesOrderNumber);
+                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
+                        patch.Replace(x => x.ShipDate, model.ShipDate);
+                        patch.Replace(x => x.ShipMethodID, model.ShipMethodID);
+                        patch.Replace(x => x.ShipToAddressID, model.ShipToAddressID);
+                        patch.Replace(x => x.Status, model.Status);
+                        patch.Replace(x => x.SubTotal, model.SubTotal);
+                        patch.Replace(x => x.TaxAmt, model.TaxAmt);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        patch.Replace(x => x.TotalDue, model.TotalDue);
+                        return patch;
+                }
+
+                private async Task<ApiSalesOrderHeaderRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderHeaderRequestModel> patch)
+                {
+                        var record = await this.SalesOrderHeaderService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesOrderHeaderRequestModel request = this.SalesOrderHeaderModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0ca707b9d964a8bb0a77a64aa1762fd5</Hash>
+    <Hash>3e8706e338d261898e68ea41a533c32c</Hash>
 </Codenesium>*/

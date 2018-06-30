@@ -17,21 +17,28 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web", "A
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Services", "AdventureWorks.Api.Services/AdventureWorks.Api.Services.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.IntegrationTests", "AdventureWorks.Api.Web.IntegrationTests/AdventureWorks.Api.Web.IntegrationTests.csproj", "{AdventureWorks.Api.Web.IntegrationTests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.IntegrationTests", "AdventureWorks.Api.Web.IntegrationTests/AdventureWorks.Api.Web.IntegrationTests.csproj", "{deb2d458-c943-45bf-9c88-40637cdf782a}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.DataAccess.Tests", "AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj", "{AdventureWorks.Api.DataAccess.Tests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.DataAccess.Tests", "AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj", "{b32d3a73-d93b-4521-8a59-cbd79ebc75a4}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Services.Tests", "AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj", "{AdventureWorks.Api.Services.Tests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Services.Tests", "AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj", "{a4b5573c-c6c4-46aa-9427-c369367ac972}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.Tests", "AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj", "{AdventureWorks.Api.Web.Tests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.Tests", "AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj", "{d54d59e3-b416-48cc-a365-109b9fd30dfd}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Client.Tests", "AdventureWorks.Api.Client.Tests/AdventureWorks.Api.Client.Tests.csproj", "{AdventureWorks.Api.Client.Tests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Client.Tests", "AdventureWorks.Api.Client.Tests/AdventureWorks.Api.Client.Tests.csproj", "{02b21c22-908a-4c2a-a040-1c8a639d984a}"
 	EndProject
-	Global
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Contracts.Tests", "AdventureWorks.Api.Contracts.Tests/AdventureWorks.Api.Contracts.Tests.csproj", "{8346f9b6-60ff-4979-b214-0ab7c090dcc5}"
+	EndProject
+	
+
+
+
+Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -83,7 +90,17 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Client.T
 		{AdventureWorks.Api.Client.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AdventureWorks.Api.Client.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AdventureWorks.Api.Client.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
-			    EndGlobalSection
+		
+		        {AdventureWorks.Api.Contracts.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AdventureWorks.Api.Contracts.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AdventureWorks.Api.Contracts.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AdventureWorks.Api.Contracts.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		
+		
+		
+		
+	    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

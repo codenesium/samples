@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IShiftService ShiftService { get; private set; }
 
+                protected IApiShiftModelMapper ShiftModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractShiftController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShiftService shiftService
+                        IShiftService shiftService,
+                        IApiShiftModelMapper shiftModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ShiftService = shiftService;
+                        this.ShiftModelMapper = shiftModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiShiftRequestModel model = new ApiShiftRequestModel();
-                                model.SetProperties(model.EndTime,
-                                                    model.ModifiedDate,
-                                                    model.Name,
-                                                    model.StartTime);
-                                patch.ApplyTo(model);
+                                ApiShiftRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ShiftService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
                 {
-                        ActionResponse result = await this.ShiftService.Update(id, model);
+                        ApiShiftRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiShiftResponseModel response = await this.ShiftService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ShiftService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiShiftResponseModel response = await this.ShiftService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -247,9 +256,35 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiShiftRequestModel> CreatePatch(ApiShiftRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiShiftRequestModel>();
+                        patch.Replace(x => x.EndTime, model.EndTime);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.StartTime, model.StartTime);
+                        return patch;
+                }
+
+                private async Task<ApiShiftRequestModel> PatchModel(int id, JsonPatchDocument<ApiShiftRequestModel> patch)
+                {
+                        var record = await this.ShiftService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiShiftRequestModel request = this.ShiftModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3d63a8cd7e733ad9729b8b27af01c15a</Hash>
+    <Hash>c5ee9a57c735854c7ad0bbaa5caeaa79</Hash>
 </Codenesium>*/

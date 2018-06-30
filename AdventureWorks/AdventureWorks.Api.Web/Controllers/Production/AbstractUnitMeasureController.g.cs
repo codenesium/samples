@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IUnitMeasureService UnitMeasureService { get; private set; }
 
+                protected IApiUnitMeasureModelMapper UnitMeasureModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractUnitMeasureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IUnitMeasureService unitMeasureService
+                        IUnitMeasureService unitMeasureService,
+                        IApiUnitMeasureModelMapper unitMeasureModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.UnitMeasureService = unitMeasureService;
+                        this.UnitMeasureModelMapper = unitMeasureModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiUnitMeasureRequestModel model = new ApiUnitMeasureRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiUnitMeasureRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.UnitMeasureService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureRequestModel model)
                 {
-                        ActionResponse result = await this.UnitMeasureService.Update(id, model);
+                        ApiUnitMeasureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiUnitMeasureResponseModel response = await this.UnitMeasureService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.UnitMeasureService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiUnitMeasureResponseModel response = await this.UnitMeasureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -240,9 +251,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiUnitMeasureRequestModel> CreatePatch(ApiUnitMeasureRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiUnitMeasureRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiUnitMeasureRequestModel> PatchModel(string id, JsonPatchDocument<ApiUnitMeasureRequestModel> patch)
+                {
+                        var record = await this.UnitMeasureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiUnitMeasureRequestModel request = this.UnitMeasureModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5bc89d10dd484181a5a75653708d4f2d</Hash>
+    <Hash>36303e7c584e547ec2d20efbc5863e1a</Hash>
 </Codenesium>*/

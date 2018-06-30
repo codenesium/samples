@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IDocumentService DocumentService { get; private set; }
 
+                protected IApiDocumentModelMapper DocumentModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractDocumentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDocumentService documentService
+                        IDocumentService documentService,
+                        IApiDocumentModelMapper documentModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.DocumentService = documentService;
+                        this.DocumentModelMapper = documentModelMapper;
                 }
 
                 [HttpGet]
@@ -134,20 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiDocumentRequestModel model = new ApiDocumentRequestModel();
-                                model.SetProperties(model.ChangeNumber,
-                                                    model.Document1,
-                                                    model.DocumentLevel,
-                                                    model.DocumentSummary,
-                                                    model.FileExtension,
-                                                    model.FileName,
-                                                    model.FolderFlag,
-                                                    model.ModifiedDate,
-                                                    model.Owner,
-                                                    model.Revision,
-                                                    model.Status,
-                                                    model.Title);
-                                patch.ApplyTo(model);
+                                ApiDocumentRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.DocumentService.Update(id, model);
 
                                 if (result.Success)
@@ -171,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentRequestModel model)
                 {
-                        ActionResponse result = await this.DocumentService.Update(id, model);
+                        ApiDocumentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiDocumentResponseModel response = await this.DocumentService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.DocumentService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiDocumentResponseModel response = await this.DocumentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -214,9 +215,43 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiDocumentRequestModel> CreatePatch(ApiDocumentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+                        patch.Replace(x => x.ChangeNumber, model.ChangeNumber);
+                        patch.Replace(x => x.Document1, model.Document1);
+                        patch.Replace(x => x.DocumentLevel, model.DocumentLevel);
+                        patch.Replace(x => x.DocumentSummary, model.DocumentSummary);
+                        patch.Replace(x => x.FileExtension, model.FileExtension);
+                        patch.Replace(x => x.FileName, model.FileName);
+                        patch.Replace(x => x.FolderFlag, model.FolderFlag);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Owner, model.Owner);
+                        patch.Replace(x => x.Revision, model.Revision);
+                        patch.Replace(x => x.Status, model.Status);
+                        patch.Replace(x => x.Title, model.Title);
+                        return patch;
+                }
+
+                private async Task<ApiDocumentRequestModel> PatchModel(Guid id, JsonPatchDocument<ApiDocumentRequestModel> patch)
+                {
+                        var record = await this.DocumentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiDocumentRequestModel request = this.DocumentModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b7cdba4608a815345a5bcc9a525f3b1c</Hash>
+    <Hash>361d5575d814d25a0251962b7df91062</Hash>
 </Codenesium>*/

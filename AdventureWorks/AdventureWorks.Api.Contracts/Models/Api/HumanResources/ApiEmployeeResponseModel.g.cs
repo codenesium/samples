@@ -9,8 +9,8 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiEmployeeResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        DateTime birthDate,
                         int businessEntityID,
+                        DateTime birthDate,
                         bool currentFlag,
                         string gender,
                         DateTime hireDate,
@@ -25,8 +25,8 @@ namespace AdventureWorksNS.Api.Contracts
                         short sickLeaveHours,
                         short vacationHours)
                 {
-                        this.BirthDate = birthDate;
                         this.BusinessEntityID = businessEntityID;
+                        this.BirthDate = birthDate;
                         this.CurrentFlag = currentFlag;
                         this.Gender = gender;
                         this.HireDate = hireDate;
@@ -214,5 +214,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b7af1ee235c03abdf48bda83b3fe0568</Hash>
+    <Hash>c781b28f3e035459c83e1a38a7e52f90</Hash>
 </Codenesium>*/

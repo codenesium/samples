@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISpecialOfferProductService SpecialOfferProductService { get; private set; }
 
+                protected IApiSpecialOfferProductModelMapper SpecialOfferProductModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSpecialOfferProductController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISpecialOfferProductService specialOfferProductService
+                        ISpecialOfferProductService specialOfferProductService,
+                        IApiSpecialOfferProductModelMapper specialOfferProductModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SpecialOfferProductService = specialOfferProductService;
+                        this.SpecialOfferProductModelMapper = specialOfferProductModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSpecialOfferProductRequestModel model = new ApiSpecialOfferProductRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.ProductID,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiSpecialOfferProductRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SpecialOfferProductService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferProductRequestModel model)
                 {
-                        ActionResponse result = await this.SpecialOfferProductService.Update(id, model);
+                        ApiSpecialOfferProductRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSpecialOfferProductResponseModel response = await this.SpecialOfferProductService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SpecialOfferProductService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSpecialOfferProductResponseModel response = await this.SpecialOfferProductService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -219,9 +229,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSpecialOfferProductRequestModel> CreatePatch(ApiSpecialOfferProductRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSpecialOfferProductRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiSpecialOfferProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferProductRequestModel> patch)
+                {
+                        var record = await this.SpecialOfferProductService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSpecialOfferProductRequestModel request = this.SpecialOfferProductModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0c2583da6ed82d1f74fb9b1842cfd1d9</Hash>
+    <Hash>73f210b7129ccc1fe367b296e5da6fd1</Hash>
 </Codenesium>*/

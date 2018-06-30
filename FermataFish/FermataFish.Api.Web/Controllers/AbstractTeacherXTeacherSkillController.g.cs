@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected ITeacherXTeacherSkillService TeacherXTeacherSkillService { get; private set; }
 
+                protected IApiTeacherXTeacherSkillModelMapper TeacherXTeacherSkillModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractTeacherXTeacherSkillController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITeacherXTeacherSkillService teacherXTeacherSkillService
+                        ITeacherXTeacherSkillService teacherXTeacherSkillService,
+                        IApiTeacherXTeacherSkillModelMapper teacherXTeacherSkillModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.TeacherXTeacherSkillService = teacherXTeacherSkillService;
+                        this.TeacherXTeacherSkillModelMapper = teacherXTeacherSkillModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiTeacherXTeacherSkillRequestModel model = new ApiTeacherXTeacherSkillRequestModel();
-                                model.SetProperties(model.TeacherId,
-                                                    model.TeacherSkillId);
-                                patch.ApplyTo(model);
+                                ApiTeacherXTeacherSkillRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.TeacherXTeacherSkillService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherXTeacherSkillRequestModel model)
                 {
-                        ActionResponse result = await this.TeacherXTeacherSkillService.Update(id, model);
+                        ApiTeacherXTeacherSkillRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiTeacherXTeacherSkillResponseModel response = await this.TeacherXTeacherSkillService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.TeacherXTeacherSkillService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiTeacherXTeacherSkillResponseModel response = await this.TeacherXTeacherSkillService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiTeacherXTeacherSkillRequestModel> CreatePatch(ApiTeacherXTeacherSkillRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTeacherXTeacherSkillRequestModel>();
+                        patch.Replace(x => x.TeacherId, model.TeacherId);
+                        patch.Replace(x => x.TeacherSkillId, model.TeacherSkillId);
+                        return patch;
+                }
+
+                private async Task<ApiTeacherXTeacherSkillRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherXTeacherSkillRequestModel> patch)
+                {
+                        var record = await this.TeacherXTeacherSkillService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiTeacherXTeacherSkillRequestModel request = this.TeacherXTeacherSkillModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bd0de791b844618789c425698223c119</Hash>
+    <Hash>63ce2ef9c784b5be12acac3f37d5618f</Hash>
 </Codenesium>*/

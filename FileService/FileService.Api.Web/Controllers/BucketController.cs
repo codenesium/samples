@@ -20,12 +20,14 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<BucketController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBucketService bucketService
+                        IBucketService bucketService,
+                        IApiBucketModelMapper bucketModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               bucketService)
+                               bucketService,
+                               bucketModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cde30d0354f7d3b87864a3aa4ced659c</Hash>
+    <Hash>3197476fbe476da905c1e96b517ee882</Hash>
 </Codenesium>*/

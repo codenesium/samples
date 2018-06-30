@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IChainStatusService ChainStatusService { get; private set; }
 
+                protected IApiChainStatusModelMapper ChainStatusModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractChainStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IChainStatusService chainStatusService
+                        IChainStatusService chainStatusService,
+                        IApiChainStatusModelMapper chainStatusModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ChainStatusService = chainStatusService;
+                        this.ChainStatusModelMapper = chainStatusModelMapper;
                 }
 
                 [HttpGet]
@@ -134,9 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiChainStatusRequestModel model = new ApiChainStatusRequestModel();
-                                model.SetProperties(model.Name);
-                                patch.ApplyTo(model);
+                                ApiChainStatusRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ChainStatusService.Update(id, model);
 
                                 if (result.Success)
@@ -160,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusRequestModel model)
                 {
-                        ActionResponse result = await this.ChainStatusService.Update(id, model);
+                        ApiChainStatusRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiChainStatusResponseModel response = await this.ChainStatusService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ChainStatusService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiChainStatusResponseModel response = await this.ChainStatusService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +218,32 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiChainStatusRequestModel> CreatePatch(ApiChainStatusRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiChainStatusRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiChainStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainStatusRequestModel> patch)
+                {
+                        var record = await this.ChainStatusService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiChainStatusRequestModel request = this.ChainStatusModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2150ae5c6c7c9488607e1212869c466e</Hash>
+    <Hash>152c66af52cc28c7b96de4b22c430b46</Hash>
 </Codenesium>*/

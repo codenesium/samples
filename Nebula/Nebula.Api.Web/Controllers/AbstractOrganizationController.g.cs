@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IOrganizationService OrganizationService { get; private set; }
 
+                protected IApiOrganizationModelMapper OrganizationModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractOrganizationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IOrganizationService organizationService
+                        IOrganizationService organizationService,
+                        IApiOrganizationModelMapper organizationModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.OrganizationService = organizationService;
+                        this.OrganizationModelMapper = organizationModelMapper;
                 }
 
                 [HttpGet]
@@ -134,9 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiOrganizationRequestModel model = new ApiOrganizationRequestModel();
-                                model.SetProperties(model.Name);
-                                patch.ApplyTo(model);
+                                ApiOrganizationRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.OrganizationService.Update(id, model);
 
                                 if (result.Success)
@@ -160,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationRequestModel model)
                 {
-                        ActionResponse result = await this.OrganizationService.Update(id, model);
+                        ApiOrganizationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiOrganizationResponseModel response = await this.OrganizationService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.OrganizationService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiOrganizationResponseModel response = await this.OrganizationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +218,32 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiOrganizationRequestModel> CreatePatch(ApiOrganizationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiOrganizationRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiOrganizationRequestModel> PatchModel(int id, JsonPatchDocument<ApiOrganizationRequestModel> patch)
+                {
+                        var record = await this.OrganizationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiOrganizationRequestModel request = this.OrganizationModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8d183613a9f3caae3432bc384b687039</Hash>
+    <Hash>94c909102e95969309d02d3609c3d6d4</Hash>
 </Codenesium>*/

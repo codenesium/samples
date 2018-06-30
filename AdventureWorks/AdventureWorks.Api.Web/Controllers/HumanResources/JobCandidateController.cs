@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<JobCandidateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IJobCandidateService jobCandidateService
+                        IJobCandidateService jobCandidateService,
+                        IApiJobCandidateModelMapper jobCandidateModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               jobCandidateService)
+                               jobCandidateService,
+                               jobCandidateModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0fde02017ce85afb550f1c8c32202c81</Hash>
+    <Hash>32af6f669607132fb047f841826cc8b1</Hash>
 </Codenesium>*/

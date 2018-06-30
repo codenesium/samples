@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAddressService addressService
+                        IAddressService addressService,
+                        IApiAddressModelMapper addressModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               addressService)
+                               addressService,
+                               addressModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ef4d77269d613fe1624fe9bb4bee255f</Hash>
+    <Hash>5176b8ecb71746280c5afc139fb72cca</Hash>
 </Codenesium>*/

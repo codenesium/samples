@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IFamilyService FamilyService { get; private set; }
 
+                protected IApiFamilyModelMapper FamilyModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractFamilyController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IFamilyService familyService
+                        IFamilyService familyService,
+                        IApiFamilyModelMapper familyModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.FamilyService = familyService;
+                        this.FamilyModelMapper = familyModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiFamilyRequestModel model = new ApiFamilyRequestModel();
-                                model.SetProperties(model.Notes,
-                                                    model.PcEmail,
-                                                    model.PcFirstName,
-                                                    model.PcLastName,
-                                                    model.PcPhone,
-                                                    model.StudioId);
-                                patch.ApplyTo(model);
+                                ApiFamilyRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.FamilyService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyRequestModel model)
                 {
-                        ActionResponse result = await this.FamilyService.Update(id, model);
+                        ApiFamilyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiFamilyResponseModel response = await this.FamilyService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.FamilyService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiFamilyResponseModel response = await this.FamilyService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -225,9 +232,37 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiFamilyRequestModel> CreatePatch(ApiFamilyRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
+                        patch.Replace(x => x.Notes, model.Notes);
+                        patch.Replace(x => x.PcEmail, model.PcEmail);
+                        patch.Replace(x => x.PcFirstName, model.PcFirstName);
+                        patch.Replace(x => x.PcLastName, model.PcLastName);
+                        patch.Replace(x => x.PcPhone, model.PcPhone);
+                        patch.Replace(x => x.StudioId, model.StudioId);
+                        return patch;
+                }
+
+                private async Task<ApiFamilyRequestModel> PatchModel(int id, JsonPatchDocument<ApiFamilyRequestModel> patch)
+                {
+                        var record = await this.FamilyService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiFamilyRequestModel request = this.FamilyModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3b10f20b3c4111f37619877724320d4e</Hash>
+    <Hash>cab7b0e3cf2887566f9aec1c258a5f5c</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -162,5 +163,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d1ca17eb06fa5095125eee9aea698f06</Hash>
+    <Hash>ad5e7b105abb79cfbfa7b75bb08cdb73</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductListPriceHistoryService ProductListPriceHistoryService { get; private set; }
 
+                protected IApiProductListPriceHistoryModelMapper ProductListPriceHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductListPriceHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductListPriceHistoryService productListPriceHistoryService
+                        IProductListPriceHistoryService productListPriceHistoryService,
+                        IApiProductListPriceHistoryModelMapper productListPriceHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductListPriceHistoryService = productListPriceHistoryService;
+                        this.ProductListPriceHistoryModelMapper = productListPriceHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductListPriceHistoryRequestModel model = new ApiProductListPriceHistoryRequestModel();
-                                model.SetProperties(model.EndDate,
-                                                    model.ListPrice,
-                                                    model.ModifiedDate,
-                                                    model.StartDate);
-                                patch.ApplyTo(model);
+                                ApiProductListPriceHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductListPriceHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductListPriceHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.ProductListPriceHistoryService.Update(id, model);
+                        ApiProductListPriceHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductListPriceHistoryResponseModel response = await this.ProductListPriceHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductListPriceHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductListPriceHistoryResponseModel response = await this.ProductListPriceHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -195,9 +204,35 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductListPriceHistoryRequestModel> CreatePatch(ApiProductListPriceHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductListPriceHistoryRequestModel>();
+                        patch.Replace(x => x.EndDate, model.EndDate);
+                        patch.Replace(x => x.ListPrice, model.ListPrice);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.StartDate, model.StartDate);
+                        return patch;
+                }
+
+                private async Task<ApiProductListPriceHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductListPriceHistoryRequestModel> patch)
+                {
+                        var record = await this.ProductListPriceHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductListPriceHistoryRequestModel request = this.ProductListPriceHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ea00f8a0cdd640f722ec3cc90b2b6d28</Hash>
+    <Hash>2610cea812d50d83e6282d6196869c6f</Hash>
 </Codenesium>*/

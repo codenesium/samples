@@ -9,18 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesTaxRateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int salesTaxRateID,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
-                        int salesTaxRateID,
                         int stateProvinceID,
                         decimal taxRate,
                         int taxType)
                 {
+                        this.SalesTaxRateID = salesTaxRateID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
-                        this.SalesTaxRateID = salesTaxRateID;
                         this.StateProvinceID = stateProvinceID;
                         this.TaxRate = taxRate;
                         this.TaxType = taxType;
@@ -110,5 +110,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c9ca88664d7a5bd702d8adf14fc2e21e</Hash>
+    <Hash>d7c5ec385aa9e6e69c376728d4187f94</Hash>
 </Codenesium>*/

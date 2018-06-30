@@ -9,15 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesReasonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int salesReasonID,
                         DateTime modifiedDate,
                         string name,
-                        string reasonType,
-                        int salesReasonID)
+                        string reasonType)
                 {
+                        this.SalesReasonID = salesReasonID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.ReasonType = reasonType;
-                        this.SalesReasonID = salesReasonID;
                 }
 
                 public DateTime ModifiedDate { get; private set; }
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>81c6b156051cdfcb40593abeb9a2a48e</Hash>
+    <Hash>3e11216c52530fd96722fbf9a96e5a1d</Hash>
 </Codenesium>*/

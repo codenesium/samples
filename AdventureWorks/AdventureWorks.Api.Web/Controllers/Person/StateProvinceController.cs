@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<StateProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStateProvinceService stateProvinceService
+                        IStateProvinceService stateProvinceService,
+                        IApiStateProvinceModelMapper stateProvinceModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               stateProvinceService)
+                               stateProvinceService,
+                               stateProvinceModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d63bc192d49d4d6a9a50dc37b1d69ef0</Hash>
+    <Hash>f2aa4bfcb1b3caeda59ceac0869d635a</Hash>
 </Codenesium>*/

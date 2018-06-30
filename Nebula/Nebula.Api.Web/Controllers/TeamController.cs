@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<TeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITeamService teamService
+                        ITeamService teamService,
+                        IApiTeamModelMapper teamModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               teamService)
+                               teamService,
+                               teamModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fc34206ad0cf97aca2dd818a6be38c3e</Hash>
+    <Hash>d88ddd989b852f38d2574fd066ec03eb</Hash>
 </Codenesium>*/

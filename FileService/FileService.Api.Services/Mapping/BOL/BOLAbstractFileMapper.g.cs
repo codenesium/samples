@@ -34,7 +34,7 @@ namespace FileServiceNS.Api.Services
                 {
                         var model = new ApiFileResponseModel();
 
-                        model.SetProperties(boFile.BucketId, boFile.DateCreated, boFile.Description, boFile.Expiration, boFile.Extension, boFile.ExternalId, boFile.FileSizeInBytes, boFile.FileTypeId, boFile.Id, boFile.Location, boFile.PrivateKey, boFile.PublicKey);
+                        model.SetProperties(boFile.Id, boFile.BucketId, boFile.DateCreated, boFile.Description, boFile.Expiration, boFile.Extension, boFile.ExternalId, boFile.FileSizeInBytes, boFile.FileTypeId, boFile.Location, boFile.PrivateKey, boFile.PublicKey);
 
                         return model;
                 }
@@ -55,5 +55,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb41e89bf29fc5262f9c50b3b98d922a</Hash>
+    <Hash>1c60ebcdbf593880cc46916189a52e4f</Hash>
 </Codenesium>*/

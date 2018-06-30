@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ILocationService LocationService { get; private set; }
 
+                protected IApiLocationModelMapper LocationModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILocationService locationService
+                        ILocationService locationService,
+                        IApiLocationModelMapper locationModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LocationService = locationService;
+                        this.LocationModelMapper = locationModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiLocationRequestModel model = new ApiLocationRequestModel();
-                                model.SetProperties(model.Availability,
-                                                    model.CostRate,
-                                                    model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiLocationRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LocationService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiLocationRequestModel model)
                 {
-                        ActionResponse result = await this.LocationService.Update(id, model);
+                        ApiLocationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLocationResponseModel response = await this.LocationService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LocationService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLocationResponseModel response = await this.LocationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -242,9 +251,35 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiLocationRequestModel> CreatePatch(ApiLocationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLocationRequestModel>();
+                        patch.Replace(x => x.Availability, model.Availability);
+                        patch.Replace(x => x.CostRate, model.CostRate);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiLocationRequestModel> PatchModel(short id, JsonPatchDocument<ApiLocationRequestModel> patch)
+                {
+                        var record = await this.LocationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLocationRequestModel request = this.LocationModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9893c416b20066aec43ae754971ed109</Hash>
+    <Hash>24337383e45c0ae55d556c43557a2fed</Hash>
 </Codenesium>*/

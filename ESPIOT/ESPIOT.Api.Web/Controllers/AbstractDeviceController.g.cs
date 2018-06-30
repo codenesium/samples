@@ -19,6 +19,8 @@ namespace ESPIOTNS.Api.Web
         {
                 protected IDeviceService DeviceService { get; private set; }
 
+                protected IApiDeviceModelMapper DeviceModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace ESPIOTNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractDeviceController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDeviceService deviceService
+                        IDeviceService deviceService,
+                        IApiDeviceModelMapper deviceModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.DeviceService = deviceService;
+                        this.DeviceModelMapper = deviceModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace ESPIOTNS.Api.Web
                         }
                         else
                         {
-                                ApiDeviceRequestModel model = new ApiDeviceRequestModel();
-                                model.SetProperties(model.Name,
-                                                    model.PublicId);
-                                patch.ApplyTo(model);
+                                ApiDeviceRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.DeviceService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace ESPIOTNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceRequestModel model)
                 {
-                        ActionResponse result = await this.DeviceService.Update(id, model);
+                        ApiDeviceRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiDeviceResponseModel response = await this.DeviceService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.DeviceService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiDeviceResponseModel response = await this.DeviceService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -226,9 +237,33 @@ namespace ESPIOTNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.PublicId, model.PublicId);
+                        return patch;
+                }
+
+                private async Task<ApiDeviceRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeviceRequestModel> patch)
+                {
+                        var record = await this.DeviceService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiDeviceRequestModel request = this.DeviceModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>634bb6919b6de122a5334d887c358459</Hash>
+    <Hash>4fc5973b1d9e5c0dd12be33272c2c636</Hash>
 </Codenesium>*/

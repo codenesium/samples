@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ScrapReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IScrapReasonService scrapReasonService
+                        IScrapReasonService scrapReasonService,
+                        IApiScrapReasonModelMapper scrapReasonModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               scrapReasonService)
+                               scrapReasonService,
+                               scrapReasonModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>288ab2d60a82bf0f29106b20ee553078</Hash>
+    <Hash>288ca5e85a92c00dd61f22cf6bc75dd6</Hash>
 </Codenesium>*/

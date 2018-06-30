@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesOrderDetailResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int salesOrderID,
                         string carrierTrackingNumber,
                         decimal lineTotal,
                         DateTime modifiedDate,
@@ -16,11 +17,11 @@ namespace AdventureWorksNS.Api.Contracts
                         int productID,
                         Guid rowguid,
                         int salesOrderDetailID,
-                        int salesOrderID,
                         int specialOfferID,
                         decimal unitPrice,
                         decimal unitPriceDiscount)
                 {
+                        this.SalesOrderID = salesOrderID;
                         this.CarrierTrackingNumber = carrierTrackingNumber;
                         this.LineTotal = lineTotal;
                         this.ModifiedDate = modifiedDate;
@@ -28,7 +29,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ProductID = productID;
                         this.Rowguid = rowguid;
                         this.SalesOrderDetailID = salesOrderDetailID;
-                        this.SalesOrderID = salesOrderID;
                         this.SpecialOfferID = specialOfferID;
                         this.UnitPrice = unitPrice;
                         this.UnitPriceDiscount = unitPriceDiscount;
@@ -172,5 +172,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>44b7c380fc81d8d4f821839a73228e24</Hash>
+    <Hash>40c901c7ab81a67118a6f6d7ef9c4e23</Hash>
 </Codenesium>*/

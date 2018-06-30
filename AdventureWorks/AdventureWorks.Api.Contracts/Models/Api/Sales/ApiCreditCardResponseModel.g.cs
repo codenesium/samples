@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiCreditCardResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int creditCardID,
                         string cardNumber,
                         string cardType,
-                        int creditCardID,
                         int expMonth,
                         short expYear,
                         DateTime modifiedDate)
                 {
+                        this.CreditCardID = creditCardID;
                         this.CardNumber = cardNumber;
                         this.CardType = cardType;
-                        this.CreditCardID = creditCardID;
                         this.ExpMonth = expMonth;
                         this.ExpYear = expYear;
                         this.ModifiedDate = modifiedDate;
@@ -97,5 +97,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cf3284bb9e3a8dfff538615441e75cbe</Hash>
+    <Hash>0b831ac6797e7a72dde27591dbdb0c91</Hash>
 </Codenesium>*/

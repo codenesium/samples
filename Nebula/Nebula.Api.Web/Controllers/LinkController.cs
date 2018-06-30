@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<LinkController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILinkService linkService
+                        ILinkService linkService,
+                        IApiLinkModelMapper linkModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               linkService)
+                               linkService,
+                               linkModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>47b59bff319ce0ac6f42fc16a07ad47f</Hash>
+    <Hash>49acb489151e73a9044633418f5a49e6</Hash>
 </Codenesium>*/

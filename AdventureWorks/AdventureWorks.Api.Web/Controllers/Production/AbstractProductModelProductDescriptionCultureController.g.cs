@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductModelProductDescriptionCultureService ProductModelProductDescriptionCultureService { get; private set; }
 
+                protected IApiProductModelProductDescriptionCultureModelMapper ProductModelProductDescriptionCultureModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductModelProductDescriptionCultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService
+                        IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService,
+                        IApiProductModelProductDescriptionCultureModelMapper productModelProductDescriptionCultureModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductModelProductDescriptionCultureService = productModelProductDescriptionCultureService;
+                        this.ProductModelProductDescriptionCultureModelMapper = productModelProductDescriptionCultureModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductModelProductDescriptionCultureRequestModel model = new ApiProductModelProductDescriptionCultureRequestModel();
-                                model.SetProperties(model.CultureID,
-                                                    model.ModifiedDate,
-                                                    model.ProductDescriptionID);
-                                patch.ApplyTo(model);
+                                ApiProductModelProductDescriptionCultureRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
                 {
-                        ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, model);
+                        ApiProductModelProductDescriptionCultureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductModelProductDescriptionCultureResponseModel response = await this.ProductModelProductDescriptionCultureService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductModelProductDescriptionCultureResponseModel response = await this.ProductModelProductDescriptionCultureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -194,9 +204,34 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> CreatePatch(ApiProductModelProductDescriptionCultureRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel>();
+                        patch.Replace(x => x.CultureID, model.CultureID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductDescriptionID, model.ProductDescriptionID);
+                        return patch;
+                }
+
+                private async Task<ApiProductModelProductDescriptionCultureRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch)
+                {
+                        var record = await this.ProductModelProductDescriptionCultureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductModelProductDescriptionCultureRequestModel request = this.ProductModelProductDescriptionCultureModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ed9ef1fa37644ab3ad01c33bd168f67b</Hash>
+    <Hash>8f43294a7000651e3815547514d80770</Hash>
 </Codenesium>*/

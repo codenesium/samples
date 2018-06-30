@@ -9,14 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiAWBuildVersionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int systemInformationID,
                         string database_Version,
                         DateTime modifiedDate,
-                        int systemInformationID,
                         DateTime versionDate)
                 {
+                        this.SystemInformationID = systemInformationID;
                         this.Database_Version = database_Version;
                         this.ModifiedDate = modifiedDate;
-                        this.SystemInformationID = systemInformationID;
                         this.VersionDate = versionDate;
                 }
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e57515fc64c12a79aae76d45a6648457</Hash>
+    <Hash>3af415404d26385862b1f349cb70b0bd</Hash>
 </Codenesium>*/

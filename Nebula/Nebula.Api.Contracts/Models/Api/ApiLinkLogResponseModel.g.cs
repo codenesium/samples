@@ -9,13 +9,13 @@ namespace NebulaNS.Api.Contracts
         public partial class ApiLinkLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        DateTime dateEntered,
                         int id,
+                        DateTime dateEntered,
                         int linkId,
                         string log)
                 {
-                        this.DateEntered = dateEntered;
                         this.Id = id;
+                        this.DateEntered = dateEntered;
                         this.LinkId = linkId;
                         this.Log = log;
 
@@ -75,5 +75,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c9d21fa30477cf92d46a46a6e931d836</Hash>
+    <Hash>5092f2139ee70682237165e9f88de4f3</Hash>
 </Codenesium>*/

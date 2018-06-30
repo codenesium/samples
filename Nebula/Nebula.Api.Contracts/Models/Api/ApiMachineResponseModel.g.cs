@@ -9,15 +9,15 @@ namespace NebulaNS.Api.Contracts
         public partial class ApiMachineResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        string description,
                         int id,
+                        string description,
                         string jwtKey,
                         string lastIpAddress,
                         Guid machineGuid,
                         string name)
                 {
-                        this.Description = description;
                         this.Id = id;
+                        this.Description = description;
                         this.JwtKey = jwtKey;
                         this.LastIpAddress = lastIpAddress;
                         this.MachineGuid = machineGuid;
@@ -97,5 +97,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>809550df3487c48d4e8684f1224a9138</Hash>
+    <Hash>06e1203f17329568da0f69c31ff8e267</Hash>
 </Codenesium>*/

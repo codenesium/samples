@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IBusinessEntityContactService BusinessEntityContactService { get; private set; }
 
+                protected IApiBusinessEntityContactModelMapper BusinessEntityContactModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractBusinessEntityContactController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBusinessEntityContactService businessEntityContactService
+                        IBusinessEntityContactService businessEntityContactService,
+                        IApiBusinessEntityContactModelMapper businessEntityContactModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.BusinessEntityContactService = businessEntityContactService;
+                        this.BusinessEntityContactModelMapper = businessEntityContactModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiBusinessEntityContactRequestModel model = new ApiBusinessEntityContactRequestModel();
-                                model.SetProperties(model.ContactTypeID,
-                                                    model.ModifiedDate,
-                                                    model.PersonID,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiBusinessEntityContactRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.BusinessEntityContactService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityContactRequestModel model)
                 {
-                        ActionResponse result = await this.BusinessEntityContactService.Update(id, model);
+                        ApiBusinessEntityContactRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiBusinessEntityContactResponseModel response = await this.BusinessEntityContactService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.BusinessEntityContactService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiBusinessEntityContactResponseModel response = await this.BusinessEntityContactService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -217,9 +226,35 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiBusinessEntityContactRequestModel> CreatePatch(ApiBusinessEntityContactRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBusinessEntityContactRequestModel>();
+                        patch.Replace(x => x.ContactTypeID, model.ContactTypeID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PersonID, model.PersonID);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiBusinessEntityContactRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityContactRequestModel> patch)
+                {
+                        var record = await this.BusinessEntityContactService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiBusinessEntityContactRequestModel request = this.BusinessEntityContactModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>af07e5aa2cf2d388d618269fe27a9d0b</Hash>
+    <Hash>0fb6da1de9c789b0ed64d59eca0ff2f8</Hash>
 </Codenesium>*/

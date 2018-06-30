@@ -9,19 +9,19 @@ namespace FermataFishNS.Api.Contracts
         public partial class ApiStudioResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         string address1,
                         string address2,
                         string city,
-                        int id,
                         string name,
                         int stateId,
                         string website,
                         string zip)
                 {
+                        this.Id = id;
                         this.Address1 = address1;
                         this.Address2 = address2;
                         this.City = city;
-                        this.Id = id;
                         this.Name = name;
                         this.StateId = stateId;
                         this.Website = website;
@@ -127,5 +127,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c3adc415290716a09ebce9668f556dd7</Hash>
+    <Hash>ec3b9603926d356ace9a7f63a17993bd</Hash>
 </Codenesium>*/

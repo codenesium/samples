@@ -9,12 +9,12 @@ namespace FileServiceNS.Api.Contracts
         public partial class ApiBucketResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Guid externalId,
                         int id,
+                        Guid externalId,
                         string name)
                 {
-                        this.ExternalId = externalId;
                         this.Id = id;
+                        this.ExternalId = externalId;
                         this.Name = name;
                 }
 
@@ -58,5 +58,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49e86c6f4bcf5b4d75f3f328b960d24e</Hash>
+    <Hash>cfd312705ea47950a71714c3cd7ade73</Hash>
 </Codenesium>*/

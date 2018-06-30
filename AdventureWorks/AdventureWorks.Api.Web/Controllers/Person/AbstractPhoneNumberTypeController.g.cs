@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IPhoneNumberTypeService PhoneNumberTypeService { get; private set; }
 
+                protected IApiPhoneNumberTypeModelMapper PhoneNumberTypeModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractPhoneNumberTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPhoneNumberTypeService phoneNumberTypeService
+                        IPhoneNumberTypeService phoneNumberTypeService,
+                        IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.PhoneNumberTypeService = phoneNumberTypeService;
+                        this.PhoneNumberTypeModelMapper = phoneNumberTypeModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiPhoneNumberTypeRequestModel model = new ApiPhoneNumberTypeRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiPhoneNumberTypeRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.PhoneNumberTypeService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
                 {
-                        ActionResponse result = await this.PhoneNumberTypeService.Update(id, model);
+                        ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.PhoneNumberTypeService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -207,9 +218,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiPhoneNumberTypeRequestModel> CreatePatch(ApiPhoneNumberTypeRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPhoneNumberTypeRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiPhoneNumberTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
+                {
+                        var record = await this.PhoneNumberTypeService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiPhoneNumberTypeRequestModel request = this.PhoneNumberTypeModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b245e70e733ff2d97dde9067f7dea581</Hash>
+    <Hash>93cafdc2f0a89f98e09467ef0e305819</Hash>
 </Codenesium>*/

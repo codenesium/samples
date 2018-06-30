@@ -9,25 +9,25 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiPurchaseOrderDetailResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int purchaseOrderID,
                         DateTime dueDate,
                         decimal lineTotal,
                         DateTime modifiedDate,
                         short orderQty,
                         int productID,
                         int purchaseOrderDetailID,
-                        int purchaseOrderID,
                         decimal receivedQty,
                         decimal rejectedQty,
                         decimal stockedQty,
                         decimal unitPrice)
                 {
+                        this.PurchaseOrderID = purchaseOrderID;
                         this.DueDate = dueDate;
                         this.LineTotal = lineTotal;
                         this.ModifiedDate = modifiedDate;
                         this.OrderQty = orderQty;
                         this.ProductID = productID;
                         this.PurchaseOrderDetailID = purchaseOrderDetailID;
-                        this.PurchaseOrderID = purchaseOrderID;
                         this.ReceivedQty = receivedQty;
                         this.RejectedQty = rejectedQty;
                         this.StockedQty = stockedQty;
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e5fe9a717f5b9471938efdb7c033abe4</Hash>
+    <Hash>92ca3c098caacfe16fed6b48f598199e</Hash>
 </Codenesium>*/

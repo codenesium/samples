@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductProductPhotoService ProductProductPhotoService { get; private set; }
 
+                protected IApiProductProductPhotoModelMapper ProductProductPhotoModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductProductPhotoController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductProductPhotoService productProductPhotoService
+                        IProductProductPhotoService productProductPhotoService,
+                        IApiProductProductPhotoModelMapper productProductPhotoModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductProductPhotoService = productProductPhotoService;
+                        this.ProductProductPhotoModelMapper = productProductPhotoModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductProductPhotoRequestModel model = new ApiProductProductPhotoRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Primary,
-                                                    model.ProductPhotoID);
-                                patch.ApplyTo(model);
+                                ApiProductProductPhotoRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductProductPhotoService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductProductPhotoRequestModel model)
                 {
-                        ActionResponse result = await this.ProductProductPhotoService.Update(id, model);
+                        ApiProductProductPhotoRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductProductPhotoResponseModel response = await this.ProductProductPhotoService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductProductPhotoService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductProductPhotoResponseModel response = await this.ProductProductPhotoService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -194,9 +204,34 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductProductPhotoRequestModel> CreatePatch(ApiProductProductPhotoRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductProductPhotoRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Primary, model.Primary);
+                        patch.Replace(x => x.ProductPhotoID, model.ProductPhotoID);
+                        return patch;
+                }
+
+                private async Task<ApiProductProductPhotoRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductProductPhotoRequestModel> patch)
+                {
+                        var record = await this.ProductProductPhotoService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductProductPhotoRequestModel request = this.ProductProductPhotoModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>768a8c834751d41d9dc20dcbb0f698c6</Hash>
+    <Hash>6dfad8cf80205c2beacdbaf918567f00</Hash>
 </Codenesium>*/

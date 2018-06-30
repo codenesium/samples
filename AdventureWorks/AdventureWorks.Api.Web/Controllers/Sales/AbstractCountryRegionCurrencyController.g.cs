@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICountryRegionCurrencyService CountryRegionCurrencyService { get; private set; }
 
+                protected IApiCountryRegionCurrencyModelMapper CountryRegionCurrencyModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCountryRegionCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICountryRegionCurrencyService countryRegionCurrencyService
+                        ICountryRegionCurrencyService countryRegionCurrencyService,
+                        IApiCountryRegionCurrencyModelMapper countryRegionCurrencyModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CountryRegionCurrencyService = countryRegionCurrencyService;
+                        this.CountryRegionCurrencyModelMapper = countryRegionCurrencyModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCountryRegionCurrencyRequestModel model = new ApiCountryRegionCurrencyRequestModel();
-                                model.SetProperties(model.CurrencyCode,
-                                                    model.ModifiedDate);
-                                patch.ApplyTo(model);
+                                ApiCountryRegionCurrencyRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CountryRegionCurrencyService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionCurrencyRequestModel model)
                 {
-                        ActionResponse result = await this.CountryRegionCurrencyService.Update(id, model);
+                        ApiCountryRegionCurrencyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCountryRegionCurrencyResponseModel response = await this.CountryRegionCurrencyService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CountryRegionCurrencyService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCountryRegionCurrencyResponseModel response = await this.CountryRegionCurrencyService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -204,9 +215,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCountryRegionCurrencyRequestModel> CreatePatch(ApiCountryRegionCurrencyRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCountryRegionCurrencyRequestModel>();
+                        patch.Replace(x => x.CurrencyCode, model.CurrencyCode);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        return patch;
+                }
+
+                private async Task<ApiCountryRegionCurrencyRequestModel> PatchModel(string id, JsonPatchDocument<ApiCountryRegionCurrencyRequestModel> patch)
+                {
+                        var record = await this.CountryRegionCurrencyService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCountryRegionCurrencyRequestModel request = this.CountryRegionCurrencyModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f52acf60886419ece1f821aeca296003</Hash>
+    <Hash>85f3544fa7c67c63fbf4b9105d627bdc</Hash>
 </Codenesium>*/

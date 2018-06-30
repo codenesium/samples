@@ -9,18 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiShipMethodResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int shipMethodID,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
                         decimal shipBase,
-                        int shipMethodID,
                         decimal shipRate)
                 {
+                        this.ShipMethodID = shipMethodID;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
                         this.ShipBase = shipBase;
-                        this.ShipMethodID = shipMethodID;
                         this.ShipRate = shipRate;
                 }
 
@@ -97,5 +97,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>46810ace8fb6d9d1c0191f8ffacaf5c8</Hash>
+    <Hash>c179b11a7017355906823daa77b840e0</Hash>
 </Codenesium>*/

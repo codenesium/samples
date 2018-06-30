@@ -9,18 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductInventoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productID,
                         int bin,
                         short locationID,
                         DateTime modifiedDate,
-                        int productID,
                         short quantity,
                         Guid rowguid,
                         string shelf)
                 {
+                        this.ProductID = productID;
                         this.Bin = bin;
                         this.LocationID = locationID;
                         this.ModifiedDate = modifiedDate;
-                        this.ProductID = productID;
                         this.Quantity = quantity;
                         this.Rowguid = rowguid;
                         this.Shelf = shelf;
@@ -110,5 +110,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f9bffc5531f569afc5a211a351253010</Hash>
+    <Hash>78e495c0f3de402f01d1722ee00fa0fd</Hash>
 </Codenesium>*/

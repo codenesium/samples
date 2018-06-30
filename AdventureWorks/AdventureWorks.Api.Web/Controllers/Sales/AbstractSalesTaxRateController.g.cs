@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesTaxRateService SalesTaxRateService { get; private set; }
 
+                protected IApiSalesTaxRateModelMapper SalesTaxRateModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesTaxRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesTaxRateService salesTaxRateService
+                        ISalesTaxRateService salesTaxRateService,
+                        IApiSalesTaxRateModelMapper salesTaxRateModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesTaxRateService = salesTaxRateService;
+                        this.SalesTaxRateModelMapper = salesTaxRateModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesTaxRateRequestModel model = new ApiSalesTaxRateRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid,
-                                                    model.StateProvinceID,
-                                                    model.TaxRate,
-                                                    model.TaxType);
-                                patch.ApplyTo(model);
+                                ApiSalesTaxRateRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesTaxRateService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateRequestModel model)
                 {
-                        ActionResponse result = await this.SalesTaxRateService.Update(id, model);
+                        ApiSalesTaxRateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesTaxRateService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -216,9 +223,37 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                private JsonPatchDocument<ApiSalesTaxRateRequestModel> CreatePatch(ApiSalesTaxRateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesTaxRateRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StateProvinceID, model.StateProvinceID);
+                        patch.Replace(x => x.TaxRate, model.TaxRate);
+                        patch.Replace(x => x.TaxType, model.TaxType);
+                        return patch;
+                }
+
+                private async Task<ApiSalesTaxRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTaxRateRequestModel> patch)
+                {
+                        var record = await this.SalesTaxRateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesTaxRateRequestModel request = this.SalesTaxRateModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b5e8d038e0fbfdc9d6055bc3fb6793bd</Hash>
+    <Hash>0dbf5fbb6b4f263b6c638a1a1db989d0</Hash>
 </Codenesium>*/

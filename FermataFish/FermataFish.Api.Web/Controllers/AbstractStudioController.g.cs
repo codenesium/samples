@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IStudioService StudioService { get; private set; }
 
+                protected IApiStudioModelMapper StudioModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractStudioController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStudioService studioService
+                        IStudioService studioService,
+                        IApiStudioModelMapper studioModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.StudioService = studioService;
+                        this.StudioModelMapper = studioModelMapper;
                 }
 
                 [HttpGet]
@@ -134,15 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiStudioRequestModel model = new ApiStudioRequestModel();
-                                model.SetProperties(model.Address1,
-                                                    model.Address2,
-                                                    model.City,
-                                                    model.Name,
-                                                    model.StateId,
-                                                    model.Website,
-                                                    model.Zip);
-                                patch.ApplyTo(model);
+                                ApiStudioRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.StudioService.Update(id, model);
 
                                 if (result.Success)
@@ -166,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudioRequestModel model)
                 {
-                        ActionResponse result = await this.StudioService.Update(id, model);
+                        ApiStudioRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiStudioResponseModel response = await this.StudioService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.StudioService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiStudioResponseModel response = await this.StudioService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -324,9 +330,38 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiStudioRequestModel> CreatePatch(ApiStudioRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStudioRequestModel>();
+                        patch.Replace(x => x.Address1, model.Address1);
+                        patch.Replace(x => x.Address2, model.Address2);
+                        patch.Replace(x => x.City, model.City);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.StateId, model.StateId);
+                        patch.Replace(x => x.Website, model.Website);
+                        patch.Replace(x => x.Zip, model.Zip);
+                        return patch;
+                }
+
+                private async Task<ApiStudioRequestModel> PatchModel(int id, JsonPatchDocument<ApiStudioRequestModel> patch)
+                {
+                        var record = await this.StudioService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiStudioRequestModel request = this.StudioModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cd864d42032498edd5aad40939091ceb</Hash>
+    <Hash>780997c0d5c9d20bf1c29818b380403a</Hash>
 </Codenesium>*/

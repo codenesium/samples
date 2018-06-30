@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiIllustrationResponseModel();
 
-                        model.SetProperties(boIllustration.Diagram, boIllustration.IllustrationID, boIllustration.ModifiedDate);
+                        model.SetProperties(boIllustration.IllustrationID, boIllustration.Diagram, boIllustration.ModifiedDate);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2750dbc13611af1bc7ef50b903b6c040</Hash>
+    <Hash>8b73199754a7b0199deccd2bdf9f52d3</Hash>
 </Codenesium>*/

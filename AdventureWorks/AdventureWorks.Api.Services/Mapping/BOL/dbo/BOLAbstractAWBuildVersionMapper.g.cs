@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiAWBuildVersionResponseModel();
 
-                        model.SetProperties(boAWBuildVersion.Database_Version, boAWBuildVersion.ModifiedDate, boAWBuildVersion.SystemInformationID, boAWBuildVersion.VersionDate);
+                        model.SetProperties(boAWBuildVersion.SystemInformationID, boAWBuildVersion.Database_Version, boAWBuildVersion.ModifiedDate, boAWBuildVersion.VersionDate);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d9babf915c7ad549e82b04d0dd243ac</Hash>
+    <Hash>df8b117337750f64d73204ac0294ced0</Hash>
 </Codenesium>*/

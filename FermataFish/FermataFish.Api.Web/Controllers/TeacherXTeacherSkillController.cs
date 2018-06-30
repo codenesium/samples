@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<TeacherXTeacherSkillController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITeacherXTeacherSkillService teacherXTeacherSkillService
+                        ITeacherXTeacherSkillService teacherXTeacherSkillService,
+                        IApiTeacherXTeacherSkillModelMapper teacherXTeacherSkillModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               teacherXTeacherSkillService)
+                               teacherXTeacherSkillService,
+                               teacherXTeacherSkillModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7e68ace7c2ae9bbda3b34fca5c1659eb</Hash>
+    <Hash>c5c028639e4a4dbe342028272b6d1375</Hash>
 </Codenesium>*/

@@ -9,20 +9,20 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductReviewResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productReviewID,
                         string comments,
                         string emailAddress,
                         DateTime modifiedDate,
                         int productID,
-                        int productReviewID,
                         int rating,
                         DateTime reviewDate,
                         string reviewerName)
                 {
+                        this.ProductReviewID = productReviewID;
                         this.Comments = comments;
                         this.EmailAddress = emailAddress;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
-                        this.ProductReviewID = productReviewID;
                         this.Rating = rating;
                         this.ReviewDate = reviewDate;
                         this.ReviewerName = reviewerName;
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2b0d3a806e8ca66d70e2661961c5a652</Hash>
+    <Hash>a06b084354a27d9fda3f70c70e6a7141</Hash>
 </Codenesium>*/

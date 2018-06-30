@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiLocationResponseModel();
 
-                        model.SetProperties(boLocation.Availability, boLocation.CostRate, boLocation.LocationID, boLocation.ModifiedDate, boLocation.Name);
+                        model.SetProperties(boLocation.LocationID, boLocation.Availability, boLocation.CostRate, boLocation.ModifiedDate, boLocation.Name);
 
                         return model;
                 }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e660443410511cb1e7c7463a81f73df</Hash>
+    <Hash>69bab989d7c3ea94c227c4d363700814</Hash>
 </Codenesium>*/

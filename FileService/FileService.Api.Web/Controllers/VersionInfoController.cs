@@ -20,12 +20,14 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<VersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IVersionInfoService versionInfoService
+                        IVersionInfoService versionInfoService,
+                        IApiVersionInfoModelMapper versionInfoModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               versionInfoService)
+                               versionInfoService,
+                               versionInfoModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3b637a27c0735dd61eb0f10cd6f76c09</Hash>
+    <Hash>258bb766358ff7bb1e65635c8a5ad628</Hash>
 </Codenesium>*/

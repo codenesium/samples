@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<WorkOrderController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IWorkOrderService workOrderService
+                        IWorkOrderService workOrderService,
+                        IApiWorkOrderModelMapper workOrderModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               workOrderService)
+                               workOrderService,
+                               workOrderModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>83ca5f5d73016e2eaa853de1671442ef</Hash>
+    <Hash>4bb8faa5d577ea21faae33ae9adf5904</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<LocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILocationService locationService
+                        ILocationService locationService,
+                        IApiLocationModelMapper locationModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               locationService)
+                               locationService,
+                               locationModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>993888db542b09c469afb2382533b07b</Hash>
+    <Hash>02a1b710777b592b0c35af0beed56017</Hash>
 </Codenesium>*/

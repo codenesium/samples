@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected ILinkService LinkService { get; private set; }
 
+                protected IApiLinkModelMapper LinkModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLinkController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILinkService linkService
+                        ILinkService linkService,
+                        IApiLinkModelMapper linkModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LinkService = linkService;
+                        this.LinkModelMapper = linkModelMapper;
                 }
 
                 [HttpGet]
@@ -134,20 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiLinkRequestModel model = new ApiLinkRequestModel();
-                                model.SetProperties(model.AssignedMachineId,
-                                                    model.ChainId,
-                                                    model.DateCompleted,
-                                                    model.DateStarted,
-                                                    model.DynamicParameters,
-                                                    model.ExternalId,
-                                                    model.LinkStatusId,
-                                                    model.Name,
-                                                    model.Order,
-                                                    model.Response,
-                                                    model.StaticParameters,
-                                                    model.TimeoutInSeconds);
-                                patch.ApplyTo(model);
+                                ApiLinkRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LinkService.Update(id, model);
 
                                 if (result.Success)
@@ -171,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkRequestModel model)
                 {
-                        ActionResponse result = await this.LinkService.Update(id, model);
+                        ApiLinkRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLinkResponseModel response = await this.LinkService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LinkService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLinkResponseModel response = await this.LinkService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -217,9 +218,43 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiLinkRequestModel> CreatePatch(ApiLinkRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLinkRequestModel>();
+                        patch.Replace(x => x.AssignedMachineId, model.AssignedMachineId);
+                        patch.Replace(x => x.ChainId, model.ChainId);
+                        patch.Replace(x => x.DateCompleted, model.DateCompleted);
+                        patch.Replace(x => x.DateStarted, model.DateStarted);
+                        patch.Replace(x => x.DynamicParameters, model.DynamicParameters);
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.LinkStatusId, model.LinkStatusId);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Order, model.Order);
+                        patch.Replace(x => x.Response, model.Response);
+                        patch.Replace(x => x.StaticParameters, model.StaticParameters);
+                        patch.Replace(x => x.TimeoutInSeconds, model.TimeoutInSeconds);
+                        return patch;
+                }
+
+                private async Task<ApiLinkRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkRequestModel> patch)
+                {
+                        var record = await this.LinkService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLinkRequestModel request = this.LinkModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0b008b1340704ed58a85006bc8ce7af0</Hash>
+    <Hash>86465388060e09e28d749ca26c4756bc</Hash>
 </Codenesium>*/

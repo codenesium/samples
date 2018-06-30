@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IEmployeeService EmployeeService { get; private set; }
 
+                protected IApiEmployeeModelMapper EmployeeModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractEmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeeService employeeService
+                        IEmployeeService employeeService,
+                        IApiEmployeeModelMapper employeeModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.EmployeeService = employeeService;
+                        this.EmployeeModelMapper = employeeModelMapper;
                 }
 
                 [HttpGet]
@@ -134,22 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiEmployeeRequestModel model = new ApiEmployeeRequestModel();
-                                model.SetProperties(model.BirthDate,
-                                                    model.CurrentFlag,
-                                                    model.Gender,
-                                                    model.HireDate,
-                                                    model.JobTitle,
-                                                    model.LoginID,
-                                                    model.MaritalStatus,
-                                                    model.ModifiedDate,
-                                                    model.NationalIDNumber,
-                                                    model.OrganizationLevel,
-                                                    model.Rowguid,
-                                                    model.SalariedFlag,
-                                                    model.SickLeaveHours,
-                                                    model.VacationHours);
-                                patch.ApplyTo(model);
+                                ApiEmployeeRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.EmployeeService.Update(id, model);
 
                                 if (result.Success)
@@ -173,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeRequestModel model)
                 {
-                        ActionResponse result = await this.EmployeeService.Update(id, model);
+                        ApiEmployeeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.EmployeeService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -285,9 +284,45 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiEmployeeRequestModel> CreatePatch(ApiEmployeeRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiEmployeeRequestModel>();
+                        patch.Replace(x => x.BirthDate, model.BirthDate);
+                        patch.Replace(x => x.CurrentFlag, model.CurrentFlag);
+                        patch.Replace(x => x.Gender, model.Gender);
+                        patch.Replace(x => x.HireDate, model.HireDate);
+                        patch.Replace(x => x.JobTitle, model.JobTitle);
+                        patch.Replace(x => x.LoginID, model.LoginID);
+                        patch.Replace(x => x.MaritalStatus, model.MaritalStatus);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.NationalIDNumber, model.NationalIDNumber);
+                        patch.Replace(x => x.OrganizationLevel, model.OrganizationLevel);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalariedFlag, model.SalariedFlag);
+                        patch.Replace(x => x.SickLeaveHours, model.SickLeaveHours);
+                        patch.Replace(x => x.VacationHours, model.VacationHours);
+                        return patch;
+                }
+
+                private async Task<ApiEmployeeRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeeRequestModel> patch)
+                {
+                        var record = await this.EmployeeService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiEmployeeRequestModel request = this.EmployeeModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a5c813cff926c117243afe5385dd5432</Hash>
+    <Hash>8cbde87bf696659ab6cda165969ac959</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<BillOfMaterialsController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBillOfMaterialsService billOfMaterialsService
+                        IBillOfMaterialsService billOfMaterialsService,
+                        IApiBillOfMaterialsModelMapper billOfMaterialsModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               billOfMaterialsService)
+                               billOfMaterialsService,
+                               billOfMaterialsModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bf7e11e11edd098c49fcbe9103882d5a</Hash>
+    <Hash>9e77363af84b01c8209cfeb5bb2459c0</Hash>
 </Codenesium>*/

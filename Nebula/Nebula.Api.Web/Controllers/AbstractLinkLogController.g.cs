@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected ILinkLogService LinkLogService { get; private set; }
 
+                protected IApiLinkLogModelMapper LinkLogModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLinkLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILinkLogService linkLogService
+                        ILinkLogService linkLogService,
+                        IApiLinkLogModelMapper linkLogModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LinkLogService = linkLogService;
+                        this.LinkLogModelMapper = linkLogModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiLinkLogRequestModel model = new ApiLinkLogRequestModel();
-                                model.SetProperties(model.DateEntered,
-                                                    model.LinkId,
-                                                    model.Log);
-                                patch.ApplyTo(model);
+                                ApiLinkLogRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LinkLogService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogRequestModel model)
                 {
-                        ActionResponse result = await this.LinkLogService.Update(id, model);
+                        ApiLinkLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLinkLogResponseModel response = await this.LinkLogService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LinkLogService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLinkLogResponseModel response = await this.LinkLogService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -194,9 +204,34 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiLinkLogRequestModel> CreatePatch(ApiLinkLogRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLinkLogRequestModel>();
+                        patch.Replace(x => x.DateEntered, model.DateEntered);
+                        patch.Replace(x => x.LinkId, model.LinkId);
+                        patch.Replace(x => x.Log, model.Log);
+                        return patch;
+                }
+
+                private async Task<ApiLinkLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkLogRequestModel> patch)
+                {
+                        var record = await this.LinkLogService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLinkLogRequestModel request = this.LinkLogModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>af076f18d1162687f1839665108f8c7b</Hash>
+    <Hash>dcbff345a47635becefa4506a0098d99</Hash>
 </Codenesium>*/

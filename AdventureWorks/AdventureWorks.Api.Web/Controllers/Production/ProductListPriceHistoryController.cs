@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ProductListPriceHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductListPriceHistoryService productListPriceHistoryService
+                        IProductListPriceHistoryService productListPriceHistoryService,
+                        IApiProductListPriceHistoryModelMapper productListPriceHistoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               productListPriceHistoryService)
+                               productListPriceHistoryService,
+                               productListPriceHistoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d3aadb4be618c98eb68bb343924e0647</Hash>
+    <Hash>d0c4bec7f10c747ca08cd2a1b0db30e4</Hash>
 </Codenesium>*/

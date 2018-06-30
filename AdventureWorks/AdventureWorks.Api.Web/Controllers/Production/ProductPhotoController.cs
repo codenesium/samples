@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ProductPhotoController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductPhotoService productPhotoService
+                        IProductPhotoService productPhotoService,
+                        IApiProductPhotoModelMapper productPhotoModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               productPhotoService)
+                               productPhotoService,
+                               productPhotoModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f29892477f76289801fee67d8a9b0949</Hash>
+    <Hash>fd7085f5c51482787012fda75bc0b3cf</Hash>
 </Codenesium>*/

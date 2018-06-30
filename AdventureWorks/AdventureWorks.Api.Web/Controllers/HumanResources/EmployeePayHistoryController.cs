@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<EmployeePayHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeePayHistoryService employeePayHistoryService
+                        IEmployeePayHistoryService employeePayHistoryService,
+                        IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               employeePayHistoryService)
+                               employeePayHistoryService,
+                               employeePayHistoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d5f5c711653183389eefcfe6a93de80e</Hash>
+    <Hash>7b3e1ff664f13122f52933fc3fffbdfc</Hash>
 </Codenesium>*/

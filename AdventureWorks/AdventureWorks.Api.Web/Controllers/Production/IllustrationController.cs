@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<IllustrationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IIllustrationService illustrationService
+                        IIllustrationService illustrationService,
+                        IApiIllustrationModelMapper illustrationModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               illustrationService)
+                               illustrationService,
+                               illustrationModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d37c13772b52d58203a50ba77e340cf3</Hash>
+    <Hash>dba97807cabdd8772c9356f7f64c69f2</Hash>
 </Codenesium>*/

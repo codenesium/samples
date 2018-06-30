@@ -9,13 +9,13 @@ namespace ESPIOTNS.Api.Contracts
         public partial class ApiDeviceActionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        int deviceId,
                         int id,
+                        int deviceId,
                         string name,
                         string @value)
                 {
-                        this.DeviceId = deviceId;
                         this.Id = id;
+                        this.DeviceId = deviceId;
                         this.Name = name;
                         this.@Value = @value;
 
@@ -75,5 +75,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d836a1819d32241a23bc78693fc9b9aa</Hash>
+    <Hash>d05772d14e471f69277e1ea65f215e06</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IPurchaseOrderDetailService PurchaseOrderDetailService { get; private set; }
 
+                protected IApiPurchaseOrderDetailModelMapper PurchaseOrderDetailModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractPurchaseOrderDetailController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPurchaseOrderDetailService purchaseOrderDetailService
+                        IPurchaseOrderDetailService purchaseOrderDetailService,
+                        IApiPurchaseOrderDetailModelMapper purchaseOrderDetailModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.PurchaseOrderDetailService = purchaseOrderDetailService;
+                        this.PurchaseOrderDetailModelMapper = purchaseOrderDetailModelMapper;
                 }
 
                 [HttpGet]
@@ -134,18 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiPurchaseOrderDetailRequestModel model = new ApiPurchaseOrderDetailRequestModel();
-                                model.SetProperties(model.DueDate,
-                                                    model.LineTotal,
-                                                    model.ModifiedDate,
-                                                    model.OrderQty,
-                                                    model.ProductID,
-                                                    model.PurchaseOrderDetailID,
-                                                    model.ReceivedQty,
-                                                    model.RejectedQty,
-                                                    model.StockedQty,
-                                                    model.UnitPrice);
-                                patch.ApplyTo(model);
+                                ApiPurchaseOrderDetailRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.PurchaseOrderDetailService.Update(id, model);
 
                                 if (result.Success)
@@ -169,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailRequestModel model)
                 {
-                        ActionResponse result = await this.PurchaseOrderDetailService.Update(id, model);
+                        ApiPurchaseOrderDetailRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.PurchaseOrderDetailService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -212,9 +215,41 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> CreatePatch(ApiPurchaseOrderDetailRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPurchaseOrderDetailRequestModel>();
+                        patch.Replace(x => x.DueDate, model.DueDate);
+                        patch.Replace(x => x.LineTotal, model.LineTotal);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OrderQty, model.OrderQty);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.PurchaseOrderDetailID, model.PurchaseOrderDetailID);
+                        patch.Replace(x => x.ReceivedQty, model.ReceivedQty);
+                        patch.Replace(x => x.RejectedQty, model.RejectedQty);
+                        patch.Replace(x => x.StockedQty, model.StockedQty);
+                        patch.Replace(x => x.UnitPrice, model.UnitPrice);
+                        return patch;
+                }
+
+                private async Task<ApiPurchaseOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
+                {
+                        var record = await this.PurchaseOrderDetailService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiPurchaseOrderDetailRequestModel request = this.PurchaseOrderDetailModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6486fcebec74a4585731c710be7a0d13</Hash>
+    <Hash>cf77ecad4f40335f36ae5c445138c0de</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesPersonService SalesPersonService { get; private set; }
 
+                protected IApiSalesPersonModelMapper SalesPersonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesPersonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesPersonService salesPersonService
+                        ISalesPersonService salesPersonService,
+                        IApiSalesPersonModelMapper salesPersonModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesPersonService = salesPersonService;
+                        this.SalesPersonModelMapper = salesPersonModelMapper;
                 }
 
                 [HttpGet]
@@ -134,16 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesPersonRequestModel model = new ApiSalesPersonRequestModel();
-                                model.SetProperties(model.Bonus,
-                                                    model.CommissionPct,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid,
-                                                    model.SalesLastYear,
-                                                    model.SalesQuota,
-                                                    model.SalesYTD,
-                                                    model.TerritoryID);
-                                patch.ApplyTo(model);
+                                ApiSalesPersonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesPersonService.Update(id, model);
 
                                 if (result.Success)
@@ -167,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonRequestModel model)
                 {
-                        ActionResponse result = await this.SalesPersonService.Update(id, model);
+                        ApiSalesPersonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesPersonResponseModel response = await this.SalesPersonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesPersonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesPersonResponseModel response = await this.SalesPersonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -255,9 +260,39 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSalesPersonRequestModel> CreatePatch(ApiSalesPersonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesPersonRequestModel>();
+                        patch.Replace(x => x.Bonus, model.Bonus);
+                        patch.Replace(x => x.CommissionPct, model.CommissionPct);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesLastYear, model.SalesLastYear);
+                        patch.Replace(x => x.SalesQuota, model.SalesQuota);
+                        patch.Replace(x => x.SalesYTD, model.SalesYTD);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        return patch;
+                }
+
+                private async Task<ApiSalesPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesPersonRequestModel> patch)
+                {
+                        var record = await this.SalesPersonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesPersonRequestModel request = this.SalesPersonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e60bdd41fb42dbfd18ff4dbfcde8c3b</Hash>
+    <Hash>577080d02400975077562832813a535d</Hash>
 </Codenesium>*/

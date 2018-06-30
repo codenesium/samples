@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Services
                 {
                         var model = new ApiVersionInfoResponseModel();
 
-                        model.SetProperties(boVersionInfo.AppliedOn, boVersionInfo.Description, boVersionInfo.Version);
+                        model.SetProperties(boVersionInfo.Version, boVersionInfo.AppliedOn, boVersionInfo.Description);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6aed615e28f93cdf4fe759b0f31dd20d</Hash>
+    <Hash>23e803b0568ce6fc5750bead7d021018</Hash>
 </Codenesium>*/

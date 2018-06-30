@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IJobCandidateService JobCandidateService { get; private set; }
 
+                protected IApiJobCandidateModelMapper JobCandidateModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractJobCandidateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IJobCandidateService jobCandidateService
+                        IJobCandidateService jobCandidateService,
+                        IApiJobCandidateModelMapper jobCandidateModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.JobCandidateService = jobCandidateService;
+                        this.JobCandidateModelMapper = jobCandidateModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiJobCandidateRequestModel model = new ApiJobCandidateRequestModel();
-                                model.SetProperties(model.BusinessEntityID,
-                                                    model.ModifiedDate,
-                                                    model.Resume);
-                                patch.ApplyTo(model);
+                                ApiJobCandidateRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.JobCandidateService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateRequestModel model)
                 {
-                        ActionResponse result = await this.JobCandidateService.Update(id, model);
+                        ApiJobCandidateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.JobCandidateService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -205,9 +215,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiJobCandidateRequestModel> CreatePatch(ApiJobCandidateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiJobCandidateRequestModel>();
+                        patch.Replace(x => x.BusinessEntityID, model.BusinessEntityID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Resume, model.Resume);
+                        return patch;
+                }
+
+                private async Task<ApiJobCandidateRequestModel> PatchModel(int id, JsonPatchDocument<ApiJobCandidateRequestModel> patch)
+                {
+                        var record = await this.JobCandidateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiJobCandidateRequestModel request = this.JobCandidateModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ffd5fa570af90586c2ce3cb16bc5c3f2</Hash>
+    <Hash>997201b68c25fdb77fd53737e4ba7f81</Hash>
 </Codenesium>*/

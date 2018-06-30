@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<PersonCreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPersonCreditCardService personCreditCardService
+                        IPersonCreditCardService personCreditCardService,
+                        IApiPersonCreditCardModelMapper personCreditCardModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               personCreditCardService)
+                               personCreditCardService,
+                               personCreditCardModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1576f30bc0e20b647c98cac178d6f1ae</Hash>
+    <Hash>96aafa2817e272d9e3734bfa711718b1</Hash>
 </Codenesium>*/

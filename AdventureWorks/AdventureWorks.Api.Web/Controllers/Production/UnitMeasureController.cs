@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<UnitMeasureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IUnitMeasureService unitMeasureService
+                        IUnitMeasureService unitMeasureService,
+                        IApiUnitMeasureModelMapper unitMeasureModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               unitMeasureService)
+                               unitMeasureService,
+                               unitMeasureModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c2e32baa7338c68964abc09ea031894b</Hash>
+    <Hash>e7028b0e669edc727eb8c7f8fa1e2caf</Hash>
 </Codenesium>*/

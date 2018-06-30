@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IShoppingCartItemService ShoppingCartItemService { get; private set; }
 
+                protected IApiShoppingCartItemModelMapper ShoppingCartItemModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractShoppingCartItemController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShoppingCartItemService shoppingCartItemService
+                        IShoppingCartItemService shoppingCartItemService,
+                        IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ShoppingCartItemService = shoppingCartItemService;
+                        this.ShoppingCartItemModelMapper = shoppingCartItemModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiShoppingCartItemRequestModel model = new ApiShoppingCartItemRequestModel();
-                                model.SetProperties(model.DateCreated,
-                                                    model.ModifiedDate,
-                                                    model.ProductID,
-                                                    model.Quantity,
-                                                    model.ShoppingCartID);
-                                patch.ApplyTo(model);
+                                ApiShoppingCartItemRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ShoppingCartItemService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
                 {
-                        ActionResponse result = await this.ShoppingCartItemService.Update(id, model);
+                        ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ShoppingCartItemService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -207,9 +215,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiShoppingCartItemRequestModel> CreatePatch(ApiShoppingCartItemRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiShoppingCartItemRequestModel>();
+                        patch.Replace(x => x.DateCreated, model.DateCreated);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Quantity, model.Quantity);
+                        patch.Replace(x => x.ShoppingCartID, model.ShoppingCartID);
+                        return patch;
+                }
+
+                private async Task<ApiShoppingCartItemRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
+                {
+                        var record = await this.ShoppingCartItemService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiShoppingCartItemRequestModel request = this.ShoppingCartItemModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>46a68c11934a88a82279c6349cde15d8</Hash>
+    <Hash>c9f388a0f89c69b68ee8be9245bb23d1</Hash>
 </Codenesium>*/

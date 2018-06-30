@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Services
                 {
                         var model = new ApiVersionInfoResponseModel();
 
-                        model.SetProperties(boVersionInfo.AppliedOn, boVersionInfo.Description, boVersionInfo.Version);
+                        model.SetProperties(boVersionInfo.Version, boVersionInfo.AppliedOn, boVersionInfo.Description);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33403e611fc21d4516cf1f038a2dbf3b</Hash>
+    <Hash>237211b305780f38688c52d76a0a2015</Hash>
 </Codenesium>*/

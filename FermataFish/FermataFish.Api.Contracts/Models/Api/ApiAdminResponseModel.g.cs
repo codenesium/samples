@@ -9,18 +9,18 @@ namespace FermataFishNS.Api.Contracts
         public partial class ApiAdminResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         DateTime? birthday,
                         string email,
                         string firstName,
-                        int id,
                         string lastName,
                         string phone,
                         int studioId)
                 {
+                        this.Id = id;
                         this.Birthday = birthday;
                         this.Email = email;
                         this.FirstName = firstName;
-                        this.Id = id;
                         this.LastName = lastName;
                         this.Phone = phone;
                         this.StudioId = studioId;
@@ -114,5 +114,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>97f61044b7108627c9723f928be2211c</Hash>
+    <Hash>d6ead75ec527be05779b06efc89d7028</Hash>
 </Codenesium>*/

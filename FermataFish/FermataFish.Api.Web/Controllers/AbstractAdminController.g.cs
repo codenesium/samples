@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IAdminService AdminService { get; private set; }
 
+                protected IApiAdminModelMapper AdminModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractAdminController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAdminService adminService
+                        IAdminService adminService,
+                        IApiAdminModelMapper adminModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.AdminService = adminService;
+                        this.AdminModelMapper = adminModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiAdminRequestModel model = new ApiAdminRequestModel();
-                                model.SetProperties(model.Birthday,
-                                                    model.Email,
-                                                    model.FirstName,
-                                                    model.LastName,
-                                                    model.Phone,
-                                                    model.StudioId);
-                                patch.ApplyTo(model);
+                                ApiAdminRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.AdminService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminRequestModel model)
                 {
-                        ActionResponse result = await this.AdminService.Update(id, model);
+                        ApiAdminRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiAdminResponseModel response = await this.AdminService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.AdminService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiAdminResponseModel response = await this.AdminService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -197,9 +204,37 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiAdminRequestModel> CreatePatch(ApiAdminRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiAdminRequestModel>();
+                        patch.Replace(x => x.Birthday, model.Birthday);
+                        patch.Replace(x => x.Email, model.Email);
+                        patch.Replace(x => x.FirstName, model.FirstName);
+                        patch.Replace(x => x.LastName, model.LastName);
+                        patch.Replace(x => x.Phone, model.Phone);
+                        patch.Replace(x => x.StudioId, model.StudioId);
+                        return patch;
+                }
+
+                private async Task<ApiAdminRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminRequestModel> patch)
+                {
+                        var record = await this.AdminService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiAdminRequestModel request = this.AdminModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ce68859e7c3acf3271ce35d823487c48</Hash>
+    <Hash>d16e67ad9b18b4acd7a884647128b8dc</Hash>
 </Codenesium>*/

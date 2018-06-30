@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductDescriptionService ProductDescriptionService { get; private set; }
 
+                protected IApiProductDescriptionModelMapper ProductDescriptionModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductDescriptionController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductDescriptionService productDescriptionService
+                        IProductDescriptionService productDescriptionService,
+                        IApiProductDescriptionModelMapper productDescriptionModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductDescriptionService = productDescriptionService;
+                        this.ProductDescriptionModelMapper = productDescriptionModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductDescriptionRequestModel model = new ApiProductDescriptionRequestModel();
-                                model.SetProperties(model.Description,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiProductDescriptionRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductDescriptionService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionRequestModel model)
                 {
-                        ActionResponse result = await this.ProductDescriptionService.Update(id, model);
+                        ApiProductDescriptionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductDescriptionResponseModel response = await this.ProductDescriptionService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductDescriptionService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductDescriptionResponseModel response = await this.ProductDescriptionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -208,9 +218,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiProductDescriptionRequestModel> CreatePatch(ApiProductDescriptionRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductDescriptionRequestModel>();
+                        patch.Replace(x => x.Description, model.Description);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiProductDescriptionRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductDescriptionRequestModel> patch)
+                {
+                        var record = await this.ProductDescriptionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductDescriptionRequestModel request = this.ProductDescriptionModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d1cf414235014f8079a42b72747051eb</Hash>
+    <Hash>15c8b01024ed45f97bbadd2d2e473364</Hash>
 </Codenesium>*/

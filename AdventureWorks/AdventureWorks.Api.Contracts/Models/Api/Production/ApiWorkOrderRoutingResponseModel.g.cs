@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiWorkOrderRoutingResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int workOrderID,
                         decimal? actualCost,
                         DateTime? actualEndDate,
                         decimal? actualResourceHrs,
@@ -19,9 +20,9 @@ namespace AdventureWorksNS.Api.Contracts
                         decimal plannedCost,
                         int productID,
                         DateTime scheduledEndDate,
-                        DateTime scheduledStartDate,
-                        int workOrderID)
+                        DateTime scheduledStartDate)
                 {
+                        this.WorkOrderID = workOrderID;
                         this.ActualCost = actualCost;
                         this.ActualEndDate = actualEndDate;
                         this.ActualResourceHrs = actualResourceHrs;
@@ -33,7 +34,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ProductID = productID;
                         this.ScheduledEndDate = scheduledEndDate;
                         this.ScheduledStartDate = scheduledStartDate;
-                        this.WorkOrderID = workOrderID;
                 }
 
                 public decimal? ActualCost { get; private set; }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ebd0ef2a04dc39ee26e59c6f4ed368a4</Hash>
+    <Hash>612640916a3d96f402db1e9a36c26009</Hash>
 </Codenesium>*/

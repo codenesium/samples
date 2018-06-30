@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IPasswordService PasswordService { get; private set; }
 
+                protected IApiPasswordModelMapper PasswordModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractPasswordController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPasswordService passwordService
+                        IPasswordService passwordService,
+                        IApiPasswordModelMapper passwordModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.PasswordService = passwordService;
+                        this.PasswordModelMapper = passwordModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiPasswordRequestModel model = new ApiPasswordRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.PasswordHash,
-                                                    model.PasswordSalt,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiPasswordRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.PasswordService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordRequestModel model)
                 {
-                        ActionResponse result = await this.PasswordService.Update(id, model);
+                        ApiPasswordRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiPasswordResponseModel response = await this.PasswordService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.PasswordService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiPasswordResponseModel response = await this.PasswordService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -195,9 +204,35 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiPasswordRequestModel> CreatePatch(ApiPasswordRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPasswordRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PasswordHash, model.PasswordHash);
+                        patch.Replace(x => x.PasswordSalt, model.PasswordSalt);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiPasswordRequestModel> PatchModel(int id, JsonPatchDocument<ApiPasswordRequestModel> patch)
+                {
+                        var record = await this.PasswordService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiPasswordRequestModel request = this.PasswordModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2f83f52258d5a2a011c765de551c6b8a</Hash>
+    <Hash>4e38e4ecdea27182c97881d51ba5dc63</Hash>
 </Codenesium>*/

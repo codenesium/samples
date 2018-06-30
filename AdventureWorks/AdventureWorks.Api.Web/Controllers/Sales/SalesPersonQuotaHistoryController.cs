@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<SalesPersonQuotaHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService
+                        ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService,
+                        IApiSalesPersonQuotaHistoryModelMapper salesPersonQuotaHistoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               salesPersonQuotaHistoryService)
+                               salesPersonQuotaHistoryService,
+                               salesPersonQuotaHistoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f26682182be43b05961383e342c66176</Hash>
+    <Hash>a6bd20eefd43a2b61249b129ac7186b8</Hash>
 </Codenesium>*/

@@ -9,13 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiUnitMeasureResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        string unitMeasureCode,
                         DateTime modifiedDate,
-                        string name,
-                        string unitMeasureCode)
+                        string name)
                 {
+                        this.UnitMeasureCode = unitMeasureCode;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.UnitMeasureCode = unitMeasureCode;
                 }
 
                 public DateTime ModifiedDate { get; private set; }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab8333db2f416f32a5ec9bf58c5b8486</Hash>
+    <Hash>8692c0a6770f46d45ed413d6c5bfb283</Hash>
 </Codenesium>*/

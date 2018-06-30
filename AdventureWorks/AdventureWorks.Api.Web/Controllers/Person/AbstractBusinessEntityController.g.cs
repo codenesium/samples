@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IBusinessEntityService BusinessEntityService { get; private set; }
 
+                protected IApiBusinessEntityModelMapper BusinessEntityModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractBusinessEntityController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBusinessEntityService businessEntityService
+                        IBusinessEntityService businessEntityService,
+                        IApiBusinessEntityModelMapper businessEntityModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.BusinessEntityService = businessEntityService;
+                        this.BusinessEntityModelMapper = businessEntityModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiBusinessEntityRequestModel model = new ApiBusinessEntityRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiBusinessEntityRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.BusinessEntityService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityRequestModel model)
                 {
-                        ActionResponse result = await this.BusinessEntityService.Update(id, model);
+                        ApiBusinessEntityRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiBusinessEntityResponseModel response = await this.BusinessEntityService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.BusinessEntityService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiBusinessEntityResponseModel response = await this.BusinessEntityService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -235,9 +246,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiBusinessEntityRequestModel> CreatePatch(ApiBusinessEntityRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBusinessEntityRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiBusinessEntityRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityRequestModel> patch)
+                {
+                        var record = await this.BusinessEntityService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiBusinessEntityRequestModel request = this.BusinessEntityModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>978779599365faaa4430770a62af431b</Hash>
+    <Hash>8ed42b9c7be5a9b016181c0e6f136666</Hash>
 </Codenesium>*/

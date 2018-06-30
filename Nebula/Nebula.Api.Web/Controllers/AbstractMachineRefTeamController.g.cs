@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IMachineRefTeamService MachineRefTeamService { get; private set; }
 
+                protected IApiMachineRefTeamModelMapper MachineRefTeamModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractMachineRefTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IMachineRefTeamService machineRefTeamService
+                        IMachineRefTeamService machineRefTeamService,
+                        IApiMachineRefTeamModelMapper machineRefTeamModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.MachineRefTeamService = machineRefTeamService;
+                        this.MachineRefTeamModelMapper = machineRefTeamModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiMachineRefTeamRequestModel model = new ApiMachineRefTeamRequestModel();
-                                model.SetProperties(model.MachineId,
-                                                    model.TeamId);
-                                patch.ApplyTo(model);
+                                ApiMachineRefTeamRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.MachineRefTeamService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRefTeamRequestModel model)
                 {
-                        ActionResponse result = await this.MachineRefTeamService.Update(id, model);
+                        ApiMachineRefTeamRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiMachineRefTeamResponseModel response = await this.MachineRefTeamService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.MachineRefTeamService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiMachineRefTeamResponseModel response = await this.MachineRefTeamService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiMachineRefTeamRequestModel> CreatePatch(ApiMachineRefTeamRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiMachineRefTeamRequestModel>();
+                        patch.Replace(x => x.MachineId, model.MachineId);
+                        patch.Replace(x => x.TeamId, model.TeamId);
+                        return patch;
+                }
+
+                private async Task<ApiMachineRefTeamRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineRefTeamRequestModel> patch)
+                {
+                        var record = await this.MachineRefTeamService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiMachineRefTeamRequestModel request = this.MachineRefTeamModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6e1bdbc85dc14a5e5782f41b3d63b9b0</Hash>
+    <Hash>9afb69017400235f2fa9cc5f48eb86eb</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IBusinessEntityAddressService BusinessEntityAddressService { get; private set; }
 
+                protected IApiBusinessEntityAddressModelMapper BusinessEntityAddressModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractBusinessEntityAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBusinessEntityAddressService businessEntityAddressService
+                        IBusinessEntityAddressService businessEntityAddressService,
+                        IApiBusinessEntityAddressModelMapper businessEntityAddressModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.BusinessEntityAddressService = businessEntityAddressService;
+                        this.BusinessEntityAddressModelMapper = businessEntityAddressModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiBusinessEntityAddressRequestModel model = new ApiBusinessEntityAddressRequestModel();
-                                model.SetProperties(model.AddressID,
-                                                    model.AddressTypeID,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiBusinessEntityAddressRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.BusinessEntityAddressService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityAddressRequestModel model)
                 {
-                        ActionResponse result = await this.BusinessEntityAddressService.Update(id, model);
+                        ApiBusinessEntityAddressRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiBusinessEntityAddressResponseModel response = await this.BusinessEntityAddressService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.BusinessEntityAddressService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiBusinessEntityAddressResponseModel response = await this.BusinessEntityAddressService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -217,9 +226,35 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiBusinessEntityAddressRequestModel> CreatePatch(ApiBusinessEntityAddressRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBusinessEntityAddressRequestModel>();
+                        patch.Replace(x => x.AddressID, model.AddressID);
+                        patch.Replace(x => x.AddressTypeID, model.AddressTypeID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiBusinessEntityAddressRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityAddressRequestModel> patch)
+                {
+                        var record = await this.BusinessEntityAddressService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiBusinessEntityAddressRequestModel request = this.BusinessEntityAddressModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b13a1b3112f64d8e5bf92a8656b4a56b</Hash>
+    <Hash>a83f36e75ec62edd7470adca3ef60849</Hash>
 </Codenesium>*/

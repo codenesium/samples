@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<EmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeeService employeeService
+                        IEmployeeService employeeService,
+                        IApiEmployeeModelMapper employeeModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               employeeService)
+                               employeeService,
+                               employeeModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>208a657f89c77bcf2a1864eb3a6fee73</Hash>
+    <Hash>f4b99687b5b64d276523f11b036d95ae</Hash>
 </Codenesium>*/

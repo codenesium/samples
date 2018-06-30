@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IMachineService MachineService { get; private set; }
 
+                protected IApiMachineModelMapper MachineModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractMachineController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IMachineService machineService
+                        IMachineService machineService,
+                        IApiMachineModelMapper machineModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.MachineService = machineService;
+                        this.MachineModelMapper = machineModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiMachineRequestModel model = new ApiMachineRequestModel();
-                                model.SetProperties(model.Description,
-                                                    model.JwtKey,
-                                                    model.LastIpAddress,
-                                                    model.MachineGuid,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiMachineRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.MachineService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRequestModel model)
                 {
-                        ActionResponse result = await this.MachineService.Update(id, model);
+                        ApiMachineRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiMachineResponseModel response = await this.MachineService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.MachineService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -224,9 +232,36 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiMachineRequestModel> CreatePatch(ApiMachineRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiMachineRequestModel>();
+                        patch.Replace(x => x.Description, model.Description);
+                        patch.Replace(x => x.JwtKey, model.JwtKey);
+                        patch.Replace(x => x.LastIpAddress, model.LastIpAddress);
+                        patch.Replace(x => x.MachineGuid, model.MachineGuid);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiMachineRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineRequestModel> patch)
+                {
+                        var record = await this.MachineService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiMachineRequestModel request = this.MachineModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7e2d26a74adacd8fe364a2e05a8854e1</Hash>
+    <Hash>5c94981e360e52cc81359f478167ae92</Hash>
 </Codenesium>*/

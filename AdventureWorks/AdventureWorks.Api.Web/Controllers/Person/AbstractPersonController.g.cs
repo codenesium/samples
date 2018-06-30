@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IPersonService PersonService { get; private set; }
 
+                protected IApiPersonModelMapper PersonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractPersonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPersonService personService
+                        IPersonService personService,
+                        IApiPersonModelMapper personModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.PersonService = personService;
+                        this.PersonModelMapper = personModelMapper;
                 }
 
                 [HttpGet]
@@ -134,20 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiPersonRequestModel model = new ApiPersonRequestModel();
-                                model.SetProperties(model.AdditionalContactInfo,
-                                                    model.Demographics,
-                                                    model.EmailPromotion,
-                                                    model.FirstName,
-                                                    model.LastName,
-                                                    model.MiddleName,
-                                                    model.ModifiedDate,
-                                                    model.NameStyle,
-                                                    model.PersonType,
-                                                    model.Rowguid,
-                                                    model.Suffix,
-                                                    model.Title);
-                                patch.ApplyTo(model);
+                                ApiPersonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.PersonService.Update(id, model);
 
                                 if (result.Success)
@@ -171,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonRequestModel model)
                 {
-                        ActionResponse result = await this.PersonService.Update(id, model);
+                        ApiPersonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiPersonResponseModel response = await this.PersonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.PersonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiPersonResponseModel response = await this.PersonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -292,9 +293,43 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiPersonRequestModel> CreatePatch(ApiPersonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPersonRequestModel>();
+                        patch.Replace(x => x.AdditionalContactInfo, model.AdditionalContactInfo);
+                        patch.Replace(x => x.Demographics, model.Demographics);
+                        patch.Replace(x => x.EmailPromotion, model.EmailPromotion);
+                        patch.Replace(x => x.FirstName, model.FirstName);
+                        patch.Replace(x => x.LastName, model.LastName);
+                        patch.Replace(x => x.MiddleName, model.MiddleName);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.NameStyle, model.NameStyle);
+                        patch.Replace(x => x.PersonType, model.PersonType);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.Suffix, model.Suffix);
+                        patch.Replace(x => x.Title, model.Title);
+                        return patch;
+                }
+
+                private async Task<ApiPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiPersonRequestModel> patch)
+                {
+                        var record = await this.PersonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiPersonRequestModel request = this.PersonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>57bd26859cd3c0de163116153ca6c8cd</Hash>
+    <Hash>3ad80885501bdd8afdb9f87b0f7d5362</Hash>
 </Codenesium>*/

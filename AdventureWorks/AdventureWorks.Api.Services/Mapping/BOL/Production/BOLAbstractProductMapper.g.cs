@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiProductResponseModel();
 
-                        model.SetProperties(boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductID, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
+                        model.SetProperties(boProduct.ProductID, boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
 
                         return model;
                 }
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57741817ba1b946804f51d6ff75c701d</Hash>
+    <Hash>bb9f629752ba429ff715be27c576975a</Hash>
 </Codenesium>*/

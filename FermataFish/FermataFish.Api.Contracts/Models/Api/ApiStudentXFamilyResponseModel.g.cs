@@ -9,12 +9,12 @@ namespace FermataFishNS.Api.Contracts
         public partial class ApiStudentXFamilyResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        int familyId,
                         int id,
+                        int familyId,
                         int studentId)
                 {
-                        this.FamilyId = familyId;
                         this.Id = id;
+                        this.FamilyId = familyId;
                         this.StudentId = studentId;
 
                         this.FamilyIdEntity = nameof(ApiResponse.Families);
@@ -65,5 +65,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>211a61451cb748f930632ff3aaa691db</Hash>
+    <Hash>cf8c51738048f30b4ad790826d97ed93</Hash>
 </Codenesium>*/

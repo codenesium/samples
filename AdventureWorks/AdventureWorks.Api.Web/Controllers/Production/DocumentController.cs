@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<DocumentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDocumentService documentService
+                        IDocumentService documentService,
+                        IApiDocumentModelMapper documentModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               documentService)
+                               documentService,
+                               documentModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>60110e6e4a8646ea9a7a3a0b64531d4d</Hash>
+    <Hash>dffc7e4a03fd50004753c5260b4181d4</Hash>
 </Codenesium>*/

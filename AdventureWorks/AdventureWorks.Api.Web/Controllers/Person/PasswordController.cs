@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<PasswordController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IPasswordService passwordService
+                        IPasswordService passwordService,
+                        IApiPasswordModelMapper passwordModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               passwordService)
+                               passwordService,
+                               passwordModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>be41c5a223fd824cd1b594e2f381acb4</Hash>
+    <Hash>061968605f057caf5941641c238e98d0</Hash>
 </Codenesium>*/

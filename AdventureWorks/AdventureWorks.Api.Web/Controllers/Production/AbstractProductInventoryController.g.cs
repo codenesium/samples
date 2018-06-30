@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductInventoryService ProductInventoryService { get; private set; }
 
+                protected IApiProductInventoryModelMapper ProductInventoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductInventoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductInventoryService productInventoryService
+                        IProductInventoryService productInventoryService,
+                        IApiProductInventoryModelMapper productInventoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductInventoryService = productInventoryService;
+                        this.ProductInventoryModelMapper = productInventoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductInventoryRequestModel model = new ApiProductInventoryRequestModel();
-                                model.SetProperties(model.Bin,
-                                                    model.LocationID,
-                                                    model.ModifiedDate,
-                                                    model.Quantity,
-                                                    model.Rowguid,
-                                                    model.Shelf);
-                                patch.ApplyTo(model);
+                                ApiProductInventoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductInventoryService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductInventoryRequestModel model)
                 {
-                        ActionResponse result = await this.ProductInventoryService.Update(id, model);
+                        ApiProductInventoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductInventoryResponseModel response = await this.ProductInventoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductInventoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductInventoryResponseModel response = await this.ProductInventoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -197,9 +204,37 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductInventoryRequestModel> CreatePatch(ApiProductInventoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
+                        patch.Replace(x => x.Bin, model.Bin);
+                        patch.Replace(x => x.LocationID, model.LocationID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Quantity, model.Quantity);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.Shelf, model.Shelf);
+                        return patch;
+                }
+
+                private async Task<ApiProductInventoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductInventoryRequestModel> patch)
+                {
+                        var record = await this.ProductInventoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductInventoryRequestModel request = this.ProductInventoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4f75874e590c80f454af5c9157692ffe</Hash>
+    <Hash>45336b6d2e988885ddbf0d521674bede</Hash>
 </Codenesium>*/

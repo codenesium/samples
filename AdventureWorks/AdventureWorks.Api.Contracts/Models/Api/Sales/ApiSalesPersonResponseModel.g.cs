@@ -9,8 +9,8 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesPersonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        decimal bonus,
                         int businessEntityID,
+                        decimal bonus,
                         decimal commissionPct,
                         DateTime modifiedDate,
                         Guid rowguid,
@@ -19,8 +19,8 @@ namespace AdventureWorksNS.Api.Contracts
                         decimal salesYTD,
                         int? territoryID)
                 {
-                        this.Bonus = bonus;
                         this.BusinessEntityID = businessEntityID;
+                        this.Bonus = bonus;
                         this.CommissionPct = commissionPct;
                         this.ModifiedDate = modifiedDate;
                         this.Rowguid = rowguid;
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>88749e13fec02cd5f42e610f3293dcdc</Hash>
+    <Hash>295a01bd21860e2850ce817b9b4056d1</Hash>
 </Codenesium>*/

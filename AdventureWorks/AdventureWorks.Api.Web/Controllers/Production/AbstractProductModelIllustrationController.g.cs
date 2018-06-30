@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductModelIllustrationService ProductModelIllustrationService { get; private set; }
 
+                protected IApiProductModelIllustrationModelMapper ProductModelIllustrationModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductModelIllustrationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductModelIllustrationService productModelIllustrationService
+                        IProductModelIllustrationService productModelIllustrationService,
+                        IApiProductModelIllustrationModelMapper productModelIllustrationModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductModelIllustrationService = productModelIllustrationService;
+                        this.ProductModelIllustrationModelMapper = productModelIllustrationModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductModelIllustrationRequestModel model = new ApiProductModelIllustrationRequestModel();
-                                model.SetProperties(model.IllustrationID,
-                                                    model.ModifiedDate);
-                                patch.ApplyTo(model);
+                                ApiProductModelIllustrationRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductModelIllustrationService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelIllustrationRequestModel model)
                 {
-                        ActionResponse result = await this.ProductModelIllustrationService.Update(id, model);
+                        ApiProductModelIllustrationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductModelIllustrationResponseModel response = await this.ProductModelIllustrationService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductModelIllustrationService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductModelIllustrationResponseModel response = await this.ProductModelIllustrationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiProductModelIllustrationRequestModel> CreatePatch(ApiProductModelIllustrationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductModelIllustrationRequestModel>();
+                        patch.Replace(x => x.IllustrationID, model.IllustrationID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        return patch;
+                }
+
+                private async Task<ApiProductModelIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductModelIllustrationRequestModel> patch)
+                {
+                        var record = await this.ProductModelIllustrationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductModelIllustrationRequestModel request = this.ProductModelIllustrationModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f2ece958dd3140664e0d1cf041976791</Hash>
+    <Hash>c241de782c42cd02b878b8c557cc5512</Hash>
 </Codenesium>*/

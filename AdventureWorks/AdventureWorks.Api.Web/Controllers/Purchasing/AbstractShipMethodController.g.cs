@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IShipMethodService ShipMethodService { get; private set; }
 
+                protected IApiShipMethodModelMapper ShipMethodModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractShipMethodController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShipMethodService shipMethodService
+                        IShipMethodService shipMethodService,
+                        IApiShipMethodModelMapper shipMethodModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ShipMethodService = shipMethodService;
+                        this.ShipMethodModelMapper = shipMethodModelMapper;
                 }
 
                 [HttpGet]
@@ -134,13 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiShipMethodRequestModel model = new ApiShipMethodRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name,
-                                                    model.Rowguid,
-                                                    model.ShipBase,
-                                                    model.ShipRate);
-                                patch.ApplyTo(model);
+                                ApiShipMethodRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ShipMethodService.Update(id, model);
 
                                 if (result.Success)
@@ -164,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodRequestModel model)
                 {
-                        ActionResponse result = await this.ShipMethodService.Update(id, model);
+                        ApiShipMethodRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiShipMethodResponseModel response = await this.ShipMethodService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ShipMethodService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiShipMethodResponseModel response = await this.ShipMethodService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -229,9 +237,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiShipMethodRequestModel> CreatePatch(ApiShipMethodRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiShipMethodRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.ShipBase, model.ShipBase);
+                        patch.Replace(x => x.ShipRate, model.ShipRate);
+                        return patch;
+                }
+
+                private async Task<ApiShipMethodRequestModel> PatchModel(int id, JsonPatchDocument<ApiShipMethodRequestModel> patch)
+                {
+                        var record = await this.ShipMethodService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiShipMethodRequestModel request = this.ShipMethodModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e5f3951a0f8f5460330f1ebbb85d2a7f</Hash>
+    <Hash>3164927b00d5f7e9e6c231e55fd4bb7a</Hash>
 </Codenesium>*/

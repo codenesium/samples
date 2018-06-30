@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICultureService CultureService { get; private set; }
 
+                protected IApiCultureModelMapper CultureModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICultureService cultureService
+                        ICultureService cultureService,
+                        IApiCultureModelMapper cultureModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CultureService = cultureService;
+                        this.CultureModelMapper = cultureModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCultureRequestModel model = new ApiCultureRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiCultureRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CultureService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureRequestModel model)
                 {
-                        ActionResponse result = await this.CultureService.Update(id, model);
+                        ApiCultureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCultureResponseModel response = await this.CultureService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CultureService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCultureResponseModel response = await this.CultureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -226,9 +237,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCultureRequestModel> CreatePatch(ApiCultureRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCultureRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiCultureRequestModel> PatchModel(string id, JsonPatchDocument<ApiCultureRequestModel> patch)
+                {
+                        var record = await this.CultureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCultureRequestModel request = this.CultureModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f51c65569ebbe4e4051e57d95d21b9d</Hash>
+    <Hash>56f305be59ed38c327f287fe7b81e4f6</Hash>
 </Codenesium>*/

@@ -9,17 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductPhotoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productPhotoID,
                         byte[] largePhoto,
                         string largePhotoFileName,
                         DateTime modifiedDate,
-                        int productPhotoID,
                         byte[] thumbNailPhoto,
                         string thumbnailPhotoFileName)
                 {
+                        this.ProductPhotoID = productPhotoID;
                         this.LargePhoto = largePhoto;
                         this.LargePhotoFileName = largePhotoFileName;
                         this.ModifiedDate = modifiedDate;
-                        this.ProductPhotoID = productPhotoID;
                         this.ThumbNailPhoto = thumbNailPhoto;
                         this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
                 }
@@ -97,5 +97,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d141c4852e8aa819c119bcfb016d5603</Hash>
+    <Hash>d1d388d8f0ed48ccd315a985f7b0599b</Hash>
 </Codenesium>*/

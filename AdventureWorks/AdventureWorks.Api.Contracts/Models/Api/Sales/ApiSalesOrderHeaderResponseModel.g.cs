@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSalesOrderHeaderResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int salesOrderID,
                         string accountNumber,
                         int billToAddressID,
                         string comment,
@@ -24,7 +25,6 @@ namespace AdventureWorksNS.Api.Contracts
                         string purchaseOrderNumber,
                         int revisionNumber,
                         Guid rowguid,
-                        int salesOrderID,
                         string salesOrderNumber,
                         int? salesPersonID,
                         DateTime? shipDate,
@@ -36,6 +36,7 @@ namespace AdventureWorksNS.Api.Contracts
                         int? territoryID,
                         decimal totalDue)
                 {
+                        this.SalesOrderID = salesOrderID;
                         this.AccountNumber = accountNumber;
                         this.BillToAddressID = billToAddressID;
                         this.Comment = comment;
@@ -51,7 +52,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.PurchaseOrderNumber = purchaseOrderNumber;
                         this.RevisionNumber = revisionNumber;
                         this.Rowguid = rowguid;
-                        this.SalesOrderID = salesOrderID;
                         this.SalesOrderNumber = salesOrderNumber;
                         this.SalesPersonID = salesPersonID;
                         this.ShipDate = shipDate;
@@ -373,5 +373,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3a5e5e28073cbade2d59d4fd347d87cf</Hash>
+    <Hash>f56e829b4976a35d1d2092fcc52499d4</Hash>
 </Codenesium>*/

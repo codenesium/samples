@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected ILinkStatusService LinkStatusService { get; private set; }
 
+                protected IApiLinkStatusModelMapper LinkStatusModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractLinkStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ILinkStatusService linkStatusService
+                        ILinkStatusService linkStatusService,
+                        IApiLinkStatusModelMapper linkStatusModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.LinkStatusService = linkStatusService;
+                        this.LinkStatusModelMapper = linkStatusModelMapper;
                 }
 
                 [HttpGet]
@@ -134,9 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiLinkStatusRequestModel model = new ApiLinkStatusRequestModel();
-                                model.SetProperties(model.Name);
-                                patch.ApplyTo(model);
+                                ApiLinkStatusRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.LinkStatusService.Update(id, model);
 
                                 if (result.Success)
@@ -160,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusRequestModel model)
                 {
-                        ActionResponse result = await this.LinkStatusService.Update(id, model);
+                        ApiLinkStatusRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiLinkStatusResponseModel response = await this.LinkStatusService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.LinkStatusService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiLinkStatusResponseModel response = await this.LinkStatusService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +218,32 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiLinkStatusRequestModel> CreatePatch(ApiLinkStatusRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLinkStatusRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiLinkStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkStatusRequestModel> patch)
+                {
+                        var record = await this.LinkStatusService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiLinkStatusRequestModel request = this.LinkStatusModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>95134eae2065812492b140396ad7a424</Hash>
+    <Hash>948c14321ddc8116893bcdb959619ad9</Hash>
 </Codenesium>*/

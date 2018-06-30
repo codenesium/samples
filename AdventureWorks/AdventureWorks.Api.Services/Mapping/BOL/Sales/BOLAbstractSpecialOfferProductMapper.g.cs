@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiSpecialOfferProductResponseModel();
 
-                        model.SetProperties(boSpecialOfferProduct.ModifiedDate, boSpecialOfferProduct.ProductID, boSpecialOfferProduct.Rowguid, boSpecialOfferProduct.SpecialOfferID);
+                        model.SetProperties(boSpecialOfferProduct.SpecialOfferID, boSpecialOfferProduct.ModifiedDate, boSpecialOfferProduct.ProductID, boSpecialOfferProduct.Rowguid);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c471b2a3c67907eea4988b8bd79e74de</Hash>
+    <Hash>719aeb3432642742fb91ce780a1a306d</Hash>
 </Codenesium>*/

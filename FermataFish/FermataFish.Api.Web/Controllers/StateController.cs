@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<StateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStateService stateService
+                        IStateService stateService,
+                        IApiStateModelMapper stateModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               stateService)
+                               stateService,
+                               stateModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed3275f161229f48a0436a7339c8cc18</Hash>
+    <Hash>e6d9f7fb4d236a5276c9cb9edefc481f</Hash>
 </Codenesium>*/

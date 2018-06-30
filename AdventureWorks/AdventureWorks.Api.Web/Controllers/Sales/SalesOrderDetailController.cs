@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<SalesOrderDetailController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderDetailService salesOrderDetailService
+                        ISalesOrderDetailService salesOrderDetailService,
+                        IApiSalesOrderDetailModelMapper salesOrderDetailModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               salesOrderDetailService)
+                               salesOrderDetailService,
+                               salesOrderDetailModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a206e056be8e0c441066890903783277</Hash>
+    <Hash>a5cd51a63754b079f5b12e6f1271029b</Hash>
 </Codenesium>*/

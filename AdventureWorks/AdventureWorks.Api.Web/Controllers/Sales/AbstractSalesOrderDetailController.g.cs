@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesOrderDetailService SalesOrderDetailService { get; private set; }
 
+                protected IApiSalesOrderDetailModelMapper SalesOrderDetailModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesOrderDetailController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderDetailService salesOrderDetailService
+                        ISalesOrderDetailService salesOrderDetailService,
+                        IApiSalesOrderDetailModelMapper salesOrderDetailModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesOrderDetailService = salesOrderDetailService;
+                        this.SalesOrderDetailModelMapper = salesOrderDetailModelMapper;
                 }
 
                 [HttpGet]
@@ -134,18 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesOrderDetailRequestModel model = new ApiSalesOrderDetailRequestModel();
-                                model.SetProperties(model.CarrierTrackingNumber,
-                                                    model.LineTotal,
-                                                    model.ModifiedDate,
-                                                    model.OrderQty,
-                                                    model.ProductID,
-                                                    model.Rowguid,
-                                                    model.SalesOrderDetailID,
-                                                    model.SpecialOfferID,
-                                                    model.UnitPrice,
-                                                    model.UnitPriceDiscount);
-                                patch.ApplyTo(model);
+                                ApiSalesOrderDetailRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesOrderDetailService.Update(id, model);
 
                                 if (result.Success)
@@ -169,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderDetailRequestModel model)
                 {
-                        ActionResponse result = await this.SalesOrderDetailService.Update(id, model);
+                        ApiSalesOrderDetailRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesOrderDetailResponseModel response = await this.SalesOrderDetailService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesOrderDetailService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesOrderDetailResponseModel response = await this.SalesOrderDetailService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -212,9 +215,41 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSalesOrderDetailRequestModel> CreatePatch(ApiSalesOrderDetailRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesOrderDetailRequestModel>();
+                        patch.Replace(x => x.CarrierTrackingNumber, model.CarrierTrackingNumber);
+                        patch.Replace(x => x.LineTotal, model.LineTotal);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OrderQty, model.OrderQty);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesOrderDetailID, model.SalesOrderDetailID);
+                        patch.Replace(x => x.SpecialOfferID, model.SpecialOfferID);
+                        patch.Replace(x => x.UnitPrice, model.UnitPrice);
+                        patch.Replace(x => x.UnitPriceDiscount, model.UnitPriceDiscount);
+                        return patch;
+                }
+
+                private async Task<ApiSalesOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderDetailRequestModel> patch)
+                {
+                        var record = await this.SalesOrderDetailService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesOrderDetailRequestModel request = this.SalesOrderDetailModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad1ea70e1dba86bf601341d1183eb701</Hash>
+    <Hash>7c214c74f0da2392c53130518dc45094</Hash>
 </Codenesium>*/

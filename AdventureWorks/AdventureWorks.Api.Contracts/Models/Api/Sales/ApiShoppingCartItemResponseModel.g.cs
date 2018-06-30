@@ -9,19 +9,19 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiShoppingCartItemResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int shoppingCartItemID,
                         DateTime dateCreated,
                         DateTime modifiedDate,
                         int productID,
                         int quantity,
-                        string shoppingCartID,
-                        int shoppingCartItemID)
+                        string shoppingCartID)
                 {
+                        this.ShoppingCartItemID = shoppingCartItemID;
                         this.DateCreated = dateCreated;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
                         this.Quantity = quantity;
                         this.ShoppingCartID = shoppingCartID;
-                        this.ShoppingCartItemID = shoppingCartItemID;
                 }
 
                 public DateTime DateCreated { get; private set; }
@@ -97,5 +97,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3f64827835894e74ec249c6100db68d</Hash>
+    <Hash>7c2c130336e2edd324b62b9ca8fd7875</Hash>
 </Codenesium>*/

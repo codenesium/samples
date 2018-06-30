@@ -9,6 +9,7 @@ namespace FileServiceNS.Api.Contracts
         public partial class ApiFileResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int id,
                         int? bucketId,
                         DateTime dateCreated,
                         string description,
@@ -17,11 +18,11 @@ namespace FileServiceNS.Api.Contracts
                         Guid externalId,
                         decimal fileSizeInBytes,
                         int fileTypeId,
-                        int id,
                         string location,
                         string privateKey,
                         string publicKey)
                 {
+                        this.Id = id;
                         this.BucketId = bucketId;
                         this.DateCreated = dateCreated;
                         this.Description = description;
@@ -30,7 +31,6 @@ namespace FileServiceNS.Api.Contracts
                         this.ExternalId = externalId;
                         this.FileSizeInBytes = fileSizeInBytes;
                         this.FileTypeId = fileTypeId;
-                        this.Id = id;
                         this.Location = location;
                         this.PrivateKey = privateKey;
                         this.PublicKey = publicKey;
@@ -182,5 +182,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>222d418d18c7cef09491038c2544c803</Hash>
+    <Hash>2ad922f7d2c2443f2aace72f4c4bf827</Hash>
 </Codenesium>*/

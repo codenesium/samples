@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiBusinessEntityAddressResponseModel();
 
-                        model.SetProperties(boBusinessEntityAddress.AddressID, boBusinessEntityAddress.AddressTypeID, boBusinessEntityAddress.BusinessEntityID, boBusinessEntityAddress.ModifiedDate, boBusinessEntityAddress.Rowguid);
+                        model.SetProperties(boBusinessEntityAddress.BusinessEntityID, boBusinessEntityAddress.AddressID, boBusinessEntityAddress.AddressTypeID, boBusinessEntityAddress.ModifiedDate, boBusinessEntityAddress.Rowguid);
 
                         return model;
                 }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea185b0b491de0e86691f03b9c55c85e</Hash>
+    <Hash>ed98cba0e133aab94a839ba111dd7ee0</Hash>
 </Codenesium>*/

@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductVendorResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productID,
                         int averageLeadTime,
                         int businessEntityID,
                         decimal? lastReceiptCost,
@@ -17,10 +18,10 @@ namespace AdventureWorksNS.Api.Contracts
                         int minOrderQty,
                         DateTime modifiedDate,
                         int? onOrderQty,
-                        int productID,
                         decimal standardPrice,
                         string unitMeasureCode)
                 {
+                        this.ProductID = productID;
                         this.AverageLeadTime = averageLeadTime;
                         this.BusinessEntityID = businessEntityID;
                         this.LastReceiptCost = lastReceiptCost;
@@ -29,7 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.MinOrderQty = minOrderQty;
                         this.ModifiedDate = modifiedDate;
                         this.OnOrderQty = onOrderQty;
-                        this.ProductID = productID;
                         this.StandardPrice = standardPrice;
                         this.UnitMeasureCode = unitMeasureCode;
                 }
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5f7ed2e4c0df2f8bb4b883516c8bab3a</Hash>
+    <Hash>c7ae3323d2b2814ca3cc7a8b94496224</Hash>
 </Codenesium>*/

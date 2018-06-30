@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ITransactionHistoryArchiveService TransactionHistoryArchiveService { get; private set; }
 
+                protected IApiTransactionHistoryArchiveModelMapper TransactionHistoryArchiveModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractTransactionHistoryArchiveController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITransactionHistoryArchiveService transactionHistoryArchiveService
+                        ITransactionHistoryArchiveService transactionHistoryArchiveService,
+                        IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.TransactionHistoryArchiveService = transactionHistoryArchiveService;
+                        this.TransactionHistoryArchiveModelMapper = transactionHistoryArchiveModelMapper;
                 }
 
                 [HttpGet]
@@ -134,16 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiTransactionHistoryArchiveRequestModel model = new ApiTransactionHistoryArchiveRequestModel();
-                                model.SetProperties(model.ActualCost,
-                                                    model.ModifiedDate,
-                                                    model.ProductID,
-                                                    model.Quantity,
-                                                    model.ReferenceOrderID,
-                                                    model.ReferenceOrderLineID,
-                                                    model.TransactionDate,
-                                                    model.TransactionType);
-                                patch.ApplyTo(model);
+                                ApiTransactionHistoryArchiveRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.TransactionHistoryArchiveService.Update(id, model);
 
                                 if (result.Success)
@@ -167,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveRequestModel model)
                 {
-                        ActionResponse result = await this.TransactionHistoryArchiveService.Update(id, model);
+                        ApiTransactionHistoryArchiveRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiTransactionHistoryArchiveResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.TransactionHistoryArchiveService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiTransactionHistoryArchiveResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -221,9 +226,39 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> CreatePatch(ApiTransactionHistoryArchiveRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel>();
+                        patch.Replace(x => x.ActualCost, model.ActualCost);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Quantity, model.Quantity);
+                        patch.Replace(x => x.ReferenceOrderID, model.ReferenceOrderID);
+                        patch.Replace(x => x.ReferenceOrderLineID, model.ReferenceOrderLineID);
+                        patch.Replace(x => x.TransactionDate, model.TransactionDate);
+                        patch.Replace(x => x.TransactionType, model.TransactionType);
+                        return patch;
+                }
+
+                private async Task<ApiTransactionHistoryArchiveRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> patch)
+                {
+                        var record = await this.TransactionHistoryArchiveService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiTransactionHistoryArchiveRequestModel request = this.TransactionHistoryArchiveModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>514a2c8a90723f4788868e8ed492ae0b</Hash>
+    <Hash>c59b159238cb9e0f239526e2e2fb4dd8</Hash>
 </Codenesium>*/

@@ -9,15 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiSpecialOfferProductResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int specialOfferID,
                         DateTime modifiedDate,
                         int productID,
-                        Guid rowguid,
-                        int specialOfferID)
+                        Guid rowguid)
                 {
+                        this.SpecialOfferID = specialOfferID;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
                         this.Rowguid = rowguid;
-                        this.SpecialOfferID = specialOfferID;
 
                         this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOffers);
                 }
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b9c258cfb9a8b067b56a6ee409f80754</Hash>
+    <Hash>f99dda7e58ec4a7475382958b91c1ef0</Hash>
 </Codenesium>*/

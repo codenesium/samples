@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ShipMethodController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IShipMethodService shipMethodService
+                        IShipMethodService shipMethodService,
+                        IApiShipMethodModelMapper shipMethodModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               shipMethodService)
+                               shipMethodService,
+                               shipMethodModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5132e1f26e88fecb80b8735831cc0544</Hash>
+    <Hash>e01975380ad9cbb5b666eed18b8d834d</Hash>
 </Codenesium>*/

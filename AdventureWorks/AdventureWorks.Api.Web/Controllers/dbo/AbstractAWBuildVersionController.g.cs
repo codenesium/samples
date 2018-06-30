@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IAWBuildVersionService AWBuildVersionService { get; private set; }
 
+                protected IApiAWBuildVersionModelMapper AWBuildVersionModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractAWBuildVersionController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAWBuildVersionService aWBuildVersionService
+                        IAWBuildVersionService aWBuildVersionService,
+                        IApiAWBuildVersionModelMapper aWBuildVersionModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.AWBuildVersionService = aWBuildVersionService;
+                        this.AWBuildVersionModelMapper = aWBuildVersionModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiAWBuildVersionRequestModel model = new ApiAWBuildVersionRequestModel();
-                                model.SetProperties(model.Database_Version,
-                                                    model.ModifiedDate,
-                                                    model.VersionDate);
-                                patch.ApplyTo(model);
+                                ApiAWBuildVersionRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.AWBuildVersionService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionRequestModel model)
                 {
-                        ActionResponse result = await this.AWBuildVersionService.Update(id, model);
+                        ApiAWBuildVersionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiAWBuildVersionResponseModel response = await this.AWBuildVersionService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.AWBuildVersionService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiAWBuildVersionResponseModel response = await this.AWBuildVersionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -194,9 +204,34 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiAWBuildVersionRequestModel> CreatePatch(ApiAWBuildVersionRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiAWBuildVersionRequestModel>();
+                        patch.Replace(x => x.Database_Version, model.Database_Version);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.VersionDate, model.VersionDate);
+                        return patch;
+                }
+
+                private async Task<ApiAWBuildVersionRequestModel> PatchModel(int id, JsonPatchDocument<ApiAWBuildVersionRequestModel> patch)
+                {
+                        var record = await this.AWBuildVersionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiAWBuildVersionRequestModel request = this.AWBuildVersionModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fba870424025f77636d4aafec080b391</Hash>
+    <Hash>4d55ef86ac5ecf91ae7f2c5729b19922</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace FileServiceNS.Api.Web
         {
                 protected IFileTypeService FileTypeService { get; private set; }
 
+                protected IApiFileTypeModelMapper FileTypeModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FileServiceNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractFileTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IFileTypeService fileTypeService
+                        IFileTypeService fileTypeService,
+                        IApiFileTypeModelMapper fileTypeModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.FileTypeService = fileTypeService;
+                        this.FileTypeModelMapper = fileTypeModelMapper;
                 }
 
                 [HttpGet]
@@ -134,9 +138,8 @@ namespace FileServiceNS.Api.Web
                         }
                         else
                         {
-                                ApiFileTypeRequestModel model = new ApiFileTypeRequestModel();
-                                model.SetProperties(model.Name);
-                                patch.ApplyTo(model);
+                                ApiFileTypeRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.FileTypeService.Update(id, model);
 
                                 if (result.Success)
@@ -160,17 +163,26 @@ namespace FileServiceNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileTypeRequestModel model)
                 {
-                        ActionResponse result = await this.FileTypeService.Update(id, model);
+                        ApiFileTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiFileTypeResponseModel response = await this.FileTypeService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.FileTypeService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiFileTypeResponseModel response = await this.FileTypeService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +218,32 @@ namespace FileServiceNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiFileTypeRequestModel> CreatePatch(ApiFileTypeRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiFileTypeRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiFileTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiFileTypeRequestModel> patch)
+                {
+                        var record = await this.FileTypeService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiFileTypeRequestModel request = this.FileTypeModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3a2be9f012d7ba4996a18c88f7a9db70</Hash>
+    <Hash>dff3ab0e1aaa885fa9a64c55442b08db</Hash>
 </Codenesium>*/

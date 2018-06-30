@@ -9,13 +9,13 @@ namespace NebulaNS.Api.Contracts
         public partial class ApiVersionInfoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        long version,
                         DateTime? appliedOn,
-                        string description,
-                        long version)
+                        string description)
                 {
+                        this.Version = version;
                         this.AppliedOn = appliedOn;
                         this.Description = description;
-                        this.Version = version;
                 }
 
                 public DateTime? AppliedOn { get; private set; }
@@ -58,5 +58,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fde440877506317b2e8a66d13f0136c9</Hash>
+    <Hash>e35e563298cbb7cb60d34d57ec3bba17</Hash>
 </Codenesium>*/

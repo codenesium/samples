@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IIllustrationService IllustrationService { get; private set; }
 
+                protected IApiIllustrationModelMapper IllustrationModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractIllustrationController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IIllustrationService illustrationService
+                        IIllustrationService illustrationService,
+                        IApiIllustrationModelMapper illustrationModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.IllustrationService = illustrationService;
+                        this.IllustrationModelMapper = illustrationModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiIllustrationRequestModel model = new ApiIllustrationRequestModel();
-                                model.SetProperties(model.Diagram,
-                                                    model.ModifiedDate);
-                                patch.ApplyTo(model);
+                                ApiIllustrationRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.IllustrationService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationRequestModel model)
                 {
-                        ActionResponse result = await this.IllustrationService.Update(id, model);
+                        ApiIllustrationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiIllustrationResponseModel response = await this.IllustrationService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.IllustrationService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiIllustrationResponseModel response = await this.IllustrationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -207,9 +218,33 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiIllustrationRequestModel> CreatePatch(ApiIllustrationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiIllustrationRequestModel>();
+                        patch.Replace(x => x.Diagram, model.Diagram);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        return patch;
+                }
+
+                private async Task<ApiIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationRequestModel> patch)
+                {
+                        var record = await this.IllustrationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiIllustrationRequestModel request = this.IllustrationModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fdb7e5a1da582b67464fca3b2bc792fd</Hash>
+    <Hash>f4e50700edb45f376d32019e3b66cd71</Hash>
 </Codenesium>*/

@@ -9,6 +9,7 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiDocumentResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        Guid rowguid,
                         int changeNumber,
                         byte[] document1,
                         short? documentLevel,
@@ -19,10 +20,10 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime modifiedDate,
                         int owner,
                         string revision,
-                        Guid rowguid,
                         int status,
                         string title)
                 {
+                        this.Rowguid = rowguid;
                         this.ChangeNumber = changeNumber;
                         this.Document1 = document1;
                         this.DocumentLevel = documentLevel;
@@ -33,7 +34,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                         this.Owner = owner;
                         this.Revision = revision;
-                        this.Rowguid = rowguid;
                         this.Status = status;
                         this.Title = title;
                 }
@@ -188,5 +188,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2284f6822b57abacbbd947e5b7bfc0c0</Hash>
+    <Hash>3fcfa0d9e6f70cf61ec1c3adcbc17d67</Hash>
 </Codenesium>*/

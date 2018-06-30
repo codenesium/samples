@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiJobCandidateResponseModel();
 
-                        model.SetProperties(boJobCandidate.BusinessEntityID, boJobCandidate.JobCandidateID, boJobCandidate.ModifiedDate, boJobCandidate.Resume);
+                        model.SetProperties(boJobCandidate.JobCandidateID, boJobCandidate.BusinessEntityID, boJobCandidate.ModifiedDate, boJobCandidate.Resume);
 
                         return model;
                 }
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7b201ba9108a3ed9ebc2f6b11f7bc6d8</Hash>
+    <Hash>e0c67e29c4d2d6d5387f5271b4d9ff36</Hash>
 </Codenesium>*/

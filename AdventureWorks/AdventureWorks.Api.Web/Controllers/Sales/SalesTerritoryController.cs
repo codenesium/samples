@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<SalesTerritoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesTerritoryService salesTerritoryService
+                        ISalesTerritoryService salesTerritoryService,
+                        IApiSalesTerritoryModelMapper salesTerritoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               salesTerritoryService)
+                               salesTerritoryService,
+                               salesTerritoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb106f8db1587a7b49b5116772cc010b</Hash>
+    <Hash>6a063831ee5d636542094b221d5b862e</Hash>
 </Codenesium>*/

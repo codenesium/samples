@@ -32,7 +32,7 @@ namespace FermataFishNS.Api.Services
                 {
                         var model = new ApiLessonResponseModel();
 
-                        model.SetProperties(boLesson.ActualEndDate, boLesson.ActualStartDate, boLesson.BillAmount, boLesson.Id, boLesson.LessonStatusId, boLesson.ScheduledEndDate, boLesson.ScheduledStartDate, boLesson.StudentNotes, boLesson.StudioId, boLesson.TeacherNotes);
+                        model.SetProperties(boLesson.Id, boLesson.ActualEndDate, boLesson.ActualStartDate, boLesson.BillAmount, boLesson.LessonStatusId, boLesson.ScheduledEndDate, boLesson.ScheduledStartDate, boLesson.StudentNotes, boLesson.StudioId, boLesson.TeacherNotes);
 
                         return model;
                 }
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88208543a365f410481e70cc7c91b21a</Hash>
+    <Hash>021fec3f7e9fb9ba3ae9726b800026a5</Hash>
 </Codenesium>*/

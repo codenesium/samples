@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<SalesOrderHeaderSalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderHeaderSalesReasonService salesOrderHeaderSalesReasonService
+                        ISalesOrderHeaderSalesReasonService salesOrderHeaderSalesReasonService,
+                        IApiSalesOrderHeaderSalesReasonModelMapper salesOrderHeaderSalesReasonModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               salesOrderHeaderSalesReasonService)
+                               salesOrderHeaderSalesReasonService,
+                               salesOrderHeaderSalesReasonModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6d4d26ab29cab47ba7180461adacb07a</Hash>
+    <Hash>d30a536de79e339bd0deb9054f8d7a2d</Hash>
 </Codenesium>*/

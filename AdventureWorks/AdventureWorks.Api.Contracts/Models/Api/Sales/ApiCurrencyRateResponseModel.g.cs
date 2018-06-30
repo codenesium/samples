@@ -9,17 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiCurrencyRateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int currencyRateID,
                         decimal averageRate,
                         DateTime currencyRateDate,
-                        int currencyRateID,
                         decimal endOfDayRate,
                         string fromCurrencyCode,
                         DateTime modifiedDate,
                         string toCurrencyCode)
                 {
+                        this.CurrencyRateID = currencyRateID;
                         this.AverageRate = averageRate;
                         this.CurrencyRateDate = currencyRateDate;
-                        this.CurrencyRateID = currencyRateID;
                         this.EndOfDayRate = endOfDayRate;
                         this.FromCurrencyCode = fromCurrencyCode;
                         this.ModifiedDate = modifiedDate;
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0dcb4c177b10ca912bf163c36174abaf</Hash>
+    <Hash>ee2f5ffc95d5804ec36e1770f3bd0fe9</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IEmailAddressService EmailAddressService { get; private set; }
 
+                protected IApiEmailAddressModelMapper EmailAddressModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractEmailAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmailAddressService emailAddressService
+                        IEmailAddressService emailAddressService,
+                        IApiEmailAddressModelMapper emailAddressModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.EmailAddressService = emailAddressService;
+                        this.EmailAddressModelMapper = emailAddressModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiEmailAddressRequestModel model = new ApiEmailAddressRequestModel();
-                                model.SetProperties(model.EmailAddress1,
-                                                    model.EmailAddressID,
-                                                    model.ModifiedDate,
-                                                    model.Rowguid);
-                                patch.ApplyTo(model);
+                                ApiEmailAddressRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.EmailAddressService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmailAddressRequestModel model)
                 {
-                        ActionResponse result = await this.EmailAddressService.Update(id, model);
+                        ApiEmailAddressRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiEmailAddressResponseModel response = await this.EmailAddressService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.EmailAddressService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiEmailAddressResponseModel response = await this.EmailAddressService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +215,35 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiEmailAddressRequestModel> CreatePatch(ApiEmailAddressRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiEmailAddressRequestModel>();
+                        patch.Replace(x => x.EmailAddress1, model.EmailAddress1);
+                        patch.Replace(x => x.EmailAddressID, model.EmailAddressID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
+
+                private async Task<ApiEmailAddressRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmailAddressRequestModel> patch)
+                {
+                        var record = await this.EmailAddressService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiEmailAddressRequestModel request = this.EmailAddressModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>969ab187d58584d9d204a1d3ff59c1e2</Hash>
+    <Hash>f90c8280021d6493b8818064743bec99</Hash>
 </Codenesium>*/

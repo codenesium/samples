@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiCreditCardResponseModel();
 
-                        model.SetProperties(boCreditCard.CardNumber, boCreditCard.CardType, boCreditCard.CreditCardID, boCreditCard.ExpMonth, boCreditCard.ExpYear, boCreditCard.ModifiedDate);
+                        model.SetProperties(boCreditCard.CreditCardID, boCreditCard.CardNumber, boCreditCard.CardType, boCreditCard.ExpMonth, boCreditCard.ExpYear, boCreditCard.ModifiedDate);
 
                         return model;
                 }
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6eb80a841c04e996748fc8b571714df9</Hash>
+    <Hash>bcec3f9a5ae36b3b3880d854d3662a30</Hash>
 </Codenesium>*/

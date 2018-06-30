@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICurrencyRateService CurrencyRateService { get; private set; }
 
+                protected IApiCurrencyRateModelMapper CurrencyRateModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCurrencyRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICurrencyRateService currencyRateService
+                        ICurrencyRateService currencyRateService,
+                        IApiCurrencyRateModelMapper currencyRateModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CurrencyRateService = currencyRateService;
+                        this.CurrencyRateModelMapper = currencyRateModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCurrencyRateRequestModel model = new ApiCurrencyRateRequestModel();
-                                model.SetProperties(model.AverageRate,
-                                                    model.CurrencyRateDate,
-                                                    model.EndOfDayRate,
-                                                    model.FromCurrencyCode,
-                                                    model.ModifiedDate,
-                                                    model.ToCurrencyCode);
-                                patch.ApplyTo(model);
+                                ApiCurrencyRateRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CurrencyRateService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCurrencyRateRequestModel model)
                 {
-                        ActionResponse result = await this.CurrencyRateService.Update(id, model);
+                        ApiCurrencyRateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCurrencyRateResponseModel response = await this.CurrencyRateService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CurrencyRateService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCurrencyRateResponseModel response = await this.CurrencyRateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -230,9 +237,37 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
+                        patch.Replace(x => x.AverageRate, model.AverageRate);
+                        patch.Replace(x => x.CurrencyRateDate, model.CurrencyRateDate);
+                        patch.Replace(x => x.EndOfDayRate, model.EndOfDayRate);
+                        patch.Replace(x => x.FromCurrencyCode, model.FromCurrencyCode);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ToCurrencyCode, model.ToCurrencyCode);
+                        return patch;
+                }
+
+                private async Task<ApiCurrencyRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiCurrencyRateRequestModel> patch)
+                {
+                        var record = await this.CurrencyRateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCurrencyRateRequestModel request = this.CurrencyRateModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a605660762155678a5cbff7f9d13854b</Hash>
+    <Hash>74ddb01a37ebb25cfed592baf42756eb</Hash>
 </Codenesium>*/

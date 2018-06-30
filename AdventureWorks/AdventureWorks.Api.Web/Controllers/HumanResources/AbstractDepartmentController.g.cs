@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IDepartmentService DepartmentService { get; private set; }
 
+                protected IApiDepartmentModelMapper DepartmentModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractDepartmentController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IDepartmentService departmentService
+                        IDepartmentService departmentService,
+                        IApiDepartmentModelMapper departmentModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.DepartmentService = departmentService;
+                        this.DepartmentModelMapper = departmentModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiDepartmentRequestModel model = new ApiDepartmentRequestModel();
-                                model.SetProperties(model.GroupName,
-                                                    model.ModifiedDate,
-                                                    model.Name);
-                                patch.ApplyTo(model);
+                                ApiDepartmentRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.DepartmentService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentRequestModel model)
                 {
-                        ActionResponse result = await this.DepartmentService.Update(id, model);
+                        ApiDepartmentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.DepartmentService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -227,9 +237,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiDepartmentRequestModel> CreatePatch(ApiDepartmentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDepartmentRequestModel>();
+                        patch.Replace(x => x.GroupName, model.GroupName);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiDepartmentRequestModel> PatchModel(short id, JsonPatchDocument<ApiDepartmentRequestModel> patch)
+                {
+                        var record = await this.DepartmentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiDepartmentRequestModel request = this.DepartmentModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c2c991a0431aded0ebb2a39d4061299</Hash>
+    <Hash>f6bd898111edbba0e27a8daa20b6caac</Hash>
 </Codenesium>*/

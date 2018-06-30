@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IErrorLogService ErrorLogService { get; private set; }
 
+                protected IApiErrorLogModelMapper ErrorLogModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractErrorLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IErrorLogService errorLogService
+                        IErrorLogService errorLogService,
+                        IApiErrorLogModelMapper errorLogModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ErrorLogService = errorLogService;
+                        this.ErrorLogModelMapper = errorLogModelMapper;
                 }
 
                 [HttpGet]
@@ -134,16 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiErrorLogRequestModel model = new ApiErrorLogRequestModel();
-                                model.SetProperties(model.ErrorLine,
-                                                    model.ErrorMessage,
-                                                    model.ErrorNumber,
-                                                    model.ErrorProcedure,
-                                                    model.ErrorSeverity,
-                                                    model.ErrorState,
-                                                    model.ErrorTime,
-                                                    model.UserName);
-                                patch.ApplyTo(model);
+                                ApiErrorLogRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ErrorLogService.Update(id, model);
 
                                 if (result.Success)
@@ -167,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogRequestModel model)
                 {
-                        ActionResponse result = await this.ErrorLogService.Update(id, model);
+                        ApiErrorLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ErrorLogService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -199,9 +204,39 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiErrorLogRequestModel> CreatePatch(ApiErrorLogRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiErrorLogRequestModel>();
+                        patch.Replace(x => x.ErrorLine, model.ErrorLine);
+                        patch.Replace(x => x.ErrorMessage, model.ErrorMessage);
+                        patch.Replace(x => x.ErrorNumber, model.ErrorNumber);
+                        patch.Replace(x => x.ErrorProcedure, model.ErrorProcedure);
+                        patch.Replace(x => x.ErrorSeverity, model.ErrorSeverity);
+                        patch.Replace(x => x.ErrorState, model.ErrorState);
+                        patch.Replace(x => x.ErrorTime, model.ErrorTime);
+                        patch.Replace(x => x.UserName, model.UserName);
+                        return patch;
+                }
+
+                private async Task<ApiErrorLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiErrorLogRequestModel> patch)
+                {
+                        var record = await this.ErrorLogService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiErrorLogRequestModel request = this.ErrorLogModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7af0c50d679193ca5f91df9a7a84e05c</Hash>
+    <Hash>96c6d5ea369c50330b97e0956bca418f</Hash>
 </Codenesium>*/

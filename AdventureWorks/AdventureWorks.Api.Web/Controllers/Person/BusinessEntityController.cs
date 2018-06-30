@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<BusinessEntityController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IBusinessEntityService businessEntityService
+                        IBusinessEntityService businessEntityService,
+                        IApiBusinessEntityModelMapper businessEntityModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               businessEntityService)
+                               businessEntityService,
+                               businessEntityModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7105df2d5fec7559a01548fc3bb3f724</Hash>
+    <Hash>3bc21b49b39b214884f97853c82e36bf</Hash>
 </Codenesium>*/

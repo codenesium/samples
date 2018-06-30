@@ -9,13 +9,13 @@ namespace FermataFishNS.Api.Contracts
         public partial class ApiRateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        decimal amountPerMinute,
                         int id,
+                        decimal amountPerMinute,
                         int teacherId,
                         int teacherSkillId)
                 {
-                        this.AmountPerMinute = amountPerMinute;
                         this.Id = id;
+                        this.AmountPerMinute = amountPerMinute;
                         this.TeacherId = teacherId;
                         this.TeacherSkillId = teacherSkillId;
 
@@ -78,5 +78,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9d5a398cb3b05160576134d4b01e5d1e</Hash>
+    <Hash>0f85fe61160249c9bb634441aed67d82</Hash>
 </Codenesium>*/

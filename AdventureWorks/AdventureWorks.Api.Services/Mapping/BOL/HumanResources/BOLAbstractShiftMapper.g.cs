@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiShiftResponseModel();
 
-                        model.SetProperties(boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.ShiftID, boShift.StartTime);
+                        model.SetProperties(boShift.ShiftID, boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.StartTime);
 
                         return model;
                 }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a91fe8d7f6399c5a6f2d9a7317f2306c</Hash>
+    <Hash>f077504ea22106cfc7950c3393a4b63f</Hash>
 </Codenesium>*/

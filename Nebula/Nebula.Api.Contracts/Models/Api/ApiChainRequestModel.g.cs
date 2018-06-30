@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -92,5 +93,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b6c4fa75429fcc10acd158763eab298f</Hash>
+    <Hash>b19021f01212d6f588f83736802ca92b</Hash>
 </Codenesium>*/

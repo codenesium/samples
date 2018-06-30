@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiProductListPriceHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int productID,
                         DateTime? endDate,
                         decimal listPrice,
                         DateTime modifiedDate,
-                        int productID,
                         DateTime startDate)
                 {
+                        this.ProductID = productID;
                         this.EndDate = endDate;
                         this.ListPrice = listPrice;
                         this.ModifiedDate = modifiedDate;
-                        this.ProductID = productID;
                         this.StartDate = startDate;
                 }
 
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>31c2f61fc8f6b9026804b936b777f48b</Hash>
+    <Hash>db5b7837f61962fc42f39296d189875d</Hash>
 </Codenesium>*/

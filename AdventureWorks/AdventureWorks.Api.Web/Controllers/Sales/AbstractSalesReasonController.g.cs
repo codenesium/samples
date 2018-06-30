@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesReasonService SalesReasonService { get; private set; }
 
+                protected IApiSalesReasonModelMapper SalesReasonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesReasonService salesReasonService
+                        ISalesReasonService salesReasonService,
+                        IApiSalesReasonModelMapper salesReasonModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesReasonService = salesReasonService;
+                        this.SalesReasonModelMapper = salesReasonModelMapper;
                 }
 
                 [HttpGet]
@@ -134,11 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesReasonRequestModel model = new ApiSalesReasonRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.Name,
-                                                    model.ReasonType);
-                                patch.ApplyTo(model);
+                                ApiSalesReasonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesReasonService.Update(id, model);
 
                                 if (result.Success)
@@ -162,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesReasonRequestModel model)
                 {
-                        ActionResponse result = await this.SalesReasonService.Update(id, model);
+                        ApiSalesReasonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesReasonResponseModel response = await this.SalesReasonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesReasonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesReasonResponseModel response = await this.SalesReasonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -208,9 +218,34 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiSalesReasonRequestModel> CreatePatch(ApiSalesReasonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesReasonRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.ReasonType, model.ReasonType);
+                        return patch;
+                }
+
+                private async Task<ApiSalesReasonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesReasonRequestModel> patch)
+                {
+                        var record = await this.SalesReasonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesReasonRequestModel request = this.SalesReasonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9581ef0047cc5a6ec5782bbd71cd0946</Hash>
+    <Hash>a7889238bc8f0112eee45e6f60b8f8be</Hash>
 </Codenesium>*/

@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<ClaspController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IClaspService claspService
+                        IClaspService claspService,
+                        IApiClaspModelMapper claspModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               claspService)
+                               claspService,
+                               claspModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0acd42cc296ac839de1eb268c2e9e42c</Hash>
+    <Hash>d5dc9e5266018c3eadf02bc70a1f96fb</Hash>
 </Codenesium>*/

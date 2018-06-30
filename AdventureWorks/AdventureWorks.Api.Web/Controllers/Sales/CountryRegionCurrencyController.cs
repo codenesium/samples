@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<CountryRegionCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICountryRegionCurrencyService countryRegionCurrencyService
+                        ICountryRegionCurrencyService countryRegionCurrencyService,
+                        IApiCountryRegionCurrencyModelMapper countryRegionCurrencyModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               countryRegionCurrencyService)
+                               countryRegionCurrencyService,
+                               countryRegionCurrencyModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3fd3a626d93bce1cbefe8e111733f5e3</Hash>
+    <Hash>1cd7d18ab57e24f03aa97434fd92db96</Hash>
 </Codenesium>*/

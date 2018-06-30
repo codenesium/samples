@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<ProductReviewController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductReviewService productReviewService
+                        IProductReviewService productReviewService,
+                        IApiProductReviewModelMapper productReviewModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               productReviewService)
+                               productReviewService,
+                               productReviewModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bb19f5832633114cf1a72a1056b8a36a</Hash>
+    <Hash>37491de4c75ac708769369a326346fd2</Hash>
 </Codenesium>*/

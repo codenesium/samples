@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected IProductVendorService ProductVendorService { get; private set; }
 
+                protected IApiProductVendorModelMapper ProductVendorModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractProductVendorController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IProductVendorService productVendorService
+                        IProductVendorService productVendorService,
+                        IApiProductVendorModelMapper productVendorModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.ProductVendorService = productVendorService;
+                        this.ProductVendorModelMapper = productVendorModelMapper;
                 }
 
                 [HttpGet]
@@ -134,18 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiProductVendorRequestModel model = new ApiProductVendorRequestModel();
-                                model.SetProperties(model.AverageLeadTime,
-                                                    model.BusinessEntityID,
-                                                    model.LastReceiptCost,
-                                                    model.LastReceiptDate,
-                                                    model.MaxOrderQty,
-                                                    model.MinOrderQty,
-                                                    model.ModifiedDate,
-                                                    model.OnOrderQty,
-                                                    model.StandardPrice,
-                                                    model.UnitMeasureCode);
-                                patch.ApplyTo(model);
+                                ApiProductVendorRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.ProductVendorService.Update(id, model);
 
                                 if (result.Success)
@@ -169,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductVendorRequestModel model)
                 {
-                        ActionResponse result = await this.ProductVendorService.Update(id, model);
+                        ApiProductVendorRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiProductVendorResponseModel response = await this.ProductVendorService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.ProductVendorService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiProductVendorResponseModel response = await this.ProductVendorService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -223,9 +226,41 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiProductVendorRequestModel> CreatePatch(ApiProductVendorRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductVendorRequestModel>();
+                        patch.Replace(x => x.AverageLeadTime, model.AverageLeadTime);
+                        patch.Replace(x => x.BusinessEntityID, model.BusinessEntityID);
+                        patch.Replace(x => x.LastReceiptCost, model.LastReceiptCost);
+                        patch.Replace(x => x.LastReceiptDate, model.LastReceiptDate);
+                        patch.Replace(x => x.MaxOrderQty, model.MaxOrderQty);
+                        patch.Replace(x => x.MinOrderQty, model.MinOrderQty);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OnOrderQty, model.OnOrderQty);
+                        patch.Replace(x => x.StandardPrice, model.StandardPrice);
+                        patch.Replace(x => x.UnitMeasureCode, model.UnitMeasureCode);
+                        return patch;
+                }
+
+                private async Task<ApiProductVendorRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductVendorRequestModel> patch)
+                {
+                        var record = await this.ProductVendorService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiProductVendorRequestModel request = this.ProductVendorModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>56674054a8ca43bec64f15ea7b1251a2</Hash>
+    <Hash>4bb59cad1642d6b808713e96834daddd</Hash>
 </Codenesium>*/

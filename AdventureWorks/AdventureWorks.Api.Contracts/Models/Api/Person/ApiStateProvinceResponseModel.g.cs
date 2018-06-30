@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.Contracts
         public partial class ApiStateProvinceResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
+                        int stateProvinceID,
                         string countryRegionCode,
                         bool isOnlyStateProvinceFlag,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
                         string stateProvinceCode,
-                        int stateProvinceID,
                         int territoryID)
                 {
+                        this.StateProvinceID = stateProvinceID;
                         this.CountryRegionCode = countryRegionCode;
                         this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
                         this.StateProvinceCode = stateProvinceCode;
-                        this.StateProvinceID = stateProvinceID;
                         this.TerritoryID = territoryID;
                 }
 
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b82d09576193dd1bf77f738ff4563f49</Hash>
+    <Hash>5e0896739e0413698a187f0b6295f794</Hash>
 </Codenesium>*/

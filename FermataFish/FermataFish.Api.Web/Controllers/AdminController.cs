@@ -20,12 +20,14 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AdminController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IAdminService adminService
+                        IAdminService adminService,
+                        IApiAdminModelMapper adminModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               adminService)
+                               adminService,
+                               adminModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5af6097a6dfffac27767d2aef11c5cb3</Hash>
+    <Hash>36e78afbe9d8a2eb92a9994110ef45cb</Hash>
 </Codenesium>*/

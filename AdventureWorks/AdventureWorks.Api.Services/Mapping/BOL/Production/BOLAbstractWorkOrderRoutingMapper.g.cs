@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiWorkOrderRoutingResponseModel();
 
-                        model.SetProperties(boWorkOrderRouting.ActualCost, boWorkOrderRouting.ActualEndDate, boWorkOrderRouting.ActualResourceHrs, boWorkOrderRouting.ActualStartDate, boWorkOrderRouting.LocationID, boWorkOrderRouting.ModifiedDate, boWorkOrderRouting.OperationSequence, boWorkOrderRouting.PlannedCost, boWorkOrderRouting.ProductID, boWorkOrderRouting.ScheduledEndDate, boWorkOrderRouting.ScheduledStartDate, boWorkOrderRouting.WorkOrderID);
+                        model.SetProperties(boWorkOrderRouting.WorkOrderID, boWorkOrderRouting.ActualCost, boWorkOrderRouting.ActualEndDate, boWorkOrderRouting.ActualResourceHrs, boWorkOrderRouting.ActualStartDate, boWorkOrderRouting.LocationID, boWorkOrderRouting.ModifiedDate, boWorkOrderRouting.OperationSequence, boWorkOrderRouting.PlannedCost, boWorkOrderRouting.ProductID, boWorkOrderRouting.ScheduledEndDate, boWorkOrderRouting.ScheduledStartDate);
 
                         return model;
                 }
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db3d62ba11d33b294c8d38b0a46531a6</Hash>
+    <Hash>166b927126abde5020c5e287c41137e3</Hash>
 </Codenesium>*/

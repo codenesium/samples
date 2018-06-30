@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiScrapReasonResponseModel();
 
-                        model.SetProperties(boScrapReason.ModifiedDate, boScrapReason.Name, boScrapReason.ScrapReasonID);
+                        model.SetProperties(boScrapReason.ScrapReasonID, boScrapReason.ModifiedDate, boScrapReason.Name);
 
                         return model;
                 }
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc9977e33adac1cfd57633f4cce36ad1</Hash>
+    <Hash>4967e669c5bf1dafca3bd7069d5d6a4a</Hash>
 </Codenesium>*/

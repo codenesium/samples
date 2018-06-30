@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<TransactionHistoryArchiveController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITransactionHistoryArchiveService transactionHistoryArchiveService
+                        ITransactionHistoryArchiveService transactionHistoryArchiveService,
+                        IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               transactionHistoryArchiveService)
+                               transactionHistoryArchiveService,
+                               transactionHistoryArchiveModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>396c868d154d270e900ca26fedfa6608</Hash>
+    <Hash>9ea94a7eb027526a8c77fcb5888893bd</Hash>
 </Codenesium>*/

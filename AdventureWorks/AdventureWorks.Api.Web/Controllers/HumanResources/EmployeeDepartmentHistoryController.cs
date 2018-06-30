@@ -20,12 +20,14 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<EmployeeDepartmentHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
+                        IEmployeeDepartmentHistoryService employeeDepartmentHistoryService,
+                        IApiEmployeeDepartmentHistoryModelMapper employeeDepartmentHistoryModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               employeeDepartmentHistoryService)
+                               employeeDepartmentHistoryService,
+                               employeeDepartmentHistoryModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c36e2b1a792417a6dd74ed5e9878907a</Hash>
+    <Hash>1abf6b48f6f4804d8fccf8f75f208b64</Hash>
 </Codenesium>*/

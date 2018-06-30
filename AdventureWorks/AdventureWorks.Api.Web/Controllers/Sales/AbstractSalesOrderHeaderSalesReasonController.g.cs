@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesOrderHeaderSalesReasonService SalesOrderHeaderSalesReasonService { get; private set; }
 
+                protected IApiSalesOrderHeaderSalesReasonModelMapper SalesOrderHeaderSalesReasonModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesOrderHeaderSalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderHeaderSalesReasonService salesOrderHeaderSalesReasonService
+                        ISalesOrderHeaderSalesReasonService salesOrderHeaderSalesReasonService,
+                        IApiSalesOrderHeaderSalesReasonModelMapper salesOrderHeaderSalesReasonModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesOrderHeaderSalesReasonService = salesOrderHeaderSalesReasonService;
+                        this.SalesOrderHeaderSalesReasonModelMapper = salesOrderHeaderSalesReasonModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesOrderHeaderSalesReasonRequestModel model = new ApiSalesOrderHeaderSalesReasonRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.SalesReasonID);
-                                patch.ApplyTo(model);
+                                ApiSalesOrderHeaderSalesReasonRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesOrderHeaderSalesReasonService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderSalesReasonRequestModel model)
                 {
-                        ActionResponse result = await this.SalesOrderHeaderSalesReasonService.Update(id, model);
+                        ApiSalesOrderHeaderSalesReasonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesOrderHeaderSalesReasonResponseModel response = await this.SalesOrderHeaderSalesReasonService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesOrderHeaderSalesReasonService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesOrderHeaderSalesReasonResponseModel response = await this.SalesOrderHeaderSalesReasonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -193,9 +204,33 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel> CreatePatch(ApiSalesOrderHeaderSalesReasonRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.SalesReasonID, model.SalesReasonID);
+                        return patch;
+                }
+
+                private async Task<ApiSalesOrderHeaderSalesReasonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel> patch)
+                {
+                        var record = await this.SalesOrderHeaderSalesReasonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesOrderHeaderSalesReasonRequestModel request = this.SalesOrderHeaderSalesReasonModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e104cbe659c2456b50123afb5b4601c2</Hash>
+    <Hash>142d69482d38e8852156b5b9b653e908</Hash>
 </Codenesium>*/

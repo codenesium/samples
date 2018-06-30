@@ -19,6 +19,8 @@ namespace FermataFishNS.Api.Web
         {
                 protected IStateService StateService { get; private set; }
 
+                protected IApiStateModelMapper StateModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace FermataFishNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractStateController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IStateService stateService
+                        IStateService stateService,
+                        IApiStateModelMapper stateModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.StateService = stateService;
+                        this.StateModelMapper = stateModelMapper;
                 }
 
                 [HttpGet]
@@ -134,9 +138,8 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ApiStateRequestModel model = new ApiStateRequestModel();
-                                model.SetProperties(model.Name);
-                                patch.ApplyTo(model);
+                                ApiStateRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.StateService.Update(id, model);
 
                                 if (result.Success)
@@ -160,17 +163,26 @@ namespace FermataFishNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateRequestModel model)
                 {
-                        ActionResponse result = await this.StateService.Update(id, model);
+                        ApiStateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiStateResponseModel response = await this.StateService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.StateService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiStateResponseModel response = await this.StateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -206,9 +218,32 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiStateRequestModel> CreatePatch(ApiStateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStateRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
+
+                private async Task<ApiStateRequestModel> PatchModel(int id, JsonPatchDocument<ApiStateRequestModel> patch)
+                {
+                        var record = await this.StateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiStateRequestModel request = this.StateModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0c5167dd2c7bf69e2e3ab65ddcc9dacd</Hash>
+    <Hash>536fcef7b462085a45febc29ab475cc0</Hash>
 </Codenesium>*/

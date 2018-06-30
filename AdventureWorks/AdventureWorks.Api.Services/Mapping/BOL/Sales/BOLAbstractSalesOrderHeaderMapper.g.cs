@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiSalesOrderHeaderResponseModel();
 
-                        model.SetProperties(boSalesOrderHeader.AccountNumber, boSalesOrderHeader.BillToAddressID, boSalesOrderHeader.Comment, boSalesOrderHeader.CreditCardApprovalCode, boSalesOrderHeader.CreditCardID, boSalesOrderHeader.CurrencyRateID, boSalesOrderHeader.CustomerID, boSalesOrderHeader.DueDate, boSalesOrderHeader.Freight, boSalesOrderHeader.ModifiedDate, boSalesOrderHeader.OnlineOrderFlag, boSalesOrderHeader.OrderDate, boSalesOrderHeader.PurchaseOrderNumber, boSalesOrderHeader.RevisionNumber, boSalesOrderHeader.Rowguid, boSalesOrderHeader.SalesOrderID, boSalesOrderHeader.SalesOrderNumber, boSalesOrderHeader.SalesPersonID, boSalesOrderHeader.ShipDate, boSalesOrderHeader.ShipMethodID, boSalesOrderHeader.ShipToAddressID, boSalesOrderHeader.Status, boSalesOrderHeader.SubTotal, boSalesOrderHeader.TaxAmt, boSalesOrderHeader.TerritoryID, boSalesOrderHeader.TotalDue);
+                        model.SetProperties(boSalesOrderHeader.SalesOrderID, boSalesOrderHeader.AccountNumber, boSalesOrderHeader.BillToAddressID, boSalesOrderHeader.Comment, boSalesOrderHeader.CreditCardApprovalCode, boSalesOrderHeader.CreditCardID, boSalesOrderHeader.CurrencyRateID, boSalesOrderHeader.CustomerID, boSalesOrderHeader.DueDate, boSalesOrderHeader.Freight, boSalesOrderHeader.ModifiedDate, boSalesOrderHeader.OnlineOrderFlag, boSalesOrderHeader.OrderDate, boSalesOrderHeader.PurchaseOrderNumber, boSalesOrderHeader.RevisionNumber, boSalesOrderHeader.Rowguid, boSalesOrderHeader.SalesOrderNumber, boSalesOrderHeader.SalesPersonID, boSalesOrderHeader.ShipDate, boSalesOrderHeader.ShipMethodID, boSalesOrderHeader.ShipToAddressID, boSalesOrderHeader.Status, boSalesOrderHeader.SubTotal, boSalesOrderHeader.TaxAmt, boSalesOrderHeader.TerritoryID, boSalesOrderHeader.TotalDue);
 
                         return model;
                 }
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>615336fe06b053f141be1e7ce477964e</Hash>
+    <Hash>dd0b58e8053a101e6ffba251858301d2</Hash>
 </Codenesium>*/

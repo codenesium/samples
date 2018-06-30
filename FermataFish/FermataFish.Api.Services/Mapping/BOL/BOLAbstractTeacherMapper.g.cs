@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.Services
                 {
                         var model = new ApiTeacherResponseModel();
 
-                        model.SetProperties(boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.Id, boTeacher.LastName, boTeacher.Phone, boTeacher.StudioId);
+                        model.SetProperties(boTeacher.Id, boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.LastName, boTeacher.Phone, boTeacher.StudioId);
 
                         return model;
                 }
@@ -50,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91a88e17b1e481b94ba736182d02df9f</Hash>
+    <Hash>b58bd3aa567cbc62c548946f34aad4b4</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected ITeamService TeamService { get; private set; }
 
+                protected IApiTeamModelMapper TeamModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ITeamService teamService
+                        ITeamService teamService,
+                        IApiTeamModelMapper teamModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.TeamService = teamService;
+                        this.TeamModelMapper = teamModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiTeamRequestModel model = new ApiTeamRequestModel();
-                                model.SetProperties(model.Name,
-                                                    model.OrganizationId);
-                                patch.ApplyTo(model);
+                                ApiTeamRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.TeamService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeamRequestModel model)
                 {
-                        ActionResponse result = await this.TeamService.Update(id, model);
+                        ApiTeamRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiTeamResponseModel response = await this.TeamService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.TeamService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiTeamResponseModel response = await this.TeamService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -221,9 +232,33 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiTeamRequestModel> CreatePatch(ApiTeamRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTeamRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.OrganizationId, model.OrganizationId);
+                        return patch;
+                }
+
+                private async Task<ApiTeamRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeamRequestModel> patch)
+                {
+                        var record = await this.TeamService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiTeamRequestModel request = this.TeamModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a4f68a046de906aba3bb73950e40e08c</Hash>
+    <Hash>64d5e0461e81d4dd6ed2f5bab2fb56b4</Hash>
 </Codenesium>*/

@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ISalesPersonQuotaHistoryService SalesPersonQuotaHistoryService { get; private set; }
 
+                protected IApiSalesPersonQuotaHistoryModelMapper SalesPersonQuotaHistoryModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractSalesPersonQuotaHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService
+                        ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService,
+                        IApiSalesPersonQuotaHistoryModelMapper salesPersonQuotaHistoryModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.SalesPersonQuotaHistoryService = salesPersonQuotaHistoryService;
+                        this.SalesPersonQuotaHistoryModelMapper = salesPersonQuotaHistoryModelMapper;
                 }
 
                 [HttpGet]
@@ -134,12 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiSalesPersonQuotaHistoryRequestModel model = new ApiSalesPersonQuotaHistoryRequestModel();
-                                model.SetProperties(model.ModifiedDate,
-                                                    model.QuotaDate,
-                                                    model.Rowguid,
-                                                    model.SalesQuota);
-                                patch.ApplyTo(model);
+                                ApiSalesPersonQuotaHistoryRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.SalesPersonQuotaHistoryService.Update(id, model);
 
                                 if (result.Success)
@@ -163,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonQuotaHistoryRequestModel model)
                 {
-                        ActionResponse result = await this.SalesPersonQuotaHistoryService.Update(id, model);
+                        ApiSalesPersonQuotaHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiSalesPersonQuotaHistoryResponseModel response = await this.SalesPersonQuotaHistoryService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.SalesPersonQuotaHistoryService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesPersonQuotaHistoryResponseModel response = await this.SalesPersonQuotaHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -195,9 +204,35 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                private JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel> CreatePatch(ApiSalesPersonQuotaHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.QuotaDate, model.QuotaDate);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesQuota, model.SalesQuota);
+                        return patch;
+                }
+
+                private async Task<ApiSalesPersonQuotaHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel> patch)
+                {
+                        var record = await this.SalesPersonQuotaHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiSalesPersonQuotaHistoryRequestModel request = this.SalesPersonQuotaHistoryModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fc000edb7669983d84626fc14bae3aa3</Hash>
+    <Hash>eb64c3a59d785ca14f50e41c6213cbf1</Hash>
 </Codenesium>*/

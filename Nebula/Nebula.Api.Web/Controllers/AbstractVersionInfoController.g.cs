@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Web
         {
                 protected IVersionInfoService VersionInfoService { get; private set; }
 
+                protected IApiVersionInfoModelMapper VersionInfoModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractVersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IVersionInfoService versionInfoService
+                        IVersionInfoService versionInfoService,
+                        IApiVersionInfoModelMapper versionInfoModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.VersionInfoService = versionInfoService;
+                        this.VersionInfoModelMapper = versionInfoModelMapper;
                 }
 
                 [HttpGet]
@@ -134,10 +138,8 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
-                                model.SetProperties(model.AppliedOn,
-                                                    model.Description);
-                                patch.ApplyTo(model);
+                                ApiVersionInfoRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.VersionInfoService.Update(id, model);
 
                                 if (result.Success)
@@ -161,17 +163,26 @@ namespace NebulaNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoRequestModel model)
                 {
-                        ActionResponse result = await this.VersionInfoService.Update(id, model);
+                        ApiVersionInfoRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.VersionInfoService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -212,9 +223,33 @@ namespace NebulaNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                private JsonPatchDocument<ApiVersionInfoRequestModel> CreatePatch(ApiVersionInfoRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiVersionInfoRequestModel>();
+                        patch.Replace(x => x.AppliedOn, model.AppliedOn);
+                        patch.Replace(x => x.Description, model.Description);
+                        return patch;
+                }
+
+                private async Task<ApiVersionInfoRequestModel> PatchModel(long id, JsonPatchDocument<ApiVersionInfoRequestModel> patch)
+                {
+                        var record = await this.VersionInfoService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiVersionInfoRequestModel request = this.VersionInfoModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>70d6227dc9daa4917d513becd625f90c</Hash>
+    <Hash>9cb2b109a85979c55f01271fde892273</Hash>
 </Codenesium>*/

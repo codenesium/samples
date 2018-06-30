@@ -20,12 +20,14 @@ namespace NebulaNS.Api.Web
                         ApiSettings settings,
                         ILogger<ChainController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        IChainService chainService
+                        IChainService chainService,
+                        IApiChainModelMapper chainModelMapper
                         )
                         : base(settings,
                                logger,
                                transactionCoordinator,
-                               chainService)
+                               chainService,
+                               chainModelMapper)
                 {
                         this.BulkInsertLimit = 250;
                         this.MaxLimit = 1000;
@@ -35,5 +37,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>15daa50a7f348d0cd0e68e50ba298434</Hash>
+    <Hash>c1d474567fbdca270535c8ac262370c1</Hash>
 </Codenesium>*/

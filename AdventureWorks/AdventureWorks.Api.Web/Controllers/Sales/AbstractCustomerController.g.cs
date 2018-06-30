@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.Web
         {
                 protected ICustomerService CustomerService { get; private set; }
 
+                protected IApiCustomerModelMapper CustomerModelMapper { get; private set; }
+
                 protected int BulkInsertLimit { get; set; }
 
                 protected int MaxLimit { get; set; }
@@ -29,11 +31,13 @@ namespace AdventureWorksNS.Api.Web
                         ApiSettings settings,
                         ILogger<AbstractCustomerController> logger,
                         ITransactionCoordinator transactionCoordinator,
-                        ICustomerService customerService
+                        ICustomerService customerService,
+                        IApiCustomerModelMapper customerModelMapper
                         )
                         : base(settings, logger, transactionCoordinator)
                 {
                         this.CustomerService = customerService;
+                        this.CustomerModelMapper = customerModelMapper;
                 }
 
                 [HttpGet]
@@ -134,14 +138,8 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ApiCustomerRequestModel model = new ApiCustomerRequestModel();
-                                model.SetProperties(model.AccountNumber,
-                                                    model.ModifiedDate,
-                                                    model.PersonID,
-                                                    model.Rowguid,
-                                                    model.StoreID,
-                                                    model.TerritoryID);
-                                patch.ApplyTo(model);
+                                ApiCustomerRequestModel model = await this.PatchModel(id, patch);
+
                                 ActionResponse result = await this.CustomerService.Update(id, model);
 
                                 if (result.Success)
@@ -165,17 +163,26 @@ namespace AdventureWorksNS.Api.Web
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerRequestModel model)
                 {
-                        ActionResponse result = await this.CustomerService.Update(id, model);
+                        ApiCustomerRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
 
-                        if (result.Success)
+                        if (request == null)
                         {
-                                ApiCustomerResponseModel response = await this.CustomerService.Get(id);
-
-                                return this.Ok(response);
+                                return this.StatusCode(StatusCodes.Status404NotFound);
                         }
                         else
                         {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                ActionResponse result = await this.CustomerService.Update(id, request);
+
+                                if (result.Success)
+                                {
+                                        ApiCustomerResponseModel response = await this.CustomerService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
                         }
                 }
 
@@ -241,9 +248,37 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                private JsonPatchDocument<ApiCustomerRequestModel> CreatePatch(ApiCustomerRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCustomerRequestModel>();
+                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PersonID, model.PersonID);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.StoreID, model.StoreID);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        return patch;
+                }
+
+                private async Task<ApiCustomerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCustomerRequestModel> patch)
+                {
+                        var record = await this.CustomerService.Get(id);
+
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                ApiCustomerRequestModel request = this.CustomerModelMapper.MapResponseToRequest(record);
+                                patch.ApplyTo(request);
+                                return request;
+                        }
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2f4ec582fdbb14ac2557de89cd85a6b4</Hash>
+    <Hash>b90e0ac49287634424226c7874549773</Hash>
 </Codenesium>*/
