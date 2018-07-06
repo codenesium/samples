@@ -38,58 +38,9 @@ namespace NebulaNS.Api.Contracts
                 public int TeamId { get; private set; }
 
                 public string TeamIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeChainStatusIdValue { get; set; } = true;
-
-                public bool ShouldSerializeChainStatusId()
-                {
-                        return this.ShouldSerializeChainStatusIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeExternalIdValue { get; set; } = true;
-
-                public bool ShouldSerializeExternalId()
-                {
-                        return this.ShouldSerializeExternalIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTeamIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTeamId()
-                {
-                        return this.ShouldSerializeTeamIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeChainStatusIdValue = false;
-                        this.ShouldSerializeExternalIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeTeamIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2d0edecccd262d7715d6eff5ab10076d</Hash>
+    <Hash>084e1547e41635051b9ae64315308105</Hash>
 </Codenesium>*/

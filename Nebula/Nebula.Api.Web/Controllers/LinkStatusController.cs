@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/linkStatus")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LinkStatusController : AbstractLinkStatusController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0aeec8d60e74d7e8f85afbc9ab624b69</Hash>
+    <Hash>07a2f6c0bc0356b543ed213ffb923940</Hash>
 </Codenesium>*/

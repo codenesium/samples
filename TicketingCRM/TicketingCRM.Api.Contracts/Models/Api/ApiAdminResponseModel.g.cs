@@ -39,76 +39,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public string Phone { get; private set; }
 
                 public string Username { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEmailValue { get; set; } = true;
-
-                public bool ShouldSerializeEmail()
-                {
-                        return this.ShouldSerializeEmailValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFirstNameValue { get; set; } = true;
-
-                public bool ShouldSerializeFirstName()
-                {
-                        return this.ShouldSerializeFirstNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLastNameValue { get; set; } = true;
-
-                public bool ShouldSerializeLastName()
-                {
-                        return this.ShouldSerializeLastNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePasswordValue { get; set; } = true;
-
-                public bool ShouldSerializePassword()
-                {
-                        return this.ShouldSerializePasswordValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePhoneValue { get; set; } = true;
-
-                public bool ShouldSerializePhone()
-                {
-                        return this.ShouldSerializePhoneValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUsernameValue { get; set; } = true;
-
-                public bool ShouldSerializeUsername()
-                {
-                        return this.ShouldSerializeUsernameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeEmailValue = false;
-                        this.ShouldSerializeFirstNameValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLastNameValue = false;
-                        this.ShouldSerializePasswordValue = false;
-                        this.ShouldSerializePhoneValue = false;
-                        this.ShouldSerializeUsernameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4f697cd68081f1ea90ef44f91011285c</Hash>
+    <Hash>c0d22422d9059626cf1c0c06b04d5f59</Hash>
 </Codenesium>*/

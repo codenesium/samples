@@ -35,67 +35,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int ShiftID { get; private set; }
 
                 public DateTime StartDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDepartmentIDValue { get; set; } = true;
-
-                public bool ShouldSerializeDepartmentID()
-                {
-                        return this.ShouldSerializeDepartmentIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEndDateValue { get; set; } = true;
-
-                public bool ShouldSerializeEndDate()
-                {
-                        return this.ShouldSerializeEndDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShiftIDValue { get; set; } = true;
-
-                public bool ShouldSerializeShiftID()
-                {
-                        return this.ShouldSerializeShiftIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-                public bool ShouldSerializeStartDate()
-                {
-                        return this.ShouldSerializeStartDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeDepartmentIDValue = false;
-                        this.ShouldSerializeEndDateValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeShiftIDValue = false;
-                        this.ShouldSerializeStartDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a184fae49fe63baaa88be77c970b4e7c</Hash>
+    <Hash>8d1559fbed3470d2e7a6aef59131a598</Hash>
 </Codenesium>*/

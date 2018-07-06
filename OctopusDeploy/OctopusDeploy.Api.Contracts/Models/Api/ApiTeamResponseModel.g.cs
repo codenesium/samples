@@ -47,94 +47,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string TenantIds { get; private set; }
 
                 public string TenantTags { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEnvironmentIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeEnvironmentIds()
-                {
-                        return this.ShouldSerializeEnvironmentIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeMemberUserIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeMemberUserIds()
-                {
-                        return this.ShouldSerializeMemberUserIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProjectGroupIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeProjectGroupIds()
-                {
-                        return this.ShouldSerializeProjectGroupIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProjectIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeProjectIds()
-                {
-                        return this.ShouldSerializeProjectIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTenantIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeTenantIds()
-                {
-                        return this.ShouldSerializeTenantIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTenantTagsValue { get; set; } = true;
-
-                public bool ShouldSerializeTenantTags()
-                {
-                        return this.ShouldSerializeTenantTagsValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeEnvironmentIdsValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeMemberUserIdsValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeProjectGroupIdsValue = false;
-                        this.ShouldSerializeProjectIdsValue = false;
-                        this.ShouldSerializeTenantIdsValue = false;
-                        this.ShouldSerializeTenantTagsValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3bfe50eb3e1e1adb113ace6ddb0334ac</Hash>
+    <Hash>b6ee685ed2e4cd05d907cfc3b2970b54</Hash>
 </Codenesium>*/

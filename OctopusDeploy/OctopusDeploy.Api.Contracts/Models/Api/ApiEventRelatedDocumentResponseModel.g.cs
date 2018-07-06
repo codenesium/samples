@@ -27,40 +27,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string RelatedDocumentId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEventIdValue { get; set; } = true;
-
-                public bool ShouldSerializeEventId()
-                {
-                        return this.ShouldSerializeEventIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRelatedDocumentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeRelatedDocumentId()
-                {
-                        return this.ShouldSerializeRelatedDocumentIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeEventIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeRelatedDocumentIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3c3a266a59839f8467dd2b3a89fe2db3</Hash>
+    <Hash>aebf8077f764a9d4c57c8b71ad163285</Hash>
 </Codenesium>*/

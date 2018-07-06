@@ -13,59 +13,42 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "SalesOrderHeaderSalesReason")]
         [Trait("Area", "Integration")]
-        public class SalesOrderHeaderSalesReasonIntegrationTests
+        public class SalesOrderHeaderSalesReasonIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
         {
-                public SalesOrderHeaderSalesReasonIntegrationTests()
+                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
                 {
+                        this.Client = new ApiClient(fixture.Client);
                 }
+
+                public ApiClient Client { get; }
 
                 [Fact]
                 public async void TestCreate()
                 {
-                        TestServer server = new TestServer(new WebHostBuilder()
-                                                           .UseStartup<TestStartup>());
-                        ApiClient client = new ApiClient(server.CreateClient());
-                        await Task.CompletedTask;
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
-                        TestServer server = new TestServer(new WebHostBuilder()
-                                                           .UseStartup<TestStartup>());
-                        ApiClient client = new ApiClient(server.CreateClient());
-                        await Task.CompletedTask;
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
-                        TestServer server = new TestServer(new WebHostBuilder()
-                                                           .UseStartup<TestStartup>());
-                        ApiClient client = new ApiClient(server.CreateClient());
-                        await Task.CompletedTask;
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
-                        TestServer server = new TestServer(new WebHostBuilder()
-                                                           .UseStartup<TestStartup>());
-                        await Task.CompletedTask;
-                        ApiClient client = new ApiClient(server.CreateClient());
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
-                        TestServer server = new TestServer(new WebHostBuilder()
-                                                           .UseStartup<TestStartup>());
-                        ApiClient client = new ApiClient(server.CreateClient());
-                        await Task.CompletedTask;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a7e717093c4c700b8140bb160a3eea7</Hash>
+    <Hash>66576b3026cb97c78c6c1369faeb7326</Hash>
 </Codenesium>*/

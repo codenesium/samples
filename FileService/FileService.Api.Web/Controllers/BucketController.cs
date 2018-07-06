@@ -13,6 +13,7 @@ using System.Linq;
 namespace FileServiceNS.Api.Web
 {
         [Route("api/buckets")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class BucketController : AbstractBucketController
         {
@@ -37,5 +38,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3197476fbe476da905c1e96b517ee882</Hash>
+    <Hash>7558a8fbf22339012e28dcddc4d11071</Hash>
 </Codenesium>*/

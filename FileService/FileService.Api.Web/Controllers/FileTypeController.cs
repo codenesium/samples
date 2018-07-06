@@ -13,6 +13,7 @@ using System.Linq;
 namespace FileServiceNS.Api.Web
 {
         [Route("api/fileTypes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class FileTypeController : AbstractFileTypeController
         {
@@ -37,5 +38,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e1ed05be9f2f86931e8e36110a97fe5</Hash>
+    <Hash>d2a9106199f1b7b55fc34ce65f81fe9d</Hash>
 </Codenesium>*/

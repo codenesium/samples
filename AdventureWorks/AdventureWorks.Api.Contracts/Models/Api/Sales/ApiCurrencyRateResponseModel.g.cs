@@ -46,76 +46,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string ToCurrencyCode { get; private set; }
 
                 public string ToCurrencyCodeEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAverageRateValue { get; set; } = true;
-
-                public bool ShouldSerializeAverageRate()
-                {
-                        return this.ShouldSerializeAverageRateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCurrencyRateDateValue { get; set; } = true;
-
-                public bool ShouldSerializeCurrencyRateDate()
-                {
-                        return this.ShouldSerializeCurrencyRateDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
-
-                public bool ShouldSerializeCurrencyRateID()
-                {
-                        return this.ShouldSerializeCurrencyRateIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEndOfDayRateValue { get; set; } = true;
-
-                public bool ShouldSerializeEndOfDayRate()
-                {
-                        return this.ShouldSerializeEndOfDayRateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeFromCurrencyCode()
-                {
-                        return this.ShouldSerializeFromCurrencyCodeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeToCurrencyCode()
-                {
-                        return this.ShouldSerializeToCurrencyCodeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAverageRateValue = false;
-                        this.ShouldSerializeCurrencyRateDateValue = false;
-                        this.ShouldSerializeCurrencyRateIDValue = false;
-                        this.ShouldSerializeEndOfDayRateValue = false;
-                        this.ShouldSerializeFromCurrencyCodeValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeToCurrencyCodeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ee2f5ffc95d5804ec36e1770f3bd0fe9</Hash>
+    <Hash>0400bed39e76de6f56ade3f403140fe7</Hash>
 </Codenesium>*/

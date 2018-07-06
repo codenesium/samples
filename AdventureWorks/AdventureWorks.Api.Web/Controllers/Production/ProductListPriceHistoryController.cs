@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/productListPriceHistories")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProductListPriceHistoryController : AbstractProductListPriceHistoryController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0c4bec7f10c747ca08cd2a1b0db30e4</Hash>
+    <Hash>ad0e976a21cb4601c84bf51a7f6a2108</Hash>
 </Codenesium>*/

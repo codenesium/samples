@@ -39,76 +39,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string TenantId { get; private set; }
 
                 public string VariableTemplateId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEnvironmentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeEnvironmentId()
-                {
-                        return this.ShouldSerializeEnvironmentIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeOwnerIdValue { get; set; } = true;
-
-                public bool ShouldSerializeOwnerId()
-                {
-                        return this.ShouldSerializeOwnerIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRelatedDocumentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeRelatedDocumentId()
-                {
-                        return this.ShouldSerializeRelatedDocumentIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTenantIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTenantId()
-                {
-                        return this.ShouldSerializeTenantIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVariableTemplateIdValue { get; set; } = true;
-
-                public bool ShouldSerializeVariableTemplateId()
-                {
-                        return this.ShouldSerializeVariableTemplateIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeEnvironmentIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeOwnerIdValue = false;
-                        this.ShouldSerializeRelatedDocumentIdValue = false;
-                        this.ShouldSerializeTenantIdValue = false;
-                        this.ShouldSerializeVariableTemplateIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5143a071b7fcb30db47ef39aee01760a</Hash>
+    <Hash>2705aa81333485f312f52d5f64a0572a</Hash>
 </Codenesium>*/

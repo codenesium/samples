@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/rates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class RateController : AbstractRateController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d25280afaa4ce10e5144748b02c8011f</Hash>
+    <Hash>eb19e22f38eb1b1a7e9425e8ee7c3849</Hash>
 </Codenesium>*/

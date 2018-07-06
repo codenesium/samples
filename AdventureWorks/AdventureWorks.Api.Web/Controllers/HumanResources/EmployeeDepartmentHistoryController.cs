@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/employeeDepartmentHistories")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class EmployeeDepartmentHistoryController : AbstractEmployeeDepartmentHistoryController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1abf6b48f6f4804d8fccf8f75f208b64</Hash>
+    <Hash>9fd59d9d573a8d0a432a0cc2ef2d6c39</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/users")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class UsersController : AbstractUsersController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>86918ac0d094be3950403e8abc5f976c</Hash>
+    <Hash>6d046cb0fdec04c9a15d5401a1fceedf</Hash>
 </Codenesium>*/

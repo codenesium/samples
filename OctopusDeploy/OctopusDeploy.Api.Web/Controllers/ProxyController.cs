@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/proxies")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProxyController : AbstractProxyController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4f6719aa983f481527cd7b8293020248</Hash>
+    <Hash>8f15d2abf36930579f2654ef503e3dec</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/teams")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TeamController : AbstractTeamController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dbaac80cc83c7f64de3dcc8517993adc</Hash>
+    <Hash>c53c50453f8d634d1ebd1860075d574f</Hash>
 </Codenesium>*/

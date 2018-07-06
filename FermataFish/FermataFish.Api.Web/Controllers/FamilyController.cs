@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/families")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class FamilyController : AbstractFamilyController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>677348882857e834caf4b990246a615a</Hash>
+    <Hash>38a056304eeb814d6964b31d960d3cb6</Hash>
 </Codenesium>*/

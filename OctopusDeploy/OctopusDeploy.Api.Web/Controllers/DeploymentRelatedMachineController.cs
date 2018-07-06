@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/deploymentRelatedMachines")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DeploymentRelatedMachineController : AbstractDeploymentRelatedMachineController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d42f9333d14dffe03cb94225cfa19fc6</Hash>
+    <Hash>efe15d69c3dc28b4c7e694d6bb18a660</Hash>
 </Codenesium>*/

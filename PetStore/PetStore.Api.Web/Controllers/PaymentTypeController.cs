@@ -13,6 +13,7 @@ using System.Linq;
 namespace PetStoreNS.Api.Web
 {
         [Route("api/paymentTypes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PaymentTypeController : AbstractPaymentTypeController
         {
@@ -37,5 +38,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c9b9d77122c747efda22b37f3ded603f</Hash>
+    <Hash>e9e3b45d8fae42fc6fa579fad5c0092f</Hash>
 </Codenesium>*/

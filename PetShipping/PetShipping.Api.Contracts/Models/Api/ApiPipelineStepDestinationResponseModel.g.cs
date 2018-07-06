@@ -30,40 +30,9 @@ namespace PetShippingNS.Api.Contracts
                 public int PipelineStepId { get; private set; }
 
                 public string PipelineStepIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDestinationIdValue { get; set; } = true;
-
-                public bool ShouldSerializeDestinationId()
-                {
-                        return this.ShouldSerializeDestinationIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePipelineStepIdValue { get; set; } = true;
-
-                public bool ShouldSerializePipelineStepId()
-                {
-                        return this.ShouldSerializePipelineStepIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDestinationIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializePipelineStepIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>42b8c8f03c77197bf7d33fa623812c4d</Hash>
+    <Hash>8fb790a2871d469b32b1c0e116c52774</Hash>
 </Codenesium>*/

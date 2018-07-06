@@ -51,94 +51,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int? TerritoryID { get; private set; }
 
                 public string TerritoryIDEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBonusValue { get; set; } = true;
-
-                public bool ShouldSerializeBonus()
-                {
-                        return this.ShouldSerializeBonusValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCommissionPctValue { get; set; } = true;
-
-                public bool ShouldSerializeCommissionPct()
-                {
-                        return this.ShouldSerializeCommissionPctValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesLastYearValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesLastYear()
-                {
-                        return this.ShouldSerializeSalesLastYearValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesQuotaValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesQuota()
-                {
-                        return this.ShouldSerializeSalesQuotaValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesYTDValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesYTD()
-                {
-                        return this.ShouldSerializeSalesYTDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
-
-                public bool ShouldSerializeTerritoryID()
-                {
-                        return this.ShouldSerializeTerritoryIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBonusValue = false;
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeCommissionPctValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeSalesLastYearValue = false;
-                        this.ShouldSerializeSalesQuotaValue = false;
-                        this.ShouldSerializeSalesYTDValue = false;
-                        this.ShouldSerializeTerritoryIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>295a01bd21860e2850ce817b9b4056d1</Hash>
+    <Hash>21320de576cb748e6383c3b8dd00d8e3</Hash>
 </Codenesium>*/

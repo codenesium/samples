@@ -27,40 +27,9 @@ namespace NebulaNS.Api.Contracts
                 public int OrganizationId { get; private set; }
 
                 public string OrganizationIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeOrganizationIdValue { get; set; } = true;
-
-                public bool ShouldSerializeOrganizationId()
-                {
-                        return this.ShouldSerializeOrganizationIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeOrganizationIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ee9c5574441318ec83b1018e7e44d427</Hash>
+    <Hash>3b358ce932b078b2b8aa1e4caac25610</Hash>
 </Codenesium>*/

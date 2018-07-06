@@ -31,58 +31,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public string Type { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIsDisabledValue { get; set; } = true;
-
-                public bool ShouldSerializeIsDisabled()
-                {
-                        return this.ShouldSerializeIsDisabledValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTypeValue { get; set; } = true;
-
-                public bool ShouldSerializeType()
-                {
-                        return this.ShouldSerializeTypeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeIsDisabledValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeTypeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3c5e83d3511b5d4a100d4f1227689fc3</Hash>
+    <Hash>c0f6650feee2c607cd9c2f3b9922a0d0</Hash>
 </Codenesium>*/

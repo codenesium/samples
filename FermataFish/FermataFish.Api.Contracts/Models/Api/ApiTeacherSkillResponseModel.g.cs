@@ -27,40 +27,9 @@ namespace FermataFishNS.Api.Contracts
                 public int StudioId { get; private set; }
 
                 public string StudioIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStudioIdValue { get; set; } = true;
-
-                public bool ShouldSerializeStudioId()
-                {
-                        return this.ShouldSerializeStudioIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeStudioIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b29b0f38eb5572189b37ab7548117309</Hash>
+    <Hash>7addd14e6753f8e8e17fda5935ee391c</Hash>
 </Codenesium>*/

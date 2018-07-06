@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/currencyRates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CurrencyRateController : AbstractCurrencyRateController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e258950c3d18cab6978a04ae90a4b89a</Hash>
+    <Hash>5ebbbacd067d5bdee9ee070d286abdb8</Hash>
 </Codenesium>*/

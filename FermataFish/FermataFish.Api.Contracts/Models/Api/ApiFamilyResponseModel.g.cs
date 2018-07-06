@@ -46,76 +46,9 @@ namespace FermataFishNS.Api.Contracts
                 public int StudioId { get; private set; }
 
                 public string StudioIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNotesValue { get; set; } = true;
-
-                public bool ShouldSerializeNotes()
-                {
-                        return this.ShouldSerializeNotesValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePcEmailValue { get; set; } = true;
-
-                public bool ShouldSerializePcEmail()
-                {
-                        return this.ShouldSerializePcEmailValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePcFirstNameValue { get; set; } = true;
-
-                public bool ShouldSerializePcFirstName()
-                {
-                        return this.ShouldSerializePcFirstNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePcLastNameValue { get; set; } = true;
-
-                public bool ShouldSerializePcLastName()
-                {
-                        return this.ShouldSerializePcLastNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePcPhoneValue { get; set; } = true;
-
-                public bool ShouldSerializePcPhone()
-                {
-                        return this.ShouldSerializePcPhoneValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStudioIdValue { get; set; } = true;
-
-                public bool ShouldSerializeStudioId()
-                {
-                        return this.ShouldSerializeStudioIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNotesValue = false;
-                        this.ShouldSerializePcEmailValue = false;
-                        this.ShouldSerializePcFirstNameValue = false;
-                        this.ShouldSerializePcLastNameValue = false;
-                        this.ShouldSerializePcPhoneValue = false;
-                        this.ShouldSerializeStudioIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>562f082a385acfa3b43c072d1da5b61d</Hash>
+    <Hash>6087ef2bfb2b0e3ce1e2dec4de86575b</Hash>
 </Codenesium>*/

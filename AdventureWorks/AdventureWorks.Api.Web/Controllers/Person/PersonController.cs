@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/people")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PersonController : AbstractPersonController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f669d4fa11100b9355195c60fbe46278</Hash>
+    <Hash>2f24e958608fa7b72b6b7e29d98a6d1b</Hash>
 </Codenesium>*/

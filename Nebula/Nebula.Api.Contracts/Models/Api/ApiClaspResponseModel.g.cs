@@ -30,40 +30,9 @@ namespace NebulaNS.Api.Contracts
                 public int PreviousChainId { get; private set; }
 
                 public string PreviousChainIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNextChainIdValue { get; set; } = true;
-
-                public bool ShouldSerializeNextChainId()
-                {
-                        return this.ShouldSerializeNextChainIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
-
-                public bool ShouldSerializePreviousChainId()
-                {
-                        return this.ShouldSerializePreviousChainIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNextChainIdValue = false;
-                        this.ShouldSerializePreviousChainIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a398e8d8a6f5ab14d9ca32d1b137418f</Hash>
+    <Hash>6343d8c48f4d77bdd2b7100ddb5c3430</Hash>
 </Codenesium>*/

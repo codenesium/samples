@@ -38,58 +38,9 @@ namespace PetShippingNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public int Weight { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBreedIdValue { get; set; } = true;
-
-                public bool ShouldSerializeBreedId()
-                {
-                        return this.ShouldSerializeBreedIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeClientIdValue { get; set; } = true;
-
-                public bool ShouldSerializeClientId()
-                {
-                        return this.ShouldSerializeClientIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeWeightValue { get; set; } = true;
-
-                public bool ShouldSerializeWeight()
-                {
-                        return this.ShouldSerializeWeightValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBreedIdValue = false;
-                        this.ShouldSerializeClientIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeWeightValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c1d4050566799d98c9ee04befb439760</Hash>
+    <Hash>ecb0fd77b76068c2696a8b8a55edfcc2</Hash>
 </Codenesium>*/

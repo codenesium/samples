@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/shipMethods")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ShipMethodController : AbstractShipMethodController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e01975380ad9cbb5b666eed18b8d834d</Hash>
+    <Hash>5fc914403cac7b5700a93384236dbb94</Hash>
 </Codenesium>*/

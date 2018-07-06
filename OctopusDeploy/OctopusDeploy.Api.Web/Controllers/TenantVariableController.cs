@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/tenantVariables")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TenantVariableController : AbstractTenantVariableController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6fd2c68f2c12219a48b06431e21dbecb</Hash>
+    <Hash>4ad1e0e54058e6fc4a5a4c92a439a4e8</Hash>
 </Codenesium>*/

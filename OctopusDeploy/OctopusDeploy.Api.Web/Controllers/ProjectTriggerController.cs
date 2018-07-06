@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/projectTriggers")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProjectTriggerController : AbstractProjectTriggerController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cf56abe8612252cfab204656cd4ce0e7</Hash>
+    <Hash>0977a33c55657d6e82ea7d49725650df</Hash>
 </Codenesium>*/

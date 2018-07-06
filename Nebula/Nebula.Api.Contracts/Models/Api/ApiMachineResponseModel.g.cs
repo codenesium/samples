@@ -35,67 +35,9 @@ namespace NebulaNS.Api.Contracts
                 public Guid MachineGuid { get; private set; }
 
                 public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = true;
-
-                public bool ShouldSerializeDescription()
-                {
-                        return this.ShouldSerializeDescriptionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJwtKeyValue { get; set; } = true;
-
-                public bool ShouldSerializeJwtKey()
-                {
-                        return this.ShouldSerializeJwtKeyValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLastIpAddressValue { get; set; } = true;
-
-                public bool ShouldSerializeLastIpAddress()
-                {
-                        return this.ShouldSerializeLastIpAddressValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeMachineGuidValue { get; set; } = true;
-
-                public bool ShouldSerializeMachineGuid()
-                {
-                        return this.ShouldSerializeMachineGuidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDescriptionValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJwtKeyValue = false;
-                        this.ShouldSerializeLastIpAddressValue = false;
-                        this.ShouldSerializeMachineGuidValue = false;
-                        this.ShouldSerializeNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>06e1203f17329568da0f69c31ff8e267</Hash>
+    <Hash>8028501d96788f7fcbdcaba532417a94</Hash>
 </Codenesium>*/

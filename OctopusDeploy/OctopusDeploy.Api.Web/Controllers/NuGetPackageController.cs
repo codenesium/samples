@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/nuGetPackages")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class NuGetPackageController : AbstractNuGetPackageController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>924e8057201608d487f3452795b81458</Hash>
+    <Hash>43a576fe8065d170cf20e8ea01819ebd</Hash>
 </Codenesium>*/

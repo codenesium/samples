@@ -13,6 +13,7 @@ using TicketingCRMNS.Api.Services;
 namespace TicketingCRMNS.Api.Web
 {
         [Route("api/ticketStatus")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TicketStatusController : AbstractTicketStatusController
         {
@@ -37,5 +38,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>40877ccad2dc3ff866cf2903d5766bbc</Hash>
+    <Hash>3d798861f1dd4642c315ec7024df52b2</Hash>
 </Codenesium>*/

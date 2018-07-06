@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/machineRefTeams")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class MachineRefTeamController : AbstractMachineRefTeamController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e3d0b4a3e3a550820732224d388f53c1</Hash>
+    <Hash>5ea477289424ccf54c1748423379baad</Hash>
 </Codenesium>*/

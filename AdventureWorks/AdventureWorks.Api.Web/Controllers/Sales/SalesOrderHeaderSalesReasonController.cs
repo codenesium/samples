@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesOrderHeaderSalesReasons")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SalesOrderHeaderSalesReasonController : AbstractSalesOrderHeaderSalesReasonController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d30a536de79e339bd0deb9054f8d7a2d</Hash>
+    <Hash>bf51db6c9154c075cb531df6ab903d85</Hash>
 </Codenesium>*/

@@ -23,40 +23,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string ScriptName { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAppliedValue { get; set; } = true;
-
-                public bool ShouldSerializeApplied()
-                {
-                        return this.ShouldSerializeAppliedValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeScriptNameValue { get; set; } = true;
-
-                public bool ShouldSerializeScriptName()
-                {
-                        return this.ShouldSerializeScriptNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAppliedValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeScriptNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a63077d7f63c9f268ba7b80a202a6ad7</Hash>
+    <Hash>f4893705f9ab22d55a35b0f3fe523af7</Hash>
 </Codenesium>*/

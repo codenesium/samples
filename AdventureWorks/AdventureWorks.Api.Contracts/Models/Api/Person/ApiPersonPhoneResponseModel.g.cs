@@ -27,49 +27,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string PhoneNumber { get; private set; }
 
                 public int PhoneNumberTypeID { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePhoneNumberValue { get; set; } = true;
-
-                public bool ShouldSerializePhoneNumber()
-                {
-                        return this.ShouldSerializePhoneNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePhoneNumberTypeIDValue { get; set; } = true;
-
-                public bool ShouldSerializePhoneNumberTypeID()
-                {
-                        return this.ShouldSerializePhoneNumberTypeIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializePhoneNumberValue = false;
-                        this.ShouldSerializePhoneNumberTypeIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>07c96e6caa01694b078a7ad10fa8d97e</Hash>
+    <Hash>ebb533b07c544f84bb1a1cb464794e97</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/deploymentHistories")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DeploymentHistoryController : AbstractDeploymentHistoryController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c7698935f10f08c823ab4e1d21f4c7e7</Hash>
+    <Hash>a561f32fa7ee8c483602d2fc90183435</Hash>
 </Codenesium>*/

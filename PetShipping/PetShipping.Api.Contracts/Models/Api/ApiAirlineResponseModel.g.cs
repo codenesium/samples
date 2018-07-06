@@ -19,31 +19,9 @@ namespace PetShippingNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>64b5857ca2236d8acda135b2447c9da9</Hash>
+    <Hash>121d46ae999c79cddfd3b0f59646cfcd</Hash>
 </Codenesium>*/

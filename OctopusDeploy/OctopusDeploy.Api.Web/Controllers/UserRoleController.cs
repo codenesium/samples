@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/userRoles")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class UserRoleController : AbstractUserRoleController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>247d3dd203b6ebcabfe1887717c45a6c</Hash>
+    <Hash>e3f46e932d4742acaaea6b5a4d937989</Hash>
 </Codenesium>*/

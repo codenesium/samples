@@ -13,6 +13,7 @@ using System.Linq;
 namespace PetShippingNS.Api.Web
 {
         [Route("api/pipelineStepDestinations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PipelineStepDestinationController : AbstractPipelineStepDestinationController
         {
@@ -37,5 +38,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4a7fbb72fd91ec4380d003540d76bf2b</Hash>
+    <Hash>80c52f4ce0e911bfc97d00f8b7c3d6a3</Hash>
 </Codenesium>*/

@@ -31,58 +31,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public decimal Rate { get; private set; }
 
                 public DateTime RateChangeDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePayFrequencyValue { get; set; } = true;
-
-                public bool ShouldSerializePayFrequency()
-                {
-                        return this.ShouldSerializePayFrequencyValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRateValue { get; set; } = true;
-
-                public bool ShouldSerializeRate()
-                {
-                        return this.ShouldSerializeRateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRateChangeDateValue { get; set; } = true;
-
-                public bool ShouldSerializeRateChangeDate()
-                {
-                        return this.ShouldSerializeRateChangeDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializePayFrequencyValue = false;
-                        this.ShouldSerializeRateValue = false;
-                        this.ShouldSerializeRateChangeDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>24d1f1374dd0cc6348520858845e1b87</Hash>
+    <Hash>047b05b2bfa5778485a333acd036e0e7</Hash>
 </Codenesium>*/

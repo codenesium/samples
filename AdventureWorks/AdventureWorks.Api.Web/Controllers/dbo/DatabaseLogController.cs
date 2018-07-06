@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/databaseLogs")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DatabaseLogController : AbstractDatabaseLogController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>05cd894d6202f55b9e8affdaec9fb729</Hash>
+    <Hash>b50e35e1c589bc4be0d48b902c9b2426</Hash>
 </Codenesium>*/

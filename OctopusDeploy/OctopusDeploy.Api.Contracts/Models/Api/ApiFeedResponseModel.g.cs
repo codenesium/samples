@@ -31,58 +31,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string JSON { get; private set; }
 
                 public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFeedTypeValue { get; set; } = true;
-
-                public bool ShouldSerializeFeedType()
-                {
-                        return this.ShouldSerializeFeedTypeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFeedUriValue { get; set; } = true;
-
-                public bool ShouldSerializeFeedUri()
-                {
-                        return this.ShouldSerializeFeedUriValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeFeedTypeValue = false;
-                        this.ShouldSerializeFeedUriValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0249581a68876fdf043166ffa968b3b1</Hash>
+    <Hash>8c840afb6434d25cbd0c31c99979e759</Hash>
 </Codenesium>*/

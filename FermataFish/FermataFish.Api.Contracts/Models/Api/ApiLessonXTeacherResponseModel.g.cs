@@ -30,40 +30,9 @@ namespace FermataFishNS.Api.Contracts
                 public int StudentId { get; private set; }
 
                 public string StudentIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLessonIdValue { get; set; } = true;
-
-                public bool ShouldSerializeLessonId()
-                {
-                        return this.ShouldSerializeLessonIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStudentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeStudentId()
-                {
-                        return this.ShouldSerializeStudentIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLessonIdValue = false;
-                        this.ShouldSerializeStudentIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>216d15cbb10f4c4af458050fe434f161</Hash>
+    <Hash>b2e33c0f3e951b1cbb941a5a54331225</Hash>
 </Codenesium>*/

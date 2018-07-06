@@ -31,58 +31,9 @@ namespace StackOverflowNS.Api.Contracts
                 public string TagName { get; private set; }
 
                 public int WikiPostId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountValue { get; set; } = true;
-
-                public bool ShouldSerializeCount()
-                {
-                        return this.ShouldSerializeCountValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeExcerptPostIdValue { get; set; } = true;
-
-                public bool ShouldSerializeExcerptPostId()
-                {
-                        return this.ShouldSerializeExcerptPostIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTagNameValue { get; set; } = true;
-
-                public bool ShouldSerializeTagName()
-                {
-                        return this.ShouldSerializeTagNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeWikiPostIdValue { get; set; } = true;
-
-                public bool ShouldSerializeWikiPostId()
-                {
-                        return this.ShouldSerializeWikiPostIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCountValue = false;
-                        this.ShouldSerializeExcerptPostIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeTagNameValue = false;
-                        this.ShouldSerializeWikiPostIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f54f0303b5053005ef10231623b0d146</Hash>
+    <Hash>0f2abb7aeda1e5cde6da9c0212498d2f</Hash>
 </Codenesium>*/

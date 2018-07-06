@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/workOrders")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class WorkOrderController : AbstractWorkOrderController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bb8faa5d577ea21faae33ae9adf5904</Hash>
+    <Hash>e0aaf9ff9aa7f99a1a6cd509d5ea99bd</Hash>
 </Codenesium>*/

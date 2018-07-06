@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/projectGroups")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProjectGroupController : AbstractProjectGroupController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>332a02445f27a8a8ff06557919a139b8</Hash>
+    <Hash>0e2acf687462ca658fa8d53100ee4675</Hash>
 </Codenesium>*/

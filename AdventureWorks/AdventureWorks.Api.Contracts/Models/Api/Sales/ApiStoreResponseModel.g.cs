@@ -39,67 +39,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int? SalesPersonID { get; private set; }
 
                 public string SalesPersonIDEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDemographicsValue { get; set; } = true;
-
-                public bool ShouldSerializeDemographics()
-                {
-                        return this.ShouldSerializeDemographicsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesPersonIDValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesPersonID()
-                {
-                        return this.ShouldSerializeSalesPersonIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeDemographicsValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeSalesPersonIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>dc595364242134438e3e90fc8606a7ed</Hash>
+    <Hash>d963f98bd74d9e837f2e896a026aec97</Hash>
 </Codenesium>*/

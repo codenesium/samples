@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/spaceFeatures")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SpaceFeatureController : AbstractSpaceFeatureController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4068144c7f77bfa32db7162f72c8317d</Hash>
+    <Hash>32ceb158094b6ae8cf953780fa25f672</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/artifacts")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ArtifactController : AbstractArtifactController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0613b33a401541f164158180dd8d2088</Hash>
+    <Hash>277e33e9497cb9d9ef4a28a9da791cec</Hash>
 </Codenesium>*/

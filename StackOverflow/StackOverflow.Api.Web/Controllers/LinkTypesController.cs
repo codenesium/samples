@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/linkTypes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LinkTypesController : AbstractLinkTypesController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>052161712c115cbe68507624cfddcbc7</Hash>
+    <Hash>31c29d89361cb362ea121504cdff430f</Hash>
 </Codenesium>*/

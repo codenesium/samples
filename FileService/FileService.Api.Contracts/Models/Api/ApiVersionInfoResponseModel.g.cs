@@ -23,40 +23,9 @@ namespace FileServiceNS.Api.Contracts
                 public string Description { get; private set; }
 
                 public long Version { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAppliedOnValue { get; set; } = true;
-
-                public bool ShouldSerializeAppliedOn()
-                {
-                        return this.ShouldSerializeAppliedOnValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = true;
-
-                public bool ShouldSerializeDescription()
-                {
-                        return this.ShouldSerializeDescriptionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVersionValue { get; set; } = true;
-
-                public bool ShouldSerializeVersion()
-                {
-                        return this.ShouldSerializeVersionValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAppliedOnValue = false;
-                        this.ShouldSerializeDescriptionValue = false;
-                        this.ShouldSerializeVersionValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>046726f579bcc92289185acf7811b221</Hash>
+    <Hash>85f55876abbd64e7054d7b78b5e6d257</Hash>
 </Codenesium>*/

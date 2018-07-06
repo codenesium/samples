@@ -19,31 +19,9 @@ namespace FermataFishNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4831bc9867c5a1ca3ff76e9f81478a45</Hash>
+    <Hash>73d6669877dcc695ad9a8dc55bba58d1</Hash>
 </Codenesium>*/

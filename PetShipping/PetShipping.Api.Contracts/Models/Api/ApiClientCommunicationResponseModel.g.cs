@@ -38,58 +38,9 @@ namespace PetShippingNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string Notes { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeClientIdValue { get; set; } = true;
-
-                public bool ShouldSerializeClientId()
-                {
-                        return this.ShouldSerializeClientIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDateCreatedValue { get; set; } = true;
-
-                public bool ShouldSerializeDateCreated()
-                {
-                        return this.ShouldSerializeDateCreatedValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEmployeeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeEmployeeId()
-                {
-                        return this.ShouldSerializeEmployeeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNotesValue { get; set; } = true;
-
-                public bool ShouldSerializeNotes()
-                {
-                        return this.ShouldSerializeNotesValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeClientIdValue = false;
-                        this.ShouldSerializeDateCreatedValue = false;
-                        this.ShouldSerializeEmployeeIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNotesValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>14a167d3c411ab9f349a6df5c5460c15</Hash>
+    <Hash>d63b81d4df5fc4df12f542ca9d7fa660</Hash>
 </Codenesium>*/

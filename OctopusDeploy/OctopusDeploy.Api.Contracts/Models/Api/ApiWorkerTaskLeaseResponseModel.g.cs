@@ -35,67 +35,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string TaskId { get; private set; }
 
                 public string WorkerId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeExclusiveValue { get; set; } = true;
-
-                public bool ShouldSerializeExclusive()
-                {
-                        return this.ShouldSerializeExclusiveValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTaskIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTaskId()
-                {
-                        return this.ShouldSerializeTaskIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeWorkerIdValue { get; set; } = true;
-
-                public bool ShouldSerializeWorkerId()
-                {
-                        return this.ShouldSerializeWorkerIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeExclusiveValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeTaskIdValue = false;
-                        this.ShouldSerializeWorkerIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7b917ac3c8f130b35db092dea4f5376b</Hash>
+    <Hash>b85e6a1739668e5deb6fdbaffc3d1b9a</Hash>
 </Codenesium>*/

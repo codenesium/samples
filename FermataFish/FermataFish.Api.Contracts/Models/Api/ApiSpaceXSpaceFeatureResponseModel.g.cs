@@ -30,40 +30,9 @@ namespace FermataFishNS.Api.Contracts
                 public int SpaceId { get; private set; }
 
                 public string SpaceIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSpaceFeatureIdValue { get; set; } = true;
-
-                public bool ShouldSerializeSpaceFeatureId()
-                {
-                        return this.ShouldSerializeSpaceFeatureIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSpaceIdValue { get; set; } = true;
-
-                public bool ShouldSerializeSpaceId()
-                {
-                        return this.ShouldSerializeSpaceIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeSpaceFeatureIdValue = false;
-                        this.ShouldSerializeSpaceIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bdce9d1f871a03badfb32770e8eeda57</Hash>
+    <Hash>4553331ae527fb5b80607bb671cba4ff</Hash>
 </Codenesium>*/

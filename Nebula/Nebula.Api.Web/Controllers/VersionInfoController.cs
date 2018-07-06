@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/versionInfoes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class VersionInfoController : AbstractVersionInfoController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8bab551a9b50bc5b1238636240a22798</Hash>
+    <Hash>949c47712bde385eeab60126f0c5c024</Hash>
 </Codenesium>*/

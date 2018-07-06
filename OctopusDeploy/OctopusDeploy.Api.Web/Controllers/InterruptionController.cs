@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/interruptions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class InterruptionController : AbstractInterruptionController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1f79d2922761c73075554d4f0f15ad41</Hash>
+    <Hash>9ccc8712bd255d0e2a5c993c5274b8e4</Hash>
 </Codenesium>*/

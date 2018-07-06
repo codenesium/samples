@@ -23,40 +23,9 @@ namespace NebulaNS.Api.Contracts
                 public string Description { get; private set; }
 
                 public long Version { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAppliedOnValue { get; set; } = true;
-
-                public bool ShouldSerializeAppliedOn()
-                {
-                        return this.ShouldSerializeAppliedOnValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = true;
-
-                public bool ShouldSerializeDescription()
-                {
-                        return this.ShouldSerializeDescriptionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVersionValue { get; set; } = true;
-
-                public bool ShouldSerializeVersion()
-                {
-                        return this.ShouldSerializeVersionValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAppliedOnValue = false;
-                        this.ShouldSerializeDescriptionValue = false;
-                        this.ShouldSerializeVersionValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e35e563298cbb7cb60d34d57ec3bba17</Hash>
+    <Hash>6929f1764bce615e9c6f2c2a9a9fe8f2</Hash>
 </Codenesium>*/

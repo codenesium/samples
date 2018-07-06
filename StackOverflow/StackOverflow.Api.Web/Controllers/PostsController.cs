@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/posts")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PostsController : AbstractPostsController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c79ac18106ed7f1cfda2706e9ac36f82</Hash>
+    <Hash>b7648ceb25836723ba8e78a3e411c28c</Hash>
 </Codenesium>*/

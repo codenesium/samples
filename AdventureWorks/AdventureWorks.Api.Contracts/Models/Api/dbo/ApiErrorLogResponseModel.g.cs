@@ -47,94 +47,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public DateTime ErrorTime { get; private set; }
 
                 public string UserName { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorLineValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorLine()
-                {
-                        return this.ShouldSerializeErrorLineValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorLogIDValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorLogID()
-                {
-                        return this.ShouldSerializeErrorLogIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorMessageValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorMessage()
-                {
-                        return this.ShouldSerializeErrorMessageValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorNumberValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorNumber()
-                {
-                        return this.ShouldSerializeErrorNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorProcedure()
-                {
-                        return this.ShouldSerializeErrorProcedureValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorSeverityValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorSeverity()
-                {
-                        return this.ShouldSerializeErrorSeverityValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorStateValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorState()
-                {
-                        return this.ShouldSerializeErrorStateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeErrorTimeValue { get; set; } = true;
-
-                public bool ShouldSerializeErrorTime()
-                {
-                        return this.ShouldSerializeErrorTimeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUserNameValue { get; set; } = true;
-
-                public bool ShouldSerializeUserName()
-                {
-                        return this.ShouldSerializeUserNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeErrorLineValue = false;
-                        this.ShouldSerializeErrorLogIDValue = false;
-                        this.ShouldSerializeErrorMessageValue = false;
-                        this.ShouldSerializeErrorNumberValue = false;
-                        this.ShouldSerializeErrorProcedureValue = false;
-                        this.ShouldSerializeErrorSeverityValue = false;
-                        this.ShouldSerializeErrorStateValue = false;
-                        this.ShouldSerializeErrorTimeValue = false;
-                        this.ShouldSerializeUserNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d0b49f28e1b06be360dc029f8a1d369f</Hash>
+    <Hash>3a256a9ccc00f4940c01344cad7553c5</Hash>
 </Codenesium>*/

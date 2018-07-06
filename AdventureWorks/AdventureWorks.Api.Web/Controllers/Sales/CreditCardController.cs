@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/creditCards")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CreditCardController : AbstractCreditCardController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c79b82ba81675a44aed9f9fea7e8ea28</Hash>
+    <Hash>76d849cde7c8db839f1c40d190b8b895</Hash>
 </Codenesium>*/

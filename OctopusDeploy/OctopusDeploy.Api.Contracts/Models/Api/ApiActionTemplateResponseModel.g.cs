@@ -35,67 +35,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public int Version { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeActionTypeValue { get; set; } = true;
-
-                public bool ShouldSerializeActionType()
-                {
-                        return this.ShouldSerializeActionTypeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCommunityActionTemplateIdValue { get; set; } = true;
-
-                public bool ShouldSerializeCommunityActionTemplateId()
-                {
-                        return this.ShouldSerializeCommunityActionTemplateIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVersionValue { get; set; } = true;
-
-                public bool ShouldSerializeVersion()
-                {
-                        return this.ShouldSerializeVersionValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeActionTypeValue = false;
-                        this.ShouldSerializeCommunityActionTemplateIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeVersionValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6f5cea838fb14c05dfd45ad75bfc0bea</Hash>
+    <Hash>cea2472978e8efe81a8548e486bc4e18</Hash>
 </Codenesium>*/

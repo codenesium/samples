@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/phoneNumberTypes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PhoneNumberTypeController : AbstractPhoneNumberTypeController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3c1b0bd62f974ef544d05ec797f56428</Hash>
+    <Hash>07700ff8aa78a632aa18f8e8b36d78d3</Hash>
 </Codenesium>*/

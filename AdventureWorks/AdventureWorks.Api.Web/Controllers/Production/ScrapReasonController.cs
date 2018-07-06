@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/scrapReasons")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ScrapReasonController : AbstractScrapReasonController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>288ca5e85a92c00dd61f22cf6bc75dd6</Hash>
+    <Hash>161e31f28513e479f8ceb36b22b8fede</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/shifts")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ShiftController : AbstractShiftController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>76f18484145faa37c6af97e3d6f5153e</Hash>
+    <Hash>e0c293298f3de62d82ec4ad6888401bc</Hash>
 </Codenesium>*/

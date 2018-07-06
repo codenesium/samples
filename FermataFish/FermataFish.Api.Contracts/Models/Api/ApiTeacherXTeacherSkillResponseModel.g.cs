@@ -30,40 +30,9 @@ namespace FermataFishNS.Api.Contracts
                 public int TeacherSkillId { get; private set; }
 
                 public string TeacherSkillIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTeacherIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTeacherId()
-                {
-                        return this.ShouldSerializeTeacherIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTeacherSkillIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTeacherSkillId()
-                {
-                        return this.ShouldSerializeTeacherSkillIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeTeacherIdValue = false;
-                        this.ShouldSerializeTeacherSkillIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1535abce1aeec46dfb44fe233387ee9a</Hash>
+    <Hash>c06be5ba23f8226908a2dfb6e0644cd5</Hash>
 </Codenesium>*/

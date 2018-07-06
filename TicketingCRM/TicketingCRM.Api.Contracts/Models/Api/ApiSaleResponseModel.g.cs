@@ -35,58 +35,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public int TransactionId { get; private set; }
 
                 public string TransactionIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIpAddressValue { get; set; } = true;
-
-                public bool ShouldSerializeIpAddress()
-                {
-                        return this.ShouldSerializeIpAddressValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNotesValue { get; set; } = true;
-
-                public bool ShouldSerializeNotes()
-                {
-                        return this.ShouldSerializeNotesValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSaleDateValue { get; set; } = true;
-
-                public bool ShouldSerializeSaleDate()
-                {
-                        return this.ShouldSerializeSaleDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTransactionIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTransactionId()
-                {
-                        return this.ShouldSerializeTransactionIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeIpAddressValue = false;
-                        this.ShouldSerializeNotesValue = false;
-                        this.ShouldSerializeSaleDateValue = false;
-                        this.ShouldSerializeTransactionIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f474032cc063229212ed591466580ff6</Hash>
+    <Hash>03679fff4e1770827607c53b83c28399</Hash>
 </Codenesium>*/

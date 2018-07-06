@@ -39,76 +39,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public string Rank { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIsInMaintenanceModeValue { get; set; } = true;
-
-                public bool ShouldSerializeIsInMaintenanceMode()
-                {
-                        return this.ShouldSerializeIsInMaintenanceModeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLastSeenValue { get; set; } = true;
-
-                public bool ShouldSerializeLastSeen()
-                {
-                        return this.ShouldSerializeLastSeenValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeMaxConcurrentTasksValue { get; set; } = true;
-
-                public bool ShouldSerializeMaxConcurrentTasks()
-                {
-                        return this.ShouldSerializeMaxConcurrentTasksValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRankValue { get; set; } = true;
-
-                public bool ShouldSerializeRank()
-                {
-                        return this.ShouldSerializeRankValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeIsInMaintenanceModeValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeLastSeenValue = false;
-                        this.ShouldSerializeMaxConcurrentTasksValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeRankValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>44de3d8ea5b957e61f3a1cb593faeb5b</Hash>
+    <Hash>8e5e2d3b80578a60576b9050abd5b5a7</Hash>
 </Codenesium>*/

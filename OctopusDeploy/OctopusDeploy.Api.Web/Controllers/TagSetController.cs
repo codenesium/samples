@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/tagSets")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TagSetController : AbstractTagSetController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e8ae900f86bdee3d584f701d7bd7facf</Hash>
+    <Hash>cbf708fd82d708749a4333da28972c10</Hash>
 </Codenesium>*/

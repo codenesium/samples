@@ -13,6 +13,7 @@ using TicketingCRMNS.Api.Services;
 namespace TicketingCRMNS.Api.Web
 {
         [Route("api/admins")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class AdminController : AbstractAdminController
         {
@@ -37,5 +38,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>37e647e75fad413a2bd0a4176c2414a5</Hash>
+    <Hash>a394e13309d1c8cb0ab7d5aaa99d2e03</Hash>
 </Codenesium>*/

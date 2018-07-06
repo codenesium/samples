@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/lifecycles")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LifecycleController : AbstractLifecycleController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>96f4381cee6467f0cfbac5cb521a221f</Hash>
+    <Hash>03b8556d5d843f0689688b82f55f5f14</Hash>
 </Codenesium>*/

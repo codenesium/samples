@@ -19,31 +19,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string Id { get; private set; }
 
                 public string JSON { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ace748754ff15308746554a2b6749ab</Hash>
+    <Hash>4d512c22886b53bf771dbc60896bf9de</Hash>
 </Codenesium>*/

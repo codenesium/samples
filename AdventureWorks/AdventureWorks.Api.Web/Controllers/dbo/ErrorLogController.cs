@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/errorLogs")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ErrorLogController : AbstractErrorLogController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>296eddb12267c75ee062dde3d09eab3e</Hash>
+    <Hash>147047afdca036abf6bda735f430b47d</Hash>
 </Codenesium>*/

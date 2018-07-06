@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/communityActionTemplates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CommunityActionTemplateController : AbstractCommunityActionTemplateController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>75cc390d0221d4a8a68d598afdd7c65e</Hash>
+    <Hash>a2404c0561a69caf1f5635a1dab8ba63</Hash>
 </Codenesium>*/

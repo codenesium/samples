@@ -43,85 +43,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string RelatedDocumentIds { get; private set; }
 
                 public string TenantId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCreatedValue { get; set; } = true;
-
-                public bool ShouldSerializeCreated()
-                {
-                        return this.ShouldSerializeCreatedValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEnvironmentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeEnvironmentId()
-                {
-                        return this.ShouldSerializeEnvironmentIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFilenameValue { get; set; } = true;
-
-                public bool ShouldSerializeFilename()
-                {
-                        return this.ShouldSerializeFilenameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProjectIdValue { get; set; } = true;
-
-                public bool ShouldSerializeProjectId()
-                {
-                        return this.ShouldSerializeProjectIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRelatedDocumentIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeRelatedDocumentIds()
-                {
-                        return this.ShouldSerializeRelatedDocumentIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTenantIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTenantId()
-                {
-                        return this.ShouldSerializeTenantIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCreatedValue = false;
-                        this.ShouldSerializeEnvironmentIdValue = false;
-                        this.ShouldSerializeFilenameValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeProjectIdValue = false;
-                        this.ShouldSerializeRelatedDocumentIdsValue = false;
-                        this.ShouldSerializeTenantIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d169097bd9a44a6d324be10ec7330c4e</Hash>
+    <Hash>d7160979b54ebdfece0e04c4f2765ac9</Hash>
 </Codenesium>*/

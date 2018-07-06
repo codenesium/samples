@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/purchaseOrderDetails")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PurchaseOrderDetailController : AbstractPurchaseOrderDetailController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ac6ce2871da8ea0119dca09a1c9832b5</Hash>
+    <Hash>69ae578aa389165a7f6a17846366ddb4</Hash>
 </Codenesium>*/

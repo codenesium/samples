@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/businessEntityContacts")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class BusinessEntityContactController : AbstractBusinessEntityContactController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a2b14fd14fae3bc5f9fbe1a5fa14b94a</Hash>
+    <Hash>03d0b9b6f34cf69915f4928c1540a930</Hash>
 </Codenesium>*/

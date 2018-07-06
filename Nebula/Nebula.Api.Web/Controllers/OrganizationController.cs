@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/organizations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class OrganizationController : AbstractOrganizationController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0a5984b6b8100b04b79f87eda00e654</Hash>
+    <Hash>f3d6cca85155bb09b6956ae2562ed7b9</Hash>
 </Codenesium>*/

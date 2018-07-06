@@ -27,40 +27,9 @@ namespace PetShippingNS.Api.Contracts
                 public string Details { get; private set; }
 
                 public int Id { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountryIdValue { get; set; } = true;
-
-                public bool ShouldSerializeCountryId()
-                {
-                        return this.ShouldSerializeCountryIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDetailsValue { get; set; } = true;
-
-                public bool ShouldSerializeDetails()
-                {
-                        return this.ShouldSerializeDetailsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCountryIdValue = false;
-                        this.ShouldSerializeDetailsValue = false;
-                        this.ShouldSerializeIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>35919bdc3ec14a083e245d33e91385e5</Hash>
+    <Hash>1df6f1506333f27d23c48a84c9de3185</Hash>
 </Codenesium>*/

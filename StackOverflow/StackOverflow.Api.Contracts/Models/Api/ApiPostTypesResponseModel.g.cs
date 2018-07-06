@@ -19,31 +19,9 @@ namespace StackOverflowNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string Type { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTypeValue { get; set; } = true;
-
-                public bool ShouldSerializeType()
-                {
-                        return this.ShouldSerializeTypeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeTypeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a711f5e93ae0182f1fb77b51f81835a</Hash>
+    <Hash>b439575c8c0946f3c3b9bcf387ea8c19</Hash>
 </Codenesium>*/

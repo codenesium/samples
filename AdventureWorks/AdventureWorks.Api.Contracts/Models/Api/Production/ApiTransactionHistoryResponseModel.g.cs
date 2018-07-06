@@ -47,94 +47,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int TransactionID { get; private set; }
 
                 public string TransactionType { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeActualCostValue { get; set; } = true;
-
-                public bool ShouldSerializeActualCost()
-                {
-                        return this.ShouldSerializeActualCostValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductID()
-                {
-                        return this.ShouldSerializeProductIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeQuantityValue { get; set; } = true;
-
-                public bool ShouldSerializeQuantity()
-                {
-                        return this.ShouldSerializeQuantityValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeReferenceOrderIDValue { get; set; } = true;
-
-                public bool ShouldSerializeReferenceOrderID()
-                {
-                        return this.ShouldSerializeReferenceOrderIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeReferenceOrderLineIDValue { get; set; } = true;
-
-                public bool ShouldSerializeReferenceOrderLineID()
-                {
-                        return this.ShouldSerializeReferenceOrderLineIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTransactionDateValue { get; set; } = true;
-
-                public bool ShouldSerializeTransactionDate()
-                {
-                        return this.ShouldSerializeTransactionDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTransactionIDValue { get; set; } = true;
-
-                public bool ShouldSerializeTransactionID()
-                {
-                        return this.ShouldSerializeTransactionIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTransactionTypeValue { get; set; } = true;
-
-                public bool ShouldSerializeTransactionType()
-                {
-                        return this.ShouldSerializeTransactionTypeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeActualCostValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductIDValue = false;
-                        this.ShouldSerializeQuantityValue = false;
-                        this.ShouldSerializeReferenceOrderIDValue = false;
-                        this.ShouldSerializeReferenceOrderLineIDValue = false;
-                        this.ShouldSerializeTransactionDateValue = false;
-                        this.ShouldSerializeTransactionIDValue = false;
-                        this.ShouldSerializeTransactionTypeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>721340d20ae68197a1822367c5a8e2c1</Hash>
+    <Hash>c116b91d404d2fba5a35e90ff7da776f</Hash>
 </Codenesium>*/

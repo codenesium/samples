@@ -148,7 +148,10 @@ namespace NebulaNS.Api.Web
                 o.SubstituteApiVersionInUrl = true;
             });
 
-            services.AddMvc();
+			// Enable MVC for app and disable the built in model validation
+			// We're disabling the built in validation because we're using Fluent Valdidation to 
+			// handle it. 
+            services.AddMvc(options => options.ModelValidatorProviders.Clear());
 
             services.AddApiVersioning(
              o =>

@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/locations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LocationController : AbstractLocationController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>02a1b710777b592b0c35af0beed56017</Hash>
+    <Hash>ac98d444749da33c705839990d863361</Hash>
 </Codenesium>*/

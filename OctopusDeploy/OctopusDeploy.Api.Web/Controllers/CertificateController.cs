@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/certificates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CertificateController : AbstractCertificateController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4fdacd74f8d74d8df209910d3f1eb80f</Hash>
+    <Hash>ca4d03e40ceb76dc34d7d55f98bf9a36</Hash>
 </Codenesium>*/

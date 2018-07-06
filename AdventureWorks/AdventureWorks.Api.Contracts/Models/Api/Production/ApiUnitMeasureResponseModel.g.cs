@@ -23,40 +23,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public string UnitMeasureCode { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeUnitMeasureCode()
-                {
-                        return this.ShouldSerializeUnitMeasureCodeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeUnitMeasureCodeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8692c0a6770f46d45ed413d6c5bfb283</Hash>
+    <Hash>122feaf9b2a9b7bdfe4cc8789a5b9ea3</Hash>
 </Codenesium>*/

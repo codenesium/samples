@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/badges")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class BadgesController : AbstractBadgesController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>71e369cc65bb315720d8c2ba09876644</Hash>
+    <Hash>38d8c01d47de0a9d6774ab562d734530</Hash>
 </Codenesium>*/

@@ -27,40 +27,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public int ProvinceId { get; private set; }
 
                 public string ProvinceIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProvinceIdValue { get; set; } = true;
-
-                public bool ShouldSerializeProvinceId()
-                {
-                        return this.ShouldSerializeProvinceIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeProvinceIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>979ed1a32896bca6df482b03e33e3181</Hash>
+    <Hash>a15047eae22d51861a19896986721ca6</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/votes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class VotesController : AbstractVotesController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5cc793535642be09ee1449a08a46d24e</Hash>
+    <Hash>9578a20aed35267ad6fe1c0014a7294c</Hash>
 </Codenesium>*/

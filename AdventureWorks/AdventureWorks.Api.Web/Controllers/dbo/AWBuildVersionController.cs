@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/aWBuildVersions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class AWBuildVersionController : AbstractAWBuildVersionController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9b07d6dbca6bf565369032fd764d8356</Hash>
+    <Hash>94e34b8fc4aad9c7db399ea2066edd1f</Hash>
 </Codenesium>*/

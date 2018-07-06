@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/comments")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CommentsController : AbstractCommentsController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a9e65ae76af58913456d2a61fb653000</Hash>
+    <Hash>219122f0b5bcfe02dc452c6cd925b70f</Hash>
 </Codenesium>*/

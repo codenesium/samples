@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/jobCandidates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class JobCandidateController : AbstractJobCandidateController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>32af6f669607132fb047f841826cc8b1</Hash>
+    <Hash>994d33ae739629c834c2198d0f037e07</Hash>
 </Codenesium>*/

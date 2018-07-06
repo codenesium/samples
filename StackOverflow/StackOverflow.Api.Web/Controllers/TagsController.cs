@@ -13,6 +13,7 @@ using System.Linq;
 namespace StackOverflowNS.Api.Web
 {
         [Route("api/tags")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TagsController : AbstractTagsController
         {
@@ -37,5 +38,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>661b09b98342cc8055ce7935f85b76d7</Hash>
+    <Hash>409bdff20c2249476b168805fdb9899a</Hash>
 </Codenesium>*/

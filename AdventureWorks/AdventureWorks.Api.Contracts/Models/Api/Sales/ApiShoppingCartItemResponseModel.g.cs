@@ -35,67 +35,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string ShoppingCartID { get; private set; }
 
                 public int ShoppingCartItemID { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDateCreatedValue { get; set; } = true;
-
-                public bool ShouldSerializeDateCreated()
-                {
-                        return this.ShouldSerializeDateCreatedValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductID()
-                {
-                        return this.ShouldSerializeProductIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeQuantityValue { get; set; } = true;
-
-                public bool ShouldSerializeQuantity()
-                {
-                        return this.ShouldSerializeQuantityValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShoppingCartIDValue { get; set; } = true;
-
-                public bool ShouldSerializeShoppingCartID()
-                {
-                        return this.ShouldSerializeShoppingCartIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShoppingCartItemIDValue { get; set; } = true;
-
-                public bool ShouldSerializeShoppingCartItemID()
-                {
-                        return this.ShouldSerializeShoppingCartItemIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDateCreatedValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductIDValue = false;
-                        this.ShouldSerializeQuantityValue = false;
-                        this.ShouldSerializeShoppingCartIDValue = false;
-                        this.ShouldSerializeShoppingCartItemIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7c2c130336e2edd324b62b9ca8fd7875</Hash>
+    <Hash>4585815c41de9553e9157d15c7f488db</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/invitations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class InvitationController : AbstractInvitationController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1ed4e68c31dd6543da1d530d6e4ab02a</Hash>
+    <Hash>420b65ef5243bc5b559cb1b04f0573ac</Hash>
 </Codenesium>*/

@@ -31,58 +31,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int ProductID { get; private set; }
 
                 public DateTime StartDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEndDateValue { get; set; } = true;
-
-                public bool ShouldSerializeEndDate()
-                {
-                        return this.ShouldSerializeEndDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeListPriceValue { get; set; } = true;
-
-                public bool ShouldSerializeListPrice()
-                {
-                        return this.ShouldSerializeListPriceValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductID()
-                {
-                        return this.ShouldSerializeProductIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-                public bool ShouldSerializeStartDate()
-                {
-                        return this.ShouldSerializeStartDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeEndDateValue = false;
-                        this.ShouldSerializeListPriceValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductIDValue = false;
-                        this.ShouldSerializeStartDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>db5b7837f61962fc42f39296d189875d</Hash>
+    <Hash>a53a4cabe58fc943a70eb2ef5d8bb660</Hash>
 </Codenesium>*/

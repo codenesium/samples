@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/spaces")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SpaceController : AbstractSpaceController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f6ce23537dcda3f4e9cb23c8a81ae8af</Hash>
+    <Hash>1b2568ba8cece1bffc4dc3cf948ea753</Hash>
 </Codenesium>*/

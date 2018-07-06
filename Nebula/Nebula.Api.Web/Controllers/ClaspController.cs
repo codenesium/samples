@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/clasps")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ClaspController : AbstractClaspController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d5dc9e5266018c3eadf02bc70a1f96fb</Hash>
+    <Hash>5adeb97249568a6ec1ccf1e5cb809ef2</Hash>
 </Codenesium>*/

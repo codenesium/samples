@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/unitMeasures")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class UnitMeasureController : AbstractUnitMeasureController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e7028b0e669edc727eb8c7f8fa1e2caf</Hash>
+    <Hash>ecba81d4219353a6d8d049291eaf5edb</Hash>
 </Codenesium>*/

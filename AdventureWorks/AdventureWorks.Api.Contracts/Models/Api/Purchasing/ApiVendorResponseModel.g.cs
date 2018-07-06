@@ -43,85 +43,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public bool PreferredVendorStatus { get; private set; }
 
                 public string PurchasingWebServiceURL { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAccountNumberValue { get; set; } = true;
-
-                public bool ShouldSerializeAccountNumber()
-                {
-                        return this.ShouldSerializeAccountNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeActiveFlagValue { get; set; } = true;
-
-                public bool ShouldSerializeActiveFlag()
-                {
-                        return this.ShouldSerializeActiveFlagValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCreditRatingValue { get; set; } = true;
-
-                public bool ShouldSerializeCreditRating()
-                {
-                        return this.ShouldSerializeCreditRatingValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePreferredVendorStatusValue { get; set; } = true;
-
-                public bool ShouldSerializePreferredVendorStatus()
-                {
-                        return this.ShouldSerializePreferredVendorStatusValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePurchasingWebServiceURLValue { get; set; } = true;
-
-                public bool ShouldSerializePurchasingWebServiceURL()
-                {
-                        return this.ShouldSerializePurchasingWebServiceURLValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAccountNumberValue = false;
-                        this.ShouldSerializeActiveFlagValue = false;
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeCreditRatingValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializePreferredVendorStatusValue = false;
-                        this.ShouldSerializePurchasingWebServiceURLValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f7207f03decd20e90085de277b5f7ef5</Hash>
+    <Hash>ba1bd8d451fe6b44f0568b89aa2a2a54</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/extensionConfigurations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ExtensionConfigurationController : AbstractExtensionConfigurationController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1f17fa2804ed74e6259e29f17f101bf5</Hash>
+    <Hash>bb2ff95fa65d36bbc09171b42661b84c</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/employeePayHistories")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class EmployeePayHistoryController : AbstractEmployeePayHistoryController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7b3e1ff664f13122f52933fc3fffbdfc</Hash>
+    <Hash>d68ddbcbd00cc5440b05c04da34880b2</Hash>
 </Codenesium>*/

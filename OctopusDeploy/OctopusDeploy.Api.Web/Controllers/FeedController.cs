@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/feeds")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class FeedController : AbstractFeedController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>727c4cc6af18a0f51e1ead6cc250c0de</Hash>
+    <Hash>17aed5a7e00b9b1c5239dcfa25f9b924</Hash>
 </Codenesium>*/

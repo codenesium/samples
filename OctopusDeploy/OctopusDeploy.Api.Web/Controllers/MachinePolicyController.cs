@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/machinePolicies")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class MachinePolicyController : AbstractMachinePolicyController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>366fbaf8c70f0df9799d4b8624925869</Hash>
+    <Hash>4223b0dfce94596974024744363446be</Hash>
 </Codenesium>*/

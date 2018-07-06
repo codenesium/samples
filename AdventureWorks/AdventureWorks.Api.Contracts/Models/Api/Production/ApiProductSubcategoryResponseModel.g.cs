@@ -31,58 +31,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int ProductSubcategoryID { get; private set; }
 
                 public Guid Rowguid { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductCategoryIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductCategoryID()
-                {
-                        return this.ShouldSerializeProductCategoryIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductSubcategoryIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductSubcategoryID()
-                {
-                        return this.ShouldSerializeProductSubcategoryIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeProductCategoryIDValue = false;
-                        this.ShouldSerializeProductSubcategoryIDValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d05233a5b29cddbeb1a9162cdb035d47</Hash>
+    <Hash>fc03c423fe3c6ae49360367b2de91ba4</Hash>
 </Codenesium>*/

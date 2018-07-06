@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/dashboardConfigurations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DashboardConfigurationController : AbstractDashboardConfigurationController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6ee8712e80fd3507b27269d4640bb23d</Hash>
+    <Hash>b083213abce8536a1d06c7c8ef0ff2aa</Hash>
 </Codenesium>*/

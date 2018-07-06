@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/workerTaskLeases")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class WorkerTaskLeaseController : AbstractWorkerTaskLeaseController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f43c5448937a079862de60c6d054196</Hash>
+    <Hash>dd6b634b39136f4d428a8217dfe6637d</Hash>
 </Codenesium>*/

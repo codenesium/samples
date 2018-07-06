@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/lessonXTeachers")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LessonXTeacherController : AbstractLessonXTeacherController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>597566e8931005d89bf780a4ea96e809</Hash>
+    <Hash>6fe1c6b5aac31865298216ebb3fd0d8e</Hash>
 </Codenesium>*/

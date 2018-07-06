@@ -46,76 +46,9 @@ namespace PetShippingNS.Api.Contracts
                 public DateTime SaleDate { get; private set; }
 
                 public int SalesPersonId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAmountValue { get; set; } = true;
-
-                public bool ShouldSerializeAmount()
-                {
-                        return this.ShouldSerializeAmountValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeClientIdValue { get; set; } = true;
-
-                public bool ShouldSerializeClientId()
-                {
-                        return this.ShouldSerializeClientIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNoteValue { get; set; } = true;
-
-                public bool ShouldSerializeNote()
-                {
-                        return this.ShouldSerializeNoteValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePetIdValue { get; set; } = true;
-
-                public bool ShouldSerializePetId()
-                {
-                        return this.ShouldSerializePetIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSaleDateValue { get; set; } = true;
-
-                public bool ShouldSerializeSaleDate()
-                {
-                        return this.ShouldSerializeSaleDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesPersonIdValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesPersonId()
-                {
-                        return this.ShouldSerializeSalesPersonIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAmountValue = false;
-                        this.ShouldSerializeClientIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNoteValue = false;
-                        this.ShouldSerializePetIdValue = false;
-                        this.ShouldSerializeSaleDateValue = false;
-                        this.ShouldSerializeSalesPersonIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c67ec60fdc74cb0e42f9f345bb414ec5</Hash>
+    <Hash>fff54400c4a2d0a4c9541f41f62a6ec6</Hash>
 </Codenesium>*/

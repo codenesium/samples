@@ -47,94 +47,9 @@ namespace StackOverflowNS.Api.Contracts
                 public string UserDisplayName { get; private set; }
 
                 public int? UserId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCommentValue { get; set; } = true;
-
-                public bool ShouldSerializeComment()
-                {
-                        return this.ShouldSerializeCommentValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCreationDateValue { get; set; } = true;
-
-                public bool ShouldSerializeCreationDate()
-                {
-                        return this.ShouldSerializeCreationDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePostHistoryTypeIdValue { get; set; } = true;
-
-                public bool ShouldSerializePostHistoryTypeId()
-                {
-                        return this.ShouldSerializePostHistoryTypeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePostIdValue { get; set; } = true;
-
-                public bool ShouldSerializePostId()
-                {
-                        return this.ShouldSerializePostIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRevisionGUIDValue { get; set; } = true;
-
-                public bool ShouldSerializeRevisionGUID()
-                {
-                        return this.ShouldSerializeRevisionGUIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTextValue { get; set; } = true;
-
-                public bool ShouldSerializeText()
-                {
-                        return this.ShouldSerializeTextValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUserDisplayNameValue { get; set; } = true;
-
-                public bool ShouldSerializeUserDisplayName()
-                {
-                        return this.ShouldSerializeUserDisplayNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUserIdValue { get; set; } = true;
-
-                public bool ShouldSerializeUserId()
-                {
-                        return this.ShouldSerializeUserIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCommentValue = false;
-                        this.ShouldSerializeCreationDateValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializePostHistoryTypeIdValue = false;
-                        this.ShouldSerializePostIdValue = false;
-                        this.ShouldSerializeRevisionGUIDValue = false;
-                        this.ShouldSerializeTextValue = false;
-                        this.ShouldSerializeUserDisplayNameValue = false;
-                        this.ShouldSerializeUserIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e11f1c087b7bc53441be23ce0a3050d1</Hash>
+    <Hash>33b4aba2ae03158f170eb32052081293</Hash>
 </Codenesium>*/

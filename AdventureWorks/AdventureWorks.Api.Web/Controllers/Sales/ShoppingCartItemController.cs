@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/shoppingCartItems")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ShoppingCartItemController : AbstractShoppingCartItemController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b9edf4cd2593fb024afe373110ab5ece</Hash>
+    <Hash>85fce16fbf5a08210fd23244ed168292</Hash>
 </Codenesium>*/

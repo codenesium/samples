@@ -31,58 +31,9 @@ namespace StackOverflowNS.Api.Contracts
                 public int PostId { get; private set; }
 
                 public int RelatedPostId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCreationDateValue { get; set; } = true;
-
-                public bool ShouldSerializeCreationDate()
-                {
-                        return this.ShouldSerializeCreationDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLinkTypeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeLinkTypeId()
-                {
-                        return this.ShouldSerializeLinkTypeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePostIdValue { get; set; } = true;
-
-                public bool ShouldSerializePostId()
-                {
-                        return this.ShouldSerializePostIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRelatedPostIdValue { get; set; } = true;
-
-                public bool ShouldSerializeRelatedPostId()
-                {
-                        return this.ShouldSerializeRelatedPostIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCreationDateValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLinkTypeIdValue = false;
-                        this.ShouldSerializePostIdValue = false;
-                        this.ShouldSerializeRelatedPostIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bce419e6009f508fcdda938d06b3209b</Hash>
+    <Hash>3778a9e1a90464b63171a0edac3478b2</Hash>
 </Codenesium>*/

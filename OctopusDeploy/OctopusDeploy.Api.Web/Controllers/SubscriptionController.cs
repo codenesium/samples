@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/subscriptions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SubscriptionController : AbstractSubscriptionController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4de01c06699c41b3d72322f2c933363b</Hash>
+    <Hash>d12169661f9c751a996147a2b70472f1</Hash>
 </Codenesium>*/

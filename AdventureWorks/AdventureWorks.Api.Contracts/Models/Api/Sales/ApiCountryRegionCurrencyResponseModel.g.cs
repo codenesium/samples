@@ -27,40 +27,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string CurrencyCodeEntity { get; set; }
 
                 public DateTime ModifiedDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeCountryRegionCode()
-                {
-                        return this.ShouldSerializeCountryRegionCodeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCurrencyCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeCurrencyCode()
-                {
-                        return this.ShouldSerializeCurrencyCodeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCountryRegionCodeValue = false;
-                        this.ShouldSerializeCurrencyCodeValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccd3ba515e014dbc27700190a0a3f54c</Hash>
+    <Hash>c4d22fa08b002b7dd0a13db75c8dab83</Hash>
 </Codenesium>*/

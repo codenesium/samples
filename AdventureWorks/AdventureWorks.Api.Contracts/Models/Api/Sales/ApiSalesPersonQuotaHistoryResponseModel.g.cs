@@ -35,58 +35,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public Guid Rowguid { get; private set; }
 
                 public decimal SalesQuota { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeQuotaDateValue { get; set; } = true;
-
-                public bool ShouldSerializeQuotaDate()
-                {
-                        return this.ShouldSerializeQuotaDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesQuotaValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesQuota()
-                {
-                        return this.ShouldSerializeSalesQuotaValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeQuotaDateValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeSalesQuotaValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>36b8bc530ee98355b5374dff83bd6d60</Hash>
+    <Hash>1f201dec4e90e59c3d07da86261d27f4</Hash>
 </Codenesium>*/

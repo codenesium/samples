@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/links")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LinkController : AbstractLinkController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>49acb489151e73a9044633418f5a49e6</Hash>
+    <Hash>3a0705e221b3a5ec468314a1d6e5e44e</Hash>
 </Codenesium>*/

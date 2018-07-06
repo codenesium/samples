@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/states")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class StateController : AbstractStateController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e6d9f7fb4d236a5276c9cb9edefc481f</Hash>
+    <Hash>30ab1c6e72033de87f7f0f7ad60844f7</Hash>
 </Codenesium>*/

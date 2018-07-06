@@ -19,31 +19,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public int Allocated { get; private set; }
 
                 public string CollectionName { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAllocatedValue { get; set; } = true;
-
-                public bool ShouldSerializeAllocated()
-                {
-                        return this.ShouldSerializeAllocatedValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCollectionNameValue { get; set; } = true;
-
-                public bool ShouldSerializeCollectionName()
-                {
-                        return this.ShouldSerializeCollectionNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAllocatedValue = false;
-                        this.ShouldSerializeCollectionNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad5c0d2c08bd24d9168cd0da6f8416e7</Hash>
+    <Hash>d10819d455dd9e9c88f199687a543322</Hash>
 </Codenesium>*/

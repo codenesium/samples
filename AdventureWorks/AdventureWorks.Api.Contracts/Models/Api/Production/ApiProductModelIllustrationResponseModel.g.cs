@@ -23,40 +23,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public DateTime ModifiedDate { get; private set; }
 
                 public int ProductModelID { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIllustrationIDValue { get; set; } = true;
-
-                public bool ShouldSerializeIllustrationID()
-                {
-                        return this.ShouldSerializeIllustrationIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductModelIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductModelID()
-                {
-                        return this.ShouldSerializeProductModelIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIllustrationIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductModelIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b9b4631add16f83205ab5a683475581d</Hash>
+    <Hash>9c18cf71f43c928144be368faa95cbff</Hash>
 </Codenesium>*/

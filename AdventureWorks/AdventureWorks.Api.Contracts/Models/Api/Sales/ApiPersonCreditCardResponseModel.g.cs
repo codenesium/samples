@@ -27,40 +27,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public string CreditCardIDEntity { get; set; }
 
                 public DateTime ModifiedDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBusinessEntityID()
-                {
-                        return this.ShouldSerializeBusinessEntityIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
-
-                public bool ShouldSerializeCreditCardID()
-                {
-                        return this.ShouldSerializeCreditCardIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBusinessEntityIDValue = false;
-                        this.ShouldSerializeCreditCardIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bbf826d641a53e48a1916ce33be4deab</Hash>
+    <Hash>6d1d030e80462f3e82d6f78f1356be81</Hash>
 </Codenesium>*/

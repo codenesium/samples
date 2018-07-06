@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/teams")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TeamController : AbstractTeamController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d88ddd989b852f38d2574fd066ec03eb</Hash>
+    <Hash>4d50d1908126045e0c7fc8bada25fdc6</Hash>
 </Codenesium>*/

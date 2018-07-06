@@ -35,67 +35,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int ShipMethodID { get; private set; }
 
                 public decimal ShipRate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShipBaseValue { get; set; } = true;
-
-                public bool ShouldSerializeShipBase()
-                {
-                        return this.ShouldSerializeShipBaseValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
-
-                public bool ShouldSerializeShipMethodID()
-                {
-                        return this.ShouldSerializeShipMethodIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeShipRateValue { get; set; } = true;
-
-                public bool ShouldSerializeShipRate()
-                {
-                        return this.ShouldSerializeShipRateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeShipBaseValue = false;
-                        this.ShouldSerializeShipMethodIDValue = false;
-                        this.ShouldSerializeShipRateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c179b11a7017355906823daa77b840e0</Hash>
+    <Hash>b92743cb318ce7bd14bc5a73f49056cc</Hash>
 </Codenesium>*/

@@ -47,94 +47,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public DateTime StartDate { get; private set; }
 
                 public string UnitMeasureCode { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
-
-                public bool ShouldSerializeBillOfMaterialsID()
-                {
-                        return this.ShouldSerializeBillOfMaterialsIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBOMLevelValue { get; set; } = true;
-
-                public bool ShouldSerializeBOMLevel()
-                {
-                        return this.ShouldSerializeBOMLevelValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeComponentIDValue { get; set; } = true;
-
-                public bool ShouldSerializeComponentID()
-                {
-                        return this.ShouldSerializeComponentIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEndDateValue { get; set; } = true;
-
-                public bool ShouldSerializeEndDate()
-                {
-                        return this.ShouldSerializeEndDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
-
-                public bool ShouldSerializePerAssemblyQty()
-                {
-                        return this.ShouldSerializePerAssemblyQtyValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductAssemblyID()
-                {
-                        return this.ShouldSerializeProductAssemblyIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-                public bool ShouldSerializeStartDate()
-                {
-                        return this.ShouldSerializeStartDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeUnitMeasureCode()
-                {
-                        return this.ShouldSerializeUnitMeasureCodeValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBillOfMaterialsIDValue = false;
-                        this.ShouldSerializeBOMLevelValue = false;
-                        this.ShouldSerializeComponentIDValue = false;
-                        this.ShouldSerializeEndDateValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializePerAssemblyQtyValue = false;
-                        this.ShouldSerializeProductAssemblyIDValue = false;
-                        this.ShouldSerializeStartDateValue = false;
-                        this.ShouldSerializeUnitMeasureCodeValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>87c2616ef4f4710f9ce9da7f627d8722</Hash>
+    <Hash>28689902004f222729719847de46fb77</Hash>
 </Codenesium>*/

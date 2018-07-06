@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/stateProvinces")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class StateProvinceController : AbstractStateProvinceController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f2aa4bfcb1b3caeda59ceac0869d635a</Hash>
+    <Hash>75c961587510a85e285fe856394914c3</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/chains")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ChainController : AbstractChainController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c1d474567fbdca270535c8ac262370c1</Hash>
+    <Hash>04e7dec8003863efce494fc227b6bb7b</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/schemaVersions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SchemaVersionsController : AbstractSchemaVersionsController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aea46b2c8d02a76232efa4a0627a5b68</Hash>
+    <Hash>64673cb5ffa9f58f68a9ccfb4fc98458</Hash>
 </Codenesium>*/

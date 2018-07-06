@@ -43,85 +43,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public DateTime ReviewDate { get; private set; }
 
                 public string ReviewerName { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCommentsValue { get; set; } = true;
-
-                public bool ShouldSerializeComments()
-                {
-                        return this.ShouldSerializeCommentsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEmailAddressValue { get; set; } = true;
-
-                public bool ShouldSerializeEmailAddress()
-                {
-                        return this.ShouldSerializeEmailAddressValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductID()
-                {
-                        return this.ShouldSerializeProductIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductReviewIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductReviewID()
-                {
-                        return this.ShouldSerializeProductReviewIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRatingValue { get; set; } = true;
-
-                public bool ShouldSerializeRating()
-                {
-                        return this.ShouldSerializeRatingValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeReviewDateValue { get; set; } = true;
-
-                public bool ShouldSerializeReviewDate()
-                {
-                        return this.ShouldSerializeReviewDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeReviewerNameValue { get; set; } = true;
-
-                public bool ShouldSerializeReviewerName()
-                {
-                        return this.ShouldSerializeReviewerNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCommentsValue = false;
-                        this.ShouldSerializeEmailAddressValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductIDValue = false;
-                        this.ShouldSerializeProductReviewIDValue = false;
-                        this.ShouldSerializeRatingValue = false;
-                        this.ShouldSerializeReviewDateValue = false;
-                        this.ShouldSerializeReviewerNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a06b084354a27d9fda3f70c70e6a7141</Hash>
+    <Hash>ea7f88df3c42639a191f30440229f5a0</Hash>
 </Codenesium>*/

@@ -49,76 +49,9 @@ namespace PetStoreNS.Api.Contracts
                 public int SpeciesId { get; private set; }
 
                 public string SpeciesIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAcquiredDateValue { get; set; } = true;
-
-                public bool ShouldSerializeAcquiredDate()
-                {
-                        return this.ShouldSerializeAcquiredDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBreedIdValue { get; set; } = true;
-
-                public bool ShouldSerializeBreedId()
-                {
-                        return this.ShouldSerializeBreedIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDescriptionValue { get; set; } = true;
-
-                public bool ShouldSerializeDescription()
-                {
-                        return this.ShouldSerializeDescriptionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePenIdValue { get; set; } = true;
-
-                public bool ShouldSerializePenId()
-                {
-                        return this.ShouldSerializePenIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePriceValue { get; set; } = true;
-
-                public bool ShouldSerializePrice()
-                {
-                        return this.ShouldSerializePriceValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSpeciesIdValue { get; set; } = true;
-
-                public bool ShouldSerializeSpeciesId()
-                {
-                        return this.ShouldSerializeSpeciesIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAcquiredDateValue = false;
-                        this.ShouldSerializeBreedIdValue = false;
-                        this.ShouldSerializeDescriptionValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializePenIdValue = false;
-                        this.ShouldSerializePriceValue = false;
-                        this.ShouldSerializeSpeciesIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ec3afa6a084ebc7a718e6a58c800f6ac</Hash>
+    <Hash>b65b10d5f053672ecfc17833657ac1f2</Hash>
 </Codenesium>*/

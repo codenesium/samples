@@ -27,40 +27,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountryIdValue { get; set; } = true;
-
-                public bool ShouldSerializeCountryId()
-                {
-                        return this.ShouldSerializeCountryIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCountryIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0437dda9ce6f39c963891ea6f5148046</Hash>
+    <Hash>6aee26739d8f49463093e64c71817562</Hash>
 </Codenesium>*/

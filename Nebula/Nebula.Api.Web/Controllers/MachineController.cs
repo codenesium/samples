@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/machines")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class MachineController : AbstractMachineController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fda1935600a79892cfb317238a6fb884</Hash>
+    <Hash>359917a40b321b1f38c6252602d0fa86</Hash>
 </Codenesium>*/

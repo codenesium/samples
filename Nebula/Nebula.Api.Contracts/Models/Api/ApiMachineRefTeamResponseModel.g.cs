@@ -30,40 +30,9 @@ namespace NebulaNS.Api.Contracts
                 public int TeamId { get; private set; }
 
                 public string TeamIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeMachineIdValue { get; set; } = true;
-
-                public bool ShouldSerializeMachineId()
-                {
-                        return this.ShouldSerializeMachineIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTeamIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTeamId()
-                {
-                        return this.ShouldSerializeTeamIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeMachineIdValue = false;
-                        this.ShouldSerializeTeamIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4ae450b7d6448a91825a895672511981</Hash>
+    <Hash>aebbaccf94217cd1bd4bc6fb9c1865ad</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/documents")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DocumentController : AbstractDocumentController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dffc7e4a03fd50004753c5260b4181d4</Hash>
+    <Hash>7b7f322bc36f5630095eb3bb2e50e4d8</Hash>
 </Codenesium>*/

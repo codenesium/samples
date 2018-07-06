@@ -43,76 +43,9 @@ namespace PetShippingNS.Api.Contracts
                 public int PipelineStepId { get; private set; }
 
                 public DateTime TakeoffDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAirlineIdValue { get; set; } = true;
-
-                public bool ShouldSerializeAirlineId()
-                {
-                        return this.ShouldSerializeAirlineIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFlightNumberValue { get; set; } = true;
-
-                public bool ShouldSerializeFlightNumber()
-                {
-                        return this.ShouldSerializeFlightNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeHandlerIdValue { get; set; } = true;
-
-                public bool ShouldSerializeHandlerId()
-                {
-                        return this.ShouldSerializeHandlerIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLandDateValue { get; set; } = true;
-
-                public bool ShouldSerializeLandDate()
-                {
-                        return this.ShouldSerializeLandDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePipelineStepIdValue { get; set; } = true;
-
-                public bool ShouldSerializePipelineStepId()
-                {
-                        return this.ShouldSerializePipelineStepIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTakeoffDateValue { get; set; } = true;
-
-                public bool ShouldSerializeTakeoffDate()
-                {
-                        return this.ShouldSerializeTakeoffDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAirlineIdValue = false;
-                        this.ShouldSerializeFlightNumberValue = false;
-                        this.ShouldSerializeHandlerIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLandDateValue = false;
-                        this.ShouldSerializePipelineStepIdValue = false;
-                        this.ShouldSerializeTakeoffDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f7ac2dd5a827fe72561d67ba16c1856</Hash>
+    <Hash>e783bd22c72227eba5f1a9dea9496175</Hash>
 </Codenesium>*/

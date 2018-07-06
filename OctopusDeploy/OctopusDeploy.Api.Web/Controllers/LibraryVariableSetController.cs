@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/libraryVariableSets")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LibraryVariableSetController : AbstractLibraryVariableSetController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0a2fe04841811f7b53b6946d35923c84</Hash>
+    <Hash>dcbb2bc67744064407bf5ffe73b56f1e</Hash>
 </Codenesium>*/

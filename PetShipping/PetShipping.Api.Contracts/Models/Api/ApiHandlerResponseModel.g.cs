@@ -35,67 +35,9 @@ namespace PetShippingNS.Api.Contracts
                 public string LastName { get; private set; }
 
                 public string Phone { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountryIdValue { get; set; } = true;
-
-                public bool ShouldSerializeCountryId()
-                {
-                        return this.ShouldSerializeCountryIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEmailValue { get; set; } = true;
-
-                public bool ShouldSerializeEmail()
-                {
-                        return this.ShouldSerializeEmailValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFirstNameValue { get; set; } = true;
-
-                public bool ShouldSerializeFirstName()
-                {
-                        return this.ShouldSerializeFirstNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLastNameValue { get; set; } = true;
-
-                public bool ShouldSerializeLastName()
-                {
-                        return this.ShouldSerializeLastNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePhoneValue { get; set; } = true;
-
-                public bool ShouldSerializePhone()
-                {
-                        return this.ShouldSerializePhoneValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeCountryIdValue = false;
-                        this.ShouldSerializeEmailValue = false;
-                        this.ShouldSerializeFirstNameValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLastNameValue = false;
-                        this.ShouldSerializePhoneValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b6b59fdf06d29cf6d9158a5ae99c971f</Hash>
+    <Hash>dba616abb8636af583966dc075e56c3f</Hash>
 </Codenesium>*/

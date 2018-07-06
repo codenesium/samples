@@ -27,49 +27,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int SystemInformationID { get; private set; }
 
                 public DateTime VersionDate { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDatabase_VersionValue { get; set; } = true;
-
-                public bool ShouldSerializeDatabase_Version()
-                {
-                        return this.ShouldSerializeDatabase_VersionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSystemInformationIDValue { get; set; } = true;
-
-                public bool ShouldSerializeSystemInformationID()
-                {
-                        return this.ShouldSerializeSystemInformationIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVersionDateValue { get; set; } = true;
-
-                public bool ShouldSerializeVersionDate()
-                {
-                        return this.ShouldSerializeVersionDateValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDatabase_VersionValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeSystemInformationIDValue = false;
-                        this.ShouldSerializeVersionDateValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3af415404d26385862b1f349cb70b0bd</Hash>
+    <Hash>a73b681abf2a269ebdd1772b35563f54</Hash>
 </Codenesium>*/

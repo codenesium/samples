@@ -27,40 +27,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public int TicketStatusId { get; private set; }
 
                 public string TicketStatusIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePublicIdValue { get; set; } = true;
-
-                public bool ShouldSerializePublicId()
-                {
-                        return this.ShouldSerializePublicIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTicketStatusIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTicketStatusId()
-                {
-                        return this.ShouldSerializeTicketStatusIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializePublicIdValue = false;
-                        this.ShouldSerializeTicketStatusIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6f0b364e68d6e9f8503d32ed9b33b509</Hash>
+    <Hash>b2530638b1f527c625fbd81d799fe5dd</Hash>
 </Codenesium>*/

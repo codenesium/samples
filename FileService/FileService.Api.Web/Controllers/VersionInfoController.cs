@@ -13,6 +13,7 @@ using System.Linq;
 namespace FileServiceNS.Api.Web
 {
         [Route("api/versionInfoes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class VersionInfoController : AbstractVersionInfoController
         {
@@ -37,5 +38,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>258bb766358ff7bb1e65635c8a5ad628</Hash>
+    <Hash>8e424d640e3270376dab88512d4c96c2</Hash>
 </Codenesium>*/

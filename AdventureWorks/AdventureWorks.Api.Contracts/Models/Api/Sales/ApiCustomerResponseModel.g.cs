@@ -46,76 +46,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int? TerritoryID { get; private set; }
 
                 public string TerritoryIDEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAccountNumberValue { get; set; } = true;
-
-                public bool ShouldSerializeAccountNumber()
-                {
-                        return this.ShouldSerializeAccountNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCustomerIDValue { get; set; } = true;
-
-                public bool ShouldSerializeCustomerID()
-                {
-                        return this.ShouldSerializeCustomerIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePersonIDValue { get; set; } = true;
-
-                public bool ShouldSerializePersonID()
-                {
-                        return this.ShouldSerializePersonIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStoreIDValue { get; set; } = true;
-
-                public bool ShouldSerializeStoreID()
-                {
-                        return this.ShouldSerializeStoreIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
-
-                public bool ShouldSerializeTerritoryID()
-                {
-                        return this.ShouldSerializeTerritoryIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAccountNumberValue = false;
-                        this.ShouldSerializeCustomerIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializePersonIDValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeStoreIDValue = false;
-                        this.ShouldSerializeTerritoryIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>37cfdb33210ca8dcf1475b39d5cd16bd</Hash>
+    <Hash>0369ffa8940823c485c0cd38901f0723</Hash>
 </Codenesium>*/

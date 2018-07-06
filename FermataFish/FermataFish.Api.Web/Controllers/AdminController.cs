@@ -13,6 +13,7 @@ using System.Linq;
 namespace FermataFishNS.Api.Web
 {
         [Route("api/admins")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class AdminController : AbstractAdminController
         {
@@ -37,5 +38,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>36e78afbe9d8a2eb92a9994110ef45cb</Hash>
+    <Hash>43a6aa90895cb9996ea4ecd557345c59</Hash>
 </Codenesium>*/

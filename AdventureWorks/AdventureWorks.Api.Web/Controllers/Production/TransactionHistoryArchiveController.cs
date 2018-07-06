@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/transactionHistoryArchives")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class TransactionHistoryArchiveController : AbstractTransactionHistoryArchiveController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9ea94a7eb027526a8c77fcb5888893bd</Hash>
+    <Hash>c854c9972684cd1718d048b3b233b4a0</Hash>
 </Codenesium>*/

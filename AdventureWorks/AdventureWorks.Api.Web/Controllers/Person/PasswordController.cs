@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/passwords")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class PasswordController : AbstractPasswordController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>061968605f057caf5941641c238e98d0</Hash>
+    <Hash>37e68d3c07cdd36007891586f7017d83</Hash>
 </Codenesium>*/

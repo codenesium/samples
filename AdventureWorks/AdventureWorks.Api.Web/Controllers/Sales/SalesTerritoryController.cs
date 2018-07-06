@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesTerritories")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SalesTerritoryController : AbstractSalesTerritoryController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a063831ee5d636542094b221d5b862e</Hash>
+    <Hash>61dca8f16e079a06bfb7447e0e519165</Hash>
 </Codenesium>*/

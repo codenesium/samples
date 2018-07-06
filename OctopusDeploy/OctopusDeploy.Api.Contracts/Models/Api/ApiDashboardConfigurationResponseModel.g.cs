@@ -35,67 +35,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string IncludedTenantTags { get; private set; }
 
                 public string JSON { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIncludedEnvironmentIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeIncludedEnvironmentIds()
-                {
-                        return this.ShouldSerializeIncludedEnvironmentIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIncludedProjectIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeIncludedProjectIds()
-                {
-                        return this.ShouldSerializeIncludedProjectIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIncludedTenantIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeIncludedTenantIds()
-                {
-                        return this.ShouldSerializeIncludedTenantIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIncludedTenantTagsValue { get; set; } = true;
-
-                public bool ShouldSerializeIncludedTenantTags()
-                {
-                        return this.ShouldSerializeIncludedTenantTagsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeIncludedEnvironmentIdsValue = false;
-                        this.ShouldSerializeIncludedProjectIdsValue = false;
-                        this.ShouldSerializeIncludedTenantIdsValue = false;
-                        this.ShouldSerializeIncludedTenantTagsValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>70db57509a16430cbff443f4b1006f1b</Hash>
+    <Hash>9fe8b26a3ff5ddce8ff6c53cb902bfad</Hash>
 </Codenesium>*/

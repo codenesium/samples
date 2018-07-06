@@ -31,49 +31,9 @@ namespace ESPIOTNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public string @Value { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDeviceIdValue { get; set; } = true;
-
-                public bool ShouldSerializeDeviceId()
-                {
-                        return this.ShouldSerializeDeviceIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeValueValue { get; set; } = true;
-
-                public bool ShouldSerializeValue()
-                {
-                        return this.ShouldSerializeValueValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDeviceIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeValueValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d05772d14e471f69277e1ea65f215e06</Hash>
+    <Hash>fe2e5a2265e1446773b2fcf0fc59c656</Hash>
 </Codenesium>*/

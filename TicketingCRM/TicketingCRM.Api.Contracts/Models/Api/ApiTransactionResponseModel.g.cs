@@ -31,49 +31,9 @@ namespace TicketingCRMNS.Api.Contracts
                 public int TransactionStatusId { get; private set; }
 
                 public string TransactionStatusIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAmountValue { get; set; } = true;
-
-                public bool ShouldSerializeAmount()
-                {
-                        return this.ShouldSerializeAmountValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeGatewayConfirmationNumberValue { get; set; } = true;
-
-                public bool ShouldSerializeGatewayConfirmationNumber()
-                {
-                        return this.ShouldSerializeGatewayConfirmationNumberValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeTransactionStatusIdValue { get; set; } = true;
-
-                public bool ShouldSerializeTransactionStatusId()
-                {
-                        return this.ShouldSerializeTransactionStatusIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAmountValue = false;
-                        this.ShouldSerializeGatewayConfirmationNumberValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeTransactionStatusIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a6aa81b4029d4fcc6329e941a847f0c</Hash>
+    <Hash>f86a36d7a30462d72eaa649eea5700c6</Hash>
 </Codenesium>*/

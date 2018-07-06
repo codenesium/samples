@@ -31,58 +31,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string Name { get; private set; }
 
                 public int SortOrder { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDataVersionValue { get; set; } = true;
-
-                public bool ShouldSerializeDataVersion()
-                {
-                        return this.ShouldSerializeDataVersionValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSortOrderValue { get; set; } = true;
-
-                public bool ShouldSerializeSortOrder()
-                {
-                        return this.ShouldSerializeSortOrderValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDataVersionValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeSortOrderValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f9a77a27014409c8bebff7bf61bf38c</Hash>
+    <Hash>3a2d4baafbed77a517b20d9dc6b3d28f</Hash>
 </Codenesium>*/

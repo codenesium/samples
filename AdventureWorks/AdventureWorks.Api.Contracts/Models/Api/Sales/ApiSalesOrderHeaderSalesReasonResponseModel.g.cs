@@ -30,40 +30,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public int SalesReasonID { get; private set; }
 
                 public string SalesReasonIDEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesOrderID()
-                {
-                        return this.ShouldSerializeSalesOrderIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeSalesReasonIDValue { get; set; } = true;
-
-                public bool ShouldSerializeSalesReasonID()
-                {
-                        return this.ShouldSerializeSalesReasonIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeSalesOrderIDValue = false;
-                        this.ShouldSerializeSalesReasonIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>54392b829c0b15411013ba9ca7383b91</Hash>
+    <Hash>700438621ce5b85ab1e51c11e79f2be9</Hash>
 </Codenesium>*/

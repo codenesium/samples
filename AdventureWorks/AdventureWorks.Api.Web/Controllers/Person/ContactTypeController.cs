@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/contactTypes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ContactTypeController : AbstractContactTypeController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8dbf6c2d5404f1cd99159d9e52175ced</Hash>
+    <Hash>ba80f996c0ab29b80b2f43d99744c474</Hash>
 </Codenesium>*/

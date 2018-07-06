@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/events")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class EventController : AbstractEventController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b41119dd938d8cb3ffd799b61bf8d859</Hash>
+    <Hash>e814595ac583a06f58af3a3e5f45b09e</Hash>
 </Codenesium>*/

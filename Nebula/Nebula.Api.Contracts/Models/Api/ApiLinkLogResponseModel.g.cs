@@ -31,49 +31,9 @@ namespace NebulaNS.Api.Contracts
                 public string LinkIdEntity { get; set; }
 
                 public string Log { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDateEnteredValue { get; set; } = true;
-
-                public bool ShouldSerializeDateEntered()
-                {
-                        return this.ShouldSerializeDateEnteredValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLinkIdValue { get; set; } = true;
-
-                public bool ShouldSerializeLinkId()
-                {
-                        return this.ShouldSerializeLinkIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLogValue { get; set; } = true;
-
-                public bool ShouldSerializeLog()
-                {
-                        return this.ShouldSerializeLogValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDateEnteredValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLinkIdValue = false;
-                        this.ShouldSerializeLogValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5092f2139ee70682237165e9f88de4f3</Hash>
+    <Hash>4821cecafdcfaff7a12226a632d590ba</Hash>
 </Codenesium>*/

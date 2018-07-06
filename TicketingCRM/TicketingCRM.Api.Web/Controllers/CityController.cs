@@ -13,6 +13,7 @@ using TicketingCRMNS.Api.Services;
 namespace TicketingCRMNS.Api.Web
 {
         [Route("api/cities")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class CityController : AbstractCityController
         {
@@ -37,5 +38,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da0de1318dc84eb9ba608bc55c827fc5</Hash>
+    <Hash>dcc0dbbe7e6dadcd95dd05dda0e210a6</Hash>
 </Codenesium>*/

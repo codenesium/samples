@@ -35,67 +35,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public string RelatedDocumentIds { get; private set; }
 
                 public int Version { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIsFrozenValue { get; set; } = true;
-
-                public bool ShouldSerializeIsFrozen()
-                {
-                        return this.ShouldSerializeIsFrozenValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeJSONValue { get; set; } = true;
-
-                public bool ShouldSerializeJSON()
-                {
-                        return this.ShouldSerializeJSONValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeOwnerIdValue { get; set; } = true;
-
-                public bool ShouldSerializeOwnerId()
-                {
-                        return this.ShouldSerializeOwnerIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRelatedDocumentIdsValue { get; set; } = true;
-
-                public bool ShouldSerializeRelatedDocumentIds()
-                {
-                        return this.ShouldSerializeRelatedDocumentIdsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeVersionValue { get; set; } = true;
-
-                public bool ShouldSerializeVersion()
-                {
-                        return this.ShouldSerializeVersionValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeIsFrozenValue = false;
-                        this.ShouldSerializeJSONValue = false;
-                        this.ShouldSerializeOwnerIdValue = false;
-                        this.ShouldSerializeRelatedDocumentIdsValue = false;
-                        this.ShouldSerializeVersionValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b2f0152a3efb0c3c1af1b1d23f390abb</Hash>
+    <Hash>c7a56c5b89a93ed8a3363dccd6424702</Hash>
 </Codenesium>*/

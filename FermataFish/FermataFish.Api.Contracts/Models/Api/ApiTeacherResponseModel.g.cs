@@ -43,76 +43,9 @@ namespace FermataFishNS.Api.Contracts
                 public int StudioId { get; private set; }
 
                 public string StudioIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeBirthdayValue { get; set; } = true;
-
-                public bool ShouldSerializeBirthday()
-                {
-                        return this.ShouldSerializeBirthdayValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeEmailValue { get; set; } = true;
-
-                public bool ShouldSerializeEmail()
-                {
-                        return this.ShouldSerializeEmailValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeFirstNameValue { get; set; } = true;
-
-                public bool ShouldSerializeFirstName()
-                {
-                        return this.ShouldSerializeFirstNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeLastNameValue { get; set; } = true;
-
-                public bool ShouldSerializeLastName()
-                {
-                        return this.ShouldSerializeLastNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePhoneValue { get; set; } = true;
-
-                public bool ShouldSerializePhone()
-                {
-                        return this.ShouldSerializePhoneValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStudioIdValue { get; set; } = true;
-
-                public bool ShouldSerializeStudioId()
-                {
-                        return this.ShouldSerializeStudioIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeBirthdayValue = false;
-                        this.ShouldSerializeEmailValue = false;
-                        this.ShouldSerializeFirstNameValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeLastNameValue = false;
-                        this.ShouldSerializePhoneValue = false;
-                        this.ShouldSerializeStudioIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e8c1679d94f5cdf0c414a48e418de901</Hash>
+    <Hash>b941fea6c81c96539a996e247fdc6493</Hash>
 </Codenesium>*/

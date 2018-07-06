@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/apiKeys")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ApiKeyController : AbstractApiKeyController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>55689721858ea68dea1ee239e0adf72e</Hash>
+    <Hash>b783dbb42231b4ad614e29334af0f782</Hash>
 </Codenesium>*/

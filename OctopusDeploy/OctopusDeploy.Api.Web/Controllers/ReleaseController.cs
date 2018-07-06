@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/releases")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ReleaseController : AbstractReleaseController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7c21478c7ad62ce0972406dc7ae07e1d</Hash>
+    <Hash>39c19a9bc0af81218813d2408799af55</Hash>
 </Codenesium>*/

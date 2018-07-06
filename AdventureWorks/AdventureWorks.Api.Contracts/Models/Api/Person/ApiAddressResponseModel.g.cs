@@ -43,85 +43,9 @@ namespace AdventureWorksNS.Api.Contracts
                 public Guid Rowguid { get; private set; }
 
                 public int StateProvinceID { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAddressIDValue { get; set; } = true;
-
-                public bool ShouldSerializeAddressID()
-                {
-                        return this.ShouldSerializeAddressIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAddressLine1Value { get; set; } = true;
-
-                public bool ShouldSerializeAddressLine1()
-                {
-                        return this.ShouldSerializeAddressLine1Value;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeAddressLine2Value { get; set; } = true;
-
-                public bool ShouldSerializeAddressLine2()
-                {
-                        return this.ShouldSerializeAddressLine2Value;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCityValue { get; set; } = true;
-
-                public bool ShouldSerializeCity()
-                {
-                        return this.ShouldSerializeCityValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePostalCodeValue { get; set; } = true;
-
-                public bool ShouldSerializePostalCode()
-                {
-                        return this.ShouldSerializePostalCodeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-                public bool ShouldSerializeRowguid()
-                {
-                        return this.ShouldSerializeRowguidValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
-
-                public bool ShouldSerializeStateProvinceID()
-                {
-                        return this.ShouldSerializeStateProvinceIDValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeAddressIDValue = false;
-                        this.ShouldSerializeAddressLine1Value = false;
-                        this.ShouldSerializeAddressLine2Value = false;
-                        this.ShouldSerializeCityValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializePostalCodeValue = false;
-                        this.ShouldSerializeRowguidValue = false;
-                        this.ShouldSerializeStateProvinceIDValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bd52d9e1406fcc4d8a6678ea26e1b548</Hash>
+    <Hash>ab8e45fddfe20eb0428cac261c547bb2</Hash>
 </Codenesium>*/

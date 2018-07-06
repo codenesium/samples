@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/productPhotoes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProductPhotoController : AbstractProductPhotoController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fd7085f5c51482787012fda75bc0b3cf</Hash>
+    <Hash>7223d59b78601f0c82eaf194eca148e0</Hash>
 </Codenesium>*/

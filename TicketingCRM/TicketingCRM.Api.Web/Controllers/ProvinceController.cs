@@ -13,6 +13,7 @@ using TicketingCRMNS.Api.Services;
 namespace TicketingCRMNS.Api.Web
 {
         [Route("api/provinces")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ProvinceController : AbstractProvinceController
         {
@@ -37,5 +38,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>29d617c082139492676035cf408819fd</Hash>
+    <Hash>270584cca29871c17aeb20f6cd1dd9f2</Hash>
 </Codenesium>*/

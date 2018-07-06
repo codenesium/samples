@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/mutexes")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class MutexController : AbstractMutexController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>412c6c9ec3ac73597db6f6266b8f106d</Hash>
+    <Hash>5e65f9bbf2ef09d1bccd11a519d03529</Hash>
 </Codenesium>*/

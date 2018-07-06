@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/channels")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ChannelController : AbstractChannelController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>94e4799a277cb1ace7c870ceca25d901</Hash>
+    <Hash>7ab8dcab568a549d1cfce1aa0680a8d9</Hash>
 </Codenesium>*/

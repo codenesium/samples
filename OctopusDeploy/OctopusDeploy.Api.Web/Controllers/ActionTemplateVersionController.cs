@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/actionTemplateVersions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class ActionTemplateVersionController : AbstractActionTemplateVersionController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bb31033c87818f20746002ac6129fd9c</Hash>
+    <Hash>88f29b7ea2a3da33201074a906bd378e</Hash>
 </Codenesium>*/

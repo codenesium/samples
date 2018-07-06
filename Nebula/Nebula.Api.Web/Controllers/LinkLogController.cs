@@ -13,6 +13,7 @@ using System.Linq;
 namespace NebulaNS.Api.Web
 {
         [Route("api/linkLogs")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class LinkLogController : AbstractLinkLogController
         {
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>357f8e3c979047e508272e1ae2f878c2</Hash>
+    <Hash>39884c90b6de5ec97ed826670421e456</Hash>
 </Codenesium>*/

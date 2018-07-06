@@ -13,6 +13,7 @@ using System.Linq;
 namespace PetShippingNS.Api.Web
 {
         [Route("api/destinations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DestinationController : AbstractDestinationController
         {
@@ -37,5 +38,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85a7e4e68371ccf49643fa61fd6932ae</Hash>
+    <Hash>06488fcdefc6bab90c49a89a1cc20b3a</Hash>
 </Codenesium>*/

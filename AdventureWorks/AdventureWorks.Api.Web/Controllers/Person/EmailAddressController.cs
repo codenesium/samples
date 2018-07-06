@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/emailAddresses")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class EmailAddressController : AbstractEmailAddressController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c765a0e43edecd246e7b7576df2cf99d</Hash>
+    <Hash>7f8cd56b482dffcbc02bf9e8912d6f47</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesTaxRates")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class SalesTaxRateController : AbstractSalesTaxRateController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd5baa34296854d56b8fd4abd1e2d5c1</Hash>
+    <Hash>7c703487f9c7a1a5af7e50ca7ad2bfba</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ using System.Linq;
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/keyAllocations")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class KeyAllocationController : AbstractKeyAllocationController
         {
@@ -37,5 +38,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>953e94f3f0e4f77d8c75b03e10a02a18</Hash>
+    <Hash>41fc42eaaaaccfba72ebef29ef71976f</Hash>
 </Codenesium>*/

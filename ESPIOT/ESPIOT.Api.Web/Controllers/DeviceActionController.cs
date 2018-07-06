@@ -13,6 +13,7 @@ using System.Linq;
 namespace ESPIOTNS.Api.Web
 {
         [Route("api/deviceActions")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class DeviceActionController : AbstractDeviceActionController
         {
@@ -37,5 +38,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ca121b2a84b82f55b4317b5b96af57bf</Hash>
+    <Hash>a2b291553052814b754d84c37d0dc4a8</Hash>
 </Codenesium>*/

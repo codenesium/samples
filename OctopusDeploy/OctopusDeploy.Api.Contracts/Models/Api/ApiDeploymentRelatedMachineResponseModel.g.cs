@@ -27,40 +27,9 @@ namespace OctopusDeployNS.Api.Contracts
                 public int Id { get; private set; }
 
                 public string MachineId { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDeploymentIdValue { get; set; } = true;
-
-                public bool ShouldSerializeDeploymentId()
-                {
-                        return this.ShouldSerializeDeploymentIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeMachineIdValue { get; set; } = true;
-
-                public bool ShouldSerializeMachineId()
-                {
-                        return this.ShouldSerializeMachineIdValue;
-                }
-
-                public virtual void DisableAllFields()
-                {
-                        this.ShouldSerializeDeploymentIdValue = false;
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeMachineIdValue = false;
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cda60b6578dd890abc97f62e7f533d61</Hash>
+    <Hash>d694bd57dfea4fb6d2b2e4e94292a342</Hash>
 </Codenesium>*/

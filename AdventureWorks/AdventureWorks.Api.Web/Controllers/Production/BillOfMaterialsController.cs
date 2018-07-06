@@ -13,6 +13,7 @@ using System.Linq;
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/billOfMaterials")]
+        [ApiController]
         [ApiVersion("1.0")]
         public class BillOfMaterialsController : AbstractBillOfMaterialsController
         {
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e77363af84b01c8209cfeb5bb2459c0</Hash>
+    <Hash>37c6b43655acd9985901e2d3689bdb88</Hash>
 </Codenesium>*/
