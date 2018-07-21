@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<INuGetPackageRepository>();
                         var model = new ApiNuGetPackageRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<NuGetPackage>())).Returns(Task.FromResult(new NuGetPackage()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
                         var service = new NuGetPackageService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.NuGetPackageModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLNuGetPackageMapperMock,
                                                               mock.DALMapperMockFactory.DALNuGetPackageMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiNuGetPackageResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.NuGetPackageModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiNuGetPackageRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8269035b792a70d73d4eaf53ff74f5d6</Hash>
+    <Hash>95e5670cb7d7058e2950e453139274dd</Hash>
 </Codenesium>*/

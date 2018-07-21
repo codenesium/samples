@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCreditCardResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardRequestModel model)
                 {
                         CreateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCreditCardResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCreditCardRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiCreditCardRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CreditCardService.Update(id, model);
+                                UpdateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCreditCardResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardRequestModel model)
                 {
-                        ApiCreditCardRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCreditCardRequestModel request = await this.PatchModel(id, this.CreditCardModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CreditCardService.Update(id, request);
+                                UpdateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -252,17 +248,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCreditCardRequestModel>();
-                        patch.Replace(x => x.CardNumber, model.CardNumber);
-                        patch.Replace(x => x.CardType, model.CardType);
-                        patch.Replace(x => x.ExpMonth, model.ExpMonth);
-                        patch.Replace(x => x.ExpYear, model.ExpYear);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        return patch;
-                }
-
                 private async Task<ApiCreditCardRequestModel> PatchModel(int id, JsonPatchDocument<ApiCreditCardRequestModel> patch)
                 {
                         var record = await this.CreditCardService.Get(id);
@@ -282,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ad5bb275043dbf69815c1a83138a9852</Hash>
+    <Hash>f890fb9434f394c586ba605fd43c9028</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostTypesResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPostTypesResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPostTypesRequestModel model)
                 {
                         CreateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostTypes/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostTypes/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostTypesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostTypesRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiPostTypesRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PostTypesService.Update(id, model);
+                                UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPostTypesResponseModel response = await this.PostTypesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostTypesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostTypesRequestModel model)
                 {
-                        ApiPostTypesRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPostTypesRequestModel request = await this.PatchModel(id, this.PostTypesModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PostTypesService.Update(id, request);
+                                UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPostTypesResponseModel response = await this.PostTypesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,13 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiPostTypesRequestModel> CreatePatch(ApiPostTypesRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPostTypesRequestModel>();
-                        patch.Replace(x => x.Type, model.Type);
-                        return patch;
-                }
-
                 private async Task<ApiPostTypesRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostTypesRequestModel> patch)
                 {
                         var record = await this.PostTypesService.Get(id);
@@ -231,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9f3baff943d77c68c0d4f9dbbf691103</Hash>
+    <Hash>518d8766ff654f4af5dc6572454902b6</Hash>
 </Codenesium>*/

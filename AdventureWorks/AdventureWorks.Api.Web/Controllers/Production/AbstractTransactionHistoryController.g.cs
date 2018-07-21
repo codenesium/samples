@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTransactionHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryRequestModel model)
                 {
                         CreateResponse<ApiTransactionHistoryResponseModel> result = await this.TransactionHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistories/{result.Record.TransactionID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistories/{result.Record.TransactionID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiTransactionHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TransactionHistoryService.Update(id, model);
+                                UpdateResponse<ApiTransactionHistoryResponseModel> result = await this.TransactionHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionHistoryResponseModel response = await this.TransactionHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryRequestModel model)
                 {
-                        ApiTransactionHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTransactionHistoryRequestModel request = await this.PatchModel(id, this.TransactionHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TransactionHistoryService.Update(id, request);
+                                UpdateResponse<ApiTransactionHistoryResponseModel> result = await this.TransactionHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionHistoryResponseModel response = await this.TransactionHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,20 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTransactionHistoryRequestModel> CreatePatch(ApiTransactionHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTransactionHistoryRequestModel>();
-                        patch.Replace(x => x.ActualCost, model.ActualCost);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Quantity, model.Quantity);
-                        patch.Replace(x => x.ReferenceOrderID, model.ReferenceOrderID);
-                        patch.Replace(x => x.ReferenceOrderLineID, model.ReferenceOrderLineID);
-                        patch.Replace(x => x.TransactionDate, model.TransactionDate);
-                        patch.Replace(x => x.TransactionType, model.TransactionType);
-                        return patch;
-                }
-
                 private async Task<ApiTransactionHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryRequestModel> patch)
                 {
                         var record = await this.TransactionHistoryService.Get(id);
@@ -260,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c439d404610a375d2789a81d9e9242b9</Hash>
+    <Hash>a9bb6de29b9f896228a45f41d3e31e72</Hash>
 </Codenesium>*/

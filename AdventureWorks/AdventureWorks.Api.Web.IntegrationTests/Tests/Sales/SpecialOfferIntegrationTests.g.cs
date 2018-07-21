@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "SpecialOffer")]
         [Trait("Area", "Integration")]
-        public class SpecialOfferIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class SpecialOfferIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public SpecialOfferIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiSpecialOfferModelMapper mapper = new ApiSpecialOfferModelMapper();
+
+                        UpdateResponse<ApiSpecialOfferResponseModel> updateResponse = await this.Client.SpecialOfferUpdateAsync(model.SpecialOfferID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.SpecialOfferDeleteAsync(model.SpecialOfferID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiSpecialOfferResponseModel response = await this.Client.SpecialOfferGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiSpecialOfferResponseModel> response = await this.Client.SpecialOfferAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiSpecialOfferResponseModel> CreateRecord()
+                {
+                        var model = new ApiSpecialOfferRequestModel();
+                        model.SetProperties("B", "B", 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+                        CreateResponse<ApiSpecialOfferResponseModel> result = await this.Client.SpecialOfferCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.SpecialOfferDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>09d1ecb23892c9ef32a4a1eb7e620e90</Hash>
+    <Hash>529286ec50c4d296565c63dad4b8e382</Hash>
 </Codenesium>*/

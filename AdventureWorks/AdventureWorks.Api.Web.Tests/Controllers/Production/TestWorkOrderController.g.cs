@@ -155,8 +155,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiWorkOrderResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiWorkOrderResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkOrderRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         WorkOrderControllerMockFacade mock = new WorkOrderControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiWorkOrderResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>()))
                         .Callback<int, ApiWorkOrderRequestModel>(
                                 (id, model) => model.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiWorkOrderResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiWorkOrderResponseModel>(new ApiWorkOrderResponseModel()));
                         WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkOrderModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         WorkOrderControllerMockFacade mock = new WorkOrderControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiWorkOrderResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkOrderResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiWorkOrderResponseModel()));
                         WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkOrderModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         WorkOrderControllerMockFacade mock = new WorkOrderControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiWorkOrderResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkOrderResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiWorkOrderResponseModel()));
                         WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkOrderModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         WorkOrderControllerMockFacade mock = new WorkOrderControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiWorkOrderResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkOrderResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiWorkOrderResponseModel>(null));
                         WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkOrderModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>b5b7ddcea1fcb63114a9fa937e992d4d</Hash>
+    <Hash>4a5e06ad785a8c6b0088cef6580bc7be</Hash>
 </Codenesium>*/

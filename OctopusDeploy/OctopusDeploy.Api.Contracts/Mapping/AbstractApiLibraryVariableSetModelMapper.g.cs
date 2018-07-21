@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -29,9 +31,19 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.VariableSetId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiLibraryVariableSetRequestModel> CreatePatch(ApiLibraryVariableSetRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLibraryVariableSetRequestModel>();
+                        patch.Replace(x => x.ContentType, model.ContentType);
+                        patch.Replace(x => x.JSON, model.JSON);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.VariableSetId, model.VariableSetId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>34b18605b9e5d3ffe8ab5729c8510d2f</Hash>
+    <Hash>fd4a257bf46acba0c25f8caf598e9c8e</Hash>
 </Codenesium>*/

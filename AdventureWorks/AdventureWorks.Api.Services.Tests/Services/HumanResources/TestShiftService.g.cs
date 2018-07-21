@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IShiftRepository>();
                         var model = new ApiShiftRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Shift>())).Returns(Task.FromResult(new Shift()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
                         var service = new ShiftService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
                                                        mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiShiftResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftRequestModel>()));
@@ -262,5 +263,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>79b3d8115f5ace4bbf53072634c540a5</Hash>
+    <Hash>98b8f6ce5564b438f39a6c96023b52c9</Hash>
 </Codenesium>*/

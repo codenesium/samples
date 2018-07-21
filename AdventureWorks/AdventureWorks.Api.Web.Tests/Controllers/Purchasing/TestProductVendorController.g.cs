@@ -155,8 +155,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiProductVendorResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProductVendorResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductVendorRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         ProductVendorControllerMockFacade mock = new ProductVendorControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductVendorResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>()))
                         .Callback<int, ApiProductVendorRequestModel>(
                                 (id, model) => model.AverageLeadTime.Should().Be(1)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiProductVendorResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductVendorResponseModel>(new ApiProductVendorResponseModel()));
                         ProductVendorController controller = new ProductVendorController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductVendorModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         ProductVendorControllerMockFacade mock = new ProductVendorControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductVendorResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductVendorResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductVendorResponseModel()));
                         ProductVendorController controller = new ProductVendorController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductVendorModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         ProductVendorControllerMockFacade mock = new ProductVendorControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductVendorResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductVendorResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductVendorResponseModel()));
                         ProductVendorController controller = new ProductVendorController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductVendorModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         ProductVendorControllerMockFacade mock = new ProductVendorControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductVendorResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductVendorResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductVendorResponseModel>(null));
                         ProductVendorController controller = new ProductVendorController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductVendorModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>41c493187b29b2c3336725d6b7a0b638</Hash>
+    <Hash>795d94b0363300046b16ced2f79cdc0b</Hash>
 </Codenesium>*/

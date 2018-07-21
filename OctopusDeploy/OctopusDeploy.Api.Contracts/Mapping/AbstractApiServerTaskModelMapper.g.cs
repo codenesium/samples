@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -53,9 +55,31 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.TenantId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiServerTaskRequestModel> CreatePatch(ApiServerTaskRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiServerTaskRequestModel>();
+                        patch.Replace(x => x.CompletedTime, model.CompletedTime);
+                        patch.Replace(x => x.ConcurrencyTag, model.ConcurrencyTag);
+                        patch.Replace(x => x.Description, model.Description);
+                        patch.Replace(x => x.DurationSeconds, model.DurationSeconds);
+                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
+                        patch.Replace(x => x.ErrorMessage, model.ErrorMessage);
+                        patch.Replace(x => x.HasPendingInterruptions, model.HasPendingInterruptions);
+                        patch.Replace(x => x.HasWarningsOrErrors, model.HasWarningsOrErrors);
+                        patch.Replace(x => x.JSON, model.JSON);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.ProjectId, model.ProjectId);
+                        patch.Replace(x => x.QueueTime, model.QueueTime);
+                        patch.Replace(x => x.ServerNodeId, model.ServerNodeId);
+                        patch.Replace(x => x.StartTime, model.StartTime);
+                        patch.Replace(x => x.State, model.State);
+                        patch.Replace(x => x.TenantId, model.TenantId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba65d278860d84f928e547b74817b2ef</Hash>
+    <Hash>91e8a29261649723a2472376c4646d7f</Hash>
 </Codenesium>*/

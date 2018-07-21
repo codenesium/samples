@@ -32,119 +32,35 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StateProvinceID = stateProvinceID;
                 }
 
-                private string addressLine1;
+                [Required]
+                [JsonProperty]
+                public string AddressLine1 { get; private set; }
+
+                [JsonProperty]
+                public string AddressLine2 { get; private set; }
 
                 [Required]
-                public string AddressLine1
-                {
-                        get
-                        {
-                                return this.addressLine1;
-                        }
-
-                        set
-                        {
-                                this.addressLine1 = value;
-                        }
-                }
-
-                private string addressLine2;
-
-                public string AddressLine2
-                {
-                        get
-                        {
-                                return this.addressLine2;
-                        }
-
-                        set
-                        {
-                                this.addressLine2 = value;
-                        }
-                }
-
-                private string city;
+                [JsonProperty]
+                public string City { get; private set; }
 
                 [Required]
-                public string City
-                {
-                        get
-                        {
-                                return this.city;
-                        }
-
-                        set
-                        {
-                                this.city = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string postalCode;
+                [JsonProperty]
+                public string PostalCode { get; private set; }
 
                 [Required]
-                public string PostalCode
-                {
-                        get
-                        {
-                                return this.postalCode;
-                        }
-
-                        set
-                        {
-                                this.postalCode = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private int stateProvinceID;
-
-                [Required]
-                public int StateProvinceID
-                {
-                        get
-                        {
-                                return this.stateProvinceID;
-                        }
-
-                        set
-                        {
-                                this.stateProvinceID = value;
-                        }
-                }
+                [JsonProperty]
+                public int StateProvinceID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1da42cbc017a24637394ee59a92bdd9b</Hash>
+    <Hash>28a762d0f89a975447792871c7e78c85</Hash>
 </Codenesium>*/

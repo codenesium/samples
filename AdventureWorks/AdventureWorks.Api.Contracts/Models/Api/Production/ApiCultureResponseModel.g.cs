@@ -18,14 +18,17 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [JsonProperty]
                 public string CultureID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>71a3d60e2e5aea773a55bb25ddfa98e2</Hash>
+    <Hash>e13324eb034685ea3916f394534fa529</Hash>
 </Codenesium>*/

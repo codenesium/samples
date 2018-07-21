@@ -26,72 +26,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.RateChangeDate = rateChangeDate;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int payFrequency;
+                [JsonProperty]
+                public int PayFrequency { get; private set; }
 
                 [Required]
-                public int PayFrequency
-                {
-                        get
-                        {
-                                return this.payFrequency;
-                        }
-
-                        set
-                        {
-                                this.payFrequency = value;
-                        }
-                }
-
-                private decimal rate;
+                [JsonProperty]
+                public decimal Rate { get; private set; }
 
                 [Required]
-                public decimal Rate
-                {
-                        get
-                        {
-                                return this.rate;
-                        }
-
-                        set
-                        {
-                                this.rate = value;
-                        }
-                }
-
-                private DateTime rateChangeDate;
-
-                [Required]
-                public DateTime RateChangeDate
-                {
-                        get
-                        {
-                                return this.rateChangeDate;
-                        }
-
-                        set
-                        {
-                                this.rateChangeDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime RateChangeDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b417133e40453edc074bddabdb0d808f</Hash>
+    <Hash>219b67871e0d4848d92c6744b02e5fb1</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace NebulaNS.Api.Contracts
 
                 ApiVersionInfoRequestModel MapResponseToRequest(
                         ApiVersionInfoResponseModel response);
+
+                JsonPatchDocument<ApiVersionInfoRequestModel> CreatePatch(ApiVersionInfoRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>626ef1a09e0d45109c1c7d8ebc744013</Hash>
+    <Hash>5b20e4203dc7a746a3b5483b157f7e3d</Hash>
 </Codenesium>*/

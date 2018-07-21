@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICommentsRepository>();
                         var model = new ApiCommentsRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Comments>())).Returns(Task.FromResult(new Comments()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Comments()));
                         var service = new CommentsService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.CommentsModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLCommentsMapperMock,
                                                           mock.DALMapperMockFactory.DALCommentsMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCommentsResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CommentsModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCommentsRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9fb5a61eba5b018525fba7fad391df0d</Hash>
+    <Hash>7ad20b5140ed5e6ecd258a35dc5f0682</Hash>
 </Codenesium>*/

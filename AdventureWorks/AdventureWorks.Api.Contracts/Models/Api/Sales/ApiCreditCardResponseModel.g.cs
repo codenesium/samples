@@ -24,20 +24,26 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
+                [JsonProperty]
                 public string CardNumber { get; private set; }
 
+                [JsonProperty]
                 public string CardType { get; private set; }
 
+                [JsonProperty]
                 public int CreditCardID { get; private set; }
 
+                [JsonProperty]
                 public int ExpMonth { get; private set; }
 
+                [JsonProperty]
                 public short ExpYear { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a7f34da8dddf4bebd78ad1ffb2fc7dc2</Hash>
+    <Hash>7e4fd3a5d41cbc634ef69eca45f5f224</Hash>
 </Codenesium>*/

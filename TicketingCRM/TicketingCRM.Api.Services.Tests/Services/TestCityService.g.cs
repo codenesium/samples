@@ -105,6 +105,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICityRepository>();
                         var model = new ApiCityRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<City>())).Returns(Task.FromResult(new City()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
                         var service = new CityService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                       mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCityResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>()));
@@ -224,5 +225,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a0c36f739ee820c27b7fcf81cdac7d1</Hash>
+    <Hash>a606284212cab8e2bf13293b961d4237</Hash>
 </Codenesium>*/

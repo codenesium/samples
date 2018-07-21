@@ -30,104 +30,32 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Shelf = shelf;
                 }
 
-                private int bin;
+                [Required]
+                [JsonProperty]
+                public int Bin { get; private set; }
 
                 [Required]
-                public int Bin
-                {
-                        get
-                        {
-                                return this.bin;
-                        }
-
-                        set
-                        {
-                                this.bin = value;
-                        }
-                }
-
-                private short locationID;
+                [JsonProperty]
+                public short LocationID { get; private set; }
 
                 [Required]
-                public short LocationID
-                {
-                        get
-                        {
-                                return this.locationID;
-                        }
-
-                        set
-                        {
-                                this.locationID = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private short quantity;
+                [JsonProperty]
+                public short Quantity { get; private set; }
 
                 [Required]
-                public short Quantity
-                {
-                        get
-                        {
-                                return this.quantity;
-                        }
-
-                        set
-                        {
-                                this.quantity = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private string shelf;
-
-                [Required]
-                public string Shelf
-                {
-                        get
-                        {
-                                return this.shelf;
-                        }
-
-                        set
-                        {
-                                this.shelf = value;
-                        }
-                }
+                [JsonProperty]
+                public string Shelf { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>41eca7f2da9222898865cc58e9f017a0</Hash>
+    <Hash>7004aff7c0dfb9fe3f46f4d8ac950c7d</Hash>
 </Codenesium>*/

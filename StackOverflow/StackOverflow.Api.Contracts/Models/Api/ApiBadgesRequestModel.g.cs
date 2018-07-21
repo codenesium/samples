@@ -24,56 +24,17 @@ namespace StackOverflowNS.Api.Contracts
                         this.UserId = userId;
                 }
 
-                private DateTime date;
+                [JsonProperty]
+                public DateTime Date { get; private set; }
 
-                [Required]
-                public DateTime Date
-                {
-                        get
-                        {
-                                return this.date;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.date = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int userId;
-
-                [Required]
-                public int UserId
-                {
-                        get
-                        {
-                                return this.userId;
-                        }
-
-                        set
-                        {
-                                this.userId = value;
-                        }
-                }
+                [JsonProperty]
+                public int UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4d117fc761f943842a5335f12816f220</Hash>
+    <Hash>5379604534403e51ca08deaded487216</Hash>
 </Codenesium>*/

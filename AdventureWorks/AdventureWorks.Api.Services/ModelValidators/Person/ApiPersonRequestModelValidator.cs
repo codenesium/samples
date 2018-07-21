@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services
                 public async Task<ValidationResult> ValidateCreateAsync(ApiPersonRequestModel model)
                 {
                         this.AdditionalContactInfoRules();
-                        this.DemographicsRules();
+                        this.DemographicRules();
                         this.EmailPromotionRules();
                         this.FirstNameRules();
                         this.LastNameRules();
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonRequestModel model)
                 {
                         this.AdditionalContactInfoRules();
-                        this.DemographicsRules();
+                        this.DemographicRules();
                         this.EmailPromotionRules();
                         this.FirstNameRules();
                         this.LastNameRules();
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f234740ef415d68f6fb66a7192dd04a</Hash>
+    <Hash>433ca1a48baf06b0326dbc001bb8e147</Hash>
 </Codenesium>*/

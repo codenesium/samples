@@ -105,6 +105,7 @@ namespace FileServiceNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IFileTypeRepository>();
                         var model = new ApiFileTypeRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<FileType>())).Returns(Task.FromResult(new FileType()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new FileType()));
                         var service = new FileTypeService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.FileTypeModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                           mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiFileTypeResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.FileTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileTypeRequestModel>()));
@@ -184,5 +185,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5e7b357132986f6011a2658390b3f5b3</Hash>
+    <Hash>7a746ea4546874766d9543ff3d6c4a03</Hash>
 </Codenesium>*/

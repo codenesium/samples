@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
                         var model = new ApiAWBuildVersionRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AWBuildVersion>())).Returns(Task.FromResult(new AWBuildVersion()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
                         var service = new AWBuildVersionService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
                                                                 mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiAWBuildVersionResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6c9dec288037bc3813166949eb43b903</Hash>
+    <Hash>ceaa206f7c473bcd4ca034bfeac82eca</Hash>
 </Codenesium>*/

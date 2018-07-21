@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Update(
                         int businessEntityID,
                         ApiSalesPersonQuotaHistoryRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.salesPersonQuotaHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.salesPersonQuotaHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolSalesPersonQuotaHistoryMapper.MapModelToBO(businessEntityID, model);
                                 await this.salesPersonQuotaHistoryRepository.Update(this.dalSalesPersonQuotaHistoryMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>(this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ed61d8ac6722c9a6202fa090680d6b70</Hash>
+    <Hash>66721cc9b882c61bab6a0ae7ab6434ff</Hash>
 </Codenesium>*/

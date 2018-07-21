@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Create_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
-                }
-
-                [Fact]
-                public async void Email_Update_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
-                }
-
-                [Fact]
                 public async void Email_Create_length()
                 {
                         Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
@@ -70,30 +46,6 @@ namespace PetShippingNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Create_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
-                }
-
-                [Fact]
-                public async void FirstName_Update_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
 
                 [Fact]
@@ -121,30 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Create_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
-                }
-
-                [Fact]
-                public async void LastName_Update_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
-                }
-
-                [Fact]
                 public async void LastName_Create_length()
                 {
                         Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
@@ -166,30 +94,6 @@ namespace PetShippingNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Phone_Create_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
-                }
-
-                [Fact]
-                public async void Phone_Update_null()
-                {
-                        Mock<IHandlerRepository> handlerRepository = new Mock<IHandlerRepository>();
-                        handlerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
-
-                        var validator = new ApiHandlerRequestModelValidator(handlerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
 
                 [Fact]
@@ -219,5 +123,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>319f26c1644113f1c4d0aca4fd32f04f</Hash>
+    <Hash>55865d4dfaf515bc616fe406c4a4eda9</Hash>
 </Codenesium>*/

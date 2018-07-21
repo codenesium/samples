@@ -1,10 +1,12 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using OctopusDeployNS.Api.Client;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "UserRole")]
         [Trait("Area", "Integration")]
-        public class UserRoleIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class UserRoleIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public UserRoleIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiUserRoleModelMapper mapper = new ApiUserRoleModelMapper();
+
+                        UpdateResponse<ApiUserRoleResponseModel> updateResponse = await this.Client.UserRoleUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.UserRoleDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiUserRoleResponseModel response = await this.Client.UserRoleGetAsync("A");
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiUserRoleResponseModel> response = await this.Client.UserRoleAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiUserRoleResponseModel> CreateRecord()
+                {
+                        var model = new ApiUserRoleRequestModel();
+                        model.SetProperties("B", "B");
+                        CreateResponse<ApiUserRoleResponseModel> result = await this.Client.UserRoleCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.UserRoleDeleteAsync("B");
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccca178197195b8f623235b8f79916d1</Hash>
+    <Hash>b665375ba4966484dd9b4ad983990fbc</Hash>
 </Codenesium>*/

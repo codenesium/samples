@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ReasonType = reasonType;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string reasonType;
-
-                [Required]
-                public string ReasonType
-                {
-                        get
-                        {
-                                return this.reasonType;
-                        }
-
-                        set
-                        {
-                                this.reasonType = value;
-                        }
-                }
+                [JsonProperty]
+                public string ReasonType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6f9c553e55855b6f4a35f8d56c516be1</Hash>
+    <Hash>bbe0c030bc5715cc6ff3e6606132f228</Hash>
 </Codenesium>*/

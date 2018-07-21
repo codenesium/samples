@@ -25,30 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Address1_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
-                }
-
-                [Fact]
-                public async void Address1_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
-                }
-
-                [Fact]
                 public async void Address1_Create_length()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -70,30 +46,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Address2_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
-                }
-
-                [Fact]
-                public async void Address2_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
                 }
 
                 [Fact]
@@ -121,30 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void City_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
-                }
-
-                [Fact]
-                public async void City_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
-                }
-
-                [Fact]
                 public async void City_Create_length()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -166,30 +94,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -267,30 +171,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Website_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
-                }
-
-                [Fact]
-                public async void Website_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
-                }
-
-                [Fact]
                 public async void Website_Create_length()
                 {
                         Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
@@ -312,30 +192,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Zip_Create_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Zip, null as string);
-                }
-
-                [Fact]
-                public async void Zip_Update_null()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
-
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Zip, null as string);
                 }
 
                 [Fact]
@@ -365,5 +221,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>534f4a5514b3787d61cfdee4e0db4e20</Hash>
+    <Hash>c7d92794ec2a66cabac4793c949fbd46</Hash>
 </Codenesium>*/

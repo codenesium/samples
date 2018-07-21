@@ -155,8 +155,8 @@ namespace OctopusDeployNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiTenantVariableResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTenantVariableResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTenantVariableRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTenantVariableResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>()))
                         .Callback<string, ApiTenantVariableRequestModel>(
                                 (id, model) => model.EnvironmentId.Should().Be("A")
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiTenantVariableResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiTenantVariableResponseModel>(new ApiTenantVariableResponseModel()));
                         TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTenantVariableModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTenantVariableResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTenantVariableResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiTenantVariableResponseModel()));
                         TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTenantVariableModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTenantVariableResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTenantVariableResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiTenantVariableResponseModel()));
                         TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTenantVariableModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTenantVariableResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTenantVariableResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiTenantVariableResponseModel>(null));
                         TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTenantVariableModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>3bb10da1381031abbbddb97c0a8e2c5d</Hash>
+    <Hash>567106b30b3816b83b78f434f03d914e</Hash>
 </Codenesium>*/

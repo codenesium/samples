@@ -155,8 +155,8 @@ namespace PetShippingNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiAirlineResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiAirlineResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirlineRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         AirlineControllerMockFacade mock = new AirlineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiAirlineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>()))
                         .Callback<int, ApiAirlineRequestModel>(
                                 (id, model) => model.Name.Should().Be("A")
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiAirlineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirlineResponseModel>(new ApiAirlineResponseModel()));
                         AirlineController controller = new AirlineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirlineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         AirlineControllerMockFacade mock = new AirlineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiAirlineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirlineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirlineResponseModel()));
                         AirlineController controller = new AirlineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirlineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         AirlineControllerMockFacade mock = new AirlineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiAirlineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirlineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirlineResponseModel()));
                         AirlineController controller = new AirlineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirlineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         AirlineControllerMockFacade mock = new AirlineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiAirlineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirlineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirlineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirlineResponseModel>(null));
                         AirlineController controller = new AirlineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirlineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace PetShippingNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d689833042161431d1b5503fe3fdfcd</Hash>
+    <Hash>191bc473ba235b3b4e212128f2c8f737</Hash>
 </Codenesium>*/

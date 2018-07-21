@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ESPIOTNS.Api.DataAccess
 {
@@ -35,5 +36,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5f20838fcffd7d805de9042bd42db77</Hash>
+    <Hash>7dc4dcb30fd1469e3d2a21fd6101e8e4</Hash>
 </Codenesium>*/

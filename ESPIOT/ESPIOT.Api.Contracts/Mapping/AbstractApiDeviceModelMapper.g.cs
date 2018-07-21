@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Contracts
 {
@@ -25,9 +27,17 @@ namespace ESPIOTNS.Api.Contracts
                                 response.PublicId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.PublicId, model.PublicId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a49f94907c6a66d0ac3474acd39ffb7</Hash>
+    <Hash>c6a071c2d020ab012f3e595398e178d5</Hash>
 </Codenesium>*/

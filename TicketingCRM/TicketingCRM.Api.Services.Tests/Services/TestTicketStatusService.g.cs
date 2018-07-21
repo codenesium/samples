@@ -105,6 +105,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITicketStatusRepository>();
                         var model = new ApiTicketStatusRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TicketStatus>())).Returns(Task.FromResult(new TicketStatus()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
                         var service = new TicketStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.TicketStatusModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTicketMapperMock,
                                                               mock.DALMapperMockFactory.DALTicketMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTicketStatusResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TicketStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatusRequestModel>()));
@@ -184,5 +185,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c792993c08094df90b02cd2f55138e67</Hash>
+    <Hash>12ac039409d24804bded364a3137b14d</Hash>
 </Codenesium>*/

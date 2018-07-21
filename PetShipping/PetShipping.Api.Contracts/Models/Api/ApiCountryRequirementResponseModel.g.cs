@@ -20,16 +20,23 @@ namespace PetShippingNS.Api.Contracts
                         this.CountryIdEntity = nameof(ApiResponse.Countries);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int CountryId { get; private set; }
 
+                [JsonProperty]
                 public string CountryIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Details { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1df6f1506333f27d23c48a84c9de3185</Hash>
+    <Hash>a08b914921f98ac91f05b48f21642aad</Hash>
 </Codenesium>*/

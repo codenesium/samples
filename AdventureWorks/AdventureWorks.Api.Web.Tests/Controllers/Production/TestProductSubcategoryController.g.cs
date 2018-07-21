@@ -155,8 +155,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiProductSubcategoryResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProductSubcategoryResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductSubcategoryRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         ProductSubcategoryControllerMockFacade mock = new ProductSubcategoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductSubcategoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>()))
                         .Callback<int, ApiProductSubcategoryRequestModel>(
                                 (id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiProductSubcategoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductSubcategoryResponseModel>(new ApiProductSubcategoryResponseModel()));
                         ProductSubcategoryController controller = new ProductSubcategoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductSubcategoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         ProductSubcategoryControllerMockFacade mock = new ProductSubcategoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductSubcategoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductSubcategoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductSubcategoryResponseModel()));
                         ProductSubcategoryController controller = new ProductSubcategoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductSubcategoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         ProductSubcategoryControllerMockFacade mock = new ProductSubcategoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductSubcategoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductSubcategoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductSubcategoryResponseModel()));
                         ProductSubcategoryController controller = new ProductSubcategoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductSubcategoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         ProductSubcategoryControllerMockFacade mock = new ProductSubcategoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiProductSubcategoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductSubcategoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductSubcategoryResponseModel>(null));
                         ProductSubcategoryController controller = new ProductSubcategoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductSubcategoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>2afb11c83d424d5ea5118c49bfed0888</Hash>
+    <Hash>f51c2e56219d10f5e471eeca36770fef</Hash>
 </Codenesium>*/

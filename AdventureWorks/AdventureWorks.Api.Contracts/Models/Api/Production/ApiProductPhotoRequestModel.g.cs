@@ -28,84 +28,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
                 }
 
-                private byte[] largePhoto;
+                [JsonProperty]
+                public byte[] LargePhoto { get; private set; }
 
-                public byte[] LargePhoto
-                {
-                        get
-                        {
-                                return this.largePhoto;
-                        }
-
-                        set
-                        {
-                                this.largePhoto = value;
-                        }
-                }
-
-                private string largePhotoFileName;
-
-                public string LargePhotoFileName
-                {
-                        get
-                        {
-                                return this.largePhotoFileName;
-                        }
-
-                        set
-                        {
-                                this.largePhotoFileName = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string LargePhotoFileName { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public byte[] ThumbNailPhoto { get; private set; }
 
-                private byte[] thumbNailPhoto;
-
-                public byte[] ThumbNailPhoto
-                {
-                        get
-                        {
-                                return this.thumbNailPhoto;
-                        }
-
-                        set
-                        {
-                                this.thumbNailPhoto = value;
-                        }
-                }
-
-                private string thumbnailPhotoFileName;
-
-                public string ThumbnailPhotoFileName
-                {
-                        get
-                        {
-                                return this.thumbnailPhotoFileName;
-                        }
-
-                        set
-                        {
-                                this.thumbnailPhotoFileName = value;
-                        }
-                }
+                [JsonProperty]
+                public string ThumbnailPhotoFileName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d83defbe5438bb79b14c784c0bebddf0</Hash>
+    <Hash>063432b38335c02c4eacecbda404b045</Hash>
 </Codenesium>*/

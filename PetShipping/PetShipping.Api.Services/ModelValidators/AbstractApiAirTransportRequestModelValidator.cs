@@ -28,7 +28,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void FlightNumberRules()
                 {
-                        this.RuleFor(x => x.FlightNumber).NotNull();
                         this.RuleFor(x => x.FlightNumber).Length(0, 12);
                 }
 
@@ -63,5 +62,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>578cadbce627254de754c3498727f8c0</Hash>
+    <Hash>2aecf422ff4f0306606ae28c2d36a7e7</Hash>
 </Codenesium>*/

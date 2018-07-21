@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiKeyAllocationResponseModel>> Create(
                         ApiKeyAllocationRequestModel model);
 
-                Task<ActionResponse> Update(string collectionName,
-                                            ApiKeyAllocationRequestModel model);
+                Task<UpdateResponse<ApiKeyAllocationResponseModel>> Update(string collectionName,
+                                                                            ApiKeyAllocationRequestModel model);
 
                 Task<ActionResponse> Delete(string collectionName);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c718dc2d658d5aadefc44e1202a32317</Hash>
+    <Hash>5e79493d3133ef3fdf75bbbeae4fb15f</Hash>
 </Codenesium>*/

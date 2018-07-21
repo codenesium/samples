@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IErrorLogRepository>();
                         var model = new ApiErrorLogRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ErrorLog>())).Returns(Task.FromResult(new ErrorLog()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
                         var service = new ErrorLogService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
                                                           mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiErrorLogResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>74cbc757207cb1b9b16549a8ce58fb57</Hash>
+    <Hash>340e874b2891eb81a492b462ec329e02</Hash>
 </Codenesium>*/

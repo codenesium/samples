@@ -40,7 +40,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void TextRules()
                 {
-                        this.RuleFor(x => x.Text).NotNull();
                         this.RuleFor(x => x.Text).Length(0, 700);
                 }
 
@@ -51,5 +50,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86fe725e8664f8b89ab161a78cee04dc</Hash>
+    <Hash>02c955e4c86545937e37b85995915aeb</Hash>
 </Codenesium>*/

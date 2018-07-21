@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
@@ -94,30 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectTriggerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void ProjectId_Create_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectId_Update_null()
-                {
-                        Mock<IProjectTriggerRepository> projectTriggerRepository = new Mock<IProjectTriggerRepository>();
-                        projectTriggerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
-
-                        var validator = new ApiProjectTriggerRequestModelValidator(projectTriggerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectTriggerRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
 
                 [Fact]
@@ -219,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aaafedca44ca73fc919ea305942594e1</Hash>
+    <Hash>759a31d07d20c25c8c9de2c0231f35bc</Hash>
 </Codenesium>*/

@@ -32,7 +32,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void LastSeenRules()
@@ -45,18 +44,16 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void RankRules()
                 {
-                        this.RuleFor(x => x.Rank).NotNull();
                         this.RuleFor(x => x.Rank).Length(0, 50);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>545aeee9db2c2d5fe99ff228709ed795</Hash>
+    <Hash>b95fd5b9dee361f14e395ef59dc92b53</Hash>
 </Codenesium>*/

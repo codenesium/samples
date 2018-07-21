@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductModelProductDescriptionCultureRepository>();
                         var model = new ApiProductModelProductDescriptionCultureRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductModelProductDescriptionCulture>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
                         var service = new ProductModelProductDescriptionCultureService(mock.LoggerMock.Object,
                                                                                        mock.RepositoryMock.Object,
                                                                                        mock.ModelValidatorMockFactory.ProductModelProductDescriptionCultureModelValidatorMock.Object,
                                                                                        mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                                                        mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductModelProductDescriptionCultureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductModelProductDescriptionCultureRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fb2e4b5a0ae33d16349c58d3065a23a2</Hash>
+    <Hash>48acb59cd265b8776c5c242cdf24d7f2</Hash>
 </Codenesium>*/

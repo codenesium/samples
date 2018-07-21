@@ -26,22 +26,36 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableTemplateId = variableTemplateId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string OwnerId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RelatedDocumentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string VariableTemplateId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2705aa81333485f312f52d5f64a0572a</Hash>
+    <Hash>70910f5b265ee6ac467cd98fc986a0be</Hash>
 </Codenesium>*/

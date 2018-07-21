@@ -22,40 +22,16 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SalesReasonID = salesReasonID;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int salesReasonID;
-
-                [Required]
-                public int SalesReasonID
-                {
-                        get
-                        {
-                                return this.salesReasonID;
-                        }
-
-                        set
-                        {
-                                this.salesReasonID = value;
-                        }
-                }
+                [JsonProperty]
+                public int SalesReasonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e04c2ade5257b9ba9530d26aa0942e10</Hash>
+    <Hash>00868cab4d4410e1774c871d6a38003d</Hash>
 </Codenesium>*/

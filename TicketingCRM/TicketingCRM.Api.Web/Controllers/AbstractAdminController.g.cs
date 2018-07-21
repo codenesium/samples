@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiAdminResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAdminRequestModel model)
                 {
                         CreateResponse<ApiAdminResponseModel> result = await this.AdminService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Admins/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Admins/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAdminRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiAdminRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.AdminService.Update(id, model);
+                                UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiAdminResponseModel response = await this.AdminService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminRequestModel model)
                 {
-                        ApiAdminRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiAdminRequestModel request = await this.PatchModel(id, this.AdminModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.AdminService.Update(id, request);
+                                UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiAdminResponseModel response = await this.AdminService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,18 +215,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiAdminRequestModel> CreatePatch(ApiAdminRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiAdminRequestModel>();
-                        patch.Replace(x => x.Email, model.Email);
-                        patch.Replace(x => x.FirstName, model.FirstName);
-                        patch.Replace(x => x.LastName, model.LastName);
-                        patch.Replace(x => x.Password, model.Password);
-                        patch.Replace(x => x.Phone, model.Phone);
-                        patch.Replace(x => x.Username, model.Username);
-                        return patch;
-                }
-
                 private async Task<ApiAdminRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminRequestModel> patch)
                 {
                         var record = await this.AdminService.Get(id);
@@ -250,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>868584fd508f23abbd38a4bc554c0e84</Hash>
+    <Hash>474ab40405e2938e3951a91aec583c8d</Hash>
 </Codenesium>*/

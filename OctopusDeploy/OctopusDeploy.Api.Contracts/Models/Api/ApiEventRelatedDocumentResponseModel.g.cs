@@ -20,16 +20,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.EventIdEntity = nameof(ApiResponse.Events);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string EventId { get; private set; }
 
+                [JsonProperty]
                 public string EventIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RelatedDocumentId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>aebf8077f764a9d4c57c8b71ad163285</Hash>
+    <Hash>cd0c99103e86884dfe9c6dd0d38b4ec6</Hash>
 </Codenesium>*/

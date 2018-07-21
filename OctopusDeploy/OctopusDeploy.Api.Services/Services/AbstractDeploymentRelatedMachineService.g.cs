@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>> Update(
                         int id,
                         ApiDeploymentRelatedMachineRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.deploymentRelatedMachineModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.deploymentRelatedMachineModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolDeploymentRelatedMachineMapper.MapModelToBO(id, model);
                                 await this.deploymentRelatedMachineRepository.Update(this.dalDeploymentRelatedMachineMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.deploymentRelatedMachineRepository.Get(id);
+
+                                return new UpdateResponse<ApiDeploymentRelatedMachineResponseModel>(this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiDeploymentRelatedMachineResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9f50974af9437b8b306feaf9d58c4e2</Hash>
+    <Hash>45958c4fb7141962d5edb166b624d2d6</Hash>
 </Codenesium>*/

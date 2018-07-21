@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -49,9 +50,31 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.JSON.Should().Be("A");
                         response.Username.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiUserModelMapper();
+                        var model = new ApiUserRequestModel();
+                        model.SetProperties("A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
+
+                        JsonPatchDocument<ApiUserRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiUserRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.DisplayName.Should().Be("A");
+                        response.EmailAddress.Should().Be("A");
+                        response.ExternalId.Should().Be("A");
+                        response.ExternalIdentifiers.Should().Be("A");
+                        response.IdentificationToken.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.IsActive.Should().Be(true);
+                        response.IsService.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.Username.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>037f07710eb6d300a8d96b0b8bf6c2db</Hash>
+    <Hash>dd36205e6876c3668f2479848bde42bf</Hash>
 </Codenesium>*/

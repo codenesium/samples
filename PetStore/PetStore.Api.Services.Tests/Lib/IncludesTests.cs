@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,5 +80,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9b7253b44eb6a2cbb8123faeca513770</Hash>
+    <Hash>12e4446a7503599427b0ed27b9dc202d</Hash>
 </Codenesium>*/

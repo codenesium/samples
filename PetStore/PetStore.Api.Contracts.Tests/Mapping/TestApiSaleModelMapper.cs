@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace PetStoreNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSaleModelMapper();
                         var model = new ApiSaleRequestModel();
-                        model.SetProperties(1, "A", "A", 1, 1, "A");
+                        model.SetProperties(1m, "A", "A", 1, 1, "A");
                         ApiSaleResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.LastName.Should().Be("A");
@@ -33,10 +34,29 @@ namespace PetStoreNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSaleModelMapper();
                         var model = new ApiSaleResponseModel();
-                        model.SetProperties(1, 1, "A", "A", 1, 1, "A");
+                        model.SetProperties(1, 1m, "A", "A", 1, 1, "A");
                         ApiSaleRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
+                        response.FirstName.Should().Be("A");
+                        response.LastName.Should().Be("A");
+                        response.PaymentTypeId.Should().Be(1);
+                        response.PetId.Should().Be(1);
+                        response.Phone.Should().Be("A");
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSaleModelMapper();
+                        var model = new ApiSaleRequestModel();
+                        model.SetProperties(1m, "A", "A", 1, 1, "A");
+
+                        JsonPatchDocument<ApiSaleRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSaleRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
                         response.PaymentTypeId.Should().Be(1);
@@ -47,5 +67,5 @@ namespace PetStoreNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>196ced140db0d256d58fb24f694570cf</Hash>
+    <Hash>dfd56a7a4d9e0937f421e52bb84129ca</Hash>
 </Codenesium>*/

@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Rowguid = rowguid;
                 }
 
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductDescriptionID { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8b9d0b7afc749f2d5ff694746fb95cf7</Hash>
+    <Hash>89e7907685baa4fcc2b6faede3c55a92</Hash>
 </Codenesium>*/

@@ -24,20 +24,32 @@ namespace StackOverflowNS.Api.Contracts
                         this.VoteTypeId = voteTypeId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int? BountyAmount { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime CreationDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PostId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? UserId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int VoteTypeId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f10b8e503deeed6f451b32249acb7807</Hash>
+    <Hash>c5171f85e2cc42dba48201a7ea356762</Hash>
 </Codenesium>*/

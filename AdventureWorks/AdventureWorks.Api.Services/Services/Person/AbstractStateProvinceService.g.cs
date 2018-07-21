@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiStateProvinceResponseModel>> Update(
                         int stateProvinceID,
                         ApiStateProvinceRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.stateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model));
-                        if (response.Success)
+                        var validationResult = await this.stateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolStateProvinceMapper.MapModelToBO(stateProvinceID, model);
                                 await this.stateProvinceRepository.Update(this.dalStateProvinceMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.stateProvinceRepository.Get(stateProvinceID);
+
+                                return new UpdateResponse<ApiStateProvinceResponseModel>(this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiStateProvinceResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6c02adb0f9a22bf85c8cebd4b9530ea</Hash>
+    <Hash>1692548c43c93198b69670b92c07b778</Hash>
 </Codenesium>*/

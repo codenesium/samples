@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IApiKeyRepository>();
                         var model = new ApiApiKeyRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ApiKey>())).Returns(Task.FromResult(new ApiKey()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
                         var service = new ApiKeyService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ApiKeyModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLApiKeyMapperMock,
                                                         mock.DALMapperMockFactory.DALApiKeyMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiApiKeyResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ApiKeyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiApiKeyRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b6e64165a5e7656b3c9e3ef4573ffddc</Hash>
+    <Hash>4305333278fd87a8d08d93fdda9a366f</Hash>
 </Codenesium>*/

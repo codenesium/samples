@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityAddressResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiBusinessEntityAddressResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityAddressRequestModel model)
                 {
                         CreateResponse<ApiBusinessEntityAddressResponseModel> result = await this.BusinessEntityAddressService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntityAddresses/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntityAddresses/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityAddressResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityAddressResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBusinessEntityAddressRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiBusinessEntityAddressRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.BusinessEntityAddressService.Update(id, model);
+                                UpdateResponse<ApiBusinessEntityAddressResponseModel> result = await this.BusinessEntityAddressService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityAddressResponseModel response = await this.BusinessEntityAddressService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityAddressResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityAddressResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityAddressRequestModel model)
                 {
-                        ApiBusinessEntityAddressRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiBusinessEntityAddressRequestModel request = await this.PatchModel(id, this.BusinessEntityAddressModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.BusinessEntityAddressService.Update(id, request);
+                                UpdateResponse<ApiBusinessEntityAddressResponseModel> result = await this.BusinessEntityAddressService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityAddressResponseModel response = await this.BusinessEntityAddressService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,16 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiBusinessEntityAddressRequestModel> CreatePatch(ApiBusinessEntityAddressRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiBusinessEntityAddressRequestModel>();
-                        patch.Replace(x => x.AddressID, model.AddressID);
-                        patch.Replace(x => x.AddressTypeID, model.AddressTypeID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiBusinessEntityAddressRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityAddressRequestModel> patch)
                 {
                         var record = await this.BusinessEntityAddressService.Get(id);
@@ -256,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a83f36e75ec62edd7470adca3ef60849</Hash>
+    <Hash>cef83ea60481b992ee9134107c55ac3c</Hash>
 </Codenesium>*/

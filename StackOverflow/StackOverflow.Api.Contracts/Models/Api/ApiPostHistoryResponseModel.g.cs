@@ -30,26 +30,44 @@ namespace StackOverflowNS.Api.Contracts
                         this.UserId = userId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Comment { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime CreationDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PostHistoryTypeId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PostId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RevisionGUID { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Text { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string UserDisplayName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>33b4aba2ae03158f170eb32052081293</Hash>
+    <Hash>129ba1e25cb0442f66b8f0780c433923</Hash>
 </Codenesium>*/

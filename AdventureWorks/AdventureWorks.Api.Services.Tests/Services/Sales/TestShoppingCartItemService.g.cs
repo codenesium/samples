@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
                         var model = new ApiShoppingCartItemRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShoppingCartItem>())).Returns(Task.FromResult(new ShoppingCartItem()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
                         var service = new ShoppingCartItemService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Object,
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiShoppingCartItemResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>21748f1df8e7682bc19f16bf9822d45b</Hash>
+    <Hash>5b2728dc1a190dfffeb9c3cdee8285c8</Hash>
 </Codenesium>*/

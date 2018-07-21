@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var model = new ApiInterruptionRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Interruption>())).Returns(Task.FromResult(new Interruption()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiInterruptionResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiInterruptionRequestModel>()));
@@ -168,5 +169,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bf2f846e604c7dfe44d526d4928e441b</Hash>
+    <Hash>d52bef84c775cc40a687a81f02cc145a</Hash>
 </Codenesium>*/

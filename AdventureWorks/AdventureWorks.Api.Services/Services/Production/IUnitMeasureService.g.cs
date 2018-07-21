@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
                         ApiUnitMeasureRequestModel model);
 
-                Task<ActionResponse> Update(string unitMeasureCode,
-                                            ApiUnitMeasureRequestModel model);
+                Task<UpdateResponse<ApiUnitMeasureResponseModel>> Update(string unitMeasureCode,
+                                                                          ApiUnitMeasureRequestModel model);
 
                 Task<ActionResponse> Delete(string unitMeasureCode);
 
@@ -23,12 +23,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiUnitMeasureResponseModel> ByName(string name);
 
-                Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>37bd6fc24406367c265d26013bb06e2b</Hash>
+    <Hash>f7132419b0b87349f144d8882ec9fe19</Hash>
 </Codenesium>*/

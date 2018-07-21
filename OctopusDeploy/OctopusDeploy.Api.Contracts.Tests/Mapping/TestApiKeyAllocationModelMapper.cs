@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace OctopusDeployNS.Api.Contracts.Tests
 
                         response.Allocated.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiKeyAllocationModelMapper();
+                        var model = new ApiKeyAllocationRequestModel();
+                        model.SetProperties(1);
+
+                        JsonPatchDocument<ApiKeyAllocationRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiKeyAllocationRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Allocated.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e5bdc81eaab5d8d9f19c2e1b91b66f3a</Hash>
+    <Hash>bced7aa9e8f719ec14554d21a808dd99</Hash>
 </Codenesium>*/

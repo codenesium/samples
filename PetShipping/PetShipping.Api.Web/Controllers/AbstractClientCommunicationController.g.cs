@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiClientCommunicationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiClientCommunicationRequestModel model)
                 {
                         CreateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ClientCommunications/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ClientCommunications/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClientCommunicationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiClientCommunicationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ClientCommunicationService.Update(id, model);
+                                UpdateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiClientCommunicationResponseModel response = await this.ClientCommunicationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientCommunicationRequestModel model)
                 {
-                        ApiClientCommunicationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiClientCommunicationRequestModel request = await this.PatchModel(id, this.ClientCommunicationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ClientCommunicationService.Update(id, request);
+                                UpdateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiClientCommunicationResponseModel response = await this.ClientCommunicationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace PetShippingNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiClientCommunicationRequestModel> CreatePatch(ApiClientCommunicationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
-                        patch.Replace(x => x.ClientId, model.ClientId);
-                        patch.Replace(x => x.DateCreated, model.DateCreated);
-                        patch.Replace(x => x.EmployeeId, model.EmployeeId);
-                        patch.Replace(x => x.Notes, model.Notes);
-                        return patch;
-                }
-
                 private async Task<ApiClientCommunicationRequestModel> PatchModel(int id, JsonPatchDocument<ApiClientCommunicationRequestModel> patch)
                 {
                         var record = await this.ClientCommunicationService.Get(id);
@@ -234,5 +220,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d37a6e57266c1e98a6004697c6ed7ea6</Hash>
+    <Hash>2383d1e7a5b42a52742d926f9d72e512</Hash>
 </Codenesium>*/

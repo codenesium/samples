@@ -75,18 +75,25 @@ namespace PetShippingNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAirTransportResponseModel>> Update(
                         int airlineId,
                         ApiAirTransportRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model));
-                        if (response.Success)
+                        var validationResult = await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAirTransportMapper.MapModelToBO(airlineId, model);
                                 await this.airTransportRepository.Update(this.dalAirTransportMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.airTransportRepository.Get(airlineId);
+
+                                return new UpdateResponse<ApiAirTransportResponseModel>(this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAirTransportResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35951493b93c5b1bd5f9a008ca9fbbff</Hash>
+    <Hash>2c33089d630611f7e7e4e410e9969958</Hash>
 </Codenesium>*/

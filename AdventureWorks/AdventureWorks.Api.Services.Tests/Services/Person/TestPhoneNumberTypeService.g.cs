@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var model = new ApiPhoneNumberTypeRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PhoneNumberType>())).Returns(Task.FromResult(new PhoneNumberType()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPhoneNumberTypeResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()));
@@ -184,5 +185,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c6d22f22d2fecc646423e6cadefd3f94</Hash>
+    <Hash>ce0fb43d7be9e8a15a7d9a64eba355ac</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var model = new ApiVersionInfoRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VersionInfo>())).Returns(Task.FromResult(new VersionInfo()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ActionResponse response = await service.Update(default(long), model);
+                        UpdateResponse<ApiVersionInfoResponseModel> response = await service.Update(default(long), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()));
@@ -167,5 +168,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>355cbe8a54fb16cb663fd714edae4fb2</Hash>
+    <Hash>576af354ab6680166b9b772188a321d6</Hash>
 </Codenesium>*/

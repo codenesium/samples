@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiCustomerResponseModel>> Create(
                         ApiCustomerRequestModel model);
 
-                Task<ActionResponse> Update(int customerID,
-                                            ApiCustomerRequestModel model);
+                Task<UpdateResponse<ApiCustomerResponseModel>> Update(int customerID,
+                                                                       ApiCustomerRequestModel model);
 
                 Task<ActionResponse> Delete(int customerID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61a75b05ff1a377ea61265507ba02790</Hash>
+    <Hash>e1c150d074b919397b4e277c6fb8a0a1</Hash>
 </Codenesium>*/

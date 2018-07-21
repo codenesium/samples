@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace OctopusDeployNS.Api.Contracts
 
                 ApiInvitationRequestModel MapResponseToRequest(
                         ApiInvitationResponseModel response);
+
+                JsonPatchDocument<ApiInvitationRequestModel> CreatePatch(ApiInvitationRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>e4ac1c03817d390231afec0918049d08</Hash>
+    <Hash>a43fd6cb0f33f44a08efbb7d9f2ca211</Hash>
 </Codenesium>*/

@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public virtual void DemographicsRules()
+                public virtual void DemographicRules()
                 {
                 }
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc07ce9b42970ec646cd65257a623538</Hash>
+    <Hash>8ca717f9543211051dd0ddc6b6684143</Hash>
 </Codenesium>*/

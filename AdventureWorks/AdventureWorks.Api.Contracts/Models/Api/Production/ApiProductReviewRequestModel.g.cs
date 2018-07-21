@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
                 }
 
                 public virtual void SetProperties(
-                        string comments,
+                        string comment,
                         string emailAddress,
                         DateTime modifiedDate,
                         int productID,
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime reviewDate,
                         string reviewerName)
                 {
-                        this.Comments = comments;
+                        this.Comment = comment;
                         this.EmailAddress = emailAddress;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
@@ -32,119 +32,35 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ReviewerName = reviewerName;
                 }
 
-                private string comments;
-
-                public string Comments
-                {
-                        get
-                        {
-                                return this.comments;
-                        }
-
-                        set
-                        {
-                                this.comments = value;
-                        }
-                }
-
-                private string emailAddress;
+                [JsonProperty]
+                public string Comment { get; private set; }
 
                 [Required]
-                public string EmailAddress
-                {
-                        get
-                        {
-                                return this.emailAddress;
-                        }
-
-                        set
-                        {
-                                this.emailAddress = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string EmailAddress { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private int rating;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public int Rating
-                {
-                        get
-                        {
-                                return this.rating;
-                        }
-
-                        set
-                        {
-                                this.rating = value;
-                        }
-                }
-
-                private DateTime reviewDate;
+                [JsonProperty]
+                public int Rating { get; private set; }
 
                 [Required]
-                public DateTime ReviewDate
-                {
-                        get
-                        {
-                                return this.reviewDate;
-                        }
-
-                        set
-                        {
-                                this.reviewDate = value;
-                        }
-                }
-
-                private string reviewerName;
+                [JsonProperty]
+                public DateTime ReviewDate { get; private set; }
 
                 [Required]
-                public string ReviewerName
-                {
-                        get
-                        {
-                                return this.reviewerName;
-                        }
-
-                        set
-                        {
-                                this.reviewerName = value;
-                        }
-                }
+                [JsonProperty]
+                public string ReviewerName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>55b3ff00a07c1f1c925fd828d2618b72</Hash>
+    <Hash>858ffec306d0c7e5b8fd50fa9ec55815</Hash>
 </Codenesium>*/

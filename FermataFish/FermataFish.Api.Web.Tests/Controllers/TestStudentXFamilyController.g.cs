@@ -155,8 +155,8 @@ namespace FermataFishNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiStudentXFamilyResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiStudentXFamilyResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentXFamilyRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         StudentXFamilyControllerMockFacade mock = new StudentXFamilyControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiStudentXFamilyResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>()))
                         .Callback<int, ApiStudentXFamilyRequestModel>(
                                 (id, model) => model.FamilyId.Should().Be(1)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiStudentXFamilyResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentXFamilyResponseModel>(new ApiStudentXFamilyResponseModel()));
                         StudentXFamilyController controller = new StudentXFamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentXFamilyModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         StudentXFamilyControllerMockFacade mock = new StudentXFamilyControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiStudentXFamilyResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentXFamilyResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentXFamilyResponseModel()));
                         StudentXFamilyController controller = new StudentXFamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentXFamilyModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         StudentXFamilyControllerMockFacade mock = new StudentXFamilyControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiStudentXFamilyResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentXFamilyResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentXFamilyResponseModel()));
                         StudentXFamilyController controller = new StudentXFamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentXFamilyModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         StudentXFamilyControllerMockFacade mock = new StudentXFamilyControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiStudentXFamilyResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentXFamilyResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentXFamilyResponseModel>(null));
                         StudentXFamilyController controller = new StudentXFamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentXFamilyModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace FermataFishNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>fbd5e99e8146104d3d351838a87039dc</Hash>
+    <Hash>5eec5b5fad6acd32ae7b07aa77db7645</Hash>
 </Codenesium>*/

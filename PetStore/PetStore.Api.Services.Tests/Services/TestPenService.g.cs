@@ -105,6 +105,7 @@ namespace PetStoreNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var model = new ApiPenRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Pen>())).Returns(Task.FromResult(new Pen()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
                                                      mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPenResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PenModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()));
@@ -184,5 +185,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>baaf6593df8cd55b345ec6e4ebe5c64b</Hash>
+    <Hash>045147972c293a3c8392dd635d1b15cf</Hash>
 </Codenesium>*/

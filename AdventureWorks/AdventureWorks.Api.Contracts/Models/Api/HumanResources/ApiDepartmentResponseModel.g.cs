@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [JsonProperty]
                 public short DepartmentID { get; private set; }
 
+                [JsonProperty]
                 public string GroupName { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8042af21815791673a613bef8cd16e78</Hash>
+    <Hash>1adf34d28a9acb3b4c9b3579f170ac41</Hash>
 </Codenesium>*/

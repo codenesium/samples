@@ -155,8 +155,8 @@ namespace OctopusDeployNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiDeploymentRelatedMachineResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDeploymentRelatedMachineResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeploymentRelatedMachineRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         DeploymentRelatedMachineControllerMockFacade mock = new DeploymentRelatedMachineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>()))
                         .Callback<int, ApiDeploymentRelatedMachineRequestModel>(
                                 (id, model) => model.DeploymentId.Should().Be("A")
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeploymentRelatedMachineResponseModel>(new ApiDeploymentRelatedMachineResponseModel()));
                         DeploymentRelatedMachineController controller = new DeploymentRelatedMachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentRelatedMachineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         DeploymentRelatedMachineControllerMockFacade mock = new DeploymentRelatedMachineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeploymentRelatedMachineResponseModel()));
                         DeploymentRelatedMachineController controller = new DeploymentRelatedMachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentRelatedMachineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         DeploymentRelatedMachineControllerMockFacade mock = new DeploymentRelatedMachineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeploymentRelatedMachineResponseModel()));
                         DeploymentRelatedMachineController controller = new DeploymentRelatedMachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentRelatedMachineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         DeploymentRelatedMachineControllerMockFacade mock = new DeploymentRelatedMachineControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentRelatedMachineResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeploymentRelatedMachineResponseModel>(null));
                         DeploymentRelatedMachineController controller = new DeploymentRelatedMachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentRelatedMachineModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>7ed4038cb2aaa466043668e0ed56330c</Hash>
+    <Hash>36888ded25af634952ed94e121baedb0</Hash>
 </Codenesium>*/

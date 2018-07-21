@@ -83,18 +83,25 @@ namespace PetStoreNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPetResponseModel>> Update(
                         int id,
                         ApiPetRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.petModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPetMapper.MapModelToBO(id, model);
                                 await this.petRepository.Update(this.dalPetMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.petRepository.Get(id);
+
+                                return new UpdateResponse<ApiPetResponseModel>(this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPetResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>603330eff865e72618cae184abafbed8</Hash>
+    <Hash>eaf1fbe35c91ca78b9cbeb6ddee5d2d8</Hash>
 </Codenesium>*/

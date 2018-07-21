@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDashboardConfigurationRepository>();
                         var model = new ApiDashboardConfigurationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DashboardConfiguration>())).Returns(Task.FromResult(new DashboardConfiguration()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
                         var service = new DashboardConfigurationService(mock.LoggerMock.Object,
                                                                         mock.RepositoryMock.Object,
                                                                         mock.ModelValidatorMockFactory.DashboardConfigurationModelValidatorMock.Object,
                                                                         mock.BOLMapperMockFactory.BOLDashboardConfigurationMapperMock,
                                                                         mock.DALMapperMockFactory.DALDashboardConfigurationMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiDashboardConfigurationResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DashboardConfigurationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiDashboardConfigurationRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2e99cac1485f08b7a9c73af64afafd2b</Hash>
+    <Hash>70d719134e9ffe9a6ced767f24b239dc</Hash>
 </Codenesium>*/

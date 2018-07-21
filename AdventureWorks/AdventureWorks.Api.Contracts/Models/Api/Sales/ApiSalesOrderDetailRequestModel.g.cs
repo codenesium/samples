@@ -38,167 +38,47 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UnitPriceDiscount = unitPriceDiscount;
                 }
 
-                private string carrierTrackingNumber;
-
-                public string CarrierTrackingNumber
-                {
-                        get
-                        {
-                                return this.carrierTrackingNumber;
-                        }
-
-                        set
-                        {
-                                this.carrierTrackingNumber = value;
-                        }
-                }
-
-                private decimal lineTotal;
+                [JsonProperty]
+                public string CarrierTrackingNumber { get; private set; }
 
                 [Required]
-                public decimal LineTotal
-                {
-                        get
-                        {
-                                return this.lineTotal;
-                        }
-
-                        set
-                        {
-                                this.lineTotal = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public decimal LineTotal { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private short orderQty;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public short OrderQty
-                {
-                        get
-                        {
-                                return this.orderQty;
-                        }
-
-                        set
-                        {
-                                this.orderQty = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public short OrderQty { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private int salesOrderDetailID;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public int SalesOrderDetailID
-                {
-                        get
-                        {
-                                return this.salesOrderDetailID;
-                        }
-
-                        set
-                        {
-                                this.salesOrderDetailID = value;
-                        }
-                }
-
-                private int specialOfferID;
+                [JsonProperty]
+                public int SalesOrderDetailID { get; private set; }
 
                 [Required]
-                public int SpecialOfferID
-                {
-                        get
-                        {
-                                return this.specialOfferID;
-                        }
-
-                        set
-                        {
-                                this.specialOfferID = value;
-                        }
-                }
-
-                private decimal unitPrice;
+                [JsonProperty]
+                public int SpecialOfferID { get; private set; }
 
                 [Required]
-                public decimal UnitPrice
-                {
-                        get
-                        {
-                                return this.unitPrice;
-                        }
-
-                        set
-                        {
-                                this.unitPrice = value;
-                        }
-                }
-
-                private decimal unitPriceDiscount;
+                [JsonProperty]
+                public decimal UnitPrice { get; private set; }
 
                 [Required]
-                public decimal UnitPriceDiscount
-                {
-                        get
-                        {
-                                return this.unitPriceDiscount;
-                        }
-
-                        set
-                        {
-                                this.unitPriceDiscount = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal UnitPriceDiscount { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>329c9d91e025b0d27775f581c9da12c8</Hash>
+    <Hash>e49bfb8b4da705a9457e54e6ffa031a6</Hash>
 </Codenesium>*/

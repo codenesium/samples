@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace NebulaNS.Api.Contracts
 
                 ApiLinkRequestModel MapResponseToRequest(
                         ApiLinkResponseModel response);
+
+                JsonPatchDocument<ApiLinkRequestModel> CreatePatch(ApiLinkRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>95f792c47b5c5e9278708d945d7bc614</Hash>
+    <Hash>3a43723df21639be68342ddd9c3531d8</Hash>
 </Codenesium>*/

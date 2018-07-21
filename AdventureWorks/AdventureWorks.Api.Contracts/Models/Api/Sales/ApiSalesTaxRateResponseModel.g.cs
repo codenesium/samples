@@ -26,22 +26,29 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TaxType = taxType;
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int SalesTaxRateID { get; private set; }
 
+                [JsonProperty]
                 public int StateProvinceID { get; private set; }
 
+                [JsonProperty]
                 public decimal TaxRate { get; private set; }
 
+                [JsonProperty]
                 public int TaxType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8c23657938e391ca033db2983a36acaa</Hash>
+    <Hash>734387fb76e203700c6db2dac81ac193</Hash>
 </Codenesium>*/

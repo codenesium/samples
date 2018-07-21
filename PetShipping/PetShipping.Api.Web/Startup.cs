@@ -243,7 +243,7 @@ namespace PetShippingNS.Api.Web
                 .AsImplementedInterfaces()
 			    .PropertiesAutowired();
 			
-			var servicesAssembly = typeof(ValidationError).Assembly;
+			var servicesAssembly = typeof(AbstractService).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
                 .AsImplementedInterfaces()

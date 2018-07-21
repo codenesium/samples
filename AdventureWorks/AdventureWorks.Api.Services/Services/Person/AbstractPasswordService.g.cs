@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPasswordResponseModel>> Update(
                         int businessEntityID,
                         ApiPasswordRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.passwordModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPasswordMapper.MapModelToBO(businessEntityID, model);
                                 await this.passwordRepository.Update(this.dalPasswordMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.passwordRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiPasswordResponseModel>(this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPasswordResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57cf709b2b0325687bf7ea0bdae90709</Hash>
+    <Hash>cd9bdcf94935bbfb05579ce0469070d5</Hash>
 </Codenesium>*/

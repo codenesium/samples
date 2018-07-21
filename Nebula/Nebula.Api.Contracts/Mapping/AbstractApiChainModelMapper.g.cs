@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
@@ -29,9 +31,19 @@ namespace NebulaNS.Api.Contracts
                                 response.TeamId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiChainRequestModel> CreatePatch(ApiChainRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiChainRequestModel>();
+                        patch.Replace(x => x.ChainStatusId, model.ChainStatusId);
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.TeamId, model.TeamId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>515000c9ce7291910fa6dc28c31b2891</Hash>
+    <Hash>b0ad199e4856c4faf344110762592c98</Hash>
 </Codenesium>*/

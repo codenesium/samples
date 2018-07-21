@@ -22,40 +22,16 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
-                private string currencyCode;
+                [Required]
+                [JsonProperty]
+                public string CurrencyCode { get; private set; }
 
                 [Required]
-                public string CurrencyCode
-                {
-                        get
-                        {
-                                return this.currencyCode;
-                        }
-
-                        set
-                        {
-                                this.currencyCode = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
-
-                [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>bf6bc5cc869e35a4e3f6e18c401d9d86</Hash>
+    <Hash>ec16b2b2216e69692fa8c9fc3406517f</Hash>
 </Codenesium>*/

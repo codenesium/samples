@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionCurrencyResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCountryRegionCurrencyResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionCurrencyRequestModel model)
                 {
                         CreateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.CountryRegionCurrencyService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegionCurrencies/{result.Record.CountryRegionCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegionCurrencies/{result.Record.CountryRegionCode}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRegionCurrencyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCountryRegionCurrencyRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiCountryRegionCurrencyRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CountryRegionCurrencyService.Update(id, model);
+                                UpdateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.CountryRegionCurrencyService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRegionCurrencyResponseModel response = await this.CountryRegionCurrencyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRegionCurrencyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionCurrencyRequestModel model)
                 {
-                        ApiCountryRegionCurrencyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCountryRegionCurrencyRequestModel request = await this.PatchModel(id, this.CountryRegionCurrencyModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CountryRegionCurrencyService.Update(id, request);
+                                UpdateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.CountryRegionCurrencyService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRegionCurrencyResponseModel response = await this.CountryRegionCurrencyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,14 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCountryRegionCurrencyRequestModel> CreatePatch(ApiCountryRegionCurrencyRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCountryRegionCurrencyRequestModel>();
-                        patch.Replace(x => x.CurrencyCode, model.CurrencyCode);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        return patch;
-                }
-
                 private async Task<ApiCountryRegionCurrencyRequestModel> PatchModel(string id, JsonPatchDocument<ApiCountryRegionCurrencyRequestModel> patch)
                 {
                         var record = await this.CountryRegionCurrencyService.Get(id);
@@ -243,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85f3544fa7c67c63fbf4b9105d627bdc</Hash>
+    <Hash>f02760dd494ea1f4b8c0eb50d2052392</Hash>
 </Codenesium>*/

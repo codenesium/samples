@@ -18,14 +18,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.ScriptName = scriptName;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime Applied { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ScriptName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f4893705f9ab22d55a35b0f3fe523af7</Hash>
+    <Hash>0048f4051cbcfcfbfb24dd50b9d6f722</Hash>
 </Codenesium>*/

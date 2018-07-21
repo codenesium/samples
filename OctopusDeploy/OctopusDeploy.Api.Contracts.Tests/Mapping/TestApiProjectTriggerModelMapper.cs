@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,27 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.ProjectId.Should().Be("A");
                         response.TriggerType.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiProjectTriggerModelMapper();
+                        var model = new ApiProjectTriggerRequestModel();
+                        model.SetProperties(true, "A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiProjectTriggerRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiProjectTriggerRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.IsDisabled.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.Name.Should().Be("A");
+                        response.ProjectId.Should().Be("A");
+                        response.TriggerType.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccf9931d3f6dfa6e845dcd1ada94772d</Hash>
+    <Hash>718de10d9855ff095cbb24de2f142dc6</Hash>
 </Codenesium>*/

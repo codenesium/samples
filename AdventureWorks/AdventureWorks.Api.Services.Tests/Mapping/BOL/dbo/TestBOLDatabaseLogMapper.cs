@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.@Object.Should().Be("A");
                         response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Schema.Should().Be("A");
-                        response.TSQL.Should().Be("A");
+                        response.Tsql.Should().Be("A");
                         response.XmlEvent.Should().Be("A");
                 }
 
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.@Object.Should().Be("A");
                         response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Schema.Should().Be("A");
-                        response.TSQL.Should().Be("A");
+                        response.Tsql.Should().Be("A");
                         response.XmlEvent.Should().Be("A");
                 }
 
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>78d713225d3e702d12c3aff4940d0af7</Hash>
+    <Hash>1c381aa1ade8af918910945e642d7dec</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICustomerRepository>();
                         var model = new ApiCustomerRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Customer>())).Returns(Task.FromResult(new Customer()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
                         var service = new CustomerService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                           mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCustomerResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()));
@@ -132,5 +133,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e92e714bb9974cc97b9cb34896ab0a17</Hash>
+    <Hash>790108bd91e0d514ff94a0c21ec30013</Hash>
 </Codenesium>*/

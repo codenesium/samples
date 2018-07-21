@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Category_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
-                }
-
-                [Fact]
-                public async void Category_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
-                }
-
-                [Fact]
                 public async void Category_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -97,54 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Message_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Message, null as string);
-                }
-
-                [Fact]
-                public async void Message_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Message, null as string);
-                }
-
-                [Fact]
                 public async void ProjectId_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -166,30 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void RelatedDocumentIds_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
-                }
-
-                [Fact]
-                public async void RelatedDocumentIds_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
                 }
 
                 [Fact]
@@ -217,30 +121,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void UserId_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
-                }
-
-                [Fact]
-                public async void UserId_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
-                }
-
-                [Fact]
                 public async void UserId_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -262,30 +142,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Username_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
-                }
-
-                [Fact]
-                public async void Username_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
                 }
 
                 [Fact]
@@ -315,5 +171,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dc3855055cd5380a10ec1431bc9625c8</Hash>
+    <Hash>57f0e297c1ce0e50462f74bd506249b5</Hash>
 </Codenesium>*/

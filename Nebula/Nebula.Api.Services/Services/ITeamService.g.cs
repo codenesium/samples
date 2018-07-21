@@ -12,8 +12,8 @@ namespace NebulaNS.Api.Services
                 Task<CreateResponse<ApiTeamResponseModel>> Create(
                         ApiTeamRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiTeamRequestModel model);
+                Task<UpdateResponse<ApiTeamResponseModel>> Update(int id,
+                                                                   ApiTeamRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c3345a18f9b66fa259efb0286ef0d78</Hash>
+    <Hash>35675bdcac0846b59e448e06d42ac127</Hash>
 </Codenesium>*/

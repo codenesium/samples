@@ -20,24 +20,11 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Allocated = allocated;
                 }
 
-                private int allocated;
-
-                [Required]
-                public int Allocated
-                {
-                        get
-                        {
-                                return this.allocated;
-                        }
-
-                        set
-                        {
-                                this.allocated = value;
-                        }
-                }
+                [JsonProperty]
+                public int Allocated { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ed0e5a30ba773f04057d7cc9be29bf9</Hash>
+    <Hash>db5fc774bbc4a333f7fff54a375e59e9</Hash>
 </Codenesium>*/

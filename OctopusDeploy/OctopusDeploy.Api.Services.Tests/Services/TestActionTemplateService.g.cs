@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IActionTemplateRepository>();
                         var model = new ApiActionTemplateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ActionTemplate>())).Returns(Task.FromResult(new ActionTemplate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
                         var service = new ActionTemplateService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ActionTemplateModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLActionTemplateMapperMock,
                                                                 mock.DALMapperMockFactory.DALActionTemplateMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiActionTemplateResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ActionTemplateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiActionTemplateRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>658e954aa2fba9f4c6728e816d3cae48</Hash>
+    <Hash>c1eb3deaba97b8f0351d71d54c085f39</Hash>
 </Codenesium>*/

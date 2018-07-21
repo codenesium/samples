@@ -90,18 +90,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiVendorResponseModel>> Update(
                         int businessEntityID,
                         ApiVendorRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolVendorMapper.MapModelToBO(businessEntityID, model);
                                 await this.vendorRepository.Update(this.dalVendorMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.vendorRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiVendorResponseModel>(this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiVendorResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3bfe7bfb62bb7b0b547fe2dc06068c99</Hash>
+    <Hash>3f84e08231c08ad361ee0a1bbcb9be62</Hash>
 </Codenesium>*/

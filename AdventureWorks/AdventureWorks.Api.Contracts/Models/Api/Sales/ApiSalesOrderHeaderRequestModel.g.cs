@@ -68,399 +68,99 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TotalDue = totalDue;
                 }
 
-                private string accountNumber;
-
-                public string AccountNumber
-                {
-                        get
-                        {
-                                return this.accountNumber;
-                        }
-
-                        set
-                        {
-                                this.accountNumber = value;
-                        }
-                }
-
-                private int billToAddressID;
+                [JsonProperty]
+                public string AccountNumber { get; private set; }
 
                 [Required]
-                public int BillToAddressID
-                {
-                        get
-                        {
-                                return this.billToAddressID;
-                        }
+                [JsonProperty]
+                public int BillToAddressID { get; private set; }
 
-                        set
-                        {
-                                this.billToAddressID = value;
-                        }
-                }
+                [JsonProperty]
+                public string Comment { get; private set; }
 
-                private string comment;
+                [JsonProperty]
+                public string CreditCardApprovalCode { get; private set; }
 
-                public string Comment
-                {
-                        get
-                        {
-                                return this.comment;
-                        }
+                [JsonProperty]
+                public int? CreditCardID { get; private set; }
 
-                        set
-                        {
-                                this.comment = value;
-                        }
-                }
-
-                private string creditCardApprovalCode;
-
-                public string CreditCardApprovalCode
-                {
-                        get
-                        {
-                                return this.creditCardApprovalCode;
-                        }
-
-                        set
-                        {
-                                this.creditCardApprovalCode = value;
-                        }
-                }
-
-                private int? creditCardID;
-
-                public int? CreditCardID
-                {
-                        get
-                        {
-                                return this.creditCardID;
-                        }
-
-                        set
-                        {
-                                this.creditCardID = value;
-                        }
-                }
-
-                private int? currencyRateID;
-
-                public int? CurrencyRateID
-                {
-                        get
-                        {
-                                return this.currencyRateID;
-                        }
-
-                        set
-                        {
-                                this.currencyRateID = value;
-                        }
-                }
-
-                private int customerID;
+                [JsonProperty]
+                public int? CurrencyRateID { get; private set; }
 
                 [Required]
-                public int CustomerID
-                {
-                        get
-                        {
-                                return this.customerID;
-                        }
-
-                        set
-                        {
-                                this.customerID = value;
-                        }
-                }
-
-                private DateTime dueDate;
+                [JsonProperty]
+                public int CustomerID { get; private set; }
 
                 [Required]
-                public DateTime DueDate
-                {
-                        get
-                        {
-                                return this.dueDate;
-                        }
-
-                        set
-                        {
-                                this.dueDate = value;
-                        }
-                }
-
-                private decimal freight;
+                [JsonProperty]
+                public DateTime DueDate { get; private set; }
 
                 [Required]
-                public decimal Freight
-                {
-                        get
-                        {
-                                return this.freight;
-                        }
-
-                        set
-                        {
-                                this.freight = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public decimal Freight { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private bool onlineOrderFlag;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public bool OnlineOrderFlag
-                {
-                        get
-                        {
-                                return this.onlineOrderFlag;
-                        }
-
-                        set
-                        {
-                                this.onlineOrderFlag = value;
-                        }
-                }
-
-                private DateTime orderDate;
+                [JsonProperty]
+                public bool OnlineOrderFlag { get; private set; }
 
                 [Required]
-                public DateTime OrderDate
-                {
-                        get
-                        {
-                                return this.orderDate;
-                        }
+                [JsonProperty]
+                public DateTime OrderDate { get; private set; }
 
-                        set
-                        {
-                                this.orderDate = value;
-                        }
-                }
-
-                private string purchaseOrderNumber;
-
-                public string PurchaseOrderNumber
-                {
-                        get
-                        {
-                                return this.purchaseOrderNumber;
-                        }
-
-                        set
-                        {
-                                this.purchaseOrderNumber = value;
-                        }
-                }
-
-                private int revisionNumber;
+                [JsonProperty]
+                public string PurchaseOrderNumber { get; private set; }
 
                 [Required]
-                public int RevisionNumber
-                {
-                        get
-                        {
-                                return this.revisionNumber;
-                        }
-
-                        set
-                        {
-                                this.revisionNumber = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public int RevisionNumber { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private string salesOrderNumber;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public string SalesOrderNumber
-                {
-                        get
-                        {
-                                return this.salesOrderNumber;
-                        }
+                [JsonProperty]
+                public string SalesOrderNumber { get; private set; }
 
-                        set
-                        {
-                                this.salesOrderNumber = value;
-                        }
-                }
+                [JsonProperty]
+                public int? SalesPersonID { get; private set; }
 
-                private int? salesPersonID;
-
-                public int? SalesPersonID
-                {
-                        get
-                        {
-                                return this.salesPersonID;
-                        }
-
-                        set
-                        {
-                                this.salesPersonID = value;
-                        }
-                }
-
-                private DateTime? shipDate;
-
-                public DateTime? ShipDate
-                {
-                        get
-                        {
-                                return this.shipDate;
-                        }
-
-                        set
-                        {
-                                this.shipDate = value;
-                        }
-                }
-
-                private int shipMethodID;
+                [JsonProperty]
+                public DateTime? ShipDate { get; private set; }
 
                 [Required]
-                public int ShipMethodID
-                {
-                        get
-                        {
-                                return this.shipMethodID;
-                        }
-
-                        set
-                        {
-                                this.shipMethodID = value;
-                        }
-                }
-
-                private int shipToAddressID;
+                [JsonProperty]
+                public int ShipMethodID { get; private set; }
 
                 [Required]
-                public int ShipToAddressID
-                {
-                        get
-                        {
-                                return this.shipToAddressID;
-                        }
-
-                        set
-                        {
-                                this.shipToAddressID = value;
-                        }
-                }
-
-                private int status;
+                [JsonProperty]
+                public int ShipToAddressID { get; private set; }
 
                 [Required]
-                public int Status
-                {
-                        get
-                        {
-                                return this.status;
-                        }
-
-                        set
-                        {
-                                this.status = value;
-                        }
-                }
-
-                private decimal subTotal;
+                [JsonProperty]
+                public int Status { get; private set; }
 
                 [Required]
-                public decimal SubTotal
-                {
-                        get
-                        {
-                                return this.subTotal;
-                        }
-
-                        set
-                        {
-                                this.subTotal = value;
-                        }
-                }
-
-                private decimal taxAmt;
+                [JsonProperty]
+                public decimal SubTotal { get; private set; }
 
                 [Required]
-                public decimal TaxAmt
-                {
-                        get
-                        {
-                                return this.taxAmt;
-                        }
+                [JsonProperty]
+                public decimal TaxAmt { get; private set; }
 
-                        set
-                        {
-                                this.taxAmt = value;
-                        }
-                }
-
-                private int? territoryID;
-
-                public int? TerritoryID
-                {
-                        get
-                        {
-                                return this.territoryID;
-                        }
-
-                        set
-                        {
-                                this.territoryID = value;
-                        }
-                }
-
-                private decimal totalDue;
+                [JsonProperty]
+                public int? TerritoryID { get; private set; }
 
                 [Required]
-                public decimal TotalDue
-                {
-                        get
-                        {
-                                return this.totalDue;
-                        }
-
-                        set
-                        {
-                                this.totalDue = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal TotalDue { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f4dfc3a57b215b4afbc4ae4ccf2a6a3</Hash>
+    <Hash>a12454c56cfacb858cc81852199e2c0e</Hash>
 </Codenesium>*/

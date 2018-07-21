@@ -58,320 +58,68 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantName = tenantName;
                 }
 
-                private string channelId;
+                [JsonProperty]
+                public string ChannelId { get; private set; }
 
-                public string ChannelId
-                {
-                        get
-                        {
-                                return this.channelId;
-                        }
+                [JsonProperty]
+                public string ChannelName { get; private set; }
 
-                        set
-                        {
-                                this.channelId = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTimeOffset? CompletedTime { get; private set; }
 
-                private string channelName;
+                [JsonProperty]
+                public DateTimeOffset Created { get; private set; }
 
-                public string ChannelName
-                {
-                        get
-                        {
-                                return this.channelName;
-                        }
+                [JsonProperty]
+                public string DeployedBy { get; private set; }
 
-                        set
-                        {
-                                this.channelName = value;
-                        }
-                }
+                [JsonProperty]
+                public string DeploymentName { get; private set; }
 
-                private DateTimeOffset? completedTime;
+                [JsonProperty]
+                public int? DurationSeconds { get; private set; }
 
-                public DateTimeOffset? CompletedTime
-                {
-                        get
-                        {
-                                return this.completedTime;
-                        }
+                [JsonProperty]
+                public string EnvironmentId { get; private set; }
 
-                        set
-                        {
-                                this.completedTime = value;
-                        }
-                }
+                [JsonProperty]
+                public string EnvironmentName { get; private set; }
 
-                private DateTimeOffset created;
+                [JsonProperty]
+                public string ProjectId { get; private set; }
 
-                [Required]
-                public DateTimeOffset Created
-                {
-                        get
-                        {
-                                return this.created;
-                        }
+                [JsonProperty]
+                public string ProjectName { get; private set; }
 
-                        set
-                        {
-                                this.created = value;
-                        }
-                }
+                [JsonProperty]
+                public string ProjectSlug { get; private set; }
 
-                private string deployedBy;
+                [JsonProperty]
+                public DateTimeOffset QueueTime { get; private set; }
 
-                public string DeployedBy
-                {
-                        get
-                        {
-                                return this.deployedBy;
-                        }
+                [JsonProperty]
+                public string ReleaseId { get; private set; }
 
-                        set
-                        {
-                                this.deployedBy = value;
-                        }
-                }
+                [JsonProperty]
+                public string ReleaseVersion { get; private set; }
 
-                private string deploymentName;
+                [JsonProperty]
+                public DateTimeOffset? StartTime { get; private set; }
 
-                [Required]
-                public string DeploymentName
-                {
-                        get
-                        {
-                                return this.deploymentName;
-                        }
+                [JsonProperty]
+                public string TaskId { get; private set; }
 
-                        set
-                        {
-                                this.deploymentName = value;
-                        }
-                }
+                [JsonProperty]
+                public string TaskState { get; private set; }
 
-                private int? durationSeconds;
+                [JsonProperty]
+                public string TenantId { get; private set; }
 
-                public int? DurationSeconds
-                {
-                        get
-                        {
-                                return this.durationSeconds;
-                        }
-
-                        set
-                        {
-                                this.durationSeconds = value;
-                        }
-                }
-
-                private string environmentId;
-
-                [Required]
-                public string EnvironmentId
-                {
-                        get
-                        {
-                                return this.environmentId;
-                        }
-
-                        set
-                        {
-                                this.environmentId = value;
-                        }
-                }
-
-                private string environmentName;
-
-                [Required]
-                public string EnvironmentName
-                {
-                        get
-                        {
-                                return this.environmentName;
-                        }
-
-                        set
-                        {
-                                this.environmentName = value;
-                        }
-                }
-
-                private string projectId;
-
-                [Required]
-                public string ProjectId
-                {
-                        get
-                        {
-                                return this.projectId;
-                        }
-
-                        set
-                        {
-                                this.projectId = value;
-                        }
-                }
-
-                private string projectName;
-
-                [Required]
-                public string ProjectName
-                {
-                        get
-                        {
-                                return this.projectName;
-                        }
-
-                        set
-                        {
-                                this.projectName = value;
-                        }
-                }
-
-                private string projectSlug;
-
-                [Required]
-                public string ProjectSlug
-                {
-                        get
-                        {
-                                return this.projectSlug;
-                        }
-
-                        set
-                        {
-                                this.projectSlug = value;
-                        }
-                }
-
-                private DateTimeOffset queueTime;
-
-                [Required]
-                public DateTimeOffset QueueTime
-                {
-                        get
-                        {
-                                return this.queueTime;
-                        }
-
-                        set
-                        {
-                                this.queueTime = value;
-                        }
-                }
-
-                private string releaseId;
-
-                [Required]
-                public string ReleaseId
-                {
-                        get
-                        {
-                                return this.releaseId;
-                        }
-
-                        set
-                        {
-                                this.releaseId = value;
-                        }
-                }
-
-                private string releaseVersion;
-
-                [Required]
-                public string ReleaseVersion
-                {
-                        get
-                        {
-                                return this.releaseVersion;
-                        }
-
-                        set
-                        {
-                                this.releaseVersion = value;
-                        }
-                }
-
-                private DateTimeOffset? startTime;
-
-                public DateTimeOffset? StartTime
-                {
-                        get
-                        {
-                                return this.startTime;
-                        }
-
-                        set
-                        {
-                                this.startTime = value;
-                        }
-                }
-
-                private string taskId;
-
-                [Required]
-                public string TaskId
-                {
-                        get
-                        {
-                                return this.taskId;
-                        }
-
-                        set
-                        {
-                                this.taskId = value;
-                        }
-                }
-
-                private string taskState;
-
-                [Required]
-                public string TaskState
-                {
-                        get
-                        {
-                                return this.taskState;
-                        }
-
-                        set
-                        {
-                                this.taskState = value;
-                        }
-                }
-
-                private string tenantId;
-
-                public string TenantId
-                {
-                        get
-                        {
-                                return this.tenantId;
-                        }
-
-                        set
-                        {
-                                this.tenantId = value;
-                        }
-                }
-
-                private string tenantName;
-
-                public string TenantName
-                {
-                        get
-                        {
-                                return this.tenantName;
-                        }
-
-                        set
-                        {
-                                this.tenantName = value;
-                        }
-                }
+                [JsonProperty]
+                public string TenantName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>259b1ad986cf4ccae4d9976ebb1a83d1</Hash>
+    <Hash>8b0529548ded5865333da13ae26870f2</Hash>
 </Codenesium>*/

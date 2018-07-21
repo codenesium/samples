@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTransactionHistoryArchiveResponseModel>> Update(
                         int transactionID,
                         ApiTransactionHistoryArchiveRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.transactionHistoryArchiveModelValidator.ValidateUpdateAsync(transactionID, model));
-                        if (response.Success)
+                        var validationResult = await this.transactionHistoryArchiveModelValidator.ValidateUpdateAsync(transactionID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTransactionHistoryArchiveMapper.MapModelToBO(transactionID, model);
                                 await this.transactionHistoryArchiveRepository.Update(this.dalTransactionHistoryArchiveMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.transactionHistoryArchiveRepository.Get(transactionID);
+
+                                return new UpdateResponse<ApiTransactionHistoryArchiveResponseModel>(this.bolTransactionHistoryArchiveMapper.MapBOToModel(this.dalTransactionHistoryArchiveMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTransactionHistoryArchiveResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69e661f13f43eff67b5302e0e5f5aaaa</Hash>
+    <Hash>9623b547f5bff892c83e4914417ba919</Hash>
 </Codenesium>*/

@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductCategoryRepository>();
                         var model = new ApiProductCategoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCategory>())).Returns(Task.FromResult(new ProductCategory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductCategory()));
                         var service = new ProductCategoryService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
                                                                  mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductCategoryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductCategoryRequestModel>()));
@@ -223,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6f8353c7626dfbc2ffbdcff6114d3912</Hash>
+    <Hash>25f62af3e13a899177b05f013f3dd4c5</Hash>
 </Codenesium>*/

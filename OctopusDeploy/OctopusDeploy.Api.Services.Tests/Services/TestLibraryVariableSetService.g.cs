@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILibraryVariableSetRepository>();
                         var model = new ApiLibraryVariableSetRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LibraryVariableSet>())).Returns(Task.FromResult(new LibraryVariableSet()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
                         var service = new LibraryVariableSetService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.LibraryVariableSetModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLLibraryVariableSetMapperMock,
                                                                     mock.DALMapperMockFactory.DALLibraryVariableSetMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiLibraryVariableSetResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LibraryVariableSetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiLibraryVariableSetRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e1069d98d274e3f0ce8b56dd0fa15909</Hash>
+    <Hash>d1266a09eb4390536e05c6f70a6be8a9</Hash>
 </Codenesium>*/

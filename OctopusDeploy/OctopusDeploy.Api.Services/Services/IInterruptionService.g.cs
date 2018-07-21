@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiInterruptionResponseModel>> Create(
                         ApiInterruptionRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiInterruptionRequestModel model);
+                Task<UpdateResponse<ApiInterruptionResponseModel>> Update(string id,
+                                                                           ApiInterruptionRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0224ddc7443c08474e7589db8f0dc8e</Hash>
+    <Hash>50e8bc0f29b7410e54c427073523d8f5</Hash>
 </Codenesium>*/

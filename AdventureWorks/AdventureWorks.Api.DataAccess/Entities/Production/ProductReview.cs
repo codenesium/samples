@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -13,7 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 public virtual void SetProperties(
-                        string comments,
+                        string comment,
                         string emailAddress,
                         DateTime modifiedDate,
                         int productID,
@@ -22,7 +23,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         DateTime reviewDate,
                         string reviewerName)
                 {
-                        this.Comments = comments;
+                        this.Comment = comment;
                         this.EmailAddress = emailAddress;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
@@ -33,7 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("Comments")]
-                public string Comments { get; private set; }
+                public string Comment { get; private set; }
 
                 [Column("EmailAddress")]
                 public string EmailAddress { get; private set; }
@@ -60,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce0d808398bd8282303660ec39c5017c</Hash>
+    <Hash>4110e24e0e6c815103edaa9a396fb952</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
@@ -64,6 +65,31 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 public virtual DbSet<Venue> Venues { get; set; }
 
+                /// <summary>
+                /// We're overriding SaveChanges because SQLite does not support database computed columns.
+                /// RowVersion is a very common type of column and it does not work with SQLite.
+                /// To work around this limitation we detect RowVersion columns here and set the value.
+                /// On SQL Server the database would set the value.
+                /// </summary>
+                /// <returns>int</returns>
+                public override int SaveChanges()
+                {
+                        var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+                        if (entries.Any())
+                        {
+                                foreach (var createdEntry in entries)
+                                {
+                                        var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+                                        if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
+                                        {
+                                                entity.CurrentValue = Guid.NewGuid();
+                                        }
+                                }
+                        }
+
+                        return base.SaveChanges();
+                }
+
                 protected override void OnConfiguring(DbContextOptionsBuilder options)
                 {
                         base.OnConfiguring(options);
@@ -95,5 +121,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81dcf3a9788d0d9a48c551b7f835dd57</Hash>
+    <Hash>e0e8104955bccd6b060565bcf2a98bd9</Hash>
 </Codenesium>*/

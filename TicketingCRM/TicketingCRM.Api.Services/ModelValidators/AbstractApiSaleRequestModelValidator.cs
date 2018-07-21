@@ -28,13 +28,11 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void IpAddressRules()
                 {
-                        this.RuleFor(x => x.IpAddress).NotNull();
                         this.RuleFor(x => x.IpAddress).Length(0, 128);
                 }
 
                 public virtual void NotesRules()
                 {
-                        this.RuleFor(x => x.Notes).NotNull();
                         this.RuleFor(x => x.Notes).Length(0, 2147483647);
                 }
 
@@ -57,5 +55,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>538014776a956e6aac5217b507fdf396</Hash>
+    <Hash>39288bd42252ee8ef52cce55ce8f97ea</Hash>
 </Codenesium>*/

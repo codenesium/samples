@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.1
+script:
+   -  dotnet build Tests.Api.Web.csproj
+   -  dotnet test Tests.Api.DataAccess.csproj
+   -  dotnet test Tests.Api.Servicea.csproj
+   -  dotnet test Tests.Api.Client.csproj
+   -  dotnet test Tests.Api.Web.csproj

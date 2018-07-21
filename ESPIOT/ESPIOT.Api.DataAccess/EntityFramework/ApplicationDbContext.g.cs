@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace ESPIOTNS.Api.DataAccess
 {
@@ -42,6 +43,31 @@ namespace ESPIOTNS.Api.DataAccess
 
                 public virtual DbSet<DeviceAction> DeviceActions { get; set; }
 
+                /// <summary>
+                /// We're overriding SaveChanges because SQLite does not support database computed columns.
+                /// RowVersion is a very common type of column and it does not work with SQLite.
+                /// To work around this limitation we detect RowVersion columns here and set the value.
+                /// On SQL Server the database would set the value.
+                /// </summary>
+                /// <returns>int</returns>
+                public override int SaveChanges()
+                {
+                        var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+                        if (entries.Any())
+                        {
+                                foreach (var createdEntry in entries)
+                                {
+                                        var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+                                        if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
+                                        {
+                                                entity.CurrentValue = Guid.NewGuid();
+                                        }
+                                }
+                        }
+
+                        return base.SaveChanges();
+                }
+
                 protected override void OnConfiguring(DbContextOptionsBuilder options)
                 {
                         base.OnConfiguring(options);
@@ -73,5 +99,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>721704877be41e9c7bba4ab0eb36dfac</Hash>
+    <Hash>615e10e81a6134cdb9ffe117bda6ec35</Hash>
 </Codenesium>*/

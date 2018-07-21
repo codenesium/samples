@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRequirementResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCountryRequirementResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCountryRequirementRequestModel model)
                 {
                         CreateResponse<ApiCountryRequirementResponseModel> result = await this.CountryRequirementService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRequirements/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRequirements/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRequirementResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRequirementResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCountryRequirementRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiCountryRequirementRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CountryRequirementService.Update(id, model);
+                                UpdateResponse<ApiCountryRequirementResponseModel> result = await this.CountryRequirementService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRequirementResponseModel response = await this.CountryRequirementService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRequirementResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRequirementResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCountryRequirementRequestModel model)
                 {
-                        ApiCountryRequirementRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCountryRequirementRequestModel request = await this.PatchModel(id, this.CountryRequirementModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CountryRequirementService.Update(id, request);
+                                UpdateResponse<ApiCountryRequirementResponseModel> result = await this.CountryRequirementService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRequirementResponseModel response = await this.CountryRequirementService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace PetShippingNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiCountryRequirementRequestModel> CreatePatch(ApiCountryRequirementRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCountryRequirementRequestModel>();
-                        patch.Replace(x => x.CountryId, model.CountryId);
-                        patch.Replace(x => x.Details, model.Details);
-                        return patch;
-                }
-
                 private async Task<ApiCountryRequirementRequestModel> PatchModel(int id, JsonPatchDocument<ApiCountryRequirementRequestModel> patch)
                 {
                         var record = await this.CountryRequirementService.Get(id);
@@ -232,5 +220,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9629d0e769889ebd5289e4905ae637e4</Hash>
+    <Hash>2829e3f22fa8ee7a5fdea55acd2e4f94</Hash>
 </Codenesium>*/

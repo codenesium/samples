@@ -12,8 +12,8 @@ namespace TicketingCRMNS.Api.Services
                 Task<CreateResponse<ApiCountryResponseModel>> Create(
                         ApiCountryRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiCountryRequestModel model);
+                Task<UpdateResponse<ApiCountryResponseModel>> Update(int id,
+                                                                      ApiCountryRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ecbcb37d68741fa53d13556f609616eb</Hash>
+    <Hash>c5a84c47a8d27ec5719ea8bc0c416422</Hash>
 </Codenesium>*/

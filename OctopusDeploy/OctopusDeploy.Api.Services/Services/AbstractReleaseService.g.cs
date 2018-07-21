@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiReleaseResponseModel>> Update(
                         string id,
                         ApiReleaseRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.releaseModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.releaseModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolReleaseMapper.MapModelToBO(id, model);
                                 await this.releaseRepository.Update(this.dalReleaseMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.releaseRepository.Get(id);
+
+                                return new UpdateResponse<ApiReleaseResponseModel>(this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiReleaseResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -146,5 +153,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4516d09b7083badf392a85aa2c306f3b</Hash>
+    <Hash>efe3909186af66a6e4a264fc4d73e9c7</Hash>
 </Codenesium>*/

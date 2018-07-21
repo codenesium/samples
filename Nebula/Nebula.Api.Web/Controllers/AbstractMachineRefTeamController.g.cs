@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineRefTeamResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiMachineRefTeamResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMachineRefTeamRequestModel model)
                 {
                         CreateResponse<ApiMachineRefTeamResponseModel> result = await this.MachineRefTeamService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/MachineRefTeams/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/MachineRefTeams/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineRefTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineRefTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiMachineRefTeamRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiMachineRefTeamRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.MachineRefTeamService.Update(id, model);
+                                UpdateResponse<ApiMachineRefTeamResponseModel> result = await this.MachineRefTeamService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineRefTeamResponseModel response = await this.MachineRefTeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineRefTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineRefTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRefTeamRequestModel model)
                 {
-                        ApiMachineRefTeamRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiMachineRefTeamRequestModel request = await this.PatchModel(id, this.MachineRefTeamModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.MachineRefTeamService.Update(id, request);
+                                UpdateResponse<ApiMachineRefTeamResponseModel> result = await this.MachineRefTeamService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineRefTeamResponseModel response = await this.MachineRefTeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace NebulaNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiMachineRefTeamRequestModel> CreatePatch(ApiMachineRefTeamRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiMachineRefTeamRequestModel>();
-                        patch.Replace(x => x.MachineId, model.MachineId);
-                        patch.Replace(x => x.TeamId, model.TeamId);
-                        return patch;
-                }
-
                 private async Task<ApiMachineRefTeamRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineRefTeamRequestModel> patch)
                 {
                         var record = await this.MachineRefTeamService.Get(id);
@@ -232,5 +220,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9afb69017400235f2fa9cc5f48eb86eb</Hash>
+    <Hash>df1e0544cc6649bbfe4669449d08c4c8</Hash>
 </Codenesium>*/

@@ -121,6 +121,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var model = new ApiBusinessEntityRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BusinessEntity>())).Returns(Task.FromResult(new BusinessEntity()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BusinessEntity()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -133,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiBusinessEntityResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBusinessEntityRequestModel>()));
@@ -312,5 +313,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6a18d8b15df283c6c72de57afb839dab</Hash>
+    <Hash>9be648f8bf0bc4d9762d860638d1dc75</Hash>
 </Codenesium>*/

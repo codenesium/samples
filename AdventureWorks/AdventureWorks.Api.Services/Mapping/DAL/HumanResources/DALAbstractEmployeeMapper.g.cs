@@ -20,14 +20,14 @@ namespace AdventureWorksNS.Api.Services
                                 bo.HireDate,
                                 bo.JobTitle,
                                 bo.LoginID,
-                                bo.MaritalStatus,
+                                bo.MaritalStatu,
                                 bo.ModifiedDate,
                                 bo.NationalIDNumber,
                                 bo.OrganizationLevel,
                                 bo.Rowguid,
                                 bo.SalariedFlag,
-                                bo.SickLeaveHours,
-                                bo.VacationHours);
+                                bo.SickLeaveHour,
+                                bo.VacationHour);
                         return efEmployee;
                 }
 
@@ -44,14 +44,14 @@ namespace AdventureWorksNS.Api.Services
                                 ef.HireDate,
                                 ef.JobTitle,
                                 ef.LoginID,
-                                ef.MaritalStatus,
+                                ef.MaritalStatu,
                                 ef.ModifiedDate,
                                 ef.NationalIDNumber,
                                 ef.OrganizationLevel,
                                 ef.Rowguid,
                                 ef.SalariedFlag,
-                                ef.SickLeaveHours,
-                                ef.VacationHours);
+                                ef.SickLeaveHour,
+                                ef.VacationHour);
                         return bo;
                 }
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4df649cca236232fab87276cda7f29a</Hash>
+    <Hash>14a553123414ed409f7198ca70d2b276</Hash>
 </Codenesium>*/

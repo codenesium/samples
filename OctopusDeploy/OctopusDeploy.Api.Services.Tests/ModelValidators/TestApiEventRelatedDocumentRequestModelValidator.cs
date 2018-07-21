@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EventId_Create_null()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, null as string);
-                }
-
-                [Fact]
-                public async void EventId_Update_null()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, null as string);
-                }
-
-                [Fact]
                 public async void EventId_Create_length()
                 {
                         Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
@@ -123,30 +99,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void RelatedDocumentId_Create_null()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, null as string);
-                }
-
-                [Fact]
-                public async void RelatedDocumentId_Update_null()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
-
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, null as string);
-                }
-
-                [Fact]
                 public async void RelatedDocumentId_Create_length()
                 {
                         Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
@@ -173,5 +125,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19fb392c7ffbc2933ec59d0f425e7623</Hash>
+    <Hash>e3bfdf5eb91f2eb8aa83aaffb5efae7b</Hash>
 </Codenesium>*/

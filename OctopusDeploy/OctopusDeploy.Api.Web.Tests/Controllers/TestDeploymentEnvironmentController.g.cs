@@ -155,8 +155,8 @@ namespace OctopusDeployNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiDeploymentEnvironmentResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDeploymentEnvironmentResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeploymentEnvironmentRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         DeploymentEnvironmentControllerMockFacade mock = new DeploymentEnvironmentControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>()))
                         .Callback<string, ApiDeploymentEnvironmentRequestModel>(
                                 (id, model) => model.JSON.Should().Be("A")
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiDeploymentEnvironmentResponseModel>(new ApiDeploymentEnvironmentResponseModel()));
                         DeploymentEnvironmentController controller = new DeploymentEnvironmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentEnvironmentModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         DeploymentEnvironmentControllerMockFacade mock = new DeploymentEnvironmentControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiDeploymentEnvironmentResponseModel()));
                         DeploymentEnvironmentController controller = new DeploymentEnvironmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentEnvironmentModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         DeploymentEnvironmentControllerMockFacade mock = new DeploymentEnvironmentControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiDeploymentEnvironmentResponseModel()));
                         DeploymentEnvironmentController controller = new DeploymentEnvironmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentEnvironmentModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace OctopusDeployNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         DeploymentEnvironmentControllerMockFacade mock = new DeploymentEnvironmentControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeploymentEnvironmentResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiDeploymentEnvironmentResponseModel>(null));
                         DeploymentEnvironmentController controller = new DeploymentEnvironmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeploymentEnvironmentModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>afcbec91de4b785a3357237c6cc4fcac</Hash>
+    <Hash>98a8a0866b15b6fa19d7c6a869c281d6</Hash>
 </Codenesium>*/

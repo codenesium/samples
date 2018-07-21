@@ -36,152 +36,35 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Website = website;
                 }
 
-                private string address1;
+                [JsonProperty]
+                public string Address1 { get; private set; }
 
-                [Required]
-                public string Address1
-                {
-                        get
-                        {
-                                return this.address1;
-                        }
+                [JsonProperty]
+                public string Address2 { get; private set; }
 
-                        set
-                        {
-                                this.address1 = value;
-                        }
-                }
+                [JsonProperty]
+                public int AdminId { get; private set; }
 
-                private string address2;
+                [JsonProperty]
+                public string Email { get; private set; }
 
-                [Required]
-                public string Address2
-                {
-                        get
-                        {
-                                return this.address2;
-                        }
+                [JsonProperty]
+                public string Facebook { get; private set; }
 
-                        set
-                        {
-                                this.address2 = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private int adminId;
+                [JsonProperty]
+                public string Phone { get; private set; }
 
-                [Required]
-                public int AdminId
-                {
-                        get
-                        {
-                                return this.adminId;
-                        }
+                [JsonProperty]
+                public int ProvinceId { get; private set; }
 
-                        set
-                        {
-                                this.adminId = value;
-                        }
-                }
-
-                private string email;
-
-                [Required]
-                public string Email
-                {
-                        get
-                        {
-                                return this.email;
-                        }
-
-                        set
-                        {
-                                this.email = value;
-                        }
-                }
-
-                private string facebook;
-
-                [Required]
-                public string Facebook
-                {
-                        get
-                        {
-                                return this.facebook;
-                        }
-
-                        set
-                        {
-                                this.facebook = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
-
-                private int provinceId;
-
-                [Required]
-                public int ProvinceId
-                {
-                        get
-                        {
-                                return this.provinceId;
-                        }
-
-                        set
-                        {
-                                this.provinceId = value;
-                        }
-                }
-
-                private string website;
-
-                [Required]
-                public string Website
-                {
-                        get
-                        {
-                                return this.website;
-                        }
-
-                        set
-                        {
-                                this.website = value;
-                        }
-                }
+                [JsonProperty]
+                public string Website { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b29c6316ccb383d6c12a2b531d906c0</Hash>
+    <Hash>e881bf709011362808b4a27ab5b4c7b8</Hash>
 </Codenesium>*/

@@ -22,40 +22,14 @@ namespace OctopusDeployNS.Api.Contracts
                         this.MachineId = machineId;
                 }
 
-                private string deploymentId;
+                [JsonProperty]
+                public string DeploymentId { get; private set; }
 
-                [Required]
-                public string DeploymentId
-                {
-                        get
-                        {
-                                return this.deploymentId;
-                        }
-
-                        set
-                        {
-                                this.deploymentId = value;
-                        }
-                }
-
-                private string machineId;
-
-                [Required]
-                public string MachineId
-                {
-                        get
-                        {
-                                return this.machineId;
-                        }
-
-                        set
-                        {
-                                this.machineId = value;
-                        }
-                }
+                [JsonProperty]
+                public string MachineId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>08bc67dddd3d58e32eb05166cd4d875d</Hash>
+    <Hash>366d6afbbdf47f9f629abcd4a091fb0e</Hash>
 </Codenesium>*/

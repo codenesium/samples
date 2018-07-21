@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo);
 
-                Task<List<Person>> ByDemographics(string demographics);
+                Task<List<Person>> ByDemographic(string demographic);
 
                 Task<List<BusinessEntityContact>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0);
 
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f79e2db5b82677980a4b5ec108d04035</Hash>
+    <Hash>a557b2d2482e9a7fe46845cd776c1976</Hash>
 </Codenesium>*/

@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Rowguid = rowguid;
                 }
 
-                private string description;
+                [Required]
+                [JsonProperty]
+                public string Description { get; private set; }
 
                 [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private Guid rowguid;
-
-                [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b5a05d965ad04e643c81e863b9f0bb5</Hash>
+    <Hash>3fcfde50775f00560cc31b71e76a025c</Hash>
 </Codenesium>*/

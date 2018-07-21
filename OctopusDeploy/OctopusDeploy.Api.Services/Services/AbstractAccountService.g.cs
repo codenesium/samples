@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAccountResponseModel>> Update(
                         string id,
                         ApiAccountRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.accountModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.accountModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAccountMapper.MapModelToBO(id, model);
                                 await this.accountRepository.Update(this.dalAccountMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.accountRepository.Get(id);
+
+                                return new UpdateResponse<ApiAccountResponseModel>(this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAccountResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5502e177107c212044262eaa03fdce3</Hash>
+    <Hash>965113ade0ef9a6499f892ab678d754f</Hash>
 </Codenesium>*/

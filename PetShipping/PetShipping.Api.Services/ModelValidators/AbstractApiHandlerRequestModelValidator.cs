@@ -32,30 +32,26 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void EmailRules()
                 {
-                        this.RuleFor(x => x.Email).NotNull();
                         this.RuleFor(x => x.Email).Length(0, 128);
                 }
 
                 public virtual void FirstNameRules()
                 {
-                        this.RuleFor(x => x.FirstName).NotNull();
                         this.RuleFor(x => x.FirstName).Length(0, 128);
                 }
 
                 public virtual void LastNameRules()
                 {
-                        this.RuleFor(x => x.LastName).NotNull();
                         this.RuleFor(x => x.LastName).Length(0, 128);
                 }
 
                 public virtual void PhoneRules()
                 {
-                        this.RuleFor(x => x.Phone).NotNull();
                         this.RuleFor(x => x.Phone).Length(0, 10);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>78a7499a847e9df9d2c7cb3b8c1947d6</Hash>
+    <Hash>8c592a62d2d700022e353ee3fdffa76b</Hash>
 </Codenesium>*/

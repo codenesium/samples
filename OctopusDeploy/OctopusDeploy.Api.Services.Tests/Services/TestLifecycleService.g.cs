@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var model = new ApiLifecycleRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Lifecycle>())).Returns(Task.FromResult(new Lifecycle()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiLifecycleResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiLifecycleRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7319efaeeddfa408a64236bdb56a45ba</Hash>
+    <Hash>ac498b61033908dd46d5c2d107fada53</Hash>
 </Codenesium>*/

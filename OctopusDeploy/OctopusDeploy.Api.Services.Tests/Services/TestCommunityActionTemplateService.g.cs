@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var model = new ApiCommunityActionTemplateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CommunityActionTemplate>())).Returns(Task.FromResult(new CommunityActionTemplate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiCommunityActionTemplateResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCommunityActionTemplateRequestModel>()));
@@ -202,5 +203,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19ed659a8538570fc4eff3730ffc5bac</Hash>
+    <Hash>41f390b7df00b0ff22f70da832d66275</Hash>
 </Codenesium>*/

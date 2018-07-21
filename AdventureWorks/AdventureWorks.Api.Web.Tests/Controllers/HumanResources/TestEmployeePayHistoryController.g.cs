@@ -155,8 +155,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiEmployeePayHistoryResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiEmployeePayHistoryResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeePayHistoryRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         EmployeePayHistoryControllerMockFacade mock = new EmployeePayHistoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiEmployeePayHistoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>()))
                         .Callback<int, ApiEmployeePayHistoryRequestModel>(
                                 (id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiEmployeePayHistoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeePayHistoryResponseModel>(new ApiEmployeePayHistoryResponseModel()));
                         EmployeePayHistoryController controller = new EmployeePayHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeePayHistoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         EmployeePayHistoryControllerMockFacade mock = new EmployeePayHistoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiEmployeePayHistoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeePayHistoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeePayHistoryResponseModel()));
                         EmployeePayHistoryController controller = new EmployeePayHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeePayHistoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         EmployeePayHistoryControllerMockFacade mock = new EmployeePayHistoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiEmployeePayHistoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeePayHistoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeePayHistoryResponseModel()));
                         EmployeePayHistoryController controller = new EmployeePayHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeePayHistoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace AdventureWorksNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         EmployeePayHistoryControllerMockFacade mock = new EmployeePayHistoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiEmployeePayHistoryResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeePayHistoryResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeePayHistoryResponseModel>(null));
                         EmployeePayHistoryController controller = new EmployeePayHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeePayHistoryModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>6af38285bf393e60c281fd0c20b719e3</Hash>
+    <Hash>c7ac9e66e075ceba6b1e9aa84929f370</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IRateRepository>();
                         var model = new ApiRateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Rate>())).Returns(Task.FromResult(new Rate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Rate()));
                         var service = new RateService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLRateMapperMock,
                                                       mock.DALMapperMockFactory.DALRateMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiRateResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.RateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>()));
@@ -132,5 +133,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3be41078ba02dd5b1b7dea1c219ac1d4</Hash>
+    <Hash>b13dc9b1d47089c40d4ff32458d5917a</Hash>
 </Codenesium>*/

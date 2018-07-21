@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Services
                                 model.HireDate,
                                 model.JobTitle,
                                 model.LoginID,
-                                model.MaritalStatus,
+                                model.MaritalStatu,
                                 model.ModifiedDate,
                                 model.NationalIDNumber,
                                 model.OrganizationLevel,
                                 model.Rowguid,
                                 model.SalariedFlag,
-                                model.SickLeaveHours,
-                                model.VacationHours);
+                                model.SickLeaveHour,
+                                model.VacationHour);
                         return boEmployee;
                 }
 
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiEmployeeResponseModel();
 
-                        model.SetProperties(boEmployee.BusinessEntityID, boEmployee.BirthDate, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
+                        model.SetProperties(boEmployee.BusinessEntityID, boEmployee.BirthDate, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatu, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHour, boEmployee.VacationHour);
 
                         return model;
                 }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db9b70c675dff96e924b4e4753b4819f</Hash>
+    <Hash>b1157f27a9519ac93efc4a561913ac87</Hash>
 </Codenesium>*/

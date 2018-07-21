@@ -20,24 +20,11 @@ namespace StackOverflowNS.Api.Contracts
                         this.Type = type;
                 }
 
-                private string type;
-
-                [Required]
-                public string Type
-                {
-                        get
-                        {
-                                return this.type;
-                        }
-
-                        set
-                        {
-                                this.type = value;
-                        }
-                }
+                [JsonProperty]
+                public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>feb6544f8c8851cf7083bfb7d1b73150</Hash>
+    <Hash>b5a9d37ef38c55388a2ad363984ba567</Hash>
 </Codenesium>*/

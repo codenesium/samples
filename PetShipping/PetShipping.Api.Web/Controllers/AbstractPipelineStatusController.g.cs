@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStatusResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPipelineStatusResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStatusRequestModel model)
                 {
                         CreateResponse<ApiPipelineStatusResponseModel> result = await this.PipelineStatusService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PipelineStatus/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PipelineStatus/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPipelineStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPipelineStatusRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiPipelineStatusRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PipelineStatusService.Update(id, model);
+                                UpdateResponse<ApiPipelineStatusResponseModel> result = await this.PipelineStatusService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPipelineStatusResponseModel response = await this.PipelineStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPipelineStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStatusRequestModel model)
                 {
-                        ApiPipelineStatusRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPipelineStatusRequestModel request = await this.PatchModel(id, this.PipelineStatusModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PipelineStatusService.Update(id, request);
+                                UpdateResponse<ApiPipelineStatusResponseModel> result = await this.PipelineStatusService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPipelineStatusResponseModel response = await this.PipelineStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace PetShippingNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPipelineStatusRequestModel> CreatePatch(ApiPipelineStatusRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPipelineStatusRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiPipelineStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiPipelineStatusRequestModel> patch)
                 {
                         var record = await this.PipelineStatusService.Get(id);
@@ -245,5 +234,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>af3ba54997d9824a72107e9381cf9823</Hash>
+    <Hash>9d39697051405223851d1d3f2f99525d</Hash>
 </Codenesium>*/

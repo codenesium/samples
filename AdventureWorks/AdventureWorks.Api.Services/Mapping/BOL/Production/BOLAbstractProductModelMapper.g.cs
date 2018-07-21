@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services
                         boProductModel.SetProperties(
                                 productModelID,
                                 model.CatalogDescription,
-                                model.Instructions,
+                                model.Instruction,
                                 model.ModifiedDate,
                                 model.Name,
                                 model.Rowguid);
@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiProductModelResponseModel();
 
-                        model.SetProperties(boProductModel.ProductModelID, boProductModel.CatalogDescription, boProductModel.Instructions, boProductModel.ModifiedDate, boProductModel.Name, boProductModel.Rowguid);
+                        model.SetProperties(boProductModel.ProductModelID, boProductModel.CatalogDescription, boProductModel.Instruction, boProductModel.ModifiedDate, boProductModel.Name, boProductModel.Rowguid);
 
                         return model;
                 }
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f0356f8fa54dbe350e4702c310f16e9</Hash>
+    <Hash>29bbdf90371dff337a9522b136b80362</Hash>
 </Codenesium>*/

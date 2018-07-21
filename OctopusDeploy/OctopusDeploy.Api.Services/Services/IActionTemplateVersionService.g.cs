@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiActionTemplateVersionResponseModel>> Create(
                         ApiActionTemplateVersionRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiActionTemplateVersionRequestModel model);
+                Task<UpdateResponse<ApiActionTemplateVersionResponseModel>> Update(string id,
+                                                                                    ApiActionTemplateVersionRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a4032afee9d565a305be2d33a1a0a2f</Hash>
+    <Hash>1f870e87ec6f9090d24c220a7aa77bab</Hash>
 </Codenesium>*/

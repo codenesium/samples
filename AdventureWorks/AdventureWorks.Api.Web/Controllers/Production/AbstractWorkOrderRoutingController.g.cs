@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiWorkOrderRoutingResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRoutingRequestModel model)
                 {
                         CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.WorkOrderRoutingService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Record.WorkOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Record.WorkOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderRoutingResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderRoutingRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiWorkOrderRoutingRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.WorkOrderRoutingService.Update(id, model);
+                                UpdateResponse<ApiWorkOrderRoutingResponseModel> result = await this.WorkOrderRoutingService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkOrderRoutingResponseModel response = await this.WorkOrderRoutingService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderRoutingResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRoutingRequestModel model)
                 {
-                        ApiWorkOrderRoutingRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiWorkOrderRoutingRequestModel request = await this.PatchModel(id, this.WorkOrderRoutingModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.WorkOrderRoutingService.Update(id, request);
+                                UpdateResponse<ApiWorkOrderRoutingResponseModel> result = await this.WorkOrderRoutingService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkOrderRoutingResponseModel response = await this.WorkOrderRoutingService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,23 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiWorkOrderRoutingRequestModel> CreatePatch(ApiWorkOrderRoutingRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiWorkOrderRoutingRequestModel>();
-                        patch.Replace(x => x.ActualCost, model.ActualCost);
-                        patch.Replace(x => x.ActualEndDate, model.ActualEndDate);
-                        patch.Replace(x => x.ActualResourceHrs, model.ActualResourceHrs);
-                        patch.Replace(x => x.ActualStartDate, model.ActualStartDate);
-                        patch.Replace(x => x.LocationID, model.LocationID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OperationSequence, model.OperationSequence);
-                        patch.Replace(x => x.PlannedCost, model.PlannedCost);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
-                        patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
-                        return patch;
-                }
-
                 private async Task<ApiWorkOrderRoutingRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderRoutingRequestModel> patch)
                 {
                         var record = await this.WorkOrderRoutingService.Get(id);
@@ -252,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5cdcc2085e5a90eb4ef1944e7c06f201</Hash>
+    <Hash>099e88583b07fc06adb29719cb2b3878</Hash>
 </Codenesium>*/

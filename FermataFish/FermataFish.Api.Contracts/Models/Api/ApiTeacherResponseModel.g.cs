@@ -28,24 +28,39 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioIdEntity = nameof(ApiResponse.Studios);
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime Birthday { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Email { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Phone { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int StudioId { get; private set; }
 
+                [JsonProperty]
                 public string StudioIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b941fea6c81c96539a996e247fdc6493</Hash>
+    <Hash>8df94c6251c82fdb08019be4c3d72f0b</Hash>
 </Codenesium>*/

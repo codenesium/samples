@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPasswordRepository>();
                         var model = new ApiPasswordRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Password>())).Returns(Task.FromResult(new Password()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
                         var service = new PasswordService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLPasswordMapperMock,
                                                           mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPasswordResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPasswordRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>314aa56f9f049f1efdb169469ea8395c</Hash>
+    <Hash>833710e2ac0a7aee2884dc701e646ce6</Hash>
 </Codenesium>*/

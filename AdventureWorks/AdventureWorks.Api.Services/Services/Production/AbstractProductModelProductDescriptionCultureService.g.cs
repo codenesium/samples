@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>> Update(
                         int productModelID,
                         ApiProductModelProductDescriptionCultureRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model));
-                        if (response.Success)
+                        var validationResult = await this.productModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
                                 await this.productModelProductDescriptionCultureRepository.Update(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productModelProductDescriptionCultureRepository.Get(productModelID);
+
+                                return new UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>(this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd732bbe080156473b3a0df22dcb8948</Hash>
+    <Hash>f1c12fc2d5d2084ab4d03b6d3d579dc1</Hash>
 </Codenesium>*/

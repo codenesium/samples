@@ -37,7 +37,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void DescriptionRules()
                 {
-                        this.RuleFor(x => x.Description).NotNull();
                 }
 
                 public virtual void DurationSecondsRules()
@@ -63,12 +62,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -92,7 +89,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void StateRules()
                 {
-                        this.RuleFor(x => x.State).NotNull();
                         this.RuleFor(x => x.State).Length(0, 50);
                 }
 
@@ -104,5 +100,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ea6c3c6a125581052bd047617e52c0b</Hash>
+    <Hash>d8afeb02a2ffd940b3e156f09b14607d</Hash>
 </Codenesium>*/

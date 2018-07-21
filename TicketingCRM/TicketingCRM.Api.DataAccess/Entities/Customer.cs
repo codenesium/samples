@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
@@ -45,5 +46,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2f4e5f4c25b0b18397540e247884bf28</Hash>
+    <Hash>5da4b80fc0fe0f1bb96bf71dbb3d4fdd</Hash>
 </Codenesium>*/

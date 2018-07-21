@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductListPriceHistoryResponseModel>> Update(
                         int productID,
                         ApiProductListPriceHistoryRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model));
-                        if (response.Success)
+                        var validationResult = await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
                                 await this.productListPriceHistoryRepository.Update(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productListPriceHistoryRepository.Get(productID);
+
+                                return new UpdateResponse<ApiProductListPriceHistoryResponseModel>(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductListPriceHistoryResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff12759a127020729e86e12e52280b9a</Hash>
+    <Hash>1e48594933e977ffa2dc6daf08b30124</Hash>
 </Codenesium>*/

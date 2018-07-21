@@ -26,72 +26,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.SortOrder = sortOrder;
                 }
 
-                private byte[] dataVersion;
+                [JsonProperty]
+                public byte[] DataVersion { get; private set; }
 
-                [Required]
-                public byte[] DataVersion
-                {
-                        get
-                        {
-                                return this.dataVersion;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.dataVersion = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int sortOrder;
-
-                [Required]
-                public int SortOrder
-                {
-                        get
-                        {
-                                return this.sortOrder;
-                        }
-
-                        set
-                        {
-                                this.sortOrder = value;
-                        }
-                }
+                [JsonProperty]
+                public int SortOrder { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5d91b283a661fd0d1402da592376db33</Hash>
+    <Hash>082cd5a126ca925aae1e7687c04ed2b2</Hash>
 </Codenesium>*/

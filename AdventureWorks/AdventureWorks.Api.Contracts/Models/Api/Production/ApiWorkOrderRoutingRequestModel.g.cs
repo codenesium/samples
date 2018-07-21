@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts
                 public virtual void SetProperties(
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHrs,
+                        decimal? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         this.ActualCost = actualCost;
                         this.ActualEndDate = actualEndDate;
-                        this.ActualResourceHrs = actualResourceHrs;
+                        this.ActualResourceHr = actualResourceHr;
                         this.ActualStartDate = actualStartDate;
                         this.LocationID = locationID;
                         this.ModifiedDate = modifiedDate;
@@ -40,180 +40,48 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ScheduledStartDate = scheduledStartDate;
                 }
 
-                private decimal? actualCost;
+                [JsonProperty]
+                public decimal? ActualCost { get; private set; }
 
-                public decimal? ActualCost
-                {
-                        get
-                        {
-                                return this.actualCost;
-                        }
+                [JsonProperty]
+                public DateTime? ActualEndDate { get; private set; }
 
-                        set
-                        {
-                                this.actualCost = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal? ActualResourceHr { get; private set; }
 
-                private DateTime? actualEndDate;
-
-                public DateTime? ActualEndDate
-                {
-                        get
-                        {
-                                return this.actualEndDate;
-                        }
-
-                        set
-                        {
-                                this.actualEndDate = value;
-                        }
-                }
-
-                private decimal? actualResourceHrs;
-
-                public decimal? ActualResourceHrs
-                {
-                        get
-                        {
-                                return this.actualResourceHrs;
-                        }
-
-                        set
-                        {
-                                this.actualResourceHrs = value;
-                        }
-                }
-
-                private DateTime? actualStartDate;
-
-                public DateTime? ActualStartDate
-                {
-                        get
-                        {
-                                return this.actualStartDate;
-                        }
-
-                        set
-                        {
-                                this.actualStartDate = value;
-                        }
-                }
-
-                private short locationID;
+                [JsonProperty]
+                public DateTime? ActualStartDate { get; private set; }
 
                 [Required]
-                public short LocationID
-                {
-                        get
-                        {
-                                return this.locationID;
-                        }
-
-                        set
-                        {
-                                this.locationID = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public short LocationID { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private short operationSequence;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public short OperationSequence
-                {
-                        get
-                        {
-                                return this.operationSequence;
-                        }
-
-                        set
-                        {
-                                this.operationSequence = value;
-                        }
-                }
-
-                private decimal plannedCost;
+                [JsonProperty]
+                public short OperationSequence { get; private set; }
 
                 [Required]
-                public decimal PlannedCost
-                {
-                        get
-                        {
-                                return this.plannedCost;
-                        }
-
-                        set
-                        {
-                                this.plannedCost = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public decimal PlannedCost { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private DateTime scheduledEndDate;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public DateTime ScheduledEndDate
-                {
-                        get
-                        {
-                                return this.scheduledEndDate;
-                        }
-
-                        set
-                        {
-                                this.scheduledEndDate = value;
-                        }
-                }
-
-                private DateTime scheduledStartDate;
+                [JsonProperty]
+                public DateTime ScheduledEndDate { get; private set; }
 
                 [Required]
-                public DateTime ScheduledStartDate
-                {
-                        get
-                        {
-                                return this.scheduledStartDate;
-                        }
-
-                        set
-                        {
-                                this.scheduledStartDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime ScheduledStartDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>255b9bf23a1ab7f6fe7e636084a1af75</Hash>
+    <Hash>091eed6102a69d0dbd162d4800a21158</Hash>
 </Codenesium>*/

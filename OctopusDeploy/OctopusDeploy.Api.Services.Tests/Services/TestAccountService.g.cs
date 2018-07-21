@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IAccountRepository>();
                         var model = new ApiAccountRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Account>())).Returns(Task.FromResult(new Account()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
                         var service = new AccountService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.AccountModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLAccountMapperMock,
                                                          mock.DALMapperMockFactory.DALAccountMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiAccountResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.AccountModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiAccountRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c79256a439f0101eb57bdcf5e38aab80</Hash>
+    <Hash>10c1efb7d5ce2a8a556116b61532a7ff</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVenueResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiVenueResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiVenueRequestModel model)
                 {
                         CreateResponse<ApiVenueResponseModel> result = await this.VenueService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Venues/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Venues/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVenueResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVenueResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVenueRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiVenueRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.VenueService.Update(id, model);
+                                UpdateResponse<ApiVenueResponseModel> result = await this.VenueService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiVenueResponseModel response = await this.VenueService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVenueResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVenueResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVenueRequestModel model)
                 {
-                        ApiVenueRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiVenueRequestModel request = await this.PatchModel(id, this.VenueModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.VenueService.Update(id, request);
+                                UpdateResponse<ApiVenueResponseModel> result = await this.VenueService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiVenueResponseModel response = await this.VenueService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,21 +223,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiVenueRequestModel> CreatePatch(ApiVenueRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiVenueRequestModel>();
-                        patch.Replace(x => x.Address1, model.Address1);
-                        patch.Replace(x => x.Address2, model.Address2);
-                        patch.Replace(x => x.AdminId, model.AdminId);
-                        patch.Replace(x => x.Email, model.Email);
-                        patch.Replace(x => x.Facebook, model.Facebook);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Phone, model.Phone);
-                        patch.Replace(x => x.ProvinceId, model.ProvinceId);
-                        patch.Replace(x => x.Website, model.Website);
-                        return patch;
-                }
-
                 private async Task<ApiVenueRequestModel> PatchModel(int id, JsonPatchDocument<ApiVenueRequestModel> patch)
                 {
                         var record = await this.VenueService.Get(id);
@@ -261,5 +242,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fd42dbb2cc02a6e0ef2dcbb8f1259c2c</Hash>
+    <Hash>c0fa50b5dc71eb9b04b8dcab397e7618</Hash>
 </Codenesium>*/

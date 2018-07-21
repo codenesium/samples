@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDatabaseLogResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDatabaseLogRequestModel model)
                 {
                         CreateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DatabaseLogs/{result.Record.DatabaseLogID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DatabaseLogs/{result.Record.DatabaseLogID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDatabaseLogRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiDatabaseLogRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DatabaseLogService.Update(id, model);
+                                UpdateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDatabaseLogResponseModel response = await this.DatabaseLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogRequestModel model)
                 {
-                        ApiDatabaseLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDatabaseLogRequestModel request = await this.PatchModel(id, this.DatabaseLogModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DatabaseLogService.Update(id, request);
+                                UpdateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDatabaseLogResponseModel response = await this.DatabaseLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,19 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiDatabaseLogRequestModel> CreatePatch(ApiDatabaseLogRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDatabaseLogRequestModel>();
-                        patch.Replace(x => x.DatabaseUser, model.DatabaseUser);
-                        patch.Replace(x => x.@Event, model.@Event);
-                        patch.Replace(x => x.@Object, model.@Object);
-                        patch.Replace(x => x.PostTime, model.PostTime);
-                        patch.Replace(x => x.Schema, model.Schema);
-                        patch.Replace(x => x.TSQL, model.TSQL);
-                        patch.Replace(x => x.XmlEvent, model.XmlEvent);
-                        return patch;
-                }
-
                 private async Task<ApiDatabaseLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiDatabaseLogRequestModel> patch)
                 {
                         var record = await this.DatabaseLogService.Get(id);
@@ -237,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b9738acaac694dfe2c1aa821492517ed</Hash>
+    <Hash>44eebe78e55515fe7eca857e02d8586b</Hash>
 </Codenesium>*/

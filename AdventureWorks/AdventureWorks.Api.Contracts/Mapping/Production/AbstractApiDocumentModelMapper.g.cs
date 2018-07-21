@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -45,9 +47,27 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.Title);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiDocumentRequestModel> CreatePatch(ApiDocumentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+                        patch.Replace(x => x.ChangeNumber, model.ChangeNumber);
+                        patch.Replace(x => x.Document1, model.Document1);
+                        patch.Replace(x => x.DocumentLevel, model.DocumentLevel);
+                        patch.Replace(x => x.DocumentSummary, model.DocumentSummary);
+                        patch.Replace(x => x.FileExtension, model.FileExtension);
+                        patch.Replace(x => x.FileName, model.FileName);
+                        patch.Replace(x => x.FolderFlag, model.FolderFlag);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Owner, model.Owner);
+                        patch.Replace(x => x.Revision, model.Revision);
+                        patch.Replace(x => x.Status, model.Status);
+                        patch.Replace(x => x.Title, model.Title);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fc91e09bba5ac4d545f4683a5d5e4c4e</Hash>
+    <Hash>9f308f37d62ae49ff7837567a8610ac6</Hash>
 </Codenesium>*/

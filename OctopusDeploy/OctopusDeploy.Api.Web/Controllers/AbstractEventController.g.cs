@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEventResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEventRequestModel model)
                 {
                         CreateResponse<ApiEventResponseModel> result = await this.EventService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Events/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Events/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiEventRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiEventRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EventService.Update(id, model);
+                                UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEventResponseModel response = await this.EventService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiEventRequestModel model)
                 {
-                        ApiEventRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEventRequestModel request = await this.PatchModel(id, this.EventModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EventService.Update(id, request);
+                                UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEventResponseModel response = await this.EventService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -263,23 +259,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEventRequestModel> CreatePatch(ApiEventRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEventRequestModel>();
-                        patch.Replace(x => x.AutoId, model.AutoId);
-                        patch.Replace(x => x.Category, model.Category);
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Message, model.Message);
-                        patch.Replace(x => x.Occurred, model.Occurred);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.RelatedDocumentIds, model.RelatedDocumentIds);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        patch.Replace(x => x.UserId, model.UserId);
-                        patch.Replace(x => x.Username, model.Username);
-                        return patch;
-                }
-
                 private async Task<ApiEventRequestModel> PatchModel(string id, JsonPatchDocument<ApiEventRequestModel> patch)
                 {
                         var record = await this.EventService.Get(id);
@@ -299,5 +278,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>349a584bc4c5e87f5c22716ececa4cf3</Hash>
+    <Hash>359641cf6e6857b1a6cf2327351aa0bf</Hash>
 </Codenesium>*/

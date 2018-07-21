@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
@@ -27,9 +29,18 @@ namespace TicketingCRMNS.Api.Contracts
                                 response.TransactionStatusId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiTransactionRequestModel> CreatePatch(ApiTransactionRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTransactionRequestModel>();
+                        patch.Replace(x => x.Amount, model.Amount);
+                        patch.Replace(x => x.GatewayConfirmationNumber, model.GatewayConfirmationNumber);
+                        patch.Replace(x => x.TransactionStatusId, model.TransactionStatusId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cefe68ad0de20eca112242547de392d3</Hash>
+    <Hash>071580186f81f151e4e9a8c64af237de</Hash>
 </Codenesium>*/

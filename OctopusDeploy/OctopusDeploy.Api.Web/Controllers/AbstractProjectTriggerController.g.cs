@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectTriggerResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProjectTriggerResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProjectTriggerRequestModel model)
                 {
                         CreateResponse<ApiProjectTriggerResponseModel> result = await this.ProjectTriggerService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProjectTriggers/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProjectTriggers/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectTriggerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProjectTriggerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiProjectTriggerRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiProjectTriggerRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProjectTriggerService.Update(id, model);
+                                UpdateResponse<ApiProjectTriggerResponseModel> result = await this.ProjectTriggerService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProjectTriggerResponseModel response = await this.ProjectTriggerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectTriggerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProjectTriggerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiProjectTriggerRequestModel model)
                 {
-                        ApiProjectTriggerRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProjectTriggerRequestModel request = await this.PatchModel(id, this.ProjectTriggerModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProjectTriggerService.Update(id, request);
+                                UpdateResponse<ApiProjectTriggerResponseModel> result = await this.ProjectTriggerService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProjectTriggerResponseModel response = await this.ProjectTriggerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,17 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProjectTriggerRequestModel> CreatePatch(ApiProjectTriggerRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProjectTriggerRequestModel>();
-                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.TriggerType, model.TriggerType);
-                        return patch;
-                }
-
                 private async Task<ApiProjectTriggerRequestModel> PatchModel(string id, JsonPatchDocument<ApiProjectTriggerRequestModel> patch)
                 {
                         var record = await this.ProjectTriggerService.Get(id);
@@ -265,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d390c56d86ed907fd28072ebbfc32ada</Hash>
+    <Hash>8972b0ebded08c0f8eedd18a9b4e4639</Hash>
 </Codenesium>*/

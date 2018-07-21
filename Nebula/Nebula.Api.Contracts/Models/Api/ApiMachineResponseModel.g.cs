@@ -24,20 +24,32 @@ namespace NebulaNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JwtKey { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastIpAddress { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public Guid MachineGuid { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8028501d96788f7fcbdcaba532417a94</Hash>
+    <Hash>ba3a42fb6e28cee8035820b9db4a90f9</Hash>
 </Codenesium>*/

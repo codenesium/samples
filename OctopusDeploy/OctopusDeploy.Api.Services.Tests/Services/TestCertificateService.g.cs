@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var model = new ApiCertificateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Certificate>())).Returns(Task.FromResult(new Certificate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Certificate()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiCertificateResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCertificateRequestModel>()));
@@ -276,5 +277,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0a559a035900bd40f2d19efa9174d696</Hash>
+    <Hash>1e364435b45233a3ee21439377aad5b8</Hash>
 </Codenesium>*/

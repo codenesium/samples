@@ -20,24 +20,11 @@ namespace FermataFishNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f71a2356cf12528a8b1b47509359094f</Hash>
+    <Hash>644669e66f10bba8bc14cac837b799ec</Hash>
 </Codenesium>*/

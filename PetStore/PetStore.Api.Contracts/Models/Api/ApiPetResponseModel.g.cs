@@ -30,28 +30,38 @@ namespace PetStoreNS.Api.Contracts
                         this.SpeciesIdEntity = nameof(ApiResponse.Species);
                 }
 
+                [JsonProperty]
                 public DateTime AcquiredDate { get; private set; }
 
+                [JsonProperty]
                 public int BreedId { get; private set; }
 
+                [JsonProperty]
                 public string BreedIdEntity { get; set; }
 
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [JsonProperty]
                 public int PenId { get; private set; }
 
+                [JsonProperty]
                 public string PenIdEntity { get; set; }
 
+                [JsonProperty]
                 public decimal Price { get; private set; }
 
+                [JsonProperty]
                 public int SpeciesId { get; private set; }
 
+                [JsonProperty]
                 public string SpeciesIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b65b10d5f053672ecfc17833657ac1f2</Hash>
+    <Hash>b00256b3d60bd7d5d14d52a5eb42cba2</Hash>
 </Codenesium>*/

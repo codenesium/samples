@@ -38,36 +38,51 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOfferProducts);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string CarrierTrackingNumber { get; private set; }
 
+                [JsonProperty]
                 public decimal LineTotal { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public short OrderQty { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public string ProductIDEntity { get; set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int SalesOrderDetailID { get; private set; }
 
+                [JsonProperty]
                 public int SalesOrderID { get; private set; }
 
+                [JsonProperty]
                 public string SalesOrderIDEntity { get; set; }
 
+                [JsonProperty]
                 public int SpecialOfferID { get; private set; }
 
+                [JsonProperty]
                 public string SpecialOfferIDEntity { get; set; }
 
+                [JsonProperty]
                 public decimal UnitPrice { get; private set; }
 
+                [JsonProperty]
                 public decimal UnitPriceDiscount { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2846f170323753f741518cb4c9aeb36b</Hash>
+    <Hash>ac3ffafd91cd62319169b1228a47b8e9</Hash>
 </Codenesium>*/

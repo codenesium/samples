@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<UnitMeasure> ByName(string name);
 
-                Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<BillOfMaterial>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>90395f6b218de41151333d5bf29dcc1c</Hash>
+    <Hash>ac8735fadf9140ccdb5fe70ec06e6567</Hash>
 </Codenesium>*/

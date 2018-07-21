@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMutexResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiMutexResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMutexRequestModel model)
                 {
                         CreateResponse<ApiMutexResponseModel> result = await this.MutexService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Mutexes/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Mutexes/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMutexResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMutexResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiMutexRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiMutexRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.MutexService.Update(id, model);
+                                UpdateResponse<ApiMutexResponseModel> result = await this.MutexService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiMutexResponseModel response = await this.MutexService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMutexResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMutexResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiMutexRequestModel model)
                 {
-                        ApiMutexRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiMutexRequestModel request = await this.PatchModel(id, this.MutexModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.MutexService.Update(id, request);
+                                UpdateResponse<ApiMutexResponseModel> result = await this.MutexService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiMutexResponseModel response = await this.MutexService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,13 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiMutexRequestModel> CreatePatch(ApiMutexRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiMutexRequestModel>();
-                        patch.Replace(x => x.JSON, model.JSON);
-                        return patch;
-                }
-
                 private async Task<ApiMutexRequestModel> PatchModel(string id, JsonPatchDocument<ApiMutexRequestModel> patch)
                 {
                         var record = await this.MutexService.Get(id);
@@ -231,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9f777df4a7343d0027630ded2a5cfe29</Hash>
+    <Hash>a25f1ff4391e851096357f4102315a27</Hash>
 </Codenesium>*/

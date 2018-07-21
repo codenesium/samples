@@ -155,8 +155,8 @@ namespace NebulaNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiMachineRefTeamResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiMachineRefTeamResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineRefTeamRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace NebulaNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         MachineRefTeamControllerMockFacade mock = new MachineRefTeamControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiMachineRefTeamResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>()))
                         .Callback<int, ApiMachineRefTeamRequestModel>(
                                 (id, model) => model.MachineId.Should().Be(1)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiMachineRefTeamResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineRefTeamResponseModel>(new ApiMachineRefTeamResponseModel()));
                         MachineRefTeamController controller = new MachineRefTeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineRefTeamModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace NebulaNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         MachineRefTeamControllerMockFacade mock = new MachineRefTeamControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiMachineRefTeamResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineRefTeamResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineRefTeamResponseModel()));
                         MachineRefTeamController controller = new MachineRefTeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineRefTeamModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace NebulaNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         MachineRefTeamControllerMockFacade mock = new MachineRefTeamControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiMachineRefTeamResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineRefTeamResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineRefTeamResponseModel()));
                         MachineRefTeamController controller = new MachineRefTeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineRefTeamModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace NebulaNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         MachineRefTeamControllerMockFacade mock = new MachineRefTeamControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiMachineRefTeamResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineRefTeamResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineRefTeamResponseModel>(null));
                         MachineRefTeamController controller = new MachineRefTeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineRefTeamModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace NebulaNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>56e39ddda46f099b098d0b6607b8eac2</Hash>
+    <Hash>4118be2cf3cb96855c4992a1d4e2460c</Hash>
 </Codenesium>*/

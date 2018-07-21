@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -55,9 +56,34 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.Status.Should().Be(1);
                         response.Title.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiDocumentModelMapper();
+                        var model = new ApiDocumentRequestModel();
+                        model.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
+
+                        JsonPatchDocument<ApiDocumentRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiDocumentRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ChangeNumber.Should().Be(1);
+                        response.Document1.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+                        response.DocumentLevel.Should().Be(1);
+                        response.DocumentSummary.Should().Be("A");
+                        response.FileExtension.Should().Be("A");
+                        response.FileName.Should().Be("A");
+                        response.FolderFlag.Should().Be(true);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Owner.Should().Be(1);
+                        response.Revision.Should().Be("A");
+                        response.Status.Should().Be(1);
+                        response.Title.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9b4457513d398bbf739f8900057e3713</Hash>
+    <Hash>21d2f333f621e79fd500853ea1495b6b</Hash>
 </Codenesium>*/

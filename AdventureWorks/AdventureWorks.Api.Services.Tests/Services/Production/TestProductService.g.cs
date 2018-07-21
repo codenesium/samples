@@ -30,8 +30,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -64,8 +64,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -97,8 +97,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -131,8 +131,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -161,13 +161,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductRepository>();
                         var model = new ApiProductRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Product>())).Returns(Task.FromResult(new Product()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
                         var service = new ProductService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -183,7 +184,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
                                                          mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductRequestModel>()));
@@ -201,8 +202,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -236,8 +237,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -269,8 +270,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -303,8 +304,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -336,8 +337,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -363,16 +364,16 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public async void BillOfMaterials_Exists()
                 {
                         var mock = new ServiceMockFacade<IProductRepository>();
-                        var records = new List<BillOfMaterials>();
-                        records.Add(new BillOfMaterials());
+                        var records = new List<BillOfMaterial>();
+                        records.Add(new BillOfMaterial());
                         mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ProductService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -388,7 +389,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
                                                          mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-                        List<ApiBillOfMaterialsResponseModel> response = await service.BillOfMaterials(default(int));
+                        List<ApiBillOfMaterialResponseModel> response = await service.BillOfMaterials(default(int));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.BillOfMaterials(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -398,14 +399,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public async void BillOfMaterials_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProductRepository>();
-                        mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterials>>(new List<BillOfMaterials>()));
+                        mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
                         var service = new ProductService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -421,7 +422,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
                                                          mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-                        List<ApiBillOfMaterialsResponseModel> response = await service.BillOfMaterials(default(int));
+                        List<ApiBillOfMaterialResponseModel> response = await service.BillOfMaterials(default(int));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.BillOfMaterials(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -439,8 +440,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -472,8 +473,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -507,8 +508,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -540,8 +541,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -575,8 +576,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -608,8 +609,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -643,8 +644,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -676,8 +677,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -711,8 +712,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -744,8 +745,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -779,8 +780,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -812,8 +813,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -847,8 +848,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -880,8 +881,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.ModelValidatorMockFactory.ProductModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                          mock.DALMapperMockFactory.DALProductMapperMock,
-                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                         mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                         mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                         mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
                                                          mock.DALMapperMockFactory.DALProductCostHistoryMapperMock,
                                                          mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
@@ -906,5 +907,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f0849fef1fca10d9c978dab4277c5d06</Hash>
+    <Hash>945499c6d8bdae70717482c81d1867b4</Hash>
 </Codenesium>*/

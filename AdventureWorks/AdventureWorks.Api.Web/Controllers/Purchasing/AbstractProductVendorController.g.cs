@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductVendorResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductVendorResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductVendorRequestModel model)
                 {
                         CreateResponse<ApiProductVendorResponseModel> result = await this.ProductVendorService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductVendors/{result.Record.ProductID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductVendors/{result.Record.ProductID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductVendorResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductVendorResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductVendorRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductVendorRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductVendorService.Update(id, model);
+                                UpdateResponse<ApiProductVendorResponseModel> result = await this.ProductVendorService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductVendorResponseModel response = await this.ProductVendorService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductVendorResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductVendorResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductVendorRequestModel model)
                 {
-                        ApiProductVendorRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductVendorRequestModel request = await this.PatchModel(id, this.ProductVendorModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductVendorService.Update(id, request);
+                                UpdateResponse<ApiProductVendorResponseModel> result = await this.ProductVendorService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductVendorResponseModel response = await this.ProductVendorService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,22 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProductVendorRequestModel> CreatePatch(ApiProductVendorRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductVendorRequestModel>();
-                        patch.Replace(x => x.AverageLeadTime, model.AverageLeadTime);
-                        patch.Replace(x => x.BusinessEntityID, model.BusinessEntityID);
-                        patch.Replace(x => x.LastReceiptCost, model.LastReceiptCost);
-                        patch.Replace(x => x.LastReceiptDate, model.LastReceiptDate);
-                        patch.Replace(x => x.MaxOrderQty, model.MaxOrderQty);
-                        patch.Replace(x => x.MinOrderQty, model.MinOrderQty);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OnOrderQty, model.OnOrderQty);
-                        patch.Replace(x => x.StandardPrice, model.StandardPrice);
-                        patch.Replace(x => x.UnitMeasureCode, model.UnitMeasureCode);
-                        return patch;
-                }
-
                 private async Task<ApiProductVendorRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductVendorRequestModel> patch)
                 {
                         var record = await this.ProductVendorService.Get(id);
@@ -262,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bb59cad1642d6b808713e96834daddd</Hash>
+    <Hash>8899ba34a5e0edccfa362da374684523</Hash>
 </Codenesium>*/

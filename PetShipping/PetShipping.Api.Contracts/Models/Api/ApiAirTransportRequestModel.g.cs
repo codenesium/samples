@@ -30,104 +30,26 @@ namespace PetShippingNS.Api.Contracts
                         this.TakeoffDate = takeoffDate;
                 }
 
-                private string flightNumber;
+                [JsonProperty]
+                public string FlightNumber { get; private set; }
 
-                [Required]
-                public string FlightNumber
-                {
-                        get
-                        {
-                                return this.flightNumber;
-                        }
+                [JsonProperty]
+                public int HandlerId { get; private set; }
 
-                        set
-                        {
-                                this.flightNumber = value;
-                        }
-                }
+                [JsonProperty]
+                public int Id { get; private set; }
 
-                private int handlerId;
+                [JsonProperty]
+                public DateTime LandDate { get; private set; }
 
-                [Required]
-                public int HandlerId
-                {
-                        get
-                        {
-                                return this.handlerId;
-                        }
+                [JsonProperty]
+                public int PipelineStepId { get; private set; }
 
-                        set
-                        {
-                                this.handlerId = value;
-                        }
-                }
-
-                private int id;
-
-                [Required]
-                public int Id
-                {
-                        get
-                        {
-                                return this.id;
-                        }
-
-                        set
-                        {
-                                this.id = value;
-                        }
-                }
-
-                private DateTime landDate;
-
-                [Required]
-                public DateTime LandDate
-                {
-                        get
-                        {
-                                return this.landDate;
-                        }
-
-                        set
-                        {
-                                this.landDate = value;
-                        }
-                }
-
-                private int pipelineStepId;
-
-                [Required]
-                public int PipelineStepId
-                {
-                        get
-                        {
-                                return this.pipelineStepId;
-                        }
-
-                        set
-                        {
-                                this.pipelineStepId = value;
-                        }
-                }
-
-                private DateTime takeoffDate;
-
-                [Required]
-                public DateTime TakeoffDate
-                {
-                        get
-                        {
-                                return this.takeoffDate;
-                        }
-
-                        set
-                        {
-                                this.takeoffDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime TakeoffDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>212aaa68b21db4cd6321815bb0a120f5</Hash>
+    <Hash>22ee76700f4ea95258af435670ccc3df</Hash>
 </Codenesium>*/

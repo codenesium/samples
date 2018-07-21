@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Services
                                 model.CreditRating,
                                 model.ModifiedDate,
                                 model.Name,
-                                model.PreferredVendorStatus,
+                                model.PreferredVendorStatu,
                                 model.PurchasingWebServiceURL);
                         return boVendor;
                 }
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiVendorResponseModel();
 
-                        model.SetProperties(boVendor.BusinessEntityID, boVendor.AccountNumber, boVendor.ActiveFlag, boVendor.CreditRating, boVendor.ModifiedDate, boVendor.Name, boVendor.PreferredVendorStatus, boVendor.PurchasingWebServiceURL);
+                        model.SetProperties(boVendor.BusinessEntityID, boVendor.AccountNumber, boVendor.ActiveFlag, boVendor.CreditRating, boVendor.ModifiedDate, boVendor.Name, boVendor.PreferredVendorStatu, boVendor.PurchasingWebServiceURL);
 
                         return model;
                 }
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a37f7d1b6eba865b1039c0836ab9f148</Hash>
+    <Hash>e5c188772947e888f0f9ef0762cc246b</Hash>
 </Codenesium>*/

@@ -105,6 +105,7 @@ namespace FileServiceNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBucketRepository>();
                         var model = new ApiBucketRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Bucket>())).Returns(Task.FromResult(new Bucket()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
                         var service = new BucketService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                         mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiBucketResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketRequestModel>()));
@@ -262,5 +263,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3e2f41b691e65d67a14a1ba414647f3a</Hash>
+    <Hash>364ea2f704fb52b065a3a114354ffb38</Hash>
 </Codenesium>*/

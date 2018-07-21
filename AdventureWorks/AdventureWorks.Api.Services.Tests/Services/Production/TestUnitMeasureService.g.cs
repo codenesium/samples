@@ -30,8 +30,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -52,8 +52,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -73,8 +73,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -95,8 +95,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -113,17 +113,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IUnitMeasureRepository>();
                         var model = new ApiUnitMeasureRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<UnitMeasure>())).Returns(Task.FromResult(new UnitMeasure()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
                         var service = new UnitMeasureService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiUnitMeasureResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUnitMeasureRequestModel>()));
@@ -141,8 +142,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -164,8 +165,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -185,8 +186,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -200,20 +201,20 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public async void BillOfMaterials_Exists()
                 {
                         var mock = new ServiceMockFacade<IUnitMeasureRepository>();
-                        var records = new List<BillOfMaterials>();
-                        records.Add(new BillOfMaterials());
+                        var records = new List<BillOfMaterial>();
+                        records.Add(new BillOfMaterial());
                         mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new UnitMeasureService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
-                        List<ApiBillOfMaterialsResponseModel> response = await service.BillOfMaterials(default(string));
+                        List<ApiBillOfMaterialResponseModel> response = await service.BillOfMaterials(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.BillOfMaterials(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -223,18 +224,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public async void BillOfMaterials_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IUnitMeasureRepository>();
-                        mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterials>>(new List<BillOfMaterials>()));
+                        mock.RepositoryMock.Setup(x => x.BillOfMaterials(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
                         var service = new UnitMeasureService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
-                        List<ApiBillOfMaterialsResponseModel> response = await service.BillOfMaterials(default(string));
+                        List<ApiBillOfMaterialResponseModel> response = await service.BillOfMaterials(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.BillOfMaterials(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -252,8 +253,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -273,8 +274,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
                                                              mock.DALMapperMockFactory.DALUnitMeasureMapperMock,
-                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialsMapperMock,
-                                                             mock.DALMapperMockFactory.DALBillOfMaterialsMapperMock,
+                                                             mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
+                                                             mock.DALMapperMockFactory.DALBillOfMaterialMapperMock,
                                                              mock.BOLMapperMockFactory.BOLProductMapperMock,
                                                              mock.DALMapperMockFactory.DALProductMapperMock);
 
@@ -287,5 +288,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e447f38b6fc5e55d2eebe2b519e28b86</Hash>
+    <Hash>cc9b8b3883b4115a271fd2a0ade20963</Hash>
 </Codenesium>*/

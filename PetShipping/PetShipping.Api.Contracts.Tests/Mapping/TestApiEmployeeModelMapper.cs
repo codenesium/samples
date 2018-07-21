@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,26 @@ namespace PetShippingNS.Api.Contracts.Tests
                         response.IsShipper.Should().Be(true);
                         response.LastName.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiEmployeeModelMapper();
+                        var model = new ApiEmployeeRequestModel();
+                        model.SetProperties("A", true, true, "A");
+
+                        JsonPatchDocument<ApiEmployeeRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiEmployeeRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.FirstName.Should().Be("A");
+                        response.IsSalesPerson.Should().Be(true);
+                        response.IsShipper.Should().Be(true);
+                        response.LastName.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>444418ed67416dbebd21bd4d99e293e2</Hash>
+    <Hash>4bdef836221acd5531e3615c9dc3d976</Hash>
 </Codenesium>*/

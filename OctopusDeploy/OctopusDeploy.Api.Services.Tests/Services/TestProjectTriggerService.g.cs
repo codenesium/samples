@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProjectTriggerRepository>();
                         var model = new ApiProjectTriggerRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProjectTrigger>())).Returns(Task.FromResult(new ProjectTrigger()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectTrigger()));
                         var service = new ProjectTriggerService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLProjectTriggerMapperMock,
                                                                 mock.DALMapperMockFactory.DALProjectTriggerMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiProjectTriggerResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProjectTriggerRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa58fa5e71f9bfce6c679fa555d4d610</Hash>
+    <Hash>2bc20462c79d8224c06d76ab99b4e82b</Hash>
 </Codenesium>*/

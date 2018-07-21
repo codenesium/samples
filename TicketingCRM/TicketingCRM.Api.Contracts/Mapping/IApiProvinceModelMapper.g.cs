@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace TicketingCRMNS.Api.Contracts
 
                 ApiProvinceRequestModel MapResponseToRequest(
                         ApiProvinceResponseModel response);
+
+                JsonPatchDocument<ApiProvinceRequestModel> CreatePatch(ApiProvinceRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>4c19b3be37a41eb15ce9b008b5a15b9d</Hash>
+    <Hash>f660269006e3ac5ec4f11f13f38acb5e</Hash>
 </Codenesium>*/

@@ -57,10 +57,10 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.LoginID).Length(0, 256);
                 }
 
-                public virtual void MaritalStatusRules()
+                public virtual void MaritalStatuRules()
                 {
-                        this.RuleFor(x => x.MaritalStatus).NotNull();
-                        this.RuleFor(x => x.MaritalStatus).Length(0, 1);
+                        this.RuleFor(x => x.MaritalStatu).NotNull();
+                        this.RuleFor(x => x.MaritalStatu).Length(0, 1);
                 }
 
                 public virtual void ModifiedDateRules()
@@ -86,11 +86,11 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                public virtual void SickLeaveHoursRules()
+                public virtual void SickLeaveHourRules()
                 {
                 }
 
-                public virtual void VacationHoursRules()
+                public virtual void VacationHourRules()
                 {
                 }
 
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6087989d02f9e627a9c03fc077df8945</Hash>
+    <Hash>8f636bfaddd2f0beebe63190dec7925d</Hash>
 </Codenesium>*/

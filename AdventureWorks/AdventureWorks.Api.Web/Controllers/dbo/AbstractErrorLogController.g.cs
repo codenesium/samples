@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiErrorLogResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogRequestModel model)
                 {
                         CreateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ErrorLogs/{result.Record.ErrorLogID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ErrorLogs/{result.Record.ErrorLogID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiErrorLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiErrorLogRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiErrorLogRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ErrorLogService.Update(id, model);
+                                UpdateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiErrorLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogRequestModel model)
                 {
-                        ApiErrorLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiErrorLogRequestModel request = await this.PatchModel(id, this.ErrorLogModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ErrorLogService.Update(id, request);
+                                UpdateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,20 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiErrorLogRequestModel> CreatePatch(ApiErrorLogRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiErrorLogRequestModel>();
-                        patch.Replace(x => x.ErrorLine, model.ErrorLine);
-                        patch.Replace(x => x.ErrorMessage, model.ErrorMessage);
-                        patch.Replace(x => x.ErrorNumber, model.ErrorNumber);
-                        patch.Replace(x => x.ErrorProcedure, model.ErrorProcedure);
-                        patch.Replace(x => x.ErrorSeverity, model.ErrorSeverity);
-                        patch.Replace(x => x.ErrorState, model.ErrorState);
-                        patch.Replace(x => x.ErrorTime, model.ErrorTime);
-                        patch.Replace(x => x.UserName, model.UserName);
-                        return patch;
-                }
-
                 private async Task<ApiErrorLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiErrorLogRequestModel> patch)
                 {
                         var record = await this.ErrorLogService.Get(id);
@@ -238,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>96c6d5ea369c50330b97e0956bca418f</Hash>
+    <Hash>900c132f38e0ae2796fcd4f7a691d41d</Hash>
 </Codenesium>*/

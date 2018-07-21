@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEmailAddressRepository>();
                         var model = new ApiEmailAddressRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EmailAddress>())).Returns(Task.FromResult(new EmailAddress()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmailAddress()));
                         var service = new EmailAddressService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.EmailAddressModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
                                                               mock.DALMapperMockFactory.DALEmailAddressMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiEmailAddressResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EmailAddressModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmailAddressRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1796114feadab8abb0d7d43837e5d222</Hash>
+    <Hash>ab4ec17226a6ce252993986f4de69c31</Hash>
 </Codenesium>*/

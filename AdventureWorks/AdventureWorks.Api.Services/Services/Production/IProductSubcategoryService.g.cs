@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
                         ApiProductSubcategoryRequestModel model);
 
-                Task<ActionResponse> Update(int productSubcategoryID,
-                                            ApiProductSubcategoryRequestModel model);
+                Task<UpdateResponse<ApiProductSubcategoryResponseModel>> Update(int productSubcategoryID,
+                                                                                 ApiProductSubcategoryRequestModel model);
 
                 Task<ActionResponse> Delete(int productSubcategoryID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0eac3ff455132bd42caa744a7109fe5</Hash>
+    <Hash>ed304cdad4522e1b31b463b8bf2cf7a2</Hash>
 </Codenesium>*/

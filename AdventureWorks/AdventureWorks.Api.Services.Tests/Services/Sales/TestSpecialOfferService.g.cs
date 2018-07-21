@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISpecialOfferRepository>();
                         var model = new ApiSpecialOfferRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SpecialOffer>())).Returns(Task.FromResult(new SpecialOffer()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
                         var service = new SpecialOfferService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
                                                               mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSpecialOfferResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()));
@@ -184,5 +185,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0910e7e095de9d587f30f04261ae2281</Hash>
+    <Hash>d56b49193d82866f0bfe289c5cd9346e</Hash>
 </Codenesium>*/

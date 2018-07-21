@@ -42,40 +42,69 @@ namespace NebulaNS.Api.Contracts
                         this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatus);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int? AssignedMachineId { get; private set; }
 
+                [JsonProperty]
                 public string AssignedMachineIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int ChainId { get; private set; }
 
+                [JsonProperty]
                 public string ChainIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? DateCompleted { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? DateStarted { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DynamicParameters { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public Guid ExternalId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int LinkStatusId { get; private set; }
 
+                [JsonProperty]
                 public string LinkStatusIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Order { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Response { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string StaticParameters { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int TimeoutInSeconds { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>728cf18ced8a2ff1b7f14e19910362b7</Hash>
+    <Hash>41fa2854e1b09bb892079574f82fb075</Hash>
 </Codenesium>*/

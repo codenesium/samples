@@ -34,12 +34,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void OwnerIdRules()
                 {
-                        this.RuleFor(x => x.OwnerId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.OwnerId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.OwnerId));
                         this.RuleFor(x => x.OwnerId).Length(0, 50);
                 }
@@ -50,14 +48,12 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void TenantIdRules()
                 {
-                        this.RuleFor(x => x.TenantId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.TenantId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.TenantId));
                         this.RuleFor(x => x.TenantId).Length(0, 50);
                 }
 
                 public virtual void VariableTemplateIdRules()
                 {
-                        this.RuleFor(x => x.VariableTemplateId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x?.VariableTemplateId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.VariableTemplateId));
                         this.RuleFor(x => x.VariableTemplateId).Length(0, 50);
                 }
@@ -79,5 +75,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2bfb8eae0c9c34e6917b75bd5756590c</Hash>
+    <Hash>f68e3e3f0b31da7be318e5e1c842d5f7</Hash>
 </Codenesium>*/

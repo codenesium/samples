@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductProductPhotoRepository>();
                         var model = new ApiProductProductPhotoRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductProductPhoto>())).Returns(Task.FromResult(new ProductProductPhoto()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductProductPhoto()));
                         var service = new ProductProductPhotoService(mock.LoggerMock.Object,
                                                                      mock.RepositoryMock.Object,
                                                                      mock.ModelValidatorMockFactory.ProductProductPhotoModelValidatorMock.Object,
                                                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
                                                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductProductPhotoResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductProductPhotoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductProductPhotoRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6d6bc349502f2c11b2884f19e35fb383</Hash>
+    <Hash>2bfc473238b3206689673e84d0da38ad</Hash>
 </Codenesium>*/

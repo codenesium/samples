@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.PhoneNumberTypeID = phoneNumberTypeID;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string phoneNumber;
+                [JsonProperty]
+                public string PhoneNumber { get; private set; }
 
                 [Required]
-                public string PhoneNumber
-                {
-                        get
-                        {
-                                return this.phoneNumber;
-                        }
-
-                        set
-                        {
-                                this.phoneNumber = value;
-                        }
-                }
-
-                private int phoneNumberTypeID;
-
-                [Required]
-                public int PhoneNumberTypeID
-                {
-                        get
-                        {
-                                return this.phoneNumberTypeID;
-                        }
-
-                        set
-                        {
-                                this.phoneNumberTypeID = value;
-                        }
-                }
+                [JsonProperty]
+                public int PhoneNumberTypeID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3bdadda08538a8e180c496db7b1f8092</Hash>
+    <Hash>5f4009110ed7fd581f501d3a9eb9ff39</Hash>
 </Codenesium>*/

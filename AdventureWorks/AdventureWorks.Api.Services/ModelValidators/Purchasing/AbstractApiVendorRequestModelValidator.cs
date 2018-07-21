@@ -51,7 +51,7 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                public virtual void PreferredVendorStatusRules()
+                public virtual void PreferredVendorStatuRules()
                 {
                 }
 
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58e2051e29c12cdacf5ea578a67bc9ad</Hash>
+    <Hash>8c76315baf5f2b764eb4089b25c77029</Hash>
 </Codenesium>*/

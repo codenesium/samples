@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Services
                         this.@ObjectRules();
                         this.PostTimeRules();
                         this.SchemaRules();
-                        this.TSQLRules();
+                        this.TsqlRules();
                         this.XmlEventRules();
                         return await this.ValidateAsync(model);
                 }
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
                         this.@ObjectRules();
                         this.PostTimeRules();
                         this.SchemaRules();
-                        this.TSQLRules();
+                        this.TsqlRules();
                         this.XmlEventRules();
                         return await this.ValidateAsync(model, id);
                 }
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>312f2eecaf4a02b455ea53b1a1e93385</Hash>
+    <Hash>ef5064a1126c6d2530dd8dbee6c036ae</Hash>
 </Codenesium>*/

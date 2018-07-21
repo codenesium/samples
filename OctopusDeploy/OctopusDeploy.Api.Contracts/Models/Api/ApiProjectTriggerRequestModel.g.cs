@@ -28,87 +28,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TriggerType = triggerType;
                 }
 
-                private bool isDisabled;
+                [JsonProperty]
+                public bool IsDisabled { get; private set; }
 
-                [Required]
-                public bool IsDisabled
-                {
-                        get
-                        {
-                                return this.isDisabled;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.isDisabled = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public string ProjectId { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string projectId;
-
-                [Required]
-                public string ProjectId
-                {
-                        get
-                        {
-                                return this.projectId;
-                        }
-
-                        set
-                        {
-                                this.projectId = value;
-                        }
-                }
-
-                private string triggerType;
-
-                public string TriggerType
-                {
-                        get
-                        {
-                                return this.triggerType;
-                        }
-
-                        set
-                        {
-                                this.triggerType = value;
-                        }
-                }
+                [JsonProperty]
+                public string TriggerType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4114020dfd37a59b276b1d6771c9e073</Hash>
+    <Hash>e7eb2c9ac5ff2f98c1b6f83fc599e967</Hash>
 </Codenesium>*/

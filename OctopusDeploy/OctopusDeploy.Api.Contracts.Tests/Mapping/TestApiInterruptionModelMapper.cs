@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -51,9 +52,32 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.TenantId.Should().Be("A");
                         response.Title.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiInterruptionModelMapper();
+                        var model = new ApiInterruptionRequestModel();
+                        model.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiInterruptionRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiInterruptionRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Created.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
+                        response.EnvironmentId.Should().Be("A");
+                        response.JSON.Should().Be("A");
+                        response.ProjectId.Should().Be("A");
+                        response.RelatedDocumentIds.Should().Be("A");
+                        response.ResponsibleTeamIds.Should().Be("A");
+                        response.Status.Should().Be("A");
+                        response.TaskId.Should().Be("A");
+                        response.TenantId.Should().Be("A");
+                        response.Title.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4dc5b6fe0a3fa5897d881fd1b1c73663</Hash>
+    <Hash>dddae0a24e3cf8de81dd18f83419c693</Hash>
 </Codenesium>*/

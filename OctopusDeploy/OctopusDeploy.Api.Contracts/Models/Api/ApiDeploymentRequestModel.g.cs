@@ -42,197 +42,44 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                private string channelId;
+                [JsonProperty]
+                public string ChannelId { get; private set; }
 
-                [Required]
-                public string ChannelId
-                {
-                        get
-                        {
-                                return this.channelId;
-                        }
+                [JsonProperty]
+                public DateTimeOffset Created { get; private set; }
 
-                        set
-                        {
-                                this.channelId = value;
-                        }
-                }
+                [JsonProperty]
+                public string DeployedBy { get; private set; }
 
-                private DateTimeOffset created;
+                [JsonProperty]
+                public string DeployedToMachineIds { get; private set; }
 
-                [Required]
-                public DateTimeOffset Created
-                {
-                        get
-                        {
-                                return this.created;
-                        }
+                [JsonProperty]
+                public string EnvironmentId { get; private set; }
 
-                        set
-                        {
-                                this.created = value;
-                        }
-                }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                private string deployedBy;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                [Required]
-                public string DeployedBy
-                {
-                        get
-                        {
-                                return this.deployedBy;
-                        }
+                [JsonProperty]
+                public string ProjectGroupId { get; private set; }
 
-                        set
-                        {
-                                this.deployedBy = value;
-                        }
-                }
+                [JsonProperty]
+                public string ProjectId { get; private set; }
 
-                private string deployedToMachineIds;
+                [JsonProperty]
+                public string ReleaseId { get; private set; }
 
-                public string DeployedToMachineIds
-                {
-                        get
-                        {
-                                return this.deployedToMachineIds;
-                        }
+                [JsonProperty]
+                public string TaskId { get; private set; }
 
-                        set
-                        {
-                                this.deployedToMachineIds = value;
-                        }
-                }
-
-                private string environmentId;
-
-                [Required]
-                public string EnvironmentId
-                {
-                        get
-                        {
-                                return this.environmentId;
-                        }
-
-                        set
-                        {
-                                this.environmentId = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string projectGroupId;
-
-                [Required]
-                public string ProjectGroupId
-                {
-                        get
-                        {
-                                return this.projectGroupId;
-                        }
-
-                        set
-                        {
-                                this.projectGroupId = value;
-                        }
-                }
-
-                private string projectId;
-
-                [Required]
-                public string ProjectId
-                {
-                        get
-                        {
-                                return this.projectId;
-                        }
-
-                        set
-                        {
-                                this.projectId = value;
-                        }
-                }
-
-                private string releaseId;
-
-                [Required]
-                public string ReleaseId
-                {
-                        get
-                        {
-                                return this.releaseId;
-                        }
-
-                        set
-                        {
-                                this.releaseId = value;
-                        }
-                }
-
-                private string taskId;
-
-                public string TaskId
-                {
-                        get
-                        {
-                                return this.taskId;
-                        }
-
-                        set
-                        {
-                                this.taskId = value;
-                        }
-                }
-
-                private string tenantId;
-
-                public string TenantId
-                {
-                        get
-                        {
-                                return this.tenantId;
-                        }
-
-                        set
-                        {
-                                this.tenantId = value;
-                        }
-                }
+                [JsonProperty]
+                public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3318644af1b36714383f087f4e2c7eda</Hash>
+    <Hash>8e3080834aa23f04a6c38072bce8fbb4</Hash>
 </Codenesium>*/

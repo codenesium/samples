@@ -36,7 +36,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void BodyRules()
                 {
-                        this.RuleFor(x => x.Body).NotNull();
                 }
 
                 public virtual void ClosedDateRules()
@@ -109,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>438be466356d0257fe0707ed9372893f</Hash>
+    <Hash>4276124bfa84db9dbc28287b5b9ae0d2</Hash>
 </Codenesium>*/

@@ -3,8 +3,10 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace FileServiceNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "File")]
         [Trait("Area", "Integration")]
-        public class FileIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class FileIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public FileIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace FileServiceNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiFileModelMapper mapper = new ApiFileModelMapper();
+
+                        UpdateResponse<ApiFileResponseModel> updateResponse = await this.Client.FileUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.FileDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiFileResponseModel response = await this.Client.FileGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiFileResponseModel> response = await this.Client.FileAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiFileResponseModel> CreateRecord()
+                {
+                        var model = new ApiFileRequestModel();
+                        model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 3810.59m, 1, "B", "B", "B");
+                        CreateResponse<ApiFileResponseModel> result = await this.Client.FileCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.FileDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7bf3b5acc66c5d8c87782068b582f946</Hash>
+    <Hash>9320633b7feb7c3b38d3e16b8b551d29</Hash>
 </Codenesium>*/

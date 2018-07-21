@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IVariableSetRepository>();
                         var model = new ApiVariableSetRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VariableSet>())).Returns(Task.FromResult(new VariableSet()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
                         var service = new VariableSetService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
                                                              mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiVariableSetResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiVariableSetRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>06e11827e9efb0e2443fbd3b0f388414</Hash>
+    <Hash>efdae508a5be85ec82a213960e0ade6d</Hash>
 </Codenesium>*/

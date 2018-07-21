@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 ApiProductPhotoRequestModel MapResponseToRequest(
                         ApiProductPhotoResponseModel response);
+
+                JsonPatchDocument<ApiProductPhotoRequestModel> CreatePatch(ApiProductPhotoRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>9bd49cd30f1d1f19118b1c9f3a05c541</Hash>
+    <Hash>47bac3003d4532ac15d51e86761c0571</Hash>
 </Codenesium>*/

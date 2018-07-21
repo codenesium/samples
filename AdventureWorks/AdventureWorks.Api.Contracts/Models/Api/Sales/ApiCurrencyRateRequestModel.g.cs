@@ -30,104 +30,32 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ToCurrencyCode = toCurrencyCode;
                 }
 
-                private decimal averageRate;
+                [Required]
+                [JsonProperty]
+                public decimal AverageRate { get; private set; }
 
                 [Required]
-                public decimal AverageRate
-                {
-                        get
-                        {
-                                return this.averageRate;
-                        }
-
-                        set
-                        {
-                                this.averageRate = value;
-                        }
-                }
-
-                private DateTime currencyRateDate;
+                [JsonProperty]
+                public DateTime CurrencyRateDate { get; private set; }
 
                 [Required]
-                public DateTime CurrencyRateDate
-                {
-                        get
-                        {
-                                return this.currencyRateDate;
-                        }
-
-                        set
-                        {
-                                this.currencyRateDate = value;
-                        }
-                }
-
-                private decimal endOfDayRate;
+                [JsonProperty]
+                public decimal EndOfDayRate { get; private set; }
 
                 [Required]
-                public decimal EndOfDayRate
-                {
-                        get
-                        {
-                                return this.endOfDayRate;
-                        }
-
-                        set
-                        {
-                                this.endOfDayRate = value;
-                        }
-                }
-
-                private string fromCurrencyCode;
+                [JsonProperty]
+                public string FromCurrencyCode { get; private set; }
 
                 [Required]
-                public string FromCurrencyCode
-                {
-                        get
-                        {
-                                return this.fromCurrencyCode;
-                        }
-
-                        set
-                        {
-                                this.fromCurrencyCode = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string toCurrencyCode;
-
-                [Required]
-                public string ToCurrencyCode
-                {
-                        get
-                        {
-                                return this.toCurrencyCode;
-                        }
-
-                        set
-                        {
-                                this.toCurrencyCode = value;
-                        }
-                }
+                [JsonProperty]
+                public string ToCurrencyCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8217c6bd063f6f1798dcfebda5cc3aa9</Hash>
+    <Hash>0805584d13f086b07360e06c2fcf7bcb</Hash>
 </Codenesium>*/

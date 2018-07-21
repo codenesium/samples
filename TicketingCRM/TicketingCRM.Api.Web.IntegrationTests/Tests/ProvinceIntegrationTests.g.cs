@@ -1,7 +1,9 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
@@ -13,11 +15,11 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "Province")]
         [Trait("Area", "Integration")]
-        public class ProvinceIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class ProvinceIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public ProvinceIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiProvinceModelMapper mapper = new ApiProvinceModelMapper();
+
+                        UpdateResponse<ApiProvinceResponseModel> updateResponse = await this.Client.ProvinceUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.ProvinceDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiProvinceResponseModel response = await this.Client.ProvinceGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiProvinceResponseModel> response = await this.Client.ProvinceAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiProvinceResponseModel> CreateRecord()
+                {
+                        var model = new ApiProvinceRequestModel();
+                        model.SetProperties(1, "B");
+                        CreateResponse<ApiProvinceResponseModel> result = await this.Client.ProvinceCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.ProvinceDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9fdc965a75c08ac0731da6b2d13fe4be</Hash>
+    <Hash>cd7e136ee7f1b70da220c20c55e9b1ca</Hash>
 </Codenesium>*/

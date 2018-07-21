@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
@@ -25,9 +27,17 @@ namespace FermataFishNS.Api.Contracts
                                 response.SpaceId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> CreatePatch(ApiSpaceXSpaceFeatureRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel>();
+                        patch.Replace(x => x.SpaceFeatureId, model.SpaceFeatureId);
+                        patch.Replace(x => x.SpaceId, model.SpaceId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f67d34db156a6f540774c8075447c0e4</Hash>
+    <Hash>4547b55d758d5d636c8fee5a7d853897</Hash>
 </Codenesium>*/

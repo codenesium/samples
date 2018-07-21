@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiErrorLogResponseModel>> Update(
                         int errorLogID,
                         ApiErrorLogRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.errorLogModelValidator.ValidateUpdateAsync(errorLogID, model));
-                        if (response.Success)
+                        var validationResult = await this.errorLogModelValidator.ValidateUpdateAsync(errorLogID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolErrorLogMapper.MapModelToBO(errorLogID, model);
                                 await this.errorLogRepository.Update(this.dalErrorLogMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.errorLogRepository.Get(errorLogID);
+
+                                return new UpdateResponse<ApiErrorLogResponseModel>(this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiErrorLogResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bcf5fa0c9b8d62c962b27c73be8fbbdc</Hash>
+    <Hash>34a17d32673000700153da5c8f3f24a5</Hash>
 </Codenesium>*/

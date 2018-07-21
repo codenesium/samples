@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                 public IBOLStateProvinceMapper BOLStateProvinceMapperMock { get; set; } = new BOLStateProvinceMapper();
 
-                public IBOLBillOfMaterialsMapper BOLBillOfMaterialsMapperMock { get; set; } = new BOLBillOfMaterialsMapper();
+                public IBOLBillOfMaterialMapper BOLBillOfMaterialMapperMock { get; set; } = new BOLBillOfMaterialMapper();
 
                 public IBOLCultureMapper BOLCultureMapperMock { get; set; } = new BOLCultureMapper();
 
@@ -155,5 +155,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e651e65b183cafc7dace2afb758a8b6d</Hash>
+    <Hash>6c79d70e44d62fe4cbcc1eff9bea8739</Hash>
 </Codenesium>*/

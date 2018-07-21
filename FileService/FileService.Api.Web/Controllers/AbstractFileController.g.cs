@@ -106,15 +106,15 @@ namespace FileServiceNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFileResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiFileResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiFileRequestModel model)
                 {
                         CreateResponse<ApiFileResponseModel> result = await this.FileService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FileServiceNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFileResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiFileResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFileRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FileServiceNS.Api.Web
                         {
                                 ApiFileRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.FileService.Update(id, model);
+                                UpdateResponse<ApiFileResponseModel> result = await this.FileService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiFileResponseModel response = await this.FileService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FileServiceNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFileResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiFileResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileRequestModel model)
                 {
-                        ApiFileRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiFileRequestModel request = await this.PatchModel(id, this.FileModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FileServiceNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.FileService.Update(id, request);
+                                UpdateResponse<ApiFileResponseModel> result = await this.FileService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiFileResponseModel response = await this.FileService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,23 +201,6 @@ namespace FileServiceNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiFileRequestModel> CreatePatch(ApiFileRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiFileRequestModel>();
-                        patch.Replace(x => x.BucketId, model.BucketId);
-                        patch.Replace(x => x.DateCreated, model.DateCreated);
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.Expiration, model.Expiration);
-                        patch.Replace(x => x.Extension, model.Extension);
-                        patch.Replace(x => x.ExternalId, model.ExternalId);
-                        patch.Replace(x => x.FileSizeInBytes, model.FileSizeInBytes);
-                        patch.Replace(x => x.FileTypeId, model.FileTypeId);
-                        patch.Replace(x => x.Location, model.Location);
-                        patch.Replace(x => x.PrivateKey, model.PrivateKey);
-                        patch.Replace(x => x.PublicKey, model.PublicKey);
-                        return patch;
-                }
-
                 private async Task<ApiFileRequestModel> PatchModel(int id, JsonPatchDocument<ApiFileRequestModel> patch)
                 {
                         var record = await this.FileService.Get(id);
@@ -241,5 +220,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>803a33998e789efee6fec7997552d6be</Hash>
+    <Hash>0548b5460101ee2531efbd26de0c756b</Hash>
 </Codenesium>*/

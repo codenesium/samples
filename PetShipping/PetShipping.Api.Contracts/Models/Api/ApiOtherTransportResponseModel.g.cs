@@ -21,18 +21,26 @@ namespace PetShippingNS.Api.Contracts
                         this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int HandlerId { get; private set; }
 
+                [JsonProperty]
                 public string HandlerIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PipelineStepId { get; private set; }
 
+                [JsonProperty]
                 public string PipelineStepIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>677ed2abc6df5f145f6c1f5fd3c7a763</Hash>
+    <Hash>10ac6de1b5d118c73b3c56246b3ca8fe</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTagSetResponseModel>> Update(
                         string id,
                         ApiTagSetRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.tagSetModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.tagSetModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTagSetMapper.MapModelToBO(id, model);
                                 await this.tagSetRepository.Update(this.dalTagSetMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.tagSetRepository.Get(id);
+
+                                return new UpdateResponse<ApiTagSetResponseModel>(this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTagSetResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -125,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b54b26a6490ddbe7da69a93246a8d4f9</Hash>
+    <Hash>65cfa06f0f382856cc48c7b8dc390d72</Hash>
 </Codenesium>*/

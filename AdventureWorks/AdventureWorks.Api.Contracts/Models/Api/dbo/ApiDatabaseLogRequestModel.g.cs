@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string @object,
                         DateTime postTime,
                         string schema,
-                        string tSQL,
+                        string tsql,
                         string xmlEvent)
                 {
                         this.DatabaseUser = databaseUser;
@@ -28,122 +28,38 @@ namespace AdventureWorksNS.Api.Contracts
                         this.@Object = @object;
                         this.PostTime = postTime;
                         this.Schema = schema;
-                        this.TSQL = tSQL;
+                        this.Tsql = tsql;
                         this.XmlEvent = xmlEvent;
                 }
 
-                private string databaseUser;
+                [Required]
+                [JsonProperty]
+                public string DatabaseUser { get; private set; }
 
                 [Required]
-                public string DatabaseUser
-                {
-                        get
-                        {
-                                return this.databaseUser;
-                        }
+                [JsonProperty]
+                public string @Event { get; private set; }
 
-                        set
-                        {
-                                this.databaseUser = value;
-                        }
-                }
-
-                private string @event;
+                [JsonProperty]
+                public string @Object { get; private set; }
 
                 [Required]
-                public string @Event
-                {
-                        get
-                        {
-                                return this.@event;
-                        }
+                [JsonProperty]
+                public DateTime PostTime { get; private set; }
 
-                        set
-                        {
-                                this.@event = value;
-                        }
-                }
-
-                private string @object;
-
-                public string @Object
-                {
-                        get
-                        {
-                                return this.@object;
-                        }
-
-                        set
-                        {
-                                this.@object = value;
-                        }
-                }
-
-                private DateTime postTime;
+                [JsonProperty]
+                public string Schema { get; private set; }
 
                 [Required]
-                public DateTime PostTime
-                {
-                        get
-                        {
-                                return this.postTime;
-                        }
-
-                        set
-                        {
-                                this.postTime = value;
-                        }
-                }
-
-                private string schema;
-
-                public string Schema
-                {
-                        get
-                        {
-                                return this.schema;
-                        }
-
-                        set
-                        {
-                                this.schema = value;
-                        }
-                }
-
-                private string tSQL;
+                [JsonProperty]
+                public string Tsql { get; private set; }
 
                 [Required]
-                public string TSQL
-                {
-                        get
-                        {
-                                return this.tSQL;
-                        }
-
-                        set
-                        {
-                                this.tSQL = value;
-                        }
-                }
-
-                private string xmlEvent;
-
-                [Required]
-                public string XmlEvent
-                {
-                        get
-                        {
-                                return this.xmlEvent;
-                        }
-
-                        set
-                        {
-                                this.xmlEvent = value;
-                        }
-                }
+                [JsonProperty]
+                public string XmlEvent { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>046d4a7654d4520d9c086e27c4875608</Hash>
+    <Hash>60324742ba384dbe57905bd13660c9bc</Hash>
 </Codenesium>*/

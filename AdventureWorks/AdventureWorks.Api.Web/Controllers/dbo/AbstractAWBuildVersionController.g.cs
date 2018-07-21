@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiAWBuildVersionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAWBuildVersionRequestModel model)
                 {
                         CreateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/AWBuildVersions/{result.Record.SystemInformationID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/AWBuildVersions/{result.Record.SystemInformationID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAWBuildVersionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiAWBuildVersionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.AWBuildVersionService.Update(id, model);
+                                UpdateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiAWBuildVersionResponseModel response = await this.AWBuildVersionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionRequestModel model)
                 {
-                        ApiAWBuildVersionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiAWBuildVersionRequestModel request = await this.PatchModel(id, this.AWBuildVersionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.AWBuildVersionService.Update(id, request);
+                                UpdateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiAWBuildVersionResponseModel response = await this.AWBuildVersionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiAWBuildVersionRequestModel> CreatePatch(ApiAWBuildVersionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiAWBuildVersionRequestModel>();
-                        patch.Replace(x => x.Database_Version, model.Database_Version);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.VersionDate, model.VersionDate);
-                        return patch;
-                }
-
                 private async Task<ApiAWBuildVersionRequestModel> PatchModel(int id, JsonPatchDocument<ApiAWBuildVersionRequestModel> patch)
                 {
                         var record = await this.AWBuildVersionService.Get(id);
@@ -233,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4d55ef86ac5ecf91ae7f2c5729b19922</Hash>
+    <Hash>2785b57ab8108ee246cca96025a8be8d</Hash>
 </Codenesium>*/

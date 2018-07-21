@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
                         var model = new ApiEventRelatedDocumentRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EventRelatedDocument>())).Returns(Task.FromResult(new EventRelatedDocument()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
                         var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                                       mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiEventRelatedDocumentResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventRelatedDocumentRequestModel>()));
@@ -204,5 +205,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>64d16718bc1fd11822b3bf472d2ebfac</Hash>
+    <Hash>c4b4c5df7f7a337d300e4b6641336f35</Hash>
 </Codenesium>*/

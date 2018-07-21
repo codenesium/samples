@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiScrapReasonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiScrapReasonResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiScrapReasonRequestModel model)
                 {
                         CreateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ScrapReasons/{result.Record.ScrapReasonID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ScrapReasons/{result.Record.ScrapReasonID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiScrapReasonRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiScrapReasonRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ScrapReasonService.Update(id, model);
+                                UpdateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiScrapReasonResponseModel response = await this.ScrapReasonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonRequestModel model)
                 {
-                        ApiScrapReasonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiScrapReasonRequestModel request = await this.PatchModel(id, this.ScrapReasonModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ScrapReasonService.Update(id, request);
+                                UpdateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiScrapReasonResponseModel response = await this.ScrapReasonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,14 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiScrapReasonRequestModel> CreatePatch(ApiScrapReasonRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiScrapReasonRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiScrapReasonRequestModel> PatchModel(short id, JsonPatchDocument<ApiScrapReasonRequestModel> patch)
                 {
                         var record = await this.ScrapReasonService.Get(id);
@@ -265,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f1853513224b8c6bb5575be312dc11d8</Hash>
+    <Hash>b3c255d10cc3d79ecba4c827347b44f3</Hash>
 </Codenesium>*/

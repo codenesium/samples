@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -50,5 +51,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c453ec989443289db3e51ee9a66de300</Hash>
+    <Hash>88bc4e8a2db1f6745a2f00ddc788a270</Hash>
 </Codenesium>*/

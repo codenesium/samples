@@ -90,18 +90,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCurrencyResponseModel>> Update(
                         string currencyCode,
                         ApiCurrencyRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.currencyModelValidator.ValidateUpdateAsync(currencyCode, model));
-                        if (response.Success)
+                        var validationResult = await this.currencyModelValidator.ValidateUpdateAsync(currencyCode, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCurrencyMapper.MapModelToBO(currencyCode, model);
                                 await this.currencyRepository.Update(this.dalCurrencyMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.currencyRepository.Get(currencyCode);
+
+                                return new UpdateResponse<ApiCurrencyResponseModel>(this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCurrencyResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa05cb901c2d91e693591b9ea7db0f34</Hash>
+    <Hash>a3ee3995d6798fb93f49625897850506</Hash>
 </Codenesium>*/

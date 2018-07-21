@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ReasonType = reasonType;
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public string ReasonType { get; private set; }
 
+                [JsonProperty]
                 public int SalesReasonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c347781421a60e793691323c6515694c</Hash>
+    <Hash>54d471f0a4c65e4549b31be7ee172695</Hash>
 </Codenesium>*/

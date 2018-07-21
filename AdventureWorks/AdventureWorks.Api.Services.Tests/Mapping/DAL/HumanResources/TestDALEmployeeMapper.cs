@@ -28,14 +28,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.JobTitle.Should().Be("A");
                         response.LoginID.Should().Be("A");
-                        response.MaritalStatus.Should().Be("A");
+                        response.MaritalStatu.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.NationalIDNumber.Should().Be("A");
                         response.OrganizationLevel.Should().Be(1);
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.SalariedFlag.Should().Be(true);
-                        response.SickLeaveHours.Should().Be(1);
-                        response.VacationHours.Should().Be(1);
+                        response.SickLeaveHour.Should().Be(1);
+                        response.VacationHour.Should().Be(1);
                 }
 
                 [Fact]
@@ -54,14 +54,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.JobTitle.Should().Be("A");
                         response.LoginID.Should().Be("A");
-                        response.MaritalStatus.Should().Be("A");
+                        response.MaritalStatu.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.NationalIDNumber.Should().Be("A");
                         response.OrganizationLevel.Should().Be(1);
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.SalariedFlag.Should().Be(true);
-                        response.SickLeaveHours.Should().Be(1);
-                        response.VacationHours.Should().Be(1);
+                        response.SickLeaveHour.Should().Be(1);
+                        response.VacationHour.Should().Be(1);
                 }
 
                 [Fact]
@@ -79,5 +79,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fbbff3d594937efb4c604f970aea3522</Hash>
+    <Hash>77f0288f082e3275a6dc03ccc7ff9580</Hash>
 </Codenesium>*/

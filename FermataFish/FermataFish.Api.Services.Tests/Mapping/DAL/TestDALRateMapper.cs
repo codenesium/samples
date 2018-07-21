@@ -17,11 +17,11 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new DALRateMapper();
                         var bo = new BORate();
-                        bo.SetProperties(1, 1, 1, 1);
+                        bo.SetProperties(1, 1m, 1, 1);
 
                         Rate response = mapper.MapBOToEF(bo);
 
-                        response.AmountPerMinute.Should().Be(1);
+                        response.AmountPerMinute.Should().Be(1m);
                         response.Id.Should().Be(1);
                         response.TeacherId.Should().Be(1);
                         response.TeacherSkillId.Should().Be(1);
@@ -32,11 +32,11 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new DALRateMapper();
                         Rate entity = new Rate();
-                        entity.SetProperties(1, 1, 1, 1);
+                        entity.SetProperties(1m, 1, 1, 1);
 
                         BORate response = mapper.MapEFToBO(entity);
 
-                        response.AmountPerMinute.Should().Be(1);
+                        response.AmountPerMinute.Should().Be(1m);
                         response.Id.Should().Be(1);
                         response.TeacherId.Should().Be(1);
                         response.TeacherSkillId.Should().Be(1);
@@ -47,7 +47,7 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new DALRateMapper();
                         Rate entity = new Rate();
-                        entity.SetProperties(1, 1, 1, 1);
+                        entity.SetProperties(1m, 1, 1, 1);
 
                         List<BORate> response = mapper.MapEFToBO(new List<Rate>() { entity });
 
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>606c1f368a96dc2ec3ff6c5fbf4d428b</Hash>
+    <Hash>165535fdc50a2684afc1b18de96498f7</Hash>
 </Codenesium>*/

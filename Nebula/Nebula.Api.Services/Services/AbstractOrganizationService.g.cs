@@ -83,18 +83,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiOrganizationResponseModel>> Update(
                         int id,
                         ApiOrganizationRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.organizationModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolOrganizationMapper.MapModelToBO(id, model);
                                 await this.organizationRepository.Update(this.dalOrganizationMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.organizationRepository.Get(id);
+
+                                return new UpdateResponse<ApiOrganizationResponseModel>(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiOrganizationResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>99eaeb0a73cb9077157ed5e409cb55f8</Hash>
+    <Hash>163200e97e966f6e5069afb0342141b1</Hash>
 </Codenesium>*/

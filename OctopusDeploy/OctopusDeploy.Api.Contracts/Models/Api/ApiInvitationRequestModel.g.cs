@@ -22,40 +22,14 @@ namespace OctopusDeployNS.Api.Contracts
                         this.JSON = jSON;
                 }
 
-                private string invitationCode;
+                [JsonProperty]
+                public string InvitationCode { get; private set; }
 
-                [Required]
-                public string InvitationCode
-                {
-                        get
-                        {
-                                return this.invitationCode;
-                        }
-
-                        set
-                        {
-                                this.invitationCode = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
+                [JsonProperty]
+                public string JSON { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5251db326193688454f47a09164c1a53</Hash>
+    <Hash>2c7cf9b5ce5b54c1a1ce38d73598c058</Hash>
 </Codenesium>*/

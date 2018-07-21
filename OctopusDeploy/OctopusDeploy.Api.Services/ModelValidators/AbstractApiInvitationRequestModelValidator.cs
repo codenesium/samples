@@ -28,17 +28,15 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void InvitationCodeRules()
                 {
-                        this.RuleFor(x => x.InvitationCode).NotNull();
                         this.RuleFor(x => x.InvitationCode).Length(0, 200);
                 }
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>59e83e79143960f3377a078cb8831314</Hash>
+    <Hash>cd0a5fc99b41eec2b26ca16945718549</Hash>
 </Codenesium>*/

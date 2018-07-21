@@ -17,16 +17,16 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALShipMethodMapper();
                         var bo = new BOShipMethod();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 
                         ShipMethod response = mapper.MapBOToEF(bo);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.ShipBase.Should().Be(1);
+                        response.ShipBase.Should().Be(1m);
                         response.ShipMethodID.Should().Be(1);
-                        response.ShipRate.Should().Be(1);
+                        response.ShipRate.Should().Be(1m);
                 }
 
                 [Fact]
@@ -34,16 +34,16 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALShipMethodMapper();
                         ShipMethod entity = new ShipMethod();
-                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
+                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, 1m);
 
                         BOShipMethod response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.ShipBase.Should().Be(1);
+                        response.ShipBase.Should().Be(1m);
                         response.ShipMethodID.Should().Be(1);
-                        response.ShipRate.Should().Be(1);
+                        response.ShipRate.Should().Be(1m);
                 }
 
                 [Fact]
@@ -51,7 +51,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALShipMethodMapper();
                         ShipMethod entity = new ShipMethod();
-                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
+                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, 1m);
 
                         List<BOShipMethod> response = mapper.MapEFToBO(new List<ShipMethod>() { entity });
 
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>36cc0f3267285dba9e5fa8a7b3148d12</Hash>
+    <Hash>aaba6e3b5c130b6773127165e22eca67</Hash>
 </Codenesium>*/

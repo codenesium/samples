@@ -97,13 +97,14 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICountryRequirementRepository>();
                         var model = new ApiCountryRequirementRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CountryRequirement>())).Returns(Task.FromResult(new CountryRequirement()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
                         var service = new CountryRequirementService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
                                                                     mock.DALMapperMockFactory.DALCountryRequirementMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCountryRequirementResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequirementRequestModel>()));
@@ -132,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a98f6bd30728a557b1f16785703520d0</Hash>
+    <Hash>bea02367c18be52031af405b1e629659</Hash>
 </Codenesium>*/

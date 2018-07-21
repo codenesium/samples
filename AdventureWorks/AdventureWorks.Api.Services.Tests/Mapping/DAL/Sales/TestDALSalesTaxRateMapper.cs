@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTaxRateMapper();
                         var bo = new BOSalesTaxRate();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
 
                         SalesTaxRate response = mapper.MapBOToEF(bo);
 
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.SalesTaxRateID.Should().Be(1);
                         response.StateProvinceID.Should().Be(1);
-                        response.TaxRate.Should().Be(1);
+                        response.TaxRate.Should().Be(1m);
                         response.TaxType.Should().Be(1);
                 }
 
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTaxRateMapper();
                         SalesTaxRate entity = new SalesTaxRate();
-                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1);
 
                         BOSalesTaxRate response = mapper.MapEFToBO(entity);
 
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.SalesTaxRateID.Should().Be(1);
                         response.StateProvinceID.Should().Be(1);
-                        response.TaxRate.Should().Be(1);
+                        response.TaxRate.Should().Be(1m);
                         response.TaxType.Should().Be(1);
                 }
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTaxRateMapper();
                         SalesTaxRate entity = new SalesTaxRate();
-                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1);
 
                         List<BOSalesTaxRate> response = mapper.MapEFToBO(new List<SalesTaxRate>() { entity });
 
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f75c2f9694d507a871eaaf19e6ad193f</Hash>
+    <Hash>1c436ae865ae4c68d15155a733f344bc</Hash>
 </Codenesium>*/

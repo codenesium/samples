@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
-
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
-
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
@@ -75,5 +51,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0461460fc0ec5e2685925482797c03c2</Hash>
+    <Hash>94d2f89f00e71fa4a2effb461ea34da5</Hash>
 </Codenesium>*/

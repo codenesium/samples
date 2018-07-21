@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAccountResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiAccountResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAccountRequestModel model)
                 {
                         CreateResponse<ApiAccountResponseModel> result = await this.AccountService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Accounts/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Accounts/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAccountResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAccountResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiAccountRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiAccountRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.AccountService.Update(id, model);
+                                UpdateResponse<ApiAccountResponseModel> result = await this.AccountService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiAccountResponseModel response = await this.AccountService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAccountResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAccountResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiAccountRequestModel model)
                 {
-                        ApiAccountRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiAccountRequestModel request = await this.PatchModel(id, this.AccountModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.AccountService.Update(id, request);
+                                UpdateResponse<ApiAccountResponseModel> result = await this.AccountService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiAccountResponseModel response = await this.AccountService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,18 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiAccountRequestModel> CreatePatch(ApiAccountRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiAccountRequestModel>();
-                        patch.Replace(x => x.AccountType, model.AccountType);
-                        patch.Replace(x => x.EnvironmentIds, model.EnvironmentIds);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.TenantIds, model.TenantIds);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        return patch;
-                }
-
                 private async Task<ApiAccountRequestModel> PatchModel(string id, JsonPatchDocument<ApiAccountRequestModel> patch)
                 {
                         var record = await this.AccountService.Get(id);
@@ -255,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>14161abe176321cf3bf60109a78a98b7</Hash>
+    <Hash>4665f6c0963689e4bcedc0d3cf50b476</Hash>
 </Codenesium>*/

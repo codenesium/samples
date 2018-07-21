@@ -155,8 +155,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiTransactionResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTransactionResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionRequestModel>()));
                 }
 
@@ -187,20 +187,20 @@ namespace TicketingCRMNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         TransactionControllerMockFacade mock = new TransactionControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTransactionResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>()))
                         .Callback<int, ApiTransactionRequestModel>(
-                                (id, model) => model.Amount.Should().Be(1)
+                                (id, model) => model.Amount.Should().Be(1m)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiTransactionResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionResponseModel>(new ApiTransactionResponseModel()));
                         TransactionController controller = new TransactionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionModelMapper());
                         controller.ControllerContext = new ControllerContext();
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
                         var patch = new JsonPatchDocument<ApiTransactionRequestModel>();
-                        patch.Replace(x => x.Amount, 1);
+                        patch.Replace(x => x.Amount, 1m);
 
                         IActionResult response = await controller.Patch(default(int), patch);
 
@@ -220,7 +220,7 @@ namespace TicketingCRMNS.Api.Web.Tests
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
                         var patch = new JsonPatchDocument<ApiTransactionRequestModel>();
-                        patch.Replace(x => x.Amount, 1);
+                        patch.Replace(x => x.Amount, 1m);
 
                         IActionResult response = await controller.Patch(default(int), patch);
 
@@ -233,9 +233,9 @@ namespace TicketingCRMNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         TransactionControllerMockFacade mock = new TransactionControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTransactionResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionResponseModel()));
                         TransactionController controller = new TransactionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace TicketingCRMNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         TransactionControllerMockFacade mock = new TransactionControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTransactionResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionResponseModel()));
                         TransactionController controller = new TransactionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace TicketingCRMNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         TransactionControllerMockFacade mock = new TransactionControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiTransactionResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionResponseModel>(null));
                         TransactionController controller = new TransactionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace TicketingCRMNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>33247f458bd1daa3173bf1569ccebee5</Hash>
+    <Hash>c23cecca2771530976c31263c75d7771</Hash>
 </Codenesium>*/

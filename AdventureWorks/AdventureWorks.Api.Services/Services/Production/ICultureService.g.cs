@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiCultureResponseModel>> Create(
                         ApiCultureRequestModel model);
 
-                Task<ActionResponse> Update(string cultureID,
-                                            ApiCultureRequestModel model);
+                Task<UpdateResponse<ApiCultureResponseModel>> Update(string cultureID,
+                                                                      ApiCultureRequestModel model);
 
                 Task<ActionResponse> Delete(string cultureID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3c0a565935f69dbd50b5083d0fde6c7</Hash>
+    <Hash>0a57f52c378dd597cf6d8d9278ceb513</Hash>
 </Codenesium>*/

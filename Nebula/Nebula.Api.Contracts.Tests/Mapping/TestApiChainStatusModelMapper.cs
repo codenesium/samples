@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace NebulaNS.Api.Contracts.Tests
 
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiChainStatusModelMapper();
+                        var model = new ApiChainStatusRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiChainStatusRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiChainStatusRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6aace1a26b768e24473befa93a20940f</Hash>
+    <Hash>166789b6dcaba4fda0f0594acca23300</Hash>
 </Codenesium>*/

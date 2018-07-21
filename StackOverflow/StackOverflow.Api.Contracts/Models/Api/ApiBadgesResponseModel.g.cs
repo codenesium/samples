@@ -20,16 +20,24 @@ namespace StackOverflowNS.Api.Contracts
                         this.UserId = userId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime Date { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c676c94e3ada88714d96027d70968e81</Hash>
+    <Hash>01e0a8cb28c16be847b90184abb39f7c</Hash>
 </Codenesium>*/

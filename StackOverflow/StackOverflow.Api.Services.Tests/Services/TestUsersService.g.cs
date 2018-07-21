@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IUsersRepository>();
                         var model = new ApiUsersRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Users>())).Returns(Task.FromResult(new Users()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
                         var service = new UsersService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.UsersModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLUsersMapperMock,
                                                        mock.DALMapperMockFactory.DALUsersMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiUsersResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.UsersModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUsersRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>487900aaab9bbf8909bbc062cfd6f4f7</Hash>
+    <Hash>74c686172decd8ee1899aba920a22f28</Hash>
 </Codenesium>*/

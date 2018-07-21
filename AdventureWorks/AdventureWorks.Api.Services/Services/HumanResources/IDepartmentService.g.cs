@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiDepartmentResponseModel>> Create(
                         ApiDepartmentRequestModel model);
 
-                Task<ActionResponse> Update(short departmentID,
-                                            ApiDepartmentRequestModel model);
+                Task<UpdateResponse<ApiDepartmentResponseModel>> Update(short departmentID,
+                                                                         ApiDepartmentRequestModel model);
 
                 Task<ActionResponse> Delete(short departmentID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e08d50d0da401686a6994743896200e4</Hash>
+    <Hash>470090c4649564adea7126879f2c39da</Hash>
 </Codenesium>*/

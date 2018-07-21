@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILinkTypesRepository>();
                         var model = new ApiLinkTypesRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkTypes>())).Returns(Task.FromResult(new LinkTypes()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
                         var service = new LinkTypesService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
                                                            mock.ModelValidatorMockFactory.LinkTypesModelValidatorMock.Object,
                                                            mock.BOLMapperMockFactory.BOLLinkTypesMapperMock,
                                                            mock.DALMapperMockFactory.DALLinkTypesMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiLinkTypesResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LinkTypesModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkTypesRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6e55a28653dcc6679c507d883711cc88</Hash>
+    <Hash>5be5caa3c114284352afd579890dbad9</Hash>
 </Codenesium>*/

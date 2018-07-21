@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FirstName_Create_null()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
-                }
-
-                [Fact]
-                public async void FirstName_Update_null()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
-                }
-
-                [Fact]
                 public async void FirstName_Create_length()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
@@ -70,30 +46,6 @@ namespace PetShippingNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void LastName_Create_null()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
-                }
-
-                [Fact]
-                public async void LastName_Update_null()
-                {
-                        Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
-                        employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
-
-                        var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
 
                 [Fact]
@@ -123,5 +75,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2a456ac6c1976f119b2faa517fee56ae</Hash>
+    <Hash>a04080de3b094f093b642c8b5a6ae1c8</Hash>
 </Codenesium>*/

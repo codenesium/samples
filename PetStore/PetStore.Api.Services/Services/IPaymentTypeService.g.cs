@@ -12,8 +12,8 @@ namespace PetStoreNS.Api.Services
                 Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
                         ApiPaymentTypeRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiPaymentTypeRequestModel model);
+                Task<UpdateResponse<ApiPaymentTypeResponseModel>> Update(int id,
+                                                                          ApiPaymentTypeRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12ceff5d0d6cd4fac9e967de859100cc</Hash>
+    <Hash>596c3e37921f8ad6d548e8ec57eee56e</Hash>
 </Codenesium>*/

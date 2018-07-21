@@ -28,24 +28,39 @@ namespace PetShippingNS.Api.Contracts
                         this.HandlerIdEntity = nameof(ApiResponse.Handlers);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int AirlineId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string FlightNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int HandlerId { get; private set; }
 
+                [JsonProperty]
                 public string HandlerIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime LandDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PipelineStepId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime TakeoffDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e783bd22c72227eba5f1a9dea9496175</Hash>
+    <Hash>3dd9ed50c812dc41adf59387eeab6769</Hash>
 </Codenesium>*/

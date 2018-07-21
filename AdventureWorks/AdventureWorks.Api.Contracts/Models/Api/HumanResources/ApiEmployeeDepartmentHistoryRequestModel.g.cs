@@ -28,87 +28,27 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartDate = startDate;
                 }
 
-                private short departmentID;
+                [Required]
+                [JsonProperty]
+                public short DepartmentID { get; private set; }
+
+                [JsonProperty]
+                public DateTime? EndDate { get; private set; }
 
                 [Required]
-                public short DepartmentID
-                {
-                        get
-                        {
-                                return this.departmentID;
-                        }
-
-                        set
-                        {
-                                this.departmentID = value;
-                        }
-                }
-
-                private DateTime? endDate;
-
-                public DateTime? EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int shiftID;
+                [JsonProperty]
+                public int ShiftID { get; private set; }
 
                 [Required]
-                public int ShiftID
-                {
-                        get
-                        {
-                                return this.shiftID;
-                        }
-
-                        set
-                        {
-                                this.shiftID = value;
-                        }
-                }
-
-                private DateTime startDate;
-
-                [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccafca7ec285529fd8d3227e8500b072</Hash>
+    <Hash>f581c54131f3cd45fb00e71637b0ff62</Hash>
 </Codenesium>*/

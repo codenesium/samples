@@ -25,54 +25,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Description_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
-                public async void Description_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
-                public async void JwtKey_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JwtKey, null as string);
-                }
-
-                [Fact]
-                public async void JwtKey_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JwtKey, null as string);
-                }
-
-                [Fact]
                 public async void JwtKey_Create_length()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -97,30 +49,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastIpAddress_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, null as string);
-                }
-
-                [Fact]
-                public async void LastIpAddress_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, null as string);
-                }
-
-                [Fact]
                 public async void LastIpAddress_Create_length()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -142,30 +70,6 @@ namespace NebulaNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -195,5 +99,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>90fe11893a89363e495a3c2ea3222f44</Hash>
+    <Hash>476d7c4486d8b2df8201ffb7032938f3</Hash>
 </Codenesium>*/

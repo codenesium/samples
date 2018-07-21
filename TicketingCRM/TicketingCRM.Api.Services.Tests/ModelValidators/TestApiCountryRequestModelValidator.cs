@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
-
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
-
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
@@ -75,5 +51,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9510bed44d2baff015b9eda2d2ea799a</Hash>
+    <Hash>40d33f9c78e78a6bfc45aeba46e6ec63</Hash>
 </Codenesium>*/

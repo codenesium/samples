@@ -90,18 +90,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiLocationResponseModel>> Update(
                         short locationID,
                         ApiLocationRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateUpdateAsync(locationID, model));
-                        if (response.Success)
+                        var validationResult = await this.locationModelValidator.ValidateUpdateAsync(locationID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
                                 await this.locationRepository.Update(this.dalLocationMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.locationRepository.Get(locationID);
+
+                                return new UpdateResponse<ApiLocationResponseModel>(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiLocationResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>63b55fddeed4bdf08cb77a3bccfe63b4</Hash>
+    <Hash>25e64504fc95bae53942f554bb46f9c9</Hash>
 </Codenesium>*/

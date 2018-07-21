@@ -28,24 +28,20 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void FeedTypeRules()
                 {
-                        this.RuleFor(x => x.FeedType).NotNull();
                         this.RuleFor(x => x.FeedType).Length(0, 50);
                 }
 
                 public virtual void FeedUriRules()
                 {
-                        this.RuleFor(x => x.FeedUri).NotNull();
                         this.RuleFor(x => x.FeedUri).Length(0, 512);
                 }
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiFeedRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
@@ -67,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcb3ba3c37291b8778610d633f3daec9</Hash>
+    <Hash>b72b84ce0f30483190e025d279c94c83</Hash>
 </Codenesium>*/

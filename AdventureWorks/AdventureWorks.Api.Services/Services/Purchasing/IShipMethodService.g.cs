@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiShipMethodResponseModel>> Create(
                         ApiShipMethodRequestModel model);
 
-                Task<ActionResponse> Update(int shipMethodID,
-                                            ApiShipMethodRequestModel model);
+                Task<UpdateResponse<ApiShipMethodResponseModel>> Update(int shipMethodID,
+                                                                         ApiShipMethodRequestModel model);
 
                 Task<ActionResponse> Delete(int shipMethodID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66b4199fe9274072f8175f428cf83aa2</Hash>
+    <Hash>a10088a3ae6fb9ecea68d772ec32393c</Hash>
 </Codenesium>*/

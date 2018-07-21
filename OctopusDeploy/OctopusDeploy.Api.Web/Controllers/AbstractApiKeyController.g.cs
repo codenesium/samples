@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiApiKeyResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiApiKeyRequestModel model)
                 {
                         CreateResponse<ApiApiKeyResponseModel> result = await this.ApiKeyService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ApiKeys/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ApiKeys/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiApiKeyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiApiKeyRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiApiKeyRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ApiKeyService.Update(id, model);
+                                UpdateResponse<ApiApiKeyResponseModel> result = await this.ApiKeyService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiApiKeyResponseModel response = await this.ApiKeyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiApiKeyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiApiKeyRequestModel model)
                 {
-                        ApiApiKeyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiApiKeyRequestModel request = await this.PatchModel(id, this.ApiKeyModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ApiKeyService.Update(id, request);
+                                UpdateResponse<ApiApiKeyResponseModel> result = await this.ApiKeyService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiApiKeyResponseModel response = await this.ApiKeyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,16 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiApiKeyRequestModel> CreatePatch(ApiApiKeyRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiApiKeyRequestModel>();
-                        patch.Replace(x => x.ApiKeyHashed, model.ApiKeyHashed);
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.UserId, model.UserId);
-                        return patch;
-                }
-
                 private async Task<ApiApiKeyRequestModel> PatchModel(string id, JsonPatchDocument<ApiApiKeyRequestModel> patch)
                 {
                         var record = await this.ApiKeyService.Get(id);
@@ -253,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>977c21e18160129596c3b70bbd96f860</Hash>
+    <Hash>273f86f5d91f5afd3b2cd8566ffb50ff</Hash>
 </Codenesium>*/

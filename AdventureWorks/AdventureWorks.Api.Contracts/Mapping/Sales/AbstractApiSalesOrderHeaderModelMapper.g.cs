@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -71,9 +73,40 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.TotalDue);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiSalesOrderHeaderRequestModel> CreatePatch(ApiSalesOrderHeaderRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiSalesOrderHeaderRequestModel>();
+                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
+                        patch.Replace(x => x.BillToAddressID, model.BillToAddressID);
+                        patch.Replace(x => x.Comment, model.Comment);
+                        patch.Replace(x => x.CreditCardApprovalCode, model.CreditCardApprovalCode);
+                        patch.Replace(x => x.CreditCardID, model.CreditCardID);
+                        patch.Replace(x => x.CurrencyRateID, model.CurrencyRateID);
+                        patch.Replace(x => x.CustomerID, model.CustomerID);
+                        patch.Replace(x => x.DueDate, model.DueDate);
+                        patch.Replace(x => x.Freight, model.Freight);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OnlineOrderFlag, model.OnlineOrderFlag);
+                        patch.Replace(x => x.OrderDate, model.OrderDate);
+                        patch.Replace(x => x.PurchaseOrderNumber, model.PurchaseOrderNumber);
+                        patch.Replace(x => x.RevisionNumber, model.RevisionNumber);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesOrderNumber, model.SalesOrderNumber);
+                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
+                        patch.Replace(x => x.ShipDate, model.ShipDate);
+                        patch.Replace(x => x.ShipMethodID, model.ShipMethodID);
+                        patch.Replace(x => x.ShipToAddressID, model.ShipToAddressID);
+                        patch.Replace(x => x.Status, model.Status);
+                        patch.Replace(x => x.SubTotal, model.SubTotal);
+                        patch.Replace(x => x.TaxAmt, model.TaxAmt);
+                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
+                        patch.Replace(x => x.TotalDue, model.TotalDue);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9b2728f4578b8dffb59b89652889f55f</Hash>
+    <Hash>5687049decb2136a483fe8e9c5e3bfc7</Hash>
 </Codenesium>*/

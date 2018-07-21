@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductCostHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductCostHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductCostHistoryRequestModel model)
                 {
                         CreateResponse<ApiProductCostHistoryResponseModel> result = await this.ProductCostHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductCostHistories/{result.Record.ProductID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductCostHistories/{result.Record.ProductID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductCostHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductCostHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductCostHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductCostHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductCostHistoryService.Update(id, model);
+                                UpdateResponse<ApiProductCostHistoryResponseModel> result = await this.ProductCostHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductCostHistoryResponseModel response = await this.ProductCostHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductCostHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductCostHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductCostHistoryRequestModel model)
                 {
-                        ApiProductCostHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductCostHistoryRequestModel request = await this.PatchModel(id, this.ProductCostHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductCostHistoryService.Update(id, request);
+                                UpdateResponse<ApiProductCostHistoryResponseModel> result = await this.ProductCostHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductCostHistoryResponseModel response = await this.ProductCostHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiProductCostHistoryRequestModel> CreatePatch(ApiProductCostHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductCostHistoryRequestModel>();
-                        patch.Replace(x => x.EndDate, model.EndDate);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.StandardCost, model.StandardCost);
-                        patch.Replace(x => x.StartDate, model.StartDate);
-                        return patch;
-                }
-
                 private async Task<ApiProductCostHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductCostHistoryRequestModel> patch)
                 {
                         var record = await this.ProductCostHistoryService.Get(id);
@@ -234,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0058b108730dc1e9137cc163c279c290</Hash>
+    <Hash>38120783a4fcbad4b6c4bd5e4a0e7ca1</Hash>
 </Codenesium>*/

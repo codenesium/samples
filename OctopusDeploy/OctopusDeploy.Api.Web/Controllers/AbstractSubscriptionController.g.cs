@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSubscriptionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSubscriptionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSubscriptionRequestModel model)
                 {
                         CreateResponse<ApiSubscriptionResponseModel> result = await this.SubscriptionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Subscriptions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Subscriptions/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSubscriptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSubscriptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiSubscriptionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiSubscriptionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SubscriptionService.Update(id, model);
+                                UpdateResponse<ApiSubscriptionResponseModel> result = await this.SubscriptionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSubscriptionResponseModel response = await this.SubscriptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSubscriptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSubscriptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiSubscriptionRequestModel model)
                 {
-                        ApiSubscriptionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSubscriptionRequestModel request = await this.PatchModel(id, this.SubscriptionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SubscriptionService.Update(id, request);
+                                UpdateResponse<ApiSubscriptionResponseModel> result = await this.SubscriptionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSubscriptionResponseModel response = await this.SubscriptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,16 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSubscriptionRequestModel> CreatePatch(ApiSubscriptionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSubscriptionRequestModel>();
-                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Type, model.Type);
-                        return patch;
-                }
-
                 private async Task<ApiSubscriptionRequestModel> PatchModel(string id, JsonPatchDocument<ApiSubscriptionRequestModel> patch)
                 {
                         var record = await this.SubscriptionService.Get(id);
@@ -253,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aa44da118c9d94d1d01b91f9049e9052</Hash>
+    <Hash>24814cde60fc94de73cd78f702c74b8a</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace PetStoreNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPetResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPetResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPetRequestModel model)
                 {
                         CreateResponse<ApiPetResponseModel> result = await this.PetService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Pets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Pets/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPetRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetStoreNS.Api.Web
                         {
                                 ApiPetRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PetService.Update(id, model);
+                                UpdateResponse<ApiPetResponseModel> result = await this.PetService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPetResponseModel response = await this.PetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetStoreNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPetRequestModel model)
                 {
-                        ApiPetRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPetRequestModel request = await this.PatchModel(id, this.PetModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetStoreNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PetService.Update(id, request);
+                                UpdateResponse<ApiPetResponseModel> result = await this.PetService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPetResponseModel response = await this.PetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,18 +215,6 @@ namespace PetStoreNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPetRequestModel> CreatePatch(ApiPetRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPetRequestModel>();
-                        patch.Replace(x => x.AcquiredDate, model.AcquiredDate);
-                        patch.Replace(x => x.BreedId, model.BreedId);
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.PenId, model.PenId);
-                        patch.Replace(x => x.Price, model.Price);
-                        patch.Replace(x => x.SpeciesId, model.SpeciesId);
-                        return patch;
-                }
-
                 private async Task<ApiPetRequestModel> PatchModel(int id, JsonPatchDocument<ApiPetRequestModel> patch)
                 {
                         var record = await this.PetService.Get(id);
@@ -250,5 +234,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>01ef0d305b5143d7fbc95a56aaa5e0d0</Hash>
+    <Hash>0f0f82426efc2380ba40f5ff22f9d621</Hash>
 </Codenesium>*/

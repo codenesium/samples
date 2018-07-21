@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPurchaseOrderHeaderResponseModel>> Update(
                         int purchaseOrderID,
                         ApiPurchaseOrderHeaderRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.purchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model));
-                        if (response.Success)
+                        var validationResult = await this.purchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(purchaseOrderID, model);
                                 await this.purchaseOrderHeaderRepository.Update(this.dalPurchaseOrderHeaderMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
+
+                                return new UpdateResponse<ApiPurchaseOrderHeaderResponseModel>(this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPurchaseOrderHeaderResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b30b6cee38af802865122b284ac20cf5</Hash>
+    <Hash>1e3611a7caa722ddf85a2bde65626fb4</Hash>
 </Codenesium>*/

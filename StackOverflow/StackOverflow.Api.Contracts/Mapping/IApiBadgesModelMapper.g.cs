@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace StackOverflowNS.Api.Contracts
 
                 ApiBadgesRequestModel MapResponseToRequest(
                         ApiBadgesResponseModel response);
+
+                JsonPatchDocument<ApiBadgesRequestModel> CreatePatch(ApiBadgesRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>629429c28c5190bcdeb6da280f0e9da1</Hash>
+    <Hash>845bb8cd83fbd974ff8800b4bb9d13b5</Hash>
 </Codenesium>*/

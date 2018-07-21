@@ -22,40 +22,14 @@ namespace OctopusDeployNS.Api.Contracts
                         this.RelatedDocumentId = relatedDocumentId;
                 }
 
-                private string eventId;
+                [JsonProperty]
+                public string EventId { get; private set; }
 
-                [Required]
-                public string EventId
-                {
-                        get
-                        {
-                                return this.eventId;
-                        }
-
-                        set
-                        {
-                                this.eventId = value;
-                        }
-                }
-
-                private string relatedDocumentId;
-
-                [Required]
-                public string RelatedDocumentId
-                {
-                        get
-                        {
-                                return this.relatedDocumentId;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentId = value;
-                        }
-                }
+                [JsonProperty]
+                public string RelatedDocumentId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>598ed5d649e15adefe28c41dad823bee</Hash>
+    <Hash>8e4451684eb2e3ec89344274259b4661</Hash>
 </Codenesium>*/

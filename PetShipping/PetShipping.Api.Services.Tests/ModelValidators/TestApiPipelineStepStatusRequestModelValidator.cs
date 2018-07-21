@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IPipelineStepStatusRepository> pipelineStepStatusRepository = new Mock<IPipelineStepStatusRepository>();
-                        pipelineStepStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStatus()));
-
-                        var validator = new ApiPipelineStepStatusRequestModelValidator(pipelineStepStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineStepStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IPipelineStepStatusRepository> pipelineStepStatusRepository = new Mock<IPipelineStepStatusRepository>();
-                        pipelineStepStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStatus()));
-
-                        var validator = new ApiPipelineStepStatusRequestModelValidator(pipelineStepStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IPipelineStepStatusRepository> pipelineStepStatusRepository = new Mock<IPipelineStepStatusRepository>();
@@ -75,5 +51,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>354efafb2506870b818c03eae58609a6</Hash>
+    <Hash>a250b5b7849244933b49fe526535523d</Hash>
 </Codenesium>*/

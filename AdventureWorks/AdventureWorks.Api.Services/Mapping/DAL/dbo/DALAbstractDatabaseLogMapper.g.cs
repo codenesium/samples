@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
                                 bo.@Object,
                                 bo.PostTime,
                                 bo.Schema,
-                                bo.TSQL,
+                                bo.Tsql,
                                 bo.XmlEvent);
                         return efDatabaseLog;
                 }
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Services
                                 ef.@Object,
                                 ef.PostTime,
                                 ef.Schema,
-                                ef.TSQL,
+                                ef.Tsql,
                                 ef.XmlEvent);
                         return bo;
                 }
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3c5da8e6f45715c8eb360dfca2ad592</Hash>
+    <Hash>8c6bcfb6f9e2f2d8678fb2498ae74d82</Hash>
 </Codenesium>*/

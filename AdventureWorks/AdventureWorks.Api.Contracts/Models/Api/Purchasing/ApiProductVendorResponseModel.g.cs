@@ -34,30 +34,44 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UnitMeasureCode = unitMeasureCode;
                 }
 
+                [JsonProperty]
                 public int AverageLeadTime { get; private set; }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public decimal? LastReceiptCost { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? LastReceiptDate { get; private set; }
 
+                [JsonProperty]
                 public int MaxOrderQty { get; private set; }
 
+                [JsonProperty]
                 public int MinOrderQty { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? OnOrderQty { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public decimal StandardPrice { get; private set; }
 
+                [JsonProperty]
                 public string UnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a6bb39042c433e8455b226dc46fe338</Hash>
+    <Hash>aa76386794a65e93acc0f13f292f5ff5</Hash>
 </Codenesium>*/

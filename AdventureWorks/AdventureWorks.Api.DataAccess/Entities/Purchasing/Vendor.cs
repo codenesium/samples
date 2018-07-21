@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -19,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         int creditRating,
                         DateTime modifiedDate,
                         string name,
-                        bool preferredVendorStatus,
+                        bool preferredVendorStatu,
                         string purchasingWebServiceURL)
                 {
                         this.AccountNumber = accountNumber;
@@ -28,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.CreditRating = creditRating;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.PreferredVendorStatus = preferredVendorStatus;
+                        this.PreferredVendorStatu = preferredVendorStatu;
                         this.PurchasingWebServiceURL = purchasingWebServiceURL;
                 }
 
@@ -52,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Name { get; private set; }
 
                 [Column("PreferredVendorStatus")]
-                public bool PreferredVendorStatus { get; private set; }
+                public bool PreferredVendorStatu { get; private set; }
 
                 [Column("PurchasingWebServiceURL")]
                 public string PurchasingWebServiceURL { get; private set; }
@@ -60,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>99306a22321d06a887d91508f79b09bc</Hash>
+    <Hash>a1592d12a6749dec87a8aee6f467aaab</Hash>
 </Codenesium>*/

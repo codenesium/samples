@@ -1,0 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using TestsNS.Api.Contracts;
+using TestsNS.Api.DataAccess;
+
+namespace TestsNS.Api.Services
+{
+        public partial class DALTableMapper : DALAbstractTableMapper, IDALTableMapper
+        {
+                public DALTableMapper()
+                {
+                }
+        }
+}
+
+/*<Codenesium>
+    <Hash>aa31ff898c4292f8967d6917018ccc5c</Hash>
+</Codenesium>*/

@@ -34,132 +34,32 @@ namespace StackOverflowNS.Api.Contracts
                         this.UserId = userId;
                 }
 
-                private string comment;
+                [JsonProperty]
+                public string Comment { get; private set; }
 
-                public string Comment
-                {
-                        get
-                        {
-                                return this.comment;
-                        }
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                        set
-                        {
-                                this.comment = value;
-                        }
-                }
+                [JsonProperty]
+                public int PostHistoryTypeId { get; private set; }
 
-                private DateTime creationDate;
+                [JsonProperty]
+                public int PostId { get; private set; }
 
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
+                [JsonProperty]
+                public string RevisionGUID { get; private set; }
 
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
+                [JsonProperty]
+                public string Text { get; private set; }
 
-                private int postHistoryTypeId;
+                [JsonProperty]
+                public string UserDisplayName { get; private set; }
 
-                [Required]
-                public int PostHistoryTypeId
-                {
-                        get
-                        {
-                                return this.postHistoryTypeId;
-                        }
-
-                        set
-                        {
-                                this.postHistoryTypeId = value;
-                        }
-                }
-
-                private int postId;
-
-                [Required]
-                public int PostId
-                {
-                        get
-                        {
-                                return this.postId;
-                        }
-
-                        set
-                        {
-                                this.postId = value;
-                        }
-                }
-
-                private string revisionGUID;
-
-                [Required]
-                public string RevisionGUID
-                {
-                        get
-                        {
-                                return this.revisionGUID;
-                        }
-
-                        set
-                        {
-                                this.revisionGUID = value;
-                        }
-                }
-
-                private string text;
-
-                public string Text
-                {
-                        get
-                        {
-                                return this.text;
-                        }
-
-                        set
-                        {
-                                this.text = value;
-                        }
-                }
-
-                private string userDisplayName;
-
-                public string UserDisplayName
-                {
-                        get
-                        {
-                                return this.userDisplayName;
-                        }
-
-                        set
-                        {
-                                this.userDisplayName = value;
-                        }
-                }
-
-                private int? userId;
-
-                public int? UserId
-                {
-                        get
-                        {
-                                return this.userId;
-                        }
-
-                        set
-                        {
-                                this.userId = value;
-                        }
-                }
+                [JsonProperty]
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>44447ee1e438270792bf7ae26bd86379</Hash>
+    <Hash>9b95e3974a151b81857e411ade6c41a0</Hash>
 </Codenesium>*/

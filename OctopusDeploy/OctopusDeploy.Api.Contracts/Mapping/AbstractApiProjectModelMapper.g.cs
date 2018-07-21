@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -45,9 +47,27 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.VariableSetId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiProjectRequestModel> CreatePatch(ApiProjectRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProjectRequestModel>();
+                        patch.Replace(x => x.AutoCreateRelease, model.AutoCreateRelease);
+                        patch.Replace(x => x.DataVersion, model.DataVersion);
+                        patch.Replace(x => x.DeploymentProcessId, model.DeploymentProcessId);
+                        patch.Replace(x => x.DiscreteChannelRelease, model.DiscreteChannelRelease);
+                        patch.Replace(x => x.IncludedLibraryVariableSetIds, model.IncludedLibraryVariableSetIds);
+                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
+                        patch.Replace(x => x.JSON, model.JSON);
+                        patch.Replace(x => x.LifecycleId, model.LifecycleId);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.ProjectGroupId, model.ProjectGroupId);
+                        patch.Replace(x => x.Slug, model.Slug);
+                        patch.Replace(x => x.VariableSetId, model.VariableSetId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0cc6e486555c5f4f090a61038579a591</Hash>
+    <Hash>3e912da6af38d987e596940eb04b3620</Hash>
 </Codenesium>*/

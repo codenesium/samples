@@ -25,30 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
-
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
-
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
@@ -125,5 +101,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a90cd49ad5e44f715d0f5de1d08fca15</Hash>
+    <Hash>0f99abea8a1fe087918596f70105f9af</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,26 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.SortOrder.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiTagSetModelMapper();
+                        var model = new ApiTagSetRequestModel();
+                        model.SetProperties(BitConverter.GetBytes(1), "A", "A", 1);
+
+                        JsonPatchDocument<ApiTagSetRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiTagSetRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+                        response.JSON.Should().Be("A");
+                        response.Name.Should().Be("A");
+                        response.SortOrder.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>508b42a4e51ea98c4568f3b45781798f</Hash>
+    <Hash>65f2aa5facbd09bab4761855713168bd</Hash>
 </Codenesium>*/

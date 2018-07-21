@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
@@ -94,30 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiOctopusServerNodeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Rank_Create_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Rank, null as string);
-                }
-
-                [Fact]
-                public async void Rank_Update_null()
-                {
-                        Mock<IOctopusServerNodeRepository> octopusServerNodeRepository = new Mock<IOctopusServerNodeRepository>();
-                        octopusServerNodeRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new OctopusServerNode()));
-
-                        var validator = new ApiOctopusServerNodeRequestModelValidator(octopusServerNodeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiOctopusServerNodeRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Rank, null as string);
                 }
 
                 [Fact]
@@ -147,5 +75,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>63757c8c9a955be3bd5abaf40789cc86</Hash>
+    <Hash>276019fc960573130d4de3104363953e</Hash>
 </Codenesium>*/

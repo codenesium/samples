@@ -28,12 +28,11 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b16222d0671ba478041ce563387356fd</Hash>
+    <Hash>c67dc2f129a29ebb79a22c9c7b5b007c</Hash>
 </Codenesium>*/

@@ -22,18 +22,28 @@ namespace OctopusDeployNS.Api.Contracts
                         this.UserId = userId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string ApiKeyHashed { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset Created { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4093e9972ce5d9b861b8801b107447fb</Hash>
+    <Hash>4aedd0329488e22bedec85799a5688b8</Hash>
 </Codenesium>*/

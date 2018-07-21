@@ -83,18 +83,25 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCityResponseModel>> Update(
                         int id,
                         ApiCityRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.cityModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.cityModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCityMapper.MapModelToBO(id, model);
                                 await this.cityRepository.Update(this.dalCityMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.cityRepository.Get(id);
+
+                                return new UpdateResponse<ApiCityResponseModel>(this.bolCityMapper.MapBOToModel(this.dalCityMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCityResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -126,5 +133,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a49f91cbf3df83483840fd65ef96228c</Hash>
+    <Hash>36d823e639ec08cae726af98060d1106</Hash>
 </Codenesium>*/

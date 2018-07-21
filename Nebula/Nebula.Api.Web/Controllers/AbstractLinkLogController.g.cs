@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkLogResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLinkLogResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLinkLogRequestModel model)
                 {
                         CreateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LinkLogs/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LinkLogs/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLinkLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkLogRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiLinkLogRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LinkLogService.Update(id, model);
+                                UpdateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLinkLogResponseModel response = await this.LinkLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkLogResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLinkLogResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogRequestModel model)
                 {
-                        ApiLinkLogRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLinkLogRequestModel request = await this.PatchModel(id, this.LinkLogModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LinkLogService.Update(id, request);
+                                UpdateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLinkLogResponseModel response = await this.LinkLogService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace NebulaNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiLinkLogRequestModel> CreatePatch(ApiLinkLogRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLinkLogRequestModel>();
-                        patch.Replace(x => x.DateEntered, model.DateEntered);
-                        patch.Replace(x => x.LinkId, model.LinkId);
-                        patch.Replace(x => x.Log, model.Log);
-                        return patch;
-                }
-
                 private async Task<ApiLinkLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkLogRequestModel> patch)
                 {
                         var record = await this.LinkLogService.Get(id);
@@ -233,5 +220,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dcbff345a47635becefa4506a0098d99</Hash>
+    <Hash>005a1f03b823440823f43f6a1d977258</Hash>
 </Codenesium>*/

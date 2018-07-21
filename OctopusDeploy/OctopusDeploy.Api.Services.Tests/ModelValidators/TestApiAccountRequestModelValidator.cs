@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void AccountType_Create_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountType, null as string);
-                }
-
-                [Fact]
-                public async void AccountType_Update_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountType, null as string);
-                }
-
-                [Fact]
                 public async void AccountType_Create_length()
                 {
                         Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
@@ -70,78 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountType, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EnvironmentIds_Create_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentIds, null as string);
-                }
-
-                [Fact]
-                public async void EnvironmentIds_Update_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentIds, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IAccountRepository> accountRepository = new Mock<IAccountRepository>();
-                        accountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Account()));
-
-                        var validator = new ApiAccountRequestModelValidator(accountRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiAccountRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -219,5 +123,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0a09b0020f4cf10c2044e4146774f502</Hash>
+    <Hash>ecee3d68993af1c4d10782fbf9ead14c</Hash>
 </Codenesium>*/

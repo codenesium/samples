@@ -25,30 +25,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
-
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeamRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
-
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
@@ -125,5 +101,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3a827fcf8e9bb7d66d973c5485cd593a</Hash>
+    <Hash>3058248196622f472b070cbf6f9e9e6b</Hash>
 </Codenesium>*/

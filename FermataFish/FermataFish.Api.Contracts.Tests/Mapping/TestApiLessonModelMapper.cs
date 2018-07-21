@@ -1,5 +1,6 @@
 using FermataFishNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,12 +17,12 @@ namespace FermataFishNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiLessonModelMapper();
                         var model = new ApiLessonRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
                         ApiLessonResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.BillAmount.Should().Be(1);
+                        response.BillAmount.Should().Be(1m);
                         response.Id.Should().Be(1);
                         response.LessonStatusId.Should().Be(1);
                         response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -36,12 +37,34 @@ namespace FermataFishNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiLessonModelMapper();
                         var model = new ApiLessonResponseModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
                         ApiLessonRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.BillAmount.Should().Be(1);
+                        response.BillAmount.Should().Be(1m);
+                        response.LessonStatusId.Should().Be(1);
+                        response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.StudentNotes.Should().Be("A");
+                        response.StudioId.Should().Be(1);
+                        response.TeacherNotes.Should().Be("A");
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiLessonModelMapper();
+                        var model = new ApiLessonRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+
+                        JsonPatchDocument<ApiLessonRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiLessonRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.BillAmount.Should().Be(1m);
                         response.LessonStatusId.Should().Be(1);
                         response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -53,5 +76,5 @@ namespace FermataFishNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>fe649ff9258c008d351444654f202a38</Hash>
+    <Hash>b27d4970b224053e102ebcb40e02f537</Hash>
 </Codenesium>*/

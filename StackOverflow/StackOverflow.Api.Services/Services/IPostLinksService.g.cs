@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
                 Task<CreateResponse<ApiPostLinksResponseModel>> Create(
                         ApiPostLinksRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiPostLinksRequestModel model);
+                Task<UpdateResponse<ApiPostLinksResponseModel>> Update(int id,
+                                                                        ApiPostLinksRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f21b70e9997d1a0f443cb9466d28829a</Hash>
+    <Hash>ba5e6dc15ef3ef48e177d1e6c356fac1</Hash>
 </Codenesium>*/

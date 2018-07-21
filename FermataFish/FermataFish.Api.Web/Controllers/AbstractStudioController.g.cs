@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStudioResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiStudioResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiStudioRequestModel model)
                 {
                         CreateResponse<ApiStudioResponseModel> result = await this.StudioService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Studios/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Studios/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStudioResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiStudioResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStudioRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiStudioRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.StudioService.Update(id, model);
+                                UpdateResponse<ApiStudioResponseModel> result = await this.StudioService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiStudioResponseModel response = await this.StudioService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStudioResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiStudioResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudioRequestModel model)
                 {
-                        ApiStudioRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiStudioRequestModel request = await this.PatchModel(id, this.StudioModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.StudioService.Update(id, request);
+                                UpdateResponse<ApiStudioResponseModel> result = await this.StudioService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiStudioResponseModel response = await this.StudioService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -331,19 +327,6 @@ namespace FermataFishNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiStudioRequestModel> CreatePatch(ApiStudioRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiStudioRequestModel>();
-                        patch.Replace(x => x.Address1, model.Address1);
-                        patch.Replace(x => x.Address2, model.Address2);
-                        patch.Replace(x => x.City, model.City);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.StateId, model.StateId);
-                        patch.Replace(x => x.Website, model.Website);
-                        patch.Replace(x => x.Zip, model.Zip);
-                        return patch;
-                }
-
                 private async Task<ApiStudioRequestModel> PatchModel(int id, JsonPatchDocument<ApiStudioRequestModel> patch)
                 {
                         var record = await this.StudioService.Get(id);
@@ -363,5 +346,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>780997c0d5c9d20bf1c29818b380403a</Hash>
+    <Hash>d121da3f68268c3b97c3ea6f4c373340</Hash>
 </Codenesium>*/

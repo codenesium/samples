@@ -18,14 +18,14 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLPetMapper();
                         ApiPetRequestModel model = new ApiPetRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
                         BOPet response = mapper.MapModelToBO(1, model);
 
                         response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.BreedId.Should().Be(1);
                         response.Description.Should().Be("A");
                         response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1);
+                        response.Price.Should().Be(1m);
                         response.SpeciesId.Should().Be(1);
                 }
 
@@ -34,7 +34,7 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLPetMapper();
                         BOPet bo = new BOPet();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
                         ApiPetResponseModel response = mapper.MapBOToModel(bo);
 
                         response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Services.Tests
                         response.Description.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1);
+                        response.Price.Should().Be(1m);
                         response.SpeciesId.Should().Be(1);
                 }
 
@@ -51,7 +51,7 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLPetMapper();
                         BOPet bo = new BOPet();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
                         List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -60,5 +60,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>990920de8d6a909bedbabff134e5a6c8</Hash>
+    <Hash>1338d5d1142291a051bdd1ddd61edfc4</Hash>
 </Codenesium>*/

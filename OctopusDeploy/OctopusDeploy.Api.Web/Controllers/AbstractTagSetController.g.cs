@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagSetResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTagSetResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTagSetRequestModel model)
                 {
                         CreateResponse<ApiTagSetResponseModel> result = await this.TagSetService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TagSets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TagSets/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagSetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTagSetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiTagSetRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiTagSetRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TagSetService.Update(id, model);
+                                UpdateResponse<ApiTagSetResponseModel> result = await this.TagSetService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTagSetResponseModel response = await this.TagSetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagSetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTagSetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiTagSetRequestModel model)
                 {
-                        ApiTagSetRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTagSetRequestModel request = await this.PatchModel(id, this.TagSetModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TagSetService.Update(id, request);
+                                UpdateResponse<ApiTagSetResponseModel> result = await this.TagSetService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTagSetResponseModel response = await this.TagSetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,16 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTagSetRequestModel> CreatePatch(ApiTagSetRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTagSetRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.SortOrder, model.SortOrder);
-                        return patch;
-                }
-
                 private async Task<ApiTagSetRequestModel> PatchModel(string id, JsonPatchDocument<ApiTagSetRequestModel> patch)
                 {
                         var record = await this.TagSetService.Get(id);
@@ -264,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b342e9be0dfb3b664b16d917a5eda2fa</Hash>
+    <Hash>e268a32f7973bbfa31c7bbe6e4293f7c</Hash>
 </Codenesium>*/

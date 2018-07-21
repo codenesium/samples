@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpecialOfferProductResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSpecialOfferProductResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferProductRequestModel model)
                 {
                         CreateResponse<ApiSpecialOfferProductResponseModel> result = await this.SpecialOfferProductService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpecialOfferProducts/{result.Record.SpecialOfferID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpecialOfferProducts/{result.Record.SpecialOfferID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpecialOfferProductResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferProductResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpecialOfferProductRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSpecialOfferProductRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SpecialOfferProductService.Update(id, model);
+                                UpdateResponse<ApiSpecialOfferProductResponseModel> result = await this.SpecialOfferProductService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSpecialOfferProductResponseModel response = await this.SpecialOfferProductService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpecialOfferProductResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferProductResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferProductRequestModel model)
                 {
-                        ApiSpecialOfferProductRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSpecialOfferProductRequestModel request = await this.PatchModel(id, this.SpecialOfferProductModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SpecialOfferProductService.Update(id, request);
+                                UpdateResponse<ApiSpecialOfferProductResponseModel> result = await this.SpecialOfferProductService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSpecialOfferProductResponseModel response = await this.SpecialOfferProductService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -230,15 +226,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSpecialOfferProductRequestModel> CreatePatch(ApiSpecialOfferProductRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSpecialOfferProductRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiSpecialOfferProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferProductRequestModel> patch)
                 {
                         var record = await this.SpecialOfferProductService.Get(id);
@@ -258,5 +245,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>73f210b7129ccc1fe367b296e5da6fd1</Hash>
+    <Hash>a5e5203b065666cbb2ef73af902ed553</Hash>
 </Codenesium>*/

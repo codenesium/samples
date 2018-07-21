@@ -32,7 +32,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CategoryRules()
                 {
-                        this.RuleFor(x => x.Category).NotNull();
                         this.RuleFor(x => x.Category).Length(0, 50);
                 }
 
@@ -43,12 +42,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void MessageRules()
                 {
-                        this.RuleFor(x => x.Message).NotNull();
                 }
 
                 public virtual void OccurredRules()
@@ -62,7 +59,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void RelatedDocumentIdsRules()
                 {
-                        this.RuleFor(x => x.RelatedDocumentIds).NotNull();
                 }
 
                 public virtual void TenantIdRules()
@@ -72,18 +68,16 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void UserIdRules()
                 {
-                        this.RuleFor(x => x.UserId).NotNull();
                         this.RuleFor(x => x.UserId).Length(0, 50);
                 }
 
                 public virtual void UsernameRules()
                 {
-                        this.RuleFor(x => x.Username).NotNull();
                         this.RuleFor(x => x.Username).Length(0, 200);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8d37dcbaa56dc8dd6537e650c549fac5</Hash>
+    <Hash>7a9ecce0ac652324055619e9cf85f2cc</Hash>
 </Codenesium>*/

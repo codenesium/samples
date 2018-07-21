@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -37,9 +38,25 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.ReasonType.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSalesReasonModelMapper();
+                        var model = new ApiSalesReasonRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+
+                        JsonPatchDocument<ApiSalesReasonRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSalesReasonRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Name.Should().Be("A");
+                        response.ReasonType.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2c4bcbbed4a79e4057709836abff0ccb</Hash>
+    <Hash>c4beabfe269842f65695a33643afdf67</Hash>
 </Codenesium>*/

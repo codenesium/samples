@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var model = new ApiProxyRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Proxy>())).Returns(Task.FromResult(new Proxy()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ProxyModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiProxyResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProxyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProxyRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>770c501e02fadad68a2162e156dba5a5</Hash>
+    <Hash>4234e0529c6a37038a7c9bfadece6116</Hash>
 </Codenesium>*/

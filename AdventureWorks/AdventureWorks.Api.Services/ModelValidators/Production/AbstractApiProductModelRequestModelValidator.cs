@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                public virtual void InstructionsRules()
+                public virtual void InstructionRules()
                 {
                 }
 
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a6a44b2d058a76cb877e05d3fc9d19a</Hash>
+    <Hash>25d9b5bc8d6e39aab80ef596047f6d54</Hash>
 </Codenesium>*/

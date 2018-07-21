@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
                                 bo.CreditRating,
                                 bo.ModifiedDate,
                                 bo.Name,
-                                bo.PreferredVendorStatus,
+                                bo.PreferredVendorStatu,
                                 bo.PurchasingWebServiceURL);
                         return efVendor;
                 }
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Services
                                 ef.CreditRating,
                                 ef.ModifiedDate,
                                 ef.Name,
-                                ef.PreferredVendorStatus,
+                                ef.PreferredVendorStatu,
                                 ef.PurchasingWebServiceURL);
                         return bo;
                 }
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>881b8d593ff3fa81e0804c53e63e18b9</Hash>
+    <Hash>c0b44a5a71d162e4683a2ca0039d7c6a</Hash>
 </Codenesium>*/

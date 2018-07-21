@@ -26,72 +26,20 @@ namespace StackOverflowNS.Api.Contracts
                         this.WikiPostId = wikiPostId;
                 }
 
-                private int count;
+                [JsonProperty]
+                public int Count { get; private set; }
 
-                [Required]
-                public int Count
-                {
-                        get
-                        {
-                                return this.count;
-                        }
+                [JsonProperty]
+                public int ExcerptPostId { get; private set; }
 
-                        set
-                        {
-                                this.count = value;
-                        }
-                }
+                [JsonProperty]
+                public string TagName { get; private set; }
 
-                private int excerptPostId;
-
-                [Required]
-                public int ExcerptPostId
-                {
-                        get
-                        {
-                                return this.excerptPostId;
-                        }
-
-                        set
-                        {
-                                this.excerptPostId = value;
-                        }
-                }
-
-                private string tagName;
-
-                [Required]
-                public string TagName
-                {
-                        get
-                        {
-                                return this.tagName;
-                        }
-
-                        set
-                        {
-                                this.tagName = value;
-                        }
-                }
-
-                private int wikiPostId;
-
-                [Required]
-                public int WikiPostId
-                {
-                        get
-                        {
-                                return this.wikiPostId;
-                        }
-
-                        set
-                        {
-                                this.wikiPostId = value;
-                        }
-                }
+                [JsonProperty]
+                public int WikiPostId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3eb9404e4f84a1f6021f5c163dd6a1cc</Hash>
+    <Hash>cd2a6189b4e95027bbb111b23ae2a624</Hash>
 </Codenesium>*/

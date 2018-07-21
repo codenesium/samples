@@ -97,13 +97,14 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISpaceXSpaceFeatureRepository>();
                         var model = new ApiSpaceXSpaceFeatureRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SpaceXSpaceFeature>())).Returns(Task.FromResult(new SpaceXSpaceFeature()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceXSpaceFeature()));
                         var service = new SpaceXSpaceFeatureService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.SpaceXSpaceFeatureModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
                                                                     mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSpaceXSpaceFeatureResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SpaceXSpaceFeatureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>()));
@@ -132,5 +133,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19438c4de5366361cb230f17f888a9e8</Hash>
+    <Hash>155dc24ed280ca3c5f70e5f0e162f958</Hash>
 </Codenesium>*/

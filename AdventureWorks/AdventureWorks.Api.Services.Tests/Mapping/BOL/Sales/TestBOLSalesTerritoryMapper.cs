@@ -18,18 +18,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesTerritoryMapper();
                         ApiSalesTerritoryRequestModel model = new ApiSalesTerritoryRequestModel();
-                        model.SetProperties(1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
+                        model.SetProperties(1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
                         BOSalesTerritory response = mapper.MapModelToBO(1, model);
 
-                        response.CostLastYear.Should().Be(1);
-                        response.CostYTD.Should().Be(1);
+                        response.CostLastYear.Should().Be(1m);
+                        response.CostYTD.Should().Be(1m);
                         response.CountryRegionCode.Should().Be("A");
                         response.@Group.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                 }
 
                 [Fact]
@@ -37,18 +37,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesTerritoryMapper();
                         BOSalesTerritory bo = new BOSalesTerritory();
-                        bo.SetProperties(1, 1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
+                        bo.SetProperties(1, 1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
                         ApiSalesTerritoryResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.CostLastYear.Should().Be(1);
-                        response.CostYTD.Should().Be(1);
+                        response.CostLastYear.Should().Be(1m);
+                        response.CostYTD.Should().Be(1m);
                         response.CountryRegionCode.Should().Be("A");
                         response.@Group.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesTerritoryMapper();
                         BOSalesTerritory bo = new BOSalesTerritory();
-                        bo.SetProperties(1, 1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
+                        bo.SetProperties(1, 1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
                         List<ApiSalesTerritoryResponseModel> response = mapper.MapBOToModel(new List<BOSalesTerritory>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d1dddfb4ef12c17d4239af8cb53d097</Hash>
+    <Hash>e5caefe7ddc673acd124fcf0f4543d05</Hash>
 </Codenesium>*/

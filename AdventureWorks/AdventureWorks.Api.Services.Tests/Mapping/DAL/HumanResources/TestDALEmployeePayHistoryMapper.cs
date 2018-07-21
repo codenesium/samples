@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
                         var bo = new BOEmployeePayHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         EmployeePayHistory response = mapper.MapBOToEF(bo);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1);
+                        response.Rate.Should().Be(1m);
                         response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
 
@@ -33,14 +33,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
                         EmployeePayHistory entity = new EmployeePayHistory();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         BOEmployeePayHistory response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1);
+                        response.Rate.Should().Be(1m);
                         response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
 
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
                         EmployeePayHistory entity = new EmployeePayHistory();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOEmployeePayHistory> response = mapper.MapEFToBO(new List<EmployeePayHistory>() { entity });
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9b30b74c7a96e311c55230dd3938e1a5</Hash>
+    <Hash>c4d382f9db58c602a32a93ae1ee71c81</Hash>
 </Codenesium>*/

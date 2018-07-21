@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiDocumentResponseModel>> Update(
                         Guid rowguid,
                         ApiDocumentRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateUpdateAsync(rowguid, model));
-                        if (response.Success)
+                        var validationResult = await this.documentModelValidator.ValidateUpdateAsync(rowguid, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolDocumentMapper.MapModelToBO(rowguid, model);
                                 await this.documentRepository.Update(this.dalDocumentMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.documentRepository.Get(rowguid);
+
+                                return new UpdateResponse<ApiDocumentResponseModel>(this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiDocumentResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -111,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d1a41e8eb44f134c7c5df544987dce0</Hash>
+    <Hash>6caa1262ac4f79e3f9b272b34fd26b88</Hash>
 </Codenesium>*/

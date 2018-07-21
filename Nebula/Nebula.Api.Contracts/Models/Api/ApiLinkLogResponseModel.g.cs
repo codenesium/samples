@@ -22,18 +22,27 @@ namespace NebulaNS.Api.Contracts
                         this.LinkIdEntity = nameof(ApiResponse.Links);
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime DateEntered { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int LinkId { get; private set; }
 
+                [JsonProperty]
                 public string LinkIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Log { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4821cecafdcfaff7a12226a632d590ba</Hash>
+    <Hash>bbfcd16cbf9ec4c46576df3621f752a2</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiMutexResponseModel>> Create(
                         ApiMutexRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiMutexRequestModel model);
+                Task<UpdateResponse<ApiMutexResponseModel>> Update(string id,
+                                                                    ApiMutexRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f04a8110633e7871a02309df0e6a0637</Hash>
+    <Hash>65a0f418feccd26ecaa0983de68fb8ad</Hash>
 </Codenesium>*/

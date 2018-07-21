@@ -28,19 +28,16 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void EmailRules()
                 {
-                        this.RuleFor(x => x.Email).NotNull();
                         this.RuleFor(x => x.Email).Length(0, 128);
                 }
 
                 public virtual void FirstNameRules()
                 {
-                        this.RuleFor(x => x.FirstName).NotNull();
                         this.RuleFor(x => x.FirstName).Length(0, 128);
                 }
 
                 public virtual void LastNameRules()
                 {
-                        this.RuleFor(x => x.LastName).NotNull();
                         this.RuleFor(x => x.LastName).Length(0, 128);
                 }
 
@@ -51,12 +48,11 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PhoneRules()
                 {
-                        this.RuleFor(x => x.Phone).NotNull();
                         this.RuleFor(x => x.Phone).Length(0, 10);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3924fa807fb8b38a86158c07081d9802</Hash>
+    <Hash>ed0c2c65f2e93a3daa4cee11cb135314</Hash>
 </Codenesium>*/

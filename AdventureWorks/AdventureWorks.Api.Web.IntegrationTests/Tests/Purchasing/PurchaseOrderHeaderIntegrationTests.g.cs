@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "PurchaseOrderHeader")]
         [Trait("Area", "Integration")]
-        public class PurchaseOrderHeaderIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class PurchaseOrderHeaderIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public PurchaseOrderHeaderIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiPurchaseOrderHeaderModelMapper mapper = new ApiPurchaseOrderHeaderModelMapper();
+
+                        UpdateResponse<ApiPurchaseOrderHeaderResponseModel> updateResponse = await this.Client.PurchaseOrderHeaderUpdateAsync(model.PurchaseOrderID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.PurchaseOrderHeaderDeleteAsync(model.PurchaseOrderID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiPurchaseOrderHeaderResponseModel response = await this.Client.PurchaseOrderHeaderGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.Client.PurchaseOrderHeaderAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiPurchaseOrderHeaderResponseModel> CreateRecord()
+                {
+                        var model = new ApiPurchaseOrderHeaderRequestModel();
+                        model.SetProperties(2, 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 3810.59m, 3810.59m, 3810.59m, 2);
+                        CreateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.Client.PurchaseOrderHeaderCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.PurchaseOrderHeaderDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9c52fc03bc8faff40663462e97a047bc</Hash>
+    <Hash>98deff639b115eddbaf89a0b31d0d011</Hash>
 </Codenesium>*/

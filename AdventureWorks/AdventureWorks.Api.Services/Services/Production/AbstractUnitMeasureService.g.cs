@@ -22,9 +22,9 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALUnitMeasureMapper dalUnitMeasureMapper;
 
-                private IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper;
+                private IBOLBillOfMaterialMapper bolBillOfMaterialMapper;
 
-                private IDALBillOfMaterialsMapper dalBillOfMaterialsMapper;
+                private IDALBillOfMaterialMapper dalBillOfMaterialMapper;
                 private IBOLProductMapper bolProductMapper;
 
                 private IDALProductMapper dalProductMapper;
@@ -37,8 +37,8 @@ namespace AdventureWorksNS.Api.Services
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
                         IBOLUnitMeasureMapper bolUnitMeasureMapper,
                         IDALUnitMeasureMapper dalUnitMeasureMapper,
-                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
+                        IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
+                        IDALBillOfMaterialMapper dalBillOfMaterialMapper,
                         IBOLProductMapper bolProductMapper,
                         IDALProductMapper dalProductMapper)
                         : base()
@@ -47,8 +47,8 @@ namespace AdventureWorksNS.Api.Services
                         this.unitMeasureModelValidator = unitMeasureModelValidator;
                         this.bolUnitMeasureMapper = bolUnitMeasureMapper;
                         this.dalUnitMeasureMapper = dalUnitMeasureMapper;
-                        this.bolBillOfMaterialsMapper = bolBillOfMaterialsMapper;
-                        this.dalBillOfMaterialsMapper = dalBillOfMaterialsMapper;
+                        this.bolBillOfMaterialMapper = bolBillOfMaterialMapper;
+                        this.dalBillOfMaterialMapper = dalBillOfMaterialMapper;
                         this.bolProductMapper = bolProductMapper;
                         this.dalProductMapper = dalProductMapper;
                         this.logger = logger;
@@ -90,18 +90,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiUnitMeasureResponseModel>> Update(
                         string unitMeasureCode,
                         ApiUnitMeasureRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model));
-                        if (response.Success)
+                        var validationResult = await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
                                 await this.unitMeasureRepository.Update(this.dalUnitMeasureMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.unitMeasureRepository.Get(unitMeasureCode);
+
+                                return new UpdateResponse<ApiUnitMeasureResponseModel>(this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiUnitMeasureResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -130,11 +137,11 @@ namespace AdventureWorksNS.Api.Services
                         }
                 }
 
-                public async virtual Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
                 {
-                        List<BillOfMaterials> records = await this.unitMeasureRepository.BillOfMaterials(unitMeasureCode, limit, offset);
+                        List<BillOfMaterial> records = await this.unitMeasureRepository.BillOfMaterials(unitMeasureCode, limit, offset);
 
-                        return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
+                        return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(records));
                 }
 
                 public async virtual Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8fd647e0758464f203a3320267334a9</Hash>
+    <Hash>f1ff830e3dea3cc63a74135b9abbd097</Hash>
 </Codenesium>*/

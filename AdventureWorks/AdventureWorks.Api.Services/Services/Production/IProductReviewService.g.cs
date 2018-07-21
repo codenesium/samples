@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiProductReviewResponseModel>> Create(
                         ApiProductReviewRequestModel model);
 
-                Task<ActionResponse> Update(int productReviewID,
-                                            ApiProductReviewRequestModel model);
+                Task<UpdateResponse<ApiProductReviewResponseModel>> Update(int productReviewID,
+                                                                            ApiProductReviewRequestModel model);
 
                 Task<ActionResponse> Delete(int productReviewID);
 
@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<List<ApiProductReviewResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiProductReviewResponseModel>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName);
+                Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName);
         }
 }
 
 /*<Codenesium>
-    <Hash>813ce6374ed715ec77e5bbd02cf40eec</Hash>
+    <Hash>2d70686eb2cbf5bdeb09e058718acdaa</Hash>
 </Codenesium>*/

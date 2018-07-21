@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -11,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         var response = new ApiProductReviewResponseModel();
                         response.SetProperties(productReviewID,
-                                               request.Comments,
+                                               request.Comment,
                                                request.EmailAddress,
                                                request.ModifiedDate,
                                                request.ProductID,
@@ -26,7 +28,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         var request = new ApiProductReviewRequestModel();
                         request.SetProperties(
-                                response.Comments,
+                                response.Comment,
                                 response.EmailAddress,
                                 response.ModifiedDate,
                                 response.ProductID,
@@ -35,9 +37,22 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.ReviewerName);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiProductReviewRequestModel> CreatePatch(ApiProductReviewRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductReviewRequestModel>();
+                        patch.Replace(x => x.Comment, model.Comment);
+                        patch.Replace(x => x.EmailAddress, model.EmailAddress);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.Rating, model.Rating);
+                        patch.Replace(x => x.ReviewDate, model.ReviewDate);
+                        patch.Replace(x => x.ReviewerName, model.ReviewerName);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f53108022563e0d9618cca2ea15e2b2</Hash>
+    <Hash>689855bf424282080578ace70cde862d</Hash>
 </Codenesium>*/

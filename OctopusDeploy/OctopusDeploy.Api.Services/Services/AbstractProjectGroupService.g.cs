@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProjectGroupResponseModel>> Update(
                         string id,
                         ApiProjectGroupRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.projectGroupModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.projectGroupModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProjectGroupMapper.MapModelToBO(id, model);
                                 await this.projectGroupRepository.Update(this.dalProjectGroupMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.projectGroupRepository.Get(id);
+
+                                return new UpdateResponse<ApiProjectGroupResponseModel>(this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProjectGroupResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -125,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a28f908b68409241c1964058f139ae73</Hash>
+    <Hash>2af48211f07cc262b140f476388e1091</Hash>
 </Codenesium>*/

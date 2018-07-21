@@ -45,7 +45,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void RevisionGUIDRules()
                 {
-                        this.RuleFor(x => x.RevisionGUID).NotNull();
                         this.RuleFor(x => x.RevisionGUID).Length(0, 36);
                 }
 
@@ -66,5 +65,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34849e853900dd249525c1d73e7aea7c</Hash>
+    <Hash>85d23c965739f00598ed0843ee25f29f</Hash>
 </Codenesium>*/

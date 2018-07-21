@@ -18,14 +18,20 @@ namespace FileServiceNS.Api.Contracts
                         this.Description = description;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? AppliedOn { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public long Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>85f55876abbd64e7054d7b78b5e6d257</Hash>
+    <Hash>2d9e9eb6ea518ffb8bb2bccb42d840f9</Hash>
 </Codenesium>*/

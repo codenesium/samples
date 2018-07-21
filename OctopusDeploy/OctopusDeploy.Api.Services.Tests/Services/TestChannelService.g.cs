@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var model = new ApiChannelRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Channel>())).Returns(Task.FromResult(new Channel()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiChannelResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiChannelRequestModel>()));
@@ -239,5 +240,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f2ef8a1db19c2854bfeea90181983893</Hash>
+    <Hash>245c5b804f953d5fd658dee07f99a14d</Hash>
 </Codenesium>*/

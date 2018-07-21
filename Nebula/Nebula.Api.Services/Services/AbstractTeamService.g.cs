@@ -90,18 +90,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTeamResponseModel>> Update(
                         int id,
                         ApiTeamRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.teamModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTeamMapper.MapModelToBO(id, model);
                                 await this.teamRepository.Update(this.dalTeamMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.teamRepository.Get(id);
+
+                                return new UpdateResponse<ApiTeamResponseModel>(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTeamResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a6dda2a4f503833931d5f54a5eeb611</Hash>
+    <Hash>e1764f2ae71830d1bf08ac4524284d96</Hash>
 </Codenesium>*/

@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DisplayName_Create_null()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUsersRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DisplayName, null as string);
-                }
-
-                [Fact]
-                public async void DisplayName_Update_null()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
-
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DisplayName, null as string);
-                }
-
-                [Fact]
                 public async void DisplayName_Create_length()
                 {
                         Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
@@ -147,5 +123,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d0ccf731cb02e7f4593f3f0937b2cd35</Hash>
+    <Hash>7abc436875e450b1939b2ec9930e31e7</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLocationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLocationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLocationRequestModel model)
                 {
                         CreateResponse<ApiLocationResponseModel> result = await this.LocationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Locations/{result.Record.LocationID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Locations/{result.Record.LocationID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLocationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiLocationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiLocationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LocationService.Update(id, model);
+                                UpdateResponse<ApiLocationResponseModel> result = await this.LocationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLocationResponseModel response = await this.LocationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLocationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiLocationRequestModel model)
                 {
-                        ApiLocationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLocationRequestModel request = await this.PatchModel(id, this.LocationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LocationService.Update(id, request);
+                                UpdateResponse<ApiLocationResponseModel> result = await this.LocationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLocationResponseModel response = await this.LocationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -252,16 +248,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiLocationRequestModel> CreatePatch(ApiLocationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLocationRequestModel>();
-                        patch.Replace(x => x.Availability, model.Availability);
-                        patch.Replace(x => x.CostRate, model.CostRate);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiLocationRequestModel> PatchModel(short id, JsonPatchDocument<ApiLocationRequestModel> patch)
                 {
                         var record = await this.LocationService.Get(id);
@@ -281,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>24337383e45c0ae55d556c43557a2fed</Hash>
+    <Hash>5bdb8218b72573b68b7ed81d2e2f5472</Hash>
 </Codenesium>*/

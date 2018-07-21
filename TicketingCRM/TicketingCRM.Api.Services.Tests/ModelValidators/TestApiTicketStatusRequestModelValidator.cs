@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
-                        ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
-
-                        var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTicketStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
-                        ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
-
-                        var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTicketStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
@@ -75,5 +51,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8872a3f882d561e506755cb57a9fda48</Hash>
+    <Hash>2443d060d45b04b66bcc12d50f2186bd</Hash>
 </Codenesium>*/

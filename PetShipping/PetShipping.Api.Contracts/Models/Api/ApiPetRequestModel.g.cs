@@ -26,72 +26,20 @@ namespace PetShippingNS.Api.Contracts
                         this.Weight = weight;
                 }
 
-                private int breedId;
+                [JsonProperty]
+                public int BreedId { get; private set; }
 
-                [Required]
-                public int BreedId
-                {
-                        get
-                        {
-                                return this.breedId;
-                        }
+                [JsonProperty]
+                public int ClientId { get; private set; }
 
-                        set
-                        {
-                                this.breedId = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private int clientId;
-
-                [Required]
-                public int ClientId
-                {
-                        get
-                        {
-                                return this.clientId;
-                        }
-
-                        set
-                        {
-                                this.clientId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int weight;
-
-                [Required]
-                public int Weight
-                {
-                        get
-                        {
-                                return this.weight;
-                        }
-
-                        set
-                        {
-                                this.weight = value;
-                        }
-                }
+                [JsonProperty]
+                public int Weight { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a153526b6517f6995aef7dbd0c20d8a6</Hash>
+    <Hash>f22e6f1ef32d9dc7fb051690d262c09c</Hash>
 </Codenesium>*/

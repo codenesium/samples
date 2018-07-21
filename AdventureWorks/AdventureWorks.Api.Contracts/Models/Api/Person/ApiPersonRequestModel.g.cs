@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public virtual void SetProperties(
                         string additionalContactInfo,
-                        string demographics,
+                        string demographic,
                         int emailPromotion,
                         string firstName,
                         string lastName,
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string title)
                 {
                         this.AdditionalContactInfo = additionalContactInfo;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.EmailPromotion = emailPromotion;
                         this.FirstName = firstName;
                         this.LastName = lastName;
@@ -42,195 +42,51 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Title = title;
                 }
 
-                private string additionalContactInfo;
+                [JsonProperty]
+                public string AdditionalContactInfo { get; private set; }
 
-                public string AdditionalContactInfo
-                {
-                        get
-                        {
-                                return this.additionalContactInfo;
-                        }
-
-                        set
-                        {
-                                this.additionalContactInfo = value;
-                        }
-                }
-
-                private string demographics;
-
-                public string Demographics
-                {
-                        get
-                        {
-                                return this.demographics;
-                        }
-
-                        set
-                        {
-                                this.demographics = value;
-                        }
-                }
-
-                private int emailPromotion;
+                [JsonProperty]
+                public string Demographic { get; private set; }
 
                 [Required]
-                public int EmailPromotion
-                {
-                        get
-                        {
-                                return this.emailPromotion;
-                        }
-
-                        set
-                        {
-                                this.emailPromotion = value;
-                        }
-                }
-
-                private string firstName;
+                [JsonProperty]
+                public int EmailPromotion { get; private set; }
 
                 [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
-
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private string lastName;
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
                 [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
+                [JsonProperty]
+                public string LastName { get; private set; }
 
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private string middleName;
-
-                public string MiddleName
-                {
-                        get
-                        {
-                                return this.middleName;
-                        }
-
-                        set
-                        {
-                                this.middleName = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string MiddleName { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private bool nameStyle;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public bool NameStyle
-                {
-                        get
-                        {
-                                return this.nameStyle;
-                        }
-
-                        set
-                        {
-                                this.nameStyle = value;
-                        }
-                }
-
-                private string personType;
+                [JsonProperty]
+                public bool NameStyle { get; private set; }
 
                 [Required]
-                public string PersonType
-                {
-                        get
-                        {
-                                return this.personType;
-                        }
-
-                        set
-                        {
-                                this.personType = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public string PersonType { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
+                [JsonProperty]
+                public string Suffix { get; private set; }
 
-                private string suffix;
-
-                public string Suffix
-                {
-                        get
-                        {
-                                return this.suffix;
-                        }
-
-                        set
-                        {
-                                this.suffix = value;
-                        }
-                }
-
-                private string title;
-
-                public string Title
-                {
-                        get
-                        {
-                                return this.title;
-                        }
-
-                        set
-                        {
-                                this.title = value;
-                        }
-                }
+                [JsonProperty]
+                public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>817c5bd9b86dc4ec7c15dbb4ba3b7ed9</Hash>
+    <Hash>7bd487d13e6d5e3888a7931e58883b4f</Hash>
 </Codenesium>*/

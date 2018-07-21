@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPurchaseOrderHeaderRepository>();
                         var model = new ApiPurchaseOrderHeaderRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PurchaseOrderHeader>())).Returns(Task.FromResult(new PurchaseOrderHeader()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PurchaseOrderHeader()));
                         var service = new PurchaseOrderHeaderService(mock.LoggerMock.Object,
                                                                      mock.RepositoryMock.Object,
                                                                      mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                      mock.BOLMapperMockFactory.BOLPurchaseOrderDetailMapperMock,
                                                                      mock.DALMapperMockFactory.DALPurchaseOrderDetailMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPurchaseOrderHeaderResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPurchaseOrderHeaderRequestModel>()));
@@ -264,5 +265,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dcef6f8eb13485acb8168cc55f83da2f</Hash>
+    <Hash>fef9c0a06924f9de7dd7fd2ee8ea0237</Hash>
 </Codenesium>*/

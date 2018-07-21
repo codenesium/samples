@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICurrencyRateRepository>();
                         var model = new ApiCurrencyRateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CurrencyRate>())).Returns(Task.FromResult(new CurrencyRate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
                         var service = new CurrencyRateService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.CurrencyRateModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
                                                               mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCurrencyRateResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CurrencyRateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>()));
@@ -223,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>93d196e77911bb84b6512f865bb0b6c5</Hash>
+    <Hash>c8abd431e94ff4ca2725057b482a3b16</Hash>
 </Codenesium>*/

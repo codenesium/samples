@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiLocationResponseModel>> Create(
                         ApiLocationRequestModel model);
 
-                Task<ActionResponse> Update(short locationID,
-                                            ApiLocationRequestModel model);
+                Task<UpdateResponse<ApiLocationResponseModel>> Update(short locationID,
+                                                                       ApiLocationRequestModel model);
 
                 Task<ActionResponse> Delete(short locationID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b2f3ae7d05d329cb34161d7beb5b693</Hash>
+    <Hash>b84b26dfeeaec06883ff9c6fea5a431c</Hash>
 </Codenesium>*/

@@ -105,6 +105,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISpaceRepository>();
                         var model = new ApiSpaceRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Space>())).Returns(Task.FromResult(new Space()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
                         var service = new SpaceService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
                                                        mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSpaceResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()));
@@ -184,5 +185,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ad8829fc1e18035f38179fd5814e649</Hash>
+    <Hash>757949183169d556b870e52f29d6b7db</Hash>
 </Codenesium>*/

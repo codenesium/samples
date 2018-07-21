@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonPhoneResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPersonPhoneResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPersonPhoneRequestModel model)
                 {
                         CreateResponse<ApiPersonPhoneResponseModel> result = await this.PersonPhoneService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PersonPhones/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PersonPhones/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonPhoneResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPersonPhoneResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPersonPhoneRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPersonPhoneRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PersonPhoneService.Update(id, model);
+                                UpdateResponse<ApiPersonPhoneResponseModel> result = await this.PersonPhoneService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPersonPhoneResponseModel response = await this.PersonPhoneService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonPhoneResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPersonPhoneResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonPhoneRequestModel model)
                 {
-                        ApiPersonPhoneRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPersonPhoneRequestModel request = await this.PatchModel(id, this.PersonPhoneModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PersonPhoneService.Update(id, request);
+                                UpdateResponse<ApiPersonPhoneResponseModel> result = await this.PersonPhoneService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPersonPhoneResponseModel response = await this.PersonPhoneService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,15 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPersonPhoneRequestModel> CreatePatch(ApiPersonPhoneRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPersonPhoneRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.PhoneNumber, model.PhoneNumber);
-                        patch.Replace(x => x.PhoneNumberTypeID, model.PhoneNumberTypeID);
-                        return patch;
-                }
-
                 private async Task<ApiPersonPhoneRequestModel> PatchModel(int id, JsonPatchDocument<ApiPersonPhoneRequestModel> patch)
                 {
                         var record = await this.PersonPhoneService.Get(id);
@@ -244,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>92525dff2780736a3bc2fb7c00cd689b</Hash>
+    <Hash>038642d996d72444f33ebe76e1789e21</Hash>
 </Codenesium>*/

@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiStoreResponseModel>> Update(
                         int businessEntityID,
                         ApiStoreRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.storeModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.storeModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolStoreMapper.MapModelToBO(businessEntityID, model);
                                 await this.storeRepository.Update(this.dalStoreMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.storeRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiStoreResponseModel>(this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiStoreResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -116,9 +123,9 @@ namespace AdventureWorksNS.Api.Services
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiStoreResponseModel>> ByDemographics(string demographics)
+                public async Task<List<ApiStoreResponseModel>> ByDemographic(string demographic)
                 {
-                        List<Store> records = await this.storeRepository.ByDemographics(demographics);
+                        List<Store> records = await this.storeRepository.ByDemographic(demographic);
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22683dc6f8837488d4362a0a6db63ab3</Hash>
+    <Hash>447e8e8733a87a061e42fa3c8f288e2b</Hash>
 </Codenesium>*/

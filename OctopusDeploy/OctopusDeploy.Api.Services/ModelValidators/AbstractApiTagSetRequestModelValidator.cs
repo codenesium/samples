@@ -32,12 +32,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTagSetRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
@@ -63,5 +61,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>122b6eeb368362d8b9a9c21486ad6c45</Hash>
+    <Hash>459d24dfafa24a5b74e1e13ee452c67b</Hash>
 </Codenesium>*/

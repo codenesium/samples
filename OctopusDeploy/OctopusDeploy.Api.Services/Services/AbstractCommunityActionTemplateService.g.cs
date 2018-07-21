@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCommunityActionTemplateResponseModel>> Update(
                         string id,
                         ApiCommunityActionTemplateRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.communityActionTemplateModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.communityActionTemplateModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(id, model);
                                 await this.communityActionTemplateRepository.Update(this.dalCommunityActionTemplateMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.communityActionTemplateRepository.Get(id);
+
+                                return new UpdateResponse<ApiCommunityActionTemplateResponseModel>(this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCommunityActionTemplateResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -132,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8fcd145f9f6b0ab29868fd282d58ad36</Hash>
+    <Hash>e331832f9ad4e50032cb4aacf810c3a0</Hash>
 </Codenesium>*/

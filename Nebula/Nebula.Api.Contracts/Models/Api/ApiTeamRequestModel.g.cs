@@ -22,40 +22,14 @@ namespace NebulaNS.Api.Contracts
                         this.OrganizationId = organizationId;
                 }
 
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int organizationId;
-
-                [Required]
-                public int OrganizationId
-                {
-                        get
-                        {
-                                return this.organizationId;
-                        }
-
-                        set
-                        {
-                                this.organizationId = value;
-                        }
-                }
+                [JsonProperty]
+                public int OrganizationId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e6fdd01200ffdd441b0e0716bf6cef69</Hash>
+    <Hash>dfa9c162fce46b704781d28e9fe9996c</Hash>
 </Codenesium>*/

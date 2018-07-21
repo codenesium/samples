@@ -26,72 +26,20 @@ namespace NebulaNS.Api.Contracts
                         this.TeamId = teamId;
                 }
 
-                private int chainStatusId;
+                [JsonProperty]
+                public int ChainStatusId { get; private set; }
 
-                [Required]
-                public int ChainStatusId
-                {
-                        get
-                        {
-                                return this.chainStatusId;
-                        }
+                [JsonProperty]
+                public Guid ExternalId { get; private set; }
 
-                        set
-                        {
-                                this.chainStatusId = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private Guid externalId;
-
-                [Required]
-                public Guid ExternalId
-                {
-                        get
-                        {
-                                return this.externalId;
-                        }
-
-                        set
-                        {
-                                this.externalId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int teamId;
-
-                [Required]
-                public int TeamId
-                {
-                        get
-                        {
-                                return this.teamId;
-                        }
-
-                        set
-                        {
-                                this.teamId = value;
-                        }
-                }
+                [JsonProperty]
+                public int TeamId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b19021f01212d6f588f83736802ca92b</Hash>
+    <Hash>5294c5fb622bc8b702de7ef4fa425998</Hash>
 </Codenesium>*/

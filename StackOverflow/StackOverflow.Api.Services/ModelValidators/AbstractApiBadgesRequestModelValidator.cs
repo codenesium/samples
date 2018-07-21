@@ -32,7 +32,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 40);
                 }
 
@@ -43,5 +42,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce3dec4d73e71eafe62edee8c6d39f17</Hash>
+    <Hash>e1762aea7c07cae325a80cc4844a8c74</Hash>
 </Codenesium>*/

@@ -20,16 +20,24 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public Guid ExternalId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>167460c888cb4391c624ba001fc3b67c</Hash>
+    <Hash>57020f37eff7f621ae0778ed9c13d598</Hash>
 </Codenesium>*/

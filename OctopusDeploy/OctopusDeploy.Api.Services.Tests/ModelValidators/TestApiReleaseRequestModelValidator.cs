@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ChannelId_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ChannelId, null as string);
-                }
-
-                [Fact]
-                public async void ChannelId_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ChannelId, null as string);
-                }
-
-                [Fact]
                 public async void ChannelId_Create_length()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -70,54 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void ProjectDeploymentProcessSnapshotId_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectDeploymentProcessSnapshotId_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, null as string);
                 }
 
                 [Fact]
@@ -145,30 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectId_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectId_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
-                }
-
-                [Fact]
                 public async void ProjectId_Create_length()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -193,30 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectVariableSetSnapshotId_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectVariableSetSnapshotId_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, null as string);
-                }
-
-                [Fact]
                 public async void ProjectVariableSetSnapshotId_Create_length()
                 {
                         Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
@@ -238,30 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
-                }
-
-                [Fact]
-                public async void Version_Create_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
-                }
-
-                [Fact]
-                public async void Version_Update_null()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
-
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
                 }
 
                 [Fact]
@@ -339,5 +195,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c2c7797cbb9c9edcb0f91767d3d7228a</Hash>
+    <Hash>dc7c3c7bb9a8eded24c0c18b4d7dc869</Hash>
 </Codenesium>*/

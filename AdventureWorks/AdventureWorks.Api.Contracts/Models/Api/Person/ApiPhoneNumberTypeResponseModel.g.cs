@@ -18,14 +18,17 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public int PhoneNumberTypeID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>de45d0028a7224f4988aa3a07d3ac014</Hash>
+    <Hash>72c589f891d9145c53d1ffcce3cf793d</Hash>
 </Codenesium>*/

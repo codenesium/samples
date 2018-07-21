@@ -28,25 +28,21 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void Address1Rules()
                 {
-                        this.RuleFor(x => x.Address1).NotNull();
                         this.RuleFor(x => x.Address1).Length(0, 128);
                 }
 
                 public virtual void Address2Rules()
                 {
-                        this.RuleFor(x => x.Address2).NotNull();
                         this.RuleFor(x => x.Address2).Length(0, 128);
                 }
 
                 public virtual void CityRules()
                 {
-                        this.RuleFor(x => x.City).NotNull();
                         this.RuleFor(x => x.City).Length(0, 128);
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
 
@@ -57,13 +53,11 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void WebsiteRules()
                 {
-                        this.RuleFor(x => x.Website).NotNull();
                         this.RuleFor(x => x.Website).Length(0, 128);
                 }
 
                 public virtual void ZipRules()
                 {
-                        this.RuleFor(x => x.Zip).NotNull();
                         this.RuleFor(x => x.Zip).Length(0, 128);
                 }
 
@@ -77,5 +71,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f630d1fb95870d293ad44aa9df54de7f</Hash>
+    <Hash>72da74257a28cc37683e2f9cae98645e</Hash>
 </Codenesium>*/

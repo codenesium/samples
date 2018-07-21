@@ -26,71 +26,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableSetId = variableSetId;
                 }
 
-                private string contentType;
+                [JsonProperty]
+                public string ContentType { get; private set; }
 
-                [Required]
-                public string ContentType
-                {
-                        get
-                        {
-                                return this.contentType;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.contentType = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string variableSetId;
-
-                public string VariableSetId
-                {
-                        get
-                        {
-                                return this.variableSetId;
-                        }
-
-                        set
-                        {
-                                this.variableSetId = value;
-                        }
-                }
+                [JsonProperty]
+                public string VariableSetId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>51ecf2b56c41a60555052b758e2d49cd</Hash>
+    <Hash>f605bf97b9314e3c2168e8fbfd650d44</Hash>
 </Codenesium>*/

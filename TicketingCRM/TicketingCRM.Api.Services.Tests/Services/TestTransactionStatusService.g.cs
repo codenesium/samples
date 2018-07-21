@@ -105,6 +105,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var model = new ApiTransactionStatusRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionStatus>())).Returns(Task.FromResult(new TransactionStatus()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.TransactionStatusModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTransactionStatusResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TransactionStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionStatusRequestModel>()));
@@ -184,5 +185,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1f4ea3415d5e1c4ffb24d6ec83d29baa</Hash>
+    <Hash>435877c0870d5d4eb4d60d84b1014149</Hash>
 </Codenesium>*/

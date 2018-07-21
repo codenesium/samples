@@ -28,12 +28,11 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1c4a161f59a045c384773e5157a16d2</Hash>
+    <Hash>fdb653d0b4c557c0057ca9615d832c5a</Hash>
 </Codenesium>*/

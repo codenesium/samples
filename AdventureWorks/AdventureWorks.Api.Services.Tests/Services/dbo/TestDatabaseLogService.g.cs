@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDatabaseLogRepository>();
                         var model = new ApiDatabaseLogRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DatabaseLog>())).Returns(Task.FromResult(new DatabaseLog()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
                         var service = new DatabaseLogService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
                                                              mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiDatabaseLogResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDatabaseLogRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>58b0a0fe2a1afe7fa4cf12c8ba56073d</Hash>
+    <Hash>67cced108d67bdba244b8fc413b8b367</Hash>
 </Codenesium>*/

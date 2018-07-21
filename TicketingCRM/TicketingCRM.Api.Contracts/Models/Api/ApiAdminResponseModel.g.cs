@@ -26,22 +26,36 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Username = username;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Email { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Password { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Phone { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Username { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c0d22422d9059626cf1c0c06b04d5f59</Hash>
+    <Hash>62fa0f7523fae245c0e54d151adff11d</Hash>
 </Codenesium>*/

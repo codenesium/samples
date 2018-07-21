@@ -22,18 +22,28 @@ namespace PetShippingNS.Api.Contracts
                         this.LastName = lastName;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsSalesPerson { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsShipper { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ee139de31ede4c97bdc9dcf8ee183a77</Hash>
+    <Hash>a2fe153245f0fe48a13db2229e9ae3e6</Hash>
 </Codenesium>*/

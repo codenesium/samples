@@ -3,8 +3,10 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace FermataFishNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "Rate")]
         [Trait("Area", "Integration")]
-        public class RateIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class RateIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public RateIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace FermataFishNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiRateModelMapper mapper = new ApiRateModelMapper();
+
+                        UpdateResponse<ApiRateResponseModel> updateResponse = await this.Client.RateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.RateDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiRateResponseModel response = await this.Client.RateGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiRateResponseModel> response = await this.Client.RateAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiRateResponseModel> CreateRecord()
+                {
+                        var model = new ApiRateRequestModel();
+                        model.SetProperties(3810.59m, 1, 1);
+                        CreateResponse<ApiRateResponseModel> result = await this.Client.RateCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.RateDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bc60ebbb03ab83d5a9bd07ef51430314</Hash>
+    <Hash>cd2b67e2904b4d9092ea53b75c3b57a3</Hash>
 </Codenesium>*/

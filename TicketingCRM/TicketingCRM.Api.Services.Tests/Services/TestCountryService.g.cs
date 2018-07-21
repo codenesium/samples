@@ -105,6 +105,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICountryRepository>();
                         var model = new ApiCountryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(Task.FromResult(new Country()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
                         var service = new CountryService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProvinceMapperMock,
                                                          mock.DALMapperMockFactory.DALProvinceMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiCountryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()));
@@ -184,5 +185,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>436e237c331a1de3b8e466c726415078</Hash>
+    <Hash>79b2c0c52658612282d688c32100ffc5</Hash>
 </Codenesium>*/

@@ -30,104 +30,26 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Username = username;
                 }
 
-                private string email;
+                [JsonProperty]
+                public string Email { get; private set; }
 
-                [Required]
-                public string Email
-                {
-                        get
-                        {
-                                return this.email;
-                        }
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
-                        set
-                        {
-                                this.email = value;
-                        }
-                }
+                [JsonProperty]
+                public string LastName { get; private set; }
 
-                private string firstName;
+                [JsonProperty]
+                public string Password { get; private set; }
 
-                [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
+                [JsonProperty]
+                public string Phone { get; private set; }
 
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private string lastName;
-
-                [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private string password;
-
-                [Required]
-                public string Password
-                {
-                        get
-                        {
-                                return this.password;
-                        }
-
-                        set
-                        {
-                                this.password = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
-
-                private string username;
-
-                [Required]
-                public string Username
-                {
-                        get
-                        {
-                                return this.username;
-                        }
-
-                        set
-                        {
-                                this.username = value;
-                        }
-                }
+                [JsonProperty]
+                public string Username { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5b0e6dd71bf345a0302f0d6e98f06470</Hash>
+    <Hash>c5dd72520dd39fd081bcd7c0af6e4e21</Hash>
 </Codenesium>*/

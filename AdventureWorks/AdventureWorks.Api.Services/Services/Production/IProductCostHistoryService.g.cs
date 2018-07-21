@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiProductCostHistoryResponseModel>> Create(
                         ApiProductCostHistoryRequestModel model);
 
-                Task<ActionResponse> Update(int productID,
-                                            ApiProductCostHistoryRequestModel model);
+                Task<UpdateResponse<ApiProductCostHistoryResponseModel>> Update(int productID,
+                                                                                 ApiProductCostHistoryRequestModel model);
 
                 Task<ActionResponse> Delete(int productID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b19a227c57245c33435bd3f6c1464d2</Hash>
+    <Hash>33a54425bdb93c3bce9b3409969f889b</Hash>
 </Codenesium>*/

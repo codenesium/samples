@@ -34,134 +34,38 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryID = territoryID;
                 }
 
-                private decimal bonus;
+                [Required]
+                [JsonProperty]
+                public decimal Bonus { get; private set; }
 
                 [Required]
-                public decimal Bonus
-                {
-                        get
-                        {
-                                return this.bonus;
-                        }
-
-                        set
-                        {
-                                this.bonus = value;
-                        }
-                }
-
-                private decimal commissionPct;
+                [JsonProperty]
+                public decimal CommissionPct { get; private set; }
 
                 [Required]
-                public decimal CommissionPct
-                {
-                        get
-                        {
-                                return this.commissionPct;
-                        }
-
-                        set
-                        {
-                                this.commissionPct = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
+                [JsonProperty]
+                public decimal SalesLastYear { get; private set; }
 
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private decimal salesLastYear;
+                [JsonProperty]
+                public decimal? SalesQuota { get; private set; }
 
                 [Required]
-                public decimal SalesLastYear
-                {
-                        get
-                        {
-                                return this.salesLastYear;
-                        }
+                [JsonProperty]
+                public decimal SalesYTD { get; private set; }
 
-                        set
-                        {
-                                this.salesLastYear = value;
-                        }
-                }
-
-                private decimal? salesQuota;
-
-                public decimal? SalesQuota
-                {
-                        get
-                        {
-                                return this.salesQuota;
-                        }
-
-                        set
-                        {
-                                this.salesQuota = value;
-                        }
-                }
-
-                private decimal salesYTD;
-
-                [Required]
-                public decimal SalesYTD
-                {
-                        get
-                        {
-                                return this.salesYTD;
-                        }
-
-                        set
-                        {
-                                this.salesYTD = value;
-                        }
-                }
-
-                private int? territoryID;
-
-                public int? TerritoryID
-                {
-                        get
-                        {
-                                return this.territoryID;
-                        }
-
-                        set
-                        {
-                                this.territoryID = value;
-                        }
-                }
+                [JsonProperty]
+                public int? TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad5e7b105abb79cfbfa7b75bb08cdb73</Hash>
+    <Hash>ff614f89537c3a45f5276a46d2f6b63d</Hash>
 </Codenesium>*/

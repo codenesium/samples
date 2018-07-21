@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -55,9 +56,34 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.TenantTags.Should().Be("A");
                         response.Thumbprint.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiMachineModelMapper();
+                        var model = new ApiMachineRequestModel();
+                        model.SetProperties("A", "A", "A", true, "A", "A", "A", "A", "A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiMachineRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiMachineRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CommunicationStyle.Should().Be("A");
+                        response.EnvironmentIds.Should().Be("A");
+                        response.Fingerprint.Should().Be("A");
+                        response.IsDisabled.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.MachinePolicyId.Should().Be("A");
+                        response.Name.Should().Be("A");
+                        response.RelatedDocumentIds.Should().Be("A");
+                        response.Roles.Should().Be("A");
+                        response.TenantIds.Should().Be("A");
+                        response.TenantTags.Should().Be("A");
+                        response.Thumbprint.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>763a33b0e300f6ae2643726315171a26</Hash>
+    <Hash>62541d9b4d9ae4e7739225ea2bdf247e</Hash>
 </Codenesium>*/

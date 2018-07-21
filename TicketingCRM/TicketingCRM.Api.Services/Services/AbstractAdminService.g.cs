@@ -83,18 +83,25 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAdminResponseModel>> Update(
                         int id,
                         ApiAdminRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.adminModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAdminMapper.MapModelToBO(id, model);
                                 await this.adminRepository.Update(this.dalAdminMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.adminRepository.Get(id);
+
+                                return new UpdateResponse<ApiAdminResponseModel>(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAdminResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66d89dc329617bc0f1ddf0af6b6fbbf7</Hash>
+    <Hash>4f3066d8ec3571337454f98f55d79b05</Hash>
 </Codenesium>*/

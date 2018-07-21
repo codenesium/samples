@@ -24,20 +24,26 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShoppingCartID = shoppingCartID;
                 }
 
+                [JsonProperty]
                 public DateTime DateCreated { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public int Quantity { get; private set; }
 
+                [JsonProperty]
                 public string ShoppingCartID { get; private set; }
 
+                [JsonProperty]
                 public int ShoppingCartItemID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4585815c41de9553e9157d15c7f488db</Hash>
+    <Hash>81f52f8a93acfd750116d69e90f15e75</Hash>
 </Codenesium>*/

@@ -18,10 +18,10 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new BOLRateMapper();
                         ApiRateRequestModel model = new ApiRateRequestModel();
-                        model.SetProperties(1, 1, 1);
+                        model.SetProperties(1m, 1, 1);
                         BORate response = mapper.MapModelToBO(1, model);
 
-                        response.AmountPerMinute.Should().Be(1);
+                        response.AmountPerMinute.Should().Be(1m);
                         response.TeacherId.Should().Be(1);
                         response.TeacherSkillId.Should().Be(1);
                 }
@@ -31,10 +31,10 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new BOLRateMapper();
                         BORate bo = new BORate();
-                        bo.SetProperties(1, 1, 1, 1);
+                        bo.SetProperties(1, 1m, 1, 1);
                         ApiRateResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AmountPerMinute.Should().Be(1);
+                        response.AmountPerMinute.Should().Be(1m);
                         response.Id.Should().Be(1);
                         response.TeacherId.Should().Be(1);
                         response.TeacherSkillId.Should().Be(1);
@@ -45,7 +45,7 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mapper = new BOLRateMapper();
                         BORate bo = new BORate();
-                        bo.SetProperties(1, 1, 1, 1);
+                        bo.SetProperties(1, 1m, 1, 1);
                         List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -54,5 +54,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d0713ea3a2747b0a0cb6460286906f3</Hash>
+    <Hash>8bb4af51478849f6ef5b245183cf3d7d</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace NebulaNS.Api.Services
                 Task<CreateResponse<ApiLinkLogResponseModel>> Create(
                         ApiLinkLogRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiLinkLogRequestModel model);
+                Task<UpdateResponse<ApiLinkLogResponseModel>> Update(int id,
+                                                                      ApiLinkLogRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a427f1a88561ef87d81cb06f2bd5ab2d</Hash>
+    <Hash>6d87f2b43242bc0420f3a6c2681e1438</Hash>
 </Codenesium>*/

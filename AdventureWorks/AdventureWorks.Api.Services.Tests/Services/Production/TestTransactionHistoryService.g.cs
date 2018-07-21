@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITransactionHistoryRepository>();
                         var model = new ApiTransactionHistoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistory>())).Returns(Task.FromResult(new TransactionHistory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
                         var service = new TransactionHistoryService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLTransactionHistoryMapperMock,
                                                                     mock.DALMapperMockFactory.DALTransactionHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTransactionHistoryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>()));
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8291da808b75c8933b6f68986c4c2a03</Hash>
+    <Hash>c26ba1b17bf499846177c2e9736e6425</Hash>
 </Codenesium>*/

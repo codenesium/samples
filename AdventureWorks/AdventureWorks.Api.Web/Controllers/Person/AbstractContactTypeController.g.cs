@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiContactTypeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiContactTypeResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiContactTypeRequestModel model)
                 {
                         CreateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ContactTypes/{result.Record.ContactTypeID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ContactTypes/{result.Record.ContactTypeID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiContactTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiContactTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiContactTypeRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiContactTypeRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ContactTypeService.Update(id, model);
+                                UpdateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiContactTypeResponseModel response = await this.ContactTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiContactTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiContactTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiContactTypeRequestModel model)
                 {
-                        ApiContactTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiContactTypeRequestModel request = await this.PatchModel(id, this.ContactTypeModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ContactTypeService.Update(id, request);
+                                UpdateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiContactTypeResponseModel response = await this.ContactTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,14 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiContactTypeRequestModel> CreatePatch(ApiContactTypeRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiContactTypeRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiContactTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiContactTypeRequestModel> patch)
                 {
                         var record = await this.ContactTypeService.Get(id);
@@ -265,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d56c958425abf3de2ca7b755ea35b690</Hash>
+    <Hash>e0c55106246d752b6a0e1556d87b43fb</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiOtherTransportResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiOtherTransportRequestModel model)
                 {
                         CreateResponse<ApiOtherTransportResponseModel> result = await this.OtherTransportService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OtherTransports/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OtherTransports/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOtherTransportResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiOtherTransportRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiOtherTransportRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.OtherTransportService.Update(id, model);
+                                UpdateResponse<ApiOtherTransportResponseModel> result = await this.OtherTransportService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiOtherTransportResponseModel response = await this.OtherTransportService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOtherTransportResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOtherTransportRequestModel model)
                 {
-                        ApiOtherTransportRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiOtherTransportRequestModel request = await this.PatchModel(id, this.OtherTransportModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.OtherTransportService.Update(id, request);
+                                UpdateResponse<ApiOtherTransportResponseModel> result = await this.OtherTransportService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiOtherTransportResponseModel response = await this.OtherTransportService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace PetShippingNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiOtherTransportRequestModel> CreatePatch(ApiOtherTransportRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiOtherTransportRequestModel>();
-                        patch.Replace(x => x.HandlerId, model.HandlerId);
-                        patch.Replace(x => x.PipelineStepId, model.PipelineStepId);
-                        return patch;
-                }
-
                 private async Task<ApiOtherTransportRequestModel> PatchModel(int id, JsonPatchDocument<ApiOtherTransportRequestModel> patch)
                 {
                         var record = await this.OtherTransportService.Get(id);
@@ -232,5 +220,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7ce5b09c3ec109043dbc5fe77115c936</Hash>
+    <Hash>e72891335152cc85d83d5ae3b4760f65</Hash>
 </Codenesium>*/

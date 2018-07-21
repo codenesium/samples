@@ -129,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPersonRepository>();
                         var model = new ApiPersonRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Person>())).Returns(Task.FromResult(new Person()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
                         var service = new PersonService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -143,7 +144,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                         mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPersonResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonRequestModel>()));
@@ -282,12 +283,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ByDemographics_Exists()
+                public async void ByDemographic_Exists()
                 {
                         var mock = new ServiceMockFacade<IPersonRepository>();
                         var records = new List<Person>();
                         records.Add(new Person());
-                        mock.RepositoryMock.Setup(x => x.ByDemographics(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new PersonService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -302,17 +303,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                         mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        List<ApiPersonResponseModel> response = await service.ByDemographics(default(string));
+                        List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void ByDemographics_Not_Exists()
+                public async void ByDemographic_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IPersonRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByDemographics(It.IsAny<string>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
+                        mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
                         var service = new PersonService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -327,10 +328,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                         mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        List<ApiPersonResponseModel> response = await service.ByDemographics(default(string));
+                        List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
                 }
 
                 [Fact]
@@ -544,5 +545,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>65e72fd30fa1cf07a827aa47a628cc8f</Hash>
+    <Hash>d62d98eaf7394adb516e3303a8912bb5</Hash>
 </Codenesium>*/

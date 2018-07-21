@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
-
-                        var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTagSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
-
-                        var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTagSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
-
-                        var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTagSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
-                        tagSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
-
-                        var validator = new ApiTagSetRequestModelValidator(tagSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTagSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ITagSetRepository> tagSetRepository = new Mock<ITagSetRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b5c123171cd9001d191f83fbcc4dde7f</Hash>
+    <Hash>f33ca13508da9a9a334ce54a94015622</Hash>
 </Codenesium>*/

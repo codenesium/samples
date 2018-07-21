@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCountryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCountryRequestModel model)
                 {
                         CreateResponse<ApiCountryResponseModel> result = await this.CountryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Countries/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Countries/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCountryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiCountryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CountryService.Update(id, model);
+                                UpdateResponse<ApiCountryResponseModel> result = await this.CountryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryResponseModel response = await this.CountryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCountryRequestModel model)
                 {
-                        ApiCountryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCountryRequestModel request = await this.PatchModel(id, this.CountryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CountryService.Update(id, request);
+                                UpdateResponse<ApiCountryResponseModel> result = await this.CountryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryResponseModel response = await this.CountryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCountryRequestModel> CreatePatch(ApiCountryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCountryRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiCountryRequestModel> PatchModel(int id, JsonPatchDocument<ApiCountryRequestModel> patch)
                 {
                         var record = await this.CountryService.Get(id);
@@ -245,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d926164f243f903b13031dcfbd264037</Hash>
+    <Hash>9f8cf96b3c294205ed0f9869653da51e</Hash>
 </Codenesium>*/

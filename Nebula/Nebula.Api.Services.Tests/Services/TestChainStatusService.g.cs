@@ -105,6 +105,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IChainStatusRepository>();
                         var model = new ApiChainStatusRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ChainStatus>())).Returns(Task.FromResult(new ChainStatus()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
                         var service = new ChainStatusService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLChainMapperMock,
                                                              mock.DALMapperMockFactory.DALChainMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiChainStatusResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>()));
@@ -184,5 +185,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eeca86de8e79fccbee70311a2b0f1032</Hash>
+    <Hash>e6ba993f5f93f9885d6b13defd9d0838</Hash>
 </Codenesium>*/

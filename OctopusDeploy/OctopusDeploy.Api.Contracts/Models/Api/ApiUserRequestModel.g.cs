@@ -36,148 +36,35 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Username = username;
                 }
 
-                private string displayName;
+                [JsonProperty]
+                public string DisplayName { get; private set; }
 
-                public string DisplayName
-                {
-                        get
-                        {
-                                return this.displayName;
-                        }
+                [JsonProperty]
+                public string EmailAddress { get; private set; }
 
-                        set
-                        {
-                                this.displayName = value;
-                        }
-                }
+                [JsonProperty]
+                public string ExternalId { get; private set; }
 
-                private string emailAddress;
+                [JsonProperty]
+                public string ExternalIdentifiers { get; private set; }
 
-                public string EmailAddress
-                {
-                        get
-                        {
-                                return this.emailAddress;
-                        }
+                [JsonProperty]
+                public Guid IdentificationToken { get; private set; }
 
-                        set
-                        {
-                                this.emailAddress = value;
-                        }
-                }
+                [JsonProperty]
+                public bool IsActive { get; private set; }
 
-                private string externalId;
+                [JsonProperty]
+                public bool IsService { get; private set; }
 
-                public string ExternalId
-                {
-                        get
-                        {
-                                return this.externalId;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.externalId = value;
-                        }
-                }
-
-                private string externalIdentifiers;
-
-                public string ExternalIdentifiers
-                {
-                        get
-                        {
-                                return this.externalIdentifiers;
-                        }
-
-                        set
-                        {
-                                this.externalIdentifiers = value;
-                        }
-                }
-
-                private Guid identificationToken;
-
-                [Required]
-                public Guid IdentificationToken
-                {
-                        get
-                        {
-                                return this.identificationToken;
-                        }
-
-                        set
-                        {
-                                this.identificationToken = value;
-                        }
-                }
-
-                private bool isActive;
-
-                [Required]
-                public bool IsActive
-                {
-                        get
-                        {
-                                return this.isActive;
-                        }
-
-                        set
-                        {
-                                this.isActive = value;
-                        }
-                }
-
-                private bool isService;
-
-                [Required]
-                public bool IsService
-                {
-                        get
-                        {
-                                return this.isService;
-                        }
-
-                        set
-                        {
-                                this.isService = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string username;
-
-                [Required]
-                public string Username
-                {
-                        get
-                        {
-                                return this.username;
-                        }
-
-                        set
-                        {
-                                this.username = value;
-                        }
-                }
+                [JsonProperty]
+                public string Username { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0b896ea7726f4b0673ead8a4a708c8c6</Hash>
+    <Hash>676b6bf9b7f9c87e28a3e8541e8398d4</Hash>
 </Codenesium>*/

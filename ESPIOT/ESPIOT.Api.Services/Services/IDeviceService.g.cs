@@ -12,8 +12,8 @@ namespace ESPIOTNS.Api.Services
                 Task<CreateResponse<ApiDeviceResponseModel>> Create(
                         ApiDeviceRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiDeviceRequestModel model);
+                Task<UpdateResponse<ApiDeviceResponseModel>> Update(int id,
+                                                                     ApiDeviceRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -28,5 +28,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f2e42fecff14f9a7ad6f52487379a23</Hash>
+    <Hash>c5ea185e2fdbb2cf0fa0f9dbfe9058b1</Hash>
 </Codenesium>*/

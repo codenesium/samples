@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -14,14 +15,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 public virtual void SetProperties(
                         int businessEntityID,
-                        string demographics,
+                        string demographic,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
                         int? salesPersonID)
                 {
                         this.BusinessEntityID = businessEntityID;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
@@ -33,7 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int BusinessEntityID { get; private set; }
 
                 [Column("Demographics")]
-                public string Demographics { get; private set; }
+                public string Demographic { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
@@ -53,5 +54,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>873b775f5fec7a741c55e3fd7f87c231</Hash>
+    <Hash>92cf76765892be1b18bb549903d29d6a</Hash>
 </Codenesium>*/

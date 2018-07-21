@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiInvitationResponseModel>> Create(
                         ApiInvitationRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiInvitationRequestModel model);
+                Task<UpdateResponse<ApiInvitationResponseModel>> Update(string id,
+                                                                         ApiInvitationRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d47e5c75b446623a1e4616ca39fe0f9</Hash>
+    <Hash>622c34b7e65555328d474062c1397e3a</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkStatusResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLinkStatusResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLinkStatusRequestModel model)
                 {
                         CreateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LinkStatus/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LinkStatus/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkStatusRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiLinkStatusRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LinkStatusService.Update(id, model);
+                                UpdateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLinkStatusResponseModel response = await this.LinkStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusRequestModel model)
                 {
-                        ApiLinkStatusRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLinkStatusRequestModel request = await this.PatchModel(id, this.LinkStatusModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LinkStatusService.Update(id, request);
+                                UpdateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLinkStatusResponseModel response = await this.LinkStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace NebulaNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiLinkStatusRequestModel> CreatePatch(ApiLinkStatusRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLinkStatusRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiLinkStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkStatusRequestModel> patch)
                 {
                         var record = await this.LinkStatusService.Get(id);
@@ -245,5 +234,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>948c14321ddc8116893bcdb959619ad9</Hash>
+    <Hash>2303163f026a5ab99eded3bc4b2e7767</Hash>
 </Codenesium>*/

@@ -40,180 +40,41 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                private DateTimeOffset? archived;
+                [JsonProperty]
+                public DateTimeOffset? Archived { get; private set; }
 
-                public DateTimeOffset? Archived
-                {
-                        get
-                        {
-                                return this.archived;
-                        }
+                [JsonProperty]
+                public DateTimeOffset Created { get; private set; }
 
-                        set
-                        {
-                                this.archived = value;
-                        }
-                }
+                [JsonProperty]
+                public byte[] DataVersion { get; private set; }
 
-                private DateTimeOffset created;
+                [JsonProperty]
+                public string EnvironmentIds { get; private set; }
 
-                [Required]
-                public DateTimeOffset Created
-                {
-                        get
-                        {
-                                return this.created;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.created = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private byte[] dataVersion;
+                [JsonProperty]
+                public DateTimeOffset NotAfter { get; private set; }
 
-                [Required]
-                public byte[] DataVersion
-                {
-                        get
-                        {
-                                return this.dataVersion;
-                        }
+                [JsonProperty]
+                public string Subject { get; private set; }
 
-                        set
-                        {
-                                this.dataVersion = value;
-                        }
-                }
+                [JsonProperty]
+                public string TenantIds { get; private set; }
 
-                private string environmentIds;
+                [JsonProperty]
+                public string TenantTags { get; private set; }
 
-                public string EnvironmentIds
-                {
-                        get
-                        {
-                                return this.environmentIds;
-                        }
-
-                        set
-                        {
-                                this.environmentIds = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private DateTimeOffset notAfter;
-
-                [Required]
-                public DateTimeOffset NotAfter
-                {
-                        get
-                        {
-                                return this.notAfter;
-                        }
-
-                        set
-                        {
-                                this.notAfter = value;
-                        }
-                }
-
-                private string subject;
-
-                [Required]
-                public string Subject
-                {
-                        get
-                        {
-                                return this.subject;
-                        }
-
-                        set
-                        {
-                                this.subject = value;
-                        }
-                }
-
-                private string tenantIds;
-
-                public string TenantIds
-                {
-                        get
-                        {
-                                return this.tenantIds;
-                        }
-
-                        set
-                        {
-                                this.tenantIds = value;
-                        }
-                }
-
-                private string tenantTags;
-
-                public string TenantTags
-                {
-                        get
-                        {
-                                return this.tenantTags;
-                        }
-
-                        set
-                        {
-                                this.tenantTags = value;
-                        }
-                }
-
-                private string thumbprint;
-
-                [Required]
-                public string Thumbprint
-                {
-                        get
-                        {
-                                return this.thumbprint;
-                        }
-
-                        set
-                        {
-                                this.thumbprint = value;
-                        }
-                }
+                [JsonProperty]
+                public string Thumbprint { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a6c803a92ad9a68977cc72b181275377</Hash>
+    <Hash>5f00f65c74f2013c4426b1f4f3c89f46</Hash>
 </Codenesium>*/

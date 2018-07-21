@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var model = new ApiProjectRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Project>())).Returns(Task.FromResult(new Project()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiProjectResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProjectRequestModel>()));
@@ -274,5 +275,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5dc55380d72b2ffdf2c1cc4f06163235</Hash>
+    <Hash>dc7b4ff8b072b08f5c55c2a4656280c8</Hash>
 </Codenesium>*/

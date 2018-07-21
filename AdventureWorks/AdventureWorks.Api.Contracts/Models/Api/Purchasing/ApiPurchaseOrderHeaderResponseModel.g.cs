@@ -38,34 +38,48 @@ namespace AdventureWorksNS.Api.Contracts
                         this.VendorID = vendorID;
                 }
 
+                [JsonProperty]
                 public int EmployeeID { get; private set; }
 
+                [JsonProperty]
                 public decimal Freight { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime OrderDate { get; private set; }
 
+                [JsonProperty]
                 public int PurchaseOrderID { get; private set; }
 
+                [JsonProperty]
                 public int RevisionNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ShipDate { get; private set; }
 
+                [JsonProperty]
                 public int ShipMethodID { get; private set; }
 
+                [JsonProperty]
                 public int Status { get; private set; }
 
+                [JsonProperty]
                 public decimal SubTotal { get; private set; }
 
+                [JsonProperty]
                 public decimal TaxAmt { get; private set; }
 
+                [JsonProperty]
                 public decimal TotalDue { get; private set; }
 
+                [JsonProperty]
                 public int VendorID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5b0e54be24eaef71f2e804b9eb9a084d</Hash>
+    <Hash>f35e5191b63916343a5bb741a74e4c33</Hash>
 </Codenesium>*/

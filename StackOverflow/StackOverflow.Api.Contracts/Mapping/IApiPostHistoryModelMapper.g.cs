@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace StackOverflowNS.Api.Contracts
 
                 ApiPostHistoryRequestModel MapResponseToRequest(
                         ApiPostHistoryResponseModel response);
+
+                JsonPatchDocument<ApiPostHistoryRequestModel> CreatePatch(ApiPostHistoryRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>5408f391b58e75aa23a7e9a10f9359be</Hash>
+    <Hash>eecb6a76ab997a867ce4fd6794938982</Hash>
 </Codenesium>*/

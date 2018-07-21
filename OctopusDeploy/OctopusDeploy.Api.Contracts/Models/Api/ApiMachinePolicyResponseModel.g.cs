@@ -20,16 +20,24 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDefault { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>fe81d18b3e281566995f7b436f5f37f1</Hash>
+    <Hash>0a1feba36df86947833eb7e57174793c</Hash>
 </Codenesium>*/

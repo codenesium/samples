@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonQuotaHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonQuotaHistoryRequestModel model)
                 {
                         CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.SalesPersonQuotaHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesPersonQuotaHistories/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesPersonQuotaHistories/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonQuotaHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesPersonQuotaHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesPersonQuotaHistoryService.Update(id, model);
+                                UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.SalesPersonQuotaHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesPersonQuotaHistoryResponseModel response = await this.SalesPersonQuotaHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonQuotaHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonQuotaHistoryRequestModel model)
                 {
-                        ApiSalesPersonQuotaHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesPersonQuotaHistoryRequestModel request = await this.PatchModel(id, this.SalesPersonQuotaHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesPersonQuotaHistoryService.Update(id, request);
+                                UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.SalesPersonQuotaHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesPersonQuotaHistoryResponseModel response = await this.SalesPersonQuotaHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel> CreatePatch(ApiSalesPersonQuotaHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.QuotaDate, model.QuotaDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalesQuota, model.SalesQuota);
-                        return patch;
-                }
-
                 private async Task<ApiSalesPersonQuotaHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesPersonQuotaHistoryRequestModel> patch)
                 {
                         var record = await this.SalesPersonQuotaHistoryService.Get(id);
@@ -234,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb64c3a59d785ca14f50e41c6213cbf1</Hash>
+    <Hash>caf08f29051454619093241d9166550a</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiOctopusServerNodeResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiOctopusServerNodeRequestModel model)
                 {
                         CreateResponse<ApiOctopusServerNodeResponseModel> result = await this.OctopusServerNodeService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OctopusServerNodes/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OctopusServerNodes/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOctopusServerNodeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiOctopusServerNodeRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiOctopusServerNodeRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.OctopusServerNodeService.Update(id, model);
+                                UpdateResponse<ApiOctopusServerNodeResponseModel> result = await this.OctopusServerNodeService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiOctopusServerNodeResponseModel response = await this.OctopusServerNodeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOctopusServerNodeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiOctopusServerNodeRequestModel model)
                 {
-                        ApiOctopusServerNodeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiOctopusServerNodeRequestModel request = await this.PatchModel(id, this.OctopusServerNodeModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.OctopusServerNodeService.Update(id, request);
+                                UpdateResponse<ApiOctopusServerNodeResponseModel> result = await this.OctopusServerNodeService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiOctopusServerNodeResponseModel response = await this.OctopusServerNodeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,18 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiOctopusServerNodeRequestModel> CreatePatch(ApiOctopusServerNodeRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiOctopusServerNodeRequestModel>();
-                        patch.Replace(x => x.IsInMaintenanceMode, model.IsInMaintenanceMode);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.LastSeen, model.LastSeen);
-                        patch.Replace(x => x.MaxConcurrentTasks, model.MaxConcurrentTasks);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rank, model.Rank);
-                        return patch;
-                }
-
                 private async Task<ApiOctopusServerNodeRequestModel> PatchModel(string id, JsonPatchDocument<ApiOctopusServerNodeRequestModel> patch)
                 {
                         var record = await this.OctopusServerNodeService.Get(id);
@@ -236,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6f3acf773be8ec529466c3e146822701</Hash>
+    <Hash>22cb45247ace2862d8d12dac718fce00</Hash>
 </Codenesium>*/

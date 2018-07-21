@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "Vendor")]
         [Trait("Area", "Integration")]
-        public class VendorIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class VendorIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public VendorIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiVendorModelMapper mapper = new ApiVendorModelMapper();
+
+                        UpdateResponse<ApiVendorResponseModel> updateResponse = await this.Client.VendorUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.VendorDeleteAsync(model.BusinessEntityID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiVendorResponseModel response = await this.Client.VendorGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiVendorResponseModel> response = await this.Client.VendorAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiVendorResponseModel> CreateRecord()
+                {
+                        var model = new ApiVendorRequestModel();
+                        model.SetProperties("B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+                        CreateResponse<ApiVendorResponseModel> result = await this.Client.VendorCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.VendorDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6e0599181c65d77d40ebd923cb706ce3</Hash>
+    <Hash>94e9974332238f7d95f37b120917d5d5</Hash>
 </Codenesium>*/

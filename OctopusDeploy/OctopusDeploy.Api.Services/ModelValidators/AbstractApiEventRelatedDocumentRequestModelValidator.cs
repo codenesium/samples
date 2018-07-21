@@ -28,14 +28,12 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void EventIdRules()
                 {
-                        this.RuleFor(x => x.EventId).NotNull();
                         this.RuleFor(x => x.EventId).MustAsync(this.BeValidEvent).When(x => x?.EventId != null).WithMessage("Invalid reference");
                         this.RuleFor(x => x.EventId).Length(0, 50);
                 }
 
                 public virtual void RelatedDocumentIdRules()
                 {
-                        this.RuleFor(x => x.RelatedDocumentId).NotNull();
                         this.RuleFor(x => x.RelatedDocumentId).Length(0, 250);
                 }
 
@@ -49,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>edab51994d43027ed05ec4461aa5de97</Hash>
+    <Hash>1a7afbbff47c5756a0f8b539bc6b81e0</Hash>
 </Codenesium>*/

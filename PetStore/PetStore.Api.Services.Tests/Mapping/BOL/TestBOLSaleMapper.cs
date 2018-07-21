@@ -18,10 +18,10 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         ApiSaleRequestModel model = new ApiSaleRequestModel();
-                        model.SetProperties(1, "A", "A", 1, 1, "A");
+                        model.SetProperties(1m, "A", "A", 1, 1, "A");
                         BOSale response = mapper.MapModelToBO(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
                         response.PaymentTypeId.Should().Be(1);
@@ -34,10 +34,10 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         BOSale bo = new BOSale();
-                        bo.SetProperties(1, 1, "A", "A", 1, 1, "A");
+                        bo.SetProperties(1, 1m, "A", "A", 1, 1, "A");
                         ApiSaleResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.LastName.Should().Be("A");
@@ -51,7 +51,7 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         BOSale bo = new BOSale();
-                        bo.SetProperties(1, 1, "A", "A", 1, 1, "A");
+                        bo.SetProperties(1, 1m, "A", "A", 1, 1, "A");
                         List<ApiSaleResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -60,5 +60,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1e1d5ee903dacac29ef013c03ddc5006</Hash>
+    <Hash>0228548b6c2bd2d06c00c7d03e699e10</Hash>
 </Codenesium>*/

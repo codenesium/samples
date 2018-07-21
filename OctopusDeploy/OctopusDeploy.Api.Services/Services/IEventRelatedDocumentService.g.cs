@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiEventRelatedDocumentResponseModel>> Create(
                         ApiEventRelatedDocumentRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiEventRelatedDocumentRequestModel model);
+                Task<UpdateResponse<ApiEventRelatedDocumentResponseModel>> Update(int id,
+                                                                                   ApiEventRelatedDocumentRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cb82e8b3f26427ec945409881c3c41f</Hash>
+    <Hash>64284106118a8d4745b705420111e52e</Hash>
 </Codenesium>*/

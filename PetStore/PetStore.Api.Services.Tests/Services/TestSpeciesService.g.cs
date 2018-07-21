@@ -105,6 +105,7 @@ namespace PetStoreNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISpeciesRepository>();
                         var model = new ApiSpeciesRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Species>())).Returns(Task.FromResult(new Species()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
                         var service = new SpeciesService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                          mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSpeciesResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>()));
@@ -184,5 +185,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>493065a588534ac8b0c5a6af904d4062</Hash>
+    <Hash>73ae55a47d2b79488e523ef08a55ee18</Hash>
 </Codenesium>*/

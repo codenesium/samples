@@ -105,6 +105,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBreedRepository>();
                         var model = new ApiBreedRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Breed>())).Returns(Task.FromResult(new Breed()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
                         var service = new BreedService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                        mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiBreedResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BreedModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>()));
@@ -184,5 +185,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f4bd1c587f943c95811b484cb2fd729d</Hash>
+    <Hash>548a605d91a88eb1bd224ea2569e6299</Hash>
 </Codenesium>*/

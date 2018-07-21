@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,27 @@ namespace NebulaNS.Api.Contracts.Tests
                         response.MachineGuid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiMachineModelMapper();
+                        var model = new ApiMachineRequestModel();
+                        model.SetProperties("A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+
+                        JsonPatchDocument<ApiMachineRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiMachineRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Description.Should().Be("A");
+                        response.JwtKey.Should().Be("A");
+                        response.LastIpAddress.Should().Be("A");
+                        response.MachineGuid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7cf78ce0bc7500858b9a9c2fd78559f4</Hash>
+    <Hash>335feac01b4fe64104181eaf9dee9a1f</Hash>
 </Codenesium>*/

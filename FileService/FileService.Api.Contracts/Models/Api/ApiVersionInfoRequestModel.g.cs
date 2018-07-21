@@ -22,38 +22,14 @@ namespace FileServiceNS.Api.Contracts
                         this.Description = description;
                 }
 
-                private DateTime? appliedOn;
+                [JsonProperty]
+                public DateTime? AppliedOn { get; private set; }
 
-                public DateTime? AppliedOn
-                {
-                        get
-                        {
-                                return this.appliedOn;
-                        }
-
-                        set
-                        {
-                                this.appliedOn = value;
-                        }
-                }
-
-                private string description;
-
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
+                [JsonProperty]
+                public string Description { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8455e5d35a42a4f3106b0d41be0576aa</Hash>
+    <Hash>793f892f01250b252e4e5e8669765438</Hash>
 </Codenesium>*/

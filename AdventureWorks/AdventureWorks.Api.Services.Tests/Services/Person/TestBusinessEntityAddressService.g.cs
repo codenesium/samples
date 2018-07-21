@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBusinessEntityAddressRepository>();
                         var model = new ApiBusinessEntityAddressRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BusinessEntityAddress>())).Returns(Task.FromResult(new BusinessEntityAddress()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BusinessEntityAddress()));
                         var service = new BusinessEntityAddressService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                                        mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiBusinessEntityAddressResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBusinessEntityAddressRequestModel>()));
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>36551d44e383b4fb8b95a07ec186e043</Hash>
+    <Hash>9e8efd158705570fca658605660a84c3</Hash>
 </Codenesium>*/

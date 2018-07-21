@@ -36,32 +36,56 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset? Archived { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset Created { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public byte[] DataVersion { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset NotAfter { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Subject { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantTags { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Thumbprint { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9929b17cd1618958757933739982cfb1</Hash>
+    <Hash>1c9896f3b115c290b64312cf3c850007</Hash>
 </Codenesium>*/

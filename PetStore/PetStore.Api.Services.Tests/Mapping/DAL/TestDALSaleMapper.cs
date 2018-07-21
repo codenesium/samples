@@ -17,11 +17,11 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         var bo = new BOSale();
-                        bo.SetProperties(1, 1, "A", "A", 1, 1, "A");
+                        bo.SetProperties(1, 1m, "A", "A", 1, 1, "A");
 
                         Sale response = mapper.MapBOToEF(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.LastName.Should().Be("A");
@@ -35,11 +35,11 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         Sale entity = new Sale();
-                        entity.SetProperties(1, "A", 1, "A", 1, 1, "A");
+                        entity.SetProperties(1m, "A", 1, "A", 1, 1, "A");
 
                         BOSale response = mapper.MapEFToBO(entity);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.FirstName.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.LastName.Should().Be("A");
@@ -53,7 +53,7 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         Sale entity = new Sale();
-                        entity.SetProperties(1, "A", 1, "A", 1, 1, "A");
+                        entity.SetProperties(1m, "A", 1, "A", 1, 1, "A");
 
                         List<BOSale> response = mapper.MapEFToBO(new List<Sale>() { entity });
 
@@ -63,5 +63,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a2841a2d5d3a991a7c0a24195f42fef1</Hash>
+    <Hash>52c997eacfa20cd941f075170c799316</Hash>
 </Codenesium>*/

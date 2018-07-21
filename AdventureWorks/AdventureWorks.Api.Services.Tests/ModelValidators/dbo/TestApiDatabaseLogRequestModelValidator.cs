@@ -169,7 +169,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TSQL_Create_null()
+                public async void Tsql_Create_null()
                 {
                         Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
@@ -177,11 +177,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TSQL, null as string);
+                        validator.ShouldHaveValidationErrorFor(x => x.Tsql, null as string);
                 }
 
                 [Fact]
-                public async void TSQL_Update_null()
+                public async void Tsql_Update_null()
                 {
                         Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
@@ -189,7 +189,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
                         await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TSQL, null as string);
+                        validator.ShouldHaveValidationErrorFor(x => x.Tsql, null as string);
                 }
 
                 [Fact]
@@ -219,5 +219,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ed61f213f6772c5e67033d0cab569a90</Hash>
+    <Hash>b61862d06e9b2f7acdbc0fa65eb85ed1</Hash>
 </Codenesium>*/

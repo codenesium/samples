@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Type_Create_null()
-                {
-                        Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
-                        linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
-
-                        var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLinkTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
-                public async void Type_Update_null()
-                {
-                        Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
-                        linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
-
-                        var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLinkTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
                 public async void Type_Create_length()
                 {
                         Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3f762cb502d84285c369ece930924e5d</Hash>
+    <Hash>237ce55a4677511522a2e8f6402449e0</Hash>
 </Codenesium>*/

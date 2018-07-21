@@ -24,20 +24,26 @@ namespace AdventureWorksNS.Api.Contracts
                         this.BusinessEntityIDEntity = nameof(ApiResponse.SalesPersons);
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public string BusinessEntityIDEntity { get; set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime QuotaDate { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public decimal SalesQuota { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1f201dec4e90e59c3d07da86261d27f4</Hash>
+    <Hash>d4ba5423786eb23eb25945fbed0823af</Hash>
 </Codenesium>*/

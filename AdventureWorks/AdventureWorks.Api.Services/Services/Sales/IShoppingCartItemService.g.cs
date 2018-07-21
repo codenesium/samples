@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
                         ApiShoppingCartItemRequestModel model);
 
-                Task<ActionResponse> Update(int shoppingCartItemID,
-                                            ApiShoppingCartItemRequestModel model);
+                Task<UpdateResponse<ApiShoppingCartItemResponseModel>> Update(int shoppingCartItemID,
+                                                                               ApiShoppingCartItemRequestModel model);
 
                 Task<ActionResponse> Delete(int shoppingCartItemID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0ae770558e91cf2c54813e816c1c0e6</Hash>
+    <Hash>cc1209a0d40da5097a663754e03a9d31</Hash>
 </Codenesium>*/

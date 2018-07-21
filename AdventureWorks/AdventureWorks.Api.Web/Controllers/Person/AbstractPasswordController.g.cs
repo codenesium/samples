@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPasswordResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPasswordResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPasswordRequestModel model)
                 {
                         CreateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Passwords/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Passwords/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPasswordResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPasswordResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPasswordRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPasswordRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PasswordService.Update(id, model);
+                                UpdateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPasswordResponseModel response = await this.PasswordService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPasswordResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPasswordResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordRequestModel model)
                 {
-                        ApiPasswordRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPasswordRequestModel request = await this.PatchModel(id, this.PasswordModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PasswordService.Update(id, request);
+                                UpdateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPasswordResponseModel response = await this.PasswordService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiPasswordRequestModel> CreatePatch(ApiPasswordRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPasswordRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.PasswordHash, model.PasswordHash);
-                        patch.Replace(x => x.PasswordSalt, model.PasswordSalt);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiPasswordRequestModel> PatchModel(int id, JsonPatchDocument<ApiPasswordRequestModel> patch)
                 {
                         var record = await this.PasswordService.Get(id);
@@ -234,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4e38e4ecdea27182c97881d51ba5dc63</Hash>
+    <Hash>d75a7d6554a1cf4484366d9855d950ef</Hash>
 </Codenesium>*/

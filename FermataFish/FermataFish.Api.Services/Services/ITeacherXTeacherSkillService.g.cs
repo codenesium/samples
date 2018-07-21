@@ -12,8 +12,8 @@ namespace FermataFishNS.Api.Services
                 Task<CreateResponse<ApiTeacherXTeacherSkillResponseModel>> Create(
                         ApiTeacherXTeacherSkillRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiTeacherXTeacherSkillRequestModel model);
+                Task<UpdateResponse<ApiTeacherXTeacherSkillResponseModel>> Update(int id,
+                                                                                   ApiTeacherXTeacherSkillRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3e422b206c43ad98640a101909bd15e</Hash>
+    <Hash>852d36ad2378be192dd26ba027743ba8</Hash>
 </Codenesium>*/

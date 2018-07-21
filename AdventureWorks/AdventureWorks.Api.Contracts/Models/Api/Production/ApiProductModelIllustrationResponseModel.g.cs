@@ -18,14 +18,17 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
+                [JsonProperty]
                 public int IllustrationID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductModelID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9c18cf71f43c928144be368faa95cbff</Hash>
+    <Hash>375e644835f797790f6adaa2cdab724b</Hash>
 </Codenesium>*/

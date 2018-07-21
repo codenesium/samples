@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDepartmentResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentRequestModel model)
                 {
                         CreateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Departments/{result.Record.DepartmentID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Departments/{result.Record.DepartmentID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDepartmentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiDepartmentRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiDepartmentRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DepartmentService.Update(id, model);
+                                UpdateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDepartmentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentRequestModel model)
                 {
-                        ApiDepartmentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDepartmentRequestModel request = await this.PatchModel(id, this.DepartmentModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DepartmentService.Update(id, request);
+                                UpdateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,15 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDepartmentRequestModel> CreatePatch(ApiDepartmentRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDepartmentRequestModel>();
-                        patch.Replace(x => x.GroupName, model.GroupName);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiDepartmentRequestModel> PatchModel(short id, JsonPatchDocument<ApiDepartmentRequestModel> patch)
                 {
                         var record = await this.DepartmentService.Get(id);
@@ -266,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f6bd898111edbba0e27a8daa20b6caac</Hash>
+    <Hash>05ae232b25f8d07181b9587aeb8d7e71</Hash>
 </Codenesium>*/

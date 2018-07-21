@@ -26,72 +26,20 @@ namespace StackOverflowNS.Api.Contracts
                         this.RelatedPostId = relatedPostId;
                 }
 
-                private DateTime creationDate;
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
+                [JsonProperty]
+                public int LinkTypeId { get; private set; }
 
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
+                [JsonProperty]
+                public int PostId { get; private set; }
 
-                private int linkTypeId;
-
-                [Required]
-                public int LinkTypeId
-                {
-                        get
-                        {
-                                return this.linkTypeId;
-                        }
-
-                        set
-                        {
-                                this.linkTypeId = value;
-                        }
-                }
-
-                private int postId;
-
-                [Required]
-                public int PostId
-                {
-                        get
-                        {
-                                return this.postId;
-                        }
-
-                        set
-                        {
-                                this.postId = value;
-                        }
-                }
-
-                private int relatedPostId;
-
-                [Required]
-                public int RelatedPostId
-                {
-                        get
-                        {
-                                return this.relatedPostId;
-                        }
-
-                        set
-                        {
-                                this.relatedPostId = value;
-                        }
-                }
+                [JsonProperty]
+                public int RelatedPostId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c4361cc921e6d0e7543ac051b3883432</Hash>
+    <Hash>33b209a33e1efcddd4eefc04914d5cbe</Hash>
 </Codenesium>*/

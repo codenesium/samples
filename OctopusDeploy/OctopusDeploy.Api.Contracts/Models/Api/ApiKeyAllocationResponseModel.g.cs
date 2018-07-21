@@ -16,12 +16,16 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Allocated = allocated;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Allocated { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string CollectionName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d10819d455dd9e9c88f199687a543322</Hash>
+    <Hash>99426846f82fa968d6ca87d901f9ddc3</Hash>
 </Codenesium>*/

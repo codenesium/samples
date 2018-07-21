@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.VersionDate = versionDate;
                 }
 
+                [JsonProperty]
                 public string Database_Version { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int SystemInformationID { get; private set; }
 
+                [JsonProperty]
                 public DateTime VersionDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a73b681abf2a269ebdd1772b35563f54</Hash>
+    <Hash>898442a5068b96a3092ab9aa68581503</Hash>
 </Codenesium>*/

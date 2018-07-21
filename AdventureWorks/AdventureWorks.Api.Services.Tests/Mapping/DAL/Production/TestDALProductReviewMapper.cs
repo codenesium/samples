@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         ProductReview response = mapper.MapBOToEF(bo);
 
-                        response.Comments.Should().Be("A");
+                        response.Comment.Should().Be("A");
                         response.EmailAddress.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         BOProductReview response = mapper.MapEFToBO(entity);
 
-                        response.Comments.Should().Be("A");
+                        response.Comment.Should().Be("A");
                         response.EmailAddress.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4ec33e10610a8d238f673e41eb0df7de</Hash>
+    <Hash>bca654878c588bb1a6d06ca565dd5541</Hash>
 </Codenesium>*/

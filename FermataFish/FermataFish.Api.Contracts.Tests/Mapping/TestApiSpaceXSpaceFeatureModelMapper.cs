@@ -1,5 +1,6 @@
 using FermataFishNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace FermataFishNS.Api.Contracts.Tests
                         response.SpaceFeatureId.Should().Be(1);
                         response.SpaceId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSpaceXSpaceFeatureModelMapper();
+                        var model = new ApiSpaceXSpaceFeatureRequestModel();
+                        model.SetProperties(1, 1);
+
+                        JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSpaceXSpaceFeatureRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.SpaceFeatureId.Should().Be(1);
+                        response.SpaceId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b106785d53175b88f72df0bb9930d19a</Hash>
+    <Hash>3fa88d57b6ccdda8c0fd488f413ca818</Hash>
 </Codenesium>*/

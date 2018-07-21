@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductInventoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductInventoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductInventoryRequestModel model)
                 {
                         CreateResponse<ApiProductInventoryResponseModel> result = await this.ProductInventoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductInventories/{result.Record.ProductID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductInventories/{result.Record.ProductID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductInventoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductInventoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductInventoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductInventoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductInventoryService.Update(id, model);
+                                UpdateResponse<ApiProductInventoryResponseModel> result = await this.ProductInventoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductInventoryResponseModel response = await this.ProductInventoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductInventoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductInventoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductInventoryRequestModel model)
                 {
-                        ApiProductInventoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductInventoryRequestModel request = await this.PatchModel(id, this.ProductInventoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductInventoryService.Update(id, request);
+                                UpdateResponse<ApiProductInventoryResponseModel> result = await this.ProductInventoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductInventoryResponseModel response = await this.ProductInventoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,18 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiProductInventoryRequestModel> CreatePatch(ApiProductInventoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
-                        patch.Replace(x => x.Bin, model.Bin);
-                        patch.Replace(x => x.LocationID, model.LocationID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Quantity, model.Quantity);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.Shelf, model.Shelf);
-                        return patch;
-                }
-
                 private async Task<ApiProductInventoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductInventoryRequestModel> patch)
                 {
                         var record = await this.ProductInventoryService.Get(id);
@@ -236,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>45336b6d2e988885ddbf0d521674bede</Hash>
+    <Hash>45b01a55dec40c7ec88625adee5f72bd</Hash>
 </Codenesium>*/

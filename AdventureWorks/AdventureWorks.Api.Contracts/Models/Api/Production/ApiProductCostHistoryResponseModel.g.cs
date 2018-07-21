@@ -22,18 +22,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartDate = startDate;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? EndDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public decimal StandardCost { get; private set; }
 
+                [JsonProperty]
                 public DateTime StartDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d85c4fa33949917a2e4c622af5b40745</Hash>
+    <Hash>a14011e3b623f205f2ad9002fc740e38</Hash>
 </Codenesium>*/

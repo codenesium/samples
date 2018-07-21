@@ -17,13 +17,13 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSpecialOfferMapper();
                         var bo = new BOSpecialOffer();
-                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         SpecialOffer response = mapper.MapBOToEF(bo);
 
                         response.Category.Should().Be("A");
                         response.Description.Should().Be("A");
-                        response.DiscountPct.Should().Be(1);
+                        response.DiscountPct.Should().Be(1m);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.MaxQty.Should().Be(1);
                         response.MinQty.Should().Be(1);
@@ -39,13 +39,13 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSpecialOfferMapper();
                         SpecialOffer entity = new SpecialOffer();
-                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         BOSpecialOffer response = mapper.MapEFToBO(entity);
 
                         response.Category.Should().Be("A");
                         response.Description.Should().Be("A");
-                        response.DiscountPct.Should().Be(1);
+                        response.DiscountPct.Should().Be(1m);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.MaxQty.Should().Be(1);
                         response.MinQty.Should().Be(1);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSpecialOfferMapper();
                         SpecialOffer entity = new SpecialOffer();
-                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOSpecialOffer> response = mapper.MapEFToBO(new List<SpecialOffer>() { entity });
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>372c4876fd6ba6747427dfae88f597ce</Hash>
+    <Hash>cef21a7e5d237b652f21a18dfd8ae4a5</Hash>
 </Codenesium>*/

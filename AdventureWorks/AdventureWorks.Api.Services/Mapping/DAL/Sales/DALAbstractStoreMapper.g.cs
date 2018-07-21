@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.Services
                         Store efStore = new Store();
                         efStore.SetProperties(
                                 bo.BusinessEntityID,
-                                bo.Demographics,
+                                bo.Demographic,
                                 bo.ModifiedDate,
                                 bo.Name,
                                 bo.Rowguid,
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
 
                         bo.SetProperties(
                                 ef.BusinessEntityID,
-                                ef.Demographics,
+                                ef.Demographic,
                                 ef.ModifiedDate,
                                 ef.Name,
                                 ef.Rowguid,
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>982905a435a464caebfbc2e7323432fd</Hash>
+    <Hash>84916e2c0837d60ad78fe9ff74303aaf</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace NebulaNS.Api.Services
                 Task<CreateResponse<ApiOrganizationResponseModel>> Create(
                         ApiOrganizationRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiOrganizationRequestModel model);
+                Task<UpdateResponse<ApiOrganizationResponseModel>> Update(int id,
+                                                                           ApiOrganizationRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f3e9106fb9ce9bd3328ff7b485b1267</Hash>
+    <Hash>39b0235b6db9d635be8709aa408eab73</Hash>
 </Codenesium>*/

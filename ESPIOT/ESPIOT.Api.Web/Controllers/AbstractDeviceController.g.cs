@@ -106,15 +106,15 @@ namespace ESPIOTNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeviceResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDeviceResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeviceRequestModel model)
                 {
                         CreateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Devices/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Devices/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace ESPIOTNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeviceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeviceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeviceRequestModel> patch)
@@ -140,13 +140,11 @@ namespace ESPIOTNS.Api.Web
                         {
                                 ApiDeviceRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DeviceService.Update(id, model);
+                                UpdateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDeviceResponseModel response = await this.DeviceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace ESPIOTNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeviceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeviceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceRequestModel model)
                 {
-                        ApiDeviceRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDeviceRequestModel request = await this.PatchModel(id, this.DeviceModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace ESPIOTNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DeviceService.Update(id, request);
+                                UpdateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDeviceResponseModel response = await this.DeviceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,14 +234,6 @@ namespace ESPIOTNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.PublicId, model.PublicId);
-                        return patch;
-                }
-
                 private async Task<ApiDeviceRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeviceRequestModel> patch)
                 {
                         var record = await this.DeviceService.Get(id);
@@ -265,5 +253,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4fc5973b1d9e5c0dd12be33272c2c636</Hash>
+    <Hash>bf775192bf0e091bfb4b6af15c3957ff</Hash>
 </Codenesium>*/

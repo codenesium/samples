@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FeedType_Create_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FeedType, null as string);
-                }
-
-                [Fact]
-                public async void FeedType_Update_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FeedType, null as string);
-                }
-
-                [Fact]
                 public async void FeedType_Create_length()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
@@ -73,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void FeedUri_Create_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FeedUri, null as string);
-                }
-
-                [Fact]
-                public async void FeedUri_Update_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FeedUri, null as string);
-                }
-
-                [Fact]
                 public async void FeedUri_Create_length()
                 {
                         Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
@@ -118,54 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, new string('A', 513));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IFeedRepository> feedRepository = new Mock<IFeedRepository>();
-                        feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
-
-                        var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -243,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ede364c527dbfd031312672fbe319a3c</Hash>
+    <Hash>5dd93e031fc8c56c7b5b5ddc90f8b534</Hash>
 </Codenesium>*/

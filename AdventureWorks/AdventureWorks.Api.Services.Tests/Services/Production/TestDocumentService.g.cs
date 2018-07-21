@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDocumentRepository>();
                         var model = new ApiDocumentRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Document>())).Returns(Task.FromResult(new Document()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
                         var service = new DocumentService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.DocumentModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        ActionResponse response = await service.Update(default(Guid), model);
+                        UpdateResponse<ApiDocumentResponseModel> response = await service.Update(default(Guid), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DocumentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0f1c51552984b97baea5a29f6be4d097</Hash>
+    <Hash>647196cbe5826b02b3b21df8d8b09824</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductRequestModel model)
                 {
                         CreateResponse<ApiProductResponseModel> result = await this.ProductService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Products/{result.Record.ProductID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Products/{result.Record.ProductID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductService.Update(id, model);
+                                UpdateResponse<ApiProductResponseModel> result = await this.ProductService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductResponseModel response = await this.ProductService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductRequestModel model)
                 {
-                        ApiProductRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductRequestModel request = await this.PatchModel(id, this.ProductModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductService.Update(id, request);
+                                UpdateResponse<ApiProductResponseModel> result = await this.ProductService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductResponseModel response = await this.ProductService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -252,7 +248,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBillOfMaterialsResponseModel> response = await this.ProductService.BillOfMaterials(componentID, query.Limit, query.Offset);
+                        List<ApiBillOfMaterialResponseModel> response = await this.ProductService.BillOfMaterials(componentID, query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -355,36 +351,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProductRequestModel> CreatePatch(ApiProductRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductRequestModel>();
-                        patch.Replace(x => x.@Class, model.@Class);
-                        patch.Replace(x => x.Color, model.Color);
-                        patch.Replace(x => x.DaysToManufacture, model.DaysToManufacture);
-                        patch.Replace(x => x.DiscontinuedDate, model.DiscontinuedDate);
-                        patch.Replace(x => x.FinishedGoodsFlag, model.FinishedGoodsFlag);
-                        patch.Replace(x => x.ListPrice, model.ListPrice);
-                        patch.Replace(x => x.MakeFlag, model.MakeFlag);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProductLine, model.ProductLine);
-                        patch.Replace(x => x.ProductModelID, model.ProductModelID);
-                        patch.Replace(x => x.ProductNumber, model.ProductNumber);
-                        patch.Replace(x => x.ProductSubcategoryID, model.ProductSubcategoryID);
-                        patch.Replace(x => x.ReorderPoint, model.ReorderPoint);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SafetyStockLevel, model.SafetyStockLevel);
-                        patch.Replace(x => x.SellEndDate, model.SellEndDate);
-                        patch.Replace(x => x.SellStartDate, model.SellStartDate);
-                        patch.Replace(x => x.Size, model.Size);
-                        patch.Replace(x => x.SizeUnitMeasureCode, model.SizeUnitMeasureCode);
-                        patch.Replace(x => x.StandardCost, model.StandardCost);
-                        patch.Replace(x => x.Style, model.Style);
-                        patch.Replace(x => x.Weight, model.Weight);
-                        patch.Replace(x => x.WeightUnitMeasureCode, model.WeightUnitMeasureCode);
-                        return patch;
-                }
-
                 private async Task<ApiProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductRequestModel> patch)
                 {
                         var record = await this.ProductService.Get(id);
@@ -404,5 +370,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>33e01e83565cbfbf85af58fef75237af</Hash>
+    <Hash>f5fa72b70ecb2c764d3a61bd294ae943</Hash>
 </Codenesium>*/

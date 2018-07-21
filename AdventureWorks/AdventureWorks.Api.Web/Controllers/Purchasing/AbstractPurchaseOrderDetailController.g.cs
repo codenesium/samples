@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPurchaseOrderDetailResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailRequestModel model)
                 {
                         CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPurchaseOrderDetailRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PurchaseOrderDetailService.Update(id, model);
+                                UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailRequestModel model)
                 {
-                        ApiPurchaseOrderDetailRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPurchaseOrderDetailRequestModel request = await this.PatchModel(id, this.PurchaseOrderDetailModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PurchaseOrderDetailService.Update(id, request);
+                                UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,22 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> CreatePatch(ApiPurchaseOrderDetailRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPurchaseOrderDetailRequestModel>();
-                        patch.Replace(x => x.DueDate, model.DueDate);
-                        patch.Replace(x => x.LineTotal, model.LineTotal);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OrderQty, model.OrderQty);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.PurchaseOrderDetailID, model.PurchaseOrderDetailID);
-                        patch.Replace(x => x.ReceivedQty, model.ReceivedQty);
-                        patch.Replace(x => x.RejectedQty, model.RejectedQty);
-                        patch.Replace(x => x.StockedQty, model.StockedQty);
-                        patch.Replace(x => x.UnitPrice, model.UnitPrice);
-                        return patch;
-                }
-
                 private async Task<ApiPurchaseOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
                 {
                         var record = await this.PurchaseOrderDetailService.Get(id);
@@ -251,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cf77ecad4f40335f36ae5c445138c0de</Hash>
+    <Hash>543a2d7ee5bc8b90bb3f76ef81bf0b9d</Hash>
 </Codenesium>*/

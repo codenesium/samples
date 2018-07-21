@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
                 Task<CreateResponse<ApiTagsResponseModel>> Create(
                         ApiTagsRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiTagsRequestModel model);
+                Task<UpdateResponse<ApiTagsResponseModel>> Update(int id,
+                                                                   ApiTagsRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f50d7ff0e943daf738405fa2dcdeec05</Hash>
+    <Hash>60fcb1102fac49529cda2aa69cf6bd76</Hash>
 </Codenesium>*/

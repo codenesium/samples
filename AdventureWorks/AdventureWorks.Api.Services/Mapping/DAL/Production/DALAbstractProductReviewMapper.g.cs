@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ProductReview efProductReview = new ProductReview();
                         efProductReview.SetProperties(
-                                bo.Comments,
+                                bo.Comment,
                                 bo.EmailAddress,
                                 bo.ModifiedDate,
                                 bo.ProductID,
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services
 
                         bo.SetProperties(
                                 ef.ProductReviewID,
-                                ef.Comments,
+                                ef.Comment,
                                 ef.EmailAddress,
                                 ef.ModifiedDate,
                                 ef.ProductID,
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>def5c2e2a0bb9052b5c92079e7d6b2b2</Hash>
+    <Hash>3a733917df7510760d358cdb9f311df3</Hash>
 </Codenesium>*/

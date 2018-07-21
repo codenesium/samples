@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using TicketingCRMNS.Api.Contracts;
@@ -33,9 +34,23 @@ namespace TicketingCRMNS.Api.Contracts.Tests
 
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiTransactionStatusModelMapper();
+                        var model = new ApiTransactionStatusRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiTransactionStatusRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiTransactionStatusRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>08f528f713432eaf23276f9eadaccefe</Hash>
+    <Hash>7bd2e94d61e33b2d57b44e18bf435be0</Hash>
 </Codenesium>*/

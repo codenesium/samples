@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.CurrencyCodeEntity = nameof(ApiResponse.Currencies);
                 }
 
+                [JsonProperty]
                 public string CountryRegionCode { get; private set; }
 
+                [JsonProperty]
                 public string CurrencyCode { get; private set; }
 
+                [JsonProperty]
                 public string CurrencyCodeEntity { get; set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c4d22fa08b002b7dd0a13db75c8dab83</Hash>
+    <Hash>5009f679b00a8344cca0b16a73bc6059</Hash>
 </Codenesium>*/

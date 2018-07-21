@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALCurrencyRateMapper();
                         var bo = new BOCurrencyRate();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         CurrencyRate response = mapper.MapBOToEF(bo);
 
-                        response.AverageRate.Should().Be(1);
+                        response.AverageRate.Should().Be(1m);
                         response.CurrencyRateDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.CurrencyRateID.Should().Be(1);
-                        response.EndOfDayRate.Should().Be(1);
+                        response.EndOfDayRate.Should().Be(1m);
                         response.FromCurrencyCode.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ToCurrencyCode.Should().Be("A");
@@ -35,14 +35,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALCurrencyRateMapper();
                         CurrencyRate entity = new CurrencyRate();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         BOCurrencyRate response = mapper.MapEFToBO(entity);
 
-                        response.AverageRate.Should().Be(1);
+                        response.AverageRate.Should().Be(1m);
                         response.CurrencyRateDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.CurrencyRateID.Should().Be(1);
-                        response.EndOfDayRate.Should().Be(1);
+                        response.EndOfDayRate.Should().Be(1m);
                         response.FromCurrencyCode.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ToCurrencyCode.Should().Be("A");
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALCurrencyRateMapper();
                         CurrencyRate entity = new CurrencyRate();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOCurrencyRate> response = mapper.MapEFToBO(new List<CurrencyRate>() { entity });
 
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>138bf315cf35b14d2733dc2f128baddd</Hash>
+    <Hash>4d15d1c5c6f7d2c0a0291d1708bc90a8</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IMachinePolicyRepository>();
                         var model = new ApiMachinePolicyRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<MachinePolicy>())).Returns(Task.FromResult(new MachinePolicy()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
                         var service = new MachinePolicyService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.MachinePolicyModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLMachinePolicyMapperMock,
                                                                mock.DALMapperMockFactory.DALMachinePolicyMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiMachinePolicyResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.MachinePolicyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiMachinePolicyRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0faeaf212c4f9dff505d4adc9d56f756</Hash>
+    <Hash>4dfcdbece4a1fc46b51ed4c269343d86</Hash>
 </Codenesium>*/

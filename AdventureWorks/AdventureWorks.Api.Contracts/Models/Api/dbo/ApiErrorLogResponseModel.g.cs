@@ -30,26 +30,39 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UserName = userName;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int? ErrorLine { get; private set; }
 
+                [JsonProperty]
                 public int ErrorLogID { get; private set; }
 
+                [JsonProperty]
                 public string ErrorMessage { get; private set; }
 
+                [JsonProperty]
                 public int ErrorNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ErrorProcedure { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? ErrorSeverity { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? ErrorState { get; private set; }
 
+                [JsonProperty]
                 public DateTime ErrorTime { get; private set; }
 
+                [JsonProperty]
                 public string UserName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3a256a9ccc00f4940c01344cad7553c5</Hash>
+    <Hash>1f7caa92398d0ab4b2f810541fc0950f</Hash>
 </Codenesium>*/

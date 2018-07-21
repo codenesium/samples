@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TicketingCRMNS.Api.Contracts;
 using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
@@ -79,5 +80,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>af5e32daeac45b94ca0c623cb1a4fb32</Hash>
+    <Hash>53749b42651596f3cd01e3dcc86043c4</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -29,9 +31,19 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.Rowguid);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiPasswordRequestModel> CreatePatch(ApiPasswordRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPasswordRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.PasswordHash, model.PasswordHash);
+                        patch.Replace(x => x.PasswordSalt, model.PasswordSalt);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7eec229cdca55f0108b29e4c46abc247</Hash>
+    <Hash>c1bfd1ef799d1676388b773b473a1803</Hash>
 </Codenesium>*/

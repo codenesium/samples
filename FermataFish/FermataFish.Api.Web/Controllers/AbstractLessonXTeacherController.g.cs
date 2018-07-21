@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonXTeacherResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLessonXTeacherResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLessonXTeacherRequestModel model)
                 {
                         CreateResponse<ApiLessonXTeacherResponseModel> result = await this.LessonXTeacherService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LessonXTeachers/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LessonXTeachers/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonXTeacherResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLessonXTeacherResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLessonXTeacherRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiLessonXTeacherRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LessonXTeacherService.Update(id, model);
+                                UpdateResponse<ApiLessonXTeacherResponseModel> result = await this.LessonXTeacherService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLessonXTeacherResponseModel response = await this.LessonXTeacherService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonXTeacherResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLessonXTeacherResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonXTeacherRequestModel model)
                 {
-                        ApiLessonXTeacherRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLessonXTeacherRequestModel request = await this.PatchModel(id, this.LessonXTeacherModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LessonXTeacherService.Update(id, request);
+                                UpdateResponse<ApiLessonXTeacherResponseModel> result = await this.LessonXTeacherService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLessonXTeacherResponseModel response = await this.LessonXTeacherService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace FermataFishNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiLessonXTeacherRequestModel> CreatePatch(ApiLessonXTeacherRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLessonXTeacherRequestModel>();
-                        patch.Replace(x => x.LessonId, model.LessonId);
-                        patch.Replace(x => x.StudentId, model.StudentId);
-                        return patch;
-                }
-
                 private async Task<ApiLessonXTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiLessonXTeacherRequestModel> patch)
                 {
                         var record = await this.LessonXTeacherService.Get(id);
@@ -232,5 +220,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0069236899185c0c03d4a068410221b7</Hash>
+    <Hash>6da3257a85de8d891374b2b9e2045d5f</Hash>
 </Codenesium>*/

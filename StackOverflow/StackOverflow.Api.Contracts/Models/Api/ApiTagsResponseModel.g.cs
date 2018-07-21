@@ -22,18 +22,28 @@ namespace StackOverflowNS.Api.Contracts
                         this.WikiPostId = wikiPostId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Count { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int ExcerptPostId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TagName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int WikiPostId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f2abb7aeda1e5cde6da9c0212498d2f</Hash>
+    <Hash>c0d4a3be2462d1b5df4de0727d6c4c09</Hash>
 </Codenesium>*/

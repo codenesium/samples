@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -61,9 +63,35 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.TenantName);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiDeploymentHistoryRequestModel> CreatePatch(ApiDeploymentHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDeploymentHistoryRequestModel>();
+                        patch.Replace(x => x.ChannelId, model.ChannelId);
+                        patch.Replace(x => x.ChannelName, model.ChannelName);
+                        patch.Replace(x => x.CompletedTime, model.CompletedTime);
+                        patch.Replace(x => x.Created, model.Created);
+                        patch.Replace(x => x.DeployedBy, model.DeployedBy);
+                        patch.Replace(x => x.DeploymentName, model.DeploymentName);
+                        patch.Replace(x => x.DurationSeconds, model.DurationSeconds);
+                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
+                        patch.Replace(x => x.EnvironmentName, model.EnvironmentName);
+                        patch.Replace(x => x.ProjectId, model.ProjectId);
+                        patch.Replace(x => x.ProjectName, model.ProjectName);
+                        patch.Replace(x => x.ProjectSlug, model.ProjectSlug);
+                        patch.Replace(x => x.QueueTime, model.QueueTime);
+                        patch.Replace(x => x.ReleaseId, model.ReleaseId);
+                        patch.Replace(x => x.ReleaseVersion, model.ReleaseVersion);
+                        patch.Replace(x => x.StartTime, model.StartTime);
+                        patch.Replace(x => x.TaskId, model.TaskId);
+                        patch.Replace(x => x.TaskState, model.TaskState);
+                        patch.Replace(x => x.TenantId, model.TenantId);
+                        patch.Replace(x => x.TenantName, model.TenantName);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>60f2062b9d4288ccea1a379cc7535979</Hash>
+    <Hash>3c7e321d3489f54be087a5643b7be43c</Hash>
 </Codenesium>*/

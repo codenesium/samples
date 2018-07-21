@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiActionTemplateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiActionTemplateResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiActionTemplateRequestModel model)
                 {
                         CreateResponse<ApiActionTemplateResponseModel> result = await this.ActionTemplateService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ActionTemplates/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ActionTemplates/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiActionTemplateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiActionTemplateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiActionTemplateRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiActionTemplateRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ActionTemplateService.Update(id, model);
+                                UpdateResponse<ApiActionTemplateResponseModel> result = await this.ActionTemplateService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiActionTemplateResponseModel response = await this.ActionTemplateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiActionTemplateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiActionTemplateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiActionTemplateRequestModel model)
                 {
-                        ApiActionTemplateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiActionTemplateRequestModel request = await this.PatchModel(id, this.ActionTemplateModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ActionTemplateService.Update(id, request);
+                                UpdateResponse<ApiActionTemplateResponseModel> result = await this.ActionTemplateService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiActionTemplateResponseModel response = await this.ActionTemplateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,17 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiActionTemplateRequestModel> CreatePatch(ApiActionTemplateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiActionTemplateRequestModel>();
-                        patch.Replace(x => x.ActionType, model.ActionType);
-                        patch.Replace(x => x.CommunityActionTemplateId, model.CommunityActionTemplateId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Version, model.Version);
-                        return patch;
-                }
-
                 private async Task<ApiActionTemplateRequestModel> PatchModel(string id, JsonPatchDocument<ApiActionTemplateRequestModel> patch)
                 {
                         var record = await this.ActionTemplateService.Get(id);
@@ -254,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ab5d860e5ff3f59bf6f615568b891f44</Hash>
+    <Hash>8f2961a2b14503d82e586a04592e451e</Hash>
 </Codenesium>*/

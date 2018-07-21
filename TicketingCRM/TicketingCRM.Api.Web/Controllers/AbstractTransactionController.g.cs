@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTransactionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTransactionRequestModel model)
                 {
                         CreateResponse<ApiTransactionResponseModel> result = await this.TransactionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Transactions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Transactions/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiTransactionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TransactionService.Update(id, model);
+                                UpdateResponse<ApiTransactionResponseModel> result = await this.TransactionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionResponseModel response = await this.TransactionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionRequestModel model)
                 {
-                        ApiTransactionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTransactionRequestModel request = await this.PatchModel(id, this.TransactionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TransactionService.Update(id, request);
+                                UpdateResponse<ApiTransactionResponseModel> result = await this.TransactionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionResponseModel response = await this.TransactionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -230,15 +226,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTransactionRequestModel> CreatePatch(ApiTransactionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTransactionRequestModel>();
-                        patch.Replace(x => x.Amount, model.Amount);
-                        patch.Replace(x => x.GatewayConfirmationNumber, model.GatewayConfirmationNumber);
-                        patch.Replace(x => x.TransactionStatusId, model.TransactionStatusId);
-                        return patch;
-                }
-
                 private async Task<ApiTransactionRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionRequestModel> patch)
                 {
                         var record = await this.TransactionService.Get(id);
@@ -258,5 +245,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>371811e76eaaf380adbb1f09c93a534f</Hash>
+    <Hash>e7f2119eb2efaadfc61b79ccd8cd444a</Hash>
 </Codenesium>*/

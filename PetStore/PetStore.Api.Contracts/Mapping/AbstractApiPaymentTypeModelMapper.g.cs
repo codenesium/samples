@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Contracts
 {
@@ -23,9 +25,16 @@ namespace PetStoreNS.Api.Contracts
                                 response.Name);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiPaymentTypeRequestModel> CreatePatch(ApiPaymentTypeRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a1d329773d40d27c41077d9007a87448</Hash>
+    <Hash>df944b94f9002dabf457458335d3213e</Hash>
 </Codenesium>*/

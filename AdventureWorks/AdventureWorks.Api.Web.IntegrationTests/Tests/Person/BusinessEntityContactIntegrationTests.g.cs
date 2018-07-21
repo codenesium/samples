@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "BusinessEntityContact")]
         [Trait("Area", "Integration")]
-        public class BusinessEntityContactIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class BusinessEntityContactIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public BusinessEntityContactIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiBusinessEntityContactModelMapper mapper = new ApiBusinessEntityContactModelMapper();
+
+                        UpdateResponse<ApiBusinessEntityContactResponseModel> updateResponse = await this.Client.BusinessEntityContactUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.BusinessEntityContactDeleteAsync(model.BusinessEntityID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiBusinessEntityContactResponseModel response = await this.Client.BusinessEntityContactGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiBusinessEntityContactResponseModel> response = await this.Client.BusinessEntityContactAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiBusinessEntityContactResponseModel> CreateRecord()
+                {
+                        var model = new ApiBusinessEntityContactRequestModel();
+                        model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+                        CreateResponse<ApiBusinessEntityContactResponseModel> result = await this.Client.BusinessEntityContactCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.BusinessEntityContactDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>eebba4acbfec6d8c78b1a5bc4e2fc392</Hash>
+    <Hash>45d54a45b3008a44a9db7b1ee98cdd17</Hash>
 </Codenesium>*/

@@ -90,18 +90,25 @@ namespace FermataFishNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiFamilyResponseModel>> Update(
                         int id,
                         ApiFamilyRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.familyModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.familyModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolFamilyMapper.MapModelToBO(id, model);
                                 await this.familyRepository.Update(this.dalFamilyMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.familyRepository.Get(id);
+
+                                return new UpdateResponse<ApiFamilyResponseModel>(this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiFamilyResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48cb7626580158259b1f3f9f55f8eb97</Hash>
+    <Hash>d630207bbf03f02b2350eeca75c66912</Hash>
 </Codenesium>*/

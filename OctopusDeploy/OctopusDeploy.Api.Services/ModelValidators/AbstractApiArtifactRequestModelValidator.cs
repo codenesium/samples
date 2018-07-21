@@ -37,13 +37,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void FilenameRules()
                 {
-                        this.RuleFor(x => x.Filename).NotNull();
                         this.RuleFor(x => x.Filename).Length(0, 200);
                 }
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void ProjectIdRules()
@@ -53,7 +51,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void RelatedDocumentIdsRules()
                 {
-                        this.RuleFor(x => x.RelatedDocumentIds).NotNull();
                 }
 
                 public virtual void TenantIdRules()
@@ -64,5 +61,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5354699e6c30baebba3e93b26bd085db</Hash>
+    <Hash>d294dd44e122a654d4a9ed1c18a99050</Hash>
 </Codenesium>*/

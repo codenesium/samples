@@ -28,7 +28,6 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void PublicIdRules()
                 {
-                        this.RuleFor(x => x.PublicId).NotNull();
                         this.RuleFor(x => x.PublicId).Length(0, 8);
                 }
 
@@ -47,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08f6e4ba5e7a3620afbea888d066520c</Hash>
+    <Hash>3b1b5ba14cf36bd3d3f7ca6bb0b7aa94</Hash>
 </Codenesium>*/

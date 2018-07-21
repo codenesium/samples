@@ -155,8 +155,8 @@ namespace FermataFishNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiSpaceXSpaceFeatureResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpaceXSpaceFeatureResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceXSpaceFeatureRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         SpaceXSpaceFeatureControllerMockFacade mock = new SpaceXSpaceFeatureControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>()))
                         .Callback<int, ApiSpaceXSpaceFeatureRequestModel>(
                                 (id, model) => model.SpaceFeatureId.Should().Be(1)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceXSpaceFeatureResponseModel>(new ApiSpaceXSpaceFeatureResponseModel()));
                         SpaceXSpaceFeatureController controller = new SpaceXSpaceFeatureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceXSpaceFeatureModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         SpaceXSpaceFeatureControllerMockFacade mock = new SpaceXSpaceFeatureControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceXSpaceFeatureResponseModel()));
                         SpaceXSpaceFeatureController controller = new SpaceXSpaceFeatureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceXSpaceFeatureModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         SpaceXSpaceFeatureControllerMockFacade mock = new SpaceXSpaceFeatureControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceXSpaceFeatureResponseModel()));
                         SpaceXSpaceFeatureController controller = new SpaceXSpaceFeatureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceXSpaceFeatureModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace FermataFishNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         SpaceXSpaceFeatureControllerMockFacade mock = new SpaceXSpaceFeatureControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceXSpaceFeatureResponseModel>(null));
                         SpaceXSpaceFeatureController controller = new SpaceXSpaceFeatureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceXSpaceFeatureModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace FermataFishNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>40e7743a16b828e7bd6ed4da0aea7999</Hash>
+    <Hash>082a18aa0565825ef5176f1407c12989</Hash>
 </Codenesium>*/

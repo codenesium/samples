@@ -97,13 +97,14 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITeacherXTeacherSkillRepository>();
                         var model = new ApiTeacherXTeacherSkillRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TeacherXTeacherSkill>())).Returns(Task.FromResult(new TeacherXTeacherSkill()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TeacherXTeacherSkill()));
                         var service = new TeacherXTeacherSkillService(mock.LoggerMock.Object,
                                                                       mock.RepositoryMock.Object,
                                                                       mock.ModelValidatorMockFactory.TeacherXTeacherSkillModelValidatorMock.Object,
                                                                       mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                                       mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTeacherXTeacherSkillResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TeacherXTeacherSkillModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherXTeacherSkillRequestModel>()));
@@ -132,5 +133,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2a75b1679661ac8ce2f86a080cb78236</Hash>
+    <Hash>f9f6f93f62c552b157b17b1009353bbb</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,26 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.VariableSetId.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiLibraryVariableSetModelMapper();
+                        var model = new ApiLibraryVariableSetRequestModel();
+                        model.SetProperties("A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiLibraryVariableSetRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiLibraryVariableSetRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ContentType.Should().Be("A");
+                        response.JSON.Should().Be("A");
+                        response.Name.Should().Be("A");
+                        response.VariableSetId.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>69e2f0dc903a44703b2ddb0a80965adc</Hash>
+    <Hash>c27531d3a22ee475a08432aca751b687</Hash>
 </Codenesium>*/

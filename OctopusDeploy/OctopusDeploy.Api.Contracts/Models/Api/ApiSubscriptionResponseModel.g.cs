@@ -22,18 +22,28 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Type = type;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDisabled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c0f6650feee2c607cd9c2f3b9922a0d0</Hash>
+    <Hash>36164cab0c3e319aca98bc0f4e118e12</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUsersResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiUsersResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiUsersRequestModel model)
                 {
                         CreateResponse<ApiUsersResponseModel> result = await this.UsersService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUsersResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUsersResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiUsersRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiUsersRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.UsersService.Update(id, model);
+                                UpdateResponse<ApiUsersResponseModel> result = await this.UsersService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiUsersResponseModel response = await this.UsersService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUsersResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUsersResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiUsersRequestModel model)
                 {
-                        ApiUsersRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiUsersRequestModel request = await this.PatchModel(id, this.UsersModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.UsersService.Update(id, request);
+                                UpdateResponse<ApiUsersResponseModel> result = await this.UsersService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiUsersResponseModel response = await this.UsersService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,25 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiUsersRequestModel> CreatePatch(ApiUsersRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiUsersRequestModel>();
-                        patch.Replace(x => x.AboutMe, model.AboutMe);
-                        patch.Replace(x => x.AccountId, model.AccountId);
-                        patch.Replace(x => x.Age, model.Age);
-                        patch.Replace(x => x.CreationDate, model.CreationDate);
-                        patch.Replace(x => x.DisplayName, model.DisplayName);
-                        patch.Replace(x => x.DownVotes, model.DownVotes);
-                        patch.Replace(x => x.EmailHash, model.EmailHash);
-                        patch.Replace(x => x.LastAccessDate, model.LastAccessDate);
-                        patch.Replace(x => x.Location, model.Location);
-                        patch.Replace(x => x.Reputation, model.Reputation);
-                        patch.Replace(x => x.UpVotes, model.UpVotes);
-                        patch.Replace(x => x.Views, model.Views);
-                        patch.Replace(x => x.WebsiteUrl, model.WebsiteUrl);
-                        return patch;
-                }
-
                 private async Task<ApiUsersRequestModel> PatchModel(int id, JsonPatchDocument<ApiUsersRequestModel> patch)
                 {
                         var record = await this.UsersService.Get(id);
@@ -243,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a4228913dddf68cc194bdc9d1c3e9a3</Hash>
+    <Hash>0d0d8d2bd2a9cf82272d11baf16ccbf7</Hash>
 </Codenesium>*/

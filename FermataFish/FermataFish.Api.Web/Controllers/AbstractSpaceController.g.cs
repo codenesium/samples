@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpaceResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSpaceResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSpaceRequestModel model)
                 {
                         CreateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Spaces/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Spaces/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpaceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSpaceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpaceRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiSpaceRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SpaceService.Update(id, model);
+                                UpdateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSpaceResponseModel response = await this.SpaceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpaceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSpaceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceRequestModel model)
                 {
-                        ApiSpaceRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSpaceRequestModel request = await this.PatchModel(id, this.SpaceModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SpaceService.Update(id, request);
+                                UpdateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSpaceResponseModel response = await this.SpaceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,15 +215,6 @@ namespace FermataFishNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSpaceRequestModel> CreatePatch(ApiSpaceRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSpaceRequestModel>();
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.StudioId, model.StudioId);
-                        return patch;
-                }
-
                 private async Task<ApiSpaceRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceRequestModel> patch)
                 {
                         var record = await this.SpaceService.Get(id);
@@ -247,5 +234,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4ea9ea71fe66fb1a184a013efb2182db</Hash>
+    <Hash>bd503a31b12232b0f258d322fb7742de</Hash>
 </Codenesium>*/

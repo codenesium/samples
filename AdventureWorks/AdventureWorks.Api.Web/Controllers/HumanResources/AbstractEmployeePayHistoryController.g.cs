@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEmployeePayHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
                 {
                         CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiEmployeePayHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EmployeePayHistoryService.Update(id, model);
+                                UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryRequestModel model)
                 {
-                        ApiEmployeePayHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEmployeePayHistoryRequestModel request = await this.PatchModel(id, this.EmployeePayHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EmployeePayHistoryService.Update(id, request);
+                                UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiEmployeePayHistoryRequestModel> CreatePatch(ApiEmployeePayHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEmployeePayHistoryRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.PayFrequency, model.PayFrequency);
-                        patch.Replace(x => x.Rate, model.Rate);
-                        patch.Replace(x => x.RateChangeDate, model.RateChangeDate);
-                        return patch;
-                }
-
                 private async Task<ApiEmployeePayHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
                 {
                         var record = await this.EmployeePayHistoryService.Get(id);
@@ -234,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b0ce517cdd928511703b377dd33c64e4</Hash>
+    <Hash>12ca7f7c675ac2457fcb0e8c9c0f67cf</Hash>
 </Codenesium>*/

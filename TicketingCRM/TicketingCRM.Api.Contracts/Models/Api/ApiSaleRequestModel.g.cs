@@ -26,72 +26,20 @@ namespace TicketingCRMNS.Api.Contracts
                         this.TransactionId = transactionId;
                 }
 
-                private string ipAddress;
+                [JsonProperty]
+                public string IpAddress { get; private set; }
 
-                [Required]
-                public string IpAddress
-                {
-                        get
-                        {
-                                return this.ipAddress;
-                        }
+                [JsonProperty]
+                public string Notes { get; private set; }
 
-                        set
-                        {
-                                this.ipAddress = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime SaleDate { get; private set; }
 
-                private string notes;
-
-                [Required]
-                public string Notes
-                {
-                        get
-                        {
-                                return this.notes;
-                        }
-
-                        set
-                        {
-                                this.notes = value;
-                        }
-                }
-
-                private DateTime saleDate;
-
-                [Required]
-                public DateTime SaleDate
-                {
-                        get
-                        {
-                                return this.saleDate;
-                        }
-
-                        set
-                        {
-                                this.saleDate = value;
-                        }
-                }
-
-                private int transactionId;
-
-                [Required]
-                public int TransactionId
-                {
-                        get
-                        {
-                                return this.transactionId;
-                        }
-
-                        set
-                        {
-                                this.transactionId = value;
-                        }
-                }
+                [JsonProperty]
+                public int TransactionId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b9d4fbd1c8e1554141f9c941cca9db70</Hash>
+    <Hash>2dfafbc0edb1b84cd0833195647a3da6</Hash>
 </Codenesium>*/

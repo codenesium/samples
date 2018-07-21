@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
                 Task<CreateResponse<ApiPostHistoryTypesResponseModel>> Create(
                         ApiPostHistoryTypesRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiPostHistoryTypesRequestModel model);
+                Task<UpdateResponse<ApiPostHistoryTypesResponseModel>> Update(int id,
+                                                                               ApiPostHistoryTypesRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>97c6423db44ed5c00b4e84dfc802329b</Hash>
+    <Hash>5723982f651f02d021be311aa1263816</Hash>
 </Codenesium>*/

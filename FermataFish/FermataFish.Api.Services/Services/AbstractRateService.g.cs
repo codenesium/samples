@@ -75,18 +75,25 @@ namespace FermataFishNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiRateResponseModel>> Update(
                         int id,
                         ApiRateRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.rateModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolRateMapper.MapModelToBO(id, model);
                                 await this.rateRepository.Update(this.dalRateMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.rateRepository.Get(id);
+
+                                return new UpdateResponse<ApiRateResponseModel>(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiRateResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3fd50cc748c077522cc48331a37bcc5f</Hash>
+    <Hash>9fdfa18e4f19f9c24c1bbbc4dfc3b56b</Hash>
 </Codenesium>*/

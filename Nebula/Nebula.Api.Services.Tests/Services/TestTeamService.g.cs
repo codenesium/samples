@@ -113,6 +113,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITeamRepository>();
                         var model = new ApiTeamRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Team>())).Returns(Task.FromResult(new Team()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
                         var service = new TeamService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace NebulaNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                       mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTeamResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TeamModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>()));
@@ -244,5 +245,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c22aca8fef9d49aa6490572f380505c2</Hash>
+    <Hash>b68ef71c61a5450ff318b9ba5b24ad75</Hash>
 </Codenesium>*/

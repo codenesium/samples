@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                         BOStore boStore = new BOStore();
                         boStore.SetProperties(
                                 businessEntityID,
-                                model.Demographics,
+                                model.Demographic,
                                 model.ModifiedDate,
                                 model.Name,
                                 model.Rowguid,
@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiStoreResponseModel();
 
-                        model.SetProperties(boStore.BusinessEntityID, boStore.Demographics, boStore.ModifiedDate, boStore.Name, boStore.Rowguid, boStore.SalesPersonID);
+                        model.SetProperties(boStore.BusinessEntityID, boStore.Demographic, boStore.ModifiedDate, boStore.Name, boStore.Rowguid, boStore.SalesPersonID);
 
                         return model;
                 }
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d56a7ff6e8cf6ca83f4209b68d2e275</Hash>
+    <Hash>fb52e8b59fafe2567151f3cea0029386</Hash>
 </Codenesium>*/

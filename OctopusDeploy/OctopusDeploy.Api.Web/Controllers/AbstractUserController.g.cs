@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiUserResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiUserRequestModel model)
                 {
                         CreateResponse<ApiUserResponseModel> result = await this.UserService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUserResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUserRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiUserRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.UserService.Update(id, model);
+                                UpdateResponse<ApiUserResponseModel> result = await this.UserService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiUserResponseModel response = await this.UserService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUserResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUserRequestModel model)
                 {
-                        ApiUserRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiUserRequestModel request = await this.PatchModel(id, this.UserModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.UserService.Update(id, request);
+                                UpdateResponse<ApiUserResponseModel> result = await this.UserService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiUserResponseModel response = await this.UserService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -257,21 +253,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiUserRequestModel> CreatePatch(ApiUserRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiUserRequestModel>();
-                        patch.Replace(x => x.DisplayName, model.DisplayName);
-                        patch.Replace(x => x.EmailAddress, model.EmailAddress);
-                        patch.Replace(x => x.ExternalId, model.ExternalId);
-                        patch.Replace(x => x.ExternalIdentifiers, model.ExternalIdentifiers);
-                        patch.Replace(x => x.IdentificationToken, model.IdentificationToken);
-                        patch.Replace(x => x.IsActive, model.IsActive);
-                        patch.Replace(x => x.IsService, model.IsService);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Username, model.Username);
-                        return patch;
-                }
-
                 private async Task<ApiUserRequestModel> PatchModel(string id, JsonPatchDocument<ApiUserRequestModel> patch)
                 {
                         var record = await this.UserService.Get(id);
@@ -291,5 +272,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bd6ea77272155da6718f045196d67ccc</Hash>
+    <Hash>ce7db990183832da31c467f4747392a1</Hash>
 </Codenesium>*/

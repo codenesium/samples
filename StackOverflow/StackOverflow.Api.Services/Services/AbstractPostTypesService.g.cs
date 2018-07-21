@@ -75,18 +75,25 @@ namespace StackOverflowNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPostTypesResponseModel>> Update(
                         int id,
                         ApiPostTypesRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.postTypesModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.postTypesModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPostTypesMapper.MapModelToBO(id, model);
                                 await this.postTypesRepository.Update(this.dalPostTypesMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.postTypesRepository.Get(id);
+
+                                return new UpdateResponse<ApiPostTypesResponseModel>(this.bolPostTypesMapper.MapBOToModel(this.dalPostTypesMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPostTypesResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04b99cb6188d38e29b544d5a987f19b7</Hash>
+    <Hash>c19377f1548e1fc277428a5b8f2a9aeb</Hash>
 </Codenesium>*/

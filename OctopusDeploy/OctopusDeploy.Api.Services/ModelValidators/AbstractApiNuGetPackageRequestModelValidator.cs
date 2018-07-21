@@ -28,18 +28,15 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void PackageIdRules()
                 {
-                        this.RuleFor(x => x.PackageId).NotNull();
                         this.RuleFor(x => x.PackageId).Length(0, 100);
                 }
 
                 public virtual void VersionRules()
                 {
-                        this.RuleFor(x => x.Version).NotNull();
                         this.RuleFor(x => x.Version).Length(0, 349);
                 }
 
@@ -67,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bb394b7b53b769e8e842dda8f301f8c</Hash>
+    <Hash>5b310346fd994d3a6eee073d2ea85b7e</Hash>
 </Codenesium>*/

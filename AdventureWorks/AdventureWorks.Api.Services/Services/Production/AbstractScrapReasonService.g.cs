@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiScrapReasonResponseModel>> Update(
                         short scrapReasonID,
                         ApiScrapReasonRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.scrapReasonModelValidator.ValidateUpdateAsync(scrapReasonID, model));
-                        if (response.Success)
+                        var validationResult = await this.scrapReasonModelValidator.ValidateUpdateAsync(scrapReasonID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolScrapReasonMapper.MapModelToBO(scrapReasonID, model);
                                 await this.scrapReasonRepository.Update(this.dalScrapReasonMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.scrapReasonRepository.Get(scrapReasonID);
+
+                                return new UpdateResponse<ApiScrapReasonResponseModel>(this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiScrapReasonResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54ae26c18ecc2da43345e4e83df4785e</Hash>
+    <Hash>bc575e31028107aa1ceeaba8ff273f5b</Hash>
 </Codenesium>*/

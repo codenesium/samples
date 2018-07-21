@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
                 Task<CreateResponse<ApiLinkTypesResponseModel>> Create(
                         ApiLinkTypesRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiLinkTypesRequestModel model);
+                Task<UpdateResponse<ApiLinkTypesResponseModel>> Update(int id,
+                                                                        ApiLinkTypesRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dc141f97659f1439d0e78477d387ec5</Hash>
+    <Hash>ab4981570bca59d42218324776a66c4d</Hash>
 </Codenesium>*/

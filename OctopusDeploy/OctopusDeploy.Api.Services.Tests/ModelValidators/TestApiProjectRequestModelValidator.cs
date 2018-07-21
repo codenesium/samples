@@ -49,54 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void LifecycleId_Create_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, null as string);
-                }
-
-                [Fact]
-                public async void LifecycleId_Update_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, null as string);
-                }
-
-                [Fact]
                 public async void LifecycleId_Create_length()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -118,30 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -169,30 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectGroupId_Create_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectGroupId_Update_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, null as string);
-                }
-
-                [Fact]
                 public async void ProjectGroupId_Create_length()
                 {
                         Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
@@ -214,30 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void Slug_Create_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Slug, null as string);
-                }
-
-                [Fact]
-                public async void Slug_Update_null()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
-
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Slug, null as string);
                 }
 
                 [Fact]
@@ -339,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>31e5e2042542339db4c889d71cd393ae</Hash>
+    <Hash>722666ddd79f7df21cde5f3a18af7613</Hash>
 </Codenesium>*/

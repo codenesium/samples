@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPhoneNumberTypeResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeRequestModel model)
                 {
                         CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PhoneNumberTypes/{result.Record.PhoneNumberTypeID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PhoneNumberTypes/{result.Record.PhoneNumberTypeID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPhoneNumberTypeRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PhoneNumberTypeService.Update(id, model);
+                                UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
                 {
-                        ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.PhoneNumberTypeModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PhoneNumberTypeService.Update(id, request);
+                                UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,14 +215,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPhoneNumberTypeRequestModel> CreatePatch(ApiPhoneNumberTypeRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPhoneNumberTypeRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiPhoneNumberTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
                 {
                         var record = await this.PhoneNumberTypeService.Get(id);
@@ -246,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>93cafdc2f0a89f98e09467ef0e305819</Hash>
+    <Hash>a7d988eac19a2039e9f6e8afd282b168</Hash>
 </Codenesium>*/

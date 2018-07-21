@@ -16,12 +16,16 @@ namespace PetShippingNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>124b7311c6d928a4bc3783e559954acf</Hash>
+    <Hash>695f4da2f2c9b49ba22f419a4fdf49d6</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -37,9 +39,23 @@ namespace StackOverflowNS.Api.Contracts
                                 response.UserId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiPostHistoryRequestModel> CreatePatch(ApiPostHistoryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPostHistoryRequestModel>();
+                        patch.Replace(x => x.Comment, model.Comment);
+                        patch.Replace(x => x.CreationDate, model.CreationDate);
+                        patch.Replace(x => x.PostHistoryTypeId, model.PostHistoryTypeId);
+                        patch.Replace(x => x.PostId, model.PostId);
+                        patch.Replace(x => x.RevisionGUID, model.RevisionGUID);
+                        patch.Replace(x => x.Text, model.Text);
+                        patch.Replace(x => x.UserDisplayName, model.UserDisplayName);
+                        patch.Replace(x => x.UserId, model.UserId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>49adae2d0305334fa5fd5baa3d3c61c9</Hash>
+    <Hash>91a81bfe421197b7e1e0bbb8ca02f7c8</Hash>
 </Codenesium>*/

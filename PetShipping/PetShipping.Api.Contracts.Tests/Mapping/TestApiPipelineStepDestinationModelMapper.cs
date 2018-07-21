@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,24 @@ namespace PetShippingNS.Api.Contracts.Tests
                         response.DestinationId.Should().Be(1);
                         response.PipelineStepId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPipelineStepDestinationModelMapper();
+                        var model = new ApiPipelineStepDestinationRequestModel();
+                        model.SetProperties(1, 1);
+
+                        JsonPatchDocument<ApiPipelineStepDestinationRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPipelineStepDestinationRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.DestinationId.Should().Be(1);
+                        response.PipelineStepId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>637e48703cc6f9edf80a8b1fb779679e</Hash>
+    <Hash>8313ca0a888dde140a2c0798cf9bc3a5</Hash>
 </Codenesium>*/

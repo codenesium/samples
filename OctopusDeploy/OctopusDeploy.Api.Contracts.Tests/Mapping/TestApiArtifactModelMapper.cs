@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,29 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.RelatedDocumentIds.Should().Be("A");
                         response.TenantId.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiArtifactModelMapper();
+                        var model = new ApiArtifactRequestModel();
+                        model.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiArtifactRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiArtifactRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Created.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
+                        response.EnvironmentId.Should().Be("A");
+                        response.Filename.Should().Be("A");
+                        response.JSON.Should().Be("A");
+                        response.ProjectId.Should().Be("A");
+                        response.RelatedDocumentIds.Should().Be("A");
+                        response.TenantId.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f40b85c6941330ded8b844265817c8df</Hash>
+    <Hash>f819f2221af2b647a5bffdf72cf671da</Hash>
 </Codenesium>*/

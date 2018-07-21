@@ -1,3 +1,4 @@
+using ESPIOTNS.Api.Contracts;
 using FluentAssertions;
 using FluentValidation.Results;
 using System;
@@ -79,5 +80,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d107ec1c324945f6077fc4907a9ec616</Hash>
+    <Hash>c24dff142bd029ad13b894935e9fa8b9</Hash>
 </Codenesium>*/

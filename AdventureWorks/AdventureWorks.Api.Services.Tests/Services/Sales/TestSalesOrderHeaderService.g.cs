@@ -113,6 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
                         var model = new ApiSalesOrderHeaderRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesOrderHeader>())).Returns(Task.FromResult(new SalesOrderHeader()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
                         var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                                   mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSalesOrderHeaderResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderRequestModel>()));
@@ -375,5 +376,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>110b7666381ba29f0c7e121079a6a626</Hash>
+    <Hash>325c53c303989bdef995f7172458053e</Hash>
 </Codenesium>*/

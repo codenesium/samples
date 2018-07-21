@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -27,9 +29,18 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.ProductPhotoID);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiProductProductPhotoRequestModel> CreatePatch(ApiProductProductPhotoRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProductProductPhotoRequestModel>();
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Primary, model.Primary);
+                        patch.Replace(x => x.ProductPhotoID, model.ProductPhotoID);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c60464a02270a02ca5396deedf02aaf</Hash>
+    <Hash>3f81e089799fd5757dd7e881c8a82ec6</Hash>
 </Codenesium>*/

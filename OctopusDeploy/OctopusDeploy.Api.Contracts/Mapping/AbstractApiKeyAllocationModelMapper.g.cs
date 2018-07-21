@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -23,9 +25,16 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.Allocated);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiKeyAllocationRequestModel> CreatePatch(ApiKeyAllocationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiKeyAllocationRequestModel>();
+                        patch.Replace(x => x.Allocated, model.Allocated);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b54095c874fa78ca2839db5cc311e41a</Hash>
+    <Hash>0d6da2d9f013dd9391c90c7d5b0409fa</Hash>
 </Codenesium>*/

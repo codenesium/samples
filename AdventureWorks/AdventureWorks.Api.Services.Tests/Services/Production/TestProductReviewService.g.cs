@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductReviewRepository>();
                         var model = new ApiProductReviewRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductReview>())).Returns(Task.FromResult(new ProductReview()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
                         var service = new ProductReviewService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
                                                                mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductReviewResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewRequestModel>()));
@@ -130,43 +131,43 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ByCommentsProductIDReviewerName_Exists()
+                public async void ByProductIDReviewerName_Exists()
                 {
                         var mock = new ServiceMockFacade<IProductReviewRepository>();
                         var records = new List<ProductReview>();
                         records.Add(new ProductReview());
-                        mock.RepositoryMock.Setup(x => x.ByCommentsProductIDReviewerName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new ProductReviewService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
                                                                mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-                        List<ApiProductReviewResponseModel> response = await service.ByCommentsProductIDReviewerName(default(string), default(int), default(string));
+                        List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByCommentsProductIDReviewerName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void ByCommentsProductIDReviewerName_Not_Exists()
+                public async void ByProductIDReviewerName_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IProductReviewRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByCommentsProductIDReviewerName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ProductReview>>(new List<ProductReview>()));
+                        mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ProductReview>>(new List<ProductReview>()));
                         var service = new ProductReviewService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
                                                                mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-                        List<ApiProductReviewResponseModel> response = await service.ByCommentsProductIDReviewerName(default(string), default(int), default(string));
+                        List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByCommentsProductIDReviewerName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>685a2c7b4cc8df6abf933f62ea3fd7ae</Hash>
+    <Hash>0b0fd08690c95eeae5e877352a19f6c5</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTeamResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTeamRequestModel model)
                 {
                         CreateResponse<ApiTeamResponseModel> result = await this.TeamService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teams/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teams/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeamRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiTeamRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TeamService.Update(id, model);
+                                UpdateResponse<ApiTeamResponseModel> result = await this.TeamService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTeamResponseModel response = await this.TeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeamRequestModel model)
                 {
-                        ApiTeamRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTeamRequestModel request = await this.PatchModel(id, this.TeamModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TeamService.Update(id, request);
+                                UpdateResponse<ApiTeamResponseModel> result = await this.TeamService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTeamResponseModel response = await this.TeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -233,14 +229,6 @@ namespace NebulaNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTeamRequestModel> CreatePatch(ApiTeamRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTeamRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.OrganizationId, model.OrganizationId);
-                        return patch;
-                }
-
                 private async Task<ApiTeamRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeamRequestModel> patch)
                 {
                         var record = await this.TeamService.Get(id);
@@ -260,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>64d5e0461e81d4dd6ed2f5bab2fb56b4</Hash>
+    <Hash>20bb9a5cc7bbd5d724010bcd1344e512</Hash>
 </Codenesium>*/

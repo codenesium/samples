@@ -28,88 +28,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.WorkerId = workerId;
                 }
 
-                private bool exclusive;
+                [JsonProperty]
+                public bool Exclusive { get; private set; }
 
-                [Required]
-                public bool Exclusive
-                {
-                        get
-                        {
-                                return this.exclusive;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.exclusive = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public string TaskId { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string taskId;
-
-                [Required]
-                public string TaskId
-                {
-                        get
-                        {
-                                return this.taskId;
-                        }
-
-                        set
-                        {
-                                this.taskId = value;
-                        }
-                }
-
-                private string workerId;
-
-                [Required]
-                public string WorkerId
-                {
-                        get
-                        {
-                                return this.workerId;
-                        }
-
-                        set
-                        {
-                                this.workerId = value;
-                        }
-                }
+                [JsonProperty]
+                public string WorkerId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>17d1a8650aa050904d6dccf5c9efac18</Hash>
+    <Hash>71bc570ad316ab2d4fb3ac389c874bff</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IMutexRepository>();
                         var model = new ApiMutexRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Mutex>())).Returns(Task.FromResult(new Mutex()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Mutex()));
                         var service = new MutexService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.MutexModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLMutexMapperMock,
                                                        mock.DALMapperMockFactory.DALMutexMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiMutexResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.MutexModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiMutexRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b7f3d97ce2a5a5966d2c71987d92d078</Hash>
+    <Hash>81666b5efe02869833700fe04177e175</Hash>
 </Codenesium>*/

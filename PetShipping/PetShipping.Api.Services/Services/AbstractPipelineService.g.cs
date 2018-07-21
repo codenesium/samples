@@ -75,18 +75,25 @@ namespace PetShippingNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPipelineResponseModel>> Update(
                         int id,
                         ApiPipelineRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.pipelineModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPipelineMapper.MapModelToBO(id, model);
                                 await this.pipelineRepository.Update(this.dalPipelineMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.pipelineRepository.Get(id);
+
+                                return new UpdateResponse<ApiPipelineResponseModel>(this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPipelineResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6dec7ba092fe176d7ef0f3d58aa5242</Hash>
+    <Hash>c3f1e6c5add3f82ac90e86e7a60db307</Hash>
 </Codenesium>*/

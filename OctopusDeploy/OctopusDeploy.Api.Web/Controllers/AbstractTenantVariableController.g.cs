@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTenantVariableResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTenantVariableResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTenantVariableRequestModel model)
                 {
                         CreateResponse<ApiTenantVariableResponseModel> result = await this.TenantVariableService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TenantVariables/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TenantVariables/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTenantVariableResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTenantVariableResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiTenantVariableRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiTenantVariableRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TenantVariableService.Update(id, model);
+                                UpdateResponse<ApiTenantVariableResponseModel> result = await this.TenantVariableService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTenantVariableResponseModel response = await this.TenantVariableService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTenantVariableResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTenantVariableResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiTenantVariableRequestModel model)
                 {
-                        ApiTenantVariableRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTenantVariableRequestModel request = await this.PatchModel(id, this.TenantVariableModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TenantVariableService.Update(id, request);
+                                UpdateResponse<ApiTenantVariableResponseModel> result = await this.TenantVariableService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTenantVariableResponseModel response = await this.TenantVariableService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,18 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTenantVariableRequestModel> CreatePatch(ApiTenantVariableRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTenantVariableRequestModel>();
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.OwnerId, model.OwnerId);
-                        patch.Replace(x => x.RelatedDocumentId, model.RelatedDocumentId);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        patch.Replace(x => x.VariableTemplateId, model.VariableTemplateId);
-                        return patch;
-                }
-
                 private async Task<ApiTenantVariableRequestModel> PatchModel(string id, JsonPatchDocument<ApiTenantVariableRequestModel> patch)
                 {
                         var record = await this.TenantVariableService.Get(id);
@@ -266,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1b4c5b0133dc7d62958b9c0a35209992</Hash>
+    <Hash>d44b2635aa89ef730a995cccdf5d3ddc</Hash>
 </Codenesium>*/

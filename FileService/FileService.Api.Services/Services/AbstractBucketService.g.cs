@@ -83,18 +83,25 @@ namespace FileServiceNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiBucketResponseModel>> Update(
                         int id,
                         ApiBucketRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.bucketModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.bucketModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolBucketMapper.MapModelToBO(id, model);
                                 await this.bucketRepository.Update(this.dalBucketMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.bucketRepository.Get(id);
+
+                                return new UpdateResponse<ApiBucketResponseModel>(this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiBucketResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0424a560c38a08a7636ed4bd84ca46c0</Hash>
+    <Hash>8c1937cd3e47ddf95bdafcaabc72659b</Hash>
 </Codenesium>*/

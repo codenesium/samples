@@ -1,10 +1,12 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using PetShippingNS.Api.Client;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace PetShippingNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "PipelineStepDestination")]
         [Trait("Area", "Integration")]
-        public class PipelineStepDestinationIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class PipelineStepDestinationIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public PipelineStepDestinationIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace PetShippingNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiPipelineStepDestinationModelMapper mapper = new ApiPipelineStepDestinationModelMapper();
+
+                        UpdateResponse<ApiPipelineStepDestinationResponseModel> updateResponse = await this.Client.PipelineStepDestinationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.PipelineStepDestinationDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiPipelineStepDestinationResponseModel response = await this.Client.PipelineStepDestinationGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiPipelineStepDestinationResponseModel> response = await this.Client.PipelineStepDestinationAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiPipelineStepDestinationResponseModel> CreateRecord()
+                {
+                        var model = new ApiPipelineStepDestinationRequestModel();
+                        model.SetProperties(1, 1);
+                        CreateResponse<ApiPipelineStepDestinationResponseModel> result = await this.Client.PipelineStepDestinationCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.PipelineStepDestinationDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7eb68ce21caf8d7cab02622d92138e36</Hash>
+    <Hash>3ca680e4ede31399777fc8e297e8c950</Hash>
 </Codenesium>*/

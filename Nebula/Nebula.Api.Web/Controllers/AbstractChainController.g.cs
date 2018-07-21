@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChainResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiChainResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiChainRequestModel model)
                 {
                         CreateResponse<ApiChainResponseModel> result = await this.ChainService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChainResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiChainResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiChainRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiChainRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ChainService.Update(id, model);
+                                UpdateResponse<ApiChainResponseModel> result = await this.ChainService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiChainResponseModel response = await this.ChainService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChainResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiChainResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainRequestModel model)
                 {
-                        ApiChainRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiChainRequestModel request = await this.PatchModel(id, this.ChainModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ChainService.Update(id, request);
+                                UpdateResponse<ApiChainResponseModel> result = await this.ChainService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiChainResponseModel response = await this.ChainService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -233,16 +229,6 @@ namespace NebulaNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiChainRequestModel> CreatePatch(ApiChainRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiChainRequestModel>();
-                        patch.Replace(x => x.ChainStatusId, model.ChainStatusId);
-                        patch.Replace(x => x.ExternalId, model.ExternalId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.TeamId, model.TeamId);
-                        return patch;
-                }
-
                 private async Task<ApiChainRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainRequestModel> patch)
                 {
                         var record = await this.ChainService.Get(id);
@@ -262,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a5a6897039c3d289126abaeb32ef1e43</Hash>
+    <Hash>74127035901f1a4228ab8b79e03e4f7e</Hash>
 </Codenesium>*/

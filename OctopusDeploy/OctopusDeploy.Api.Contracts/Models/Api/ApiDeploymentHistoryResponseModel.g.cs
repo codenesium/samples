@@ -54,50 +54,92 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantName = tenantName;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string ChannelId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ChannelName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset? CompletedTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset Created { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeployedBy { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeploymentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeploymentName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? DurationSeconds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectSlug { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset QueueTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ReleaseId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ReleaseVersion { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset? StartTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TaskId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TaskState { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4b6d6c8cf7e010b9f2e706670d1dd57e</Hash>
+    <Hash>7d8778598ff41b1219d6c185e9154765</Hash>
 </Codenesium>*/

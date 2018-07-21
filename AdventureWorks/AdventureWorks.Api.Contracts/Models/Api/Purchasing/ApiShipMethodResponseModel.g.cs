@@ -24,20 +24,26 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShipRate = shipRate;
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public decimal ShipBase { get; private set; }
 
+                [JsonProperty]
                 public int ShipMethodID { get; private set; }
 
+                [JsonProperty]
                 public decimal ShipRate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b92743cb318ce7bd14bc5a73f49056cc</Hash>
+    <Hash>8c467a12c3d2650b981d90cc3dd7e126</Hash>
 </Codenesium>*/

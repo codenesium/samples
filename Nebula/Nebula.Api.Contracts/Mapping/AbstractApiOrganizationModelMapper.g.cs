@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
@@ -23,9 +25,16 @@ namespace NebulaNS.Api.Contracts
                                 response.Name);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiOrganizationRequestModel> CreatePatch(ApiOrganizationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiOrganizationRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e589cc9351e4943860ace0f5218bb50</Hash>
+    <Hash>0b3d4de04733091bb574bc4a6c67ae0d</Hash>
 </Codenesium>*/

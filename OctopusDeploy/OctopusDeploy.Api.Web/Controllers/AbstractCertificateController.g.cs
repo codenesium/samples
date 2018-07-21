@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCertificateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCertificateResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCertificateRequestModel model)
                 {
                         CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCertificateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCertificateRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiCertificateRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CertificateService.Update(id, model);
+                                UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCertificateResponseModel response = await this.CertificateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCertificateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCertificateRequestModel model)
                 {
-                        ApiCertificateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCertificateRequestModel request = await this.PatchModel(id, this.CertificateModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CertificateService.Update(id, request);
+                                UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCertificateResponseModel response = await this.CertificateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -249,23 +245,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCertificateRequestModel> CreatePatch(ApiCertificateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCertificateRequestModel>();
-                        patch.Replace(x => x.Archived, model.Archived);
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.EnvironmentIds, model.EnvironmentIds);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.NotAfter, model.NotAfter);
-                        patch.Replace(x => x.Subject, model.Subject);
-                        patch.Replace(x => x.TenantIds, model.TenantIds);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        patch.Replace(x => x.Thumbprint, model.Thumbprint);
-                        return patch;
-                }
-
                 private async Task<ApiCertificateRequestModel> PatchModel(string id, JsonPatchDocument<ApiCertificateRequestModel> patch)
                 {
                         var record = await this.CertificateService.Get(id);
@@ -285,5 +264,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9d7288a2f042454c7faacb8387efe0eb</Hash>
+    <Hash>e1b24030eed542ad9b7d11cbacc1f7cf</Hash>
 </Codenesium>*/

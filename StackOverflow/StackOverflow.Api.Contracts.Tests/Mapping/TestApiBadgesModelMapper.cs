@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,25 @@ namespace StackOverflowNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.UserId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiBadgesModelMapper();
+                        var model = new ApiBadgesRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+
+                        JsonPatchDocument<ApiBadgesRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiBadgesRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Name.Should().Be("A");
+                        response.UserId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6a7f08c268cbde019cdabb8258f0b918</Hash>
+    <Hash>1c2b4689040cb323b4ae509085e9aa5d</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,10 +17,10 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiTransactionHistoryModelMapper();
                         var model = new ApiTransactionHistoryRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiTransactionHistoryResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.ActualCost.Should().Be(1);
+                        response.ActualCost.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
                         response.Quantity.Should().Be(1);
@@ -35,10 +36,31 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiTransactionHistoryModelMapper();
                         var model = new ApiTransactionHistoryResponseModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiTransactionHistoryRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.ActualCost.Should().Be(1);
+                        response.ActualCost.Should().Be(1m);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.ProductID.Should().Be(1);
+                        response.Quantity.Should().Be(1);
+                        response.ReferenceOrderID.Should().Be(1);
+                        response.ReferenceOrderLineID.Should().Be(1);
+                        response.TransactionDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.TransactionType.Should().Be("A");
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiTransactionHistoryModelMapper();
+                        var model = new ApiTransactionHistoryRequestModel();
+                        model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+
+                        JsonPatchDocument<ApiTransactionHistoryRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiTransactionHistoryRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ActualCost.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
                         response.Quantity.Should().Be(1);
@@ -51,5 +73,5 @@ namespace AdventureWorksNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>61a275e64012b330bc328e53ba3d5389</Hash>
+    <Hash>7bab2dbbd9e62e081be17047f193932b</Hash>
 </Codenesium>*/

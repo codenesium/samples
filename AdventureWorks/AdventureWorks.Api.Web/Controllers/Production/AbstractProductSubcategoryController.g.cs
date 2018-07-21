@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductSubcategoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductSubcategoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductSubcategoryRequestModel model)
                 {
                         CreateResponse<ApiProductSubcategoryResponseModel> result = await this.ProductSubcategoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductSubcategories/{result.Record.ProductSubcategoryID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductSubcategories/{result.Record.ProductSubcategoryID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductSubcategoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductSubcategoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductSubcategoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductSubcategoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductSubcategoryService.Update(id, model);
+                                UpdateResponse<ApiProductSubcategoryResponseModel> result = await this.ProductSubcategoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductSubcategoryResponseModel response = await this.ProductSubcategoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductSubcategoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductSubcategoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductSubcategoryRequestModel model)
                 {
-                        ApiProductSubcategoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductSubcategoryRequestModel request = await this.PatchModel(id, this.ProductSubcategoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductSubcategoryService.Update(id, request);
+                                UpdateResponse<ApiProductSubcategoryResponseModel> result = await this.ProductSubcategoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductSubcategoryResponseModel response = await this.ProductSubcategoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,16 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProductSubcategoryRequestModel> CreatePatch(ApiProductSubcategoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductSubcategoryRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProductCategoryID, model.ProductCategoryID);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiProductSubcategoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductSubcategoryRequestModel> patch)
                 {
                         var record = await this.ProductSubcategoryService.Get(id);
@@ -267,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3b9b48292cbf93672f51430edb0c3be0</Hash>
+    <Hash>82d44ca02c6e85411d572d15a271eafb</Hash>
 </Codenesium>*/

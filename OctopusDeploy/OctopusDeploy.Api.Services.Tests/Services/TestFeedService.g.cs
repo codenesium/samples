@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IFeedRepository>();
                         var model = new ApiFeedRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Feed>())).Returns(Task.FromResult(new Feed()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
                         var service = new FeedService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.FeedModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLFeedMapperMock,
                                                       mock.DALMapperMockFactory.DALFeedMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiFeedResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.FeedModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiFeedRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1ff991bd4549ee061ede12eab5d1e912</Hash>
+    <Hash>6441e3fbb2950fd2f016886bc8a94aaa</Hash>
 </Codenesium>*/

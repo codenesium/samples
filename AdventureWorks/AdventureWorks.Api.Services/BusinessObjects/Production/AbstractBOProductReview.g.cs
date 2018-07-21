@@ -11,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int productReviewID,
-                                                  string comments,
+                                                  string comment,
                                                   string emailAddress,
                                                   DateTime modifiedDate,
                                                   int productID,
@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
                                                   DateTime reviewDate,
                                                   string reviewerName)
                 {
-                        this.Comments = comments;
+                        this.Comment = comment;
                         this.EmailAddress = emailAddress;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                         this.ReviewerName = reviewerName;
                 }
 
-                public string Comments { get; private set; }
+                public string Comment { get; private set; }
 
                 public string EmailAddress { get; private set; }
 
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1854e0ef97968751d748edf427c94fed</Hash>
+    <Hash>7280afd5a2a3793e83bd6b64b34f5b90</Hash>
 </Codenesium>*/

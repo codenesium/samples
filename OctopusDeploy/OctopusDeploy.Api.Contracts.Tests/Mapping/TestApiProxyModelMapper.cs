@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,24 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.JSON.Should().Be("A");
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiProxyModelMapper();
+                        var model = new ApiProxyRequestModel();
+                        model.SetProperties("A", "A");
+
+                        JsonPatchDocument<ApiProxyRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiProxyRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.JSON.Should().Be("A");
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4ef5d2d05544468bdc67e881dab166dd</Hash>
+    <Hash>ba7af93eb3b90344a1ea1c5d5a8fb40e</Hash>
 </Codenesium>*/

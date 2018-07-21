@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityContactResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiBusinessEntityContactResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityContactRequestModel model)
                 {
                         CreateResponse<ApiBusinessEntityContactResponseModel> result = await this.BusinessEntityContactService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntityContacts/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntityContacts/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityContactResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityContactResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBusinessEntityContactRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiBusinessEntityContactRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.BusinessEntityContactService.Update(id, model);
+                                UpdateResponse<ApiBusinessEntityContactResponseModel> result = await this.BusinessEntityContactService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityContactResponseModel response = await this.BusinessEntityContactService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityContactResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityContactResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityContactRequestModel model)
                 {
-                        ApiBusinessEntityContactRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiBusinessEntityContactRequestModel request = await this.PatchModel(id, this.BusinessEntityContactModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.BusinessEntityContactService.Update(id, request);
+                                UpdateResponse<ApiBusinessEntityContactResponseModel> result = await this.BusinessEntityContactService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityContactResponseModel response = await this.BusinessEntityContactService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,16 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiBusinessEntityContactRequestModel> CreatePatch(ApiBusinessEntityContactRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiBusinessEntityContactRequestModel>();
-                        patch.Replace(x => x.ContactTypeID, model.ContactTypeID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.PersonID, model.PersonID);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiBusinessEntityContactRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityContactRequestModel> patch)
                 {
                         var record = await this.BusinessEntityContactService.Get(id);
@@ -256,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0fb6da1de9c789b0ed64d59eca0ff2f8</Hash>
+    <Hash>5b484966264f2efa0123767d480fdb47</Hash>
 </Codenesium>*/

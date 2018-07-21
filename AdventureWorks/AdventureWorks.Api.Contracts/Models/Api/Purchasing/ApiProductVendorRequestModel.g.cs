@@ -38,165 +38,45 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UnitMeasureCode = unitMeasureCode;
                 }
 
-                private int averageLeadTime;
+                [Required]
+                [JsonProperty]
+                public int AverageLeadTime { get; private set; }
 
                 [Required]
-                public int AverageLeadTime
-                {
-                        get
-                        {
-                                return this.averageLeadTime;
-                        }
+                [JsonProperty]
+                public int BusinessEntityID { get; private set; }
 
-                        set
-                        {
-                                this.averageLeadTime = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal? LastReceiptCost { get; private set; }
 
-                private int businessEntityID;
+                [JsonProperty]
+                public DateTime? LastReceiptDate { get; private set; }
 
                 [Required]
-                public int BusinessEntityID
-                {
-                        get
-                        {
-                                return this.businessEntityID;
-                        }
-
-                        set
-                        {
-                                this.businessEntityID = value;
-                        }
-                }
-
-                private decimal? lastReceiptCost;
-
-                public decimal? LastReceiptCost
-                {
-                        get
-                        {
-                                return this.lastReceiptCost;
-                        }
-
-                        set
-                        {
-                                this.lastReceiptCost = value;
-                        }
-                }
-
-                private DateTime? lastReceiptDate;
-
-                public DateTime? LastReceiptDate
-                {
-                        get
-                        {
-                                return this.lastReceiptDate;
-                        }
-
-                        set
-                        {
-                                this.lastReceiptDate = value;
-                        }
-                }
-
-                private int maxOrderQty;
+                [JsonProperty]
+                public int MaxOrderQty { get; private set; }
 
                 [Required]
-                public int MaxOrderQty
-                {
-                        get
-                        {
-                                return this.maxOrderQty;
-                        }
-
-                        set
-                        {
-                                this.maxOrderQty = value;
-                        }
-                }
-
-                private int minOrderQty;
+                [JsonProperty]
+                public int MinOrderQty { get; private set; }
 
                 [Required]
-                public int MinOrderQty
-                {
-                        get
-                        {
-                                return this.minOrderQty;
-                        }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
-                        set
-                        {
-                                this.minOrderQty = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public int? OnOrderQty { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int? onOrderQty;
-
-                public int? OnOrderQty
-                {
-                        get
-                        {
-                                return this.onOrderQty;
-                        }
-
-                        set
-                        {
-                                this.onOrderQty = value;
-                        }
-                }
-
-                private decimal standardPrice;
+                [JsonProperty]
+                public decimal StandardPrice { get; private set; }
 
                 [Required]
-                public decimal StandardPrice
-                {
-                        get
-                        {
-                                return this.standardPrice;
-                        }
-
-                        set
-                        {
-                                this.standardPrice = value;
-                        }
-                }
-
-                private string unitMeasureCode;
-
-                [Required]
-                public string UnitMeasureCode
-                {
-                        get
-                        {
-                                return this.unitMeasureCode;
-                        }
-
-                        set
-                        {
-                                this.unitMeasureCode = value;
-                        }
-                }
+                [JsonProperty]
+                public string UnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0104d9ab19bacf778e1c6e41993de01f</Hash>
+    <Hash>8e99ebe9aeb3c637599490a124fe317c</Hash>
 </Codenesium>*/

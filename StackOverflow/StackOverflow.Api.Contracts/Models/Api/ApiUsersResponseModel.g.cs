@@ -40,36 +40,64 @@ namespace StackOverflowNS.Api.Contracts
                         this.WebsiteUrl = websiteUrl;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string AboutMe { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? AccountId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? Age { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime CreationDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DisplayName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int DownVotes { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EmailHash { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime LastAccessDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Location { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Reputation { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int UpVotes { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Views { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string WebsiteUrl { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>894fffa2a451c03f8b4ffebe651b6e33</Hash>
+    <Hash>cda95738d4326bf19a80ec3764414124</Hash>
 </Codenesium>*/

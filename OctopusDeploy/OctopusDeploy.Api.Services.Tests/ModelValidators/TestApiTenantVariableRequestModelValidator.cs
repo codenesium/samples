@@ -49,54 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void OwnerId_Create_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
-                }
-
-                [Fact]
-                public async void OwnerId_Update_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
-                }
-
-                [Fact]
                 public async void OwnerId_Create_length()
                 {
                         Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
@@ -121,30 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TenantId_Create_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, null as string);
-                }
-
-                [Fact]
-                public async void TenantId_Update_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, null as string);
-                }
-
-                [Fact]
                 public async void TenantId_Create_length()
                 {
                         Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
@@ -166,30 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void VariableTemplateId_Create_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, null as string);
-                }
-
-                [Fact]
-                public async void VariableTemplateId_Update_null()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
-
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, null as string);
                 }
 
                 [Fact]
@@ -267,5 +171,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9197940e54319e85a6596dbca7b01800</Hash>
+    <Hash>164fb8a6127edf602faf62438bdfe8d9</Hash>
 </Codenesium>*/

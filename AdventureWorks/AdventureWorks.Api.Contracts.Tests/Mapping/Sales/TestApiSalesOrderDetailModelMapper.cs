@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,11 +17,11 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSalesOrderDetailModelMapper();
                         var model = new ApiSalesOrderDetailRequestModel();
-                        model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        model.SetProperties("A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1m);
                         ApiSalesOrderDetailResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.CarrierTrackingNumber.Should().Be("A");
-                        response.LineTotal.Should().Be(1);
+                        response.LineTotal.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
@@ -28,8 +29,8 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.SalesOrderDetailID.Should().Be(1);
                         response.SalesOrderID.Should().Be(1);
                         response.SpecialOfferID.Should().Be(1);
-                        response.UnitPrice.Should().Be(1);
-                        response.UnitPriceDiscount.Should().Be(1);
+                        response.UnitPrice.Should().Be(1m);
+                        response.UnitPriceDiscount.Should().Be(1m);
                 }
 
                 [Fact]
@@ -37,23 +38,46 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSalesOrderDetailModelMapper();
                         var model = new ApiSalesOrderDetailResponseModel();
-                        model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        model.SetProperties(1, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1m);
                         ApiSalesOrderDetailRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.CarrierTrackingNumber.Should().Be("A");
-                        response.LineTotal.Should().Be(1);
+                        response.LineTotal.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.SalesOrderDetailID.Should().Be(1);
                         response.SpecialOfferID.Should().Be(1);
-                        response.UnitPrice.Should().Be(1);
-                        response.UnitPriceDiscount.Should().Be(1);
+                        response.UnitPrice.Should().Be(1m);
+                        response.UnitPriceDiscount.Should().Be(1m);
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSalesOrderDetailModelMapper();
+                        var model = new ApiSalesOrderDetailRequestModel();
+                        model.SetProperties("A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1m);
+
+                        JsonPatchDocument<ApiSalesOrderDetailRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSalesOrderDetailRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CarrierTrackingNumber.Should().Be("A");
+                        response.LineTotal.Should().Be(1m);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.OrderQty.Should().Be(1);
+                        response.ProductID.Should().Be(1);
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.SalesOrderDetailID.Should().Be(1);
+                        response.SpecialOfferID.Should().Be(1);
+                        response.UnitPrice.Should().Be(1m);
+                        response.UnitPriceDiscount.Should().Be(1m);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a8331f6d2207896ae3e6432d32033e6</Hash>
+    <Hash>6cfc179b80bda1c5ca741748f20d918d</Hash>
 </Codenesium>*/

@@ -42,194 +42,44 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                private string communicationStyle;
+                [JsonProperty]
+                public string CommunicationStyle { get; private set; }
 
-                [Required]
-                public string CommunicationStyle
-                {
-                        get
-                        {
-                                return this.communicationStyle;
-                        }
+                [JsonProperty]
+                public string EnvironmentIds { get; private set; }
 
-                        set
-                        {
-                                this.communicationStyle = value;
-                        }
-                }
+                [JsonProperty]
+                public string Fingerprint { get; private set; }
 
-                private string environmentIds;
+                [JsonProperty]
+                public bool IsDisabled { get; private set; }
 
-                [Required]
-                public string EnvironmentIds
-                {
-                        get
-                        {
-                                return this.environmentIds;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.environmentIds = value;
-                        }
-                }
+                [JsonProperty]
+                public string MachinePolicyId { get; private set; }
 
-                private string fingerprint;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                public string Fingerprint
-                {
-                        get
-                        {
-                                return this.fingerprint;
-                        }
+                [JsonProperty]
+                public string RelatedDocumentIds { get; private set; }
 
-                        set
-                        {
-                                this.fingerprint = value;
-                        }
-                }
+                [JsonProperty]
+                public string Roles { get; private set; }
 
-                private bool isDisabled;
+                [JsonProperty]
+                public string TenantIds { get; private set; }
 
-                [Required]
-                public bool IsDisabled
-                {
-                        get
-                        {
-                                return this.isDisabled;
-                        }
+                [JsonProperty]
+                public string TenantTags { get; private set; }
 
-                        set
-                        {
-                                this.isDisabled = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string machinePolicyId;
-
-                public string MachinePolicyId
-                {
-                        get
-                        {
-                                return this.machinePolicyId;
-                        }
-
-                        set
-                        {
-                                this.machinePolicyId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string relatedDocumentIds;
-
-                public string RelatedDocumentIds
-                {
-                        get
-                        {
-                                return this.relatedDocumentIds;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentIds = value;
-                        }
-                }
-
-                private string roles;
-
-                [Required]
-                public string Roles
-                {
-                        get
-                        {
-                                return this.roles;
-                        }
-
-                        set
-                        {
-                                this.roles = value;
-                        }
-                }
-
-                private string tenantIds;
-
-                public string TenantIds
-                {
-                        get
-                        {
-                                return this.tenantIds;
-                        }
-
-                        set
-                        {
-                                this.tenantIds = value;
-                        }
-                }
-
-                private string tenantTags;
-
-                public string TenantTags
-                {
-                        get
-                        {
-                                return this.tenantTags;
-                        }
-
-                        set
-                        {
-                                this.tenantTags = value;
-                        }
-                }
-
-                private string thumbprint;
-
-                public string Thumbprint
-                {
-                        get
-                        {
-                                return this.thumbprint;
-                        }
-
-                        set
-                        {
-                                this.thumbprint = value;
-                        }
-                }
+                [JsonProperty]
+                public string Thumbprint { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>514ba2af52dbfa2df12f7ce391aae05c</Hash>
+    <Hash>233817241c615a3768d29241169099b3</Hash>
 </Codenesium>*/

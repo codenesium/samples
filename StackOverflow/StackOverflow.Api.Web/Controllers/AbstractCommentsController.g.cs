@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCommentsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCommentsResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCommentsRequestModel model)
                 {
                         CreateResponse<ApiCommentsResponseModel> result = await this.CommentsService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Comments/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Comments/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCommentsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCommentsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCommentsRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiCommentsRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CommentsService.Update(id, model);
+                                UpdateResponse<ApiCommentsResponseModel> result = await this.CommentsService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCommentsResponseModel response = await this.CommentsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCommentsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCommentsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCommentsRequestModel model)
                 {
-                        ApiCommentsRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCommentsRequestModel request = await this.PatchModel(id, this.CommentsModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CommentsService.Update(id, request);
+                                UpdateResponse<ApiCommentsResponseModel> result = await this.CommentsService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCommentsResponseModel response = await this.CommentsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,17 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiCommentsRequestModel> CreatePatch(ApiCommentsRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCommentsRequestModel>();
-                        patch.Replace(x => x.CreationDate, model.CreationDate);
-                        patch.Replace(x => x.PostId, model.PostId);
-                        patch.Replace(x => x.Score, model.Score);
-                        patch.Replace(x => x.Text, model.Text);
-                        patch.Replace(x => x.UserId, model.UserId);
-                        return patch;
-                }
-
                 private async Task<ApiCommentsRequestModel> PatchModel(int id, JsonPatchDocument<ApiCommentsRequestModel> patch)
                 {
                         var record = await this.CommentsService.Get(id);
@@ -235,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4e39194d8718961bbc882daab732e44</Hash>
+    <Hash>8459431c3381e817d37302bd1fdca8e2</Hash>
 </Codenesium>*/

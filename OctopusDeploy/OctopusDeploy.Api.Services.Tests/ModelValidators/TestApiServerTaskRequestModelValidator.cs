@@ -49,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Description_Create_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
-                public async void Description_Update_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
                 public async void EnvironmentId_Create_length()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -94,54 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -217,30 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void State_Create_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.State, null as string);
-                }
-
-                [Fact]
-                public async void State_Update_null()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
-
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.State, null as string);
-                }
-
-                [Fact]
                 public async void State_Create_length()
                 {
                         Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
@@ -291,5 +195,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7b85d03bc99d4d07e04894db2f42a466</Hash>
+    <Hash>ed6df7ae7163db3fb112ea7a2d352d4b</Hash>
 </Codenesium>*/

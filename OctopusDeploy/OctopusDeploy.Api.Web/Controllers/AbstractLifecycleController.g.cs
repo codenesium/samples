@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLifecycleResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLifecycleResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLifecycleRequestModel model)
                 {
                         CreateResponse<ApiLifecycleResponseModel> result = await this.LifecycleService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lifecycles/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lifecycles/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLifecycleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLifecycleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiLifecycleRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiLifecycleRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LifecycleService.Update(id, model);
+                                UpdateResponse<ApiLifecycleResponseModel> result = await this.LifecycleService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLifecycleResponseModel response = await this.LifecycleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLifecycleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLifecycleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiLifecycleRequestModel model)
                 {
-                        ApiLifecycleRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLifecycleRequestModel request = await this.PatchModel(id, this.LifecycleModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LifecycleService.Update(id, request);
+                                UpdateResponse<ApiLifecycleResponseModel> result = await this.LifecycleService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLifecycleResponseModel response = await this.LifecycleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,15 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiLifecycleRequestModel> CreatePatch(ApiLifecycleRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLifecycleRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiLifecycleRequestModel> PatchModel(string id, JsonPatchDocument<ApiLifecycleRequestModel> patch)
                 {
                         var record = await this.LifecycleService.Get(id);
@@ -263,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85221c40239834619db7980eff559969</Hash>
+    <Hash>44e5ae53089deb1945df4f9d0ea2f6b8</Hash>
 </Codenesium>*/

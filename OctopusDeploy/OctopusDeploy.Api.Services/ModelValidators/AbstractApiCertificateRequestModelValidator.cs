@@ -44,12 +44,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -59,7 +57,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void SubjectRules()
                 {
-                        this.RuleFor(x => x.Subject).NotNull();
                 }
 
                 public virtual void TenantIdsRules()
@@ -72,12 +69,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ThumbprintRules()
                 {
-                        this.RuleFor(x => x.Thumbprint).NotNull();
                         this.RuleFor(x => x.Thumbprint).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f6530d43d5c4f18e6c9411547b1e172</Hash>
+    <Hash>e637240d8ff3481e16a655c676317c11</Hash>
 </Codenesium>*/

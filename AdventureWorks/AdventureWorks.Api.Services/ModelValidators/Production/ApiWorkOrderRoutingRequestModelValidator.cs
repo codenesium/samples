@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         this.ActualCostRules();
                         this.ActualEndDateRules();
-                        this.ActualResourceHrsRules();
+                        this.ActualResourceHrRules();
                         this.ActualStartDateRules();
                         this.LocationIDRules();
                         this.ModifiedDateRules();
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         this.ActualCostRules();
                         this.ActualEndDateRules();
-                        this.ActualResourceHrsRules();
+                        this.ActualResourceHrRules();
                         this.ActualStartDateRules();
                         this.LocationIDRules();
                         this.ModifiedDateRules();
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75e3b8489108d18afd5d7a2a368d94f8</Hash>
+    <Hash>43ec182bc95274631f4aeb2fc9c11670</Hash>
 </Codenesium>*/

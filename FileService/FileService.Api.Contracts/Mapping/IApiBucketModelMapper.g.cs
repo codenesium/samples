@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace FileServiceNS.Api.Contracts
 
                 ApiBucketRequestModel MapResponseToRequest(
                         ApiBucketResponseModel response);
+
+                JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>fa29145e90b0c64f0b967c5871966d45</Hash>
+    <Hash>b070427bda3ed9e5e7030c5d384e469e</Hash>
 </Codenesium>*/

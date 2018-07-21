@@ -75,18 +75,25 @@ namespace StackOverflowNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTagsResponseModel>> Update(
                         int id,
                         ApiTagsRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.tagsModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.tagsModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTagsMapper.MapModelToBO(id, model);
                                 await this.tagsRepository.Update(this.dalTagsMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.tagsRepository.Get(id);
+
+                                return new UpdateResponse<ApiTagsResponseModel>(this.bolTagsMapper.MapBOToModel(this.dalTagsMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTagsResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebdd9bcbcab5aa87611036f78b744150</Hash>
+    <Hash>3e99e5220e6a68eade068a5b8de1c5bb</Hash>
 </Codenesium>*/

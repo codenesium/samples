@@ -106,15 +106,15 @@ namespace PetStoreNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPenResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPenResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPenRequestModel model)
                 {
                         CreateResponse<ApiPenResponseModel> result = await this.PenService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Pens/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Pens/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPenResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPenResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPenRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetStoreNS.Api.Web
                         {
                                 ApiPenRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PenService.Update(id, model);
+                                UpdateResponse<ApiPenResponseModel> result = await this.PenService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPenResponseModel response = await this.PenService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetStoreNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPenResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPenResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPenRequestModel model)
                 {
-                        ApiPenRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPenRequestModel request = await this.PatchModel(id, this.PenModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetStoreNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PenService.Update(id, request);
+                                UpdateResponse<ApiPenResponseModel> result = await this.PenService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPenResponseModel response = await this.PenService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace PetStoreNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPenRequestModel> CreatePatch(ApiPenRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPenRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiPenRequestModel> PatchModel(int id, JsonPatchDocument<ApiPenRequestModel> patch)
                 {
                         var record = await this.PenService.Get(id);
@@ -245,5 +234,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c23f7390982930c1077040fb4cbedea4</Hash>
+    <Hash>14b5ff265034fe94bd7a1cf4bf3aed5d</Hash>
 </Codenesium>*/

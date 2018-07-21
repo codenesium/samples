@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiCountryRegionResponseModel>> Create(
                         ApiCountryRegionRequestModel model);
 
-                Task<ActionResponse> Update(string countryRegionCode,
-                                            ApiCountryRegionRequestModel model);
+                Task<UpdateResponse<ApiCountryRegionResponseModel>> Update(string countryRegionCode,
+                                                                            ApiCountryRegionRequestModel model);
 
                 Task<ActionResponse> Delete(string countryRegionCode);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>197b892260777a3a1a72e923652a3098</Hash>
+    <Hash>6d6694dc1dd8679d3ef703cceffdebce</Hash>
 </Codenesium>*/

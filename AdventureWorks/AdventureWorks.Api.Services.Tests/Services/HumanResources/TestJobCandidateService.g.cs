@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IJobCandidateRepository>();
                         var model = new ApiJobCandidateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<JobCandidate>())).Returns(Task.FromResult(new JobCandidate()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new JobCandidate()));
                         var service = new JobCandidateService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
                                                               mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiJobCandidateResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>987887f601cadd4880589d5e018d78a6</Hash>
+    <Hash>c760fe37723ac5b61e178f3d6ebe508a</Hash>
 </Codenesium>*/

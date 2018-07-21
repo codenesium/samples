@@ -1,5 +1,6 @@
 using FermataFishNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace FermataFishNS.Api.Contracts.Tests
                         response.LessonId.Should().Be(1);
                         response.StudentId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiLessonXStudentModelMapper();
+                        var model = new ApiLessonXStudentRequestModel();
+                        model.SetProperties(1, 1);
+
+                        JsonPatchDocument<ApiLessonXStudentRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiLessonXStudentRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.LessonId.Should().Be(1);
+                        response.StudentId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bcf35ac0ff91b9d005f74a937b0f8611</Hash>
+    <Hash>fd7475431ea907fbe297e4d35c8bb9d0</Hash>
 </Codenesium>*/

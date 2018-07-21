@@ -26,72 +26,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Rowguid = rowguid;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string passwordHash;
+                [JsonProperty]
+                public string PasswordHash { get; private set; }
 
                 [Required]
-                public string PasswordHash
-                {
-                        get
-                        {
-                                return this.passwordHash;
-                        }
-
-                        set
-                        {
-                                this.passwordHash = value;
-                        }
-                }
-
-                private string passwordSalt;
+                [JsonProperty]
+                public string PasswordSalt { get; private set; }
 
                 [Required]
-                public string PasswordSalt
-                {
-                        get
-                        {
-                                return this.passwordSalt;
-                        }
-
-                        set
-                        {
-                                this.passwordSalt = value;
-                        }
-                }
-
-                private Guid rowguid;
-
-                [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c7550329071720d4299ebbf398a393c</Hash>
+    <Hash>05eae47eaea7a4e507b9f7b51bb5dd7f</Hash>
 </Codenesium>*/

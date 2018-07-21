@@ -25,30 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
-
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
-
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
@@ -125,5 +101,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5491f919972ebb64db8432cdd316fca8</Hash>
+    <Hash>d8fa3cfba1e9667def7cfb366ca6f368</Hash>
 </Codenesium>*/

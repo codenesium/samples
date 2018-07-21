@@ -1,7 +1,9 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
@@ -13,11 +15,11 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "SaleTickets")]
         [Trait("Area", "Integration")]
-        public class SaleTicketsIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class SaleTicketsIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public SaleTicketsIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiSaleTicketsModelMapper mapper = new ApiSaleTicketsModelMapper();
+
+                        UpdateResponse<ApiSaleTicketsResponseModel> updateResponse = await this.Client.SaleTicketsUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.SaleTicketsDeleteAsync(model.Id);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiSaleTicketsResponseModel response = await this.Client.SaleTicketsGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiSaleTicketsResponseModel> response = await this.Client.SaleTicketsAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiSaleTicketsResponseModel> CreateRecord()
+                {
+                        var model = new ApiSaleTicketsRequestModel();
+                        model.SetProperties(1, 1);
+                        CreateResponse<ApiSaleTicketsResponseModel> result = await this.Client.SaleTicketsCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.SaleTicketsDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d674cc91233661ce1c0579a1d98c57a</Hash>
+    <Hash>9cb66c1ede39801022d991aad4e8422a</Hash>
 </Codenesium>*/

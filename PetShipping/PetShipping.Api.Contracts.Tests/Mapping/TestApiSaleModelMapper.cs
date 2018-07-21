@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace PetShippingNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSaleModelMapper();
                         var model = new ApiSaleRequestModel();
-                        model.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        model.SetProperties(1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         ApiSaleResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Note.Should().Be("A");
@@ -33,10 +34,29 @@ namespace PetShippingNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSaleModelMapper();
                         var model = new ApiSaleResponseModel();
-                        model.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        model.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         ApiSaleRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
+                        response.ClientId.Should().Be(1);
+                        response.Note.Should().Be("A");
+                        response.PetId.Should().Be(1);
+                        response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.SalesPersonId.Should().Be(1);
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSaleModelMapper();
+                        var model = new ApiSaleRequestModel();
+                        model.SetProperties(1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+
+                        JsonPatchDocument<ApiSaleRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSaleRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Note.Should().Be("A");
                         response.PetId.Should().Be(1);
@@ -47,5 +67,5 @@ namespace PetShippingNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>ba50ca637bd0518fc58fbec61578ba6d</Hash>
+    <Hash>2db6289d057ed589a3e665d60c4c1166</Hash>
 </Codenesium>*/

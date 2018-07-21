@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProvinceResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProvinceResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProvinceRequestModel model)
                 {
                         CreateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Provinces/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Provinces/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProvinceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProvinceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProvinceRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiProvinceRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProvinceService.Update(id, model);
+                                UpdateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProvinceResponseModel response = await this.ProvinceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProvinceResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProvinceResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProvinceRequestModel model)
                 {
-                        ApiProvinceRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProvinceRequestModel request = await this.PatchModel(id, this.ProvinceModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProvinceService.Update(id, request);
+                                UpdateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProvinceResponseModel response = await this.ProvinceService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -244,14 +240,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProvinceRequestModel> CreatePatch(ApiProvinceRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProvinceRequestModel>();
-                        patch.Replace(x => x.CountryId, model.CountryId);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiProvinceRequestModel> PatchModel(int id, JsonPatchDocument<ApiProvinceRequestModel> patch)
                 {
                         var record = await this.ProvinceService.Get(id);
@@ -271,5 +259,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>579cbb86b2d3b6867f06759c846209f1</Hash>
+    <Hash>f640b548414c8697abceb123699985a6</Hash>
 </Codenesium>*/

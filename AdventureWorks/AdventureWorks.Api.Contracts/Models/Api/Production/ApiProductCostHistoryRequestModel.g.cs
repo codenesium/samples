@@ -26,71 +26,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartDate = startDate;
                 }
 
-                private DateTime? endDate;
-
-                public DateTime? EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime? EndDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private decimal standardCost;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public decimal StandardCost
-                {
-                        get
-                        {
-                                return this.standardCost;
-                        }
-
-                        set
-                        {
-                                this.standardCost = value;
-                        }
-                }
-
-                private DateTime startDate;
+                [JsonProperty]
+                public decimal StandardCost { get; private set; }
 
                 [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0295e1f4948bab6a30c68eb98e1a20df</Hash>
+    <Hash>2b5a0f8a1674cfc92312d4cb973f499a</Hash>
 </Codenesium>*/

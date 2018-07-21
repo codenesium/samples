@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShiftResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiShiftResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiShiftRequestModel model)
                 {
                         CreateResponse<ApiShiftResponseModel> result = await this.ShiftService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShiftResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShiftRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiShiftRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ShiftService.Update(id, model);
+                                UpdateResponse<ApiShiftResponseModel> result = await this.ShiftService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiShiftResponseModel response = await this.ShiftService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShiftResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
                 {
-                        ApiShiftRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiShiftRequestModel request = await this.PatchModel(id, this.ShiftModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ShiftService.Update(id, request);
+                                UpdateResponse<ApiShiftResponseModel> result = await this.ShiftService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiShiftResponseModel response = await this.ShiftService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -257,16 +253,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiShiftRequestModel> CreatePatch(ApiShiftRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiShiftRequestModel>();
-                        patch.Replace(x => x.EndTime, model.EndTime);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.StartTime, model.StartTime);
-                        return patch;
-                }
-
                 private async Task<ApiShiftRequestModel> PatchModel(int id, JsonPatchDocument<ApiShiftRequestModel> patch)
                 {
                         var record = await this.ShiftService.Get(id);
@@ -286,5 +272,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c5ee9a57c735854c7ad0bbaa5caeaa79</Hash>
+    <Hash>958609c68af3d85bd26e0a0a7214ff3f</Hash>
 </Codenesium>*/

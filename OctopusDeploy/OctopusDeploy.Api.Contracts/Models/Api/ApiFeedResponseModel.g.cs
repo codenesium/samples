@@ -22,18 +22,28 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string FeedType { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string FeedUri { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8c840afb6434d25cbd0c31c99979e759</Hash>
+    <Hash>cd44caac5a0acd72e0792046979a1dd7</Hash>
 </Codenesium>*/

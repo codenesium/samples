@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTicketStatusResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTicketStatusResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTicketStatusRequestModel model)
                 {
                         CreateResponse<ApiTicketStatusResponseModel> result = await this.TicketStatusService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TicketStatus/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TicketStatus/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTicketStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTicketStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTicketStatusRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiTicketStatusRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TicketStatusService.Update(id, model);
+                                UpdateResponse<ApiTicketStatusResponseModel> result = await this.TicketStatusService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTicketStatusResponseModel response = await this.TicketStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTicketStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTicketStatusResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTicketStatusRequestModel model)
                 {
-                        ApiTicketStatusRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTicketStatusRequestModel request = await this.PatchModel(id, this.TicketStatusModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TicketStatusService.Update(id, request);
+                                UpdateResponse<ApiTicketStatusResponseModel> result = await this.TicketStatusService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTicketStatusResponseModel response = await this.TicketStatusService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTicketStatusRequestModel> CreatePatch(ApiTicketStatusRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTicketStatusRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiTicketStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiTicketStatusRequestModel> patch)
                 {
                         var record = await this.TicketStatusService.Get(id);
@@ -245,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>75da47ee70da2506cf6b382148baf7fd</Hash>
+    <Hash>49271f84a2bdb68b62a0a5a7009f74d5</Hash>
 </Codenesium>*/

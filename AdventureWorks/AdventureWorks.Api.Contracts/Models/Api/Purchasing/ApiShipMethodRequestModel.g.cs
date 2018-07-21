@@ -28,88 +28,28 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShipRate = shipRate;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private decimal shipBase;
+                [JsonProperty]
+                public decimal ShipBase { get; private set; }
 
                 [Required]
-                public decimal ShipBase
-                {
-                        get
-                        {
-                                return this.shipBase;
-                        }
-
-                        set
-                        {
-                                this.shipBase = value;
-                        }
-                }
-
-                private decimal shipRate;
-
-                [Required]
-                public decimal ShipRate
-                {
-                        get
-                        {
-                                return this.shipRate;
-                        }
-
-                        set
-                        {
-                                this.shipRate = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal ShipRate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>290d7974bfe2e88238c8ea92a3d3b6d7</Hash>
+    <Hash>e387367d5bf2ac22e94eb039635333b4</Hash>
 </Codenesium>*/

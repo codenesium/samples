@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         BOPerson response = mapper.MapModelToBO(1, model);
 
                         response.AdditionalContactInfo.Should().Be("A");
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.EmailPromotion.Should().Be(1);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         response.AdditionalContactInfo.Should().Be("A");
                         response.BusinessEntityID.Should().Be(1);
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.EmailPromotion.Should().Be(1);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>773b56186296e0d7596cfb723b0b2f91</Hash>
+    <Hash>4141b6160c0b8ff2fefc5e148700a6fe</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace StackOverflowNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiBadgesResponseModel>> Update(
                         int id,
                         ApiBadgesRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.badgesModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.badgesModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolBadgesMapper.MapModelToBO(id, model);
                                 await this.badgesRepository.Update(this.dalBadgesMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.badgesRepository.Get(id);
+
+                                return new UpdateResponse<ApiBadgesResponseModel>(this.bolBadgesMapper.MapBOToModel(this.dalBadgesMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiBadgesResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b9439a11ea7c55b4349ae09e07d31cc</Hash>
+    <Hash>a623aa2955ffb381663db60f901841eb</Hash>
 </Codenesium>*/

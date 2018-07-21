@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.CreditRating.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
-                        response.PreferredVendorStatus.Should().Be(true);
+                        response.PreferredVendorStatu.Should().Be(true);
                         response.PurchasingWebServiceURL.Should().Be("A");
                 }
 
@@ -42,12 +43,32 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.CreditRating.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
-                        response.PreferredVendorStatus.Should().Be(true);
+                        response.PreferredVendorStatu.Should().Be(true);
+                        response.PurchasingWebServiceURL.Should().Be("A");
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiVendorModelMapper();
+                        var model = new ApiVendorRequestModel();
+                        model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
+
+                        JsonPatchDocument<ApiVendorRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiVendorRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.AccountNumber.Should().Be("A");
+                        response.ActiveFlag.Should().Be(true);
+                        response.CreditRating.Should().Be(1);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Name.Should().Be("A");
+                        response.PreferredVendorStatu.Should().Be(true);
                         response.PurchasingWebServiceURL.Should().Be("A");
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2ac515ccbc81fce725dba133a2310ef3</Hash>
+    <Hash>68201d982601357a60d99bebe6ec1fbd</Hash>
 </Codenesium>*/

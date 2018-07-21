@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,24 @@ namespace NebulaNS.Api.Contracts.Tests
                         response.MachineId.Should().Be(1);
                         response.TeamId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiMachineRefTeamModelMapper();
+                        var model = new ApiMachineRefTeamRequestModel();
+                        model.SetProperties(1, 1);
+
+                        JsonPatchDocument<ApiMachineRefTeamRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiMachineRefTeamRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.MachineId.Should().Be(1);
+                        response.TeamId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f40201da2cf8852ccbf89551dd74e212</Hash>
+    <Hash>0b380f092ff9c89f2996779ca70aa15f</Hash>
 </Codenesium>*/

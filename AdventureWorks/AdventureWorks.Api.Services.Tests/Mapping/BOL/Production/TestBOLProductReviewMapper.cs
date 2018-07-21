@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOProductReview response = mapper.MapModelToBO(1, model);
 
-                        response.Comments.Should().Be("A");
+                        response.Comment.Should().Be("A");
                         response.EmailAddress.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiProductReviewResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Comments.Should().Be("A");
+                        response.Comment.Should().Be("A");
                         response.EmailAddress.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0278f69baff41c897d431c2489b50cb1</Hash>
+    <Hash>3cbe5fbaa26aaaefa3b59d38edbe0a2e</Hash>
 </Codenesium>*/

@@ -97,54 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUserRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Username_Create_null()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUserRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
-                }
-
-                [Fact]
-                public async void Username_Update_null()
-                {
-                        Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-                        userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
-
-                        var validator = new ApiUserRequestModelValidator(userRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
-                }
-
-                [Fact]
                 public async void Username_Create_length()
                 {
                         Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
@@ -219,5 +171,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3c37842954f9d77591059b93666b125a</Hash>
+    <Hash>8006ee2adab3274a51ecc569e4394527</Hash>
 </Codenesium>*/

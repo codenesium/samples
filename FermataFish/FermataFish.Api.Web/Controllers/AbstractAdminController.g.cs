@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiAdminResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAdminRequestModel model)
                 {
                         CreateResponse<ApiAdminResponseModel> result = await this.AdminService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Admins/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Admins/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAdminRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiAdminRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.AdminService.Update(id, model);
+                                UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiAdminResponseModel response = await this.AdminService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminRequestModel model)
                 {
-                        ApiAdminRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiAdminRequestModel request = await this.PatchModel(id, this.AdminModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.AdminService.Update(id, request);
+                                UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiAdminResponseModel response = await this.AdminService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,18 +201,6 @@ namespace FermataFishNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiAdminRequestModel> CreatePatch(ApiAdminRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiAdminRequestModel>();
-                        patch.Replace(x => x.Birthday, model.Birthday);
-                        patch.Replace(x => x.Email, model.Email);
-                        patch.Replace(x => x.FirstName, model.FirstName);
-                        patch.Replace(x => x.LastName, model.LastName);
-                        patch.Replace(x => x.Phone, model.Phone);
-                        patch.Replace(x => x.StudioId, model.StudioId);
-                        return patch;
-                }
-
                 private async Task<ApiAdminRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminRequestModel> patch)
                 {
                         var record = await this.AdminService.Get(id);
@@ -236,5 +220,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d16e67ad9b18b4acd7a884647128b8dc</Hash>
+    <Hash>c2f470a9bc1f3796c219070c03c9daa0</Hash>
 </Codenesium>*/

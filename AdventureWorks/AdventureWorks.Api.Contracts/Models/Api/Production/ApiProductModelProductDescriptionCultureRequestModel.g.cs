@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ProductDescriptionID = productDescriptionID;
                 }
 
-                private string cultureID;
+                [Required]
+                [JsonProperty]
+                public string CultureID { get; private set; }
 
                 [Required]
-                public string CultureID
-                {
-                        get
-                        {
-                                return this.cultureID;
-                        }
-
-                        set
-                        {
-                                this.cultureID = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int productDescriptionID;
-
-                [Required]
-                public int ProductDescriptionID
-                {
-                        get
-                        {
-                                return this.productDescriptionID;
-                        }
-
-                        set
-                        {
-                                this.productDescriptionID = value;
-                        }
-                }
+                [JsonProperty]
+                public int ProductDescriptionID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8eb65475d40c9613be163533a6da0bd8</Hash>
+    <Hash>68b869677aa3a983189a0ab406ac1872</Hash>
 </Codenesium>*/

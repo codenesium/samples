@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
-                        transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
-
-                        var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTransactionStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
-                        transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
-
-                        var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
@@ -75,5 +51,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>83c543099691d9c7facda403d3e5236f</Hash>
+    <Hash>34e4391e1c195cf45405b942d28d383a</Hash>
 </Codenesium>*/

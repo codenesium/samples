@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var model = new ApiDeploymentHistoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentHistory>())).Returns(Task.FromResult(new DeploymentHistory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Object,
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiDeploymentHistoryResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiDeploymentHistoryRequestModel>()));
@@ -168,5 +169,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>86ca79ec3b9769e3d619a88bbf770c1d</Hash>
+    <Hash>3946c3d4aff2e8cdffaaa5c7bcdddea0</Hash>
 </Codenesium>*/

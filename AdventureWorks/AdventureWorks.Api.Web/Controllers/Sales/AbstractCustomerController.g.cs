@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCustomerResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCustomerRequestModel model)
                 {
                         CreateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Customers/{result.Record.CustomerID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Customers/{result.Record.CustomerID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCustomerRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiCustomerRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CustomerService.Update(id, model);
+                                UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCustomerResponseModel response = await this.CustomerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerRequestModel model)
                 {
-                        ApiCustomerRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCustomerRequestModel request = await this.PatchModel(id, this.CustomerModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CustomerService.Update(id, request);
+                                UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCustomerResponseModel response = await this.CustomerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -249,18 +245,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCustomerRequestModel> CreatePatch(ApiCustomerRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCustomerRequestModel>();
-                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.PersonID, model.PersonID);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.StoreID, model.StoreID);
-                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
-                        return patch;
-                }
-
                 private async Task<ApiCustomerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCustomerRequestModel> patch)
                 {
                         var record = await this.CustomerService.Get(id);
@@ -280,5 +264,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b90e0ac49287634424226c7874549773</Hash>
+    <Hash>8ca5dcdde56424e67101cdc8c607ece4</Hash>
 </Codenesium>*/

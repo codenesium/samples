@@ -29,26 +29,35 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ToCurrencyCodeEntity = nameof(ApiResponse.Currencies);
                 }
 
+                [JsonProperty]
                 public decimal AverageRate { get; private set; }
 
+                [JsonProperty]
                 public DateTime CurrencyRateDate { get; private set; }
 
+                [JsonProperty]
                 public int CurrencyRateID { get; private set; }
 
+                [JsonProperty]
                 public decimal EndOfDayRate { get; private set; }
 
+                [JsonProperty]
                 public string FromCurrencyCode { get; private set; }
 
+                [JsonProperty]
                 public string FromCurrencyCodeEntity { get; set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string ToCurrencyCode { get; private set; }
 
+                [JsonProperty]
                 public string ToCurrencyCodeEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0400bed39e76de6f56ade3f403140fe7</Hash>
+    <Hash>6ca26e6e3a7a47f8e6442d2aac62a322</Hash>
 </Codenesium>*/

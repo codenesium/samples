@@ -30,101 +30,29 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryID = territoryID;
                 }
 
-                private string accountNumber;
+                [Required]
+                [JsonProperty]
+                public string AccountNumber { get; private set; }
 
                 [Required]
-                public string AccountNumber
-                {
-                        get
-                        {
-                                return this.accountNumber;
-                        }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
-                        set
-                        {
-                                this.accountNumber = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public int? PersonID { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public int? StoreID { get; private set; }
 
-                private int? personID;
-
-                public int? PersonID
-                {
-                        get
-                        {
-                                return this.personID;
-                        }
-
-                        set
-                        {
-                                this.personID = value;
-                        }
-                }
-
-                private Guid rowguid;
-
-                [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private int? storeID;
-
-                public int? StoreID
-                {
-                        get
-                        {
-                                return this.storeID;
-                        }
-
-                        set
-                        {
-                                this.storeID = value;
-                        }
-                }
-
-                private int? territoryID;
-
-                public int? TerritoryID
-                {
-                        get
-                        {
-                                return this.territoryID;
-                        }
-
-                        set
-                        {
-                                this.territoryID = value;
-                        }
-                }
+                [JsonProperty]
+                public int? TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8f3ddd3936fbc5dfb13a6e35eb9f29fd</Hash>
+    <Hash>b309327c0c4043dbd4984fc61430c9c4</Hash>
 </Codenesium>*/

@@ -25,30 +25,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
-                        chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
-
-                        var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChainStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
-                        chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
-
-                        var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
@@ -75,5 +51,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5a149cdd30e30543482277f7defda8ee</Hash>
+    <Hash>92249faaee83c1f1bcbd5277a9cd4df4</Hash>
 </Codenesium>*/

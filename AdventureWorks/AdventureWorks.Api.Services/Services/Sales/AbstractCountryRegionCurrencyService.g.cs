@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCountryRegionCurrencyResponseModel>> Update(
                         string countryRegionCode,
                         ApiCountryRegionCurrencyRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.countryRegionCurrencyModelValidator.ValidateUpdateAsync(countryRegionCode, model));
-                        if (response.Success)
+                        var validationResult = await this.countryRegionCurrencyModelValidator.ValidateUpdateAsync(countryRegionCode, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(countryRegionCode, model);
                                 await this.countryRegionCurrencyRepository.Update(this.dalCountryRegionCurrencyMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.countryRegionCurrencyRepository.Get(countryRegionCode);
+
+                                return new UpdateResponse<ApiCountryRegionCurrencyResponseModel>(this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCountryRegionCurrencyResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -111,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc1cce78cd0ffe742f1e8eb46ab09319</Hash>
+    <Hash>bc64e9e6fbe5a6f80bcbf9c3deee83d8</Hash>
 </Codenesium>*/

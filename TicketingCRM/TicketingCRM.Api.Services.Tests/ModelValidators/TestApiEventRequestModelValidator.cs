@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Address1_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
-                }
-
-                [Fact]
-                public async void Address1_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
-                }
-
-                [Fact]
                 public async void Address1_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -70,30 +46,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Address2_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
-                }
-
-                [Fact]
-                public async void Address2_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
                 }
 
                 [Fact]
@@ -171,54 +123,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Description_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
-                public async void Description_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
-
-                [Fact]
-                public async void Facebook_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, null as string);
-                }
-
-                [Fact]
-                public async void Facebook_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, null as string);
-                }
-
-                [Fact]
                 public async void Facebook_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -243,30 +147,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
@@ -288,30 +168,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Website_Create_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
-                }
-
-                [Fact]
-                public async void Website_Update_null()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
-
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
                 }
 
                 [Fact]
@@ -341,5 +197,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ef8f11e22396cc2a5ba94575a00ce969</Hash>
+    <Hash>393e0148f0ae8134454cf18045c7a0fa</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace StackOverflowNS.Api.Contracts.Tests
 
                         response.Type.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPostHistoryTypesModelMapper();
+                        var model = new ApiPostHistoryTypesRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiPostHistoryTypesRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPostHistoryTypesRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Type.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f585fe60744aba73fd1de53b14fbb0bc</Hash>
+    <Hash>f6a06456947ae5f0fcc109696ed385c3</Hash>
 </Codenesium>*/

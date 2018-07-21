@@ -83,18 +83,25 @@ namespace PetStoreNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPaymentTypeResponseModel>> Update(
                         int id,
                         ApiPaymentTypeRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPaymentTypeMapper.MapModelToBO(id, model);
                                 await this.paymentTypeRepository.Update(this.dalPaymentTypeMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.paymentTypeRepository.Get(id);
+
+                                return new UpdateResponse<ApiPaymentTypeResponseModel>(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPaymentTypeResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f36bcd88c06307a1855f03778870a5e6</Hash>
+    <Hash>2ed1c767ef788ba1b6f5f90ee2049626</Hash>
 </Codenesium>*/

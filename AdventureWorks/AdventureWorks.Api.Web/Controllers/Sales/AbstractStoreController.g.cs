@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStoreResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiStoreResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiStoreRequestModel model)
                 {
                         CreateResponse<ApiStoreResponseModel> result = await this.StoreService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Stores/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Stores/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiStoreResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStoreRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiStoreRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.StoreService.Update(id, model);
+                                UpdateResponse<ApiStoreResponseModel> result = await this.StoreService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiStoreResponseModel response = await this.StoreService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiStoreResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreRequestModel model)
                 {
-                        ApiStoreRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiStoreRequestModel request = await this.PatchModel(id, this.StoreModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.StoreService.Update(id, request);
+                                UpdateResponse<ApiStoreResponseModel> result = await this.StoreService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiStoreResponseModel response = await this.StoreService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -217,12 +213,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("byDemographics/{demographics}")]
+                [Route("byDemographics/{demographic}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByDemographics(string demographics)
+                public async virtual Task<IActionResult> ByDemographic(string demographic)
                 {
-                        List<ApiStoreResponseModel> response = await this.StoreService.ByDemographics(demographics);
+                        List<ApiStoreResponseModel> response = await this.StoreService.ByDemographic(demographic);
 
                         return this.Ok(response);
                 }
@@ -239,17 +235,6 @@ namespace AdventureWorksNS.Api.Web
                         List<ApiCustomerResponseModel> response = await this.StoreService.Customers(storeID, query.Limit, query.Offset);
 
                         return this.Ok(response);
-                }
-
-                private JsonPatchDocument<ApiStoreRequestModel> CreatePatch(ApiStoreRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiStoreRequestModel>();
-                        patch.Replace(x => x.Demographics, model.Demographics);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
-                        return patch;
                 }
 
                 private async Task<ApiStoreRequestModel> PatchModel(int id, JsonPatchDocument<ApiStoreRequestModel> patch)
@@ -271,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d5bd1644bb694201e71e469c14580ec0</Hash>
+    <Hash>b575615ef4be33de18881525a22badce</Hash>
 </Codenesium>*/

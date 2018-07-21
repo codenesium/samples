@@ -12,8 +12,8 @@ namespace NebulaNS.Api.Services
                 Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
                         ApiVersionInfoRequestModel model);
 
-                Task<ActionResponse> Update(long version,
-                                            ApiVersionInfoRequestModel model);
+                Task<UpdateResponse<ApiVersionInfoResponseModel>> Update(long version,
+                                                                          ApiVersionInfoRequestModel model);
 
                 Task<ActionResponse> Delete(long version);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>18419edb6e86453a0fd58a86d468fde7</Hash>
+    <Hash>62ca809533c8daaff6a5e85e09c06455</Hash>
 </Codenesium>*/

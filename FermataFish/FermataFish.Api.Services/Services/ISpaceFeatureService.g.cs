@@ -12,8 +12,8 @@ namespace FermataFishNS.Api.Services
                 Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
                         ApiSpaceFeatureRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiSpaceFeatureRequestModel model);
+                Task<UpdateResponse<ApiSpaceFeatureResponseModel>> Update(int id,
+                                                                           ApiSpaceFeatureRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>789dd85ed8dbfbe77001a71feaa78fa2</Hash>
+    <Hash>8115070fd9ba9237950c8257a9a8227d</Hash>
 </Codenesium>*/

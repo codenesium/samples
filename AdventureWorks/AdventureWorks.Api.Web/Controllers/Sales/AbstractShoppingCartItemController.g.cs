@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiShoppingCartItemResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemRequestModel model)
                 {
                         CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShoppingCartItems/{result.Record.ShoppingCartItemID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShoppingCartItems/{result.Record.ShoppingCartItemID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiShoppingCartItemRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ShoppingCartItemService.Update(id, model);
+                                UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
                 {
-                        ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.ShoppingCartItemModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ShoppingCartItemService.Update(id, request);
+                                UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,17 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiShoppingCartItemRequestModel> CreatePatch(ApiShoppingCartItemRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiShoppingCartItemRequestModel>();
-                        patch.Replace(x => x.DateCreated, model.DateCreated);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Quantity, model.Quantity);
-                        patch.Replace(x => x.ShoppingCartID, model.ShoppingCartID);
-                        return patch;
-                }
-
                 private async Task<ApiShoppingCartItemRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
                 {
                         var record = await this.ShoppingCartItemService.Get(id);
@@ -246,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c9f388a0f89c69b68ee8be9245bb23d1</Hash>
+    <Hash>a1593d02b66fd5254650973af47d86b8</Hash>
 </Codenesium>*/

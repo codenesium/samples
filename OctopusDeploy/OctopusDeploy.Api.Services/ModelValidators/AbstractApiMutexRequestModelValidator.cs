@@ -28,11 +28,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>71d3796cadd8a62924bf6077d0f7e8c7</Hash>
+    <Hash>b01b4a30c43222d0ebeaffe962636b73</Hash>
 </Codenesium>*/

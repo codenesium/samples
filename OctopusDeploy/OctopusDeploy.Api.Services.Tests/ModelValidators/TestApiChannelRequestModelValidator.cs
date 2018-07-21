@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
                 public async void LifecycleId_Create_length()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
@@ -73,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
@@ -118,30 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void ProjectId_Create_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectId_Update_null()
-                {
-                        Mock<IChannelRepository> channelRepository = new Mock<IChannelRepository>();
-                        channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
-
-                        var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
 
                 [Fact]
@@ -219,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>787c3eff0ab1bb362ad680a1b6ec603e</Hash>
+    <Hash>7a15519d1fa2a9d6a11c0757ae53efe6</Hash>
 </Codenesium>*/

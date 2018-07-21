@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmailAddressResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEmailAddressResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEmailAddressRequestModel model)
                 {
                         CreateResponse<ApiEmailAddressResponseModel> result = await this.EmailAddressService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmailAddresses/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmailAddresses/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmailAddressResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmailAddressResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmailAddressRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiEmailAddressRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EmailAddressService.Update(id, model);
+                                UpdateResponse<ApiEmailAddressResponseModel> result = await this.EmailAddressService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEmailAddressResponseModel response = await this.EmailAddressService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmailAddressResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmailAddressResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmailAddressRequestModel model)
                 {
-                        ApiEmailAddressRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEmailAddressRequestModel request = await this.PatchModel(id, this.EmailAddressModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EmailAddressService.Update(id, request);
+                                UpdateResponse<ApiEmailAddressResponseModel> result = await this.EmailAddressService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEmailAddressResponseModel response = await this.EmailAddressService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,16 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEmailAddressRequestModel> CreatePatch(ApiEmailAddressRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEmailAddressRequestModel>();
-                        patch.Replace(x => x.EmailAddress1, model.EmailAddress1);
-                        patch.Replace(x => x.EmailAddressID, model.EmailAddressID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiEmailAddressRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmailAddressRequestModel> patch)
                 {
                         var record = await this.EmailAddressService.Get(id);
@@ -245,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f90c8280021d6493b8818064743bec99</Hash>
+    <Hash>075587d18804bce4c79d6d699e5f4355</Hash>
 </Codenesium>*/

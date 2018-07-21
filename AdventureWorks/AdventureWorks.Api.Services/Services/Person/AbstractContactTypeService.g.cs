@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiContactTypeResponseModel>> Update(
                         int contactTypeID,
                         ApiContactTypeRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateUpdateAsync(contactTypeID, model));
-                        if (response.Success)
+                        var validationResult = await this.contactTypeModelValidator.ValidateUpdateAsync(contactTypeID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolContactTypeMapper.MapModelToBO(contactTypeID, model);
                                 await this.contactTypeRepository.Update(this.dalContactTypeMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.contactTypeRepository.Get(contactTypeID);
+
+                                return new UpdateResponse<ApiContactTypeResponseModel>(this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiContactTypeResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a68eb9819d62acaeb51f827d54c29709</Hash>
+    <Hash>2ff9222ae1b3f939559f40210399c550</Hash>
 </Codenesium>*/

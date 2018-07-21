@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -45,9 +46,29 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.StateProvinceCode.Should().Be("A");
                         response.TerritoryID.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiStateProvinceModelMapper();
+                        var model = new ApiStateProvinceRequestModel();
+                        model.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
+
+                        JsonPatchDocument<ApiStateProvinceRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiStateProvinceRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CountryRegionCode.Should().Be("A");
+                        response.IsOnlyStateProvinceFlag.Should().Be(true);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Name.Should().Be("A");
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.StateProvinceCode.Should().Be("A");
+                        response.TerritoryID.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6effa24202718e39ffb1da76558a84f8</Hash>
+    <Hash>47b86d9c0ebea33767bf257a55379080</Hash>
 </Codenesium>*/

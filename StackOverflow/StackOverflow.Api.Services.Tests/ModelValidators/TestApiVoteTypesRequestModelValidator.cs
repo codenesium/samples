@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
-                        voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
-
-                        var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVoteTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
-                        voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
-
-                        var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVoteTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>408b9a5cbf0f944297998e7ff7e6e371</Hash>
+    <Hash>89700630045e6e5ecb3485fafa91b36a</Hash>
 </Codenesium>*/

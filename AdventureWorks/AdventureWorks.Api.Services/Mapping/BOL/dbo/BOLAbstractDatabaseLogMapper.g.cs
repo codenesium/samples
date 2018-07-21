@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Services
                                 model.@Object,
                                 model.PostTime,
                                 model.Schema,
-                                model.TSQL,
+                                model.Tsql,
                                 model.XmlEvent);
                         return boDatabaseLog;
                 }
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiDatabaseLogResponseModel();
 
-                        model.SetProperties(boDatabaseLog.DatabaseLogID, boDatabaseLog.DatabaseUser, boDatabaseLog.@Event, boDatabaseLog.@Object, boDatabaseLog.PostTime, boDatabaseLog.Schema, boDatabaseLog.TSQL, boDatabaseLog.XmlEvent);
+                        model.SetProperties(boDatabaseLog.DatabaseLogID, boDatabaseLog.DatabaseUser, boDatabaseLog.@Event, boDatabaseLog.@Object, boDatabaseLog.PostTime, boDatabaseLog.Schema, boDatabaseLog.Tsql, boDatabaseLog.XmlEvent);
 
                         return model;
                 }
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0832868a6800be930a9692858581941</Hash>
+    <Hash>23db6df47b3c8c8cd674948c22d6b9a0</Hash>
 </Codenesium>*/

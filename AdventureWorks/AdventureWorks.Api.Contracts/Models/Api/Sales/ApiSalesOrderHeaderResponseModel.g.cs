@@ -70,70 +70,110 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string AccountNumber { get; private set; }
 
+                [JsonProperty]
                 public int BillToAddressID { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Comment { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string CreditCardApprovalCode { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? CreditCardID { get; private set; }
 
+                [JsonProperty]
                 public string CreditCardIDEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int? CurrencyRateID { get; private set; }
 
+                [JsonProperty]
                 public string CurrencyRateIDEntity { get; set; }
 
+                [JsonProperty]
                 public int CustomerID { get; private set; }
 
+                [JsonProperty]
                 public string CustomerIDEntity { get; set; }
 
+                [JsonProperty]
                 public DateTime DueDate { get; private set; }
 
+                [JsonProperty]
                 public decimal Freight { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public bool OnlineOrderFlag { get; private set; }
 
+                [JsonProperty]
                 public DateTime OrderDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string PurchaseOrderNumber { get; private set; }
 
+                [JsonProperty]
                 public int RevisionNumber { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int SalesOrderID { get; private set; }
 
+                [JsonProperty]
                 public string SalesOrderNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? SalesPersonID { get; private set; }
 
+                [JsonProperty]
                 public string SalesPersonIDEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ShipDate { get; private set; }
 
+                [JsonProperty]
                 public int ShipMethodID { get; private set; }
 
+                [JsonProperty]
                 public int ShipToAddressID { get; private set; }
 
+                [JsonProperty]
                 public int Status { get; private set; }
 
+                [JsonProperty]
                 public decimal SubTotal { get; private set; }
 
+                [JsonProperty]
                 public decimal TaxAmt { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? TerritoryID { get; private set; }
 
+                [JsonProperty]
                 public string TerritoryIDEntity { get; set; }
 
+                [JsonProperty]
                 public decimal TotalDue { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9eb260973b7a4592f492421c980c3264</Hash>
+    <Hash>7a236b657bcf51aa661b1b196b22b551</Hash>
 </Codenesium>*/

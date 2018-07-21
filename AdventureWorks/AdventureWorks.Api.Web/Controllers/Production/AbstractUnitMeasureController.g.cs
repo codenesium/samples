@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiUnitMeasureResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiUnitMeasureRequestModel model)
                 {
                         CreateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/UnitMeasures/{result.Record.UnitMeasureCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/UnitMeasures/{result.Record.UnitMeasureCode}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUnitMeasureRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiUnitMeasureRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.UnitMeasureService.Update(id, model);
+                                UpdateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiUnitMeasureResponseModel response = await this.UnitMeasureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureRequestModel model)
                 {
-                        ApiUnitMeasureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiUnitMeasureRequestModel request = await this.PatchModel(id, this.UnitMeasureModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.UnitMeasureService.Update(id, request);
+                                UpdateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiUnitMeasureResponseModel response = await this.UnitMeasureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -233,7 +229,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBillOfMaterialsResponseModel> response = await this.UnitMeasureService.BillOfMaterials(unitMeasureCode, query.Limit, query.Offset);
+                        List<ApiBillOfMaterialResponseModel> response = await this.UnitMeasureService.BillOfMaterials(unitMeasureCode, query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -250,14 +246,6 @@ namespace AdventureWorksNS.Api.Web
                         List<ApiProductResponseModel> response = await this.UnitMeasureService.Products(sizeUnitMeasureCode, query.Limit, query.Offset);
 
                         return this.Ok(response);
-                }
-
-                private JsonPatchDocument<ApiUnitMeasureRequestModel> CreatePatch(ApiUnitMeasureRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiUnitMeasureRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
                 }
 
                 private async Task<ApiUnitMeasureRequestModel> PatchModel(string id, JsonPatchDocument<ApiUnitMeasureRequestModel> patch)
@@ -279,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>36303e7c584e547ec2d20efbc5863e1a</Hash>
+    <Hash>b14991f63430ebb1958268d8f9ca3d5f</Hash>
 </Codenesium>*/

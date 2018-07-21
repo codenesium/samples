@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IDeploymentEnvironmentRepository> deploymentEnvironmentRepository = new Mock<IDeploymentEnvironmentRepository>();
-                        deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
-
-                        var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentEnvironmentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IDeploymentEnvironmentRepository> deploymentEnvironmentRepository = new Mock<IDeploymentEnvironmentRepository>();
-                        deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
-
-                        var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IDeploymentEnvironmentRepository> deploymentEnvironmentRepository = new Mock<IDeploymentEnvironmentRepository>();
-                        deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
-
-                        var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentEnvironmentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IDeploymentEnvironmentRepository> deploymentEnvironmentRepository = new Mock<IDeploymentEnvironmentRepository>();
-                        deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
-
-                        var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IDeploymentEnvironmentRepository> deploymentEnvironmentRepository = new Mock<IDeploymentEnvironmentRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>853cb5203ee3bc590684719f8d15cf07</Hash>
+    <Hash>4143b25e26c14a257be4a2d2cd1786b2</Hash>
 </Codenesium>*/

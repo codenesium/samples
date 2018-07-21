@@ -38,34 +38,50 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Title = title;
                 }
 
+                [JsonProperty]
                 public int ChangeNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public byte[] Document1 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public short? DocumentLevel { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DocumentSummary { get; private set; }
 
+                [JsonProperty]
                 public string FileExtension { get; private set; }
 
+                [JsonProperty]
                 public string FileName { get; private set; }
 
+                [JsonProperty]
                 public bool FolderFlag { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int Owner { get; private set; }
 
+                [JsonProperty]
                 public string Revision { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int Status { get; private set; }
 
+                [JsonProperty]
                 public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b336aee182316259afceadcb08a17962</Hash>
+    <Hash>768df1cea0aaa10856c51ca0d4ed6bea</Hash>
 </Codenesium>*/

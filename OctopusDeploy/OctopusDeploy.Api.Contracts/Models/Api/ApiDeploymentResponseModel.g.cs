@@ -38,34 +38,60 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string ChannelId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset Created { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeployedBy { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeployedToMachineIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectGroupId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ReleaseId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TaskId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>be3e160152c329724a1c3a0d9adb84d2</Hash>
+    <Hash>bd472b0205f024f283892519574160f7</Hash>
 </Codenesium>*/

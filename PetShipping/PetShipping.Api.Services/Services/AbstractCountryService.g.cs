@@ -90,18 +90,25 @@ namespace PetShippingNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCountryResponseModel>> Update(
                         int id,
                         ApiCountryRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.countryModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCountryMapper.MapModelToBO(id, model);
                                 await this.countryRepository.Update(this.dalCountryMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.countryRepository.Get(id);
+
+                                return new UpdateResponse<ApiCountryResponseModel>(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCountryResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>413ea5ae57bff0e8d68fb3bf54cd29c2</Hash>
+    <Hash>2caf2a734141f8ab9dde102f8da65321</Hash>
 </Codenesium>*/

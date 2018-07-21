@@ -28,86 +28,23 @@ namespace StackOverflowNS.Api.Contracts
                         this.VoteTypeId = voteTypeId;
                 }
 
-                private int? bountyAmount;
+                [JsonProperty]
+                public int? BountyAmount { get; private set; }
 
-                public int? BountyAmount
-                {
-                        get
-                        {
-                                return this.bountyAmount;
-                        }
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                        set
-                        {
-                                this.bountyAmount = value;
-                        }
-                }
+                [JsonProperty]
+                public int PostId { get; private set; }
 
-                private DateTime creationDate;
+                [JsonProperty]
+                public int? UserId { get; private set; }
 
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
-
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
-
-                private int postId;
-
-                [Required]
-                public int PostId
-                {
-                        get
-                        {
-                                return this.postId;
-                        }
-
-                        set
-                        {
-                                this.postId = value;
-                        }
-                }
-
-                private int? userId;
-
-                public int? UserId
-                {
-                        get
-                        {
-                                return this.userId;
-                        }
-
-                        set
-                        {
-                                this.userId = value;
-                        }
-                }
-
-                private int voteTypeId;
-
-                [Required]
-                public int VoteTypeId
-                {
-                        get
-                        {
-                                return this.voteTypeId;
-                        }
-
-                        set
-                        {
-                                this.voteTypeId = value;
-                        }
-                }
+                [JsonProperty]
+                public int VoteTypeId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>adc2d9caaf0ab48085309c2bb0da48b7</Hash>
+    <Hash>0085c2a1e25e7a66926ecafad55899d8</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiWorkOrderResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRequestModel model)
                 {
                         CreateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrders/{result.Record.WorkOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrders/{result.Record.WorkOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiWorkOrderRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.WorkOrderService.Update(id, model);
+                                UpdateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRequestModel model)
                 {
-                        ApiWorkOrderRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiWorkOrderRequestModel request = await this.PatchModel(id, this.WorkOrderModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.WorkOrderService.Update(id, request);
+                                UpdateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -241,21 +237,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiWorkOrderRequestModel> CreatePatch(ApiWorkOrderRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiWorkOrderRequestModel>();
-                        patch.Replace(x => x.DueDate, model.DueDate);
-                        patch.Replace(x => x.EndDate, model.EndDate);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OrderQty, model.OrderQty);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.ScrappedQty, model.ScrappedQty);
-                        patch.Replace(x => x.ScrapReasonID, model.ScrapReasonID);
-                        patch.Replace(x => x.StartDate, model.StartDate);
-                        patch.Replace(x => x.StockedQty, model.StockedQty);
-                        return patch;
-                }
-
                 private async Task<ApiWorkOrderRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderRequestModel> patch)
                 {
                         var record = await this.WorkOrderService.Get(id);
@@ -275,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f9a0c2e8c467356e621b90f497210ff9</Hash>
+    <Hash>9cac8545de20c2a2674e048b1d13cfcc</Hash>
 </Codenesium>*/

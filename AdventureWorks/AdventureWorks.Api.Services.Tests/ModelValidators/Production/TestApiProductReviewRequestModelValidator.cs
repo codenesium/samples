@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Comments_Create_length()
+                public async void Comment_Create_length()
                 {
                         Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
                         productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
@@ -33,11 +33,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
                         await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Comments, new string('A', 3851));
+                        validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
                 }
 
                 [Fact]
-                public async void Comments_Update_length()
+                public async void Comment_Update_length()
                 {
                         Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
                         productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
                         await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Comments, new string('A', 3851));
+                        validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
                 }
 
                 [Fact]
@@ -147,5 +147,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c4168491ed227985e3b5686d40018c0e</Hash>
+    <Hash>fb40c57af78b837adf59c5e4a792027b</Hash>
 </Codenesium>*/

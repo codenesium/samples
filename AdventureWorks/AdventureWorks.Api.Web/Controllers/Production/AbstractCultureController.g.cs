@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCultureResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCultureResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCultureRequestModel model)
                 {
                         CreateResponse<ApiCultureResponseModel> result = await this.CultureService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCultureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCultureRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiCultureRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CultureService.Update(id, model);
+                                UpdateResponse<ApiCultureResponseModel> result = await this.CultureService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCultureResponseModel response = await this.CultureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCultureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureRequestModel model)
                 {
-                        ApiCultureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCultureRequestModel request = await this.PatchModel(id, this.CultureModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CultureService.Update(id, request);
+                                UpdateResponse<ApiCultureResponseModel> result = await this.CultureService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCultureResponseModel response = await this.CultureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,14 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCultureRequestModel> CreatePatch(ApiCultureRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCultureRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiCultureRequestModel> PatchModel(string id, JsonPatchDocument<ApiCultureRequestModel> patch)
                 {
                         var record = await this.CultureService.Get(id);
@@ -265,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>56f305be59ed38c327f287fe7b81e4f6</Hash>
+    <Hash>4f3099c83d825a3f1a0013c1fe22c7e7</Hash>
 </Codenesium>*/

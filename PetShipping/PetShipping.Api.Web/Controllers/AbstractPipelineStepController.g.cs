@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStepResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPipelineStepResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepRequestModel model)
                 {
                         CreateResponse<ApiPipelineStepResponseModel> result = await this.PipelineStepService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPipelineStepRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiPipelineStepRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PipelineStepService.Update(id, model);
+                                UpdateResponse<ApiPipelineStepResponseModel> result = await this.PipelineStepService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPipelineStepResponseModel response = await this.PipelineStepService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepRequestModel model)
                 {
-                        ApiPipelineStepRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPipelineStepRequestModel request = await this.PatchModel(id, this.PipelineStepModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PipelineStepService.Update(id, request);
+                                UpdateResponse<ApiPipelineStepResponseModel> result = await this.PipelineStepService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPipelineStepResponseModel response = await this.PipelineStepService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -275,15 +271,6 @@ namespace PetShippingNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPipelineStepRequestModel> CreatePatch(ApiPipelineStepRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPipelineStepRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.PipelineStepStatusId, model.PipelineStepStatusId);
-                        patch.Replace(x => x.ShipperId, model.ShipperId);
-                        return patch;
-                }
-
                 private async Task<ApiPipelineStepRequestModel> PatchModel(int id, JsonPatchDocument<ApiPipelineStepRequestModel> patch)
                 {
                         var record = await this.PipelineStepService.Get(id);
@@ -303,5 +290,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9561752ac31770f76ade0da633d97785</Hash>
+    <Hash>86a16844a77d9a0d2ce25a7507969f6e</Hash>
 </Codenesium>*/

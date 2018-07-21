@@ -113,6 +113,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IFamilyRepository>();
                         var model = new ApiFamilyRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Family>())).Returns(Task.FromResult(new Family()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
                         var service = new FamilyService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
                                                         mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiFamilyResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()));
@@ -244,5 +245,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a709d833ff19126dc5442457b9ee3b02</Hash>
+    <Hash>9ed2488afb5e37359e71e85c3fb6e42c</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var model = new ApiTenantVariableRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TenantVariable>())).Returns(Task.FromResult(new TenantVariable()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiTenantVariableResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9b1ae0b9da4a84c51c710254a767ca6a</Hash>
+    <Hash>f0a76941224e77b5de3fb3b8169b1f66</Hash>
 </Codenesium>*/

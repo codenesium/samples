@@ -22,18 +22,28 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableSetId = variableSetId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string ContentType { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string VariableSetId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d07ea357bfa1767a9956ede0c10df6b</Hash>
+    <Hash>3b31dec30e55cc1728feb27781dfc54e</Hash>
 </Codenesium>*/

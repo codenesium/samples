@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
                         ApiProductPhotoRequestModel model);
 
-                Task<ActionResponse> Update(int productPhotoID,
-                                            ApiProductPhotoRequestModel model);
+                Task<UpdateResponse<ApiProductPhotoResponseModel>> Update(int productPhotoID,
+                                                                           ApiProductPhotoRequestModel model);
 
                 Task<ActionResponse> Delete(int productPhotoID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>323f372e8f39148f345d2db7c2812eaf</Hash>
+    <Hash>e4a6ca6433aed1b5dbd18500fbb99df5</Hash>
 </Codenesium>*/

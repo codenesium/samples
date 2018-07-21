@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectGroupResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProjectGroupResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProjectGroupRequestModel model)
                 {
                         CreateResponse<ApiProjectGroupResponseModel> result = await this.ProjectGroupService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProjectGroups/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProjectGroups/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectGroupResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProjectGroupResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiProjectGroupRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiProjectGroupRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProjectGroupService.Update(id, model);
+                                UpdateResponse<ApiProjectGroupResponseModel> result = await this.ProjectGroupService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProjectGroupResponseModel response = await this.ProjectGroupService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectGroupResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProjectGroupResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiProjectGroupRequestModel model)
                 {
-                        ApiProjectGroupRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProjectGroupRequestModel request = await this.PatchModel(id, this.ProjectGroupModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProjectGroupService.Update(id, request);
+                                UpdateResponse<ApiProjectGroupResponseModel> result = await this.ProjectGroupService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProjectGroupResponseModel response = await this.ProjectGroupService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,15 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProjectGroupRequestModel> CreatePatch(ApiProjectGroupRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProjectGroupRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiProjectGroupRequestModel> PatchModel(string id, JsonPatchDocument<ApiProjectGroupRequestModel> patch)
                 {
                         var record = await this.ProjectGroupService.Get(id);
@@ -263,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>40b6529ba2c30294a368234ecce1ccc4</Hash>
+    <Hash>50b1ea3d2809749ca8ec429d8e166831</Hash>
 </Codenesium>*/

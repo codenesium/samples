@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEmployeeDepartmentHistoryRepository>();
                         var model = new ApiEmployeeDepartmentHistoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EmployeeDepartmentHistory>())).Returns(Task.FromResult(new EmployeeDepartmentHistory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmployeeDepartmentHistory()));
                         var service = new EmployeeDepartmentHistoryService(mock.LoggerMock.Object,
                                                                            mock.RepositoryMock.Object,
                                                                            mock.ModelValidatorMockFactory.EmployeeDepartmentHistoryModelValidatorMock.Object,
                                                                            mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
                                                                            mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EmployeeDepartmentHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeeDepartmentHistoryRequestModel>()));
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f6ce20aada291cbfca46626b284e295b</Hash>
+    <Hash>5164f42f8ab9a6ff6a91a5ccd38183af</Hash>
 </Codenesium>*/

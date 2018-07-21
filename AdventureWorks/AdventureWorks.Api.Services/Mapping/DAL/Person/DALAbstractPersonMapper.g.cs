@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                         efPerson.SetProperties(
                                 bo.AdditionalContactInfo,
                                 bo.BusinessEntityID,
-                                bo.Demographics,
+                                bo.Demographic,
                                 bo.EmailPromotion,
                                 bo.FirstName,
                                 bo.LastName,
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services
                         bo.SetProperties(
                                 ef.BusinessEntityID,
                                 ef.AdditionalContactInfo,
-                                ef.Demographics,
+                                ef.Demographic,
                                 ef.EmailPromotion,
                                 ef.FirstName,
                                 ef.LastName,
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>09e37079f9f3dce4c970cb43e03751cc</Hash>
+    <Hash>08d5ebeed942da9ec065bc8c6361a245</Hash>
 </Codenesium>*/

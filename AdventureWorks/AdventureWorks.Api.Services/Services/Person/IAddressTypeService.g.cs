@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
                         ApiAddressTypeRequestModel model);
 
-                Task<ActionResponse> Update(int addressTypeID,
-                                            ApiAddressTypeRequestModel model);
+                Task<UpdateResponse<ApiAddressTypeResponseModel>> Update(int addressTypeID,
+                                                                          ApiAddressTypeRequestModel model);
 
                 Task<ActionResponse> Delete(int addressTypeID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c000e9da00dfa571809fbe20d38e2ee3</Hash>
+    <Hash>8d712d3b6e5d469dd3720391a33d31b9</Hash>
 </Codenesium>*/

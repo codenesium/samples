@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
@@ -25,9 +27,17 @@ namespace FermataFishNS.Api.Contracts
                                 response.StudentId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiLessonXStudentRequestModel> CreatePatch(ApiLessonXStudentRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiLessonXStudentRequestModel>();
+                        patch.Replace(x => x.LessonId, model.LessonId);
+                        patch.Replace(x => x.StudentId, model.StudentId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bafe319220a0e884bf86c2f36a7ce720</Hash>
+    <Hash>fc753a5ca308ebfa1d7b8e74ebd82bf2</Hash>
 </Codenesium>*/

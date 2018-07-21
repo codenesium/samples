@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var model = new ApiSubscriptionRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Subscription>())).Returns(Task.FromResult(new Subscription()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.SubscriptionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiSubscriptionResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SubscriptionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiSubscriptionRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0c77fa47f095a952bb11142f6e24f2c4</Hash>
+    <Hash>b329bc1bb59fe213befc8a2e2ab7c475</Hash>
 </Codenesium>*/

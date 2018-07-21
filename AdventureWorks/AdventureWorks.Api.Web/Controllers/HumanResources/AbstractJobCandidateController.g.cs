@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiJobCandidateResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateRequestModel model)
                 {
                         CreateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/JobCandidates/{result.Record.JobCandidateID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/JobCandidates/{result.Record.JobCandidateID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiJobCandidateRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiJobCandidateRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.JobCandidateService.Update(id, model);
+                                UpdateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateRequestModel model)
                 {
-                        ApiJobCandidateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiJobCandidateRequestModel request = await this.PatchModel(id, this.JobCandidateModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.JobCandidateService.Update(id, request);
+                                UpdateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,15 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiJobCandidateRequestModel> CreatePatch(ApiJobCandidateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiJobCandidateRequestModel>();
-                        patch.Replace(x => x.BusinessEntityID, model.BusinessEntityID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Resume, model.Resume);
-                        return patch;
-                }
-
                 private async Task<ApiJobCandidateRequestModel> PatchModel(int id, JsonPatchDocument<ApiJobCandidateRequestModel> patch)
                 {
                         var record = await this.JobCandidateService.Get(id);
@@ -244,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>997201b68c25fdb77fd53737e4ba7f81</Hash>
+    <Hash>fb1af12e4614d704f793b7940713ff73</Hash>
 </Codenesium>*/

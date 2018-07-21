@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiDeploymentHistoryResponseModel>> Create(
                         ApiDeploymentHistoryRequestModel model);
 
-                Task<ActionResponse> Update(string deploymentId,
-                                            ApiDeploymentHistoryRequestModel model);
+                Task<UpdateResponse<ApiDeploymentHistoryResponseModel>> Update(string deploymentId,
+                                                                                ApiDeploymentHistoryRequestModel model);
 
                 Task<ActionResponse> Delete(string deploymentId);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa3bdc72df79698313cd2e5357434416</Hash>
+    <Hash>007ddb7c8197c2bd6082391e28d3f68d</Hash>
 </Codenesium>*/

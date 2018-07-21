@@ -32,120 +32,29 @@ namespace FermataFishNS.Api.Contracts
                         this.Zip = zip;
                 }
 
-                private string address1;
+                [JsonProperty]
+                public string Address1 { get; private set; }
 
-                [Required]
-                public string Address1
-                {
-                        get
-                        {
-                                return this.address1;
-                        }
+                [JsonProperty]
+                public string Address2 { get; private set; }
 
-                        set
-                        {
-                                this.address1 = value;
-                        }
-                }
+                [JsonProperty]
+                public string City { get; private set; }
 
-                private string address2;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                [Required]
-                public string Address2
-                {
-                        get
-                        {
-                                return this.address2;
-                        }
+                [JsonProperty]
+                public int StateId { get; private set; }
 
-                        set
-                        {
-                                this.address2 = value;
-                        }
-                }
+                [JsonProperty]
+                public string Website { get; private set; }
 
-                private string city;
-
-                [Required]
-                public string City
-                {
-                        get
-                        {
-                                return this.city;
-                        }
-
-                        set
-                        {
-                                this.city = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int stateId;
-
-                [Required]
-                public int StateId
-                {
-                        get
-                        {
-                                return this.stateId;
-                        }
-
-                        set
-                        {
-                                this.stateId = value;
-                        }
-                }
-
-                private string website;
-
-                [Required]
-                public string Website
-                {
-                        get
-                        {
-                                return this.website;
-                        }
-
-                        set
-                        {
-                                this.website = value;
-                        }
-                }
-
-                private string zip;
-
-                [Required]
-                public string Zip
-                {
-                        get
-                        {
-                                return this.zip;
-                        }
-
-                        set
-                        {
-                                this.zip = value;
-                        }
-                }
+                [JsonProperty]
+                public string Zip { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>745c9a19647442e92d198b1ee9734a5f</Hash>
+    <Hash>6d451e2387ca02c2a01d1897a222ae26</Hash>
 </Codenesium>*/

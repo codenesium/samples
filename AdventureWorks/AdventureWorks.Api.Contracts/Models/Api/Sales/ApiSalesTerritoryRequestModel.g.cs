@@ -36,152 +36,44 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SalesYTD = salesYTD;
                 }
 
-                private decimal costLastYear;
+                [Required]
+                [JsonProperty]
+                public decimal CostLastYear { get; private set; }
 
                 [Required]
-                public decimal CostLastYear
-                {
-                        get
-                        {
-                                return this.costLastYear;
-                        }
-
-                        set
-                        {
-                                this.costLastYear = value;
-                        }
-                }
-
-                private decimal costYTD;
+                [JsonProperty]
+                public decimal CostYTD { get; private set; }
 
                 [Required]
-                public decimal CostYTD
-                {
-                        get
-                        {
-                                return this.costYTD;
-                        }
-
-                        set
-                        {
-                                this.costYTD = value;
-                        }
-                }
-
-                private string countryRegionCode;
+                [JsonProperty]
+                public string CountryRegionCode { get; private set; }
 
                 [Required]
-                public string CountryRegionCode
-                {
-                        get
-                        {
-                                return this.countryRegionCode;
-                        }
-
-                        set
-                        {
-                                this.countryRegionCode = value;
-                        }
-                }
-
-                private string @group;
+                [JsonProperty]
+                public string @Group { get; private set; }
 
                 [Required]
-                public string @Group
-                {
-                        get
-                        {
-                                return this.@group;
-                        }
-
-                        set
-                        {
-                                this.@group = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private decimal salesLastYear;
+                [JsonProperty]
+                public decimal SalesLastYear { get; private set; }
 
                 [Required]
-                public decimal SalesLastYear
-                {
-                        get
-                        {
-                                return this.salesLastYear;
-                        }
-
-                        set
-                        {
-                                this.salesLastYear = value;
-                        }
-                }
-
-                private decimal salesYTD;
-
-                [Required]
-                public decimal SalesYTD
-                {
-                        get
-                        {
-                                return this.salesYTD;
-                        }
-
-                        set
-                        {
-                                this.salesYTD = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal SalesYTD { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>27d62387e8eb5dce198c01141bf83ce4</Hash>
+    <Hash>65af249f704910908cc153fc95a866c1</Hash>
 </Codenesium>*/

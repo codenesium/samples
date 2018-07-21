@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductVendorRepository>();
                         var model = new ApiProductVendorRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductVendor>())).Returns(Task.FromResult(new ProductVendor()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
                         var service = new ProductVendorService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
                                                                mock.DALMapperMockFactory.DALProductVendorMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductVendorResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductVendorRequestModel>()));
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f2eabc592a22e0527f38097aeb0fda12</Hash>
+    <Hash>eccba8884026afe1bb414c3c64ad3699</Hash>
 </Codenesium>*/

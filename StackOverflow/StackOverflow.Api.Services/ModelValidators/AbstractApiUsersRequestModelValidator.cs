@@ -44,7 +44,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void DisplayNameRules()
                 {
-                        this.RuleFor(x => x.DisplayName).NotNull();
                         this.RuleFor(x => x.DisplayName).Length(0, 40);
                 }
 
@@ -86,5 +85,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7f8fe8a3aabcfb4ce1c0d1a048a6b3c</Hash>
+    <Hash>ebd1e39449a53c1f881a6be0e164df71</Hash>
 </Codenesium>*/

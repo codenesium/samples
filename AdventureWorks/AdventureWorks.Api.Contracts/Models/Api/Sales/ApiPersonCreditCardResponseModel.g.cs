@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.CreditCardIDEntity = nameof(ApiResponse.CreditCards);
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public int CreditCardID { get; private set; }
 
+                [JsonProperty]
                 public string CreditCardIDEntity { get; set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d1d030e80462f3e82d6f78f1356be81</Hash>
+    <Hash>c796bb51474c383d88e4f16a917397e6</Hash>
 </Codenesium>*/

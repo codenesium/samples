@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVoteTypesResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiVoteTypesResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiVoteTypesRequestModel model)
                 {
                         CreateResponse<ApiVoteTypesResponseModel> result = await this.VoteTypesService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VoteTypes/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VoteTypes/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVoteTypesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVoteTypesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVoteTypesRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiVoteTypesRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.VoteTypesService.Update(id, model);
+                                UpdateResponse<ApiVoteTypesResponseModel> result = await this.VoteTypesService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiVoteTypesResponseModel response = await this.VoteTypesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVoteTypesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVoteTypesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVoteTypesRequestModel model)
                 {
-                        ApiVoteTypesRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiVoteTypesRequestModel request = await this.PatchModel(id, this.VoteTypesModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.VoteTypesService.Update(id, request);
+                                UpdateResponse<ApiVoteTypesResponseModel> result = await this.VoteTypesService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiVoteTypesResponseModel response = await this.VoteTypesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,13 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiVoteTypesRequestModel> CreatePatch(ApiVoteTypesRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiVoteTypesRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiVoteTypesRequestModel> PatchModel(int id, JsonPatchDocument<ApiVoteTypesRequestModel> patch)
                 {
                         var record = await this.VoteTypesService.Get(id);
@@ -231,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f49ca8a2f8abbff7844d60eea7d1b32a</Hash>
+    <Hash>37dc1ab5d9e2ef8239fc8133abb9a0a1</Hash>
 </Codenesium>*/

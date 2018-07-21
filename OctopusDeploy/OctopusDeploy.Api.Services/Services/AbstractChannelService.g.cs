@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiChannelResponseModel>> Update(
                         string id,
                         ApiChannelRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.channelModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.channelModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolChannelMapper.MapModelToBO(id, model);
                                 await this.channelRepository.Update(this.dalChannelMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.channelRepository.Get(id);
+
+                                return new UpdateResponse<ApiChannelResponseModel>(this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiChannelResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -132,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>37c65d6575f256c53be6022721cdbd1c</Hash>
+    <Hash>ebc432d90779aa022c8086ce2d5207a6</Hash>
 </Codenesium>*/

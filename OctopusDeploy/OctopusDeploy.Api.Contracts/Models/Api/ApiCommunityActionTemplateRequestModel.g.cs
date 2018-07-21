@@ -24,56 +24,17 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private Guid externalId;
+                [JsonProperty]
+                public Guid ExternalId { get; private set; }
 
-                [Required]
-                public Guid ExternalId
-                {
-                        get
-                        {
-                                return this.externalId;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.externalId = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7855fad8368471e574a3e7f2dfe641a8</Hash>
+    <Hash>dc14f44a644b12203edc3da2f3f51487</Hash>
 </Codenesium>*/

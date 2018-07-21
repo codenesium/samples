@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -33,9 +34,23 @@ namespace FileServiceNS.Api.Contracts.Tests
 
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiFileTypeModelMapper();
+                        var model = new ApiFileTypeRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiFileTypeRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiFileTypeRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4a0ac857d823a18296659e16ba2d6347</Hash>
+    <Hash>2a462a29411fabd9e348efd685df3462</Hash>
 </Codenesium>*/

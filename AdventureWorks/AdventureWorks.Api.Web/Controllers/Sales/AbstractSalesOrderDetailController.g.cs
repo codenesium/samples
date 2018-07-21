@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesOrderDetailResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderDetailRequestModel model)
                 {
                         CreateResponse<ApiSalesOrderDetailResponseModel> result = await this.SalesOrderDetailService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderDetails/{result.Record.SalesOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderDetails/{result.Record.SalesOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderDetailResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderDetailRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesOrderDetailRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesOrderDetailService.Update(id, model);
+                                UpdateResponse<ApiSalesOrderDetailResponseModel> result = await this.SalesOrderDetailService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesOrderDetailResponseModel response = await this.SalesOrderDetailService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderDetailResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderDetailRequestModel model)
                 {
-                        ApiSalesOrderDetailRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesOrderDetailRequestModel request = await this.PatchModel(id, this.SalesOrderDetailModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesOrderDetailService.Update(id, request);
+                                UpdateResponse<ApiSalesOrderDetailResponseModel> result = await this.SalesOrderDetailService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesOrderDetailResponseModel response = await this.SalesOrderDetailService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,22 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSalesOrderDetailRequestModel> CreatePatch(ApiSalesOrderDetailRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesOrderDetailRequestModel>();
-                        patch.Replace(x => x.CarrierTrackingNumber, model.CarrierTrackingNumber);
-                        patch.Replace(x => x.LineTotal, model.LineTotal);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OrderQty, model.OrderQty);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalesOrderDetailID, model.SalesOrderDetailID);
-                        patch.Replace(x => x.SpecialOfferID, model.SpecialOfferID);
-                        patch.Replace(x => x.UnitPrice, model.UnitPrice);
-                        patch.Replace(x => x.UnitPriceDiscount, model.UnitPriceDiscount);
-                        return patch;
-                }
-
                 private async Task<ApiSalesOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderDetailRequestModel> patch)
                 {
                         var record = await this.SalesOrderDetailService.Get(id);
@@ -251,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7c214c74f0da2392c53130518dc45094</Hash>
+    <Hash>4230e1a7a19e156cf70758550b162265</Hash>
 </Codenesium>*/

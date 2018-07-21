@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiExtensionConfigurationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiExtensionConfigurationRequestModel model)
                 {
                         CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiExtensionConfigurationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ExtensionConfigurationService.Update(id, model);
+                                UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiExtensionConfigurationResponseModel response = await this.ExtensionConfigurationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiExtensionConfigurationRequestModel model)
                 {
-                        ApiExtensionConfigurationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiExtensionConfigurationRequestModel request = await this.PatchModel(id, this.ExtensionConfigurationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ExtensionConfigurationService.Update(id, request);
+                                UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiExtensionConfigurationResponseModel response = await this.ExtensionConfigurationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiExtensionConfigurationRequestModel> CreatePatch(ApiExtensionConfigurationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiExtensionConfigurationRequestModel>();
-                        patch.Replace(x => x.ExtensionAuthor, model.ExtensionAuthor);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiExtensionConfigurationRequestModel> PatchModel(string id, JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
                 {
                         var record = await this.ExtensionConfigurationService.Get(id);
@@ -233,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f53576a9de345e3fd2183cd73c8e721e</Hash>
+    <Hash>9dc08a9f525e5f45cbd65fe9a28fef49</Hash>
 </Codenesium>*/

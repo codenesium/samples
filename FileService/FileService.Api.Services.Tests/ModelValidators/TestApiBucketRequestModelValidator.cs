@@ -25,30 +25,6 @@ namespace FileServiceNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
-
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBucketRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
-
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
@@ -123,5 +99,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b3d04e6a0d93a0ca4874a7eb74a0fca</Hash>
+    <Hash>8d1fb05a937c4d04a2c231783cd9433d</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCityResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCityResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCityRequestModel model)
                 {
                         CreateResponse<ApiCityResponseModel> result = await this.CityService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cities/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cities/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCityResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCityResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCityRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiCityRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CityService.Update(id, model);
+                                UpdateResponse<ApiCityResponseModel> result = await this.CityService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCityResponseModel response = await this.CityService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCityResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCityResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCityRequestModel model)
                 {
-                        ApiCityRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCityRequestModel request = await this.PatchModel(id, this.CityModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CityService.Update(id, request);
+                                UpdateResponse<ApiCityResponseModel> result = await this.CityService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCityResponseModel response = await this.CityService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -230,14 +226,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCityRequestModel> CreatePatch(ApiCityRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCityRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProvinceId, model.ProvinceId);
-                        return patch;
-                }
-
                 private async Task<ApiCityRequestModel> PatchModel(int id, JsonPatchDocument<ApiCityRequestModel> patch)
                 {
                         var record = await this.CityService.Get(id);
@@ -257,5 +245,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c80ee9199cebdfdb180694a3033f63d8</Hash>
+    <Hash>e6c62b13d3e33e265e7da6dd9f316ed9</Hash>
 </Codenesium>*/

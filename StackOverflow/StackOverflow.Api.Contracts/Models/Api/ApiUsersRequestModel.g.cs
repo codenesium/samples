@@ -44,210 +44,47 @@ namespace StackOverflowNS.Api.Contracts
                         this.WebsiteUrl = websiteUrl;
                 }
 
-                private string aboutMe;
+                [JsonProperty]
+                public string AboutMe { get; private set; }
 
-                public string AboutMe
-                {
-                        get
-                        {
-                                return this.aboutMe;
-                        }
+                [JsonProperty]
+                public int? AccountId { get; private set; }
 
-                        set
-                        {
-                                this.aboutMe = value;
-                        }
-                }
+                [JsonProperty]
+                public int? Age { get; private set; }
 
-                private int? accountId;
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                public int? AccountId
-                {
-                        get
-                        {
-                                return this.accountId;
-                        }
+                [JsonProperty]
+                public string DisplayName { get; private set; }
 
-                        set
-                        {
-                                this.accountId = value;
-                        }
-                }
+                [JsonProperty]
+                public int DownVotes { get; private set; }
 
-                private int? age;
+                [JsonProperty]
+                public string EmailHash { get; private set; }
 
-                public int? Age
-                {
-                        get
-                        {
-                                return this.age;
-                        }
+                [JsonProperty]
+                public DateTime LastAccessDate { get; private set; }
 
-                        set
-                        {
-                                this.age = value;
-                        }
-                }
+                [JsonProperty]
+                public string Location { get; private set; }
 
-                private DateTime creationDate;
+                [JsonProperty]
+                public int Reputation { get; private set; }
 
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
+                [JsonProperty]
+                public int UpVotes { get; private set; }
 
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
+                [JsonProperty]
+                public int Views { get; private set; }
 
-                private string displayName;
-
-                [Required]
-                public string DisplayName
-                {
-                        get
-                        {
-                                return this.displayName;
-                        }
-
-                        set
-                        {
-                                this.displayName = value;
-                        }
-                }
-
-                private int downVotes;
-
-                [Required]
-                public int DownVotes
-                {
-                        get
-                        {
-                                return this.downVotes;
-                        }
-
-                        set
-                        {
-                                this.downVotes = value;
-                        }
-                }
-
-                private string emailHash;
-
-                public string EmailHash
-                {
-                        get
-                        {
-                                return this.emailHash;
-                        }
-
-                        set
-                        {
-                                this.emailHash = value;
-                        }
-                }
-
-                private DateTime lastAccessDate;
-
-                [Required]
-                public DateTime LastAccessDate
-                {
-                        get
-                        {
-                                return this.lastAccessDate;
-                        }
-
-                        set
-                        {
-                                this.lastAccessDate = value;
-                        }
-                }
-
-                private string location;
-
-                public string Location
-                {
-                        get
-                        {
-                                return this.location;
-                        }
-
-                        set
-                        {
-                                this.location = value;
-                        }
-                }
-
-                private int reputation;
-
-                [Required]
-                public int Reputation
-                {
-                        get
-                        {
-                                return this.reputation;
-                        }
-
-                        set
-                        {
-                                this.reputation = value;
-                        }
-                }
-
-                private int upVotes;
-
-                [Required]
-                public int UpVotes
-                {
-                        get
-                        {
-                                return this.upVotes;
-                        }
-
-                        set
-                        {
-                                this.upVotes = value;
-                        }
-                }
-
-                private int views;
-
-                [Required]
-                public int Views
-                {
-                        get
-                        {
-                                return this.views;
-                        }
-
-                        set
-                        {
-                                this.views = value;
-                        }
-                }
-
-                private string websiteUrl;
-
-                public string WebsiteUrl
-                {
-                        get
-                        {
-                                return this.websiteUrl;
-                        }
-
-                        set
-                        {
-                                this.websiteUrl = value;
-                        }
-                }
+                [JsonProperty]
+                public string WebsiteUrl { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0005ae1167c041e41b609ddf5a7f1138</Hash>
+    <Hash>8df5d5f24032c8cab81ab2b2fdf57d1c</Hash>
 </Codenesium>*/

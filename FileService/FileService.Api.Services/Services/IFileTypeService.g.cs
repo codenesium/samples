@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.Services
                 Task<CreateResponse<ApiFileTypeResponseModel>> Create(
                         ApiFileTypeRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiFileTypeRequestModel model);
+                Task<UpdateResponse<ApiFileTypeResponseModel>> Update(int id,
+                                                                       ApiFileTypeRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fee96c46861c0af5b73c96611fc7d9bd</Hash>
+    <Hash>85de5e5e204765372ee5392ba8d4bc31</Hash>
 </Codenesium>*/

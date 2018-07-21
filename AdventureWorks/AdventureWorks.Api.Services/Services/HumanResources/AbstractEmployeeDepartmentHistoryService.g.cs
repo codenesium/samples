@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Update(
                         int businessEntityID,
                         ApiEmployeeDepartmentHistoryRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.employeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.employeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
                                 await this.employeeDepartmentHistoryRepository.Update(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.employeeDepartmentHistoryRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>(this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>610688a4fe57737b2d6c7badd7223835</Hash>
+    <Hash>02659ca69410c38e91a12323201d92e8</Hash>
 </Codenesium>*/

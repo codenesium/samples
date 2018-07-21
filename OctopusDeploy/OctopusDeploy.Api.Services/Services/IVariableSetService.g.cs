@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiVariableSetResponseModel>> Create(
                         ApiVariableSetRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiVariableSetRequestModel model);
+                Task<UpdateResponse<ApiVariableSetResponseModel>> Update(string id,
+                                                                          ApiVariableSetRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c32f025eef5ca8fa5738e62ff4fdcea</Hash>
+    <Hash>861b0a5074f3e049d8be4f38ed94f11a</Hash>
 </Codenesium>*/

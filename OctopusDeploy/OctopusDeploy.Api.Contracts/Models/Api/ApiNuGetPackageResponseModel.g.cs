@@ -30,26 +30,44 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VersionSpecial = versionSpecial;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string PackageId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Version { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int VersionBuild { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int VersionMajor { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int VersionMinor { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int VersionRevision { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string VersionSpecial { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>112bc91753467671b20e24f91351bb5c</Hash>
+    <Hash>d576698c904cbb7e1bf49e8897914fda</Hash>
 </Codenesium>*/

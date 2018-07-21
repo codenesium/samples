@@ -1,5 +1,6 @@
 using ESPIOTNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace ESPIOTNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.PublicId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiDeviceModelMapper();
+                        var model = new ApiDeviceRequestModel();
+                        model.SetProperties("A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+
+                        JsonPatchDocument<ApiDeviceRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiDeviceRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                        response.PublicId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1b006cc2eb4a67f7bf01ec275bea8f4a</Hash>
+    <Hash>8d7d36809769575d2b09af7e108e6a14</Hash>
 </Codenesium>*/

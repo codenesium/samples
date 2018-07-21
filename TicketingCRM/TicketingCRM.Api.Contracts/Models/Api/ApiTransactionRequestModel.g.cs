@@ -24,56 +24,17 @@ namespace TicketingCRMNS.Api.Contracts
                         this.TransactionStatusId = transactionStatusId;
                 }
 
-                private decimal amount;
+                [JsonProperty]
+                public decimal Amount { get; private set; }
 
-                [Required]
-                public decimal Amount
-                {
-                        get
-                        {
-                                return this.amount;
-                        }
+                [JsonProperty]
+                public string GatewayConfirmationNumber { get; private set; }
 
-                        set
-                        {
-                                this.amount = value;
-                        }
-                }
-
-                private string gatewayConfirmationNumber;
-
-                [Required]
-                public string GatewayConfirmationNumber
-                {
-                        get
-                        {
-                                return this.gatewayConfirmationNumber;
-                        }
-
-                        set
-                        {
-                                this.gatewayConfirmationNumber = value;
-                        }
-                }
-
-                private int transactionStatusId;
-
-                [Required]
-                public int TransactionStatusId
-                {
-                        get
-                        {
-                                return this.transactionStatusId;
-                        }
-
-                        set
-                        {
-                                this.transactionStatusId = value;
-                        }
-                }
+                [JsonProperty]
+                public int TransactionStatusId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>317ff5d5e08f9dde4c9732653c77afd6</Hash>
+    <Hash>c7e21841016ffe4c3c3caef4ed016249</Hash>
 </Codenesium>*/

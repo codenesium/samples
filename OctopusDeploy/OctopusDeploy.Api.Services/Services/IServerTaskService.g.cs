@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiServerTaskResponseModel>> Create(
                         ApiServerTaskRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiServerTaskRequestModel model);
+                Task<UpdateResponse<ApiServerTaskResponseModel>> Update(string id,
+                                                                         ApiServerTaskRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7bf8906f4473d02924b804f9057cf5e3</Hash>
+    <Hash>3b36ee098f5267947d239b091dd65b4b</Hash>
 </Codenesium>*/

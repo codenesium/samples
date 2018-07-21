@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiShipMethodResponseModel>> Update(
                         int shipMethodID,
                         ApiShipMethodRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.shipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model));
-                        if (response.Success)
+                        var validationResult = await this.shipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolShipMethodMapper.MapModelToBO(shipMethodID, model);
                                 await this.shipMethodRepository.Update(this.dalShipMethodMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.shipMethodRepository.Get(shipMethodID);
+
+                                return new UpdateResponse<ApiShipMethodResponseModel>(this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiShipMethodResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>884fbf0d781b1729c3c85c84d3ce0adf</Hash>
+    <Hash>e69d36d9e501554c9082f8570dd9e860</Hash>
 </Codenesium>*/

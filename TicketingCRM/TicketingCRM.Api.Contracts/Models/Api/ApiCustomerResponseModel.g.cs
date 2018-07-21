@@ -22,18 +22,28 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Phone = phone;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Email { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Phone { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1064348a7bb81264d1360702567b9b02</Hash>
+    <Hash>ed70b791a5e88d5de46e638b016ee39c</Hash>
 </Codenesium>*/

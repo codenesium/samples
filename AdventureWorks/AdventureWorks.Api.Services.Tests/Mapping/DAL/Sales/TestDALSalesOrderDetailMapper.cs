@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesOrderDetailMapper();
                         var bo = new BOSalesOrderDetail();
-                        bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        bo.SetProperties(1, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1m, 1m);
 
                         SalesOrderDetail response = mapper.MapBOToEF(bo);
 
                         response.CarrierTrackingNumber.Should().Be("A");
-                        response.LineTotal.Should().Be(1);
+                        response.LineTotal.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
@@ -30,8 +30,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SalesOrderDetailID.Should().Be(1);
                         response.SalesOrderID.Should().Be(1);
                         response.SpecialOfferID.Should().Be(1);
-                        response.UnitPrice.Should().Be(1);
-                        response.UnitPriceDiscount.Should().Be(1);
+                        response.UnitPrice.Should().Be(1m);
+                        response.UnitPriceDiscount.Should().Be(1m);
                 }
 
                 [Fact]
@@ -39,12 +39,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesOrderDetailMapper();
                         SalesOrderDetail entity = new SalesOrderDetail();
-                        entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1, 1);
+                        entity.SetProperties("A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1m, 1m);
 
                         BOSalesOrderDetail response = mapper.MapEFToBO(entity);
 
                         response.CarrierTrackingNumber.Should().Be("A");
-                        response.LineTotal.Should().Be(1);
+                        response.LineTotal.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
@@ -52,8 +52,8 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SalesOrderDetailID.Should().Be(1);
                         response.SalesOrderID.Should().Be(1);
                         response.SpecialOfferID.Should().Be(1);
-                        response.UnitPrice.Should().Be(1);
-                        response.UnitPriceDiscount.Should().Be(1);
+                        response.UnitPrice.Should().Be(1m);
+                        response.UnitPriceDiscount.Should().Be(1m);
                 }
 
                 [Fact]
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesOrderDetailMapper();
                         SalesOrderDetail entity = new SalesOrderDetail();
-                        entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1, 1);
+                        entity.SetProperties("A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1m, 1m);
 
                         List<BOSalesOrderDetail> response = mapper.MapEFToBO(new List<SalesOrderDetail>() { entity });
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>53e55f32ddd5c60ac35fc101ef537959</Hash>
+    <Hash>042c0ef68a652abb42ddc1babc6800c9</Hash>
 </Codenesium>*/

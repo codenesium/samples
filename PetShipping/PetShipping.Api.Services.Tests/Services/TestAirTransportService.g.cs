@@ -97,13 +97,14 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IAirTransportRepository>();
                         var model = new ApiAirTransportRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AirTransport>())).Returns(Task.FromResult(new AirTransport()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
                         var service = new AirTransportService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
                                                               mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiAirTransportResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()));
@@ -132,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9ca3319497e0cfa006735be24648ef74</Hash>
+    <Hash>0a2648dce385a5930aaa5cf03abb0b83</Hash>
 </Codenesium>*/

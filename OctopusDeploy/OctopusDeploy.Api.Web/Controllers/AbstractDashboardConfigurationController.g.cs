@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDashboardConfigurationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDashboardConfigurationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDashboardConfigurationRequestModel model)
                 {
                         CreateResponse<ApiDashboardConfigurationResponseModel> result = await this.DashboardConfigurationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DashboardConfigurations/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DashboardConfigurations/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDashboardConfigurationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDashboardConfigurationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiDashboardConfigurationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiDashboardConfigurationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DashboardConfigurationService.Update(id, model);
+                                UpdateResponse<ApiDashboardConfigurationResponseModel> result = await this.DashboardConfigurationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDashboardConfigurationResponseModel response = await this.DashboardConfigurationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDashboardConfigurationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDashboardConfigurationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiDashboardConfigurationRequestModel model)
                 {
-                        ApiDashboardConfigurationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDashboardConfigurationRequestModel request = await this.PatchModel(id, this.DashboardConfigurationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DashboardConfigurationService.Update(id, request);
+                                UpdateResponse<ApiDashboardConfigurationResponseModel> result = await this.DashboardConfigurationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDashboardConfigurationResponseModel response = await this.DashboardConfigurationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,17 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiDashboardConfigurationRequestModel> CreatePatch(ApiDashboardConfigurationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDashboardConfigurationRequestModel>();
-                        patch.Replace(x => x.IncludedEnvironmentIds, model.IncludedEnvironmentIds);
-                        patch.Replace(x => x.IncludedProjectIds, model.IncludedProjectIds);
-                        patch.Replace(x => x.IncludedTenantIds, model.IncludedTenantIds);
-                        patch.Replace(x => x.IncludedTenantTags, model.IncludedTenantTags);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        return patch;
-                }
-
                 private async Task<ApiDashboardConfigurationRequestModel> PatchModel(string id, JsonPatchDocument<ApiDashboardConfigurationRequestModel> patch)
                 {
                         var record = await this.DashboardConfigurationService.Get(id);
@@ -235,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f9544b9ad3ba8703f922187194ea51c</Hash>
+    <Hash>751937be75be1c02e7c4bfbcd5b5839a</Hash>
 </Codenesium>*/

@@ -28,12 +28,11 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>30402660163aab5c7274adb45af3c9e3</Hash>
+    <Hash>c312d0b4c3c26acf8582cef1de94a870</Hash>
 </Codenesium>*/

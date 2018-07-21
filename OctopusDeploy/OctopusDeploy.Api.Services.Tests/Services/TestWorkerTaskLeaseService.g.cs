@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IWorkerTaskLeaseRepository>();
                         var model = new ApiWorkerTaskLeaseRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkerTaskLease>())).Returns(Task.FromResult(new WorkerTaskLease()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
                         var service = new WorkerTaskLeaseService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.WorkerTaskLeaseModelValidatorMock.Object,
                                                                  mock.BOLMapperMockFactory.BOLWorkerTaskLeaseMapperMock,
                                                                  mock.DALMapperMockFactory.DALWorkerTaskLeaseMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiWorkerTaskLeaseResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.WorkerTaskLeaseModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiWorkerTaskLeaseRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>48a251eb6253f2fa548aa69d63c0a03d</Hash>
+    <Hash>12c65b63b7a312cc437b232d3de8c5f8</Hash>
 </Codenesium>*/

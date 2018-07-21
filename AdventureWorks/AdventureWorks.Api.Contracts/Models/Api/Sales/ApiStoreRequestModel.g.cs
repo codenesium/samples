@@ -15,99 +15,39 @@ namespace AdventureWorksNS.Api.Contracts
                 }
 
                 public virtual void SetProperties(
-                        string demographics,
+                        string demographic,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
                         int? salesPersonID)
                 {
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
                         this.SalesPersonID = salesPersonID;
                 }
 
-                private string demographics;
-
-                public string Demographics
-                {
-                        get
-                        {
-                                return this.demographics;
-                        }
-
-                        set
-                        {
-                                this.demographics = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string Demographic { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private int? salesPersonID;
-
-                public int? SalesPersonID
-                {
-                        get
-                        {
-                                return this.salesPersonID;
-                        }
-
-                        set
-                        {
-                                this.salesPersonID = value;
-                        }
-                }
+                [JsonProperty]
+                public int? SalesPersonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>95fd98fe654f004b6377d4b5a9089f48</Hash>
+    <Hash>d9ece4f3070e401a6a92aedc7a00b796</Hash>
 </Codenesium>*/

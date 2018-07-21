@@ -20,24 +20,11 @@ namespace PetShippingNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8d8e744845c7021b2ccedb46fc36a749</Hash>
+    <Hash>a162824737047cefcf354bdd0d428914</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiUserRoleResponseModel>> Create(
                         ApiUserRoleRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiUserRoleRequestModel model);
+                Task<UpdateResponse<ApiUserRoleResponseModel>> Update(string id,
+                                                                       ApiUserRoleRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ccd4654661b5d05bc712c6d8766cf81</Hash>
+    <Hash>7e3d6b46fd2e9b2ae868c1e4238bd4f1</Hash>
 </Codenesium>*/

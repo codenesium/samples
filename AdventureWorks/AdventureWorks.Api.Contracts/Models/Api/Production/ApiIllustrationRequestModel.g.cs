@@ -22,39 +22,15 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
-                private string diagram;
-
-                public string Diagram
-                {
-                        get
-                        {
-                                return this.diagram;
-                        }
-
-                        set
-                        {
-                                this.diagram = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string Diagram { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb7d7f7002957c9bbe02b188053f9098</Hash>
+    <Hash>c30a211f2a7943c7ac0176fbb94e2bab</Hash>
 </Codenesium>*/

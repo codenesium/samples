@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ProductDescriptionID = productDescriptionID;
                 }
 
+                [JsonProperty]
                 public string CultureID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductDescriptionID { get; private set; }
 
+                [JsonProperty]
                 public int ProductModelID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>bf8d65a2f8b00d146dc67fd5d52f3c57</Hash>
+    <Hash>167d0246e49759bac301f421af7d59ae</Hash>
 </Codenesium>*/

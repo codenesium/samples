@@ -16,14 +16,14 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime hireDate,
                         string jobTitle,
                         string loginID,
-                        string maritalStatus,
+                        string maritalStatu,
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
-                        short sickLeaveHours,
-                        short vacationHours)
+                        short sickLeaveHour,
+                        short vacationHour)
                 {
                         this.BusinessEntityID = businessEntityID;
                         this.BirthDate = birthDate;
@@ -32,48 +32,64 @@ namespace AdventureWorksNS.Api.Contracts
                         this.HireDate = hireDate;
                         this.JobTitle = jobTitle;
                         this.LoginID = loginID;
-                        this.MaritalStatus = maritalStatus;
+                        this.MaritalStatu = maritalStatu;
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
-                        this.SickLeaveHours = sickLeaveHours;
-                        this.VacationHours = vacationHours;
+                        this.SickLeaveHour = sickLeaveHour;
+                        this.VacationHour = vacationHour;
                 }
 
+                [JsonProperty]
                 public DateTime BirthDate { get; private set; }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public bool CurrentFlag { get; private set; }
 
+                [JsonProperty]
                 public string Gender { get; private set; }
 
+                [JsonProperty]
                 public DateTime HireDate { get; private set; }
 
+                [JsonProperty]
                 public string JobTitle { get; private set; }
 
+                [JsonProperty]
                 public string LoginID { get; private set; }
 
-                public string MaritalStatus { get; private set; }
+                [JsonProperty]
+                public string MaritalStatu { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string NationalIDNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public short? OrganizationLevel { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public bool SalariedFlag { get; private set; }
 
-                public short SickLeaveHours { get; private set; }
+                [JsonProperty]
+                public short SickLeaveHour { get; private set; }
 
-                public short VacationHours { get; private set; }
+                [JsonProperty]
+                public short VacationHour { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f51a5b308fc91b2a00ed05ebe7ce7d0</Hash>
+    <Hash>c7dfad330dca7b7641076628c78e343e</Hash>
 </Codenesium>*/

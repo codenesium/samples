@@ -90,18 +90,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiMachineResponseModel>> Update(
                         int id,
                         ApiMachineRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.machineModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolMachineMapper.MapModelToBO(id, model);
                                 await this.machineRepository.Update(this.dalMachineMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.machineRepository.Get(id);
+
+                                return new UpdateResponse<ApiMachineResponseModel>(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiMachineResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1990ce58e6bf5a03ea49836ff1a59ab9</Hash>
+    <Hash>78a28e399d9dac38529ff54d49db15d9</Hash>
 </Codenesium>*/

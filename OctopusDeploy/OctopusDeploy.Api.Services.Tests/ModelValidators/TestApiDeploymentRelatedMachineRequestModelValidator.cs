@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DeploymentId_Create_null()
-                {
-                        Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
-                        deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
-
-                        var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, null as string);
-                }
-
-                [Fact]
-                public async void DeploymentId_Update_null()
-                {
-                        Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
-                        deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
-
-                        var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, null as string);
-                }
-
-                [Fact]
                 public async void DeploymentId_Create_length()
                 {
                         Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
@@ -123,30 +99,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void MachineId_Create_null()
-                {
-                        Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
-                        deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
-
-                        var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.MachineId, null as string);
-                }
-
-                [Fact]
-                public async void MachineId_Update_null()
-                {
-                        Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
-                        deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
-
-                        var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.MachineId, null as string);
-                }
-
-                [Fact]
                 public async void MachineId_Create_length()
                 {
                         Mock<IDeploymentRelatedMachineRepository> deploymentRelatedMachineRepository = new Mock<IDeploymentRelatedMachineRepository>();
@@ -173,5 +125,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a8acf42890f3ee2e96ee566f66ae2cda</Hash>
+    <Hash>0898c3a400b4e5ff9887e932c4c2d9ad</Hash>
 </Codenesium>*/

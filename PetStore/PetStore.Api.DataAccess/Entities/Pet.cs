@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace PetStoreNS.Api.DataAccess
 {
@@ -40,6 +41,7 @@ namespace PetStoreNS.Api.DataAccess
                 public string Description { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("id")]
                 public int Id { get; private set; }
 
@@ -64,5 +66,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b37246047eff6a6d82ef3448866283fe</Hash>
+    <Hash>266d5d115b479019da5f0ab7ab356a5e</Hash>
 </Codenesium>*/

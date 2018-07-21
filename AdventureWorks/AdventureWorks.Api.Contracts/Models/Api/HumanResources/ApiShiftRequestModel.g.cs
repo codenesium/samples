@@ -26,72 +26,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartTime = startTime;
                 }
 
-                private TimeSpan endTime;
+                [Required]
+                [JsonProperty]
+                public TimeSpan EndTime { get; private set; }
 
                 [Required]
-                public TimeSpan EndTime
-                {
-                        get
-                        {
-                                return this.endTime;
-                        }
-
-                        set
-                        {
-                                this.endTime = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private TimeSpan startTime;
-
-                [Required]
-                public TimeSpan StartTime
-                {
-                        get
-                        {
-                                return this.startTime;
-                        }
-
-                        set
-                        {
-                                this.startTime = value;
-                        }
-                }
+                [JsonProperty]
+                public TimeSpan StartTime { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f1d57032fbab3c09c6a25cc65e826c8</Hash>
+    <Hash>b94286763052bf2d7fe4e2de34034a30</Hash>
 </Codenesium>*/

@@ -105,6 +105,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPipelineStatusRepository>();
                         var model = new ApiPipelineStatusRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStatus>())).Returns(Task.FromResult(new PipelineStatus()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStatus()));
                         var service = new PipelineStatusService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.PipelineStatusModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPipelineMapperMock,
                                                                 mock.DALMapperMockFactory.DALPipelineMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPipelineStatusResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PipelineStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStatusRequestModel>()));
@@ -184,5 +185,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8a3e4fe2ae9d0cf3faf1f8374ba56276</Hash>
+    <Hash>90a2ba3c829463601873482614debcda</Hash>
 </Codenesium>*/

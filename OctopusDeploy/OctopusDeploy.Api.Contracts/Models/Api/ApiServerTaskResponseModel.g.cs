@@ -46,42 +46,76 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset? CompletedTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ConcurrencyTag { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int DurationSeconds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ErrorMessage { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool HasPendingInterruptions { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool HasWarningsOrErrors { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset QueueTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ServerNodeId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset? StartTime { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string State { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ec1886f36024ce8fbd4084094a09d08</Hash>
+    <Hash>e11b35e5bc135e2e080cdb18f35ab321</Hash>
 </Codenesium>*/

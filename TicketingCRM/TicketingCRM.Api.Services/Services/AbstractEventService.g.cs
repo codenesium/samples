@@ -75,18 +75,25 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiEventResponseModel>> Update(
                         int id,
                         ApiEventRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.eventModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolEventMapper.MapModelToBO(id, model);
                                 await this.eventRepository.Update(this.dalEventMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.eventRepository.Get(id);
+
+                                return new UpdateResponse<ApiEventResponseModel>(this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiEventResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -111,5 +118,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36dd07032a76f9b92da4779c36d26a25</Hash>
+    <Hash>f5b5f8e59f9e4eff4925b65c10d471cc</Hash>
 </Codenesium>*/

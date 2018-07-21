@@ -24,20 +24,31 @@ namespace TicketingCRMNS.Api.Contracts
                         this.TransactionIdEntity = nameof(ApiResponse.Transactions);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string IpAddress { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Notes { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime SaleDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int TransactionId { get; private set; }
 
+                [JsonProperty]
                 public string TransactionIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>03679fff4e1770827607c53b83c28399</Hash>
+    <Hash>580cf3b48c757a6a373acb4abe8bfce9</Hash>
 </Codenesium>*/

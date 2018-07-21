@@ -28,87 +28,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
-                private string actionType;
+                [JsonProperty]
+                public string ActionType { get; private set; }
 
-                [Required]
-                public string ActionType
-                {
-                        get
-                        {
-                                return this.actionType;
-                        }
+                [JsonProperty]
+                public string CommunityActionTemplateId { get; private set; }
 
-                        set
-                        {
-                                this.actionType = value;
-                        }
-                }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                private string communityActionTemplateId;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                public string CommunityActionTemplateId
-                {
-                        get
-                        {
-                                return this.communityActionTemplateId;
-                        }
-
-                        set
-                        {
-                                this.communityActionTemplateId = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int version;
-
-                [Required]
-                public int Version
-                {
-                        get
-                        {
-                                return this.version;
-                        }
-
-                        set
-                        {
-                                this.version = value;
-                        }
-                }
+                [JsonProperty]
+                public int Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>055f0b8322952452d9a3a6770e62c859</Hash>
+    <Hash>5ff27e2297310af245e7562e6fc18f01</Hash>
 </Codenesium>*/

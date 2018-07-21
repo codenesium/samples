@@ -28,13 +28,11 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void Address1Rules()
                 {
-                        this.RuleFor(x => x.Address1).NotNull();
                         this.RuleFor(x => x.Address1).Length(0, 128);
                 }
 
                 public virtual void Address2Rules()
                 {
-                        this.RuleFor(x => x.Address2).NotNull();
                         this.RuleFor(x => x.Address2).Length(0, 128);
                 }
 
@@ -49,7 +47,6 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void DescriptionRules()
                 {
-                        this.RuleFor(x => x.Description).NotNull();
                         this.RuleFor(x => x.Description).Length(0, 2147483647);
                 }
 
@@ -59,13 +56,11 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void FacebookRules()
                 {
-                        this.RuleFor(x => x.Facebook).NotNull();
                         this.RuleFor(x => x.Facebook).Length(0, 128);
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
 
@@ -75,7 +70,6 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void WebsiteRules()
                 {
-                        this.RuleFor(x => x.Website).NotNull();
                         this.RuleFor(x => x.Website).Length(0, 128);
                 }
 
@@ -89,5 +83,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a68391e1db981f7511b05d35fad5d6fb</Hash>
+    <Hash>1792f7ee3cb533174ed464e5e1bfd5e0</Hash>
 </Codenesium>*/

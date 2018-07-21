@@ -42,199 +42,55 @@ namespace AdventureWorksNS.Api.Contracts
                         this.VendorID = vendorID;
                 }
 
-                private int employeeID;
+                [Required]
+                [JsonProperty]
+                public int EmployeeID { get; private set; }
 
                 [Required]
-                public int EmployeeID
-                {
-                        get
-                        {
-                                return this.employeeID;
-                        }
-
-                        set
-                        {
-                                this.employeeID = value;
-                        }
-                }
-
-                private decimal freight;
+                [JsonProperty]
+                public decimal Freight { get; private set; }
 
                 [Required]
-                public decimal Freight
-                {
-                        get
-                        {
-                                return this.freight;
-                        }
-
-                        set
-                        {
-                                this.freight = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private DateTime orderDate;
+                [JsonProperty]
+                public DateTime OrderDate { get; private set; }
 
                 [Required]
-                public DateTime OrderDate
-                {
-                        get
-                        {
-                                return this.orderDate;
-                        }
+                [JsonProperty]
+                public int RevisionNumber { get; private set; }
 
-                        set
-                        {
-                                this.orderDate = value;
-                        }
-                }
-
-                private int revisionNumber;
+                [JsonProperty]
+                public DateTime? ShipDate { get; private set; }
 
                 [Required]
-                public int RevisionNumber
-                {
-                        get
-                        {
-                                return this.revisionNumber;
-                        }
-
-                        set
-                        {
-                                this.revisionNumber = value;
-                        }
-                }
-
-                private DateTime? shipDate;
-
-                public DateTime? ShipDate
-                {
-                        get
-                        {
-                                return this.shipDate;
-                        }
-
-                        set
-                        {
-                                this.shipDate = value;
-                        }
-                }
-
-                private int shipMethodID;
+                [JsonProperty]
+                public int ShipMethodID { get; private set; }
 
                 [Required]
-                public int ShipMethodID
-                {
-                        get
-                        {
-                                return this.shipMethodID;
-                        }
-
-                        set
-                        {
-                                this.shipMethodID = value;
-                        }
-                }
-
-                private int status;
+                [JsonProperty]
+                public int Status { get; private set; }
 
                 [Required]
-                public int Status
-                {
-                        get
-                        {
-                                return this.status;
-                        }
-
-                        set
-                        {
-                                this.status = value;
-                        }
-                }
-
-                private decimal subTotal;
+                [JsonProperty]
+                public decimal SubTotal { get; private set; }
 
                 [Required]
-                public decimal SubTotal
-                {
-                        get
-                        {
-                                return this.subTotal;
-                        }
-
-                        set
-                        {
-                                this.subTotal = value;
-                        }
-                }
-
-                private decimal taxAmt;
+                [JsonProperty]
+                public decimal TaxAmt { get; private set; }
 
                 [Required]
-                public decimal TaxAmt
-                {
-                        get
-                        {
-                                return this.taxAmt;
-                        }
-
-                        set
-                        {
-                                this.taxAmt = value;
-                        }
-                }
-
-                private decimal totalDue;
+                [JsonProperty]
+                public decimal TotalDue { get; private set; }
 
                 [Required]
-                public decimal TotalDue
-                {
-                        get
-                        {
-                                return this.totalDue;
-                        }
-
-                        set
-                        {
-                                this.totalDue = value;
-                        }
-                }
-
-                private int vendorID;
-
-                [Required]
-                public int VendorID
-                {
-                        get
-                        {
-                                return this.vendorID;
-                        }
-
-                        set
-                        {
-                                this.vendorID = value;
-                        }
-                }
+                [JsonProperty]
+                public int VendorID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d2c152acb5d3898e6409d2abfa73eab2</Hash>
+    <Hash>f1d1e7d2a1b60547f1abba5224f138a4</Hash>
 </Codenesium>*/

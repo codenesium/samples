@@ -25,30 +25,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
-                        deviceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
-
-                        var validator = new ApiDeviceRequestModelValidator(deviceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeviceRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
-                        deviceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
-
-                        var validator = new ApiDeviceRequestModelValidator(deviceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
@@ -123,5 +99,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>74907c8315442aa8478701f7905c98b7</Hash>
+    <Hash>daee50757b2b1b311efd961f994a615e</Hash>
 </Codenesium>*/

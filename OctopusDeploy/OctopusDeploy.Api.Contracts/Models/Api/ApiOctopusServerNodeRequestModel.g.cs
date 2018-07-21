@@ -30,104 +30,26 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Rank = rank;
                 }
 
-                private bool isInMaintenanceMode;
+                [JsonProperty]
+                public bool IsInMaintenanceMode { get; private set; }
 
-                [Required]
-                public bool IsInMaintenanceMode
-                {
-                        get
-                        {
-                                return this.isInMaintenanceMode;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.isInMaintenanceMode = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTimeOffset LastSeen { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public int MaxConcurrentTasks { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private DateTimeOffset lastSeen;
-
-                [Required]
-                public DateTimeOffset LastSeen
-                {
-                        get
-                        {
-                                return this.lastSeen;
-                        }
-
-                        set
-                        {
-                                this.lastSeen = value;
-                        }
-                }
-
-                private int maxConcurrentTasks;
-
-                [Required]
-                public int MaxConcurrentTasks
-                {
-                        get
-                        {
-                                return this.maxConcurrentTasks;
-                        }
-
-                        set
-                        {
-                                this.maxConcurrentTasks = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string rank;
-
-                [Required]
-                public string Rank
-                {
-                        get
-                        {
-                                return this.rank;
-                        }
-
-                        set
-                        {
-                                this.rank = value;
-                        }
-                }
+                [JsonProperty]
+                public string Rank { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>034d226b5ac576ed623b97bc217106ce</Hash>
+    <Hash>ee98366a57a298a00018c3c6e9db8dea</Hash>
 </Codenesium>*/

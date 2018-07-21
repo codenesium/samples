@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IContactTypeRepository>();
                         var model = new ApiContactTypeRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ContactType>())).Returns(Task.FromResult(new ContactType()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
                         var service = new ContactTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiContactTypeResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()));
@@ -223,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>311380155912bc5bf118298c26f354f8</Hash>
+    <Hash>64aaafeae0065c5699e7b9706525bc46</Hash>
 </Codenesium>*/

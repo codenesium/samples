@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -41,9 +42,27 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ThumbNailPhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
                         response.ThumbnailPhotoFileName.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiProductPhotoModelMapper();
+                        var model = new ApiProductPhotoRequestModel();
+                        model.SetProperties(BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
+
+                        JsonPatchDocument<ApiProductPhotoRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiProductPhotoRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.LargePhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+                        response.LargePhotoFileName.Should().Be("A");
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.ThumbNailPhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+                        response.ThumbnailPhotoFileName.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5b554d4e3c9aad2bf08acf840da0baac</Hash>
+    <Hash>bcc399fde35b9b66e5fd2897c37c379f</Hash>
 </Codenesium>*/

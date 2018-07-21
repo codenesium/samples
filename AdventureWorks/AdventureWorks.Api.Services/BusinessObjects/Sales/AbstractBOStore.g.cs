@@ -11,14 +11,14 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(int businessEntityID,
-                                                  string demographics,
+                                                  string demographic,
                                                   DateTime modifiedDate,
                                                   string name,
                                                   Guid rowguid,
                                                   int? salesPersonID)
                 {
                         this.BusinessEntityID = businessEntityID;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public int BusinessEntityID { get; private set; }
 
-                public string Demographics { get; private set; }
+                public string Demographic { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e6a88465191ff55f5c4cc6fee161d3e</Hash>
+    <Hash>d7c43a1d710a4124e9e12a3d9e39f6bd</Hash>
 </Codenesium>*/

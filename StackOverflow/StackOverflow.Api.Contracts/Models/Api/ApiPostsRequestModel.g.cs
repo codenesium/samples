@@ -56,299 +56,65 @@ namespace StackOverflowNS.Api.Contracts
                         this.ViewCount = viewCount;
                 }
 
-                private int? acceptedAnswerId;
+                [JsonProperty]
+                public int? AcceptedAnswerId { get; private set; }
 
-                public int? AcceptedAnswerId
-                {
-                        get
-                        {
-                                return this.acceptedAnswerId;
-                        }
+                [JsonProperty]
+                public int? AnswerCount { get; private set; }
 
-                        set
-                        {
-                                this.acceptedAnswerId = value;
-                        }
-                }
+                [JsonProperty]
+                public string Body { get; private set; }
 
-                private int? answerCount;
+                [JsonProperty]
+                public DateTime? ClosedDate { get; private set; }
 
-                public int? AnswerCount
-                {
-                        get
-                        {
-                                return this.answerCount;
-                        }
+                [JsonProperty]
+                public int? CommentCount { get; private set; }
 
-                        set
-                        {
-                                this.answerCount = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime? CommunityOwnedDate { get; private set; }
 
-                private string body;
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                [Required]
-                public string Body
-                {
-                        get
-                        {
-                                return this.body;
-                        }
+                [JsonProperty]
+                public int? FavoriteCount { get; private set; }
 
-                        set
-                        {
-                                this.body = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime LastActivityDate { get; private set; }
 
-                private DateTime? closedDate;
+                [JsonProperty]
+                public DateTime? LastEditDate { get; private set; }
 
-                public DateTime? ClosedDate
-                {
-                        get
-                        {
-                                return this.closedDate;
-                        }
+                [JsonProperty]
+                public string LastEditorDisplayName { get; private set; }
 
-                        set
-                        {
-                                this.closedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public int? LastEditorUserId { get; private set; }
 
-                private int? commentCount;
+                [JsonProperty]
+                public int? OwnerUserId { get; private set; }
 
-                public int? CommentCount
-                {
-                        get
-                        {
-                                return this.commentCount;
-                        }
+                [JsonProperty]
+                public int? ParentId { get; private set; }
 
-                        set
-                        {
-                                this.commentCount = value;
-                        }
-                }
+                [JsonProperty]
+                public int PostTypeId { get; private set; }
 
-                private DateTime? communityOwnedDate;
+                [JsonProperty]
+                public int Score { get; private set; }
 
-                public DateTime? CommunityOwnedDate
-                {
-                        get
-                        {
-                                return this.communityOwnedDate;
-                        }
+                [JsonProperty]
+                public string Tags { get; private set; }
 
-                        set
-                        {
-                                this.communityOwnedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public string Title { get; private set; }
 
-                private DateTime creationDate;
-
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
-
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
-
-                private int? favoriteCount;
-
-                public int? FavoriteCount
-                {
-                        get
-                        {
-                                return this.favoriteCount;
-                        }
-
-                        set
-                        {
-                                this.favoriteCount = value;
-                        }
-                }
-
-                private DateTime lastActivityDate;
-
-                [Required]
-                public DateTime LastActivityDate
-                {
-                        get
-                        {
-                                return this.lastActivityDate;
-                        }
-
-                        set
-                        {
-                                this.lastActivityDate = value;
-                        }
-                }
-
-                private DateTime? lastEditDate;
-
-                public DateTime? LastEditDate
-                {
-                        get
-                        {
-                                return this.lastEditDate;
-                        }
-
-                        set
-                        {
-                                this.lastEditDate = value;
-                        }
-                }
-
-                private string lastEditorDisplayName;
-
-                public string LastEditorDisplayName
-                {
-                        get
-                        {
-                                return this.lastEditorDisplayName;
-                        }
-
-                        set
-                        {
-                                this.lastEditorDisplayName = value;
-                        }
-                }
-
-                private int? lastEditorUserId;
-
-                public int? LastEditorUserId
-                {
-                        get
-                        {
-                                return this.lastEditorUserId;
-                        }
-
-                        set
-                        {
-                                this.lastEditorUserId = value;
-                        }
-                }
-
-                private int? ownerUserId;
-
-                public int? OwnerUserId
-                {
-                        get
-                        {
-                                return this.ownerUserId;
-                        }
-
-                        set
-                        {
-                                this.ownerUserId = value;
-                        }
-                }
-
-                private int? parentId;
-
-                public int? ParentId
-                {
-                        get
-                        {
-                                return this.parentId;
-                        }
-
-                        set
-                        {
-                                this.parentId = value;
-                        }
-                }
-
-                private int postTypeId;
-
-                [Required]
-                public int PostTypeId
-                {
-                        get
-                        {
-                                return this.postTypeId;
-                        }
-
-                        set
-                        {
-                                this.postTypeId = value;
-                        }
-                }
-
-                private int score;
-
-                [Required]
-                public int Score
-                {
-                        get
-                        {
-                                return this.score;
-                        }
-
-                        set
-                        {
-                                this.score = value;
-                        }
-                }
-
-                private string tags;
-
-                public string Tags
-                {
-                        get
-                        {
-                                return this.tags;
-                        }
-
-                        set
-                        {
-                                this.tags = value;
-                        }
-                }
-
-                private string title;
-
-                public string Title
-                {
-                        get
-                        {
-                                return this.title;
-                        }
-
-                        set
-                        {
-                                this.title = value;
-                        }
-                }
-
-                private int viewCount;
-
-                [Required]
-                public int ViewCount
-                {
-                        get
-                        {
-                                return this.viewCount;
-                        }
-
-                        set
-                        {
-                                this.viewCount = value;
-                        }
-                }
+                [JsonProperty]
+                public int ViewCount { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b076c8fe3c68fee95de126aee15396cc</Hash>
+    <Hash>a16e66f89cbd82c55f1fb66db056ea33</Hash>
 </Codenesium>*/

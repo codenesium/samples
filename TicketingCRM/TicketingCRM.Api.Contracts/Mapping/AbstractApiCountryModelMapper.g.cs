@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
@@ -23,9 +25,16 @@ namespace TicketingCRMNS.Api.Contracts
                                 response.Name);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiCountryRequestModel> CreatePatch(ApiCountryRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCountryRequestModel>();
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c696a8582621b91a9725eeacc2521ce1</Hash>
+    <Hash>0f773f245091bb8120616191b7363f3b</Hash>
 </Codenesium>*/

@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                public virtual void ActualResourceHrsRules()
+                public virtual void ActualResourceHrRules()
                 {
                 }
 
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>713831c488200675a99836b8063c622f</Hash>
+    <Hash>ec3eff2fcf083cc58958dd849dd1f3ca</Hash>
 </Codenesium>*/

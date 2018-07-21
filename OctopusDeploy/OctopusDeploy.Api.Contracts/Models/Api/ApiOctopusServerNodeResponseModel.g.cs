@@ -26,22 +26,36 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Rank = rank;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsInMaintenanceMode { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset LastSeen { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int MaxConcurrentTasks { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Rank { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e5e2d3b80578a60576b9050abd5b5a7</Hash>
+    <Hash>133b519048f4a003b3cc7e8dbd13b45e</Hash>
 </Codenesium>*/

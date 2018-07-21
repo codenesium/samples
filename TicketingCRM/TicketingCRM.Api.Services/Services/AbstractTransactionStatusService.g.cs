@@ -83,18 +83,25 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTransactionStatusResponseModel>> Update(
                         int id,
                         ApiTransactionStatusRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.transactionStatusModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.transactionStatusModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTransactionStatusMapper.MapModelToBO(id, model);
                                 await this.transactionStatusRepository.Update(this.dalTransactionStatusMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.transactionStatusRepository.Get(id);
+
+                                return new UpdateResponse<ApiTransactionStatusResponseModel>(this.bolTransactionStatusMapper.MapBOToModel(this.dalTransactionStatusMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTransactionStatusResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79547fd2a80de8807e76cc1125849c5e</Hash>
+    <Hash>ee208fb3eb4ddcea097f082fda4e96f9</Hash>
 </Codenesium>*/

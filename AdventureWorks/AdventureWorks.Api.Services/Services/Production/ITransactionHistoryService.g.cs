@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiTransactionHistoryResponseModel>> Create(
                         ApiTransactionHistoryRequestModel model);
 
-                Task<ActionResponse> Update(int transactionID,
-                                            ApiTransactionHistoryRequestModel model);
+                Task<UpdateResponse<ApiTransactionHistoryResponseModel>> Update(int transactionID,
+                                                                                 ApiTransactionHistoryRequestModel model);
 
                 Task<ActionResponse> Delete(int transactionID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb796bce06ae85a872a698f6a653dafe</Hash>
+    <Hash>9e8b14b2327f986c2583c5d357481da6</Hash>
 </Codenesium>*/

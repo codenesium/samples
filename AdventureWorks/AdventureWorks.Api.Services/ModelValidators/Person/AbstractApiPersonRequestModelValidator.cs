@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                public virtual void DemographicsRules()
+                public virtual void DemographicRules()
                 {
                 }
 
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>670fa37cb346e2b67a2826f17e469410</Hash>
+    <Hash>70c1be84d9a0bd9af44ec39f8a5ed042</Hash>
 </Codenesium>*/

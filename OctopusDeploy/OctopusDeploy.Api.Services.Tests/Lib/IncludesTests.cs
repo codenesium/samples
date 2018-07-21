@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,5 +80,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7a565a9d3df9a722f908bdee889078b</Hash>
+    <Hash>db4fe1e29155175a8fde281575df0216</Hash>
 </Codenesium>*/

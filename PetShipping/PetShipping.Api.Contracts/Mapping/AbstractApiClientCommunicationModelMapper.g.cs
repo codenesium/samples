@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
@@ -29,9 +31,19 @@ namespace PetShippingNS.Api.Contracts
                                 response.Notes);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiClientCommunicationRequestModel> CreatePatch(ApiClientCommunicationRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
+                        patch.Replace(x => x.ClientId, model.ClientId);
+                        patch.Replace(x => x.DateCreated, model.DateCreated);
+                        patch.Replace(x => x.EmployeeId, model.EmployeeId);
+                        patch.Replace(x => x.Notes, model.Notes);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>93566f590356fcb4d4e24431a011e5c8</Hash>
+    <Hash>8765a79d5b105e1217140cb46114de6f</Hash>
 </Codenesium>*/

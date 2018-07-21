@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,28 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.Rank.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiOctopusServerNodeModelMapper();
+                        var model = new ApiOctopusServerNodeRequestModel();
+                        model.SetProperties(true, "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, "A", "A");
+
+                        JsonPatchDocument<ApiOctopusServerNodeRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiOctopusServerNodeRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.IsInMaintenanceMode.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.LastSeen.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
+                        response.MaxConcurrentTasks.Should().Be(1);
+                        response.Name.Should().Be("A");
+                        response.Rank.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f9c9023bd9ccf7b2ef21883a3919d076</Hash>
+    <Hash>2cb14b8da772dcca60a0ee46a6aad406</Hash>
 </Codenesium>*/

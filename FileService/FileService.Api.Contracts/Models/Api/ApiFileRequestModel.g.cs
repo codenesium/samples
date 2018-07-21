@@ -40,182 +40,41 @@ namespace FileServiceNS.Api.Contracts
                         this.PublicKey = publicKey;
                 }
 
-                private int? bucketId;
+                [JsonProperty]
+                public int? BucketId { get; private set; }
 
-                public int? BucketId
-                {
-                        get
-                        {
-                                return this.bucketId;
-                        }
+                [JsonProperty]
+                public DateTime DateCreated { get; private set; }
 
-                        set
-                        {
-                                this.bucketId = value;
-                        }
-                }
+                [JsonProperty]
+                public string Description { get; private set; }
 
-                private DateTime dateCreated;
+                [JsonProperty]
+                public DateTime Expiration { get; private set; }
 
-                [Required]
-                public DateTime DateCreated
-                {
-                        get
-                        {
-                                return this.dateCreated;
-                        }
+                [JsonProperty]
+                public string Extension { get; private set; }
 
-                        set
-                        {
-                                this.dateCreated = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid ExternalId { get; private set; }
 
-                private string description;
+                [JsonProperty]
+                public decimal FileSizeInBytes { get; private set; }
 
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
+                [JsonProperty]
+                public int FileTypeId { get; private set; }
 
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
+                [JsonProperty]
+                public string Location { get; private set; }
 
-                private DateTime expiration;
+                [JsonProperty]
+                public string PrivateKey { get; private set; }
 
-                [Required]
-                public DateTime Expiration
-                {
-                        get
-                        {
-                                return this.expiration;
-                        }
-
-                        set
-                        {
-                                this.expiration = value;
-                        }
-                }
-
-                private string extension;
-
-                [Required]
-                public string Extension
-                {
-                        get
-                        {
-                                return this.extension;
-                        }
-
-                        set
-                        {
-                                this.extension = value;
-                        }
-                }
-
-                private Guid externalId;
-
-                [Required]
-                public Guid ExternalId
-                {
-                        get
-                        {
-                                return this.externalId;
-                        }
-
-                        set
-                        {
-                                this.externalId = value;
-                        }
-                }
-
-                private decimal fileSizeInBytes;
-
-                [Required]
-                public decimal FileSizeInBytes
-                {
-                        get
-                        {
-                                return this.fileSizeInBytes;
-                        }
-
-                        set
-                        {
-                                this.fileSizeInBytes = value;
-                        }
-                }
-
-                private int fileTypeId;
-
-                [Required]
-                public int FileTypeId
-                {
-                        get
-                        {
-                                return this.fileTypeId;
-                        }
-
-                        set
-                        {
-                                this.fileTypeId = value;
-                        }
-                }
-
-                private string location;
-
-                [Required]
-                public string Location
-                {
-                        get
-                        {
-                                return this.location;
-                        }
-
-                        set
-                        {
-                                this.location = value;
-                        }
-                }
-
-                private string privateKey;
-
-                [Required]
-                public string PrivateKey
-                {
-                        get
-                        {
-                                return this.privateKey;
-                        }
-
-                        set
-                        {
-                                this.privateKey = value;
-                        }
-                }
-
-                private string publicKey;
-
-                [Required]
-                public string PublicKey
-                {
-                        get
-                        {
-                                return this.publicKey;
-                        }
-
-                        set
-                        {
-                                this.publicKey = value;
-                        }
-                }
+                [JsonProperty]
+                public string PublicKey { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>12c887951654ab75a4a4ea2db79b37cf</Hash>
+    <Hash>d336cc4b82a9181b90fe985c873ed0e3</Hash>
 </Codenesium>*/

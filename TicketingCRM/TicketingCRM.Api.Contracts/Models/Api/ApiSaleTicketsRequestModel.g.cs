@@ -22,40 +22,14 @@ namespace TicketingCRMNS.Api.Contracts
                         this.TicketId = ticketId;
                 }
 
-                private int saleId;
+                [JsonProperty]
+                public int SaleId { get; private set; }
 
-                [Required]
-                public int SaleId
-                {
-                        get
-                        {
-                                return this.saleId;
-                        }
-
-                        set
-                        {
-                                this.saleId = value;
-                        }
-                }
-
-                private int ticketId;
-
-                [Required]
-                public int TicketId
-                {
-                        get
-                        {
-                                return this.ticketId;
-                        }
-
-                        set
-                        {
-                                this.ticketId = value;
-                        }
-                }
+                [JsonProperty]
+                public int TicketId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6b149e1deed603959b62afa4fb630650</Hash>
+    <Hash>2915311f61fb02afafec2c9dee82f10a</Hash>
 </Codenesium>*/

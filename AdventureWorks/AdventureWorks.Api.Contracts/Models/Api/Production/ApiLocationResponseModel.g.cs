@@ -22,18 +22,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [JsonProperty]
                 public decimal Availability { get; private set; }
 
+                [JsonProperty]
                 public decimal CostRate { get; private set; }
 
+                [JsonProperty]
                 public short LocationID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>aecb7d5a516238a76d9782b53e9d4bdb</Hash>
+    <Hash>59b1183e3730b71b2026798ac485bb5d</Hash>
 </Codenesium>*/

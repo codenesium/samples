@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiChannelResponseModel>> Create(
                         ApiChannelRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiChannelRequestModel model);
+                Task<UpdateResponse<ApiChannelResponseModel>> Update(string id,
+                                                                      ApiChannelRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e543226e4f8ad0369b4e5278eda78da</Hash>
+    <Hash>09e282814fee96302740ca99f0f65df5</Hash>
 </Codenesium>*/

@@ -32,12 +32,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void OwnerIdRules()
                 {
-                        this.RuleFor(x => x.OwnerId).NotNull();
                         this.RuleFor(x => x.OwnerId).Length(0, 150);
                 }
 
@@ -52,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e01bdd5126873965e69a5202e1262b3</Hash>
+    <Hash>c2c110075215273965b770187f944694</Hash>
 </Codenesium>*/

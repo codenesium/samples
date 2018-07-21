@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "SalesPersonQuotaHistory")]
         [Trait("Area", "Integration")]
-        public class SalesPersonQuotaHistoryIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class SalesPersonQuotaHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public SalesPersonQuotaHistoryIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiSalesPersonQuotaHistoryModelMapper mapper = new ApiSalesPersonQuotaHistoryModelMapper();
+
+                        UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> updateResponse = await this.Client.SalesPersonQuotaHistoryUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.SalesPersonQuotaHistoryDeleteAsync(model.BusinessEntityID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiSalesPersonQuotaHistoryResponseModel response = await this.Client.SalesPersonQuotaHistoryGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiSalesPersonQuotaHistoryResponseModel> response = await this.Client.SalesPersonQuotaHistoryAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiSalesPersonQuotaHistoryResponseModel> CreateRecord()
+                {
+                        var model = new ApiSalesPersonQuotaHistoryRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 3810.59m);
+                        CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.Client.SalesPersonQuotaHistoryCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.SalesPersonQuotaHistoryDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>64376a6f5d2e1f1f39db79f7f8d1c98f</Hash>
+    <Hash>c866c271fed7f00c6139d16f57fcf8ef</Hash>
 </Codenesium>*/

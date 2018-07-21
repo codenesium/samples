@@ -17,20 +17,20 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductVendorMapper();
                         var bo = new BOProductVendor();
-                        bo.SetProperties(1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
+                        bo.SetProperties(1, 1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A");
 
                         ProductVendor response = mapper.MapBOToEF(bo);
 
                         response.AverageLeadTime.Should().Be(1);
                         response.BusinessEntityID.Should().Be(1);
-                        response.LastReceiptCost.Should().Be(1);
+                        response.LastReceiptCost.Should().Be(1m);
                         response.LastReceiptDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.MaxOrderQty.Should().Be(1);
                         response.MinOrderQty.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OnOrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
-                        response.StandardPrice.Should().Be(1);
+                        response.StandardPrice.Should().Be(1m);
                         response.UnitMeasureCode.Should().Be("A");
                 }
 
@@ -39,20 +39,20 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductVendorMapper();
                         ProductVendor entity = new ProductVendor();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A");
+                        entity.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, "A");
 
                         BOProductVendor response = mapper.MapEFToBO(entity);
 
                         response.AverageLeadTime.Should().Be(1);
                         response.BusinessEntityID.Should().Be(1);
-                        response.LastReceiptCost.Should().Be(1);
+                        response.LastReceiptCost.Should().Be(1m);
                         response.LastReceiptDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.MaxOrderQty.Should().Be(1);
                         response.MinOrderQty.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OnOrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
-                        response.StandardPrice.Should().Be(1);
+                        response.StandardPrice.Should().Be(1m);
                         response.UnitMeasureCode.Should().Be("A");
                 }
 
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductVendorMapper();
                         ProductVendor entity = new ProductVendor();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A");
+                        entity.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, "A");
 
                         List<BOProductVendor> response = mapper.MapEFToBO(new List<ProductVendor>() { entity });
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4792bac56803ee9015e6b6da00c67327</Hash>
+    <Hash>151e65764ef2c95f772ea815bf239ba2</Hash>
 </Codenesium>*/

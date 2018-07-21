@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ScriptName_Create_null()
-                {
-                        Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
-                        schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
-
-                        var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSchemaVersionsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ScriptName, null as string);
-                }
-
-                [Fact]
-                public async void ScriptName_Update_null()
-                {
-                        Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
-                        schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
-
-                        var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSchemaVersionsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ScriptName, null as string);
-                }
-
-                [Fact]
                 public async void ScriptName_Create_length()
                 {
                         Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
@@ -75,5 +51,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9015bce4877858a908212174df32ea55</Hash>
+    <Hash>52cd6771c0aefe3b3562e82bf9885673</Hash>
 </Codenesium>*/

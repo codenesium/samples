@@ -28,88 +28,28 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShoppingCartID = shoppingCartID;
                 }
 
-                private DateTime dateCreated;
+                [Required]
+                [JsonProperty]
+                public DateTime DateCreated { get; private set; }
 
                 [Required]
-                public DateTime DateCreated
-                {
-                        get
-                        {
-                                return this.dateCreated;
-                        }
-
-                        set
-                        {
-                                this.dateCreated = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private int quantity;
+                [JsonProperty]
+                public int Quantity { get; private set; }
 
                 [Required]
-                public int Quantity
-                {
-                        get
-                        {
-                                return this.quantity;
-                        }
-
-                        set
-                        {
-                                this.quantity = value;
-                        }
-                }
-
-                private string shoppingCartID;
-
-                [Required]
-                public string ShoppingCartID
-                {
-                        get
-                        {
-                                return this.shoppingCartID;
-                        }
-
-                        set
-                        {
-                                this.shoppingCartID = value;
-                        }
-                }
+                [JsonProperty]
+                public string ShoppingCartID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c8a57deafc186b51a0061438b585e743</Hash>
+    <Hash>bc6ad45390557054a5521b1dfd55f06a</Hash>
 </Codenesium>*/

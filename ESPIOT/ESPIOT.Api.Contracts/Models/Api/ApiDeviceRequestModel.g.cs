@@ -22,40 +22,14 @@ namespace ESPIOTNS.Api.Contracts
                         this.PublicId = publicId;
                 }
 
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid publicId;
-
-                [Required]
-                public Guid PublicId
-                {
-                        get
-                        {
-                                return this.publicId;
-                        }
-
-                        set
-                        {
-                                this.publicId = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid PublicId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>55e210d7216fea5e2389d9e32f2e4b54</Hash>
+    <Hash>526d1a7b1ce757d1cd88df70a552e349</Hash>
 </Codenesium>*/

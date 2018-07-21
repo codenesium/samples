@@ -22,18 +22,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StartTime = startTime;
                 }
 
+                [JsonProperty]
                 public TimeSpan EndTime { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public int ShiftID { get; private set; }
 
+                [JsonProperty]
                 public TimeSpan StartTime { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3a827f11cd1d2f6236f4c0ee466b89b2</Hash>
+    <Hash>52de1ac08ed86534b225f6315a0d3863</Hash>
 </Codenesium>*/

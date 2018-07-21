@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
-
-                        var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLifecycleRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
-
-                        var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiLifecycleRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
-
-                        var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLifecycleRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
-                        lifecycleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Lifecycle()));
-
-                        var validator = new ApiLifecycleRequestModelValidator(lifecycleRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiLifecycleRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ILifecycleRepository> lifecycleRepository = new Mock<ILifecycleRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4737ffb2adfefcd897ddd24bd28d116b</Hash>
+    <Hash>bdea7197d2afc9e3b3c648553378fcf3</Hash>
 </Codenesium>*/

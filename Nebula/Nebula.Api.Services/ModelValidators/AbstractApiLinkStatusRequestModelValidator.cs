@@ -28,12 +28,11 @@ namespace NebulaNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0dc20058ca1f0bf6587e5e5b2f57e6a8</Hash>
+    <Hash>46c89bb59636911ecee9d5fe093ed2c9</Hash>
 </Codenesium>*/

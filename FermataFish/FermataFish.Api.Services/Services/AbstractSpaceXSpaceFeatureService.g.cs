@@ -75,18 +75,25 @@ namespace FermataFishNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>> Update(
                         int id,
                         ApiSpaceXSpaceFeatureRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.spaceXSpaceFeatureModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.spaceXSpaceFeatureModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolSpaceXSpaceFeatureMapper.MapModelToBO(id, model);
                                 await this.spaceXSpaceFeatureRepository.Update(this.dalSpaceXSpaceFeatureMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.spaceXSpaceFeatureRepository.Get(id);
+
+                                return new UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>(this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6253ad2d8b73e47c80ea7e9ea883c645</Hash>
+    <Hash>63752ecedc1efe21d7651b4a046ab9cb</Hash>
 </Codenesium>*/

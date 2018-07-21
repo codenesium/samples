@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
-
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProxyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
-
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
-
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProxyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
-
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>08836215daab26521c9a990f74de6c3b</Hash>
+    <Hash>bcbcbd40048285a235a1ca2f9c403961</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLessonResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLessonRequestModel model)
                 {
                         CreateResponse<ApiLessonResponseModel> result = await this.LessonService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lessons/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lessons/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLessonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLessonRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiLessonRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LessonService.Update(id, model);
+                                UpdateResponse<ApiLessonResponseModel> result = await this.LessonService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLessonResponseModel response = await this.LessonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLessonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonRequestModel model)
                 {
-                        ApiLessonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLessonRequestModel request = await this.PatchModel(id, this.LessonModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LessonService.Update(id, request);
+                                UpdateResponse<ApiLessonResponseModel> result = await this.LessonService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLessonResponseModel response = await this.LessonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -233,21 +229,6 @@ namespace FermataFishNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiLessonRequestModel> CreatePatch(ApiLessonRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLessonRequestModel>();
-                        patch.Replace(x => x.ActualEndDate, model.ActualEndDate);
-                        patch.Replace(x => x.ActualStartDate, model.ActualStartDate);
-                        patch.Replace(x => x.BillAmount, model.BillAmount);
-                        patch.Replace(x => x.LessonStatusId, model.LessonStatusId);
-                        patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
-                        patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
-                        patch.Replace(x => x.StudentNotes, model.StudentNotes);
-                        patch.Replace(x => x.StudioId, model.StudioId);
-                        patch.Replace(x => x.TeacherNotes, model.TeacherNotes);
-                        return patch;
-                }
-
                 private async Task<ApiLessonRequestModel> PatchModel(int id, JsonPatchDocument<ApiLessonRequestModel> patch)
                 {
                         var record = await this.LessonService.Get(id);
@@ -267,5 +248,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b91c2c06ff2685a86e13183c0f8c3329</Hash>
+    <Hash>e3e5e00b32bc90884822da9231625c7a</Hash>
 </Codenesium>*/

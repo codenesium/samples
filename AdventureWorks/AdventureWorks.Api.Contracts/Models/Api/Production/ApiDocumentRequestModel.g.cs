@@ -42,197 +42,53 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Title = title;
                 }
 
-                private int changeNumber;
+                [Required]
+                [JsonProperty]
+                public int ChangeNumber { get; private set; }
+
+                [JsonProperty]
+                public byte[] Document1 { get; private set; }
+
+                [JsonProperty]
+                public short? DocumentLevel { get; private set; }
+
+                [JsonProperty]
+                public string DocumentSummary { get; private set; }
 
                 [Required]
-                public int ChangeNumber
-                {
-                        get
-                        {
-                                return this.changeNumber;
-                        }
-
-                        set
-                        {
-                                this.changeNumber = value;
-                        }
-                }
-
-                private byte[] document1;
-
-                public byte[] Document1
-                {
-                        get
-                        {
-                                return this.document1;
-                        }
-
-                        set
-                        {
-                                this.document1 = value;
-                        }
-                }
-
-                private short? documentLevel;
-
-                public short? DocumentLevel
-                {
-                        get
-                        {
-                                return this.documentLevel;
-                        }
-
-                        set
-                        {
-                                this.documentLevel = value;
-                        }
-                }
-
-                private string documentSummary;
-
-                public string DocumentSummary
-                {
-                        get
-                        {
-                                return this.documentSummary;
-                        }
-
-                        set
-                        {
-                                this.documentSummary = value;
-                        }
-                }
-
-                private string fileExtension;
+                [JsonProperty]
+                public string FileExtension { get; private set; }
 
                 [Required]
-                public string FileExtension
-                {
-                        get
-                        {
-                                return this.fileExtension;
-                        }
-
-                        set
-                        {
-                                this.fileExtension = value;
-                        }
-                }
-
-                private string fileName;
+                [JsonProperty]
+                public string FileName { get; private set; }
 
                 [Required]
-                public string FileName
-                {
-                        get
-                        {
-                                return this.fileName;
-                        }
-
-                        set
-                        {
-                                this.fileName = value;
-                        }
-                }
-
-                private bool folderFlag;
+                [JsonProperty]
+                public bool FolderFlag { get; private set; }
 
                 [Required]
-                public bool FolderFlag
-                {
-                        get
-                        {
-                                return this.folderFlag;
-                        }
-
-                        set
-                        {
-                                this.folderFlag = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int owner;
+                [JsonProperty]
+                public int Owner { get; private set; }
 
                 [Required]
-                public int Owner
-                {
-                        get
-                        {
-                                return this.owner;
-                        }
-
-                        set
-                        {
-                                this.owner = value;
-                        }
-                }
-
-                private string revision;
+                [JsonProperty]
+                public string Revision { get; private set; }
 
                 [Required]
-                public string Revision
-                {
-                        get
-                        {
-                                return this.revision;
-                        }
-
-                        set
-                        {
-                                this.revision = value;
-                        }
-                }
-
-                private int status;
+                [JsonProperty]
+                public int Status { get; private set; }
 
                 [Required]
-                public int Status
-                {
-                        get
-                        {
-                                return this.status;
-                        }
-
-                        set
-                        {
-                                this.status = value;
-                        }
-                }
-
-                private string title;
-
-                [Required]
-                public string Title
-                {
-                        get
-                        {
-                                return this.title;
-                        }
-
-                        set
-                        {
-                                this.title = value;
-                        }
-                }
+                [JsonProperty]
+                public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d2e25ada68d7b4eda6903304ad3d6371</Hash>
+    <Hash>6c2f77051e4217e8fae29951bcea1f32</Hash>
 </Codenesium>*/

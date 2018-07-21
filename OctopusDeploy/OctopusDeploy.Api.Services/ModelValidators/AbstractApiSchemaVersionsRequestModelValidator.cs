@@ -32,12 +32,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ScriptNameRules()
                 {
-                        this.RuleFor(x => x.ScriptName).NotNull();
                         this.RuleFor(x => x.ScriptName).Length(0, 255);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>83af627e89d9ea5ea74195c4861e4e16</Hash>
+    <Hash>c2a7ad91b6259fe1acdc5c7f49c0b86f</Hash>
 </Codenesium>*/

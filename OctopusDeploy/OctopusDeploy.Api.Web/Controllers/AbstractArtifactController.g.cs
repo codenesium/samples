@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiArtifactResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiArtifactResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiArtifactRequestModel model)
                 {
                         CreateResponse<ApiArtifactResponseModel> result = await this.ArtifactService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Artifacts/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Artifacts/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiArtifactResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiArtifactResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiArtifactRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiArtifactRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ArtifactService.Update(id, model);
+                                UpdateResponse<ApiArtifactResponseModel> result = await this.ArtifactService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiArtifactResponseModel response = await this.ArtifactService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiArtifactResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiArtifactResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiArtifactRequestModel model)
                 {
-                        ApiArtifactRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiArtifactRequestModel request = await this.PatchModel(id, this.ArtifactModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ArtifactService.Update(id, request);
+                                UpdateResponse<ApiArtifactResponseModel> result = await this.ArtifactService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiArtifactResponseModel response = await this.ArtifactService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,19 +212,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiArtifactRequestModel> CreatePatch(ApiArtifactRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiArtifactRequestModel>();
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.Filename, model.Filename);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.RelatedDocumentIds, model.RelatedDocumentIds);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        return patch;
-                }
-
                 private async Task<ApiArtifactRequestModel> PatchModel(string id, JsonPatchDocument<ApiArtifactRequestModel> patch)
                 {
                         var record = await this.ArtifactService.Get(id);
@@ -248,5 +231,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9d8bcd726b439d7fe2d4e6a5a903b521</Hash>
+    <Hash>69f727a199a6bd6ae277c2dce1e050fc</Hash>
 </Codenesium>*/

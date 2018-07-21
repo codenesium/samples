@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IWorkOrderRoutingRepository>();
                         var model = new ApiWorkOrderRoutingRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkOrderRouting>())).Returns(Task.FromResult(new WorkOrderRouting()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new WorkOrderRouting()));
                         var service = new WorkOrderRoutingService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.WorkOrderRoutingModelValidatorMock.Object,
                                                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiWorkOrderRoutingResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.WorkOrderRoutingModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderRoutingRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>92dfee53594a7cf78efeae30521b9020</Hash>
+    <Hash>d7abd1f3cdb620f930ebf5845d7a8023</Hash>
 </Codenesium>*/

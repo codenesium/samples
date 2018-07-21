@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTeamResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTeamRequestModel model)
                 {
                         CreateResponse<ApiTeamResponseModel> result = await this.TeamService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teams/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teams/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiTeamRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiTeamRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TeamService.Update(id, model);
+                                UpdateResponse<ApiTeamResponseModel> result = await this.TeamService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTeamResponseModel response = await this.TeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTeamResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiTeamRequestModel model)
                 {
-                        ApiTeamRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTeamRequestModel request = await this.PatchModel(id, this.TeamModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TeamService.Update(id, request);
+                                UpdateResponse<ApiTeamResponseModel> result = await this.TeamService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTeamResponseModel response = await this.TeamService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,20 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiTeamRequestModel> CreatePatch(ApiTeamRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTeamRequestModel>();
-                        patch.Replace(x => x.EnvironmentIds, model.EnvironmentIds);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.MemberUserIds, model.MemberUserIds);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProjectGroupIds, model.ProjectGroupIds);
-                        patch.Replace(x => x.ProjectIds, model.ProjectIds);
-                        patch.Replace(x => x.TenantIds, model.TenantIds);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        return patch;
-                }
-
                 private async Task<ApiTeamRequestModel> PatchModel(string id, JsonPatchDocument<ApiTeamRequestModel> patch)
                 {
                         var record = await this.TeamService.Get(id);
@@ -257,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>065bab4907b0ca8bec0966d95c9a5e4a</Hash>
+    <Hash>9baccc2e93bb812b66b48c0f26304523</Hash>
 </Codenesium>*/

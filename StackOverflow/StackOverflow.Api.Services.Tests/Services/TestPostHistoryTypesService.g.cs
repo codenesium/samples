@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPostHistoryTypesRepository>();
                         var model = new ApiPostHistoryTypesRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostHistoryTypes>())).Returns(Task.FromResult(new PostHistoryTypes()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistoryTypes()));
                         var service = new PostHistoryTypesService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.PostHistoryTypesModelValidatorMock.Object,
                                                                   mock.BOLMapperMockFactory.BOLPostHistoryTypesMapperMock,
                                                                   mock.DALMapperMockFactory.DALPostHistoryTypesMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPostHistoryTypesResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PostHistoryTypesModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypesRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>94d6af5ff79e582b1e9d114529a4ffed</Hash>
+    <Hash>6093b699b264981d2eeb857250498446</Hash>
 </Codenesium>*/

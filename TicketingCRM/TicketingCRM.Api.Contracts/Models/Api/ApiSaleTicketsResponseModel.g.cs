@@ -21,18 +21,26 @@ namespace TicketingCRMNS.Api.Contracts
                         this.TicketIdEntity = nameof(ApiResponse.Tickets);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int SaleId { get; private set; }
 
+                [JsonProperty]
                 public string SaleIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int TicketId { get; private set; }
 
+                [JsonProperty]
                 public string TicketIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>fc67be217d57550d3b859cc4bae9e1b0</Hash>
+    <Hash>76a51ba81106a09889105005e875ca44</Hash>
 </Codenesium>*/

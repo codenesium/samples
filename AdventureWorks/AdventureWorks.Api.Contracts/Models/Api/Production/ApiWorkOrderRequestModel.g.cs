@@ -36,150 +36,42 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StockedQty = stockedQty;
                 }
 
-                private DateTime dueDate;
+                [Required]
+                [JsonProperty]
+                public DateTime DueDate { get; private set; }
+
+                [JsonProperty]
+                public DateTime? EndDate { get; private set; }
 
                 [Required]
-                public DateTime DueDate
-                {
-                        get
-                        {
-                                return this.dueDate;
-                        }
-
-                        set
-                        {
-                                this.dueDate = value;
-                        }
-                }
-
-                private DateTime? endDate;
-
-                public DateTime? EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int orderQty;
+                [JsonProperty]
+                public int OrderQty { get; private set; }
 
                 [Required]
-                public int OrderQty
-                {
-                        get
-                        {
-                                return this.orderQty;
-                        }
-
-                        set
-                        {
-                                this.orderQty = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
+                [JsonProperty]
+                public short ScrappedQty { get; private set; }
 
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private short scrappedQty;
+                [JsonProperty]
+                public short? ScrapReasonID { get; private set; }
 
                 [Required]
-                public short ScrappedQty
-                {
-                        get
-                        {
-                                return this.scrappedQty;
-                        }
-
-                        set
-                        {
-                                this.scrappedQty = value;
-                        }
-                }
-
-                private short? scrapReasonID;
-
-                public short? ScrapReasonID
-                {
-                        get
-                        {
-                                return this.scrapReasonID;
-                        }
-
-                        set
-                        {
-                                this.scrapReasonID = value;
-                        }
-                }
-
-                private DateTime startDate;
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
 
                 [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
-
-                private int stockedQty;
-
-                [Required]
-                public int StockedQty
-                {
-                        get
-                        {
-                                return this.stockedQty;
-                        }
-
-                        set
-                        {
-                                this.stockedQty = value;
-                        }
-                }
+                [JsonProperty]
+                public int StockedQty { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f354f5ac385194695d6ec389bf9f53d7</Hash>
+    <Hash>267e87344458ac8460539b721138abb8</Hash>
 </Codenesium>*/

@@ -18,14 +18,18 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Diagram { get; private set; }
 
+                [JsonProperty]
                 public int IllustrationID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e947433d229fbe429f7bc72db4a6f7aa</Hash>
+    <Hash>53a667e13396fe8cc3b9e548d1d760ca</Hash>
 </Codenesium>*/

@@ -26,72 +26,20 @@ namespace PetShippingNS.Api.Contracts
                         this.Notes = notes;
                 }
 
-                private int clientId;
+                [JsonProperty]
+                public int ClientId { get; private set; }
 
-                [Required]
-                public int ClientId
-                {
-                        get
-                        {
-                                return this.clientId;
-                        }
+                [JsonProperty]
+                public DateTime DateCreated { get; private set; }
 
-                        set
-                        {
-                                this.clientId = value;
-                        }
-                }
+                [JsonProperty]
+                public int EmployeeId { get; private set; }
 
-                private DateTime dateCreated;
-
-                [Required]
-                public DateTime DateCreated
-                {
-                        get
-                        {
-                                return this.dateCreated;
-                        }
-
-                        set
-                        {
-                                this.dateCreated = value;
-                        }
-                }
-
-                private int employeeId;
-
-                [Required]
-                public int EmployeeId
-                {
-                        get
-                        {
-                                return this.employeeId;
-                        }
-
-                        set
-                        {
-                                this.employeeId = value;
-                        }
-                }
-
-                private string notes;
-
-                [Required]
-                public string Notes
-                {
-                        get
-                        {
-                                return this.notes;
-                        }
-
-                        set
-                        {
-                                this.notes = value;
-                        }
-                }
+                [JsonProperty]
+                public string Notes { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b9f8094eead800018c6e81c0a967cd20</Hash>
+    <Hash>013a90ab6e3b6a154d36eb1c13ab2e9a</Hash>
 </Codenesium>*/

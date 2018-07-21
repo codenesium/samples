@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using TicketingCRMNS.Api.Contracts;
@@ -43,9 +44,28 @@ namespace TicketingCRMNS.Api.Contracts.Tests
                         response.Phone.Should().Be("A");
                         response.Username.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiAdminModelMapper();
+                        var model = new ApiAdminRequestModel();
+                        model.SetProperties("A", "A", "A", "A", "A", "A");
+
+                        JsonPatchDocument<ApiAdminRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiAdminRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Email.Should().Be("A");
+                        response.FirstName.Should().Be("A");
+                        response.LastName.Should().Be("A");
+                        response.Password.Should().Be("A");
+                        response.Phone.Should().Be("A");
+                        response.Username.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a7c491076720f1893dfc6ca73a844516</Hash>
+    <Hash>6e0331656710de69996b9e9b434d8cfb</Hash>
 </Codenesium>*/

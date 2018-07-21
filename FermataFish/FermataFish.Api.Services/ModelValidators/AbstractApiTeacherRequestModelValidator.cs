@@ -32,25 +32,21 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void EmailRules()
                 {
-                        this.RuleFor(x => x.Email).NotNull();
                         this.RuleFor(x => x.Email).Length(0, 128);
                 }
 
                 public virtual void FirstNameRules()
                 {
-                        this.RuleFor(x => x.FirstName).NotNull();
                         this.RuleFor(x => x.FirstName).Length(0, 128);
                 }
 
                 public virtual void LastNameRules()
                 {
-                        this.RuleFor(x => x.LastName).NotNull();
                         this.RuleFor(x => x.LastName).Length(0, 128);
                 }
 
                 public virtual void PhoneRules()
                 {
-                        this.RuleFor(x => x.Phone).NotNull();
                         this.RuleFor(x => x.Phone).Length(0, 128);
                 }
 
@@ -69,5 +65,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb64554b8139c7d56cb61e7a267aec50</Hash>
+    <Hash>ef33bca936d0efb33cae495ec7c4c9e1</Hash>
 </Codenesium>*/

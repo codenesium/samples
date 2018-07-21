@@ -12,8 +12,8 @@ namespace PetShippingNS.Api.Services
                 Task<CreateResponse<ApiPipelineStepStatusResponseModel>> Create(
                         ApiPipelineStepStatusRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiPipelineStepStatusRequestModel model);
+                Task<UpdateResponse<ApiPipelineStepStatusResponseModel>> Update(int id,
+                                                                                 ApiPipelineStepStatusRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f696841465e01cab0e847566f6d907c</Hash>
+    <Hash>ff7c185597d318ec67a4309dbdf52451</Hash>
 </Codenesium>*/

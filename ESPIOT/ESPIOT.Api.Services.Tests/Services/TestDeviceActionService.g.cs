@@ -97,13 +97,14 @@ namespace ESPIOTNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDeviceActionRepository>();
                         var model = new ApiDeviceActionRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeviceAction>())).Returns(Task.FromResult(new DeviceAction()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
                         var service = new DeviceActionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
                                                               mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                               mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiDeviceActionResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionRequestModel>()));
@@ -168,5 +169,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6cc1951f88d0844b8b389b70c9682357</Hash>
+    <Hash>7eea157888e8435e5de0a2be9f800002</Hash>
 </Codenesium>*/

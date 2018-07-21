@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -37,9 +38,25 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.Primary.Should().Be(true);
                         response.ProductPhotoID.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiProductProductPhotoModelMapper();
+                        var model = new ApiProductProductPhotoRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
+
+                        JsonPatchDocument<ApiProductProductPhotoRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiProductProductPhotoRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Primary.Should().Be(true);
+                        response.ProductPhotoID.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cd17adeb66e276eefccd4e2ce0408ba2</Hash>
+    <Hash>b91290c66f1a2d3f67cb7b6f82b69774</Hash>
 </Codenesium>*/

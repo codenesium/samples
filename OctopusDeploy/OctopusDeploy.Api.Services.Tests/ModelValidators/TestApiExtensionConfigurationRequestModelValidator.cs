@@ -49,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
-
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
-
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
@@ -99,5 +75,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>86033326099c36ad45753fe0de27fab7</Hash>
+    <Hash>6ed8ce0b769873fe4a353353dd3aedf7</Hash>
 </Codenesium>*/

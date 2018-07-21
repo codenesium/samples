@@ -26,9 +26,9 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public virtual void CommentsRules()
+                public virtual void CommentRules()
                 {
-                        this.RuleFor(x => x.Comments).Length(0, 3850);
+                        this.RuleFor(x => x.Comment).Length(0, 3850);
                 }
 
                 public virtual void EmailAddressRules()
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c38b9ef20f15e84d6ce860ac1fb2bdde</Hash>
+    <Hash>93f6fafd8e0dc7c451e988bbaf072d33</Hash>
 </Codenesium>*/

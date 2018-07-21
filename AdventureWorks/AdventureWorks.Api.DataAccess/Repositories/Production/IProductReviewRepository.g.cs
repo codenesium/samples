@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ProductReview>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName);
+                Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName);
         }
 }
 
 /*<Codenesium>
-    <Hash>43cadd07d2223f990cf1c8c2c4852b64</Hash>
+    <Hash>26c8a02f2caa638cd032cb3a5134a8d5</Hash>
 </Codenesium>*/

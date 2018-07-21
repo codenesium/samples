@@ -26,72 +26,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SalesQuota = salesQuota;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private DateTime quotaDate;
+                [JsonProperty]
+                public DateTime QuotaDate { get; private set; }
 
                 [Required]
-                public DateTime QuotaDate
-                {
-                        get
-                        {
-                                return this.quotaDate;
-                        }
-
-                        set
-                        {
-                                this.quotaDate = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private decimal salesQuota;
-
-                [Required]
-                public decimal SalesQuota
-                {
-                        get
-                        {
-                                return this.salesQuota;
-                        }
-
-                        set
-                        {
-                                this.salesQuota = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal SalesQuota { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f0c631648e30db349443a3a1a3a13f07</Hash>
+    <Hash>58fdbb68221a76b8a611b493e5b48429</Hash>
 </Codenesium>*/

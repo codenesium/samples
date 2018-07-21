@@ -105,6 +105,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILinkRepository>();
                         var model = new ApiLinkRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Link>())).Returns(Task.FromResult(new Link()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
                         var service = new LinkService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace NebulaNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                       mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiLinkResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkRequestModel>()));
@@ -184,5 +185,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>425e00172230a7a9ca8ee43a39a68d81</Hash>
+    <Hash>551b287b7c0d4463230031edf21ecd88</Hash>
 </Codenesium>*/

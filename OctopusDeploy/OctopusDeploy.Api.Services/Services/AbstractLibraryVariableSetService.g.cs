@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiLibraryVariableSetResponseModel>> Update(
                         string id,
                         ApiLibraryVariableSetRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.libraryVariableSetModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.libraryVariableSetModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolLibraryVariableSetMapper.MapModelToBO(id, model);
                                 await this.libraryVariableSetRepository.Update(this.dalLibraryVariableSetMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.libraryVariableSetRepository.Get(id);
+
+                                return new UpdateResponse<ApiLibraryVariableSetResponseModel>(this.bolLibraryVariableSetMapper.MapBOToModel(this.dalLibraryVariableSetMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiLibraryVariableSetResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5c6f7413ef509b6ba151f420a379ea9</Hash>
+    <Hash>5beea88488483fdac0ecd23cb7e2dadb</Hash>
 </Codenesium>*/

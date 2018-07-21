@@ -38,34 +38,60 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableSetId = variableSetId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public bool AutoCreateRelease { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public byte[] DataVersion { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string DeploymentProcessId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool DiscreteChannelRelease { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string IncludedLibraryVariableSetIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDisabled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LifecycleId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectGroupId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Slug { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string VariableSetId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e527635c95a273096191dfea718c6598</Hash>
+    <Hash>a8761e534173fd999d1613b115bf8208</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace PetStoreNS.Api.Contracts.Tests
 
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSpeciesModelMapper();
+                        var model = new ApiSpeciesRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiSpeciesRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSpeciesRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1956d8c9d2605ec635ebadf464271f4</Hash>
+    <Hash>021146ceaa79d17e496e0818dcba7e38</Hash>
 </Codenesium>*/

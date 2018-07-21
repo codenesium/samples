@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiWorkerResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiWorkerRequestModel model)
                 {
                         CreateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Workers/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Workers/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiWorkerRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiWorkerRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.WorkerService.Update(id, model);
+                                UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkerResponseModel response = await this.WorkerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiWorkerRequestModel model)
                 {
-                        ApiWorkerRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiWorkerRequestModel request = await this.PatchModel(id, this.WorkerModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.WorkerService.Update(id, request);
+                                UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkerResponseModel response = await this.WorkerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,21 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiWorkerRequestModel> CreatePatch(ApiWorkerRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiWorkerRequestModel>();
-                        patch.Replace(x => x.CommunicationStyle, model.CommunicationStyle);
-                        patch.Replace(x => x.Fingerprint, model.Fingerprint);
-                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.MachinePolicyId, model.MachinePolicyId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.RelatedDocumentIds, model.RelatedDocumentIds);
-                        patch.Replace(x => x.Thumbprint, model.Thumbprint);
-                        patch.Replace(x => x.WorkerPoolIds, model.WorkerPoolIds);
-                        return patch;
-                }
-
                 private async Task<ApiWorkerRequestModel> PatchModel(string id, JsonPatchDocument<ApiWorkerRequestModel> patch)
                 {
                         var record = await this.WorkerService.Get(id);
@@ -269,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fabadd5c9558dcda4c16526e2ffe5657</Hash>
+    <Hash>2a42ac130e93ca5ea388f9dc284136c0</Hash>
 </Codenesium>*/

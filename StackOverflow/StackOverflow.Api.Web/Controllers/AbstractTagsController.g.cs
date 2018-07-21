@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTagsResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTagsRequestModel model)
                 {
                         CreateResponse<ApiTagsResponseModel> result = await this.TagsService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Tags/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Tags/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTagsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTagsRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiTagsRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TagsService.Update(id, model);
+                                UpdateResponse<ApiTagsResponseModel> result = await this.TagsService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTagsResponseModel response = await this.TagsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTagsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTagsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTagsRequestModel model)
                 {
-                        ApiTagsRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTagsRequestModel request = await this.PatchModel(id, this.TagsModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TagsService.Update(id, request);
+                                UpdateResponse<ApiTagsResponseModel> result = await this.TagsService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTagsResponseModel response = await this.TagsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiTagsRequestModel> CreatePatch(ApiTagsRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTagsRequestModel>();
-                        patch.Replace(x => x.Count, model.Count);
-                        patch.Replace(x => x.ExcerptPostId, model.ExcerptPostId);
-                        patch.Replace(x => x.TagName, model.TagName);
-                        patch.Replace(x => x.WikiPostId, model.WikiPostId);
-                        return patch;
-                }
-
                 private async Task<ApiTagsRequestModel> PatchModel(int id, JsonPatchDocument<ApiTagsRequestModel> patch)
                 {
                         var record = await this.TagsService.Get(id);
@@ -234,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5f8475738ea861599516423d248f284d</Hash>
+    <Hash>890948f2b416911fc49f07d468d85f0a</Hash>
 </Codenesium>*/

@@ -28,12 +28,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void IncludedEnvironmentIdsRules()
                 {
-                        this.RuleFor(x => x.IncludedEnvironmentIds).NotNull();
                 }
 
                 public virtual void IncludedProjectIdsRules()
                 {
-                        this.RuleFor(x => x.IncludedProjectIds).NotNull();
                 }
 
                 public virtual void IncludedTenantIdsRules()
@@ -46,11 +44,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a8b8945606802655d5fb41af7d4d66d7</Hash>
+    <Hash>bbdf0ee43b6e996f378ed70e017de64c</Hash>
 </Codenesium>*/

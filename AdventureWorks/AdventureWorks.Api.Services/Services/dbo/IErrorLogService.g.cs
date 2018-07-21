@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiErrorLogResponseModel>> Create(
                         ApiErrorLogRequestModel model);
 
-                Task<ActionResponse> Update(int errorLogID,
-                                            ApiErrorLogRequestModel model);
+                Task<UpdateResponse<ApiErrorLogResponseModel>> Update(int errorLogID,
+                                                                       ApiErrorLogRequestModel model);
 
                 Task<ActionResponse> Delete(int errorLogID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4a2c2b1c48f4d682e971578dfc4b94e</Hash>
+    <Hash>4c29ad4868bc64134f9072a7cc254ae6</Hash>
 </Codenesium>*/

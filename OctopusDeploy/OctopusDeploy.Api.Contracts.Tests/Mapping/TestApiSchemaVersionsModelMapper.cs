@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,24 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.Applied.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ScriptName.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSchemaVersionsModelMapper();
+                        var model = new ApiSchemaVersionsRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+
+                        JsonPatchDocument<ApiSchemaVersionsRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSchemaVersionsRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Applied.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.ScriptName.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c3b417bd4fa80d30159d7a778403cdf</Hash>
+    <Hash>c85eae7a3101e21cd2a27ec234384f6d</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductReviewResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductReviewResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductReviewRequestModel model)
                 {
                         CreateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductReviews/{result.Record.ProductReviewID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductReviews/{result.Record.ProductReviewID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductReviewResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductReviewResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductReviewRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductReviewRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductReviewService.Update(id, model);
+                                UpdateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductReviewResponseModel response = await this.ProductReviewService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductReviewResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductReviewResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewRequestModel model)
                 {
-                        ApiProductReviewRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductReviewRequestModel request = await this.PatchModel(id, this.ProductReviewModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductReviewService.Update(id, request);
+                                UpdateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductReviewResponseModel response = await this.ProductReviewService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -206,27 +202,14 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("byCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}")]
+                [Route("byProductIDReviewerName/{productID}/{reviewerName}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public async virtual Task<IActionResult> ByProductIDReviewerName(int productID, string reviewerName)
                 {
-                        List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByCommentsProductIDReviewerName(comments, productID, reviewerName);
+                        List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByProductIDReviewerName(productID, reviewerName);
 
                         return this.Ok(response);
-                }
-
-                private JsonPatchDocument<ApiProductReviewRequestModel> CreatePatch(ApiProductReviewRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductReviewRequestModel>();
-                        patch.Replace(x => x.Comments, model.Comments);
-                        patch.Replace(x => x.EmailAddress, model.EmailAddress);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Rating, model.Rating);
-                        patch.Replace(x => x.ReviewDate, model.ReviewDate);
-                        patch.Replace(x => x.ReviewerName, model.ReviewerName);
-                        return patch;
                 }
 
                 private async Task<ApiProductReviewRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductReviewRequestModel> patch)
@@ -248,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>718382e907ed00c78946fa10320e90ec</Hash>
+    <Hash>594b9b19e8134c9a9b94ea2c3581d0fd</Hash>
 </Codenesium>*/

@@ -30,104 +30,32 @@ namespace PetStoreNS.Api.Contracts
                         this.SpeciesId = speciesId;
                 }
 
-                private DateTime acquiredDate;
+                [Required]
+                [JsonProperty]
+                public DateTime AcquiredDate { get; private set; }
 
                 [Required]
-                public DateTime AcquiredDate
-                {
-                        get
-                        {
-                                return this.acquiredDate;
-                        }
-
-                        set
-                        {
-                                this.acquiredDate = value;
-                        }
-                }
-
-                private int breedId;
+                [JsonProperty]
+                public int BreedId { get; private set; }
 
                 [Required]
-                public int BreedId
-                {
-                        get
-                        {
-                                return this.breedId;
-                        }
-
-                        set
-                        {
-                                this.breedId = value;
-                        }
-                }
-
-                private string description;
+                [JsonProperty]
+                public string Description { get; private set; }
 
                 [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
-
-                private int penId;
+                [JsonProperty]
+                public int PenId { get; private set; }
 
                 [Required]
-                public int PenId
-                {
-                        get
-                        {
-                                return this.penId;
-                        }
-
-                        set
-                        {
-                                this.penId = value;
-                        }
-                }
-
-                private decimal price;
+                [JsonProperty]
+                public decimal Price { get; private set; }
 
                 [Required]
-                public decimal Price
-                {
-                        get
-                        {
-                                return this.price;
-                        }
-
-                        set
-                        {
-                                this.price = value;
-                        }
-                }
-
-                private int speciesId;
-
-                [Required]
-                public int SpeciesId
-                {
-                        get
-                        {
-                                return this.speciesId;
-                        }
-
-                        set
-                        {
-                                this.speciesId = value;
-                        }
-                }
+                [JsonProperty]
+                public int SpeciesId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c935c8095b9216c13ef340bfdbc169b1</Hash>
+    <Hash>f64e5ae5b3ecc9deb44e2792b438206e</Hash>
 </Codenesium>*/

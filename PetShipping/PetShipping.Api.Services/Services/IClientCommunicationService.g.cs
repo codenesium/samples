@@ -12,8 +12,8 @@ namespace PetShippingNS.Api.Services
                 Task<CreateResponse<ApiClientCommunicationResponseModel>> Create(
                         ApiClientCommunicationRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiClientCommunicationRequestModel model);
+                Task<UpdateResponse<ApiClientCommunicationResponseModel>> Update(int id,
+                                                                                  ApiClientCommunicationRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcd3ddde95dddf331b0775e1ec341eb3</Hash>
+    <Hash>c71220d2edead21d686148ccc891c794</Hash>
 </Codenesium>*/

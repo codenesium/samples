@@ -17,18 +17,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesPersonMapper();
                         var bo = new BOSalesPerson();
-                        bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        bo.SetProperties(1, 1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
 
                         SalesPerson response = mapper.MapBOToEF(bo);
 
-                        response.Bonus.Should().Be(1);
+                        response.Bonus.Should().Be(1m);
                         response.BusinessEntityID.Should().Be(1);
-                        response.CommissionPct.Should().Be(1);
+                        response.CommissionPct.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesQuota.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesQuota.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -37,18 +37,18 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesPersonMapper();
                         SalesPerson entity = new SalesPerson();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        entity.SetProperties(1m, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
 
                         BOSalesPerson response = mapper.MapEFToBO(entity);
 
-                        response.Bonus.Should().Be(1);
+                        response.Bonus.Should().Be(1m);
                         response.BusinessEntityID.Should().Be(1);
-                        response.CommissionPct.Should().Be(1);
+                        response.CommissionPct.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesQuota.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesQuota.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesPersonMapper();
                         SalesPerson entity = new SalesPerson();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        entity.SetProperties(1m, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
 
                         List<BOSalesPerson> response = mapper.MapEFToBO(new List<SalesPerson>() { entity });
 
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f14bf0e71df0bd75a0502fab195c343f</Hash>
+    <Hash>acdf699486f930e8d591feb335725499</Hash>
 </Codenesium>*/

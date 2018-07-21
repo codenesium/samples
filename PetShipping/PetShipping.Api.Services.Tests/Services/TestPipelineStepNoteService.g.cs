@@ -97,13 +97,14 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPipelineStepNoteRepository>();
                         var model = new ApiPipelineStepNoteRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepNote>())).Returns(Task.FromResult(new PipelineStepNote()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepNote()));
                         var service = new PipelineStepNoteService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
                                                                   mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
                                                                   mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPipelineStepNoteResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepNoteRequestModel>()));
@@ -132,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d426774f558c4f42d94169d0fe49c8c3</Hash>
+    <Hash>207f6dc4fc908d91d997ca9ee85ac3e0</Hash>
 </Codenesium>*/

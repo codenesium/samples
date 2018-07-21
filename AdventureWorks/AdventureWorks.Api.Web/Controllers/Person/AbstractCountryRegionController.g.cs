@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCountryRegionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionRequestModel model)
                 {
                         CreateResponse<ApiCountryRegionResponseModel> result = await this.CountryRegionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegions/{result.Record.CountryRegionCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegions/{result.Record.CountryRegionCode}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRegionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCountryRegionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiCountryRegionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CountryRegionService.Update(id, model);
+                                UpdateResponse<ApiCountryRegionResponseModel> result = await this.CountryRegionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRegionResponseModel response = await this.CountryRegionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCountryRegionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionRequestModel model)
                 {
-                        ApiCountryRegionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCountryRegionRequestModel request = await this.PatchModel(id, this.CountryRegionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CountryRegionService.Update(id, request);
+                                UpdateResponse<ApiCountryRegionResponseModel> result = await this.CountryRegionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCountryRegionResponseModel response = await this.CountryRegionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,14 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiCountryRegionRequestModel> CreatePatch(ApiCountryRegionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCountryRegionRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiCountryRegionRequestModel> PatchModel(string id, JsonPatchDocument<ApiCountryRegionRequestModel> patch)
                 {
                         var record = await this.CountryRegionService.Get(id);
@@ -265,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>55fb9f0998451eb4281b087797f31fc4</Hash>
+    <Hash>d166af57394c311abefcc664cf356db4</Hash>
 </Codenesium>*/

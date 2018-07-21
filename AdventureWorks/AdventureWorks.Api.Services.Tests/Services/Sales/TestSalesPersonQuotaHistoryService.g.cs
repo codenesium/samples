@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesPersonQuotaHistoryRepository>();
                         var model = new ApiSalesPersonQuotaHistoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesPersonQuotaHistory>())).Returns(Task.FromResult(new SalesPersonQuotaHistory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesPersonQuotaHistory()));
                         var service = new SalesPersonQuotaHistoryService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
                                                                          mock.ModelValidatorMockFactory.SalesPersonQuotaHistoryModelValidatorMock.Object,
                                                                          mock.BOLMapperMockFactory.BOLSalesPersonQuotaHistoryMapperMock,
                                                                          mock.DALMapperMockFactory.DALSalesPersonQuotaHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SalesPersonQuotaHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesPersonQuotaHistoryRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ac2dc621162708c82ab6dcfcd43c8e8</Hash>
+    <Hash>b70094d651d82f4f82ec67c7d4da27b1</Hash>
 </Codenesium>*/

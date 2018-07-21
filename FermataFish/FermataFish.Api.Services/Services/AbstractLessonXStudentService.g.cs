@@ -75,18 +75,25 @@ namespace FermataFishNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiLessonXStudentResponseModel>> Update(
                         int id,
                         ApiLessonXStudentRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.lessonXStudentModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolLessonXStudentMapper.MapModelToBO(id, model);
                                 await this.lessonXStudentRepository.Update(this.dalLessonXStudentMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.lessonXStudentRepository.Get(id);
+
+                                return new UpdateResponse<ApiLessonXStudentResponseModel>(this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiLessonXStudentResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41ff4f639f64e5f1f90461b1baf9af9c</Hash>
+    <Hash>15eed2e24a4874e5480aca4b59f64ba0</Hash>
 </Codenesium>*/

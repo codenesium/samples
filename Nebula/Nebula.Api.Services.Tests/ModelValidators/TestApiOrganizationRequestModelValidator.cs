@@ -25,30 +25,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
-                        organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
-
-                        var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOrganizationRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
-                        organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
-
-                        var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiOrganizationRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
@@ -75,5 +51,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>86fdb85c1c9008542e98567dff09c177</Hash>
+    <Hash>91d801779d55cb751ba6581ec50425c5</Hash>
 </Codenesium>*/

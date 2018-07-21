@@ -28,88 +28,23 @@ namespace NebulaNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private string description;
+                [JsonProperty]
+                public string Description { get; private set; }
 
-                [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
+                [JsonProperty]
+                public string JwtKey { get; private set; }
 
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
+                [JsonProperty]
+                public string LastIpAddress { get; private set; }
 
-                private string jwtKey;
+                [JsonProperty]
+                public Guid MachineGuid { get; private set; }
 
-                [Required]
-                public string JwtKey
-                {
-                        get
-                        {
-                                return this.jwtKey;
-                        }
-
-                        set
-                        {
-                                this.jwtKey = value;
-                        }
-                }
-
-                private string lastIpAddress;
-
-                [Required]
-                public string LastIpAddress
-                {
-                        get
-                        {
-                                return this.lastIpAddress;
-                        }
-
-                        set
-                        {
-                                this.lastIpAddress = value;
-                        }
-                }
-
-                private Guid machineGuid;
-
-                [Required]
-                public Guid MachineGuid
-                {
-                        get
-                        {
-                                return this.machineGuid;
-                        }
-
-                        set
-                        {
-                                this.machineGuid = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>20d2fb8a9d8530113cb7f0c37a486b02</Hash>
+    <Hash>49aa14386909c13d6d7ea547a47a604f</Hash>
 </Codenesium>*/

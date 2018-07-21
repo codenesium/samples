@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IInvitationRepository>();
                         var model = new ApiInvitationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Invitation>())).Returns(Task.FromResult(new Invitation()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
                         var service = new InvitationService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.InvitationModelValidatorMock.Object,
                                                             mock.BOLMapperMockFactory.BOLInvitationMapperMock,
                                                             mock.DALMapperMockFactory.DALInvitationMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiInvitationResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.InvitationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiInvitationRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3f82c2e22cc3ccfa06e209aae48e3f3a</Hash>
+    <Hash>312a1586dd4f7bc2e7fbb2eb8b507f94</Hash>
 </Codenesium>*/

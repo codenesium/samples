@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
                         int creditRating,
                         DateTime modifiedDate,
                         string name,
-                        bool preferredVendorStatus,
+                        bool preferredVendorStatu,
                         string purchasingWebServiceURL)
                 {
                         this.AccountNumber = accountNumber;
@@ -28,123 +28,39 @@ namespace AdventureWorksNS.Api.Contracts
                         this.CreditRating = creditRating;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.PreferredVendorStatus = preferredVendorStatus;
+                        this.PreferredVendorStatu = preferredVendorStatu;
                         this.PurchasingWebServiceURL = purchasingWebServiceURL;
                 }
 
-                private string accountNumber;
+                [Required]
+                [JsonProperty]
+                public string AccountNumber { get; private set; }
 
                 [Required]
-                public string AccountNumber
-                {
-                        get
-                        {
-                                return this.accountNumber;
-                        }
-
-                        set
-                        {
-                                this.accountNumber = value;
-                        }
-                }
-
-                private bool activeFlag;
+                [JsonProperty]
+                public bool ActiveFlag { get; private set; }
 
                 [Required]
-                public bool ActiveFlag
-                {
-                        get
-                        {
-                                return this.activeFlag;
-                        }
-
-                        set
-                        {
-                                this.activeFlag = value;
-                        }
-                }
-
-                private int creditRating;
+                [JsonProperty]
+                public int CreditRating { get; private set; }
 
                 [Required]
-                public int CreditRating
-                {
-                        get
-                        {
-                                return this.creditRating;
-                        }
-
-                        set
-                        {
-                                this.creditRating = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
+                [JsonProperty]
+                public bool PreferredVendorStatu { get; private set; }
 
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private bool preferredVendorStatus;
-
-                [Required]
-                public bool PreferredVendorStatus
-                {
-                        get
-                        {
-                                return this.preferredVendorStatus;
-                        }
-
-                        set
-                        {
-                                this.preferredVendorStatus = value;
-                        }
-                }
-
-                private string purchasingWebServiceURL;
-
-                public string PurchasingWebServiceURL
-                {
-                        get
-                        {
-                                return this.purchasingWebServiceURL;
-                        }
-
-                        set
-                        {
-                                this.purchasingWebServiceURL = value;
-                        }
-                }
+                [JsonProperty]
+                public string PurchasingWebServiceURL { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>51e20a32d1992d24dbf5ef9dfce068fa</Hash>
+    <Hash>a93a4765b5f9376fe40e7973a025d94e</Hash>
 </Codenesium>*/

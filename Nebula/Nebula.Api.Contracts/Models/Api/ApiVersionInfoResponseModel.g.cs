@@ -18,14 +18,20 @@ namespace NebulaNS.Api.Contracts
                         this.Description = description;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? AppliedOn { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public long Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6929f1764bce615e9c6f2c2a9a9fe8f2</Hash>
+    <Hash>d526e13026dd12f279bad307fc5a51ac</Hash>
 </Codenesium>*/

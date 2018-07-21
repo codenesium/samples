@@ -32,19 +32,16 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByProjectIdName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void ProjectIdRules()
                 {
-                        this.RuleFor(x => x.ProjectId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByProjectIdName).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectTriggerRequestModel.ProjectId));
                         this.RuleFor(x => x.ProjectId).Length(0, 50);
                 }
@@ -71,5 +68,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b649cdd7bfb6f3b18d5e60e573e2347</Hash>
+    <Hash>e66dde7ea9926cd11cbead53646ac4ad</Hash>
 </Codenesium>*/

@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var model = new ApiStoreRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Store>())).Returns(Task.FromResult(new Store()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiStoreResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StoreModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStoreRequestModel>()));
@@ -182,12 +183,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ByDemographics_Exists()
+                public async void ByDemographic_Exists()
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var records = new List<Store>();
                         records.Add(new Store());
-                        mock.RepositoryMock.Setup(x => x.ByDemographics(It.IsAny<string>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult(records));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -196,17 +197,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.ByDemographics(default(string));
+                        List<ApiStoreResponseModel> response = await service.ByDemographic(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void ByDemographics_Not_Exists()
+                public async void ByDemographic_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByDemographics(It.IsAny<string>())).Returns(Task.FromResult<List<Store>>(new List<Store>()));
+                        mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult<List<Store>>(new List<Store>()));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -215,10 +216,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.ByDemographics(default(string));
+                        List<ApiStoreResponseModel> response = await service.ByDemographic(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
+                        mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
                 }
 
                 [Fact]
@@ -264,5 +265,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bfac0ee7e2e240df0d74753bea458688</Hash>
+    <Hash>91326f29f7284ccb19035d926e59ab07</Hash>
 </Codenesium>*/

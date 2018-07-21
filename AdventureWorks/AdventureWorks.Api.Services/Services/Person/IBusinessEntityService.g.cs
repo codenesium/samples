@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiBusinessEntityResponseModel>> Create(
                         ApiBusinessEntityRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiBusinessEntityRequestModel model);
+                Task<UpdateResponse<ApiBusinessEntityResponseModel>> Update(int businessEntityID,
+                                                                             ApiBusinessEntityRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fde5b1092e1798a5dc6d2d6d12fa7bc3</Hash>
+    <Hash>81b66b3246002012148bce3340f2e8cc</Hash>
 </Codenesium>*/

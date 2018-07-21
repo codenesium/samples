@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiTenantResponseModel>> Update(
                         string id,
                         ApiTenantRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.tenantModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.tenantModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolTenantMapper.MapModelToBO(id, model);
                                 await this.tenantRepository.Update(this.dalTenantMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.tenantRepository.Get(id);
+
+                                return new UpdateResponse<ApiTenantResponseModel>(this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiTenantResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -125,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6aca114b6962766f8cfb0cb738058b5</Hash>
+    <Hash>d083a8a656b46ee95f2eb6087b3feee0</Hash>
 </Codenesium>*/

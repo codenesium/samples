@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEmployeePayHistoryRepository>();
                         var model = new ApiEmployeePayHistoryRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EmployeePayHistory>())).Returns(Task.FromResult(new EmployeePayHistory()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmployeePayHistory()));
                         var service = new EmployeePayHistoryService(mock.LoggerMock.Object,
                                                                     mock.RepositoryMock.Object,
                                                                     mock.ModelValidatorMockFactory.EmployeePayHistoryModelValidatorMock.Object,
                                                                     mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
                                                                     mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiEmployeePayHistoryResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EmployeePayHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeePayHistoryRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7a8d7a7871ff733df3f1316463effdad</Hash>
+    <Hash>727e885a799d3ab760a28f8b928d02f6</Hash>
 </Codenesium>*/

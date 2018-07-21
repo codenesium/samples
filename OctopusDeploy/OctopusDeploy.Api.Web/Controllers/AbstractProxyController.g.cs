@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProxyResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProxyResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProxyRequestModel model)
                 {
                         CreateResponse<ApiProxyResponseModel> result = await this.ProxyService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Proxies/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Proxies/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProxyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProxyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiProxyRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiProxyRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProxyService.Update(id, model);
+                                UpdateResponse<ApiProxyResponseModel> result = await this.ProxyService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProxyResponseModel response = await this.ProxyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProxyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProxyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiProxyRequestModel model)
                 {
-                        ApiProxyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProxyRequestModel request = await this.PatchModel(id, this.ProxyModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProxyService.Update(id, request);
+                                UpdateResponse<ApiProxyResponseModel> result = await this.ProxyService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProxyResponseModel response = await this.ProxyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,14 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiProxyRequestModel> CreatePatch(ApiProxyRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProxyRequestModel>();
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiProxyRequestModel> PatchModel(string id, JsonPatchDocument<ApiProxyRequestModel> patch)
                 {
                         var record = await this.ProxyService.Get(id);
@@ -251,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>48cd1a2f99ec0e7fbb26659376e29415</Hash>
+    <Hash>aeaaf30528c9896214d10aeb3a469857</Hash>
 </Codenesium>*/

@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "SalesOrderDetail")]
         [Trait("Area", "Integration")]
-        public class SalesOrderDetailIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class SalesOrderDetailIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public SalesOrderDetailIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiSalesOrderDetailModelMapper mapper = new ApiSalesOrderDetailModelMapper();
+
+                        UpdateResponse<ApiSalesOrderDetailResponseModel> updateResponse = await this.Client.SalesOrderDetailUpdateAsync(model.SalesOrderID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.SalesOrderDetailDeleteAsync(model.SalesOrderID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiSalesOrderDetailResponseModel response = await this.Client.SalesOrderDetailGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiSalesOrderDetailResponseModel> response = await this.Client.SalesOrderDetailAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiSalesOrderDetailResponseModel> CreateRecord()
+                {
+                        var model = new ApiSalesOrderDetailRequestModel();
+                        model.SetProperties("B", 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 3810.59m, 3810.59m);
+                        CreateResponse<ApiSalesOrderDetailResponseModel> result = await this.Client.SalesOrderDetailCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.SalesOrderDetailDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>351bfc497fb5136ee9fa0dd439a6184a</Hash>
+    <Hash>4cb1245e00d3b635ac23228665b1e15e</Hash>
 </Codenesium>*/

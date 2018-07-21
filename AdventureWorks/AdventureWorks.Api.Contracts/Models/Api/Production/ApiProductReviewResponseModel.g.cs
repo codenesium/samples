@@ -10,7 +10,7 @@ namespace AdventureWorksNS.Api.Contracts
         {
                 public virtual void SetProperties(
                         int productReviewID,
-                        string comments,
+                        string comment,
                         string emailAddress,
                         DateTime modifiedDate,
                         int productID,
@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string reviewerName)
                 {
                         this.ProductReviewID = productReviewID;
-                        this.Comments = comments;
+                        this.Comment = comment;
                         this.EmailAddress = emailAddress;
                         this.ModifiedDate = modifiedDate;
                         this.ProductID = productID;
@@ -28,24 +28,33 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ReviewerName = reviewerName;
                 }
 
-                public string Comments { get; private set; }
+                [Required]
+                [JsonProperty]
+                public string Comment { get; private set; }
 
+                [JsonProperty]
                 public string EmailAddress { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public int ProductReviewID { get; private set; }
 
+                [JsonProperty]
                 public int Rating { get; private set; }
 
+                [JsonProperty]
                 public DateTime ReviewDate { get; private set; }
 
+                [JsonProperty]
                 public string ReviewerName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ea7f88df3c42639a191f30440229f5a0</Hash>
+    <Hash>1c2b4122e828e6924eab3c743e660eaa</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesOrderHeaderSalesReasonRepository>();
                         var model = new ApiSalesOrderHeaderSalesReasonRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesOrderHeaderSalesReason>())).Returns(Task.FromResult(new SalesOrderHeaderSalesReason()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeaderSalesReason()));
                         var service = new SalesOrderHeaderSalesReasonService(mock.LoggerMock.Object,
                                                                              mock.RepositoryMock.Object,
                                                                              mock.ModelValidatorMockFactory.SalesOrderHeaderSalesReasonModelValidatorMock.Object,
                                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SalesOrderHeaderSalesReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderSalesReasonRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2ab25aad9d221d6ba5d75aa190560514</Hash>
+    <Hash>f882de784aae7e0a3ec7e94b18ae1146</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiIllustrationResponseModel>> Create(
                         ApiIllustrationRequestModel model);
 
-                Task<ActionResponse> Update(int illustrationID,
-                                            ApiIllustrationRequestModel model);
+                Task<UpdateResponse<ApiIllustrationResponseModel>> Update(int illustrationID,
+                                                                           ApiIllustrationRequestModel model);
 
                 Task<ActionResponse> Delete(int illustrationID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>caf7adbf06af65bd8a3eb5968c9fdaee</Hash>
+    <Hash>08b168f027b9f8a7e5513b1b5411851c</Hash>
 </Codenesium>*/

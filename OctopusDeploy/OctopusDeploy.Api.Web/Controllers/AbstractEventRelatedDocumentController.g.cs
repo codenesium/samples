@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEventRelatedDocumentResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEventRelatedDocumentRequestModel model)
                 {
                         CreateResponse<ApiEventRelatedDocumentResponseModel> result = await this.EventRelatedDocumentService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventRelatedDocuments/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventRelatedDocuments/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventRelatedDocumentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEventRelatedDocumentRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiEventRelatedDocumentRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EventRelatedDocumentService.Update(id, model);
+                                UpdateResponse<ApiEventRelatedDocumentResponseModel> result = await this.EventRelatedDocumentService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEventRelatedDocumentResponseModel response = await this.EventRelatedDocumentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventRelatedDocumentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEventRelatedDocumentRequestModel model)
                 {
-                        ApiEventRelatedDocumentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEventRelatedDocumentRequestModel request = await this.PatchModel(id, this.EventRelatedDocumentModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EventRelatedDocumentService.Update(id, request);
+                                UpdateResponse<ApiEventRelatedDocumentResponseModel> result = await this.EventRelatedDocumentService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEventRelatedDocumentResponseModel response = await this.EventRelatedDocumentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,14 +223,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEventRelatedDocumentRequestModel> CreatePatch(ApiEventRelatedDocumentRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEventRelatedDocumentRequestModel>();
-                        patch.Replace(x => x.EventId, model.EventId);
-                        patch.Replace(x => x.RelatedDocumentId, model.RelatedDocumentId);
-                        return patch;
-                }
-
                 private async Task<ApiEventRelatedDocumentRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventRelatedDocumentRequestModel> patch)
                 {
                         var record = await this.EventRelatedDocumentService.Get(id);
@@ -254,5 +242,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3c37c6bca147e2da74e443fffbedf1a0</Hash>
+    <Hash>f2b891c283b4be53281f1ff1df6dd657</Hash>
 </Codenesium>*/

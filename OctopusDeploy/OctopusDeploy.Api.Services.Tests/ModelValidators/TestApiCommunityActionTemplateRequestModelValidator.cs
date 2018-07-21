@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
-
-                        var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
-
-                        var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
-
-                        var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
-                        communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
-
-                        var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ICommunityActionTemplateRepository> communityActionTemplateRepository = new Mock<ICommunityActionTemplateRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d64ff94695d03fc775334ba5f6d2c8ad</Hash>
+    <Hash>6f67b602326b1697a53d4c4c971f8341</Hash>
 </Codenesium>*/

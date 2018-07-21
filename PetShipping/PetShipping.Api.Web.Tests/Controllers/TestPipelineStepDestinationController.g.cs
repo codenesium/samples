@@ -155,8 +155,8 @@ namespace PetShippingNS.Api.Web.Tests
 
                         response.Should().BeOfType<CreatedResult>();
                         (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var record = (response as CreatedResult).Value as ApiPipelineStepDestinationResponseModel;
-                        record.Should().NotBeNull();
+                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPipelineStepDestinationResponseModel>;
+                        createResponse.Record.Should().NotBeNull();
                         mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStepDestinationRequestModel>()));
                 }
 
@@ -187,13 +187,13 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Patch_No_Errors()
                 {
                         PipelineStepDestinationControllerMockFacade mock = new PipelineStepDestinationControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiPipelineStepDestinationResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>()))
                         .Callback<int, ApiPipelineStepDestinationRequestModel>(
                                 (id, model) => model.DestinationId.Should().Be(1)
                                 )
-                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        .Returns(Task.FromResult<UpdateResponse<ApiPipelineStepDestinationResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStepDestinationResponseModel>(new ApiPipelineStepDestinationResponseModel()));
                         PipelineStepDestinationController controller = new PipelineStepDestinationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStepDestinationModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -233,9 +233,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_No_Errors()
                 {
                         PipelineStepDestinationControllerMockFacade mock = new PipelineStepDestinationControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiPipelineStepDestinationResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStepDestinationResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStepDestinationResponseModel()));
                         PipelineStepDestinationController controller = new PipelineStepDestinationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStepDestinationModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -252,9 +252,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_Errors()
                 {
                         PipelineStepDestinationControllerMockFacade mock = new PipelineStepDestinationControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiPipelineStepDestinationResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStepDestinationResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStepDestinationResponseModel()));
                         PipelineStepDestinationController controller = new PipelineStepDestinationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStepDestinationModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -271,9 +271,9 @@ namespace PetShippingNS.Api.Web.Tests
                 public async void Update_NotFound()
                 {
                         PipelineStepDestinationControllerMockFacade mock = new PipelineStepDestinationControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
+                        var mockResult = new Mock<UpdateResponse<ApiPipelineStepDestinationResponseModel>>();
                         mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStepDestinationResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStepDestinationResponseModel>(null));
                         PipelineStepDestinationController controller = new PipelineStepDestinationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStepDestinationModelMapper());
                         controller.ControllerContext = new ControllerContext();
@@ -338,5 +338,5 @@ namespace PetShippingNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>31287a6bffac0b784b8307731d6df85a</Hash>
+    <Hash>edb9e1c437a7c6dc442ea993e74e048b</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSchemaVersionsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSchemaVersionsResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSchemaVersionsRequestModel model)
                 {
                         CreateResponse<ApiSchemaVersionsResponseModel> result = await this.SchemaVersionsService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SchemaVersions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SchemaVersions/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSchemaVersionsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSchemaVersionsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSchemaVersionsRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiSchemaVersionsRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SchemaVersionsService.Update(id, model);
+                                UpdateResponse<ApiSchemaVersionsResponseModel> result = await this.SchemaVersionsService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSchemaVersionsResponseModel response = await this.SchemaVersionsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSchemaVersionsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSchemaVersionsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSchemaVersionsRequestModel model)
                 {
-                        ApiSchemaVersionsRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSchemaVersionsRequestModel request = await this.PatchModel(id, this.SchemaVersionsModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SchemaVersionsService.Update(id, request);
+                                UpdateResponse<ApiSchemaVersionsResponseModel> result = await this.SchemaVersionsService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSchemaVersionsResponseModel response = await this.SchemaVersionsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSchemaVersionsRequestModel> CreatePatch(ApiSchemaVersionsRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSchemaVersionsRequestModel>();
-                        patch.Replace(x => x.Applied, model.Applied);
-                        patch.Replace(x => x.ScriptName, model.ScriptName);
-                        return patch;
-                }
-
                 private async Task<ApiSchemaVersionsRequestModel> PatchModel(int id, JsonPatchDocument<ApiSchemaVersionsRequestModel> patch)
                 {
                         var record = await this.SchemaVersionsService.Get(id);
@@ -232,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>652fe55c575c831cea88ea3b898faf0d</Hash>
+    <Hash>ebb4db165e856d2ed58c181f4a8fbe28</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -20,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
                         DateTime hireDate,
                         string jobTitle,
                         string loginID,
-                        string maritalStatus,
+                        string maritalStatu,
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
-                        short sickLeaveHours,
-                        short vacationHours)
+                        short sickLeaveHour,
+                        short vacationHour)
                 {
                         this.BirthDate = birthDate;
                         this.BusinessEntityID = businessEntityID;
@@ -36,14 +37,14 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.HireDate = hireDate;
                         this.JobTitle = jobTitle;
                         this.LoginID = loginID;
-                        this.MaritalStatus = maritalStatus;
+                        this.MaritalStatu = maritalStatu;
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
-                        this.SickLeaveHours = sickLeaveHours;
-                        this.VacationHours = vacationHours;
+                        this.SickLeaveHour = sickLeaveHour;
+                        this.VacationHour = vacationHour;
                 }
 
                 [Column("BirthDate")]
@@ -69,7 +70,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string LoginID { get; private set; }
 
                 [Column("MaritalStatus")]
-                public string MaritalStatus { get; private set; }
+                public string MaritalStatu { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
@@ -88,13 +89,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public bool SalariedFlag { get; private set; }
 
                 [Column("SickLeaveHours")]
-                public short SickLeaveHours { get; private set; }
+                public short SickLeaveHour { get; private set; }
 
                 [Column("VacationHours")]
-                public short VacationHours { get; private set; }
+                public short VacationHour { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>29d53197c05dc6f6f3f2abaf53fae490</Hash>
+    <Hash>362f401eeb9fe8a0bd649328d1d7c8c3</Hash>
 </Codenesium>*/

@@ -73,33 +73,9 @@ namespace PetShippingNS.Api.Services.Tests
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
                 }
-
-                [Fact]
-                public async void Details_Create_null()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
-
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRequirementRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
-                }
-
-                [Fact]
-                public async void Details_Update_null()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
-
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>263f102d68df01c272d2700461c929ef</Hash>
+    <Hash>2181e8d3edd54d6ec57695aef9a68ee8</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPersonPhoneRepository>();
                         var model = new ApiPersonPhoneRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PersonPhone>())).Returns(Task.FromResult(new PersonPhone()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
                         var service = new PersonPhoneService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.PersonPhoneModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                              mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPersonPhoneResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PersonPhoneModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonPhoneRequestModel>()));
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>38463448a076785eac705633323592c3</Hash>
+    <Hash>99e0114685c1a57b63c1dc1ce8ee6f95</Hash>
 </Codenesium>*/

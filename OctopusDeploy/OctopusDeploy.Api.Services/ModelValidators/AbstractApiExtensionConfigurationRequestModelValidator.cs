@@ -33,7 +33,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -44,5 +43,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9c4c2139b8cb7c91a7994d61adcb360</Hash>
+    <Hash>4b88e9636d54da8243ae7d4b3ac501d9</Hash>
 </Codenesium>*/

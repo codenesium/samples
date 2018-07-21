@@ -22,38 +22,14 @@ namespace NebulaNS.Api.Contracts
                         this.Description = description;
                 }
 
-                private DateTime? appliedOn;
+                [JsonProperty]
+                public DateTime? AppliedOn { get; private set; }
 
-                public DateTime? AppliedOn
-                {
-                        get
-                        {
-                                return this.appliedOn;
-                        }
-
-                        set
-                        {
-                                this.appliedOn = value;
-                        }
-                }
-
-                private string description;
-
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
+                [JsonProperty]
+                public string Description { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d4288d9bdaf5dd9f088ac937d663ae7</Hash>
+    <Hash>6408c87e308ea4777e0b7df5dc117453</Hash>
 </Codenesium>*/

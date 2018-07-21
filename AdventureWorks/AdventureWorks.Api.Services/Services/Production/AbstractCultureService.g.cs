@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCultureResponseModel>> Update(
                         string cultureID,
                         ApiCultureRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model));
-                        if (response.Success)
+                        var validationResult = await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCultureMapper.MapModelToBO(cultureID, model);
                                 await this.cultureRepository.Update(this.dalCultureMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.cultureRepository.Get(cultureID);
+
+                                return new UpdateResponse<ApiCultureResponseModel>(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCultureResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbbb382a0be7ca887d6712cb688cfd28</Hash>
+    <Hash>0d492c52c733ec7f78b31a519bf4dd10</Hash>
 </Codenesium>*/

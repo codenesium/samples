@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
@@ -25,9 +27,17 @@ namespace FileServiceNS.Api.Contracts
                                 response.Name);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiBucketRequestModel>();
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.Name, model.Name);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e5ae3680b90188820f96a727cf74fcc</Hash>
+    <Hash>195297fc40e229a383b5cc4bffa37e6e</Hash>
 </Codenesium>*/

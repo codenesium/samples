@@ -20,24 +20,11 @@ namespace FileServiceNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6b5b65c6c0bc45e0795db2cddc60fb44</Hash>
+    <Hash>65b2f1d0fa99640ff641679530604b07</Hash>
 </Codenesium>*/

@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.Services
                         ProductModel efProductModel = new ProductModel();
                         efProductModel.SetProperties(
                                 bo.CatalogDescription,
-                                bo.Instructions,
+                                bo.Instruction,
                                 bo.ModifiedDate,
                                 bo.Name,
                                 bo.ProductModelID,
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                         bo.SetProperties(
                                 ef.ProductModelID,
                                 ef.CatalogDescription,
-                                ef.Instructions,
+                                ef.Instruction,
                                 ef.ModifiedDate,
                                 ef.Name,
                                 ef.Rowguid);
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a731a8211a8c560f6094e56738d770a4</Hash>
+    <Hash>9183d8b6fc6b095edb047a4ad8a79fa8</Hash>
 </Codenesium>*/

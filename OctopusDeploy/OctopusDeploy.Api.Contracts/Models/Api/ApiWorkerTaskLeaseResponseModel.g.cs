@@ -24,20 +24,32 @@ namespace OctopusDeployNS.Api.Contracts
                         this.WorkerId = workerId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public bool Exclusive { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TaskId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string WorkerId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b85e6a1739668e5deb6fdbaffc3d1b9a</Hash>
+    <Hash>a81c14a656df3865f2bf402007b5b221</Hash>
 </Codenesium>*/

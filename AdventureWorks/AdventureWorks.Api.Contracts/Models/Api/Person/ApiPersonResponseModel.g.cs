@@ -11,7 +11,7 @@ namespace AdventureWorksNS.Api.Contracts
                 public virtual void SetProperties(
                         int businessEntityID,
                         string additionalContactInfo,
-                        string demographics,
+                        string demographic,
                         int emailPromotion,
                         string firstName,
                         string lastName,
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         this.BusinessEntityID = businessEntityID;
                         this.AdditionalContactInfo = additionalContactInfo;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.EmailPromotion = emailPromotion;
                         this.FirstName = firstName;
                         this.LastName = lastName;
@@ -38,34 +38,52 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Title = title;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string AdditionalContactInfo { get; private set; }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
-                public string Demographics { get; private set; }
+                [Required]
+                [JsonProperty]
+                public string Demographic { get; private set; }
 
+                [JsonProperty]
                 public int EmailPromotion { get; private set; }
 
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [JsonProperty]
                 public string LastName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string MiddleName { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public bool NameStyle { get; private set; }
 
+                [JsonProperty]
                 public string PersonType { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Suffix { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1295153e1a0c73c7f59c34dddb8eb684</Hash>
+    <Hash>d180ada4e3c1dc7ccf0e1eba061ca15a</Hash>
 </Codenesium>*/

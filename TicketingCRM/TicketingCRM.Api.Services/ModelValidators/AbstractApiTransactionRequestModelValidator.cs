@@ -32,7 +32,6 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void GatewayConfirmationNumberRules()
                 {
-                        this.RuleFor(x => x.GatewayConfirmationNumber).NotNull();
                         this.RuleFor(x => x.GatewayConfirmationNumber).Length(0, 1);
                 }
 
@@ -51,5 +50,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fc97c96f8e6b62ee637117d3c72e056</Hash>
+    <Hash>f19cd42d484bfbceec8fe639ff4fdf0e</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -29,9 +31,19 @@ namespace StackOverflowNS.Api.Contracts
                                 response.WikiPostId);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiTagsRequestModel> CreatePatch(ApiTagsRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiTagsRequestModel>();
+                        patch.Replace(x => x.Count, model.Count);
+                        patch.Replace(x => x.ExcerptPostId, model.ExcerptPostId);
+                        patch.Replace(x => x.TagName, model.TagName);
+                        patch.Replace(x => x.WikiPostId, model.WikiPostId);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fa7c7a0a1a179250426aa49cbb99352a</Hash>
+    <Hash>5a49e074eddb0e242742589267331173</Hash>
 </Codenesium>*/

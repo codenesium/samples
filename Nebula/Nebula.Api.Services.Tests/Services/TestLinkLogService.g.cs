@@ -97,13 +97,14 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILinkLogRepository>();
                         var model = new ApiLinkLogRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkLog>())).Returns(Task.FromResult(new LinkLog()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkLog()));
                         var service = new LinkLogService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.LinkLogModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                          mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiLinkLogResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LinkLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()));
@@ -132,5 +133,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ca209b7dba5383859cb09e3cf99b686c</Hash>
+    <Hash>255216fc6cac5c2a4dac98a889f94078</Hash>
 </Codenesium>*/

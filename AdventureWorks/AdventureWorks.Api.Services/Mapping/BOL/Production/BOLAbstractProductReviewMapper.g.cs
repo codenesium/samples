@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                         BOProductReview boProductReview = new BOProductReview();
                         boProductReview.SetProperties(
                                 productReviewID,
-                                model.Comments,
+                                model.Comment,
                                 model.EmailAddress,
                                 model.ModifiedDate,
                                 model.ProductID,
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiProductReviewResponseModel();
 
-                        model.SetProperties(boProductReview.ProductReviewID, boProductReview.Comments, boProductReview.EmailAddress, boProductReview.ModifiedDate, boProductReview.ProductID, boProductReview.Rating, boProductReview.ReviewDate, boProductReview.ReviewerName);
+                        model.SetProperties(boProductReview.ProductReviewID, boProductReview.Comment, boProductReview.EmailAddress, boProductReview.ModifiedDate, boProductReview.ProductID, boProductReview.Rating, boProductReview.ReviewDate, boProductReview.ReviewerName);
 
                         return model;
                 }
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f99bec2d7745fa5d329ae2fa48c324b6</Hash>
+    <Hash>91589183542a40fb1617b5756cd36862</Hash>
 </Codenesium>*/

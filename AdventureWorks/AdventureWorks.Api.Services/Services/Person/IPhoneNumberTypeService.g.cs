@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
                         ApiPhoneNumberTypeRequestModel model);
 
-                Task<ActionResponse> Update(int phoneNumberTypeID,
-                                            ApiPhoneNumberTypeRequestModel model);
+                Task<UpdateResponse<ApiPhoneNumberTypeResponseModel>> Update(int phoneNumberTypeID,
+                                                                              ApiPhoneNumberTypeRequestModel model);
 
                 Task<ActionResponse> Delete(int phoneNumberTypeID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e468d468937e4e74e394cf53568c27c4</Hash>
+    <Hash>7759e96657fc073a6bfaa52b2037e6ea</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -11,7 +13,7 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         var response = new ApiStoreResponseModel();
                         response.SetProperties(businessEntityID,
-                                               request.Demographics,
+                                               request.Demographic,
                                                request.ModifiedDate,
                                                request.Name,
                                                request.Rowguid,
@@ -24,16 +26,27 @@ namespace AdventureWorksNS.Api.Contracts
                 {
                         var request = new ApiStoreRequestModel();
                         request.SetProperties(
-                                response.Demographics,
+                                response.Demographic,
                                 response.ModifiedDate,
                                 response.Name,
                                 response.Rowguid,
                                 response.SalesPersonID);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiStoreRequestModel> CreatePatch(ApiStoreRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiStoreRequestModel>();
+                        patch.Replace(x => x.Demographic, model.Demographic);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.Rowguid, model.Rowguid);
+                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2c2935c8a3a4e9a60fb964d98df51a93</Hash>
+    <Hash>212040f371ca432f4abfcec0df8d8663</Hash>
 </Codenesium>*/

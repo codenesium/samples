@@ -105,6 +105,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiEventResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiEventRequestModel>()));
@@ -344,5 +345,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>566a387b0940077aa0b67d7f18b0b1ed</Hash>
+    <Hash>2c867834edae4ae8c022c04b45082d6d</Hash>
 </Codenesium>*/

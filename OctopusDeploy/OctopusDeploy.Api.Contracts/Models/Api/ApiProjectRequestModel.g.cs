@@ -42,197 +42,44 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableSetId = variableSetId;
                 }
 
-                private bool autoCreateRelease;
+                [JsonProperty]
+                public bool AutoCreateRelease { get; private set; }
 
-                [Required]
-                public bool AutoCreateRelease
-                {
-                        get
-                        {
-                                return this.autoCreateRelease;
-                        }
+                [JsonProperty]
+                public byte[] DataVersion { get; private set; }
 
-                        set
-                        {
-                                this.autoCreateRelease = value;
-                        }
-                }
+                [JsonProperty]
+                public string DeploymentProcessId { get; private set; }
 
-                private byte[] dataVersion;
+                [JsonProperty]
+                public bool DiscreteChannelRelease { get; private set; }
 
-                [Required]
-                public byte[] DataVersion
-                {
-                        get
-                        {
-                                return this.dataVersion;
-                        }
+                [JsonProperty]
+                public string IncludedLibraryVariableSetIds { get; private set; }
 
-                        set
-                        {
-                                this.dataVersion = value;
-                        }
-                }
+                [JsonProperty]
+                public bool IsDisabled { get; private set; }
 
-                private string deploymentProcessId;
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                public string DeploymentProcessId
-                {
-                        get
-                        {
-                                return this.deploymentProcessId;
-                        }
+                [JsonProperty]
+                public string LifecycleId { get; private set; }
 
-                        set
-                        {
-                                this.deploymentProcessId = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private bool discreteChannelRelease;
+                [JsonProperty]
+                public string ProjectGroupId { get; private set; }
 
-                [Required]
-                public bool DiscreteChannelRelease
-                {
-                        get
-                        {
-                                return this.discreteChannelRelease;
-                        }
+                [JsonProperty]
+                public string Slug { get; private set; }
 
-                        set
-                        {
-                                this.discreteChannelRelease = value;
-                        }
-                }
-
-                private string includedLibraryVariableSetIds;
-
-                public string IncludedLibraryVariableSetIds
-                {
-                        get
-                        {
-                                return this.includedLibraryVariableSetIds;
-                        }
-
-                        set
-                        {
-                                this.includedLibraryVariableSetIds = value;
-                        }
-                }
-
-                private bool isDisabled;
-
-                [Required]
-                public bool IsDisabled
-                {
-                        get
-                        {
-                                return this.isDisabled;
-                        }
-
-                        set
-                        {
-                                this.isDisabled = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string lifecycleId;
-
-                [Required]
-                public string LifecycleId
-                {
-                        get
-                        {
-                                return this.lifecycleId;
-                        }
-
-                        set
-                        {
-                                this.lifecycleId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string projectGroupId;
-
-                [Required]
-                public string ProjectGroupId
-                {
-                        get
-                        {
-                                return this.projectGroupId;
-                        }
-
-                        set
-                        {
-                                this.projectGroupId = value;
-                        }
-                }
-
-                private string slug;
-
-                [Required]
-                public string Slug
-                {
-                        get
-                        {
-                                return this.slug;
-                        }
-
-                        set
-                        {
-                                this.slug = value;
-                        }
-                }
-
-                private string variableSetId;
-
-                public string VariableSetId
-                {
-                        get
-                        {
-                                return this.variableSetId;
-                        }
-
-                        set
-                        {
-                                this.variableSetId = value;
-                        }
-                }
+                [JsonProperty]
+                public string VariableSetId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7ec07959b006775d8f830372f9b81947</Hash>
+    <Hash>aff0ce4dde55e31960feee879bf214fd</Hash>
 </Codenesium>*/

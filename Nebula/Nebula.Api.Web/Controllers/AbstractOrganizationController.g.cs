@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOrganizationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiOrganizationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationRequestModel model)
                 {
                         CreateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Organizations/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Organizations/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOrganizationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiOrganizationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiOrganizationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.OrganizationService.Update(id, model);
+                                UpdateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiOrganizationResponseModel response = await this.OrganizationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiOrganizationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationRequestModel model)
                 {
-                        ApiOrganizationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiOrganizationRequestModel request = await this.PatchModel(id, this.OrganizationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.OrganizationService.Update(id, request);
+                                UpdateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiOrganizationResponseModel response = await this.OrganizationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace NebulaNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiOrganizationRequestModel> CreatePatch(ApiOrganizationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiOrganizationRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiOrganizationRequestModel> PatchModel(int id, JsonPatchDocument<ApiOrganizationRequestModel> patch)
                 {
                         var record = await this.OrganizationService.Get(id);
@@ -245,5 +234,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>94c909102e95969309d02d3609c3d6d4</Hash>
+    <Hash>7c03c8d12262a55a16ca1bec12c0686f</Hash>
 </Codenesium>*/

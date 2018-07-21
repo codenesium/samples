@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
                         ApiEmployeeDepartmentHistoryRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiEmployeeDepartmentHistoryRequestModel model);
+                Task<UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Update(int businessEntityID,
+                                                                                        ApiEmployeeDepartmentHistoryRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25596824cce772c4006f4987adf8a2bf</Hash>
+    <Hash>c7d278faac874d2d3170bb8dff5f0fdf</Hash>
 </Codenesium>*/

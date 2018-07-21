@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPurchaseOrderHeaderResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderHeaderRequestModel model)
                 {
                         CreateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.PurchaseOrderHeaderService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderHeaders/{result.Record.PurchaseOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderHeaders/{result.Record.PurchaseOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderHeaderResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPurchaseOrderHeaderRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPurchaseOrderHeaderRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PurchaseOrderHeaderService.Update(id, model);
+                                UpdateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.PurchaseOrderHeaderService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPurchaseOrderHeaderResponseModel response = await this.PurchaseOrderHeaderService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderHeaderResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderHeaderRequestModel model)
                 {
-                        ApiPurchaseOrderHeaderRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPurchaseOrderHeaderRequestModel request = await this.PatchModel(id, this.PurchaseOrderHeaderModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PurchaseOrderHeaderService.Update(id, request);
+                                UpdateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.PurchaseOrderHeaderService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPurchaseOrderHeaderResponseModel response = await this.PurchaseOrderHeaderService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -241,24 +237,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPurchaseOrderHeaderRequestModel> CreatePatch(ApiPurchaseOrderHeaderRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPurchaseOrderHeaderRequestModel>();
-                        patch.Replace(x => x.EmployeeID, model.EmployeeID);
-                        patch.Replace(x => x.Freight, model.Freight);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.OrderDate, model.OrderDate);
-                        patch.Replace(x => x.RevisionNumber, model.RevisionNumber);
-                        patch.Replace(x => x.ShipDate, model.ShipDate);
-                        patch.Replace(x => x.ShipMethodID, model.ShipMethodID);
-                        patch.Replace(x => x.Status, model.Status);
-                        patch.Replace(x => x.SubTotal, model.SubTotal);
-                        patch.Replace(x => x.TaxAmt, model.TaxAmt);
-                        patch.Replace(x => x.TotalDue, model.TotalDue);
-                        patch.Replace(x => x.VendorID, model.VendorID);
-                        return patch;
-                }
-
                 private async Task<ApiPurchaseOrderHeaderRequestModel> PatchModel(int id, JsonPatchDocument<ApiPurchaseOrderHeaderRequestModel> patch)
                 {
                         var record = await this.PurchaseOrderHeaderService.Get(id);
@@ -278,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>38d43fd61241437417d9c312264fbe5f</Hash>
+    <Hash>d8872c67e89eb58e3f2164faa17508cc</Hash>
 </Codenesium>*/

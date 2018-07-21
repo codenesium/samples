@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductReviewResponseModel>> Update(
                         int productReviewID,
                         ApiProductReviewRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateUpdateAsync(productReviewID, model));
-                        if (response.Success)
+                        var validationResult = await this.productReviewModelValidator.ValidateUpdateAsync(productReviewID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductReviewMapper.MapModelToBO(productReviewID, model);
                                 await this.productReviewRepository.Update(this.dalProductReviewMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productReviewRepository.Get(productReviewID);
+
+                                return new UpdateResponse<ApiProductReviewResponseModel>(this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductReviewResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -101,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiProductReviewResponseModel>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public async Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName)
                 {
-                        List<ProductReview> records = await this.productReviewRepository.ByCommentsProductIDReviewerName(comments, productID, reviewerName);
+                        List<ProductReview> records = await this.productReviewRepository.ByProductIDReviewerName(productID, reviewerName);
 
                         return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
                 }
@@ -111,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f7e13dd65462c180934b96c5d08dd14</Hash>
+    <Hash>3c5e6928873c093ebbdf888f647993d3</Hash>
 </Codenesium>*/

@@ -30,104 +30,32 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TaxType = taxType;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private int stateProvinceID;
+                [JsonProperty]
+                public int StateProvinceID { get; private set; }
 
                 [Required]
-                public int StateProvinceID
-                {
-                        get
-                        {
-                                return this.stateProvinceID;
-                        }
-
-                        set
-                        {
-                                this.stateProvinceID = value;
-                        }
-                }
-
-                private decimal taxRate;
+                [JsonProperty]
+                public decimal TaxRate { get; private set; }
 
                 [Required]
-                public decimal TaxRate
-                {
-                        get
-                        {
-                                return this.taxRate;
-                        }
-
-                        set
-                        {
-                                this.taxRate = value;
-                        }
-                }
-
-                private int taxType;
-
-                [Required]
-                public int TaxType
-                {
-                        get
-                        {
-                                return this.taxType;
-                        }
-
-                        set
-                        {
-                                this.taxType = value;
-                        }
-                }
+                [JsonProperty]
+                public int TaxType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e1cbe0b1bb92fda5ca0242f52d785ea4</Hash>
+    <Hash>c411948b6b1e38a68bcaea5a7ed294ff</Hash>
 </Codenesium>*/

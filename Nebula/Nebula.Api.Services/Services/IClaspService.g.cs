@@ -12,8 +12,8 @@ namespace NebulaNS.Api.Services
                 Task<CreateResponse<ApiClaspResponseModel>> Create(
                         ApiClaspRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiClaspRequestModel model);
+                Task<UpdateResponse<ApiClaspResponseModel>> Update(int id,
+                                                                    ApiClaspRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d42ef1dcbc39f6755f05d15d579e9782</Hash>
+    <Hash>c5dff71cd08678d0f3938676910f06cd</Hash>
 </Codenesium>*/

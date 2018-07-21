@@ -106,15 +106,15 @@ namespace FileServiceNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBucketResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiBucketResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiBucketRequestModel model)
                 {
                         CreateResponse<ApiBucketResponseModel> result = await this.BucketService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Buckets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Buckets/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FileServiceNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBucketResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBucketRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FileServiceNS.Api.Web
                         {
                                 ApiBucketRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.BucketService.Update(id, model);
+                                UpdateResponse<ApiBucketResponseModel> result = await this.BucketService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiBucketResponseModel response = await this.BucketService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FileServiceNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBucketResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketRequestModel model)
                 {
-                        ApiBucketRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiBucketRequestModel request = await this.PatchModel(id, this.BucketModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FileServiceNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.BucketService.Update(id, request);
+                                UpdateResponse<ApiBucketResponseModel> result = await this.BucketService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiBucketResponseModel response = await this.BucketService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -257,14 +253,6 @@ namespace FileServiceNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiBucketRequestModel>();
-                        patch.Replace(x => x.ExternalId, model.ExternalId);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiBucketRequestModel> PatchModel(int id, JsonPatchDocument<ApiBucketRequestModel> patch)
                 {
                         var record = await this.BucketService.Get(id);
@@ -284,5 +272,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4362bcd2f57975e6733c5194283fc46</Hash>
+    <Hash>a787ad498a4971e183a98e8922c9bfcb</Hash>
 </Codenesium>*/

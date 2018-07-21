@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
                         var model = new ApiTransactionHistoryArchiveRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
                         var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
                                                                            mock.RepositoryMock.Object,
                                                                            mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
                                                                            mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
                                                                            mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>da80ed5732c8c3811a934459c6e01a65</Hash>
+    <Hash>4768697f0d25b310a79a86029b416911</Hash>
 </Codenesium>*/

@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime hireDate,
                         string jobTitle,
                         string loginID,
-                        string maritalStatus,
+                        string maritalStatu,
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         short? organizationLevel,
                         Guid rowguid,
                         bool salariedFlag,
-                        short sickLeaveHours,
-                        short vacationHours)
+                        short sickLeaveHour,
+                        short vacationHour)
                 {
                         this.BirthDate = birthDate;
                         this.CurrentFlag = currentFlag;
@@ -36,241 +36,73 @@ namespace AdventureWorksNS.Api.Contracts
                         this.HireDate = hireDate;
                         this.JobTitle = jobTitle;
                         this.LoginID = loginID;
-                        this.MaritalStatus = maritalStatus;
+                        this.MaritalStatu = maritalStatu;
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
-                        this.SickLeaveHours = sickLeaveHours;
-                        this.VacationHours = vacationHours;
+                        this.SickLeaveHour = sickLeaveHour;
+                        this.VacationHour = vacationHour;
                 }
-
-                private DateTime birthDate;
 
                 [Required]
-                public DateTime BirthDate
-                {
-                        get
-                        {
-                                return this.birthDate;
-                        }
-
-                        set
-                        {
-                                this.birthDate = value;
-                        }
-                }
-
-                private bool currentFlag;
+                [JsonProperty]
+                public DateTime BirthDate { get; private set; }
 
                 [Required]
-                public bool CurrentFlag
-                {
-                        get
-                        {
-                                return this.currentFlag;
-                        }
-
-                        set
-                        {
-                                this.currentFlag = value;
-                        }
-                }
-
-                private string gender;
+                [JsonProperty]
+                public bool CurrentFlag { get; private set; }
 
                 [Required]
-                public string Gender
-                {
-                        get
-                        {
-                                return this.gender;
-                        }
-
-                        set
-                        {
-                                this.gender = value;
-                        }
-                }
-
-                private DateTime hireDate;
+                [JsonProperty]
+                public string Gender { get; private set; }
 
                 [Required]
-                public DateTime HireDate
-                {
-                        get
-                        {
-                                return this.hireDate;
-                        }
-
-                        set
-                        {
-                                this.hireDate = value;
-                        }
-                }
-
-                private string jobTitle;
+                [JsonProperty]
+                public DateTime HireDate { get; private set; }
 
                 [Required]
-                public string JobTitle
-                {
-                        get
-                        {
-                                return this.jobTitle;
-                        }
-
-                        set
-                        {
-                                this.jobTitle = value;
-                        }
-                }
-
-                private string loginID;
+                [JsonProperty]
+                public string JobTitle { get; private set; }
 
                 [Required]
-                public string LoginID
-                {
-                        get
-                        {
-                                return this.loginID;
-                        }
-
-                        set
-                        {
-                                this.loginID = value;
-                        }
-                }
-
-                private string maritalStatus;
+                [JsonProperty]
+                public string LoginID { get; private set; }
 
                 [Required]
-                public string MaritalStatus
-                {
-                        get
-                        {
-                                return this.maritalStatus;
-                        }
-
-                        set
-                        {
-                                this.maritalStatus = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string MaritalStatu { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string nationalIDNumber;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public string NationalIDNumber
-                {
-                        get
-                        {
-                                return this.nationalIDNumber;
-                        }
+                [JsonProperty]
+                public string NationalIDNumber { get; private set; }
 
-                        set
-                        {
-                                this.nationalIDNumber = value;
-                        }
-                }
-
-                private short? organizationLevel;
-
-                public short? OrganizationLevel
-                {
-                        get
-                        {
-                                return this.organizationLevel;
-                        }
-
-                        set
-                        {
-                                this.organizationLevel = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public short? OrganizationLevel { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private bool salariedFlag;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public bool SalariedFlag
-                {
-                        get
-                        {
-                                return this.salariedFlag;
-                        }
-
-                        set
-                        {
-                                this.salariedFlag = value;
-                        }
-                }
-
-                private short sickLeaveHours;
+                [JsonProperty]
+                public bool SalariedFlag { get; private set; }
 
                 [Required]
-                public short SickLeaveHours
-                {
-                        get
-                        {
-                                return this.sickLeaveHours;
-                        }
-
-                        set
-                        {
-                                this.sickLeaveHours = value;
-                        }
-                }
-
-                private short vacationHours;
+                [JsonProperty]
+                public short SickLeaveHour { get; private set; }
 
                 [Required]
-                public short VacationHours
-                {
-                        get
-                        {
-                                return this.vacationHours;
-                        }
-
-                        set
-                        {
-                                this.vacationHours = value;
-                        }
-                }
+                [JsonProperty]
+                public short VacationHour { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>92d559f62f994b3e8504005f58c9e9c9</Hash>
+    <Hash>8b3e9c5de726f84f28929edf4f67129c</Hash>
 </Codenesium>*/

@@ -12,13 +12,13 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SetProperties(int productModelID,
                                                   string catalogDescription,
-                                                  string instructions,
+                                                  string instruction,
                                                   DateTime modifiedDate,
                                                   string name,
                                                   Guid rowguid)
                 {
                         this.CatalogDescription = catalogDescription;
-                        this.Instructions = instructions;
+                        this.Instruction = instruction;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.ProductModelID = productModelID;
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public string CatalogDescription { get; private set; }
 
-                public string Instructions { get; private set; }
+                public string Instruction { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>050c4c153af75afecd775c49fd853cff</Hash>
+    <Hash>080a72428ccba79247f13afbee0f3551</Hash>
 </Codenesium>*/

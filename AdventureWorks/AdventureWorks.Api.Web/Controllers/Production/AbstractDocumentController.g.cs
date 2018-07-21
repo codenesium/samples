@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDocumentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<Guid>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDocumentResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDocumentRequestModel model)
                 {
                         CreateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.Rowguid}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.Rowguid}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDocumentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ApiDocumentRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiDocumentRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DocumentService.Update(id, model);
+                                UpdateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDocumentResponseModel response = await this.DocumentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDocumentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentRequestModel model)
                 {
-                        ApiDocumentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDocumentRequestModel request = await this.PatchModel(id, this.DocumentModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DocumentService.Update(id, request);
+                                UpdateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDocumentResponseModel response = await this.DocumentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,24 +212,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDocumentRequestModel> CreatePatch(ApiDocumentRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
-                        patch.Replace(x => x.ChangeNumber, model.ChangeNumber);
-                        patch.Replace(x => x.Document1, model.Document1);
-                        patch.Replace(x => x.DocumentLevel, model.DocumentLevel);
-                        patch.Replace(x => x.DocumentSummary, model.DocumentSummary);
-                        patch.Replace(x => x.FileExtension, model.FileExtension);
-                        patch.Replace(x => x.FileName, model.FileName);
-                        patch.Replace(x => x.FolderFlag, model.FolderFlag);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Owner, model.Owner);
-                        patch.Replace(x => x.Revision, model.Revision);
-                        patch.Replace(x => x.Status, model.Status);
-                        patch.Replace(x => x.Title, model.Title);
-                        return patch;
-                }
-
                 private async Task<ApiDocumentRequestModel> PatchModel(Guid id, JsonPatchDocument<ApiDocumentRequestModel> patch)
                 {
                         var record = await this.DocumentService.Get(id);
@@ -253,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>361d5575d814d25a0251962b7df91062</Hash>
+    <Hash>073f8c2bf043b47fdc7486b38b2f2a86</Hash>
 </Codenesium>*/

@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.Schema).Length(0, 128);
                 }
 
-                public virtual void TSQLRules()
+                public virtual void TsqlRules()
                 {
-                        this.RuleFor(x => x.TSQL).NotNull();
+                        this.RuleFor(x => x.Tsql).NotNull();
                 }
 
                 public virtual void XmlEventRules()
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>010082a8f162ab71e80b0e0f1e8821aa</Hash>
+    <Hash>8b7fd696e832e7c57f8899f2bbd35908</Hash>
 </Codenesium>*/

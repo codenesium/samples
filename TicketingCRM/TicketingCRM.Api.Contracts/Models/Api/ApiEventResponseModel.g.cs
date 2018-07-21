@@ -36,32 +36,55 @@ namespace TicketingCRMNS.Api.Contracts
                         this.CityIdEntity = nameof(ApiResponse.Cities);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Address1 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Address2 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int CityId { get; private set; }
 
+                [JsonProperty]
                 public string CityIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime Date { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime EndDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Facebook { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime StartDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Website { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ed394e58553c73ce0dabf2325808ac11</Hash>
+    <Hash>d9c4f3a645f020fe70aab1f7cf663568</Hash>
 </Codenesium>*/

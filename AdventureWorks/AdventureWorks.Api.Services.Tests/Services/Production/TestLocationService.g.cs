@@ -113,6 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var model = new ApiLocationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ActionResponse response = await service.Update(default(short), model);
+                        UpdateResponse<ApiLocationResponseModel> response = await service.Update(default(short), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>()));
@@ -287,5 +288,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>70481c18ad93d5926225eb4124035176</Hash>
+    <Hash>a565b699ea0be4d8bb2f70ee79eecdf2</Hash>
 </Codenesium>*/

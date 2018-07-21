@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiSchemaVersionsResponseModel>> Create(
                         ApiSchemaVersionsRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiSchemaVersionsRequestModel model);
+                Task<UpdateResponse<ApiSchemaVersionsResponseModel>> Update(int id,
+                                                                             ApiSchemaVersionsRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>813fec20159d26aed825c7c68a27c08e</Hash>
+    <Hash>e26c4ded2f6738a409d6737715b81df8</Hash>
 </Codenesium>*/

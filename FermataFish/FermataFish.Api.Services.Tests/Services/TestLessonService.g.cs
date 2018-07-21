@@ -113,6 +113,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILessonRepository>();
                         var model = new ApiLessonRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Lesson>())).Returns(Task.FromResult(new Lesson()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Lesson()));
                         var service = new LessonService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.LessonModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLLessonXTeacherMapperMock,
                                                         mock.DALMapperMockFactory.DALLessonXTeacherMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiLessonResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LessonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLessonRequestModel>()));
@@ -244,5 +245,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ad9166d4ecdeace430d37518aefab969</Hash>
+    <Hash>af64cc32985e59ef91dd5b44855c1585</Hash>
 </Codenesium>*/

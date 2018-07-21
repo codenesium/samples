@@ -113,6 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IVendorRepository>();
                         var model = new ApiVendorRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vendor>())).Returns(Task.FromResult(new Vendor()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
                         var service = new VendorService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                         mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiVendorResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorRequestModel>()));
@@ -287,5 +288,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4ea68453c8d332421882de7eb388d708</Hash>
+    <Hash>97e48898a9a78c98dab300ac6722b173</Hash>
 </Codenesium>*/

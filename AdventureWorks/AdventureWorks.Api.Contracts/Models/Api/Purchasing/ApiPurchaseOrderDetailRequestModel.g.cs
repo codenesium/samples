@@ -38,168 +38,48 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UnitPrice = unitPrice;
                 }
 
-                private DateTime dueDate;
+                [Required]
+                [JsonProperty]
+                public DateTime DueDate { get; private set; }
 
                 [Required]
-                public DateTime DueDate
-                {
-                        get
-                        {
-                                return this.dueDate;
-                        }
-
-                        set
-                        {
-                                this.dueDate = value;
-                        }
-                }
-
-                private decimal lineTotal;
+                [JsonProperty]
+                public decimal LineTotal { get; private set; }
 
                 [Required]
-                public decimal LineTotal
-                {
-                        get
-                        {
-                                return this.lineTotal;
-                        }
-
-                        set
-                        {
-                                this.lineTotal = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private short orderQty;
+                [JsonProperty]
+                public short OrderQty { get; private set; }
 
                 [Required]
-                public short OrderQty
-                {
-                        get
-                        {
-                                return this.orderQty;
-                        }
-
-                        set
-                        {
-                                this.orderQty = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private int purchaseOrderDetailID;
+                [JsonProperty]
+                public int PurchaseOrderDetailID { get; private set; }
 
                 [Required]
-                public int PurchaseOrderDetailID
-                {
-                        get
-                        {
-                                return this.purchaseOrderDetailID;
-                        }
-
-                        set
-                        {
-                                this.purchaseOrderDetailID = value;
-                        }
-                }
-
-                private decimal receivedQty;
+                [JsonProperty]
+                public decimal ReceivedQty { get; private set; }
 
                 [Required]
-                public decimal ReceivedQty
-                {
-                        get
-                        {
-                                return this.receivedQty;
-                        }
-
-                        set
-                        {
-                                this.receivedQty = value;
-                        }
-                }
-
-                private decimal rejectedQty;
+                [JsonProperty]
+                public decimal RejectedQty { get; private set; }
 
                 [Required]
-                public decimal RejectedQty
-                {
-                        get
-                        {
-                                return this.rejectedQty;
-                        }
-
-                        set
-                        {
-                                this.rejectedQty = value;
-                        }
-                }
-
-                private decimal stockedQty;
+                [JsonProperty]
+                public decimal StockedQty { get; private set; }
 
                 [Required]
-                public decimal StockedQty
-                {
-                        get
-                        {
-                                return this.stockedQty;
-                        }
-
-                        set
-                        {
-                                this.stockedQty = value;
-                        }
-                }
-
-                private decimal unitPrice;
-
-                [Required]
-                public decimal UnitPrice
-                {
-                        get
-                        {
-                                return this.unitPrice;
-                        }
-
-                        set
-                        {
-                                this.unitPrice = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal UnitPrice { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f9af0851dc2117e8b9ba2d425274fc29</Hash>
+    <Hash>df9bad811e13a74636d4369fc7e920fd</Hash>
 </Codenesium>*/

@@ -22,18 +22,28 @@ namespace StackOverflowNS.Api.Contracts
                         this.RelatedPostId = relatedPostId;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime CreationDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int LinkTypeId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PostId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int RelatedPostId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3778a9e1a90464b63171a0edac3478b2</Hash>
+    <Hash>74750d257b5b9c262453828904b1cf6e</Hash>
 </Codenesium>*/

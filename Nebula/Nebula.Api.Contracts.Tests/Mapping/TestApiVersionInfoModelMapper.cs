@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,24 @@ namespace NebulaNS.Api.Contracts.Tests
                         response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Description.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiVersionInfoModelMapper();
+                        var model = new ApiVersionInfoRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+
+                        JsonPatchDocument<ApiVersionInfoRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiVersionInfoRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Description.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a90b1d92534547ddde0b705a5f2abf65</Hash>
+    <Hash>2987539a98d01fefe5b533c29f8c586d</Hash>
 </Codenesium>*/

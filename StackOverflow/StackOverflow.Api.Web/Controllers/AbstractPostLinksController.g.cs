@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostLinksResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPostLinksResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPostLinksRequestModel model)
                 {
                         CreateResponse<ApiPostLinksResponseModel> result = await this.PostLinksService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostLinks/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostLinks/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostLinksResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostLinksResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostLinksRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiPostLinksRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PostLinksService.Update(id, model);
+                                UpdateResponse<ApiPostLinksResponseModel> result = await this.PostLinksService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPostLinksResponseModel response = await this.PostLinksService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostLinksResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostLinksResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostLinksRequestModel model)
                 {
-                        ApiPostLinksRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPostLinksRequestModel request = await this.PatchModel(id, this.PostLinksModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PostLinksService.Update(id, request);
+                                UpdateResponse<ApiPostLinksResponseModel> result = await this.PostLinksService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPostLinksResponseModel response = await this.PostLinksService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiPostLinksRequestModel> CreatePatch(ApiPostLinksRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPostLinksRequestModel>();
-                        patch.Replace(x => x.CreationDate, model.CreationDate);
-                        patch.Replace(x => x.LinkTypeId, model.LinkTypeId);
-                        patch.Replace(x => x.PostId, model.PostId);
-                        patch.Replace(x => x.RelatedPostId, model.RelatedPostId);
-                        return patch;
-                }
-
                 private async Task<ApiPostLinksRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostLinksRequestModel> patch)
                 {
                         var record = await this.PostLinksService.Get(id);
@@ -234,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2affe73b73616969255c03ecf97da17b</Hash>
+    <Hash>e4ec389c7dff931e6a2327fca5705833</Hash>
 </Codenesium>*/

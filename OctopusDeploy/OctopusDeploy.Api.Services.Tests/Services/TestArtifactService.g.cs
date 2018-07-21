@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var model = new ApiArtifactRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Artifact>())).Returns(Task.FromResult(new Artifact()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ArtifactModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiArtifactResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ArtifactModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiArtifactRequestModel>()));
@@ -168,5 +169,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>92e750df219f4da8097370a0ce8bff1a</Hash>
+    <Hash>ed22d3d4693c1d7a3e5a52f4596f8f17</Hash>
 </Codenesium>*/

@@ -32,117 +32,29 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                private DateTimeOffset created;
+                [JsonProperty]
+                public DateTimeOffset Created { get; private set; }
 
-                [Required]
-                public DateTimeOffset Created
-                {
-                        get
-                        {
-                                return this.created;
-                        }
+                [JsonProperty]
+                public string EnvironmentId { get; private set; }
 
-                        set
-                        {
-                                this.created = value;
-                        }
-                }
+                [JsonProperty]
+                public string Filename { get; private set; }
 
-                private string environmentId;
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                public string EnvironmentId
-                {
-                        get
-                        {
-                                return this.environmentId;
-                        }
+                [JsonProperty]
+                public string ProjectId { get; private set; }
 
-                        set
-                        {
-                                this.environmentId = value;
-                        }
-                }
+                [JsonProperty]
+                public string RelatedDocumentIds { get; private set; }
 
-                private string filename;
-
-                [Required]
-                public string Filename
-                {
-                        get
-                        {
-                                return this.filename;
-                        }
-
-                        set
-                        {
-                                this.filename = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string projectId;
-
-                public string ProjectId
-                {
-                        get
-                        {
-                                return this.projectId;
-                        }
-
-                        set
-                        {
-                                this.projectId = value;
-                        }
-                }
-
-                private string relatedDocumentIds;
-
-                [Required]
-                public string RelatedDocumentIds
-                {
-                        get
-                        {
-                                return this.relatedDocumentIds;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentIds = value;
-                        }
-                }
-
-                private string tenantId;
-
-                public string TenantId
-                {
-                        get
-                        {
-                                return this.tenantId;
-                        }
-
-                        set
-                        {
-                                this.tenantId = value;
-                        }
-                }
+                [JsonProperty]
+                public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4a3bfac925178984a1ad5c7ed53a002f</Hash>
+    <Hash>8ee5ac8e152414a6a8b87cf708c76ff0</Hash>
 </Codenesium>*/

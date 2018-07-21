@@ -97,13 +97,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IVenueRepository>();
                         var model = new ApiVenueRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Venue>())).Returns(Task.FromResult(new Venue()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
                         var service = new VenueService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                        mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiVenueResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VenueModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()));
@@ -204,5 +205,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3004d2c0b3784f0ebacef00816b30d8c</Hash>
+    <Hash>2025d0420c5e96126bd540e7fdf2a180</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace StackOverflowNS.Api.Services
                 Task<CreateResponse<ApiBadgesResponseModel>> Create(
                         ApiBadgesRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiBadgesRequestModel model);
+                Task<UpdateResponse<ApiBadgesResponseModel>> Update(int id,
+                                                                     ApiBadgesRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f130bf064540ccc5bfd3441a5779c47</Hash>
+    <Hash>97ea93d0581afa76d56794f57a64c751</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.Services
                 Task<CreateResponse<ApiBucketResponseModel>> Create(
                         ApiBucketRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiBucketRequestModel model);
+                Task<UpdateResponse<ApiBucketResponseModel>> Update(int id,
+                                                                     ApiBucketRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -30,5 +30,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e908ca4be029574d2cac3b0a540bdedd</Hash>
+    <Hash>02ed61baa790212c28f0926f085388e1</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISaleTicketsRepository>();
                         var model = new ApiSaleTicketsRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SaleTickets>())).Returns(Task.FromResult(new SaleTickets()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SaleTickets()));
                         var service = new SaleTicketsService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.SaleTicketsModelValidatorMock.Object,
                                                              mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                              mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSaleTicketsResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SaleTicketsModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleTicketsRequestModel>()));
@@ -168,5 +169,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>49bba5f439a4d6744ab83296de9396ae</Hash>
+    <Hash>68aa0194dd7c2faea184074e04b603f3</Hash>
 </Codenesium>*/

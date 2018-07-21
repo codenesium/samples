@@ -106,15 +106,15 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSaleResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSaleRequestModel model)
                 {
                         CreateResponse<ApiSaleResponseModel> result = await this.SaleService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Sales/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Sales/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSaleRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetShippingNS.Api.Web
                         {
                                 ApiSaleRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SaleService.Update(id, model);
+                                UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleResponseModel response = await this.SaleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetShippingNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleRequestModel model)
                 {
-                        ApiSaleRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSaleRequestModel request = await this.PatchModel(id, this.SaleModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetShippingNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SaleService.Update(id, request);
+                                UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleResponseModel response = await this.SaleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,18 +201,6 @@ namespace PetShippingNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSaleRequestModel> CreatePatch(ApiSaleRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSaleRequestModel>();
-                        patch.Replace(x => x.Amount, model.Amount);
-                        patch.Replace(x => x.ClientId, model.ClientId);
-                        patch.Replace(x => x.Note, model.Note);
-                        patch.Replace(x => x.PetId, model.PetId);
-                        patch.Replace(x => x.SaleDate, model.SaleDate);
-                        patch.Replace(x => x.SalesPersonId, model.SalesPersonId);
-                        return patch;
-                }
-
                 private async Task<ApiSaleRequestModel> PatchModel(int id, JsonPatchDocument<ApiSaleRequestModel> patch)
                 {
                         var record = await this.SaleService.Get(id);
@@ -236,5 +220,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4449749d8ea5bdaf461bed33563e9ec4</Hash>
+    <Hash>31c66f9a5aa436e8acf8260fd0e33805</Hash>
 </Codenesium>*/

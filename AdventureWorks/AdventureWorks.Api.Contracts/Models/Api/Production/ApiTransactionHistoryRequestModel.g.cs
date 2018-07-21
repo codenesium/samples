@@ -34,136 +34,40 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TransactionType = transactionType;
                 }
 
-                private decimal actualCost;
+                [Required]
+                [JsonProperty]
+                public decimal ActualCost { get; private set; }
 
                 [Required]
-                public decimal ActualCost
-                {
-                        get
-                        {
-                                return this.actualCost;
-                        }
-
-                        set
-                        {
-                                this.actualCost = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private int productID;
+                [JsonProperty]
+                public int ProductID { get; private set; }
 
                 [Required]
-                public int ProductID
-                {
-                        get
-                        {
-                                return this.productID;
-                        }
-
-                        set
-                        {
-                                this.productID = value;
-                        }
-                }
-
-                private int quantity;
+                [JsonProperty]
+                public int Quantity { get; private set; }
 
                 [Required]
-                public int Quantity
-                {
-                        get
-                        {
-                                return this.quantity;
-                        }
-
-                        set
-                        {
-                                this.quantity = value;
-                        }
-                }
-
-                private int referenceOrderID;
+                [JsonProperty]
+                public int ReferenceOrderID { get; private set; }
 
                 [Required]
-                public int ReferenceOrderID
-                {
-                        get
-                        {
-                                return this.referenceOrderID;
-                        }
-
-                        set
-                        {
-                                this.referenceOrderID = value;
-                        }
-                }
-
-                private int referenceOrderLineID;
+                [JsonProperty]
+                public int ReferenceOrderLineID { get; private set; }
 
                 [Required]
-                public int ReferenceOrderLineID
-                {
-                        get
-                        {
-                                return this.referenceOrderLineID;
-                        }
-
-                        set
-                        {
-                                this.referenceOrderLineID = value;
-                        }
-                }
-
-                private DateTime transactionDate;
+                [JsonProperty]
+                public DateTime TransactionDate { get; private set; }
 
                 [Required]
-                public DateTime TransactionDate
-                {
-                        get
-                        {
-                                return this.transactionDate;
-                        }
-
-                        set
-                        {
-                                this.transactionDate = value;
-                        }
-                }
-
-                private string transactionType;
-
-                [Required]
-                public string TransactionType
-                {
-                        get
-                        {
-                                return this.transactionType;
-                        }
-
-                        set
-                        {
-                                this.transactionType = value;
-                        }
-                }
+                [JsonProperty]
+                public string TransactionType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7ec4afdc8c04712c25387e73f3b26824</Hash>
+    <Hash>9c149136abe0a3988448c1a7400a128c</Hash>
 </Codenesium>*/

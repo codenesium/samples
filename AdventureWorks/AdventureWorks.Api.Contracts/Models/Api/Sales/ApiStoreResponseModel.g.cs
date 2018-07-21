@@ -10,14 +10,14 @@ namespace AdventureWorksNS.Api.Contracts
         {
                 public virtual void SetProperties(
                         int businessEntityID,
-                        string demographics,
+                        string demographic,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid,
                         int? salesPersonID)
                 {
                         this.BusinessEntityID = businessEntityID;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
@@ -26,22 +26,31 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SalesPersonIDEntity = nameof(ApiResponse.SalesPersons);
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
-                public string Demographics { get; private set; }
+                [Required]
+                [JsonProperty]
+                public string Demographic { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? SalesPersonID { get; private set; }
 
+                [JsonProperty]
                 public string SalesPersonIDEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d963f98bd74d9e837f2e896a026aec97</Hash>
+    <Hash>0f99c61c30cb497289d7e975a8a14796</Hash>
 </Codenesium>*/

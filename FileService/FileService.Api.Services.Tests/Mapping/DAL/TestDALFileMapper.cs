@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new DALFileMapper();
                         var bo = new BOFile();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 
                         File response = mapper.MapBOToEF(bo);
 
@@ -27,7 +27,7 @@ namespace FileServiceNS.Api.Services.Tests
                         response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Extension.Should().Be("A");
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.FileSizeInBytes.Should().Be(1);
+                        response.FileSizeInBytes.Should().Be(1m);
                         response.FileTypeId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Location.Should().Be("A");
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new DALFileMapper();
                         File entity = new File();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, "A", "A", "A");
+                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, 1, "A", "A", "A");
 
                         BOFile response = mapper.MapEFToBO(entity);
 
@@ -50,7 +50,7 @@ namespace FileServiceNS.Api.Services.Tests
                         response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Extension.Should().Be("A");
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.FileSizeInBytes.Should().Be(1);
+                        response.FileSizeInBytes.Should().Be(1m);
                         response.FileTypeId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Location.Should().Be("A");
@@ -63,7 +63,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new DALFileMapper();
                         File entity = new File();
-                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, "A", "A", "A");
+                        entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, 1, "A", "A", "A");
 
                         List<BOFile> response = mapper.MapEFToBO(new List<File>() { entity });
 
@@ -73,5 +73,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8d71333325eb3a5dcd31261b3e90ee2b</Hash>
+    <Hash>dd0291afb8e44836ce56b71c990fb58d</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiKeyAllocationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiKeyAllocationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiKeyAllocationRequestModel model)
                 {
                         CreateResponse<ApiKeyAllocationResponseModel> result = await this.KeyAllocationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/KeyAllocations/{result.Record.CollectionName}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/KeyAllocations/{result.Record.CollectionName}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiKeyAllocationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiKeyAllocationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiKeyAllocationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiKeyAllocationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.KeyAllocationService.Update(id, model);
+                                UpdateResponse<ApiKeyAllocationResponseModel> result = await this.KeyAllocationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiKeyAllocationResponseModel response = await this.KeyAllocationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiKeyAllocationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiKeyAllocationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiKeyAllocationRequestModel model)
                 {
-                        ApiKeyAllocationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiKeyAllocationRequestModel request = await this.PatchModel(id, this.KeyAllocationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.KeyAllocationService.Update(id, request);
+                                UpdateResponse<ApiKeyAllocationResponseModel> result = await this.KeyAllocationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiKeyAllocationResponseModel response = await this.KeyAllocationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,13 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiKeyAllocationRequestModel> CreatePatch(ApiKeyAllocationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiKeyAllocationRequestModel>();
-                        patch.Replace(x => x.Allocated, model.Allocated);
-                        return patch;
-                }
-
                 private async Task<ApiKeyAllocationRequestModel> PatchModel(string id, JsonPatchDocument<ApiKeyAllocationRequestModel> patch)
                 {
                         var record = await this.KeyAllocationService.Get(id);
@@ -231,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>06da1f9a84ba60a1772940e6fa3f9649</Hash>
+    <Hash>b35c754d3d8bbfd9253ef26b3d45d291</Hash>
 </Codenesium>*/

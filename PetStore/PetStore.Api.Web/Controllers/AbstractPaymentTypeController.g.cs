@@ -106,15 +106,15 @@ namespace PetStoreNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPaymentTypeResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeRequestModel model)
                 {
                         CreateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PaymentTypes/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PaymentTypes/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPaymentTypeRequestModel> patch)
@@ -140,13 +140,11 @@ namespace PetStoreNS.Api.Web
                         {
                                 ApiPaymentTypeRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PaymentTypeService.Update(id, model);
+                                UpdateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPaymentTypeResponseModel response = await this.PaymentTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace PetStoreNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeRequestModel model)
                 {
-                        ApiPaymentTypeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPaymentTypeRequestModel request = await this.PatchModel(id, this.PaymentTypeModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace PetStoreNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PaymentTypeService.Update(id, request);
+                                UpdateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPaymentTypeResponseModel response = await this.PaymentTypeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,13 +215,6 @@ namespace PetStoreNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPaymentTypeRequestModel> CreatePatch(ApiPaymentTypeRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiPaymentTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPaymentTypeRequestModel> patch)
                 {
                         var record = await this.PaymentTypeService.Get(id);
@@ -245,5 +234,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a55ce8269fc62335750418ef0ddf7bdb</Hash>
+    <Hash>078bab16fbd2d2b31d774c3d71d0cbdb</Hash>
 </Codenesium>*/

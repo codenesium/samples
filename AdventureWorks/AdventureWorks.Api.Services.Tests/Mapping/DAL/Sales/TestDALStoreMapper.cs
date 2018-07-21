@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         Store response = mapper.MapBOToEF(bo);
 
                         response.BusinessEntityID.Should().Be(1);
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -39,7 +39,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         BOStore response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fc49d699f93241e458d4d63248501e1f</Hash>
+    <Hash>5258abe9414b982a3d59fa707c8a9fe5</Hash>
 </Codenesium>*/

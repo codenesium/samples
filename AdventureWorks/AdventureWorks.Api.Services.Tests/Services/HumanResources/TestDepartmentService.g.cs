@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDepartmentRepository>();
                         var model = new ApiDepartmentRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Department>())).Returns(Task.FromResult(new Department()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
                         var service = new DepartmentService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
                                                             mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default(short), model);
+                        UpdateResponse<ApiDepartmentResponseModel> response = await service.Update(default(short), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>()));
@@ -223,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ed6bcf08e6854494f147504e00553e6</Hash>
+    <Hash>d0a25498e79c20a61938f0c0f52b7520</Hash>
 </Codenesium>*/

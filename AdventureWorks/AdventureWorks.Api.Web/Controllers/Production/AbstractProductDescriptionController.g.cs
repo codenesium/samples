@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductDescriptionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductDescriptionRequestModel model)
                 {
                         CreateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductDescriptions/{result.Record.ProductDescriptionID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductDescriptions/{result.Record.ProductDescriptionID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductDescriptionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductDescriptionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductDescriptionService.Update(id, model);
+                                UpdateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductDescriptionResponseModel response = await this.ProductDescriptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionRequestModel model)
                 {
-                        ApiProductDescriptionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductDescriptionRequestModel request = await this.PatchModel(id, this.ProductDescriptionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductDescriptionService.Update(id, request);
+                                UpdateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductDescriptionResponseModel response = await this.ProductDescriptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,15 +215,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProductDescriptionRequestModel> CreatePatch(ApiProductDescriptionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductDescriptionRequestModel>();
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiProductDescriptionRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductDescriptionRequestModel> patch)
                 {
                         var record = await this.ProductDescriptionService.Get(id);
@@ -247,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>15c8b01024ed45f97bbadd2d2e473364</Hash>
+    <Hash>a803894757a6e92f67e7331d16db31a8</Hash>
 </Codenesium>*/

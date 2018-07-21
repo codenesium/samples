@@ -26,72 +26,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.SortOrder = sortOrder;
                 }
 
-                private bool isDefault;
+                [JsonProperty]
+                public bool IsDefault { get; private set; }
 
-                [Required]
-                public bool IsDefault
-                {
-                        get
-                        {
-                                return this.isDefault;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.isDefault = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int sortOrder;
-
-                [Required]
-                public int SortOrder
-                {
-                        get
-                        {
-                                return this.sortOrder;
-                        }
-
-                        set
-                        {
-                                this.sortOrder = value;
-                        }
-                }
+                [JsonProperty]
+                public int SortOrder { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f40fe180b51c6105c40a686799100742</Hash>
+    <Hash>757b6a647f69a4818de2b0c64f4f11a0</Hash>
 </Codenesium>*/

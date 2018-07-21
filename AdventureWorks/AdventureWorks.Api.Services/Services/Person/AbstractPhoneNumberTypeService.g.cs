@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPhoneNumberTypeResponseModel>> Update(
                         int phoneNumberTypeID,
                         ApiPhoneNumberTypeRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model));
-                        if (response.Success)
+                        var validationResult = await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
                                 await this.phoneNumberTypeRepository.Update(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
+
+                                return new UpdateResponse<ApiPhoneNumberTypeResponseModel>(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPhoneNumberTypeResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4aaf8bd1acebc1778b5ab5ac282c2d2a</Hash>
+    <Hash>c062c9f2ce6a47d3cea3d8225aee4ef5</Hash>
 </Codenesium>*/

@@ -22,9 +22,9 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALProductMapper dalProductMapper;
 
-                private IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper;
+                private IBOLBillOfMaterialMapper bolBillOfMaterialMapper;
 
-                private IDALBillOfMaterialsMapper dalBillOfMaterialsMapper;
+                private IDALBillOfMaterialMapper dalBillOfMaterialMapper;
                 private IBOLProductCostHistoryMapper bolProductCostHistoryMapper;
 
                 private IDALProductCostHistoryMapper dalProductCostHistoryMapper;
@@ -55,8 +55,8 @@ namespace AdventureWorksNS.Api.Services
                         IApiProductRequestModelValidator productModelValidator,
                         IBOLProductMapper bolProductMapper,
                         IDALProductMapper dalProductMapper,
-                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
+                        IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
+                        IDALBillOfMaterialMapper dalBillOfMaterialMapper,
                         IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
                         IDALProductCostHistoryMapper dalProductCostHistoryMapper,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
@@ -77,8 +77,8 @@ namespace AdventureWorksNS.Api.Services
                         this.productModelValidator = productModelValidator;
                         this.bolProductMapper = bolProductMapper;
                         this.dalProductMapper = dalProductMapper;
-                        this.bolBillOfMaterialsMapper = bolBillOfMaterialsMapper;
-                        this.dalBillOfMaterialsMapper = dalBillOfMaterialsMapper;
+                        this.bolBillOfMaterialMapper = bolBillOfMaterialMapper;
+                        this.dalBillOfMaterialMapper = dalBillOfMaterialMapper;
                         this.bolProductCostHistoryMapper = bolProductCostHistoryMapper;
                         this.dalProductCostHistoryMapper = dalProductCostHistoryMapper;
                         this.bolProductInventoryMapper = bolProductInventoryMapper;
@@ -132,18 +132,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductResponseModel>> Update(
                         int productID,
                         ApiProductRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productModelValidator.ValidateUpdateAsync(productID, model));
-                        if (response.Success)
+                        var validationResult = await this.productModelValidator.ValidateUpdateAsync(productID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductMapper.MapModelToBO(productID, model);
                                 await this.productRepository.Update(this.dalProductMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productRepository.Get(productID);
+
+                                return new UpdateResponse<ApiProductResponseModel>(this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -186,11 +193,11 @@ namespace AdventureWorksNS.Api.Services
                         }
                 }
 
-                public async virtual Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0)
+                public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0)
                 {
-                        List<BillOfMaterials> records = await this.productRepository.BillOfMaterials(componentID, limit, offset);
+                        List<BillOfMaterial> records = await this.productRepository.BillOfMaterials(componentID, limit, offset);
 
-                        return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
+                        return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(records));
                 }
 
                 public async virtual Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0)
@@ -245,5 +252,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6a6ab1f2969a3f38f6f8c8816cf6c951</Hash>
+    <Hash>b7c22183ab77be1efbb0bcbf0366c4c5</Hash>
 </Codenesium>*/

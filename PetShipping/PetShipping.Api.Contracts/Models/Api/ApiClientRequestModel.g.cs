@@ -28,87 +28,23 @@ namespace PetShippingNS.Api.Contracts
                         this.Phone = phone;
                 }
 
-                private string email;
+                [JsonProperty]
+                public string Email { get; private set; }
 
-                [Required]
-                public string Email
-                {
-                        get
-                        {
-                                return this.email;
-                        }
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
-                        set
-                        {
-                                this.email = value;
-                        }
-                }
+                [JsonProperty]
+                public string LastName { get; private set; }
 
-                private string firstName;
+                [JsonProperty]
+                public string Notes { get; private set; }
 
-                [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
-
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private string lastName;
-
-                [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private string notes;
-
-                public string Notes
-                {
-                        get
-                        {
-                                return this.notes;
-                        }
-
-                        set
-                        {
-                                this.notes = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
+                [JsonProperty]
+                public string Phone { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c8256a500a6c4d73a160eafb032673aa</Hash>
+    <Hash>8d2e249c3081d0550b5d412c692f7119</Hash>
 </Codenesium>*/

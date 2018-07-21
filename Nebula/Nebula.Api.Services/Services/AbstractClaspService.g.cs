@@ -75,18 +75,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiClaspResponseModel>> Update(
                         int id,
                         ApiClaspRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.claspModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolClaspMapper.MapModelToBO(id, model);
                                 await this.claspRepository.Update(this.dalClaspMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.claspRepository.Get(id);
+
+                                return new UpdateResponse<ApiClaspResponseModel>(this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiClaspResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>309b2268b82feea7810edf30d803fca5</Hash>
+    <Hash>8e7415c026d13b95185c43c20f5cf4d0</Hash>
 </Codenesium>*/

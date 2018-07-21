@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiMachineResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
                 {
                         CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiMachineRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiMachineRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.MachineService.Update(id, model);
+                                UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiMachineRequestModel model)
                 {
-                        ApiMachineRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiMachineRequestModel request = await this.PatchModel(id, this.MachineModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.MachineService.Update(id, request);
+                                UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,24 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiMachineRequestModel> CreatePatch(ApiMachineRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiMachineRequestModel>();
-                        patch.Replace(x => x.CommunicationStyle, model.CommunicationStyle);
-                        patch.Replace(x => x.EnvironmentIds, model.EnvironmentIds);
-                        patch.Replace(x => x.Fingerprint, model.Fingerprint);
-                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.MachinePolicyId, model.MachinePolicyId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.RelatedDocumentIds, model.RelatedDocumentIds);
-                        patch.Replace(x => x.Roles, model.Roles);
-                        patch.Replace(x => x.TenantIds, model.TenantIds);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        patch.Replace(x => x.Thumbprint, model.Thumbprint);
-                        return patch;
-                }
-
                 private async Task<ApiMachineRequestModel> PatchModel(string id, JsonPatchDocument<ApiMachineRequestModel> patch)
                 {
                         var record = await this.MachineService.Get(id);
@@ -272,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee9d3185c20c72b3bfbb20d7661e4a21</Hash>
+    <Hash>cd5aa1f0c4d0e672a59130fe946c7c5f</Hash>
 </Codenesium>*/

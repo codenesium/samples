@@ -75,18 +75,25 @@ namespace FileServiceNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiVersionInfoResponseModel>> Update(
                         long version,
                         ApiVersionInfoRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
-                        if (response.Success)
+                        var validationResult = await this.versionInfoModelValidator.ValidateUpdateAsync(version, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
                                 await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.versionInfoRepository.Get(version);
+
+                                return new UpdateResponse<ApiVersionInfoResponseModel>(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiVersionInfoResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84af98762720d0bff4084710647f3479</Hash>
+    <Hash>519edd7467b93932c7b8a9ba75805947</Hash>
 </Codenesium>*/

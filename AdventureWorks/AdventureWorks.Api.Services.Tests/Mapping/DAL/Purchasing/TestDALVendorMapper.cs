@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.CreditRating.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
-                        response.PreferredVendorStatus.Should().Be(true);
+                        response.PreferredVendorStatu.Should().Be(true);
                         response.PurchasingWebServiceURL.Should().Be("A");
                 }
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.CreditRating.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
-                        response.PreferredVendorStatus.Should().Be(true);
+                        response.PreferredVendorStatu.Should().Be(true);
                         response.PurchasingWebServiceURL.Should().Be("A");
                 }
 
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b0c5bcceefabe07d75c42a6d09d0350d</Hash>
+    <Hash>09c4b6c9077124ff5315d9425c34e994</Hash>
 </Codenesium>*/

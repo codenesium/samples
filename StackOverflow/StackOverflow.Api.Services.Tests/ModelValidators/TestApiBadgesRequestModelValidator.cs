@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
-                        badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
-
-                        var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBadgesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
-                        badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
-
-                        var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBadgesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c141bc8a15f2c5e673c02d51f965b6b8</Hash>
+    <Hash>46eea63f85260f8f869e415b0a0a952a</Hash>
 </Codenesium>*/

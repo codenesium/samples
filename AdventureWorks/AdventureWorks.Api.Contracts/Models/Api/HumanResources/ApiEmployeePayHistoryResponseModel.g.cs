@@ -22,18 +22,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.RateChangeDate = rateChangeDate;
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int PayFrequency { get; private set; }
 
+                [JsonProperty]
                 public decimal Rate { get; private set; }
 
+                [JsonProperty]
                 public DateTime RateChangeDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>047b05b2bfa5778485a333acd036e0e7</Hash>
+    <Hash>215b8805ad91f2f73f8f377ebe73fabf</Hash>
 </Codenesium>*/

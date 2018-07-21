@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVendorResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiVendorResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiVendorRequestModel model)
                 {
                         CreateResponse<ApiVendorResponseModel> result = await this.VendorService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Vendors/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Vendors/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVendorResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVendorRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiVendorRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.VendorService.Update(id, model);
+                                UpdateResponse<ApiVendorResponseModel> result = await this.VendorService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiVendorResponseModel response = await this.VendorService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVendorResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorRequestModel model)
                 {
-                        ApiVendorRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiVendorRequestModel request = await this.PatchModel(id, this.VendorModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.VendorService.Update(id, request);
+                                UpdateResponse<ApiVendorResponseModel> result = await this.VendorService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiVendorResponseModel response = await this.VendorService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -252,19 +248,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiVendorRequestModel> CreatePatch(ApiVendorRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiVendorRequestModel>();
-                        patch.Replace(x => x.AccountNumber, model.AccountNumber);
-                        patch.Replace(x => x.ActiveFlag, model.ActiveFlag);
-                        patch.Replace(x => x.CreditRating, model.CreditRating);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.PreferredVendorStatus, model.PreferredVendorStatus);
-                        patch.Replace(x => x.PurchasingWebServiceURL, model.PurchasingWebServiceURL);
-                        return patch;
-                }
-
                 private async Task<ApiVendorRequestModel> PatchModel(int id, JsonPatchDocument<ApiVendorRequestModel> patch)
                 {
                         var record = await this.VendorService.Get(id);
@@ -284,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>93eabd973332ac0a60bd7a18ab92b4a2</Hash>
+    <Hash>af6f0206ea723f995748acc939149209</Hash>
 </Codenesium>*/

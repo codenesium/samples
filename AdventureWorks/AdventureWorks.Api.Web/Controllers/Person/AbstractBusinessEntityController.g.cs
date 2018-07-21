@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiBusinessEntityResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityRequestModel model)
                 {
                         CreateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntities/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BusinessEntities/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBusinessEntityRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiBusinessEntityRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.BusinessEntityService.Update(id, model);
+                                UpdateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityResponseModel response = await this.BusinessEntityService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityRequestModel model)
                 {
-                        ApiBusinessEntityRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiBusinessEntityRequestModel request = await this.PatchModel(id, this.BusinessEntityModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.BusinessEntityService.Update(id, request);
+                                UpdateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiBusinessEntityResponseModel response = await this.BusinessEntityService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -247,14 +243,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiBusinessEntityRequestModel> CreatePatch(ApiBusinessEntityRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiBusinessEntityRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiBusinessEntityRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityRequestModel> patch)
                 {
                         var record = await this.BusinessEntityService.Get(id);
@@ -274,5 +262,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8ed42b9c7be5a9b016181c0e6f136666</Hash>
+    <Hash>a43490ecfba5dd2bbacf560bb62b8678</Hash>
 </Codenesium>*/

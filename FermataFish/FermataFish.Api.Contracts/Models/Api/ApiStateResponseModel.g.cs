@@ -16,12 +16,16 @@ namespace FermataFishNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>73d6669877dcc695ad9a8dc55bba58d1</Hash>
+    <Hash>ec6948775c3143a9fb1bdaa82458bff8</Hash>
 </Codenesium>*/

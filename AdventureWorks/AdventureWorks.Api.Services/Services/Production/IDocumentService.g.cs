@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiDocumentResponseModel>> Create(
                         ApiDocumentRequestModel model);
 
-                Task<ActionResponse> Update(Guid rowguid,
-                                            ApiDocumentRequestModel model);
+                Task<UpdateResponse<ApiDocumentResponseModel>> Update(Guid rowguid,
+                                                                       ApiDocumentRequestModel model);
 
                 Task<ActionResponse> Delete(Guid rowguid);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebfb8c25966944a5abd7972bc3f1500d</Hash>
+    <Hash>a10eb2d5f64e83a0f2035382aad0112e</Hash>
 </Codenesium>*/

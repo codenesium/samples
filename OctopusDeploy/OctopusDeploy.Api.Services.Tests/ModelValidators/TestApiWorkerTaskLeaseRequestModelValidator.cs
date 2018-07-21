@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
@@ -97,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TaskId_Create_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
-                }
-
-                [Fact]
-                public async void TaskId_Update_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
-                }
-
-                [Fact]
                 public async void TaskId_Create_length()
                 {
                         Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
@@ -142,30 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void WorkerId_Create_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.WorkerId, null as string);
-                }
-
-                [Fact]
-                public async void WorkerId_Update_null()
-                {
-                        Mock<IWorkerTaskLeaseRepository> workerTaskLeaseRepository = new Mock<IWorkerTaskLeaseRepository>();
-                        workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
-
-                        var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.WorkerId, null as string);
                 }
 
                 [Fact]
@@ -195,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>43efc66b1240e472ec87a2001c8cf681</Hash>
+    <Hash>96ea5a1a269d64365e211bf1d1c5c7d6</Hash>
 </Codenesium>*/

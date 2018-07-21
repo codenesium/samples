@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDeploymentResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentRequestModel model)
                 {
                         CreateResponse<ApiDeploymentResponseModel> result = await this.DeploymentService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Deployments/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Deployments/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiDeploymentRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiDeploymentRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DeploymentService.Update(id, model);
+                                UpdateResponse<ApiDeploymentResponseModel> result = await this.DeploymentService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentResponseModel response = await this.DeploymentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiDeploymentRequestModel model)
                 {
-                        ApiDeploymentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDeploymentRequestModel request = await this.PatchModel(id, this.DeploymentModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DeploymentService.Update(id, request);
+                                UpdateResponse<ApiDeploymentResponseModel> result = await this.DeploymentService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentResponseModel response = await this.DeploymentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -252,24 +248,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDeploymentRequestModel> CreatePatch(ApiDeploymentRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeploymentRequestModel>();
-                        patch.Replace(x => x.ChannelId, model.ChannelId);
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.DeployedBy, model.DeployedBy);
-                        patch.Replace(x => x.DeployedToMachineIds, model.DeployedToMachineIds);
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProjectGroupId, model.ProjectGroupId);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.ReleaseId, model.ReleaseId);
-                        patch.Replace(x => x.TaskId, model.TaskId);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        return patch;
-                }
-
                 private async Task<ApiDeploymentRequestModel> PatchModel(string id, JsonPatchDocument<ApiDeploymentRequestModel> patch)
                 {
                         var record = await this.DeploymentService.Get(id);
@@ -289,5 +267,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c7cbc7e106e4f6d861573bc1e086e789</Hash>
+    <Hash>74b719f799e71719e0ccec7cecf5ed34</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
                         ApiAWBuildVersionRequestModel model);
 
-                Task<ActionResponse> Update(int systemInformationID,
-                                            ApiAWBuildVersionRequestModel model);
+                Task<UpdateResponse<ApiAWBuildVersionResponseModel>> Update(int systemInformationID,
+                                                                             ApiAWBuildVersionRequestModel model);
 
                 Task<ActionResponse> Delete(int systemInformationID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91a3b14029146ad0cbeadeeda01a6ccf</Hash>
+    <Hash>6e7354e38caa9c18cd83682b61e31ce9</Hash>
 </Codenesium>*/

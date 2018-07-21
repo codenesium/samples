@@ -29,26 +29,35 @@ namespace PetStoreNS.Api.Contracts
                         this.PetIdEntity = nameof(ApiResponse.Pets);
                 }
 
+                [JsonProperty]
                 public decimal Amount { get; private set; }
 
+                [JsonProperty]
                 public string FirstName { get; private set; }
 
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [JsonProperty]
                 public string LastName { get; private set; }
 
+                [JsonProperty]
                 public int PaymentTypeId { get; private set; }
 
+                [JsonProperty]
                 public string PaymentTypeIdEntity { get; set; }
 
+                [JsonProperty]
                 public int PetId { get; private set; }
 
+                [JsonProperty]
                 public string PetIdEntity { get; set; }
 
+                [JsonProperty]
                 public string Phone { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>95895134d733ec2240ef5a7a06f2b4ea</Hash>
+    <Hash>9cc259b81f511dcefe4db0d0831e82a7</Hash>
 </Codenesium>*/

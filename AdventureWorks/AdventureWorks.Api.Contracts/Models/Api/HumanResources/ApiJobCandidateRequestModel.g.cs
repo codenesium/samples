@@ -24,54 +24,18 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Resume = resume;
                 }
 
-                private int? businessEntityID;
-
-                public int? BusinessEntityID
-                {
-                        get
-                        {
-                                return this.businessEntityID;
-                        }
-
-                        set
-                        {
-                                this.businessEntityID = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public int? BusinessEntityID { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string resume;
-
-                public string Resume
-                {
-                        get
-                        {
-                                return this.resume;
-                        }
-
-                        set
-                        {
-                                this.resume = value;
-                        }
-                }
+                [JsonProperty]
+                public string Resume { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9911ad7472efa129daebeb24fbc401f7</Hash>
+    <Hash>1be3c69c92ed2c51af76e4a5928e6903</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         ProductModel response = mapper.MapBOToEF(bo);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.ProductModelID.Should().Be(1);
@@ -39,7 +39,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         BOProductModel response = mapper.MapEFToBO(entity);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.ProductModelID.Should().Be(1);
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c52cae6375bf4a60eca329da37df0840</Hash>
+    <Hash>539018af1a68676cb545940b526ceb4d</Hash>
 </Codenesium>*/

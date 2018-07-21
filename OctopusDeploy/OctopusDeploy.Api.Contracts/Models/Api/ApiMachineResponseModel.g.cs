@@ -38,34 +38,60 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string CommunicationStyle { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string EnvironmentIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Fingerprint { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDisabled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string MachinePolicyId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RelatedDocumentIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Roles { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantTags { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Thumbprint { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e754b6d4570405c6a9d2f50b576a697f</Hash>
+    <Hash>4699506b21de3efab91438b2c98f35bd</Hash>
 </Codenesium>*/

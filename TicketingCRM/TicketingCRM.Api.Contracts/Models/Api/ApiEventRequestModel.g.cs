@@ -38,168 +38,38 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Website = website;
                 }
 
-                private string address1;
+                [JsonProperty]
+                public string Address1 { get; private set; }
 
-                [Required]
-                public string Address1
-                {
-                        get
-                        {
-                                return this.address1;
-                        }
+                [JsonProperty]
+                public string Address2 { get; private set; }
 
-                        set
-                        {
-                                this.address1 = value;
-                        }
-                }
+                [JsonProperty]
+                public int CityId { get; private set; }
 
-                private string address2;
+                [JsonProperty]
+                public DateTime Date { get; private set; }
 
-                [Required]
-                public string Address2
-                {
-                        get
-                        {
-                                return this.address2;
-                        }
+                [JsonProperty]
+                public string Description { get; private set; }
 
-                        set
-                        {
-                                this.address2 = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime EndDate { get; private set; }
 
-                private int cityId;
+                [JsonProperty]
+                public string Facebook { get; private set; }
 
-                [Required]
-                public int CityId
-                {
-                        get
-                        {
-                                return this.cityId;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.cityId = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
 
-                private DateTime date;
-
-                [Required]
-                public DateTime Date
-                {
-                        get
-                        {
-                                return this.date;
-                        }
-
-                        set
-                        {
-                                this.date = value;
-                        }
-                }
-
-                private string description;
-
-                [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
-
-                private DateTime endDate;
-
-                [Required]
-                public DateTime EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private string facebook;
-
-                [Required]
-                public string Facebook
-                {
-                        get
-                        {
-                                return this.facebook;
-                        }
-
-                        set
-                        {
-                                this.facebook = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private DateTime startDate;
-
-                [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
-
-                private string website;
-
-                [Required]
-                public string Website
-                {
-                        get
-                        {
-                                return this.website;
-                        }
-
-                        set
-                        {
-                                this.website = value;
-                        }
-                }
+                [JsonProperty]
+                public string Website { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c736f9a06515333ab607141b3c15ec39</Hash>
+    <Hash>ebd7ec1cdcc432f3582a519f31f8a43a</Hash>
 </Codenesium>*/

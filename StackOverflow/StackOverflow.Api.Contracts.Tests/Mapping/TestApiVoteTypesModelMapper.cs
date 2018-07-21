@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace StackOverflowNS.Api.Contracts.Tests
 
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiVoteTypesModelMapper();
+                        var model = new ApiVoteTypesRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiVoteTypesRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiVoteTypesRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>dac4a953b048fc8eb43a55da24d3af48</Hash>
+    <Hash>a8368251d9964c4b9551cd0a35db7384</Hash>
 </Codenesium>*/

@@ -22,18 +22,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOffers);
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int SpecialOfferID { get; private set; }
 
+                [JsonProperty]
                 public string SpecialOfferIDEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>458a186754f6bb4af4d94ef75ca54bb7</Hash>
+    <Hash>78a39b49a90aef10dca3c28870302962</Hash>
 </Codenesium>*/

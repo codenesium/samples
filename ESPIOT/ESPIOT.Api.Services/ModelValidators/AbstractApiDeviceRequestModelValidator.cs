@@ -28,7 +28,6 @@ namespace ESPIOTNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 90);
                 }
 
@@ -54,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8486a77324b8686247c996d80fb40dd4</Hash>
+    <Hash>b644a5c3fb461538d219a2bef800fe81</Hash>
 </Codenesium>*/

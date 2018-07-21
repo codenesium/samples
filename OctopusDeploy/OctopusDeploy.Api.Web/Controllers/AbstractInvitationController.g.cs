@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInvitationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiInvitationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiInvitationRequestModel model)
                 {
                         CreateResponse<ApiInvitationResponseModel> result = await this.InvitationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Invitations/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Invitations/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInvitationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiInvitationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiInvitationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiInvitationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.InvitationService.Update(id, model);
+                                UpdateResponse<ApiInvitationResponseModel> result = await this.InvitationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiInvitationResponseModel response = await this.InvitationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInvitationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiInvitationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiInvitationRequestModel model)
                 {
-                        ApiInvitationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiInvitationRequestModel request = await this.PatchModel(id, this.InvitationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.InvitationService.Update(id, request);
+                                UpdateResponse<ApiInvitationResponseModel> result = await this.InvitationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiInvitationResponseModel response = await this.InvitationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiInvitationRequestModel> CreatePatch(ApiInvitationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiInvitationRequestModel>();
-                        patch.Replace(x => x.InvitationCode, model.InvitationCode);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        return patch;
-                }
-
                 private async Task<ApiInvitationRequestModel> PatchModel(string id, JsonPatchDocument<ApiInvitationRequestModel> patch)
                 {
                         var record = await this.InvitationService.Get(id);
@@ -232,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aa5aec5cb707c08107a6d68ee465c335</Hash>
+    <Hash>480a3d62faa8e8dfb62bc813c939a63a</Hash>
 </Codenesium>*/

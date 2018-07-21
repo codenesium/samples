@@ -169,7 +169,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void MaritalStatus_Create_null()
+                public async void MaritalStatu_Create_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
@@ -177,11 +177,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, null as string);
+                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatu, null as string);
                 }
 
                 [Fact]
-                public async void MaritalStatus_Update_null()
+                public async void MaritalStatu_Update_null()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
@@ -189,11 +189,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
                         await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, null as string);
+                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatu, null as string);
                 }
 
                 [Fact]
-                public async void MaritalStatus_Create_length()
+                public async void MaritalStatu_Create_length()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
@@ -201,11 +201,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, new string('A', 2));
+                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatu, new string('A', 2));
                 }
 
                 [Fact]
-                public async void MaritalStatus_Update_length()
+                public async void MaritalStatu_Update_length()
                 {
                         Mock<IEmployeeRepository> employeeRepository = new Mock<IEmployeeRepository>();
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
@@ -213,7 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
                         await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, new string('A', 2));
+                        validator.ShouldHaveValidationErrorFor(x => x.MaritalStatu, new string('A', 2));
                 }
 
                 [Fact]
@@ -315,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e28d99beafee3eef05aaa45b0d4c6155</Hash>
+    <Hash>59c9692256a05e0f2b97af27a3ce3157</Hash>
 </Codenesium>*/

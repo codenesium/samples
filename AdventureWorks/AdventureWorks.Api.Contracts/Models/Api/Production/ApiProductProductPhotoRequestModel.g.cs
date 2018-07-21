@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ProductPhotoID = productPhotoID;
                 }
 
-                private DateTime modifiedDate;
+                [Required]
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private bool primary;
+                [JsonProperty]
+                public bool Primary { get; private set; }
 
                 [Required]
-                public bool Primary
-                {
-                        get
-                        {
-                                return this.primary;
-                        }
-
-                        set
-                        {
-                                this.primary = value;
-                        }
-                }
-
-                private int productPhotoID;
-
-                [Required]
-                public int ProductPhotoID
-                {
-                        get
-                        {
-                                return this.productPhotoID;
-                        }
-
-                        set
-                        {
-                                this.productPhotoID = value;
-                        }
-                }
+                [JsonProperty]
+                public int ProductPhotoID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>55527d4f9d3f4736a11bacb3846d87d8</Hash>
+    <Hash>863dda71315b355f1514e9b587869688</Hash>
 </Codenesium>*/

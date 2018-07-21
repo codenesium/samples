@@ -18,8 +18,8 @@ namespace AdventureWorksNS.Api.Services
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
                         IBOLUnitMeasureMapper bolunitMeasureMapper,
                         IDALUnitMeasureMapper dalunitMeasureMapper,
-                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
+                        IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
+                        IDALBillOfMaterialMapper dalBillOfMaterialMapper,
                         IBOLProductMapper bolProductMapper,
                         IDALProductMapper dalProductMapper
                         )
@@ -28,8 +28,8 @@ namespace AdventureWorksNS.Api.Services
                                unitMeasureModelValidator,
                                bolunitMeasureMapper,
                                dalunitMeasureMapper,
-                               bolBillOfMaterialsMapper,
-                               dalBillOfMaterialsMapper,
+                               bolBillOfMaterialMapper,
+                               dalBillOfMaterialMapper,
                                bolProductMapper,
                                dalProductMapper)
                 {
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6ca0b0eecd8221e6c495d0442724063</Hash>
+    <Hash>3a137731f90467fbd378af3673e8b18e</Hash>
 </Codenesium>*/

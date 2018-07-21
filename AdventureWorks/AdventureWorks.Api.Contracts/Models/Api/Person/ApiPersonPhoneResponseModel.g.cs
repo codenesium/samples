@@ -20,16 +20,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.PhoneNumberTypeID = phoneNumberTypeID;
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string PhoneNumber { get; private set; }
 
+                [JsonProperty]
                 public int PhoneNumberTypeID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ebb533b07c544f84bb1a1cb464794e97</Hash>
+    <Hash>d08b19f10097143aab1484b156ac8ddb</Hash>
 </Codenesium>*/

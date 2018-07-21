@@ -12,8 +12,8 @@ namespace TicketingCRMNS.Api.Services
                 Task<CreateResponse<ApiCustomerResponseModel>> Create(
                         ApiCustomerRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiCustomerRequestModel model);
+                Task<UpdateResponse<ApiCustomerResponseModel>> Update(int id,
+                                                                       ApiCustomerRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16dd78335498f9ac63c58073fffeceff</Hash>
+    <Hash>cd9d4e99a10be8bdf0ec1e08f720795d</Hash>
 </Codenesium>*/

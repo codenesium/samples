@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace FileServiceNS.Api.DataAccess
 {
@@ -46,6 +47,31 @@ namespace FileServiceNS.Api.DataAccess
 
                 public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
 
+                /// <summary>
+                /// We're overriding SaveChanges because SQLite does not support database computed columns.
+                /// RowVersion is a very common type of column and it does not work with SQLite.
+                /// To work around this limitation we detect RowVersion columns here and set the value.
+                /// On SQL Server the database would set the value.
+                /// </summary>
+                /// <returns>int</returns>
+                public override int SaveChanges()
+                {
+                        var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+                        if (entries.Any())
+                        {
+                                foreach (var createdEntry in entries)
+                                {
+                                        var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+                                        if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
+                                        {
+                                                entity.CurrentValue = Guid.NewGuid();
+                                        }
+                                }
+                        }
+
+                        return base.SaveChanges();
+                }
+
                 protected override void OnConfiguring(DbContextOptionsBuilder options)
                 {
                         base.OnConfiguring(options);
@@ -77,5 +103,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a985e639912a925695156352fb05681</Hash>
+    <Hash>3aa9fdf1ad599ed61330d44628771d5c</Hash>
 </Codenesium>*/

@@ -22,18 +22,28 @@ namespace OctopusDeployNS.Api.Contracts
                         this.SortOrder = sortOrder;
                 }
 
+                [Required]
+                [JsonProperty]
                 public byte[] DataVersion { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int SortOrder { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7e95b34f4c79841687f6ccedba594ddd</Hash>
+    <Hash>0cf5424cc42634451cd26b7cc056b47d</Hash>
 </Codenesium>*/

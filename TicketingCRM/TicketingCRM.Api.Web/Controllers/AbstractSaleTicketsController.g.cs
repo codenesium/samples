@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleTicketsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSaleTicketsResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSaleTicketsRequestModel model)
                 {
                         CreateResponse<ApiSaleTicketsResponseModel> result = await this.SaleTicketsService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SaleTickets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SaleTickets/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleTicketsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleTicketsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSaleTicketsRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiSaleTicketsRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SaleTicketsService.Update(id, model);
+                                UpdateResponse<ApiSaleTicketsResponseModel> result = await this.SaleTicketsService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleTicketsResponseModel response = await this.SaleTicketsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleTicketsResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleTicketsResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleTicketsRequestModel model)
                 {
-                        ApiSaleTicketsRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSaleTicketsRequestModel request = await this.PatchModel(id, this.SaleTicketsModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SaleTicketsService.Update(id, request);
+                                UpdateResponse<ApiSaleTicketsResponseModel> result = await this.SaleTicketsService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleTicketsResponseModel response = await this.SaleTicketsService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,14 +212,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSaleTicketsRequestModel> CreatePatch(ApiSaleTicketsRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSaleTicketsRequestModel>();
-                        patch.Replace(x => x.SaleId, model.SaleId);
-                        patch.Replace(x => x.TicketId, model.TicketId);
-                        return patch;
-                }
-
                 private async Task<ApiSaleTicketsRequestModel> PatchModel(int id, JsonPatchDocument<ApiSaleTicketsRequestModel> patch)
                 {
                         var record = await this.SaleTicketsService.Get(id);
@@ -243,5 +231,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>323d4d772c1bba95f506327f768177a5</Hash>
+    <Hash>5b17c9967793e75a64aabb64e2bd1954</Hash>
 </Codenesium>*/

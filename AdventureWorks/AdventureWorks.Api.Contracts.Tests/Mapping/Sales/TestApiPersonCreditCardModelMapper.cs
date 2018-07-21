@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.CreditCardID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPersonCreditCardModelMapper();
+                        var model = new ApiPersonCreditCardRequestModel();
+                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+
+                        JsonPatchDocument<ApiPersonCreditCardRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPersonCreditCardRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CreditCardID.Should().Be(1);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9609dc3c0d91a2ad01c3de01d6899406</Hash>
+    <Hash>5fb160d1ab46e7500a78322683b3caa0</Hash>
 </Codenesium>*/

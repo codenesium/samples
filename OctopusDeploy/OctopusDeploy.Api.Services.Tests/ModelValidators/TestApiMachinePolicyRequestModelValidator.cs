@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
-
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
-
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
-
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
-
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07d56f1d205e49e5612e0cea3b980c84</Hash>
+    <Hash>f31eeb5a374a6c2b538782225474f0d7</Hash>
 </Codenesium>*/

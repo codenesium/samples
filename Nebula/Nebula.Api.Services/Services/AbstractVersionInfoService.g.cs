@@ -75,18 +75,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiVersionInfoResponseModel>> Update(
                         long version,
                         ApiVersionInfoRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
-                        if (response.Success)
+                        var validationResult = await this.versionInfoModelValidator.ValidateUpdateAsync(version, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
                                 await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.versionInfoRepository.Get(version);
+
+                                return new UpdateResponse<ApiVersionInfoResponseModel>(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiVersionInfoResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>14991b4d7511842c6a53527c7e259574</Hash>
+    <Hash>7edb9e890c5bca6acf79f2d9139a5d80</Hash>
 </Codenesium>*/

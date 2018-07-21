@@ -12,8 +12,8 @@ namespace PetShippingNS.Api.Services
                 Task<CreateResponse<ApiOtherTransportResponseModel>> Create(
                         ApiOtherTransportRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiOtherTransportRequestModel model);
+                Task<UpdateResponse<ApiOtherTransportResponseModel>> Update(int id,
+                                                                             ApiOtherTransportRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de16868ee30adb6074956a50eb421985</Hash>
+    <Hash>e6d3a417e09b8611a8d131c8ae33a213</Hash>
 </Codenesium>*/

@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ChannelIdRules()
                 {
-                        this.RuleFor(x => x.ChannelId).NotNull();
                         this.RuleFor(x => x.ChannelId).Length(0, 50);
                 }
 
@@ -38,7 +37,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void DeployedByRules()
                 {
-                        this.RuleFor(x => x.DeployedBy).NotNull();
                         this.RuleFor(x => x.DeployedBy).Length(0, 200);
                 }
 
@@ -48,36 +46,30 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void EnvironmentIdRules()
                 {
-                        this.RuleFor(x => x.EnvironmentId).NotNull();
                         this.RuleFor(x => x.EnvironmentId).Length(0, 50);
                 }
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void ProjectGroupIdRules()
                 {
-                        this.RuleFor(x => x.ProjectGroupId).NotNull();
                         this.RuleFor(x => x.ProjectGroupId).Length(0, 50);
                 }
 
                 public virtual void ProjectIdRules()
                 {
-                        this.RuleFor(x => x.ProjectId).NotNull();
                         this.RuleFor(x => x.ProjectId).Length(0, 50);
                 }
 
                 public virtual void ReleaseIdRules()
                 {
-                        this.RuleFor(x => x.ReleaseId).NotNull();
                         this.RuleFor(x => x.ReleaseId).Length(0, 50);
                 }
 
@@ -94,5 +86,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>44de75e7d5d8c5ace3fb27af61c16ec5</Hash>
+    <Hash>3cf1aeae6f32144c6a6535bcc9868a61</Hash>
 </Codenesium>*/

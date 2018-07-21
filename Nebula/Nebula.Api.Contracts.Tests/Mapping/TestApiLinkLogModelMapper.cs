@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,25 @@ namespace NebulaNS.Api.Contracts.Tests
                         response.LinkId.Should().Be(1);
                         response.Log.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiLinkLogModelMapper();
+                        var model = new ApiLinkLogRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
+
+                        JsonPatchDocument<ApiLinkLogRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiLinkLogRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.DateEntered.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.LinkId.Should().Be(1);
+                        response.Log.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9241821870539721da42e05d27c35843</Hash>
+    <Hash>7d67484761b2ec5d76d5d006e57003b9</Hash>
 </Codenesium>*/

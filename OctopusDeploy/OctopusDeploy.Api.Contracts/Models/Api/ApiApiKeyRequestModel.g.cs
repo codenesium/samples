@@ -26,72 +26,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.UserId = userId;
                 }
 
-                private string apiKeyHashed;
+                [JsonProperty]
+                public string ApiKeyHashed { get; private set; }
 
-                [Required]
-                public string ApiKeyHashed
-                {
-                        get
-                        {
-                                return this.apiKeyHashed;
-                        }
+                [JsonProperty]
+                public DateTimeOffset Created { get; private set; }
 
-                        set
-                        {
-                                this.apiKeyHashed = value;
-                        }
-                }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                private DateTimeOffset created;
-
-                [Required]
-                public DateTimeOffset Created
-                {
-                        get
-                        {
-                                return this.created;
-                        }
-
-                        set
-                        {
-                                this.created = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string userId;
-
-                [Required]
-                public string UserId
-                {
-                        get
-                        {
-                                return this.userId;
-                        }
-
-                        set
-                        {
-                                this.userId = value;
-                        }
-                }
+                [JsonProperty]
+                public string UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e91f10a520d4f21b8325d24f8d8a79af</Hash>
+    <Hash>aafefd415d67f21eadaeadf14379500b</Hash>
 </Codenesium>*/

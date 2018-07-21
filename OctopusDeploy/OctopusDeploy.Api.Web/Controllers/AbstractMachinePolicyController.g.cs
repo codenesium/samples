@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachinePolicyResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiMachinePolicyResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMachinePolicyRequestModel model)
                 {
                         CreateResponse<ApiMachinePolicyResponseModel> result = await this.MachinePolicyService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/MachinePolicies/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/MachinePolicies/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachinePolicyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachinePolicyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiMachinePolicyRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiMachinePolicyRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.MachinePolicyService.Update(id, model);
+                                UpdateResponse<ApiMachinePolicyResponseModel> result = await this.MachinePolicyService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiMachinePolicyResponseModel response = await this.MachinePolicyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachinePolicyResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachinePolicyResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiMachinePolicyRequestModel model)
                 {
-                        ApiMachinePolicyRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiMachinePolicyRequestModel request = await this.PatchModel(id, this.MachinePolicyModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.MachinePolicyService.Update(id, request);
+                                UpdateResponse<ApiMachinePolicyResponseModel> result = await this.MachinePolicyService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiMachinePolicyResponseModel response = await this.MachinePolicyService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,15 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiMachinePolicyRequestModel> CreatePatch(ApiMachinePolicyRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiMachinePolicyRequestModel>();
-                        patch.Replace(x => x.IsDefault, model.IsDefault);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiMachinePolicyRequestModel> PatchModel(string id, JsonPatchDocument<ApiMachinePolicyRequestModel> patch)
                 {
                         var record = await this.MachinePolicyService.Get(id);
@@ -252,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>355604bcb47027f6df4866a1d571259a</Hash>
+    <Hash>e0b892292803e3422aeef6c1e55b02c1</Hash>
 </Codenesium>*/

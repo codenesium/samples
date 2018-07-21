@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "WorkOrderRouting")]
         [Trait("Area", "Integration")]
-        public class WorkOrderRoutingIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class WorkOrderRoutingIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public WorkOrderRoutingIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiWorkOrderRoutingModelMapper mapper = new ApiWorkOrderRoutingModelMapper();
+
+                        UpdateResponse<ApiWorkOrderRoutingResponseModel> updateResponse = await this.Client.WorkOrderRoutingUpdateAsync(model.WorkOrderID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.WorkOrderRoutingDeleteAsync(model.WorkOrderID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiWorkOrderRoutingResponseModel response = await this.Client.WorkOrderRoutingGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiWorkOrderRoutingResponseModel> response = await this.Client.WorkOrderRoutingAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiWorkOrderRoutingResponseModel> CreateRecord()
+                {
+                        var model = new ApiWorkOrderRoutingRequestModel();
+                        model.SetProperties(3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 3810.59m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
+                        CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.Client.WorkOrderRoutingCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.WorkOrderRoutingDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d02970d976f1ff01e43c61d0d233889c</Hash>
+    <Hash>847681f81ba002cf864d9763bb9e1f49</Hash>
 </Codenesium>*/

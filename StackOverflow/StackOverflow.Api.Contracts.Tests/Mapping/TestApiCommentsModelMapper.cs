@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,27 @@ namespace StackOverflowNS.Api.Contracts.Tests
                         response.Text.Should().Be("A");
                         response.UserId.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiCommentsModelMapper();
+                        var model = new ApiCommentsRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1);
+
+                        JsonPatchDocument<ApiCommentsRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiCommentsRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.PostId.Should().Be(1);
+                        response.Score.Should().Be(1);
+                        response.Text.Should().Be("A");
+                        response.UserId.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>880cf41f5ccc3f5861f8da64add86898</Hash>
+    <Hash>d90647c1c9133ba8a4ca8e691b5dbccc</Hash>
 </Codenesium>*/

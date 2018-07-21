@@ -21,18 +21,26 @@ namespace FermataFishNS.Api.Contracts
                         this.SpaceIdEntity = nameof(ApiResponse.Spaces);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int SpaceFeatureId { get; private set; }
 
+                [JsonProperty]
                 public string SpaceFeatureIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int SpaceId { get; private set; }
 
+                [JsonProperty]
                 public string SpaceIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4553331ae527fb5b80607bb671cba4ff</Hash>
+    <Hash>65189be096937c5fde9e1b945e8bc73c</Hash>
 </Codenesium>*/

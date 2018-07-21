@@ -105,6 +105,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IScrapReasonRepository>();
                         var model = new ApiScrapReasonRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ScrapReason>())).Returns(Task.FromResult(new ScrapReason()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
                         var service = new ScrapReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
                                                              mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-                        ActionResponse response = await service.Update(default(short), model);
+                        UpdateResponse<ApiScrapReasonResponseModel> response = await service.Update(default(short), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonRequestModel>()));
@@ -223,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>868861cd3a44203c6ecf509975c7e933</Hash>
+    <Hash>a40128bb00506e87f89375c359bc0b38</Hash>
 </Codenesium>*/

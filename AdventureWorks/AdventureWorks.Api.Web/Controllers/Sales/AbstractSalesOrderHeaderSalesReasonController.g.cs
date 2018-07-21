@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderHeaderSalesReasonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderSalesReasonRequestModel model)
                 {
                         CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> result = await this.SalesOrderHeaderSalesReasonService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaderSalesReasons/{result.Record.SalesOrderID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaderSalesReasons/{result.Record.SalesOrderID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderHeaderSalesReasonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesOrderHeaderSalesReasonRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesOrderHeaderSalesReasonService.Update(id, model);
+                                UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> result = await this.SalesOrderHeaderSalesReasonService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesOrderHeaderSalesReasonResponseModel response = await this.SalesOrderHeaderSalesReasonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderHeaderSalesReasonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderSalesReasonRequestModel model)
                 {
-                        ApiSalesOrderHeaderSalesReasonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesOrderHeaderSalesReasonRequestModel request = await this.PatchModel(id, this.SalesOrderHeaderSalesReasonModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesOrderHeaderSalesReasonService.Update(id, request);
+                                UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> result = await this.SalesOrderHeaderSalesReasonService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesOrderHeaderSalesReasonResponseModel response = await this.SalesOrderHeaderSalesReasonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel> CreatePatch(ApiSalesOrderHeaderSalesReasonRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.SalesReasonID, model.SalesReasonID);
-                        return patch;
-                }
-
                 private async Task<ApiSalesOrderHeaderSalesReasonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderHeaderSalesReasonRequestModel> patch)
                 {
                         var record = await this.SalesOrderHeaderSalesReasonService.Get(id);
@@ -232,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>142d69482d38e8852156b5b9b653e908</Hash>
+    <Hash>4e980d95961ac46220f7bb5cef6cd671</Hash>
 </Codenesium>*/

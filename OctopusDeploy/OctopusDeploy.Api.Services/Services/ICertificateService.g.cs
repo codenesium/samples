@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiCertificateResponseModel>> Create(
                         ApiCertificateRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiCertificateRequestModel model);
+                Task<UpdateResponse<ApiCertificateResponseModel>> Update(string id,
+                                                                          ApiCertificateRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dabf0249e58b73b0c44b342ce6e91d9d</Hash>
+    <Hash>92cdcdeaedc67aa199c286bae22511ee</Hash>
 </Codenesium>*/

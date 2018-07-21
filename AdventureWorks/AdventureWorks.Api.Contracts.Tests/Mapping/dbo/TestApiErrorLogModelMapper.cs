@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -47,9 +48,30 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ErrorTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UserName.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiErrorLogModelMapper();
+                        var model = new ApiErrorLogRequestModel();
+                        model.SetProperties(1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+
+                        JsonPatchDocument<ApiErrorLogRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiErrorLogRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ErrorLine.Should().Be(1);
+                        response.ErrorMessage.Should().Be("A");
+                        response.ErrorNumber.Should().Be(1);
+                        response.ErrorProcedure.Should().Be("A");
+                        response.ErrorSeverity.Should().Be(1);
+                        response.ErrorState.Should().Be(1);
+                        response.ErrorTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.UserName.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>801f2e400ae98840581dc86d14d9c312</Hash>
+    <Hash>302b5de41c144f239b5611730aaed206</Hash>
 </Codenesium>*/

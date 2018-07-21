@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -39,9 +41,24 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.Username);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiUserRequestModel> CreatePatch(ApiUserRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiUserRequestModel>();
+                        patch.Replace(x => x.DisplayName, model.DisplayName);
+                        patch.Replace(x => x.EmailAddress, model.EmailAddress);
+                        patch.Replace(x => x.ExternalId, model.ExternalId);
+                        patch.Replace(x => x.ExternalIdentifiers, model.ExternalIdentifiers);
+                        patch.Replace(x => x.IdentificationToken, model.IdentificationToken);
+                        patch.Replace(x => x.IsActive, model.IsActive);
+                        patch.Replace(x => x.IsService, model.IsService);
+                        patch.Replace(x => x.JSON, model.JSON);
+                        patch.Replace(x => x.Username, model.Username);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b6c9a82ca8f95427e8a31fae3f7bc165</Hash>
+    <Hash>85c39a7d25e2a68b7ba46fd18c07e5ab</Hash>
 </Codenesium>*/

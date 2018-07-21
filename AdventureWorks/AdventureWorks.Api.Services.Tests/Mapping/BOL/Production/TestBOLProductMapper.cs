@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLProductMapper();
                         ApiProductRequestModel model = new ApiProductRequestModel();
-                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
+                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
                         BOProduct response = mapper.MapModelToBO(1, model);
 
                         response.@Class.Should().Be("A");
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.DaysToManufacture.Should().Be(1);
                         response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.FinishedGoodsFlag.Should().Be(true);
-                        response.ListPrice.Should().Be(1);
+                        response.ListPrice.Should().Be(1m);
                         response.MakeFlag.Should().Be(true);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -41,9 +41,9 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SellStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Size.Should().Be("A");
                         response.SizeUnitMeasureCode.Should().Be("A");
-                        response.StandardCost.Should().Be(1);
+                        response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1);
+                        response.Weight.Should().Be(1m);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLProductMapper();
                         BOProduct bo = new BOProduct();
-                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
+                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
                         ApiProductResponseModel response = mapper.MapBOToModel(bo);
 
                         response.@Class.Should().Be("A");
@@ -60,7 +60,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.DaysToManufacture.Should().Be(1);
                         response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.FinishedGoodsFlag.Should().Be(true);
-                        response.ListPrice.Should().Be(1);
+                        response.ListPrice.Should().Be(1m);
                         response.MakeFlag.Should().Be(true);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SellStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Size.Should().Be("A");
                         response.SizeUnitMeasureCode.Should().Be("A");
-                        response.StandardCost.Should().Be(1);
+                        response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1);
+                        response.Weight.Should().Be(1m);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -87,7 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLProductMapper();
                         BOProduct bo = new BOProduct();
-                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
+                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
                         List<ApiProductResponseModel> response = mapper.MapBOToModel(new List<BOProduct>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -96,5 +96,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>289ea36d66a6aa0293ba0895ac318a96</Hash>
+    <Hash>f1fd2721a30ec0b6167cba6b281add98</Hash>
 </Codenesium>*/

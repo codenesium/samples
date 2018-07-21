@@ -26,72 +26,24 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Name = name;
                 }
 
-                private decimal availability;
+                [Required]
+                [JsonProperty]
+                public decimal Availability { get; private set; }
 
                 [Required]
-                public decimal Availability
-                {
-                        get
-                        {
-                                return this.availability;
-                        }
-
-                        set
-                        {
-                                this.availability = value;
-                        }
-                }
-
-                private decimal costRate;
+                [JsonProperty]
+                public decimal CostRate { get; private set; }
 
                 [Required]
-                public decimal CostRate
-                {
-                        get
-                        {
-                                return this.costRate;
-                        }
-
-                        set
-                        {
-                                this.costRate = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>212b7f34cc469fd7cf71066c38b9d6a2</Hash>
+    <Hash>a99af0055f121a0b88ebb483edaea6a6</Hash>
 </Codenesium>*/

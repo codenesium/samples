@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<long>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiVersionInfoResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
                 {
                         CreateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(long id, [FromBody] JsonPatchDocument<ApiVersionInfoRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiVersionInfoRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.VersionInfoService.Update(id, model);
+                                UpdateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoRequestModel model)
                 {
-                        ApiVersionInfoRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiVersionInfoRequestModel request = await this.PatchModel(id, this.VersionInfoModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.VersionInfoService.Update(id, request);
+                                UpdateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,14 +220,6 @@ namespace NebulaNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiVersionInfoRequestModel> CreatePatch(ApiVersionInfoRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiVersionInfoRequestModel>();
-                        patch.Replace(x => x.AppliedOn, model.AppliedOn);
-                        patch.Replace(x => x.Description, model.Description);
-                        return patch;
-                }
-
                 private async Task<ApiVersionInfoRequestModel> PatchModel(long id, JsonPatchDocument<ApiVersionInfoRequestModel> patch)
                 {
                         var record = await this.VersionInfoService.Get(id);
@@ -251,5 +239,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9cb2b109a85979c55f01271fde892273</Hash>
+    <Hash>d7cc684ac7b7ac0e3e8e767272e01e93</Hash>
 </Codenesium>*/

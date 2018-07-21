@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IConfigurationRepository>();
                         var model = new ApiConfigurationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Configuration>())).Returns(Task.FromResult(new Configuration()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Configuration()));
                         var service = new ConfigurationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.ConfigurationModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLConfigurationMapperMock,
                                                                mock.DALMapperMockFactory.DALConfigurationMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiConfigurationResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ConfigurationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiConfigurationRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3d84d4c950d546f2c99235f21d217b74</Hash>
+    <Hash>f9c4af8c5949cc275eaaaa0f02f7c3ee</Hash>
 </Codenesium>*/

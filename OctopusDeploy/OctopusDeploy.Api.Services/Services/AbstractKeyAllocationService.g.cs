@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiKeyAllocationResponseModel>> Update(
                         string collectionName,
                         ApiKeyAllocationRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model));
-                        if (response.Success)
+                        var validationResult = await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolKeyAllocationMapper.MapModelToBO(collectionName, model);
                                 await this.keyAllocationRepository.Update(this.dalKeyAllocationMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.keyAllocationRepository.Get(collectionName);
+
+                                return new UpdateResponse<ApiKeyAllocationResponseModel>(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiKeyAllocationResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e7ba672d728096ea019a1b8c96eb67f</Hash>
+    <Hash>5ce48e16ff7739bdc695210aa0a65eaf</Hash>
 </Codenesium>*/

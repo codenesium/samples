@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IWorkerPoolRepository> workerPoolRepository = new Mock<IWorkerPoolRepository>();
-                        workerPoolRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerPool()));
-
-                        var validator = new ApiWorkerPoolRequestModelValidator(workerPoolRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerPoolRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IWorkerPoolRepository> workerPoolRepository = new Mock<IWorkerPoolRepository>();
-                        workerPoolRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerPool()));
-
-                        var validator = new ApiWorkerPoolRequestModelValidator(workerPoolRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerPoolRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IWorkerPoolRepository> workerPoolRepository = new Mock<IWorkerPoolRepository>();
-                        workerPoolRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerPool()));
-
-                        var validator = new ApiWorkerPoolRequestModelValidator(workerPoolRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerPoolRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IWorkerPoolRepository> workerPoolRepository = new Mock<IWorkerPoolRepository>();
-                        workerPoolRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerPool()));
-
-                        var validator = new ApiWorkerPoolRequestModelValidator(workerPoolRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerPoolRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IWorkerPoolRepository> workerPoolRepository = new Mock<IWorkerPoolRepository>();
@@ -147,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>74561953db0ea98f1c62ee12fae84bd3</Hash>
+    <Hash>bc83feeb9e9c77af43985a09b83a341d</Hash>
 </Codenesium>*/

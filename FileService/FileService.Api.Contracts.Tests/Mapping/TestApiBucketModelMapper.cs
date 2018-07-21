@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace FileServiceNS.Api.Contracts.Tests
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.Name.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiBucketModelMapper();
+                        var model = new ApiBucketRequestModel();
+                        model.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+
+                        JsonPatchDocument<ApiBucketRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiBucketRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.Name.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0b4557cfef00e003062eb906826d09a9</Hash>
+    <Hash>83204b11508e848f47060f3c775ee393</Hash>
 </Codenesium>*/

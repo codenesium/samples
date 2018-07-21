@@ -20,16 +20,22 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Resume = resume;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int? BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public int JobCandidateID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Resume { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9a410256de555f1d89f1779059c6e664</Hash>
+    <Hash>ce6ee295a5e7113691f253e796077fe2</Hash>
 </Codenesium>*/

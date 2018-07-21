@@ -66,380 +66,92 @@ namespace AdventureWorksNS.Api.Contracts
                         this.WeightUnitMeasureCode = weightUnitMeasureCode;
                 }
 
-                private string @class;
+                [JsonProperty]
+                public string @Class { get; private set; }
 
-                public string @Class
-                {
-                        get
-                        {
-                                return this.@class;
-                        }
-
-                        set
-                        {
-                                this.@class = value;
-                        }
-                }
-
-                private string color;
-
-                public string Color
-                {
-                        get
-                        {
-                                return this.color;
-                        }
-
-                        set
-                        {
-                                this.color = value;
-                        }
-                }
-
-                private int daysToManufacture;
+                [JsonProperty]
+                public string Color { get; private set; }
 
                 [Required]
-                public int DaysToManufacture
-                {
-                        get
-                        {
-                                return this.daysToManufacture;
-                        }
+                [JsonProperty]
+                public int DaysToManufacture { get; private set; }
 
-                        set
-                        {
-                                this.daysToManufacture = value;
-                        }
-                }
-
-                private DateTime? discontinuedDate;
-
-                public DateTime? DiscontinuedDate
-                {
-                        get
-                        {
-                                return this.discontinuedDate;
-                        }
-
-                        set
-                        {
-                                this.discontinuedDate = value;
-                        }
-                }
-
-                private bool finishedGoodsFlag;
+                [JsonProperty]
+                public DateTime? DiscontinuedDate { get; private set; }
 
                 [Required]
-                public bool FinishedGoodsFlag
-                {
-                        get
-                        {
-                                return this.finishedGoodsFlag;
-                        }
-
-                        set
-                        {
-                                this.finishedGoodsFlag = value;
-                        }
-                }
-
-                private decimal listPrice;
+                [JsonProperty]
+                public bool FinishedGoodsFlag { get; private set; }
 
                 [Required]
-                public decimal ListPrice
-                {
-                        get
-                        {
-                                return this.listPrice;
-                        }
-
-                        set
-                        {
-                                this.listPrice = value;
-                        }
-                }
-
-                private bool makeFlag;
+                [JsonProperty]
+                public decimal ListPrice { get; private set; }
 
                 [Required]
-                public bool MakeFlag
-                {
-                        get
-                        {
-                                return this.makeFlag;
-                        }
-
-                        set
-                        {
-                                this.makeFlag = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public bool MakeFlag { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
+                [JsonProperty]
+                public string ProductLine { get; private set; }
 
-                private string productLine;
-
-                public string ProductLine
-                {
-                        get
-                        {
-                                return this.productLine;
-                        }
-
-                        set
-                        {
-                                this.productLine = value;
-                        }
-                }
-
-                private int? productModelID;
-
-                public int? ProductModelID
-                {
-                        get
-                        {
-                                return this.productModelID;
-                        }
-
-                        set
-                        {
-                                this.productModelID = value;
-                        }
-                }
-
-                private string productNumber;
+                [JsonProperty]
+                public int? ProductModelID { get; private set; }
 
                 [Required]
-                public string ProductNumber
-                {
-                        get
-                        {
-                                return this.productNumber;
-                        }
+                [JsonProperty]
+                public string ProductNumber { get; private set; }
 
-                        set
-                        {
-                                this.productNumber = value;
-                        }
-                }
-
-                private int? productSubcategoryID;
-
-                public int? ProductSubcategoryID
-                {
-                        get
-                        {
-                                return this.productSubcategoryID;
-                        }
-
-                        set
-                        {
-                                this.productSubcategoryID = value;
-                        }
-                }
-
-                private short reorderPoint;
+                [JsonProperty]
+                public int? ProductSubcategoryID { get; private set; }
 
                 [Required]
-                public short ReorderPoint
-                {
-                        get
-                        {
-                                return this.reorderPoint;
-                        }
-
-                        set
-                        {
-                                this.reorderPoint = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public short ReorderPoint { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private short safetyStockLevel;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public short SafetyStockLevel
-                {
-                        get
-                        {
-                                return this.safetyStockLevel;
-                        }
+                [JsonProperty]
+                public short SafetyStockLevel { get; private set; }
 
-                        set
-                        {
-                                this.safetyStockLevel = value;
-                        }
-                }
-
-                private DateTime? sellEndDate;
-
-                public DateTime? SellEndDate
-                {
-                        get
-                        {
-                                return this.sellEndDate;
-                        }
-
-                        set
-                        {
-                                this.sellEndDate = value;
-                        }
-                }
-
-                private DateTime sellStartDate;
+                [JsonProperty]
+                public DateTime? SellEndDate { get; private set; }
 
                 [Required]
-                public DateTime SellStartDate
-                {
-                        get
-                        {
-                                return this.sellStartDate;
-                        }
+                [JsonProperty]
+                public DateTime SellStartDate { get; private set; }
 
-                        set
-                        {
-                                this.sellStartDate = value;
-                        }
-                }
+                [JsonProperty]
+                public string Size { get; private set; }
 
-                private string size;
-
-                public string Size
-                {
-                        get
-                        {
-                                return this.size;
-                        }
-
-                        set
-                        {
-                                this.size = value;
-                        }
-                }
-
-                private string sizeUnitMeasureCode;
-
-                public string SizeUnitMeasureCode
-                {
-                        get
-                        {
-                                return this.sizeUnitMeasureCode;
-                        }
-
-                        set
-                        {
-                                this.sizeUnitMeasureCode = value;
-                        }
-                }
-
-                private decimal standardCost;
+                [JsonProperty]
+                public string SizeUnitMeasureCode { get; private set; }
 
                 [Required]
-                public decimal StandardCost
-                {
-                        get
-                        {
-                                return this.standardCost;
-                        }
+                [JsonProperty]
+                public decimal StandardCost { get; private set; }
 
-                        set
-                        {
-                                this.standardCost = value;
-                        }
-                }
+                [JsonProperty]
+                public string Style { get; private set; }
 
-                private string style;
+                [JsonProperty]
+                public decimal? Weight { get; private set; }
 
-                public string Style
-                {
-                        get
-                        {
-                                return this.style;
-                        }
-
-                        set
-                        {
-                                this.style = value;
-                        }
-                }
-
-                private decimal? weight;
-
-                public decimal? Weight
-                {
-                        get
-                        {
-                                return this.weight;
-                        }
-
-                        set
-                        {
-                                this.weight = value;
-                        }
-                }
-
-                private string weightUnitMeasureCode;
-
-                public string WeightUnitMeasureCode
-                {
-                        get
-                        {
-                                return this.weightUnitMeasureCode;
-                        }
-
-                        set
-                        {
-                                this.weightUnitMeasureCode = value;
-                        }
-                }
+                [JsonProperty]
+                public string WeightUnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f1f3b6bdd2a877881a742fa5af49af7</Hash>
+    <Hash>7da86e81c82bd8cf7129e788515ca5a3</Hash>
 </Codenesium>*/

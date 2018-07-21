@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,5 +80,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c755c6fb58d0efd8123af5ce922c762f</Hash>
+    <Hash>5c2e5e9654f9704ad8fa8c136246594a</Hash>
 </Codenesium>*/

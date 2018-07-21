@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPersonCreditCardRepository>();
                         var model = new ApiPersonCreditCardRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PersonCreditCard>())).Returns(Task.FromResult(new PersonCreditCard()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonCreditCard()));
                         var service = new PersonCreditCardService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
                                                                   mock.ModelValidatorMockFactory.PersonCreditCardModelValidatorMock.Object,
                                                                   mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
                                                                   mock.DALMapperMockFactory.DALPersonCreditCardMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPersonCreditCardResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PersonCreditCardModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonCreditCardRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ff0705a484c75d7e3e49189306196f28</Hash>
+    <Hash>6c7f44a00503659a7533a39e3d4fe75e</Hash>
 </Codenesium>*/

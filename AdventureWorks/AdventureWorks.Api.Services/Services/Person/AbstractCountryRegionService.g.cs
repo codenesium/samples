@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCountryRegionResponseModel>> Update(
                         string countryRegionCode,
                         ApiCountryRegionRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model));
-                        if (response.Success)
+                        var validationResult = await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCountryRegionMapper.MapModelToBO(countryRegionCode, model);
                                 await this.countryRegionRepository.Update(this.dalCountryRegionMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.countryRegionRepository.Get(countryRegionCode);
+
+                                return new UpdateResponse<ApiCountryRegionResponseModel>(this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCountryRegionResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48d36b3c01ba5d7bebf6dadfb50314dd</Hash>
+    <Hash>55d682dc36e03c3cacea1678731d737f</Hash>
 </Codenesium>*/

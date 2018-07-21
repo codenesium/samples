@@ -34,30 +34,42 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Type = type;
                 }
 
+                [JsonProperty]
                 public string Category { get; private set; }
 
+                [JsonProperty]
                 public string Description { get; private set; }
 
+                [JsonProperty]
                 public decimal DiscountPct { get; private set; }
 
+                [JsonProperty]
                 public DateTime EndDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? MaxQty { get; private set; }
 
+                [JsonProperty]
                 public int MinQty { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int SpecialOfferID { get; private set; }
 
+                [JsonProperty]
                 public DateTime StartDate { get; private set; }
 
+                [JsonProperty]
                 public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>694bb7cd388ff9606340e650407d6b4e</Hash>
+    <Hash>e2b90d7a33a0a7521f5d71d35bdcc9e7</Hash>
 </Codenesium>*/

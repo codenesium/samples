@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IUserRoleRepository>();
                         var model = new ApiUserRoleRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<UserRole>())).Returns(Task.FromResult(new UserRole()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
                         var service = new UserRoleService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.UserRoleModelValidatorMock.Object,
                                                           mock.BOLMapperMockFactory.BOLUserRoleMapperMock,
                                                           mock.DALMapperMockFactory.DALUserRoleMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiUserRoleResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.UserRoleModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUserRoleRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>291688653a95d6834fb14b67d661cc43</Hash>
+    <Hash>bb8efce154d61106847d7102756fac38</Hash>
 </Codenesium>*/

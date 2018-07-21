@@ -16,12 +16,16 @@ namespace FileServiceNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>241495341e5808c7c6a6fea55430fe5d</Hash>
+    <Hash>78e119be8d1cd0b5f14ac51a82868608</Hash>
 </Codenesium>*/

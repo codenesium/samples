@@ -22,40 +22,14 @@ namespace PetShippingNS.Api.Contracts
                         this.PipelineStepId = pipelineStepId;
                 }
 
-                private int destinationId;
+                [JsonProperty]
+                public int DestinationId { get; private set; }
 
-                [Required]
-                public int DestinationId
-                {
-                        get
-                        {
-                                return this.destinationId;
-                        }
-
-                        set
-                        {
-                                this.destinationId = value;
-                        }
-                }
-
-                private int pipelineStepId;
-
-                [Required]
-                public int PipelineStepId
-                {
-                        get
-                        {
-                                return this.pipelineStepId;
-                        }
-
-                        set
-                        {
-                                this.pipelineStepId = value;
-                        }
-                }
+                [JsonProperty]
+                public int PipelineStepId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8845c4c8be2c07d5c5efde3b9577575f</Hash>
+    <Hash>d656bd4e81a9463ae7b2b65993440c85</Hash>
 </Codenesium>*/

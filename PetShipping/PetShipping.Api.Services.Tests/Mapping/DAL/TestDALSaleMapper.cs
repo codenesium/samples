@@ -17,11 +17,11 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         var bo = new BOSale();
-                        bo.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        bo.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         Sale response = mapper.MapBOToEF(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Note.Should().Be("A");
@@ -35,11 +35,11 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         Sale entity = new Sale();
-                        entity.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        entity.SetProperties(1m, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         BOSale response = mapper.MapEFToBO(entity);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Note.Should().Be("A");
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new DALSaleMapper();
                         Sale entity = new Sale();
-                        entity.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        entity.SetProperties(1m, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         List<BOSale> response = mapper.MapEFToBO(new List<Sale>() { entity });
 
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>20c7c566a9411a6348c313ba1db48b04</Hash>
+    <Hash>280a4545a2a359a5d88796316c13c323</Hash>
 </Codenesium>*/

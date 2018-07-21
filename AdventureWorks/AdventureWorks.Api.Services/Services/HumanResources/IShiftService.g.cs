@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiShiftResponseModel>> Create(
                         ApiShiftRequestModel model);
 
-                Task<ActionResponse> Update(int shiftID,
-                                            ApiShiftRequestModel model);
+                Task<UpdateResponse<ApiShiftResponseModel>> Update(int shiftID,
+                                                                    ApiShiftRequestModel model);
 
                 Task<ActionResponse> Delete(int shiftID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>448f7e5914643adbed02cf92a70c22c7</Hash>
+    <Hash>1f1bb900fa8a2ab42c687a823c8072b9</Hash>
 </Codenesium>*/

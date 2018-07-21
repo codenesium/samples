@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBadgesRepository>();
                         var model = new ApiBadgesRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Badges>())).Returns(Task.FromResult(new Badges()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
                         var service = new BadgesService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.BadgesModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLBadgesMapperMock,
                                                         mock.DALMapperMockFactory.DALBadgesMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiBadgesResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BadgesModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgesRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>008f9658f09da716eb90395223893809</Hash>
+    <Hash>9d0e215b9a802822bc94c4185a931953</Hash>
 </Codenesium>*/

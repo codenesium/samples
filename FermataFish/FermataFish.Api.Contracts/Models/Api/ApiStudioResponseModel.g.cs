@@ -30,26 +30,43 @@ namespace FermataFishNS.Api.Contracts
                         this.StateIdEntity = nameof(ApiResponse.States);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Address1 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Address2 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string City { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int StateId { get; private set; }
 
+                [JsonProperty]
                 public string StateIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Website { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Zip { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f47e1fe69335e9bd7c37a016b217a4ac</Hash>
+    <Hash>80c9f11fc8079cd1f666d2724d976f97</Hash>
 </Codenesium>*/

@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
-
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
@@ -171,5 +123,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>480c1d0526702f9d7b563aa7b97b9c00</Hash>
+    <Hash>f4453b07a2c4ae83bea99a4e258f2cc2</Hash>
 </Codenesium>*/

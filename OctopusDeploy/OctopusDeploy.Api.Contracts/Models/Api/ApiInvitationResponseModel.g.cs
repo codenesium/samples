@@ -18,14 +18,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.JSON = jSON;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string InvitationCode { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>834dd4c873635c3afe16574811c12977</Hash>
+    <Hash>cdfaa880425ec6c6e695c5109d44ff4e</Hash>
 </Codenesium>*/

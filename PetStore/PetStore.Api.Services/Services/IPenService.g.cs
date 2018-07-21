@@ -12,8 +12,8 @@ namespace PetStoreNS.Api.Services
                 Task<CreateResponse<ApiPenResponseModel>> Create(
                         ApiPenRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiPenRequestModel model);
+                Task<UpdateResponse<ApiPenResponseModel>> Update(int id,
+                                                                  ApiPenRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ae67c6cde3e1a27cb30479934945bf3</Hash>
+    <Hash>1103f2458166f566fbc630e84f7a6345</Hash>
 </Codenesium>*/

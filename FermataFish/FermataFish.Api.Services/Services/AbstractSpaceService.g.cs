@@ -83,18 +83,25 @@ namespace FermataFishNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiSpaceResponseModel>> Update(
                         int id,
                         ApiSpaceRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.spaceModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolSpaceMapper.MapModelToBO(id, model);
                                 await this.spaceRepository.Update(this.dalSpaceMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.spaceRepository.Get(id);
+
+                                return new UpdateResponse<ApiSpaceResponseModel>(this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiSpaceResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -119,5 +126,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4efe57df89ec685a6d4578a097975859</Hash>
+    <Hash>7993af3df1a71c8a194aae657872a8c0</Hash>
 </Codenesium>*/

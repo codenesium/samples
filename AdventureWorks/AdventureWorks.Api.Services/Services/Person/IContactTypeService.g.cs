@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiContactTypeResponseModel>> Create(
                         ApiContactTypeRequestModel model);
 
-                Task<ActionResponse> Update(int contactTypeID,
-                                            ApiContactTypeRequestModel model);
+                Task<UpdateResponse<ApiContactTypeResponseModel>> Update(int contactTypeID,
+                                                                          ApiContactTypeRequestModel model);
 
                 Task<ActionResponse> Delete(int contactTypeID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cec57fce5289321bae46dae0ec1f5ad</Hash>
+    <Hash>033d53295b997b06723184d0a6c4a4bb</Hash>
 </Codenesium>*/

@@ -28,42 +28,36 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void EmailRules()
                 {
-                        this.RuleFor(x => x.Email).NotNull();
                         this.RuleFor(x => x.Email).Length(0, 128);
                 }
 
                 public virtual void FirstNameRules()
                 {
-                        this.RuleFor(x => x.FirstName).NotNull();
                         this.RuleFor(x => x.FirstName).Length(0, 128);
                 }
 
                 public virtual void LastNameRules()
                 {
-                        this.RuleFor(x => x.LastName).NotNull();
                         this.RuleFor(x => x.LastName).Length(0, 128);
                 }
 
                 public virtual void PasswordRules()
                 {
-                        this.RuleFor(x => x.Password).NotNull();
                         this.RuleFor(x => x.Password).Length(0, 128);
                 }
 
                 public virtual void PhoneRules()
                 {
-                        this.RuleFor(x => x.Phone).NotNull();
                         this.RuleFor(x => x.Phone).Length(0, 128);
                 }
 
                 public virtual void UsernameRules()
                 {
-                        this.RuleFor(x => x.Username).NotNull();
                         this.RuleFor(x => x.Username).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8403105df0af3924280191ea561792d1</Hash>
+    <Hash>299ca257c4f5d0f69f5c6eb1891c755f</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -19,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         string @object,
                         DateTime postTime,
                         string schema,
-                        string tSQL,
+                        string tsql,
                         string xmlEvent)
                 {
                         this.DatabaseLogID = databaseLogID;
@@ -28,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.@Object = @object;
                         this.PostTime = postTime;
                         this.Schema = schema;
-                        this.TSQL = tSQL;
+                        this.Tsql = tsql;
                         this.XmlEvent = xmlEvent;
                 }
 
@@ -52,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Schema { get; private set; }
 
                 [Column("TSQL")]
-                public string TSQL { get; private set; }
+                public string Tsql { get; private set; }
 
                 [Column("XmlEvent")]
                 public string XmlEvent { get; private set; }
@@ -60,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>07487de8181fc5e18fa0d1a276e1ee4f</Hash>
+    <Hash>4459be30b16c6b1ae8d830b6a2f45334</Hash>
 </Codenesium>*/

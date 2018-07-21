@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Services
                         this.HireDateRules();
                         this.JobTitleRules();
                         this.LoginIDRules();
-                        this.MaritalStatusRules();
+                        this.MaritalStatuRules();
                         this.ModifiedDateRules();
                         this.NationalIDNumberRules();
                         this.OrganizationLevelRules();
                         this.RowguidRules();
                         this.SalariedFlagRules();
-                        this.SickLeaveHoursRules();
-                        this.VacationHoursRules();
+                        this.SickLeaveHourRules();
+                        this.VacationHourRules();
                         return await this.ValidateAsync(model);
                 }
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
                         this.HireDateRules();
                         this.JobTitleRules();
                         this.LoginIDRules();
-                        this.MaritalStatusRules();
+                        this.MaritalStatuRules();
                         this.ModifiedDateRules();
                         this.NationalIDNumberRules();
                         this.OrganizationLevelRules();
                         this.RowguidRules();
                         this.SalariedFlagRules();
-                        this.SickLeaveHoursRules();
-                        this.VacationHoursRules();
+                        this.SickLeaveHourRules();
+                        this.VacationHourRules();
                         return await this.ValidateAsync(model, id);
                 }
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5a27c07679cd8436c3fba3950bea3128</Hash>
+    <Hash>d07cc757ab287301fede32b1112f5e35</Hash>
 </Codenesium>*/

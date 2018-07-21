@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
                         int creditRating,
                         DateTime modifiedDate,
                         string name,
-                        bool preferredVendorStatus,
+                        bool preferredVendorStatu,
                         string purchasingWebServiceURL)
                 {
                         this.BusinessEntityID = businessEntityID;
@@ -24,28 +24,37 @@ namespace AdventureWorksNS.Api.Contracts
                         this.CreditRating = creditRating;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.PreferredVendorStatus = preferredVendorStatus;
+                        this.PreferredVendorStatu = preferredVendorStatu;
                         this.PurchasingWebServiceURL = purchasingWebServiceURL;
                 }
 
+                [JsonProperty]
                 public string AccountNumber { get; private set; }
 
+                [JsonProperty]
                 public bool ActiveFlag { get; private set; }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public int CreditRating { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
-                public bool PreferredVendorStatus { get; private set; }
+                [JsonProperty]
+                public bool PreferredVendorStatu { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string PurchasingWebServiceURL { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba1bd8d451fe6b44f0568b89aa2a2a54</Hash>
+    <Hash>9e34816341ecf39b43d3dcc6acc11a56</Hash>
 </Codenesium>*/

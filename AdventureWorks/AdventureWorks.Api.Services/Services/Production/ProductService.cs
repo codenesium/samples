@@ -18,8 +18,8 @@ namespace AdventureWorksNS.Api.Services
                         IApiProductRequestModelValidator productModelValidator,
                         IBOLProductMapper bolproductMapper,
                         IDALProductMapper dalproductMapper,
-                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
+                        IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
+                        IDALBillOfMaterialMapper dalBillOfMaterialMapper,
                         IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
                         IDALProductCostHistoryMapper dalProductCostHistoryMapper,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
@@ -40,8 +40,8 @@ namespace AdventureWorksNS.Api.Services
                                productModelValidator,
                                bolproductMapper,
                                dalproductMapper,
-                               bolBillOfMaterialsMapper,
-                               dalBillOfMaterialsMapper,
+                               bolBillOfMaterialMapper,
+                               dalBillOfMaterialMapper,
                                bolProductCostHistoryMapper,
                                dalProductCostHistoryMapper,
                                bolProductInventoryMapper,
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38b0df8872b242f3beac552e0f4700f1</Hash>
+    <Hash>6a56a872029b0a29308885666a29dfc2</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -39,9 +40,26 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiEmailAddressModelMapper();
+                        var model = new ApiEmailAddressRequestModel();
+                        model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+
+                        JsonPatchDocument<ApiEmailAddressRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiEmailAddressRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.EmailAddress1.Should().Be("A");
+                        response.EmailAddressID.Should().Be(1);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8ead89c3c764cdef14eb366fabeeb002</Hash>
+    <Hash>59f8d780fd23e7213f580b48d44ba6fb</Hash>
 </Codenesium>*/

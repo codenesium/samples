@@ -28,88 +28,28 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                 }
 
-                private string cardNumber;
+                [Required]
+                [JsonProperty]
+                public string CardNumber { get; private set; }
 
                 [Required]
-                public string CardNumber
-                {
-                        get
-                        {
-                                return this.cardNumber;
-                        }
-
-                        set
-                        {
-                                this.cardNumber = value;
-                        }
-                }
-
-                private string cardType;
+                [JsonProperty]
+                public string CardType { get; private set; }
 
                 [Required]
-                public string CardType
-                {
-                        get
-                        {
-                                return this.cardType;
-                        }
-
-                        set
-                        {
-                                this.cardType = value;
-                        }
-                }
-
-                private int expMonth;
+                [JsonProperty]
+                public int ExpMonth { get; private set; }
 
                 [Required]
-                public int ExpMonth
-                {
-                        get
-                        {
-                                return this.expMonth;
-                        }
-
-                        set
-                        {
-                                this.expMonth = value;
-                        }
-                }
-
-                private short expYear;
+                [JsonProperty]
+                public short ExpYear { get; private set; }
 
                 [Required]
-                public short ExpYear
-                {
-                        get
-                        {
-                                return this.expYear;
-                        }
-
-                        set
-                        {
-                                this.expYear = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
-
-                [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a857fcdd6af0faf5bb455142d42bd20a</Hash>
+    <Hash>ac2250d3f8c8247f695da9b3255be975</Hash>
 </Codenesium>*/

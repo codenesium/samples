@@ -35,32 +35,54 @@ namespace TicketingCRMNS.Api.Contracts
                         this.ProvinceIdEntity = nameof(ApiResponse.Provinces);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Address1 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Address2 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int AdminId { get; private set; }
 
+                [JsonProperty]
                 public string AdminIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Email { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Facebook { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Phone { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int ProvinceId { get; private set; }
 
+                [JsonProperty]
                 public string ProvinceIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string Website { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9fd9b3a73d60664f5b1713c450844ad1</Hash>
+    <Hash>fe7bb7fc1fb185d21a33087aa768fe45</Hash>
 </Codenesium>*/

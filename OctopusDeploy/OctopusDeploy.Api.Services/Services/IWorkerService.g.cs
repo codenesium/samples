@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiWorkerResponseModel>> Create(
                         ApiWorkerRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiWorkerRequestModel model);
+                Task<UpdateResponse<ApiWorkerResponseModel>> Update(string id,
+                                                                     ApiWorkerRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d59e318a25f46624b704a1cd0bb3b05d</Hash>
+    <Hash>98b5a9d8b130b95403e8293d52cafbb7</Hash>
 </Codenesium>*/

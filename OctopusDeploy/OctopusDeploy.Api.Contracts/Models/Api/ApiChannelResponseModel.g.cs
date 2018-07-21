@@ -26,22 +26,36 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantTags = tenantTags;
                 }
 
+                [Required]
+                [JsonProperty]
                 public byte[] DataVersion { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LifecycleId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TenantTags { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>abf36a09b78a20c0c7a50c434a7565eb</Hash>
+    <Hash>d5d339f609ff586efed18086c2d18682</Hash>
 </Codenesium>*/

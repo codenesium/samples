@@ -30,104 +30,32 @@ namespace PetStoreNS.Api.Contracts
                         this.Phone = phone;
                 }
 
-                private decimal amount;
+                [Required]
+                [JsonProperty]
+                public decimal Amount { get; private set; }
 
                 [Required]
-                public decimal Amount
-                {
-                        get
-                        {
-                                return this.amount;
-                        }
-
-                        set
-                        {
-                                this.amount = value;
-                        }
-                }
-
-                private string firstName;
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
                 [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
-
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private string lastName;
+                [JsonProperty]
+                public string LastName { get; private set; }
 
                 [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private int paymentTypeId;
+                [JsonProperty]
+                public int PaymentTypeId { get; private set; }
 
                 [Required]
-                public int PaymentTypeId
-                {
-                        get
-                        {
-                                return this.paymentTypeId;
-                        }
-
-                        set
-                        {
-                                this.paymentTypeId = value;
-                        }
-                }
-
-                private int petId;
+                [JsonProperty]
+                public int PetId { get; private set; }
 
                 [Required]
-                public int PetId
-                {
-                        get
-                        {
-                                return this.petId;
-                        }
-
-                        set
-                        {
-                                this.petId = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
+                [JsonProperty]
+                public string Phone { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1f795bad3ba04393390ae51fb458a0ea</Hash>
+    <Hash>b0895b0a6ef0bf59684a3b2aadd8fe85</Hash>
 </Codenesium>*/

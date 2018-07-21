@@ -30,104 +30,26 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioId = studioId;
                 }
 
-                private string notes;
+                [JsonProperty]
+                public string Notes { get; private set; }
 
-                [Required]
-                public string Notes
-                {
-                        get
-                        {
-                                return this.notes;
-                        }
+                [JsonProperty]
+                public string PcEmail { get; private set; }
 
-                        set
-                        {
-                                this.notes = value;
-                        }
-                }
+                [JsonProperty]
+                public string PcFirstName { get; private set; }
 
-                private string pcEmail;
+                [JsonProperty]
+                public string PcLastName { get; private set; }
 
-                [Required]
-                public string PcEmail
-                {
-                        get
-                        {
-                                return this.pcEmail;
-                        }
+                [JsonProperty]
+                public string PcPhone { get; private set; }
 
-                        set
-                        {
-                                this.pcEmail = value;
-                        }
-                }
-
-                private string pcFirstName;
-
-                [Required]
-                public string PcFirstName
-                {
-                        get
-                        {
-                                return this.pcFirstName;
-                        }
-
-                        set
-                        {
-                                this.pcFirstName = value;
-                        }
-                }
-
-                private string pcLastName;
-
-                [Required]
-                public string PcLastName
-                {
-                        get
-                        {
-                                return this.pcLastName;
-                        }
-
-                        set
-                        {
-                                this.pcLastName = value;
-                        }
-                }
-
-                private string pcPhone;
-
-                [Required]
-                public string PcPhone
-                {
-                        get
-                        {
-                                return this.pcPhone;
-                        }
-
-                        set
-                        {
-                                this.pcPhone = value;
-                        }
-                }
-
-                private int studioId;
-
-                [Required]
-                public int StudioId
-                {
-                        get
-                        {
-                                return this.studioId;
-                        }
-
-                        set
-                        {
-                                this.studioId = value;
-                        }
-                }
+                [JsonProperty]
+                public int StudioId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a130811efe8c92675e94a87f55a6698d</Hash>
+    <Hash>264f3d14d86ed6188ccd5086aa1ce58e</Hash>
 </Codenesium>*/

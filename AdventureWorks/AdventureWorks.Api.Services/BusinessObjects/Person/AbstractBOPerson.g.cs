@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SetProperties(int businessEntityID,
                                                   string additionalContactInfo,
-                                                  string demographics,
+                                                  string demographic,
                                                   int emailPromotion,
                                                   string firstName,
                                                   string lastName,
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         this.AdditionalContactInfo = additionalContactInfo;
                         this.BusinessEntityID = businessEntityID;
-                        this.Demographics = demographics;
+                        this.Demographic = demographic;
                         this.EmailPromotion = emailPromotion;
                         this.FirstName = firstName;
                         this.LastName = lastName;
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public int BusinessEntityID { get; private set; }
 
-                public string Demographics { get; private set; }
+                public string Demographic { get; private set; }
 
                 public int EmailPromotion { get; private set; }
 
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8267c26e44333c53a79de46ce570e8a7</Hash>
+    <Hash>3c9c608fbe699c2f3fe9a8ca0845a7d8</Hash>
 </Codenesium>*/

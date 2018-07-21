@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAddressResponseModel>> Update(
                         int addressID,
                         ApiAddressRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateUpdateAsync(addressID, model));
-                        if (response.Success)
+                        var validationResult = await this.addressModelValidator.ValidateUpdateAsync(addressID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAddressMapper.MapModelToBO(addressID, model);
                                 await this.addressRepository.Update(this.dalAddressMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.addressRepository.Get(addressID);
+
+                                return new UpdateResponse<ApiAddressResponseModel>(this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAddressResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -140,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73d337c2bda28e0cb2a4ad0a373b5639</Hash>
+    <Hash>292b75fde7cf33785c88bcce936b9acb</Hash>
 </Codenesium>*/

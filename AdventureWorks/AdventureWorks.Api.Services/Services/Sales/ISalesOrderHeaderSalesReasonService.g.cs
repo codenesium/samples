@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Create(
                         ApiSalesOrderHeaderSalesReasonRequestModel model);
 
-                Task<ActionResponse> Update(int salesOrderID,
-                                            ApiSalesOrderHeaderSalesReasonRequestModel model);
+                Task<UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Update(int salesOrderID,
+                                                                                          ApiSalesOrderHeaderSalesReasonRequestModel model);
 
                 Task<ActionResponse> Delete(int salesOrderID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f36340dfc38738c76cfc04d1356ce78</Hash>
+    <Hash>4c861730a1a00e53843bcd10c7dc824b</Hash>
 </Codenesium>*/

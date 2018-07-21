@@ -23,33 +23,9 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public ApiMutexRequestModelValidatorTest()
                 {
                 }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IMutexRepository> mutexRepository = new Mock<IMutexRepository>();
-                        mutexRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Mutex()));
-
-                        var validator = new ApiMutexRequestModelValidator(mutexRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMutexRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IMutexRepository> mutexRepository = new Mock<IMutexRepository>();
-                        mutexRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Mutex()));
-
-                        var validator = new ApiMutexRequestModelValidator(mutexRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMutexRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>53145a6a225e4348bbf852a7d7ea1d38</Hash>
+    <Hash>ecb61d4f7ca902a81b6c096ec07dce12</Hash>
 </Codenesium>*/

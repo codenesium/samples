@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
                         ApiSalesOrderHeaderRequestModel model = new ApiSalesOrderHeaderRequestModel();
-                        model.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
+                        model.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
                         BOSalesOrderHeader response = mapper.MapModelToBO(1, model);
 
                         response.AccountNumber.Should().Be("A");
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.CurrencyRateID.Should().Be(1);
                         response.CustomerID.Should().Be(1);
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Freight.Should().Be(1);
+                        response.Freight.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OnlineOrderFlag.Should().Be(true);
                         response.OrderDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -42,10 +42,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.ShipMethodID.Should().Be(1);
                         response.ShipToAddressID.Should().Be(1);
                         response.Status.Should().Be(1);
-                        response.SubTotal.Should().Be(1);
-                        response.TaxAmt.Should().Be(1);
+                        response.SubTotal.Should().Be(1m);
+                        response.TaxAmt.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
-                        response.TotalDue.Should().Be(1);
+                        response.TotalDue.Should().Be(1m);
                 }
 
                 [Fact]
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
                         BOSalesOrderHeader bo = new BOSalesOrderHeader();
-                        bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
+                        bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
                         ApiSalesOrderHeaderResponseModel response = mapper.MapBOToModel(bo);
 
                         response.AccountNumber.Should().Be("A");
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.CurrencyRateID.Should().Be(1);
                         response.CustomerID.Should().Be(1);
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Freight.Should().Be(1);
+                        response.Freight.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.OnlineOrderFlag.Should().Be(true);
                         response.OrderDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -78,10 +78,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.ShipMethodID.Should().Be(1);
                         response.ShipToAddressID.Should().Be(1);
                         response.Status.Should().Be(1);
-                        response.SubTotal.Should().Be(1);
-                        response.TaxAmt.Should().Be(1);
+                        response.SubTotal.Should().Be(1m);
+                        response.TaxAmt.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
-                        response.TotalDue.Should().Be(1);
+                        response.TotalDue.Should().Be(1m);
                 }
 
                 [Fact]
@@ -89,7 +89,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
                         BOSalesOrderHeader bo = new BOSalesOrderHeader();
-                        bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
+                        bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
                         List<ApiSalesOrderHeaderResponseModel> response = mapper.MapBOToModel(new List<BOSalesOrderHeader>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -98,5 +98,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>22875a51da617140de836c6872b574aa</Hash>
+    <Hash>8e2582bad8bb26fc0d7523c200223647</Hash>
 </Codenesium>*/

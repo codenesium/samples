@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Details_Create_null()
-                {
-                        Mock<IPipelineStepStepRequirementRepository> pipelineStepStepRequirementRepository = new Mock<IPipelineStepStepRequirementRepository>();
-                        pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
-
-                        var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineStepStepRequirementRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
-                }
-
-                [Fact]
-                public async void Details_Update_null()
-                {
-                        Mock<IPipelineStepStepRequirementRepository> pipelineStepStepRequirementRepository = new Mock<IPipelineStepStepRequirementRepository>();
-                        pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
-
-                        var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStepRequirementRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
-                }
-
-                [Fact]
                 public async void PipelineStepId_Create_Valid_Reference()
                 {
                         Mock<IPipelineStepStepRequirementRepository> pipelineStepStepRequirementRepository = new Mock<IPipelineStepStepRequirementRepository>();
@@ -101,5 +77,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b5811ec142c1092d4b4271424a630372</Hash>
+    <Hash>8af76a67b9403bb80614726af707be74</Hash>
 </Codenesium>*/

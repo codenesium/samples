@@ -97,18 +97,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductModelResponseModel>> Update(
                         int productModelID,
                         ApiProductModelRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model));
-                        if (response.Success)
+                        var validationResult = await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductModelMapper.MapModelToBO(productModelID, model);
                                 await this.productModelRepository.Update(this.dalProductModelMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productModelRepository.Get(productModelID);
+
+                                return new UpdateResponse<ApiProductModelResponseModel>(this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductModelResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -144,9 +151,9 @@ namespace AdventureWorksNS.Api.Services
                         return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
                 }
 
-                public async Task<List<ApiProductModelResponseModel>> ByInstructions(string instructions)
+                public async Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction)
                 {
-                        List<ProductModel> records = await this.productModelRepository.ByInstructions(instructions);
+                        List<ProductModel> records = await this.productModelRepository.ByInstruction(instruction);
 
                         return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
                 }
@@ -175,5 +182,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>527b1d51748426893f85201701c1270b</Hash>
+    <Hash>a271a62600ef039f50146b51a1781306</Hash>
 </Codenesium>*/

@@ -32,29 +32,25 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
                 public virtual void TaskIdRules()
                 {
-                        this.RuleFor(x => x.TaskId).NotNull();
                         this.RuleFor(x => x.TaskId).Length(0, 50);
                 }
 
                 public virtual void WorkerIdRules()
                 {
-                        this.RuleFor(x => x.WorkerId).NotNull();
                         this.RuleFor(x => x.WorkerId).Length(0, 50);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8abd5271e98a9fc5fa5cc55a8e31fbad</Hash>
+    <Hash>17a3f5ea7188ca719b6fac21e15fb422</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITagSetRepository>();
                         var model = new ApiTagSetRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TagSet>())).Returns(Task.FromResult(new TagSet()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TagSet()));
                         var service = new TagSetService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLTagSetMapperMock,
                                                         mock.DALMapperMockFactory.DALTagSetMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiTagSetResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TagSetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiTagSetRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>17ab5d2ce885f3cb7a497bb76ac1ec43</Hash>
+    <Hash>7ad2016c24e0a4cf943d603c0990615e</Hash>
 </Codenesium>*/

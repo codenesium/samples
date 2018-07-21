@@ -49,30 +49,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Filename_Create_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Filename, null as string);
-                }
-
-                [Fact]
-                public async void Filename_Update_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Filename, null as string);
-                }
-
-                [Fact]
                 public async void Filename_Create_length()
                 {
                         Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
@@ -97,30 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
                 public async void ProjectId_Create_length()
                 {
                         Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
@@ -142,30 +94,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void RelatedDocumentIds_Create_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
-                }
-
-                [Fact]
-                public async void RelatedDocumentIds_Update_null()
-                {
-                        Mock<IArtifactRepository> artifactRepository = new Mock<IArtifactRepository>();
-                        artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
-
-                        var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
                 }
 
                 [Fact]
@@ -195,5 +123,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>26039295e5270a9d72efdda651355bd5</Hash>
+    <Hash>ba1ca734040414da83204d60175f6f0a</Hash>
 </Codenesium>*/

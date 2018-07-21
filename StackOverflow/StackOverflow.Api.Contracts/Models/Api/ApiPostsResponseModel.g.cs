@@ -52,48 +52,88 @@ namespace StackOverflowNS.Api.Contracts
                         this.ViewCount = viewCount;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int? AcceptedAnswerId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? AnswerCount { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Body { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ClosedDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? CommentCount { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? CommunityOwnedDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime CreationDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? FavoriteCount { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime LastActivityDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? LastEditDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LastEditorDisplayName { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? LastEditorUserId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? OwnerUserId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? ParentId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int PostTypeId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Score { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Tags { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Title { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int ViewCount { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>739e6faffb19d7c602889b2e0291e82d</Hash>
+    <Hash>c70e3e7d57b040828be62748ae59de86</Hash>
 </Codenesium>*/

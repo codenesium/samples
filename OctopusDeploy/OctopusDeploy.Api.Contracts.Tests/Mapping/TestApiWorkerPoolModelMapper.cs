@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,26 @@ namespace OctopusDeployNS.Api.Contracts.Tests
                         response.Name.Should().Be("A");
                         response.SortOrder.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiWorkerPoolModelMapper();
+                        var model = new ApiWorkerPoolRequestModel();
+                        model.SetProperties(true, "A", "A", 1);
+
+                        JsonPatchDocument<ApiWorkerPoolRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiWorkerPoolRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.IsDefault.Should().Be(true);
+                        response.JSON.Should().Be("A");
+                        response.Name.Should().Be("A");
+                        response.SortOrder.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1e8463a38b4eed010c5fe21f5b02b495</Hash>
+    <Hash>6d902cd7bd9a8323b1845dccf41d09f2</Hash>
 </Codenesium>*/

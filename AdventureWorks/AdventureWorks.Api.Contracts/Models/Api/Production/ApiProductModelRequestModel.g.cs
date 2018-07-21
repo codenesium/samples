@@ -16,98 +16,38 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public virtual void SetProperties(
                         string catalogDescription,
-                        string instructions,
+                        string instruction,
                         DateTime modifiedDate,
                         string name,
                         Guid rowguid)
                 {
                         this.CatalogDescription = catalogDescription;
-                        this.Instructions = instructions;
+                        this.Instruction = instruction;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
                         this.Rowguid = rowguid;
                 }
 
-                private string catalogDescription;
+                [JsonProperty]
+                public string CatalogDescription { get; private set; }
 
-                public string CatalogDescription
-                {
-                        get
-                        {
-                                return this.catalogDescription;
-                        }
-
-                        set
-                        {
-                                this.catalogDescription = value;
-                        }
-                }
-
-                private string instructions;
-
-                public string Instructions
-                {
-                        get
-                        {
-                                return this.instructions;
-                        }
-
-                        set
-                        {
-                                this.instructions = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public string Instruction { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>225ec4b0c67234e8b8d68737eb58f2c6</Hash>
+    <Hash>99064d2ecb2d862921a44ab0c296b134</Hash>
 </Codenesium>*/

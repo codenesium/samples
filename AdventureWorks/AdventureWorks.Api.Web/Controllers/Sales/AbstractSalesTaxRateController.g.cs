@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesTaxRateResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesTaxRateRequestModel model)
                 {
                         CreateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesTaxRates/{result.Record.SalesTaxRateID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesTaxRates/{result.Record.SalesTaxRateID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTaxRateRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesTaxRateRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesTaxRateService.Update(id, model);
+                                UpdateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateRequestModel model)
                 {
-                        ApiSalesTaxRateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesTaxRateRequestModel request = await this.PatchModel(id, this.SalesTaxRateModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesTaxRateService.Update(id, request);
+                                UpdateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,18 +220,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSalesTaxRateRequestModel> CreatePatch(ApiSalesTaxRateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesTaxRateRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.StateProvinceID, model.StateProvinceID);
-                        patch.Replace(x => x.TaxRate, model.TaxRate);
-                        patch.Replace(x => x.TaxType, model.TaxType);
-                        return patch;
-                }
-
                 private async Task<ApiSalesTaxRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTaxRateRequestModel> patch)
                 {
                         var record = await this.SalesTaxRateService.Get(id);
@@ -255,5 +239,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0dbf5fbb6b4f263b6c638a1a1db989d0</Hash>
+    <Hash>17b5635ab33a076bf4ecfef6d5b6cb4a</Hash>
 </Codenesium>*/

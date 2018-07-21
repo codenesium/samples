@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
                 {
                         CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.ProductModelProductDescriptionCultureService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Record.ProductModelID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Record.ProductModelID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductModelProductDescriptionCultureRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, model);
+                                UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.ProductModelProductDescriptionCultureService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductModelProductDescriptionCultureResponseModel response = await this.ProductModelProductDescriptionCultureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
                 {
-                        ApiProductModelProductDescriptionCultureRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductModelProductDescriptionCultureRequestModel request = await this.PatchModel(id, this.ProductModelProductDescriptionCultureModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, request);
+                                UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.ProductModelProductDescriptionCultureService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductModelProductDescriptionCultureResponseModel response = await this.ProductModelProductDescriptionCultureService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> CreatePatch(ApiProductModelProductDescriptionCultureRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel>();
-                        patch.Replace(x => x.CultureID, model.CultureID);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductDescriptionID, model.ProductDescriptionID);
-                        return patch;
-                }
-
                 private async Task<ApiProductModelProductDescriptionCultureRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch)
                 {
                         var record = await this.ProductModelProductDescriptionCultureService.Get(id);
@@ -233,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f43294a7000651e3815547514d80770</Hash>
+    <Hash>e205f6df804c60fc3f77750a661961dc</Hash>
 </Codenesium>*/

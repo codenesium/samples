@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiPasswordResponseModel>> Create(
                         ApiPasswordRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiPasswordRequestModel model);
+                Task<UpdateResponse<ApiPasswordResponseModel>> Update(int businessEntityID,
+                                                                       ApiPasswordRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77183cf20318a24218531c877c5c5ccc</Hash>
+    <Hash>3fcf8addc4bf91e6fb57fc3417b36259</Hash>
 </Codenesium>*/

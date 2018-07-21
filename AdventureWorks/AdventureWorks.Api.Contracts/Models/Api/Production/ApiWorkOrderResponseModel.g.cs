@@ -32,28 +32,40 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StockedQty = stockedQty;
                 }
 
+                [JsonProperty]
                 public DateTime DueDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? EndDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int OrderQty { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public short ScrappedQty { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public short? ScrapReasonID { get; private set; }
 
+                [JsonProperty]
                 public DateTime StartDate { get; private set; }
 
+                [JsonProperty]
                 public int StockedQty { get; private set; }
 
+                [JsonProperty]
                 public int WorkOrderID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e1bdbc49bcba17b46ea03d2d285b4041</Hash>
+    <Hash>8845468c23cc9fbb902ab5664665dafd</Hash>
 </Codenesium>*/

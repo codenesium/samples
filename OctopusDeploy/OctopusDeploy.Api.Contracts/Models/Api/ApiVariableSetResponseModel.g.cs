@@ -24,20 +24,32 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsFrozen { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string OwnerId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RelatedDocumentIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0730b2b4d560bb135e070a072be42245</Hash>
+    <Hash>359a5357382fd7c77a4b6915ccc0c87e</Hash>
 </Codenesium>*/

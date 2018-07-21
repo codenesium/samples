@@ -42,194 +42,44 @@ namespace NebulaNS.Api.Contracts
                         this.TimeoutInSeconds = timeoutInSeconds;
                 }
 
-                private int? assignedMachineId;
+                [JsonProperty]
+                public int? AssignedMachineId { get; private set; }
 
-                public int? AssignedMachineId
-                {
-                        get
-                        {
-                                return this.assignedMachineId;
-                        }
+                [JsonProperty]
+                public int ChainId { get; private set; }
 
-                        set
-                        {
-                                this.assignedMachineId = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime? DateCompleted { get; private set; }
 
-                private int chainId;
+                [JsonProperty]
+                public DateTime? DateStarted { get; private set; }
 
-                [Required]
-                public int ChainId
-                {
-                        get
-                        {
-                                return this.chainId;
-                        }
+                [JsonProperty]
+                public string DynamicParameters { get; private set; }
 
-                        set
-                        {
-                                this.chainId = value;
-                        }
-                }
+                [JsonProperty]
+                public Guid ExternalId { get; private set; }
 
-                private DateTime? dateCompleted;
+                [JsonProperty]
+                public int LinkStatusId { get; private set; }
 
-                public DateTime? DateCompleted
-                {
-                        get
-                        {
-                                return this.dateCompleted;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.dateCompleted = value;
-                        }
-                }
+                [JsonProperty]
+                public int Order { get; private set; }
 
-                private DateTime? dateStarted;
+                [JsonProperty]
+                public string Response { get; private set; }
 
-                public DateTime? DateStarted
-                {
-                        get
-                        {
-                                return this.dateStarted;
-                        }
+                [JsonProperty]
+                public string StaticParameters { get; private set; }
 
-                        set
-                        {
-                                this.dateStarted = value;
-                        }
-                }
-
-                private string dynamicParameters;
-
-                public string DynamicParameters
-                {
-                        get
-                        {
-                                return this.dynamicParameters;
-                        }
-
-                        set
-                        {
-                                this.dynamicParameters = value;
-                        }
-                }
-
-                private Guid externalId;
-
-                [Required]
-                public Guid ExternalId
-                {
-                        get
-                        {
-                                return this.externalId;
-                        }
-
-                        set
-                        {
-                                this.externalId = value;
-                        }
-                }
-
-                private int linkStatusId;
-
-                [Required]
-                public int LinkStatusId
-                {
-                        get
-                        {
-                                return this.linkStatusId;
-                        }
-
-                        set
-                        {
-                                this.linkStatusId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int order;
-
-                [Required]
-                public int Order
-                {
-                        get
-                        {
-                                return this.order;
-                        }
-
-                        set
-                        {
-                                this.order = value;
-                        }
-                }
-
-                private string response;
-
-                public string Response
-                {
-                        get
-                        {
-                                return this.response;
-                        }
-
-                        set
-                        {
-                                this.response = value;
-                        }
-                }
-
-                private string staticParameters;
-
-                public string StaticParameters
-                {
-                        get
-                        {
-                                return this.staticParameters;
-                        }
-
-                        set
-                        {
-                                this.staticParameters = value;
-                        }
-                }
-
-                private int timeoutInSeconds;
-
-                [Required]
-                public int TimeoutInSeconds
-                {
-                        get
-                        {
-                                return this.timeoutInSeconds;
-                        }
-
-                        set
-                        {
-                                this.timeoutInSeconds = value;
-                        }
-                }
+                [JsonProperty]
+                public int TimeoutInSeconds { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>fb7eb604d661200742b8fba96d629f39</Hash>
+    <Hash>9c651a3c361a52494d9a3f4251a280c0</Hash>
 </Codenesium>*/

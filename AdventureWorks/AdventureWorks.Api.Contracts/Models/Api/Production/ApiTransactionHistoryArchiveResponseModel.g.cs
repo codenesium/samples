@@ -30,26 +30,35 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TransactionType = transactionType;
                 }
 
+                [JsonProperty]
                 public decimal ActualCost { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public int Quantity { get; private set; }
 
+                [JsonProperty]
                 public int ReferenceOrderID { get; private set; }
 
+                [JsonProperty]
                 public int ReferenceOrderLineID { get; private set; }
 
+                [JsonProperty]
                 public DateTime TransactionDate { get; private set; }
 
+                [JsonProperty]
                 public int TransactionID { get; private set; }
 
+                [JsonProperty]
                 public string TransactionType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>913284c8342307b1aa7bb2597b8cd4d1</Hash>
+    <Hash>5a1435c4f80ea422d98bcac707b0fca1</Hash>
 </Codenesium>*/

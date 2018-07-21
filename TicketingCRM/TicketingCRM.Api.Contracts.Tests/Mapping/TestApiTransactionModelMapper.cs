@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using TicketingCRMNS.Api.Contracts;
@@ -16,10 +17,10 @@ namespace TicketingCRMNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiTransactionModelMapper();
                         var model = new ApiTransactionRequestModel();
-                        model.SetProperties(1, "A", 1);
+                        model.SetProperties(1m, "A", 1);
                         ApiTransactionResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.TransactionStatusId.Should().Be(1);
@@ -30,10 +31,26 @@ namespace TicketingCRMNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiTransactionModelMapper();
                         var model = new ApiTransactionResponseModel();
-                        model.SetProperties(1, 1, "A", 1);
+                        model.SetProperties(1, 1m, "A", 1);
                         ApiTransactionRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
+                        response.GatewayConfirmationNumber.Should().Be("A");
+                        response.TransactionStatusId.Should().Be(1);
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiTransactionModelMapper();
+                        var model = new ApiTransactionRequestModel();
+                        model.SetProperties(1m, "A", 1);
+
+                        JsonPatchDocument<ApiTransactionRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiTransactionRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.TransactionStatusId.Should().Be(1);
                 }
@@ -41,5 +58,5 @@ namespace TicketingCRMNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>fe3ffc0dc5c72ec52b8247117bf65249</Hash>
+    <Hash>5310e41bde9a974a06ebbb70aa82e759</Hash>
 </Codenesium>*/

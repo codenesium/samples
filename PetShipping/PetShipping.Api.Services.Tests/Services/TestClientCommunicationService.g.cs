@@ -97,13 +97,14 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IClientCommunicationRepository>();
                         var model = new ApiClientCommunicationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ClientCommunication>())).Returns(Task.FromResult(new ClientCommunication()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ClientCommunication()));
                         var service = new ClientCommunicationService(mock.LoggerMock.Object,
                                                                      mock.RepositoryMock.Object,
                                                                      mock.ModelValidatorMockFactory.ClientCommunicationModelValidatorMock.Object,
                                                                      mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
                                                                      mock.DALMapperMockFactory.DALClientCommunicationMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiClientCommunicationResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ClientCommunicationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>()));
@@ -132,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f76acfbb4115990df23740fbfe877dff</Hash>
+    <Hash>38969e263d0676ada90f0b3552983ed4</Hash>
 </Codenesium>*/

@@ -25,30 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Email_Create_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
-                }
-
-                [Fact]
-                public async void Email_Update_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
-                }
-
-                [Fact]
                 public async void Email_Create_length()
                 {
                         Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
@@ -70,30 +46,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
-                }
-
-                [Fact]
-                public async void FirstName_Create_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
-                }
-
-                [Fact]
-                public async void FirstName_Update_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
 
                 [Fact]
@@ -121,30 +73,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void LastName_Create_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
-                }
-
-                [Fact]
-                public async void LastName_Update_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
-                }
-
-                [Fact]
                 public async void LastName_Create_length()
                 {
                         Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
@@ -166,30 +94,6 @@ namespace FermataFishNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
-                }
-
-                [Fact]
-                public async void Phone_Create_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
-                }
-
-                [Fact]
-                public async void Phone_Update_null()
-                {
-                        Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-                        teacherRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
-
-                        var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
 
                 [Fact]
@@ -269,5 +173,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>28a70e9090f1d3d978fb70e3aa401a12</Hash>
+    <Hash>193e2497ed086bc609754ea496e6e20f</Hash>
 </Codenesium>*/

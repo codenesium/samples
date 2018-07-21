@@ -18,10 +18,10 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         ApiSaleRequestModel model = new ApiSaleRequestModel();
-                        model.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        model.SetProperties(1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         BOSale response = mapper.MapModelToBO(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Note.Should().Be("A");
                         response.PetId.Should().Be(1);
@@ -34,10 +34,10 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         BOSale bo = new BOSale();
-                        bo.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        bo.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         ApiSaleResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.ClientId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Note.Should().Be("A");
@@ -51,7 +51,7 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mapper = new BOLSaleMapper();
                         BOSale bo = new BOSale();
-                        bo.SetProperties(1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        bo.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         List<ApiSaleResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -60,5 +60,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0e67078bc6859c1e9b236832400c7da8</Hash>
+    <Hash>71f33ef2a22123decf644d726b6131d6</Hash>
 </Codenesium>*/

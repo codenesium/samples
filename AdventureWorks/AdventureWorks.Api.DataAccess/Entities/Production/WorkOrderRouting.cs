@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public virtual void SetProperties(
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHrs,
+                        decimal? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -28,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                         this.ActualCost = actualCost;
                         this.ActualEndDate = actualEndDate;
-                        this.ActualResourceHrs = actualResourceHrs;
+                        this.ActualResourceHr = actualResourceHr;
                         this.ActualStartDate = actualStartDate;
                         this.LocationID = locationID;
                         this.ModifiedDate = modifiedDate;
@@ -47,7 +48,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime? ActualEndDate { get; private set; }
 
                 [Column("ActualResourceHrs")]
-                public decimal? ActualResourceHrs { get; private set; }
+                public decimal? ActualResourceHr { get; private set; }
 
                 [Column("ActualStartDate")]
                 public DateTime? ActualStartDate { get; private set; }
@@ -80,5 +81,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d77fc6c952cb29ee1723920b8007106</Hash>
+    <Hash>d0e76e83695eb04e7f267b2ab245e984</Hash>
 </Codenesium>*/

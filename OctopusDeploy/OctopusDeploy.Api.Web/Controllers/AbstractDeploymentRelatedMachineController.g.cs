@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDeploymentRelatedMachineResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentRelatedMachineRequestModel model)
                 {
                         CreateResponse<ApiDeploymentRelatedMachineResponseModel> result = await this.DeploymentRelatedMachineService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentRelatedMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeploymentRelatedMachineRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiDeploymentRelatedMachineRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DeploymentRelatedMachineService.Update(id, model);
+                                UpdateResponse<ApiDeploymentRelatedMachineResponseModel> result = await this.DeploymentRelatedMachineService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentRelatedMachineResponseModel response = await this.DeploymentRelatedMachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentRelatedMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeploymentRelatedMachineRequestModel model)
                 {
-                        ApiDeploymentRelatedMachineRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDeploymentRelatedMachineRequestModel request = await this.PatchModel(id, this.DeploymentRelatedMachineModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DeploymentRelatedMachineService.Update(id, request);
+                                UpdateResponse<ApiDeploymentRelatedMachineResponseModel> result = await this.DeploymentRelatedMachineService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentRelatedMachineResponseModel response = await this.DeploymentRelatedMachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,14 +223,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDeploymentRelatedMachineRequestModel> CreatePatch(ApiDeploymentRelatedMachineRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeploymentRelatedMachineRequestModel>();
-                        patch.Replace(x => x.DeploymentId, model.DeploymentId);
-                        patch.Replace(x => x.MachineId, model.MachineId);
-                        return patch;
-                }
-
                 private async Task<ApiDeploymentRelatedMachineRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeploymentRelatedMachineRequestModel> patch)
                 {
                         var record = await this.DeploymentRelatedMachineService.Get(id);
@@ -254,5 +242,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>19030303fc18fa8e3dd8e1e20fdaebff</Hash>
+    <Hash>e76f56465120d13075ffcf3f21207721</Hash>
 </Codenesium>*/

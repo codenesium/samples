@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Update(
                         int salesOrderID,
                         ApiSalesOrderHeaderSalesReasonRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.salesOrderHeaderSalesReasonModelValidator.ValidateUpdateAsync(salesOrderID, model));
-                        if (response.Success)
+                        var validationResult = await this.salesOrderHeaderSalesReasonModelValidator.ValidateUpdateAsync(salesOrderID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(salesOrderID, model);
                                 await this.salesOrderHeaderSalesReasonRepository.Update(this.dalSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.salesOrderHeaderSalesReasonRepository.Get(salesOrderID);
+
+                                return new UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>(this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f739ca966c04afcdd5dbf459d27592d3</Hash>
+    <Hash>dcd0c3c85dc2aea89ab9dc9a5372cff6</Hash>
 </Codenesium>*/

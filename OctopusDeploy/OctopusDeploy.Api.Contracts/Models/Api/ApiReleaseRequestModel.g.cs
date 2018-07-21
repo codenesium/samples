@@ -32,120 +32,29 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
-                private DateTimeOffset assembled;
+                [JsonProperty]
+                public DateTimeOffset Assembled { get; private set; }
 
-                [Required]
-                public DateTimeOffset Assembled
-                {
-                        get
-                        {
-                                return this.assembled;
-                        }
+                [JsonProperty]
+                public string ChannelId { get; private set; }
 
-                        set
-                        {
-                                this.assembled = value;
-                        }
-                }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                private string channelId;
+                [JsonProperty]
+                public string ProjectDeploymentProcessSnapshotId { get; private set; }
 
-                [Required]
-                public string ChannelId
-                {
-                        get
-                        {
-                                return this.channelId;
-                        }
+                [JsonProperty]
+                public string ProjectId { get; private set; }
 
-                        set
-                        {
-                                this.channelId = value;
-                        }
-                }
+                [JsonProperty]
+                public string ProjectVariableSetSnapshotId { get; private set; }
 
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string projectDeploymentProcessSnapshotId;
-
-                [Required]
-                public string ProjectDeploymentProcessSnapshotId
-                {
-                        get
-                        {
-                                return this.projectDeploymentProcessSnapshotId;
-                        }
-
-                        set
-                        {
-                                this.projectDeploymentProcessSnapshotId = value;
-                        }
-                }
-
-                private string projectId;
-
-                [Required]
-                public string ProjectId
-                {
-                        get
-                        {
-                                return this.projectId;
-                        }
-
-                        set
-                        {
-                                this.projectId = value;
-                        }
-                }
-
-                private string projectVariableSetSnapshotId;
-
-                [Required]
-                public string ProjectVariableSetSnapshotId
-                {
-                        get
-                        {
-                                return this.projectVariableSetSnapshotId;
-                        }
-
-                        set
-                        {
-                                this.projectVariableSetSnapshotId = value;
-                        }
-                }
-
-                private string version;
-
-                [Required]
-                public string Version
-                {
-                        get
-                        {
-                                return this.version;
-                        }
-
-                        set
-                        {
-                                this.version = value;
-                        }
-                }
+                [JsonProperty]
+                public string Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c6fd568bf4059ede29ced03e1ba62f7b</Hash>
+    <Hash>cd1ceb045c5f5fca7bf5247d08d024d7</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiCertificateResponseModel>> Update(
                         string id,
                         ApiCertificateRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.certificateModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.certificateModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolCertificateMapper.MapModelToBO(id, model);
                                 await this.certificateRepository.Update(this.dalCertificateMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.certificateRepository.Get(id);
+
+                                return new UpdateResponse<ApiCertificateResponseModel>(this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiCertificateResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -132,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a586e5c30400d1aeb75f2eda051ec037</Hash>
+    <Hash>0496c2924fa5b5137878bbae9fdb76cb</Hash>
 </Codenesium>*/

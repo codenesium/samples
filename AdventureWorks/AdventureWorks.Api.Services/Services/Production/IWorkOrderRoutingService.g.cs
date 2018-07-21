@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiWorkOrderRoutingResponseModel>> Create(
                         ApiWorkOrderRoutingRequestModel model);
 
-                Task<ActionResponse> Update(int workOrderID,
-                                            ApiWorkOrderRoutingRequestModel model);
+                Task<UpdateResponse<ApiWorkOrderRoutingResponseModel>> Update(int workOrderID,
+                                                                               ApiWorkOrderRoutingRequestModel model);
 
                 Task<ActionResponse> Delete(int workOrderID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d41f5ff71030e0bc4328c9a5bac16d7</Hash>
+    <Hash>9718536c587f8b1a8fe2ca4b4827559e</Hash>
 </Codenesium>*/

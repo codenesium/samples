@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -33,9 +35,21 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.ToCurrencyCode);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
+                        patch.Replace(x => x.AverageRate, model.AverageRate);
+                        patch.Replace(x => x.CurrencyRateDate, model.CurrencyRateDate);
+                        patch.Replace(x => x.EndOfDayRate, model.EndOfDayRate);
+                        patch.Replace(x => x.FromCurrencyCode, model.FromCurrencyCode);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.ToCurrencyCode, model.ToCurrencyCode);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8a6ffb742c1d57dc7ad55ce5c23f9545</Hash>
+    <Hash>c93f6254f8a25e62fae4db8654da9dda</Hash>
 </Codenesium>*/

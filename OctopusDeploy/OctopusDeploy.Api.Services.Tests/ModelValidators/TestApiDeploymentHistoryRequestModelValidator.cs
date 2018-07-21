@@ -97,30 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void DeploymentName_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, null as string);
-                }
-
-                [Fact]
-                public async void DeploymentName_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, null as string);
-                }
-
-                [Fact]
                 public async void DeploymentName_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -142,30 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, new string('A', 201));
-                }
-
-                [Fact]
-                public async void EnvironmentId_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
-                }
-
-                [Fact]
-                public async void EnvironmentId_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
                 }
 
                 [Fact]
@@ -193,30 +145,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void EnvironmentName_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, null as string);
-                }
-
-                [Fact]
-                public async void EnvironmentName_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, null as string);
-                }
-
-                [Fact]
                 public async void EnvironmentName_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -238,30 +166,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, new string('A', 201));
-                }
-
-                [Fact]
-                public async void ProjectId_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
-                }
-
-                [Fact]
-                public async void ProjectId_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
 
                 [Fact]
@@ -289,30 +193,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ProjectName_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectName, null as string);
-                }
-
-                [Fact]
-                public async void ProjectName_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectName, null as string);
-                }
-
-                [Fact]
                 public async void ProjectName_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -334,30 +214,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectName, new string('A', 201));
-                }
-
-                [Fact]
-                public async void ProjectSlug_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, null as string);
-                }
-
-                [Fact]
-                public async void ProjectSlug_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, null as string);
                 }
 
                 [Fact]
@@ -385,30 +241,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ReleaseId_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, null as string);
-                }
-
-                [Fact]
-                public async void ReleaseId_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, null as string);
-                }
-
-                [Fact]
                 public async void ReleaseId_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -430,30 +262,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, new string('A', 151));
-                }
-
-                [Fact]
-                public async void ReleaseVersion_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, null as string);
-                }
-
-                [Fact]
-                public async void ReleaseVersion_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, null as string);
                 }
 
                 [Fact]
@@ -481,30 +289,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TaskId_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
-                }
-
-                [Fact]
-                public async void TaskId_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
-                }
-
-                [Fact]
                 public async void TaskId_Create_length()
                 {
                         Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
@@ -526,30 +310,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void TaskState_Create_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskState, null as string);
-                }
-
-                [Fact]
-                public async void TaskState_Update_null()
-                {
-                        Mock<IDeploymentHistoryRepository> deploymentHistoryRepository = new Mock<IDeploymentHistoryRepository>();
-                        deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
-
-                        var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TaskState, null as string);
                 }
 
                 [Fact]
@@ -627,5 +387,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dc98fbba05e3d5421aa6e4eef98626ee</Hash>
+    <Hash>a6a5f206dc1657f22b8ed391261f046a</Hash>
 </Codenesium>*/

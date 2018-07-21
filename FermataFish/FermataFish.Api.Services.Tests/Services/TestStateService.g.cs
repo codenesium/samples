@@ -105,6 +105,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var model = new ApiStateRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<State>())).Returns(Task.FromResult(new State()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StateModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiStateResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateRequestModel>()));
@@ -184,5 +185,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5a80e41c009325e69f24ccfb4e71b9a3</Hash>
+    <Hash>4c57a2b70d663ce2138b0786dbe64328</Hash>
 </Codenesium>*/

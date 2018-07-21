@@ -38,168 +38,38 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioId = studioId;
                 }
 
-                private DateTime birthday;
+                [JsonProperty]
+                public DateTime Birthday { get; private set; }
 
-                [Required]
-                public DateTime Birthday
-                {
-                        get
-                        {
-                                return this.birthday;
-                        }
+                [JsonProperty]
+                public string Email { get; private set; }
 
-                        set
-                        {
-                                this.birthday = value;
-                        }
-                }
+                [JsonProperty]
+                public bool EmailRemindersEnabled { get; private set; }
 
-                private string email;
+                [JsonProperty]
+                public int FamilyId { get; private set; }
 
-                [Required]
-                public string Email
-                {
-                        get
-                        {
-                                return this.email;
-                        }
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
-                        set
-                        {
-                                this.email = value;
-                        }
-                }
+                [JsonProperty]
+                public bool IsAdult { get; private set; }
 
-                private bool emailRemindersEnabled;
+                [JsonProperty]
+                public string LastName { get; private set; }
 
-                [Required]
-                public bool EmailRemindersEnabled
-                {
-                        get
-                        {
-                                return this.emailRemindersEnabled;
-                        }
+                [JsonProperty]
+                public string Phone { get; private set; }
 
-                        set
-                        {
-                                this.emailRemindersEnabled = value;
-                        }
-                }
+                [JsonProperty]
+                public bool SmsRemindersEnabled { get; private set; }
 
-                private int familyId;
-
-                [Required]
-                public int FamilyId
-                {
-                        get
-                        {
-                                return this.familyId;
-                        }
-
-                        set
-                        {
-                                this.familyId = value;
-                        }
-                }
-
-                private string firstName;
-
-                [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
-
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private bool isAdult;
-
-                [Required]
-                public bool IsAdult
-                {
-                        get
-                        {
-                                return this.isAdult;
-                        }
-
-                        set
-                        {
-                                this.isAdult = value;
-                        }
-                }
-
-                private string lastName;
-
-                [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
-
-                private bool smsRemindersEnabled;
-
-                [Required]
-                public bool SmsRemindersEnabled
-                {
-                        get
-                        {
-                                return this.smsRemindersEnabled;
-                        }
-
-                        set
-                        {
-                                this.smsRemindersEnabled = value;
-                        }
-                }
-
-                private int studioId;
-
-                [Required]
-                public int StudioId
-                {
-                        get
-                        {
-                                return this.studioId;
-                        }
-
-                        set
-                        {
-                                this.studioId = value;
-                        }
-                }
+                [JsonProperty]
+                public int StudioId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4a1b64bebcc938ac5b34b43f52a3b061</Hash>
+    <Hash>72d117eb83d3b964197f0bed031bd75e</Hash>
 </Codenesium>*/

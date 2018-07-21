@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "TransactionHistoryArchive")]
         [Trait("Area", "Integration")]
-        public class TransactionHistoryArchiveIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class TransactionHistoryArchiveIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public TransactionHistoryArchiveIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiTransactionHistoryArchiveModelMapper mapper = new ApiTransactionHistoryArchiveModelMapper();
+
+                        UpdateResponse<ApiTransactionHistoryArchiveResponseModel> updateResponse = await this.Client.TransactionHistoryArchiveUpdateAsync(model.TransactionID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.TransactionHistoryArchiveDeleteAsync(model.TransactionID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiTransactionHistoryArchiveResponseModel response = await this.Client.TransactionHistoryArchiveGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiTransactionHistoryArchiveResponseModel> response = await this.Client.TransactionHistoryArchiveAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiTransactionHistoryArchiveResponseModel> CreateRecord()
+                {
+                        var model = new ApiTransactionHistoryArchiveRequestModel();
+                        model.SetProperties(3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+                        CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.Client.TransactionHistoryArchiveCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.TransactionHistoryArchiveDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f759e171ac691b8b19e8d5acef90562</Hash>
+    <Hash>f5e367239469a0e4419f8143d5e594b8</Hash>
 </Codenesium>*/

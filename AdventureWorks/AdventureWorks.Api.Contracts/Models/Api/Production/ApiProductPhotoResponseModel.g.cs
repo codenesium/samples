@@ -24,20 +24,30 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
                 }
 
+                [Required]
+                [JsonProperty]
                 public byte[] LargePhoto { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string LargePhotoFileName { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int ProductPhotoID { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public byte[] ThumbNailPhoto { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ThumbnailPhotoFileName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4124a6b4ac9cdd46fe1b76edfe6ddb99</Hash>
+    <Hash>8554ef08e4572fa1f0dd587a3756246d</Hash>
 </Codenesium>*/

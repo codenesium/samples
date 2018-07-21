@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -31,9 +33,20 @@ namespace OctopusDeployNS.Api.Contracts
                                 response.TriggerType);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiProjectTriggerRequestModel> CreatePatch(ApiProjectTriggerRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiProjectTriggerRequestModel>();
+                        patch.Replace(x => x.IsDisabled, model.IsDisabled);
+                        patch.Replace(x => x.JSON, model.JSON);
+                        patch.Replace(x => x.Name, model.Name);
+                        patch.Replace(x => x.ProjectId, model.ProjectId);
+                        patch.Replace(x => x.TriggerType, model.TriggerType);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>015e8bfa44c03ccbbcd5eb804c590f0a</Hash>
+    <Hash>11a95cf11d7c9e9ee8a80568bd10a5cc</Hash>
 </Codenesium>*/

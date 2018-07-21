@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiMachineResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
                 {
                         CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiMachineRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiMachineRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.MachineService.Update(id, model);
+                                UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRequestModel model)
                 {
-                        ApiMachineRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiMachineRequestModel request = await this.PatchModel(id, this.MachineModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.MachineService.Update(id, request);
+                                UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -233,17 +229,6 @@ namespace NebulaNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiMachineRequestModel> CreatePatch(ApiMachineRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiMachineRequestModel>();
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.JwtKey, model.JwtKey);
-                        patch.Replace(x => x.LastIpAddress, model.LastIpAddress);
-                        patch.Replace(x => x.MachineGuid, model.MachineGuid);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiMachineRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineRequestModel> patch)
                 {
                         var record = await this.MachineService.Get(id);
@@ -263,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5c94981e360e52cc81359f478167ae92</Hash>
+    <Hash>784b56b85e64233b67fb6498eb17e396</Hash>
 </Codenesium>*/

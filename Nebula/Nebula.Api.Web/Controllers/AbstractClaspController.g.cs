@@ -106,15 +106,15 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClaspResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiClaspResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiClaspRequestModel model)
                 {
                         CreateResponse<ApiClaspResponseModel> result = await this.ClaspService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace NebulaNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClaspResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiClaspResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClaspRequestModel> patch)
@@ -140,13 +140,11 @@ namespace NebulaNS.Api.Web
                         {
                                 ApiClaspRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ClaspService.Update(id, model);
+                                UpdateResponse<ApiClaspResponseModel> result = await this.ClaspService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiClaspResponseModel response = await this.ClaspService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace NebulaNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClaspResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiClaspResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClaspRequestModel model)
                 {
-                        ApiClaspRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiClaspRequestModel request = await this.PatchModel(id, this.ClaspModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace NebulaNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ClaspService.Update(id, request);
+                                UpdateResponse<ApiClaspResponseModel> result = await this.ClaspService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiClaspResponseModel response = await this.ClaspService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,14 +201,6 @@ namespace NebulaNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiClaspRequestModel> CreatePatch(ApiClaspRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiClaspRequestModel>();
-                        patch.Replace(x => x.NextChainId, model.NextChainId);
-                        patch.Replace(x => x.PreviousChainId, model.PreviousChainId);
-                        return patch;
-                }
-
                 private async Task<ApiClaspRequestModel> PatchModel(int id, JsonPatchDocument<ApiClaspRequestModel> patch)
                 {
                         var record = await this.ClaspService.Get(id);
@@ -232,5 +220,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d56b616b1ceb974485c68320a20f9ba7</Hash>
+    <Hash>1aea3b8063beb31a8b40d9913489701c</Hash>
 </Codenesium>*/

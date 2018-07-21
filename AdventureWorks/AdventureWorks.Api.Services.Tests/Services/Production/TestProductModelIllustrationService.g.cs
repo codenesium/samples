@@ -97,13 +97,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProductModelIllustrationRepository>();
                         var model = new ApiProductModelIllustrationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductModelIllustration>())).Returns(Task.FromResult(new ProductModelIllustration()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelIllustration()));
                         var service = new ProductModelIllustrationService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
                                                                           mock.ModelValidatorMockFactory.ProductModelIllustrationModelValidatorMock.Object,
                                                                           mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
                                                                           mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProductModelIllustrationResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductModelIllustrationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductModelIllustrationRequestModel>()));
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a1af772fbde888ac049cb58573c4369b</Hash>
+    <Hash>344b9856349fd8bb45e539e22b110292</Hash>
 </Codenesium>*/

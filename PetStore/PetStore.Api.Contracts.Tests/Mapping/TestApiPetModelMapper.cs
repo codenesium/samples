@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace PetStoreNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiPetModelMapper();
                         var model = new ApiPetRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
                         ApiPetResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -24,7 +25,7 @@ namespace PetStoreNS.Api.Contracts.Tests
                         response.Description.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1);
+                        response.Price.Should().Be(1m);
                         response.SpeciesId.Should().Be(1);
                 }
 
@@ -33,19 +34,38 @@ namespace PetStoreNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiPetModelMapper();
                         var model = new ApiPetResponseModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
+                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
                         ApiPetRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.BreedId.Should().Be(1);
                         response.Description.Should().Be("A");
                         response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1);
+                        response.Price.Should().Be(1m);
+                        response.SpeciesId.Should().Be(1);
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPetModelMapper();
+                        var model = new ApiPetRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+
+                        JsonPatchDocument<ApiPetRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPetRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.BreedId.Should().Be(1);
+                        response.Description.Should().Be("A");
+                        response.PenId.Should().Be(1);
+                        response.Price.Should().Be(1m);
                         response.SpeciesId.Should().Be(1);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ca77df5e596313a828cf548d41a35ecc</Hash>
+    <Hash>173ebbe3d0061f9c15d0348320ab3578</Hash>
 </Codenesium>*/

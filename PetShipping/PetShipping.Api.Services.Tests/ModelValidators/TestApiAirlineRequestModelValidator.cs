@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IAirlineRepository> airlineRepository = new Mock<IAirlineRepository>();
-                        airlineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Airline()));
-
-                        var validator = new ApiAirlineRequestModelValidator(airlineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAirlineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IAirlineRepository> airlineRepository = new Mock<IAirlineRepository>();
-                        airlineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Airline()));
-
-                        var validator = new ApiAirlineRequestModelValidator(airlineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAirlineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IAirlineRepository> airlineRepository = new Mock<IAirlineRepository>();
@@ -75,5 +51,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b0f8a63cac2bd5e86c4c336b069dce71</Hash>
+    <Hash>247bfcafa2ea7c611452d66eea1b6b9c</Hash>
 </Codenesium>*/

@@ -26,72 +26,20 @@ namespace PetShippingNS.Api.Contracts
                         this.LastName = lastName;
                 }
 
-                private string firstName;
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
-                [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
+                [JsonProperty]
+                public bool IsSalesPerson { get; private set; }
 
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
+                [JsonProperty]
+                public bool IsShipper { get; private set; }
 
-                private bool isSalesPerson;
-
-                [Required]
-                public bool IsSalesPerson
-                {
-                        get
-                        {
-                                return this.isSalesPerson;
-                        }
-
-                        set
-                        {
-                                this.isSalesPerson = value;
-                        }
-                }
-
-                private bool isShipper;
-
-                [Required]
-                public bool IsShipper
-                {
-                        get
-                        {
-                                return this.isShipper;
-                        }
-
-                        set
-                        {
-                                this.isShipper = value;
-                        }
-                }
-
-                private string lastName;
-
-                [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
+                [JsonProperty]
+                public string LastName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb68a8ff09ac80bb26d2b5045eee1664</Hash>
+    <Hash>c5345614ba12cbef2dfe2213fabef6df</Hash>
 </Codenesium>*/

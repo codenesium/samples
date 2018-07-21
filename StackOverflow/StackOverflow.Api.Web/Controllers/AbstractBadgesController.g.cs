@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBadgesResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiBadgesResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiBadgesRequestModel model)
                 {
                         CreateResponse<ApiBadgesResponseModel> result = await this.BadgesService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Badges/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Badges/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBadgesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBadgesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBadgesRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiBadgesRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.BadgesService.Update(id, model);
+                                UpdateResponse<ApiBadgesResponseModel> result = await this.BadgesService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiBadgesResponseModel response = await this.BadgesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBadgesResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiBadgesResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBadgesRequestModel model)
                 {
-                        ApiBadgesRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiBadgesRequestModel request = await this.PatchModel(id, this.BadgesModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.BadgesService.Update(id, request);
+                                UpdateResponse<ApiBadgesResponseModel> result = await this.BadgesService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiBadgesResponseModel response = await this.BadgesService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiBadgesRequestModel> CreatePatch(ApiBadgesRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiBadgesRequestModel>();
-                        patch.Replace(x => x.Date, model.Date);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.UserId, model.UserId);
-                        return patch;
-                }
-
                 private async Task<ApiBadgesRequestModel> PatchModel(int id, JsonPatchDocument<ApiBadgesRequestModel> patch)
                 {
                         var record = await this.BadgesService.Get(id);
@@ -233,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c45b4e6b71c7819a8c7dd49c305d2ffd</Hash>
+    <Hash>a485f42034072bcdb49709f098f09221</Hash>
 </Codenesium>*/

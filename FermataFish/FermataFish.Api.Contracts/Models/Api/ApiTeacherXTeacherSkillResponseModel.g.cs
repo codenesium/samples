@@ -21,18 +21,26 @@ namespace FermataFishNS.Api.Contracts
                         this.TeacherSkillIdEntity = nameof(ApiResponse.TeacherSkills);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int TeacherId { get; private set; }
 
+                [JsonProperty]
                 public string TeacherIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int TeacherSkillId { get; private set; }
 
+                [JsonProperty]
                 public string TeacherSkillIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>c06be5ba23f8226908a2dfb6e0644cd5</Hash>
+    <Hash>31a2fdb9dd1a599efeeacc80cd955510</Hash>
 </Codenesium>*/

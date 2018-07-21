@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -16,7 +18,7 @@ namespace AdventureWorksNS.Api.Contracts
                                                request.@Object,
                                                request.PostTime,
                                                request.Schema,
-                                               request.TSQL,
+                                               request.Tsql,
                                                request.XmlEvent);
                         return response;
                 }
@@ -31,13 +33,26 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.@Object,
                                 response.PostTime,
                                 response.Schema,
-                                response.TSQL,
+                                response.Tsql,
                                 response.XmlEvent);
                         return request;
+                }
+
+                public JsonPatchDocument<ApiDatabaseLogRequestModel> CreatePatch(ApiDatabaseLogRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiDatabaseLogRequestModel>();
+                        patch.Replace(x => x.DatabaseUser, model.DatabaseUser);
+                        patch.Replace(x => x.@Event, model.@Event);
+                        patch.Replace(x => x.@Object, model.@Object);
+                        patch.Replace(x => x.PostTime, model.PostTime);
+                        patch.Replace(x => x.Schema, model.Schema);
+                        patch.Replace(x => x.Tsql, model.Tsql);
+                        patch.Replace(x => x.XmlEvent, model.XmlEvent);
+                        return patch;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>01e3ad894dc5108fdecbcbbedfd1646c</Hash>
+    <Hash>b35101507f8e696e1794b550e8ed0164</Hash>
 </Codenesium>*/

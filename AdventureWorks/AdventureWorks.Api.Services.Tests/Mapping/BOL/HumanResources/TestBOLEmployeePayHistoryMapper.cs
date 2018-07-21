@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLEmployeePayHistoryMapper();
                         ApiEmployeePayHistoryRequestModel model = new ApiEmployeePayHistoryRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOEmployeePayHistory response = mapper.MapModelToBO(1, model);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1);
+                        response.Rate.Should().Be(1m);
                         response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
 
@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLEmployeePayHistoryMapper();
                         BOEmployeePayHistory bo = new BOEmployeePayHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiEmployeePayHistoryResponseModel response = mapper.MapBOToModel(bo);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1);
+                        response.Rate.Should().Be(1m);
                         response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
 
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLEmployeePayHistoryMapper();
                         BOEmployeePayHistory bo = new BOEmployeePayHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiEmployeePayHistoryResponseModel> response = mapper.MapBOToModel(new List<BOEmployeePayHistory>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6e59a29d8e5fb89f5135ce4348702a4d</Hash>
+    <Hash>17bb2f67b7125fb203dd092d1703ed6d</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,5 +80,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>65dec9dfe19a94a1fdb9fa5cb30f60ef</Hash>
+    <Hash>907f1ddacc49ba34019c630daf2979e4</Hash>
 </Codenesium>*/

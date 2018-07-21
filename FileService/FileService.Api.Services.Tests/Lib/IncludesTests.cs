@@ -1,3 +1,4 @@
+using FileServiceNS.Api.Contracts;
 using FluentAssertions;
 using FluentValidation.Results;
 using System;
@@ -79,5 +80,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ea0bfc0dd9d09da59064572f1c490c04</Hash>
+    <Hash>787c7f718d3511c210201aab1e22f940</Hash>
 </Codenesium>*/

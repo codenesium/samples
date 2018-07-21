@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateCreateAsync(ApiProductReviewRequestModel model)
                 {
-                        this.CommentsRules();
+                        this.CommentRules();
                         this.EmailAddressRules();
                         this.ModifiedDateRules();
                         this.ProductIDRules();
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductReviewRequestModel model)
                 {
-                        this.CommentsRules();
+                        this.CommentRules();
                         this.EmailAddressRules();
                         this.ModifiedDateRules();
                         this.ProductIDRules();
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10a7edc9abf696266ed2c22788143437</Hash>
+    <Hash>83a720882e22e1efebe57925f8be7eef</Hash>
 </Codenesium>*/

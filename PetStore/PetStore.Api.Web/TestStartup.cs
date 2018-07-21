@@ -33,8 +33,10 @@ namespace PetStoreNS.Api.Web
 
 		public override void MigrateDatabase(ApplicationDbContext context)
         {
-			 context.Database.OpenConnection();
-			 context.Database.EnsureCreated();
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+            migrator.Migrate();
         }
     }
 }

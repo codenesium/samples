@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSaleResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSaleRequestModel model)
                 {
                         CreateResponse<ApiSaleResponseModel> result = await this.SaleService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Sales/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Sales/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSaleRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiSaleRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SaleService.Update(id, model);
+                                UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleResponseModel response = await this.SaleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleRequestModel model)
                 {
-                        ApiSaleRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSaleRequestModel request = await this.PatchModel(id, this.SaleModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SaleService.Update(id, request);
+                                UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSaleResponseModel response = await this.SaleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -230,16 +226,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSaleRequestModel> CreatePatch(ApiSaleRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSaleRequestModel>();
-                        patch.Replace(x => x.IpAddress, model.IpAddress);
-                        patch.Replace(x => x.Notes, model.Notes);
-                        patch.Replace(x => x.SaleDate, model.SaleDate);
-                        patch.Replace(x => x.TransactionId, model.TransactionId);
-                        return patch;
-                }
-
                 private async Task<ApiSaleRequestModel> PatchModel(int id, JsonPatchDocument<ApiSaleRequestModel> patch)
                 {
                         var record = await this.SaleService.Get(id);
@@ -259,5 +245,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9cbcdc349356d4357cf6e1daec214121</Hash>
+    <Hash>69ff17b73882453a33f1096193466a7f</Hash>
 </Codenesium>*/

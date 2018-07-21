@@ -105,6 +105,7 @@ namespace PetStoreNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPaymentTypeRepository>();
                         var model = new ApiPaymentTypeRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PaymentType>())).Returns(Task.FromResult(new PaymentType()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
                         var service = new PaymentTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                              mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiPaymentTypeResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
@@ -184,5 +185,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f6babe5670dd504454ccadbad501c121</Hash>
+    <Hash>ca7a516dfbded1d6b1a0298a0eaef801</Hash>
 </Codenesium>*/

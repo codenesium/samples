@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAddressTypeResponseModel>> Update(
                         int addressTypeID,
                         ApiAddressTypeRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model));
-                        if (response.Success)
+                        var validationResult = await this.addressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAddressTypeMapper.MapModelToBO(addressTypeID, model);
                                 await this.addressTypeRepository.Update(this.dalAddressTypeMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.addressTypeRepository.Get(addressTypeID);
+
+                                return new UpdateResponse<ApiAddressTypeResponseModel>(this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAddressTypeResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>991b4feb4fd2cc5d523c9d526d5283a9</Hash>
+    <Hash>9ceaf0f214c4eab28f5978e42bfd82f9</Hash>
 </Codenesium>*/

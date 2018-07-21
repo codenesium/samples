@@ -105,6 +105,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IOrganizationRepository>();
                         var model = new ApiOrganizationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Organization>())).Returns(Task.FromResult(new Organization()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
                         var service = new OrganizationService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
@@ -113,7 +114,7 @@ namespace NebulaNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeamMapperMock,
                                                               mock.DALMapperMockFactory.DALTeamMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiOrganizationResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>()));
@@ -184,5 +185,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c1687b238c8b569010db9f23b25d5b5f</Hash>
+    <Hash>e887c3c7a96489ac31fbf2edfd22e356</Hash>
 </Codenesium>*/

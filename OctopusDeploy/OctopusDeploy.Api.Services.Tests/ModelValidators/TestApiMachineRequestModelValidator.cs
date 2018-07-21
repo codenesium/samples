@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void CommunicationStyle_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, null as string);
-                }
-
-                [Fact]
-                public async void CommunicationStyle_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, null as string);
-                }
-
-                [Fact]
                 public async void CommunicationStyle_Create_length()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -70,30 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
-                }
-
-                [Fact]
-                public async void EnvironmentIds_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentIds, null as string);
-                }
-
-                [Fact]
-                public async void EnvironmentIds_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentIds, null as string);
                 }
 
                 [Fact]
@@ -121,30 +73,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
                 public async void MachinePolicyId_Create_length()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -169,30 +97,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
@@ -214,30 +118,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
-
-                [Fact]
-                public async void Roles_Create_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Roles, null as string);
-                }
-
-                [Fact]
-                public async void Roles_Update_null()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
-
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Roles, null as string);
                 }
 
                 [Fact]
@@ -315,5 +195,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>42021e20cdcafa971c2d8acf1c5f36d4</Hash>
+    <Hash>c963e7f09192ac7d808367b7ba6d9c8a</Hash>
 </Codenesium>*/

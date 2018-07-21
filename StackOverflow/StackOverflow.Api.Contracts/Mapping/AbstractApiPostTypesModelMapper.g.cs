@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -23,9 +25,16 @@ namespace StackOverflowNS.Api.Contracts
                                 response.Type);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiPostTypesRequestModel> CreatePatch(ApiPostTypesRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPostTypesRequestModel>();
+                        patch.Replace(x => x.Type, model.Type);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b329e9d7017800583528cf2aec488cb2</Hash>
+    <Hash>c64e95b5569ae223fb405c7904cb726b</Hash>
 </Codenesium>*/

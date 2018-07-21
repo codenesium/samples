@@ -24,56 +24,20 @@ namespace AdventureWorksNS.Api.Contracts
                         this.VersionDate = versionDate;
                 }
 
-                private string database_Version;
+                [Required]
+                [JsonProperty]
+                public string Database_Version { get; private set; }
 
                 [Required]
-                public string Database_Version
-                {
-                        get
-                        {
-                                return this.database_Version;
-                        }
-
-                        set
-                        {
-                                this.database_Version = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private DateTime versionDate;
-
-                [Required]
-                public DateTime VersionDate
-                {
-                        get
-                        {
-                                return this.versionDate;
-                        }
-
-                        set
-                        {
-                                this.versionDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime VersionDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d8cac2dc4a7f7099230c5fa0b5f61a81</Hash>
+    <Hash>f576f3b10fd7a83bf75a286046269bdd</Hash>
 </Codenesium>*/

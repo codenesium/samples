@@ -18,7 +18,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new BOLFileMapper();
                         ApiFileRequestModel model = new ApiFileRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
                         BOFile response = mapper.MapModelToBO(1, model);
 
                         response.BucketId.Should().Be(1);
@@ -27,7 +27,7 @@ namespace FileServiceNS.Api.Services.Tests
                         response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Extension.Should().Be("A");
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.FileSizeInBytes.Should().Be(1);
+                        response.FileSizeInBytes.Should().Be(1m);
                         response.FileTypeId.Should().Be(1);
                         response.Location.Should().Be("A");
                         response.PrivateKey.Should().Be("A");
@@ -39,7 +39,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new BOLFileMapper();
                         BOFile bo = new BOFile();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
                         ApiFileResponseModel response = mapper.MapBOToModel(bo);
 
                         response.BucketId.Should().Be(1);
@@ -48,7 +48,7 @@ namespace FileServiceNS.Api.Services.Tests
                         response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Extension.Should().Be("A");
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.FileSizeInBytes.Should().Be(1);
+                        response.FileSizeInBytes.Should().Be(1m);
                         response.FileTypeId.Should().Be(1);
                         response.Id.Should().Be(1);
                         response.Location.Should().Be("A");
@@ -61,7 +61,7 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mapper = new BOLFileMapper();
                         BOFile bo = new BOFile();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
                         List<ApiFileResponseModel> response = mapper.MapBOToModel(new List<BOFile>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -70,5 +70,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0fb12c55bf11d7afd0e56b0e28f367bd</Hash>
+    <Hash>084ab777101fcc31b9f86ae7e995379e</Hash>
 </Codenesium>*/

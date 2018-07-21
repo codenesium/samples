@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.Contracts
                         int workOrderID,
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHrs,
+                        decimal? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Contracts
                         this.WorkOrderID = workOrderID;
                         this.ActualCost = actualCost;
                         this.ActualEndDate = actualEndDate;
-                        this.ActualResourceHrs = actualResourceHrs;
+                        this.ActualResourceHr = actualResourceHr;
                         this.ActualStartDate = actualStartDate;
                         this.LocationID = locationID;
                         this.ModifiedDate = modifiedDate;
@@ -36,32 +36,48 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ScheduledStartDate = scheduledStartDate;
                 }
 
+                [Required]
+                [JsonProperty]
                 public decimal? ActualCost { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ActualEndDate { get; private set; }
 
-                public decimal? ActualResourceHrs { get; private set; }
+                [Required]
+                [JsonProperty]
+                public decimal? ActualResourceHr { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ActualStartDate { get; private set; }
 
+                [JsonProperty]
                 public short LocationID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public short OperationSequence { get; private set; }
 
+                [JsonProperty]
                 public decimal PlannedCost { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ScheduledEndDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime ScheduledStartDate { get; private set; }
 
+                [JsonProperty]
                 public int WorkOrderID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>579672722f629745a930cc9c2620f99d</Hash>
+    <Hash>e30558a265ef639bdc5a5664f425f98d</Hash>
 </Codenesium>*/

@@ -32,28 +32,48 @@ namespace OctopusDeployNS.Api.Contracts
                         this.WorkerPoolIds = workerPoolIds;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string CommunicationStyle { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Fingerprint { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDisabled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string MachinePolicyId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string RelatedDocumentIds { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Thumbprint { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string WorkerPoolIds { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>79c1572d73a3b19185e26db5d22aeaff</Hash>
+    <Hash>8d4fc0a65e08182e1099c8a1a8132d27</Hash>
 </Codenesium>*/

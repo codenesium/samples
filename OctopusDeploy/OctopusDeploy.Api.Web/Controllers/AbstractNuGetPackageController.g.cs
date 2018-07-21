@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiNuGetPackageResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiNuGetPackageRequestModel model)
                 {
                         CreateResponse<ApiNuGetPackageResponseModel> result = await this.NuGetPackageService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/NuGetPackages/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/NuGetPackages/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiNuGetPackageResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiNuGetPackageRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiNuGetPackageRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.NuGetPackageService.Update(id, model);
+                                UpdateResponse<ApiNuGetPackageResponseModel> result = await this.NuGetPackageService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiNuGetPackageResponseModel response = await this.NuGetPackageService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiNuGetPackageResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiNuGetPackageRequestModel model)
                 {
-                        ApiNuGetPackageRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiNuGetPackageRequestModel request = await this.PatchModel(id, this.NuGetPackageModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.NuGetPackageService.Update(id, request);
+                                UpdateResponse<ApiNuGetPackageResponseModel> result = await this.NuGetPackageService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiNuGetPackageResponseModel response = await this.NuGetPackageService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,20 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiNuGetPackageRequestModel> CreatePatch(ApiNuGetPackageRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiNuGetPackageRequestModel>();
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.PackageId, model.PackageId);
-                        patch.Replace(x => x.Version, model.Version);
-                        patch.Replace(x => x.VersionBuild, model.VersionBuild);
-                        patch.Replace(x => x.VersionMajor, model.VersionMajor);
-                        patch.Replace(x => x.VersionMinor, model.VersionMinor);
-                        patch.Replace(x => x.VersionRevision, model.VersionRevision);
-                        patch.Replace(x => x.VersionSpecial, model.VersionSpecial);
-                        return patch;
-                }
-
                 private async Task<ApiNuGetPackageRequestModel> PatchModel(string id, JsonPatchDocument<ApiNuGetPackageRequestModel> patch)
                 {
                         var record = await this.NuGetPackageService.Get(id);
@@ -238,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8af0a801584b6b8d1644eaad60256a9b</Hash>
+    <Hash>746b8f78901efd05e62c61ce9af13eb0</Hash>
 </Codenesium>*/

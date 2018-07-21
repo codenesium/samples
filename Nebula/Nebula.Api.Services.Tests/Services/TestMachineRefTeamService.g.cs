@@ -97,13 +97,14 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IMachineRefTeamRepository>();
                         var model = new ApiMachineRefTeamRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<MachineRefTeam>())).Returns(Task.FromResult(new MachineRefTeam()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new MachineRefTeam()));
                         var service = new MachineRefTeamService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.MachineRefTeamModelValidatorMock.Object,
                                                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiMachineRefTeamResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.MachineRefTeamModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamRequestModel>()));
@@ -132,5 +133,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bdf2c55b0883012177ca8862a99fc9eb</Hash>
+    <Hash>b96d158f1018606f1ee4415b7f0c5b88</Hash>
 </Codenesium>*/

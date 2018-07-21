@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
                         ApiSpecialOfferRequestModel model);
 
-                Task<ActionResponse> Update(int specialOfferID,
-                                            ApiSpecialOfferRequestModel model);
+                Task<UpdateResponse<ApiSpecialOfferResponseModel>> Update(int specialOfferID,
+                                                                           ApiSpecialOfferRequestModel model);
 
                 Task<ActionResponse> Delete(int specialOfferID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>092905221d0e43fdfb75ebcb89c34373</Hash>
+    <Hash>8b0c3df914e4ff93d3628ea01682189c</Hash>
 </Codenesium>*/

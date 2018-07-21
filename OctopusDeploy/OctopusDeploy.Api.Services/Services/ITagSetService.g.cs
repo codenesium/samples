@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiTagSetResponseModel>> Create(
                         ApiTagSetRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiTagSetRequestModel model);
+                Task<UpdateResponse<ApiTagSetResponseModel>> Update(string id,
+                                                                     ApiTagSetRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d483696d8a2478830ab47dc72fabecc8</Hash>
+    <Hash>3c1f8d3b2a89db54b7a72c35464fdfd4</Hash>
 </Codenesium>*/

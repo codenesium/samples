@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Type_Create_null()
-                {
-                        Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
-                        postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
-
-                        var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
-                public async void Type_Update_null()
-                {
-                        Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
-                        postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
-
-                        var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
                 public async void Type_Create_length()
                 {
                         Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8398f2d1e4ade837448ea248e7d7e940</Hash>
+    <Hash>f88e4da4036e5c23f4b035a65e8485d6</Hash>
 </Codenesium>*/

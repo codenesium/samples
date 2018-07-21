@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void GatewayConfirmationNumber_Create_null()
-                {
-                        Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-                        transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
-
-                        var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
-                }
-
-                [Fact]
-                public async void GatewayConfirmationNumber_Update_null()
-                {
-                        Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-                        transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
-
-                        var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
-                }
-
-                [Fact]
                 public async void GatewayConfirmationNumber_Create_length()
                 {
                         Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
@@ -125,5 +101,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6c906aabc91797a13ab0a490844701e8</Hash>
+    <Hash>3606d5ec055dacd2b9cb4235ff097c1f</Hash>
 </Codenesium>*/

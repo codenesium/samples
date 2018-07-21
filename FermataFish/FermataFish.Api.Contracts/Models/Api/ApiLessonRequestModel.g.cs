@@ -36,145 +36,35 @@ namespace FermataFishNS.Api.Contracts
                         this.TeacherNotes = teacherNotes;
                 }
 
-                private DateTime? actualEndDate;
+                [JsonProperty]
+                public DateTime? ActualEndDate { get; private set; }
 
-                public DateTime? ActualEndDate
-                {
-                        get
-                        {
-                                return this.actualEndDate;
-                        }
+                [JsonProperty]
+                public DateTime? ActualStartDate { get; private set; }
 
-                        set
-                        {
-                                this.actualEndDate = value;
-                        }
-                }
+                [JsonProperty]
+                public decimal? BillAmount { get; private set; }
 
-                private DateTime? actualStartDate;
+                [JsonProperty]
+                public int LessonStatusId { get; private set; }
 
-                public DateTime? ActualStartDate
-                {
-                        get
-                        {
-                                return this.actualStartDate;
-                        }
+                [JsonProperty]
+                public DateTime? ScheduledEndDate { get; private set; }
 
-                        set
-                        {
-                                this.actualStartDate = value;
-                        }
-                }
+                [JsonProperty]
+                public DateTime? ScheduledStartDate { get; private set; }
 
-                private decimal? billAmount;
+                [JsonProperty]
+                public string StudentNotes { get; private set; }
 
-                public decimal? BillAmount
-                {
-                        get
-                        {
-                                return this.billAmount;
-                        }
+                [JsonProperty]
+                public int StudioId { get; private set; }
 
-                        set
-                        {
-                                this.billAmount = value;
-                        }
-                }
-
-                private int lessonStatusId;
-
-                [Required]
-                public int LessonStatusId
-                {
-                        get
-                        {
-                                return this.lessonStatusId;
-                        }
-
-                        set
-                        {
-                                this.lessonStatusId = value;
-                        }
-                }
-
-                private DateTime? scheduledEndDate;
-
-                public DateTime? ScheduledEndDate
-                {
-                        get
-                        {
-                                return this.scheduledEndDate;
-                        }
-
-                        set
-                        {
-                                this.scheduledEndDate = value;
-                        }
-                }
-
-                private DateTime? scheduledStartDate;
-
-                public DateTime? ScheduledStartDate
-                {
-                        get
-                        {
-                                return this.scheduledStartDate;
-                        }
-
-                        set
-                        {
-                                this.scheduledStartDate = value;
-                        }
-                }
-
-                private string studentNotes;
-
-                public string StudentNotes
-                {
-                        get
-                        {
-                                return this.studentNotes;
-                        }
-
-                        set
-                        {
-                                this.studentNotes = value;
-                        }
-                }
-
-                private int studioId;
-
-                [Required]
-                public int StudioId
-                {
-                        get
-                        {
-                                return this.studioId;
-                        }
-
-                        set
-                        {
-                                this.studioId = value;
-                        }
-                }
-
-                private string teacherNotes;
-
-                public string TeacherNotes
-                {
-                        get
-                        {
-                                return this.teacherNotes;
-                        }
-
-                        set
-                        {
-                                this.teacherNotes = value;
-                        }
-                }
+                [JsonProperty]
+                public string TeacherNotes { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6135cdda96b2c208811bcb12c924ac98</Hash>
+    <Hash>97ebd12178044cdf4c7eeb747f6f6ca9</Hash>
 </Codenesium>*/

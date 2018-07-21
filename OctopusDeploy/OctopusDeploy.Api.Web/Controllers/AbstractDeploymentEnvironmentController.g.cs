@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentEnvironmentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDeploymentEnvironmentResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentEnvironmentRequestModel model)
                 {
                         CreateResponse<ApiDeploymentEnvironmentResponseModel> result = await this.DeploymentEnvironmentService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentEnvironments/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentEnvironments/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentEnvironmentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentEnvironmentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiDeploymentEnvironmentRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiDeploymentEnvironmentRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DeploymentEnvironmentService.Update(id, model);
+                                UpdateResponse<ApiDeploymentEnvironmentResponseModel> result = await this.DeploymentEnvironmentService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentEnvironmentResponseModel response = await this.DeploymentEnvironmentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentEnvironmentResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentEnvironmentResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiDeploymentEnvironmentRequestModel model)
                 {
-                        ApiDeploymentEnvironmentRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDeploymentEnvironmentRequestModel request = await this.PatchModel(id, this.DeploymentEnvironmentModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DeploymentEnvironmentService.Update(id, request);
+                                UpdateResponse<ApiDeploymentEnvironmentResponseModel> result = await this.DeploymentEnvironmentService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentEnvironmentResponseModel response = await this.DeploymentEnvironmentService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -235,16 +231,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDeploymentEnvironmentRequestModel> CreatePatch(ApiDeploymentEnvironmentRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeploymentEnvironmentRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.SortOrder, model.SortOrder);
-                        return patch;
-                }
-
                 private async Task<ApiDeploymentEnvironmentRequestModel> PatchModel(string id, JsonPatchDocument<ApiDeploymentEnvironmentRequestModel> patch)
                 {
                         var record = await this.DeploymentEnvironmentService.Get(id);
@@ -264,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>46635d4d19b1d44f8e9d9314cd17239e</Hash>
+    <Hash>962c0198e0d2cf188e375c4fc832add1</Hash>
 </Codenesium>*/

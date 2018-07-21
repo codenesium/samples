@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProxyResponseModel>> Update(
                         string id,
                         ApiProxyRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.proxyModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.proxyModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProxyMapper.MapModelToBO(id, model);
                                 await this.proxyRepository.Update(this.dalProxyMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.proxyRepository.Get(id);
+
+                                return new UpdateResponse<ApiProxyResponseModel>(this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProxyResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>556b978bba8d3380127a0933308e4539</Hash>
+    <Hash>28349711b29a80c8aabb1f9adbc76607</Hash>
 </Codenesium>*/

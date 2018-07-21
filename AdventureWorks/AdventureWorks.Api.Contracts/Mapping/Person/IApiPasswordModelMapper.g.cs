@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace AdventureWorksNS.Api.Contracts
 
                 ApiPasswordRequestModel MapResponseToRequest(
                         ApiPasswordResponseModel response);
+
+                JsonPatchDocument<ApiPasswordRequestModel> CreatePatch(ApiPasswordRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>6161474f07236acd6253737f96a792b1</Hash>
+    <Hash>efbea00e5d551859e4884b2921e68eac</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEmployeeResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeRequestModel model)
                 {
                         CreateResponse<ApiEmployeeResponseModel> result = await this.EmployeeService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Employees/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Employees/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeeRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiEmployeeRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EmployeeService.Update(id, model);
+                                UpdateResponse<ApiEmployeeResponseModel> result = await this.EmployeeService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeeResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeRequestModel model)
                 {
-                        ApiEmployeeRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEmployeeRequestModel request = await this.PatchModel(id, this.EmployeeModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EmployeeService.Update(id, request);
+                                UpdateResponse<ApiEmployeeResponseModel> result = await this.EmployeeService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -285,26 +281,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEmployeeRequestModel> CreatePatch(ApiEmployeeRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEmployeeRequestModel>();
-                        patch.Replace(x => x.BirthDate, model.BirthDate);
-                        patch.Replace(x => x.CurrentFlag, model.CurrentFlag);
-                        patch.Replace(x => x.Gender, model.Gender);
-                        patch.Replace(x => x.HireDate, model.HireDate);
-                        patch.Replace(x => x.JobTitle, model.JobTitle);
-                        patch.Replace(x => x.LoginID, model.LoginID);
-                        patch.Replace(x => x.MaritalStatus, model.MaritalStatus);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.NationalIDNumber, model.NationalIDNumber);
-                        patch.Replace(x => x.OrganizationLevel, model.OrganizationLevel);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalariedFlag, model.SalariedFlag);
-                        patch.Replace(x => x.SickLeaveHours, model.SickLeaveHours);
-                        patch.Replace(x => x.VacationHours, model.VacationHours);
-                        return patch;
-                }
-
                 private async Task<ApiEmployeeRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeeRequestModel> patch)
                 {
                         var record = await this.EmployeeService.Get(id);
@@ -324,5 +300,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8cbde87bf696659ab6cda165969ac959</Hash>
+    <Hash>3012746a3ce6cc27f147fb9c91db8755</Hash>
 </Codenesium>*/

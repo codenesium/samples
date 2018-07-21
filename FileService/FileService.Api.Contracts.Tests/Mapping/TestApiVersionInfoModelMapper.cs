@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -35,9 +36,24 @@ namespace FileServiceNS.Api.Contracts.Tests
                         response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Description.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiVersionInfoModelMapper();
+                        var model = new ApiVersionInfoRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+
+                        JsonPatchDocument<ApiVersionInfoRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiVersionInfoRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Description.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>faa5d96b1920d0dfa5f5055acb193ac6</Hash>
+    <Hash>8af404729c0270c77f47566249d4b5bb</Hash>
 </Codenesium>*/

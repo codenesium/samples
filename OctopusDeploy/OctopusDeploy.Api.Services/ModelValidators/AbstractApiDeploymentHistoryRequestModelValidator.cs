@@ -51,7 +51,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void DeploymentNameRules()
                 {
-                        this.RuleFor(x => x.DeploymentName).NotNull();
                         this.RuleFor(x => x.DeploymentName).Length(0, 200);
                 }
 
@@ -61,31 +60,26 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void EnvironmentIdRules()
                 {
-                        this.RuleFor(x => x.EnvironmentId).NotNull();
                         this.RuleFor(x => x.EnvironmentId).Length(0, 50);
                 }
 
                 public virtual void EnvironmentNameRules()
                 {
-                        this.RuleFor(x => x.EnvironmentName).NotNull();
                         this.RuleFor(x => x.EnvironmentName).Length(0, 200);
                 }
 
                 public virtual void ProjectIdRules()
                 {
-                        this.RuleFor(x => x.ProjectId).NotNull();
                         this.RuleFor(x => x.ProjectId).Length(0, 50);
                 }
 
                 public virtual void ProjectNameRules()
                 {
-                        this.RuleFor(x => x.ProjectName).NotNull();
                         this.RuleFor(x => x.ProjectName).Length(0, 200);
                 }
 
                 public virtual void ProjectSlugRules()
                 {
-                        this.RuleFor(x => x.ProjectSlug).NotNull();
                         this.RuleFor(x => x.ProjectSlug).Length(0, 210);
                 }
 
@@ -95,13 +89,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ReleaseIdRules()
                 {
-                        this.RuleFor(x => x.ReleaseId).NotNull();
                         this.RuleFor(x => x.ReleaseId).Length(0, 150);
                 }
 
                 public virtual void ReleaseVersionRules()
                 {
-                        this.RuleFor(x => x.ReleaseVersion).NotNull();
                         this.RuleFor(x => x.ReleaseVersion).Length(0, 100);
                 }
 
@@ -111,13 +103,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void TaskIdRules()
                 {
-                        this.RuleFor(x => x.TaskId).NotNull();
                         this.RuleFor(x => x.TaskId).Length(0, 50);
                 }
 
                 public virtual void TaskStateRules()
                 {
-                        this.RuleFor(x => x.TaskState).NotNull();
                         this.RuleFor(x => x.TaskState).Length(0, 50);
                 }
 
@@ -134,5 +124,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f1e5628c93260790f600dc24079f923</Hash>
+    <Hash>4589aaed2dae86fe73203f3454153c48</Hash>
 </Codenesium>*/

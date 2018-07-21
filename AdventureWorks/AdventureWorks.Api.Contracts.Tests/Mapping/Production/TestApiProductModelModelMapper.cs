@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -20,7 +21,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         ApiProductModelResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.ProductModelID.Should().Be(1);
@@ -36,7 +37,25 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         ApiProductModelRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Name.Should().Be("A");
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiProductModelModelMapper();
+                        var model = new ApiProductModelRequestModel();
+                        model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+
+                        JsonPatchDocument<ApiProductModelRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiProductModelRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.CatalogDescription.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -45,5 +64,5 @@ namespace AdventureWorksNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>2ad3021068e853746f73e89a740ad7d6</Hash>
+    <Hash>1173e933d84a2f5cbd78f3dcf1ccc7b1</Hash>
 </Codenesium>*/

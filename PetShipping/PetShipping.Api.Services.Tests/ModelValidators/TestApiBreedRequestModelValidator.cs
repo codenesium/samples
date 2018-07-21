@@ -25,30 +25,6 @@ namespace PetShippingNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
-
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBreedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
-
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
@@ -125,5 +101,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ca438343d9ab8722d1b3f6175e685836</Hash>
+    <Hash>6c87d35aa6ef2bb3e27e1df05fa83a68</Hash>
 </Codenesium>*/

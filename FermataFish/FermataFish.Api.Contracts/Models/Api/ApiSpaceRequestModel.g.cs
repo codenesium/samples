@@ -24,56 +24,17 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioId = studioId;
                 }
 
-                private string description;
+                [JsonProperty]
+                public string Description { get; private set; }
 
-                [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int studioId;
-
-                [Required]
-                public int StudioId
-                {
-                        get
-                        {
-                                return this.studioId;
-                        }
-
-                        set
-                        {
-                                this.studioId = value;
-                        }
-                }
+                [JsonProperty]
+                public int StudioId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>21c8408e10ffdf8dc1130c6919b8ae5d</Hash>
+    <Hash>27734edcdb798d24b0d56408830a7a34</Hash>
 </Codenesium>*/

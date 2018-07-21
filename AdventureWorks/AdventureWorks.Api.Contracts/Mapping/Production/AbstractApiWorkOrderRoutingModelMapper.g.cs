@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
@@ -13,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
                         response.SetProperties(workOrderID,
                                                request.ActualCost,
                                                request.ActualEndDate,
-                                               request.ActualResourceHrs,
+                                               request.ActualResourceHr,
                                                request.ActualStartDate,
                                                request.LocationID,
                                                request.ModifiedDate,
@@ -32,7 +34,7 @@ namespace AdventureWorksNS.Api.Contracts
                         request.SetProperties(
                                 response.ActualCost,
                                 response.ActualEndDate,
-                                response.ActualResourceHrs,
+                                response.ActualResourceHr,
                                 response.ActualStartDate,
                                 response.LocationID,
                                 response.ModifiedDate,
@@ -43,9 +45,26 @@ namespace AdventureWorksNS.Api.Contracts
                                 response.ScheduledStartDate);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiWorkOrderRoutingRequestModel> CreatePatch(ApiWorkOrderRoutingRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiWorkOrderRoutingRequestModel>();
+                        patch.Replace(x => x.ActualCost, model.ActualCost);
+                        patch.Replace(x => x.ActualEndDate, model.ActualEndDate);
+                        patch.Replace(x => x.ActualResourceHr, model.ActualResourceHr);
+                        patch.Replace(x => x.ActualStartDate, model.ActualStartDate);
+                        patch.Replace(x => x.LocationID, model.LocationID);
+                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+                        patch.Replace(x => x.OperationSequence, model.OperationSequence);
+                        patch.Replace(x => x.PlannedCost, model.PlannedCost);
+                        patch.Replace(x => x.ProductID, model.ProductID);
+                        patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
+                        patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7bfda262cd9e04acc519b618b5cc9ae5</Hash>
+    <Hash>f934670680eb2c2f0cc8a53b0cb4368f</Hash>
 </Codenesium>*/

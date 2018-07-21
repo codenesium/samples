@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
                         ApiPersonPhoneRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiPersonPhoneRequestModel model);
+                Task<UpdateResponse<ApiPersonPhoneResponseModel>> Update(int businessEntityID,
+                                                                          ApiPersonPhoneRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4ce81205596f4679192c62dd5484fb4</Hash>
+    <Hash>8b1fa80c87455316a42e69c604ccc84a</Hash>
 </Codenesium>*/

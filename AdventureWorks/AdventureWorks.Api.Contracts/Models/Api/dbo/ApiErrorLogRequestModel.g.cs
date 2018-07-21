@@ -34,132 +34,36 @@ namespace AdventureWorksNS.Api.Contracts
                         this.UserName = userName;
                 }
 
-                private int? errorLine;
-
-                public int? ErrorLine
-                {
-                        get
-                        {
-                                return this.errorLine;
-                        }
-
-                        set
-                        {
-                                this.errorLine = value;
-                        }
-                }
-
-                private string errorMessage;
+                [JsonProperty]
+                public int? ErrorLine { get; private set; }
 
                 [Required]
-                public string ErrorMessage
-                {
-                        get
-                        {
-                                return this.errorMessage;
-                        }
-
-                        set
-                        {
-                                this.errorMessage = value;
-                        }
-                }
-
-                private int errorNumber;
+                [JsonProperty]
+                public string ErrorMessage { get; private set; }
 
                 [Required]
-                public int ErrorNumber
-                {
-                        get
-                        {
-                                return this.errorNumber;
-                        }
+                [JsonProperty]
+                public int ErrorNumber { get; private set; }
 
-                        set
-                        {
-                                this.errorNumber = value;
-                        }
-                }
+                [JsonProperty]
+                public string ErrorProcedure { get; private set; }
 
-                private string errorProcedure;
+                [JsonProperty]
+                public int? ErrorSeverity { get; private set; }
 
-                public string ErrorProcedure
-                {
-                        get
-                        {
-                                return this.errorProcedure;
-                        }
-
-                        set
-                        {
-                                this.errorProcedure = value;
-                        }
-                }
-
-                private int? errorSeverity;
-
-                public int? ErrorSeverity
-                {
-                        get
-                        {
-                                return this.errorSeverity;
-                        }
-
-                        set
-                        {
-                                this.errorSeverity = value;
-                        }
-                }
-
-                private int? errorState;
-
-                public int? ErrorState
-                {
-                        get
-                        {
-                                return this.errorState;
-                        }
-
-                        set
-                        {
-                                this.errorState = value;
-                        }
-                }
-
-                private DateTime errorTime;
+                [JsonProperty]
+                public int? ErrorState { get; private set; }
 
                 [Required]
-                public DateTime ErrorTime
-                {
-                        get
-                        {
-                                return this.errorTime;
-                        }
-
-                        set
-                        {
-                                this.errorTime = value;
-                        }
-                }
-
-                private string userName;
+                [JsonProperty]
+                public DateTime ErrorTime { get; private set; }
 
                 [Required]
-                public string UserName
-                {
-                        get
-                        {
-                                return this.userName;
-                        }
-
-                        set
-                        {
-                                this.userName = value;
-                        }
-                }
+                [JsonProperty]
+                public string UserName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8311c2fc8f54e054315a71f879a5d3e0</Hash>
+    <Hash>cd6349ee45407f46e42a63414034836c</Hash>
 </Codenesium>*/

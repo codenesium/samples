@@ -28,19 +28,16 @@ namespace NebulaNS.Api.Services
 
                 public virtual void DescriptionRules()
                 {
-                        this.RuleFor(x => x.Description).NotNull();
                         this.RuleFor(x => x.Description).Length(0, 2147483647);
                 }
 
                 public virtual void JwtKeyRules()
                 {
-                        this.RuleFor(x => x.JwtKey).NotNull();
                         this.RuleFor(x => x.JwtKey).Length(0, 128);
                 }
 
                 public virtual void LastIpAddressRules()
                 {
-                        this.RuleFor(x => x.LastIpAddress).NotNull();
                         this.RuleFor(x => x.LastIpAddress).Length(0, 128);
                 }
 
@@ -50,12 +47,11 @@ namespace NebulaNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x.Name).Length(0, 128);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>86ff3f2b1c26a376104c1240389bb788</Hash>
+    <Hash>be5824d78d942f4dd72c3fb75d973737</Hash>
 </Codenesium>*/

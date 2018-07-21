@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Services
                         this.CreditRatingRules();
                         this.ModifiedDateRules();
                         this.NameRules();
-                        this.PreferredVendorStatusRules();
+                        this.PreferredVendorStatuRules();
                         this.PurchasingWebServiceURLRules();
                         return await this.ValidateAsync(model);
                 }
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
                         this.CreditRatingRules();
                         this.ModifiedDateRules();
                         this.NameRules();
-                        this.PreferredVendorStatusRules();
+                        this.PreferredVendorStatuRules();
                         this.PurchasingWebServiceURLRules();
                         return await this.ValidateAsync(model, id);
                 }
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48531f8829a7b3d66ba4e5c19268630a</Hash>
+    <Hash>e3e00696bfa940431c54787f397fd0a7</Hash>
 </Codenesium>*/

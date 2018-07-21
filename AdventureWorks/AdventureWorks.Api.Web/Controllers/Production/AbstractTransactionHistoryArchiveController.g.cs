@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiTransactionHistoryArchiveResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryArchiveRequestModel model)
                 {
                         CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistoryArchives/{result.Record.TransactionID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistoryArchives/{result.Record.TransactionID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiTransactionHistoryArchiveRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.TransactionHistoryArchiveService.Update(id, model);
+                                UpdateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionHistoryArchiveResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveRequestModel model)
                 {
-                        ApiTransactionHistoryArchiveRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiTransactionHistoryArchiveRequestModel request = await this.PatchModel(id, this.TransactionHistoryArchiveModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.TransactionHistoryArchiveService.Update(id, request);
+                                UpdateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiTransactionHistoryArchiveResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,20 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> CreatePatch(ApiTransactionHistoryArchiveRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel>();
-                        patch.Replace(x => x.ActualCost, model.ActualCost);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ProductID, model.ProductID);
-                        patch.Replace(x => x.Quantity, model.Quantity);
-                        patch.Replace(x => x.ReferenceOrderID, model.ReferenceOrderID);
-                        patch.Replace(x => x.ReferenceOrderLineID, model.ReferenceOrderLineID);
-                        patch.Replace(x => x.TransactionDate, model.TransactionDate);
-                        patch.Replace(x => x.TransactionType, model.TransactionType);
-                        return patch;
-                }
-
                 private async Task<ApiTransactionHistoryArchiveRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> patch)
                 {
                         var record = await this.TransactionHistoryArchiveService.Get(id);
@@ -260,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c59b159238cb9e0f239526e2e2fb4dd8</Hash>
+    <Hash>065642080d969dc653b24c11c5d8a91d</Hash>
 </Codenesium>*/

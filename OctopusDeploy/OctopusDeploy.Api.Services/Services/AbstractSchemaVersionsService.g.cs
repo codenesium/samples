@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiSchemaVersionsResponseModel>> Update(
                         int id,
                         ApiSchemaVersionsRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.schemaVersionsModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.schemaVersionsModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolSchemaVersionsMapper.MapModelToBO(id, model);
                                 await this.schemaVersionsRepository.Update(this.dalSchemaVersionsMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.schemaVersionsRepository.Get(id);
+
+                                return new UpdateResponse<ApiSchemaVersionsResponseModel>(this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiSchemaVersionsResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31b216151251124612928fb92b06446a</Hash>
+    <Hash>71b386d737051c2e2b10bee259900550</Hash>
 </Codenesium>*/

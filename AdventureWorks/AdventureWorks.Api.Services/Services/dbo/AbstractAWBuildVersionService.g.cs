@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiAWBuildVersionResponseModel>> Update(
                         int systemInformationID,
                         ApiAWBuildVersionRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.aWBuildVersionModelValidator.ValidateUpdateAsync(systemInformationID, model));
-                        if (response.Success)
+                        var validationResult = await this.aWBuildVersionModelValidator.ValidateUpdateAsync(systemInformationID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolAWBuildVersionMapper.MapModelToBO(systemInformationID, model);
                                 await this.aWBuildVersionRepository.Update(this.dalAWBuildVersionMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.aWBuildVersionRepository.Get(systemInformationID);
+
+                                return new UpdateResponse<ApiAWBuildVersionResponseModel>(this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiAWBuildVersionResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>016efe8e855be4c753dc68d7bcd9df55</Hash>
+    <Hash>77a0cc36dc61f0d513ff6be5428d7ab8</Hash>
 </Codenesium>*/

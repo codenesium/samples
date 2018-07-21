@@ -28,13 +28,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CommunicationStyleRules()
                 {
-                        this.RuleFor(x => x.CommunicationStyle).NotNull();
                         this.RuleFor(x => x.CommunicationStyle).Length(0, 50);
                 }
 
                 public virtual void EnvironmentIdsRules()
                 {
-                        this.RuleFor(x => x.EnvironmentIds).NotNull();
                 }
 
                 public virtual void FingerprintRules()
@@ -48,7 +46,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void MachinePolicyIdRules()
@@ -58,7 +55,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void NameRules()
                 {
-                        this.RuleFor(x => x.Name).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
@@ -69,7 +65,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void RolesRules()
                 {
-                        this.RuleFor(x => x.Roles).NotNull();
                 }
 
                 public virtual void TenantIdsRules()
@@ -102,5 +97,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d03b8e018992bdb8892d65614156e0dd</Hash>
+    <Hash>c967f2eb6f0398b46bd64fed14138f5f</Hash>
 </Codenesium>*/

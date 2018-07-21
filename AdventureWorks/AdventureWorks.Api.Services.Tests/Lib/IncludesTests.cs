@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
 using FluentValidation.Results;
 using System;
@@ -79,5 +80,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e4aeed098a4f110a00d289fca6d1cd0e</Hash>
+    <Hash>eeb79bcc0d21092f13d75a9d44ef897e</Hash>
 </Codenesium>*/

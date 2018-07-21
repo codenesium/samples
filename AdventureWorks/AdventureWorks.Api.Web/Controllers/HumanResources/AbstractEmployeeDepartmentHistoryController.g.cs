@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeDepartmentHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeDepartmentHistoryRequestModel model)
                 {
                         CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> result = await this.EmployeeDepartmentHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeeDepartmentHistories/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeeDepartmentHistories/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeDepartmentHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiEmployeeDepartmentHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EmployeeDepartmentHistoryService.Update(id, model);
+                                UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel> result = await this.EmployeeDepartmentHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeeDepartmentHistoryResponseModel response = await this.EmployeeDepartmentHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeeDepartmentHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeDepartmentHistoryRequestModel model)
                 {
-                        ApiEmployeeDepartmentHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEmployeeDepartmentHistoryRequestModel request = await this.PatchModel(id, this.EmployeeDepartmentHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EmployeeDepartmentHistoryService.Update(id, request);
+                                UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel> result = await this.EmployeeDepartmentHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEmployeeDepartmentHistoryResponseModel response = await this.EmployeeDepartmentHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -227,17 +223,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel> CreatePatch(ApiEmployeeDepartmentHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel>();
-                        patch.Replace(x => x.DepartmentID, model.DepartmentID);
-                        patch.Replace(x => x.EndDate, model.EndDate);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ShiftID, model.ShiftID);
-                        patch.Replace(x => x.StartDate, model.StartDate);
-                        return patch;
-                }
-
                 private async Task<ApiEmployeeDepartmentHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeeDepartmentHistoryRequestModel> patch)
                 {
                         var record = await this.EmployeeDepartmentHistoryService.Get(id);
@@ -257,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>203775913ca261c7e64506481c8d8f43</Hash>
+    <Hash>31c7afce730768a00a933be9604a7f5a</Hash>
 </Codenesium>*/

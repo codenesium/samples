@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiEmailAddressResponseModel>> Create(
                         ApiEmailAddressRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiEmailAddressRequestModel model);
+                Task<UpdateResponse<ApiEmailAddressResponseModel>> Update(int businessEntityID,
+                                                                           ApiEmailAddressRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f3fa6671e67ff665585d1ceeed1fd3d</Hash>
+    <Hash>fe0a7e92f0eb87e07a78a6644a6c5d7e</Hash>
 </Codenesium>*/

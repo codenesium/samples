@@ -83,18 +83,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiShiftResponseModel>> Update(
                         int shiftID,
                         ApiShiftRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model));
-                        if (response.Success)
+                        var validationResult = await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolShiftMapper.MapModelToBO(shiftID, model);
                                 await this.shiftRepository.Update(this.dalShiftMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.shiftRepository.Get(shiftID);
+
+                                return new UpdateResponse<ApiShiftResponseModel>(this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiShiftResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db657f3362af2c2c1cd876867c571bd7</Hash>
+    <Hash>e2fc4ea2809361a5c6d5d4730fcaad27</Hash>
 </Codenesium>*/

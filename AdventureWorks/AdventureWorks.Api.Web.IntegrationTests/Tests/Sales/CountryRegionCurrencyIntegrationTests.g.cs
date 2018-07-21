@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "CountryRegionCurrency")]
         [Trait("Area", "Integration")]
-        public class CountryRegionCurrencyIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class CountryRegionCurrencyIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public CountryRegionCurrencyIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiCountryRegionCurrencyModelMapper mapper = new ApiCountryRegionCurrencyModelMapper();
+
+                        UpdateResponse<ApiCountryRegionCurrencyResponseModel> updateResponse = await this.Client.CountryRegionCurrencyUpdateAsync(model.CountryRegionCode, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.CountryRegionCurrencyDeleteAsync(model.CountryRegionCode);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiCountryRegionCurrencyResponseModel response = await this.Client.CountryRegionCurrencyGetAsync("A");
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiCountryRegionCurrencyResponseModel> response = await this.Client.CountryRegionCurrencyAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiCountryRegionCurrencyResponseModel> CreateRecord()
+                {
+                        var model = new ApiCountryRegionCurrencyRequestModel();
+                        model.SetProperties("A", DateTime.Parse("1/1/1988 12:00:00 AM"));
+                        CreateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.Client.CountryRegionCurrencyCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.CountryRegionCurrencyDeleteAsync("B");
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5e19ee716973ef155f74cb57604aaac7</Hash>
+    <Hash>38dbdc354af9a55fc58888bfb87e662d</Hash>
 </Codenesium>*/

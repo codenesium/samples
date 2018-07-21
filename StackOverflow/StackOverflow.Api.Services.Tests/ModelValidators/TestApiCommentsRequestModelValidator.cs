@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Text_Create_null()
-                {
-                        Mock<ICommentsRepository> commentsRepository = new Mock<ICommentsRepository>();
-                        commentsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Comments()));
-
-                        var validator = new ApiCommentsRequestModelValidator(commentsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCommentsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Text, null as string);
-                }
-
-                [Fact]
-                public async void Text_Update_null()
-                {
-                        Mock<ICommentsRepository> commentsRepository = new Mock<ICommentsRepository>();
-                        commentsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Comments()));
-
-                        var validator = new ApiCommentsRequestModelValidator(commentsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCommentsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Text, null as string);
-                }
-
-                [Fact]
                 public async void Text_Create_length()
                 {
                         Mock<ICommentsRepository> commentsRepository = new Mock<ICommentsRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c938c4d206fa73f2cc6ee1e08282a97f</Hash>
+    <Hash>3d8760525c3a770e2c6bfa817169ec56</Hash>
 </Codenesium>*/

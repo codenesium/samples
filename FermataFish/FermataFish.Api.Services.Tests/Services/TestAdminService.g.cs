@@ -97,13 +97,14 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IAdminRepository>();
                         var model = new ApiAdminRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Admin>())).Returns(Task.FromResult(new Admin()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
                         var service = new AdminService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLAdminMapperMock,
                                                        mock.DALMapperMockFactory.DALAdminMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiAdminResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAdminRequestModel>()));
@@ -132,5 +133,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d0db4c32641842d4058ec8116d518f43</Hash>
+    <Hash>76adb20e7cecae8fc05b5b2bceb0045b</Hash>
 </Codenesium>*/

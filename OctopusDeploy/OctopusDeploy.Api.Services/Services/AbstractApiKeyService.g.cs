@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiApiKeyResponseModel>> Update(
                         string id,
                         ApiApiKeyRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.apiKeyModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.apiKeyModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolApiKeyMapper.MapModelToBO(id, model);
                                 await this.apiKeyRepository.Update(this.dalApiKeyMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.apiKeyRepository.Get(id);
+
+                                return new UpdateResponse<ApiApiKeyResponseModel>(this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiApiKeyResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bbdbd0410ed051bac41d87b19006775</Hash>
+    <Hash>96d451bed1d0c27d76b6e059d8fc9e70</Hash>
 </Codenesium>*/

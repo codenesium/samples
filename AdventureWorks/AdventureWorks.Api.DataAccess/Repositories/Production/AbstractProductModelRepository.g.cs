@@ -90,9 +90,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                public async Task<List<ProductModel>> ByInstructions(string instructions)
+                public async Task<List<ProductModel>> ByInstruction(string instruction)
                 {
-                        var records = await this.Where(x => x.Instructions == instructions);
+                        var records = await this.Where(x => x.Instruction == instruction);
 
                         return records;
                 }
@@ -144,5 +144,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>93291c4608df2834b9f530f1f8423e8b</Hash>
+    <Hash>032fc65f6cc13e7c9c90791e4b00ffc7</Hash>
 </Codenesium>*/

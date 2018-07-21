@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiPersonResponseModel>> Create(
                         ApiPersonRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiPersonRequestModel model);
+                Task<UpdateResponse<ApiPersonResponseModel>> Update(int businessEntityID,
+                                                                     ApiPersonRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<List<ApiPersonResponseModel>> ByAdditionalContactInfo(string additionalContactInfo);
 
-                Task<List<ApiPersonResponseModel>> ByDemographics(string demographics);
+                Task<List<ApiPersonResponseModel>> ByDemographic(string demographic);
 
                 Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0);
 
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad55db55bdfb6a748d37892a444e5e68</Hash>
+    <Hash>85ff934d24867dffd93fc71534a9e787</Hash>
 </Codenesium>*/

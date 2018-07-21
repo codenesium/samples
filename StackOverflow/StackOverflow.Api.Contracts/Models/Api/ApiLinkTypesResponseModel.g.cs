@@ -16,12 +16,16 @@ namespace StackOverflowNS.Api.Contracts
                         this.Type = type;
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>dac6024c3ac1cc087403dee687908f37</Hash>
+    <Hash>643338f03af7fafabea64fce328dbc61</Hash>
 </Codenesium>*/

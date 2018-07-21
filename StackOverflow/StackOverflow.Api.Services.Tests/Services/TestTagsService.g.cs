@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITagsRepository>();
                         var model = new ApiTagsRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Tags>())).Returns(Task.FromResult(new Tags()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tags()));
                         var service = new TagsService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.TagsModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLTagsMapperMock,
                                                       mock.DALMapperMockFactory.DALTagsMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiTagsResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TagsModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTagsRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>52b23871bebc33740529dba874f53a92</Hash>
+    <Hash>00b68a8af8de803abfd5f32e4c6d393b</Hash>
 </Codenesium>*/

@@ -24,56 +24,17 @@ namespace PetShippingNS.Api.Contracts
                         this.Order = order;
                 }
 
-                private int countryId;
+                [JsonProperty]
+                public int CountryId { get; private set; }
 
-                [Required]
-                public int CountryId
-                {
-                        get
-                        {
-                                return this.countryId;
-                        }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                        set
-                        {
-                                this.countryId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private int order;
-
-                [Required]
-                public int Order
-                {
-                        get
-                        {
-                                return this.order;
-                        }
-
-                        set
-                        {
-                                this.order = value;
-                        }
-                }
+                [JsonProperty]
+                public int Order { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4c0b0c5def768fa4c40f8fb6399bb01f</Hash>
+    <Hash>405b0cd3777e56f6b3deb464c3767cfb</Hash>
 </Codenesium>*/

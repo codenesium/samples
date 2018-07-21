@@ -25,30 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ITeacherSkillRepository> teacherSkillRepository = new Mock<ITeacherSkillRepository>();
-                        teacherSkillRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TeacherSkill()));
-
-                        var validator = new ApiTeacherSkillRequestModelValidator(teacherSkillRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeacherSkillRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ITeacherSkillRepository> teacherSkillRepository = new Mock<ITeacherSkillRepository>();
-                        teacherSkillRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TeacherSkill()));
-
-                        var validator = new ApiTeacherSkillRequestModelValidator(teacherSkillRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherSkillRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ITeacherSkillRepository> teacherSkillRepository = new Mock<ITeacherSkillRepository>();
@@ -125,5 +101,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>96ce2ca6bab3ce8b52ae054f96679d8c</Hash>
+    <Hash>7f7712ec765e2cc16e0bf039ac31a89a</Hash>
 </Codenesium>*/

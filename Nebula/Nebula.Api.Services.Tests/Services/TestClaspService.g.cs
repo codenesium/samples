@@ -97,13 +97,14 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IClaspRepository>();
                         var model = new ApiClaspRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Clasp>())).Returns(Task.FromResult(new Clasp()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Clasp()));
                         var service = new ClaspService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLClaspMapperMock,
                                                        mock.DALMapperMockFactory.DALClaspMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiClaspResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspRequestModel>()));
@@ -132,5 +133,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4190b7ef4bca94a1c837fae2a5e7f693</Hash>
+    <Hash>7adaf280b4060db8969cea5d6cb3c941</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiCustomerResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCustomerRequestModel model)
                 {
                         CreateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Customers/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Customers/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCustomerRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiCustomerRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.CustomerService.Update(id, model);
+                                UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiCustomerResponseModel response = await this.CustomerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerRequestModel model)
                 {
-                        ApiCustomerRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiCustomerRequestModel request = await this.PatchModel(id, this.CustomerModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.CustomerService.Update(id, request);
+                                UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiCustomerResponseModel response = await this.CustomerService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,16 +201,6 @@ namespace TicketingCRMNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiCustomerRequestModel> CreatePatch(ApiCustomerRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCustomerRequestModel>();
-                        patch.Replace(x => x.Email, model.Email);
-                        patch.Replace(x => x.FirstName, model.FirstName);
-                        patch.Replace(x => x.LastName, model.LastName);
-                        patch.Replace(x => x.Phone, model.Phone);
-                        return patch;
-                }
-
                 private async Task<ApiCustomerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCustomerRequestModel> patch)
                 {
                         var record = await this.CustomerService.Get(id);
@@ -234,5 +220,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fa67c8bb4bd6118174e8ff54f1ee44ca</Hash>
+    <Hash>908a8ce59b1f5379e2bc08ae336f0c71</Hash>
 </Codenesium>*/

@@ -28,14 +28,12 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void DeploymentIdRules()
                 {
-                        this.RuleFor(x => x.DeploymentId).NotNull();
                         this.RuleFor(x => x.DeploymentId).MustAsync(this.BeValidDeployment).When(x => x?.DeploymentId != null).WithMessage("Invalid reference");
                         this.RuleFor(x => x.DeploymentId).Length(0, 50);
                 }
 
                 public virtual void MachineIdRules()
                 {
-                        this.RuleFor(x => x.MachineId).NotNull();
                         this.RuleFor(x => x.MachineId).Length(0, 50);
                 }
 
@@ -49,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>687ca4036da3c4a79eb392a1f5a16679</Hash>
+    <Hash>336171463319578b785d2cdbdfdec426</Hash>
 </Codenesium>*/

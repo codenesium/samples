@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiPurchaseOrderHeaderResponseModel>> Create(
                         ApiPurchaseOrderHeaderRequestModel model);
 
-                Task<ActionResponse> Update(int purchaseOrderID,
-                                            ApiPurchaseOrderHeaderRequestModel model);
+                Task<UpdateResponse<ApiPurchaseOrderHeaderResponseModel>> Update(int purchaseOrderID,
+                                                                                  ApiPurchaseOrderHeaderRequestModel model);
 
                 Task<ActionResponse> Delete(int purchaseOrderID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d4c0900f611120b83f80af060145e15</Hash>
+    <Hash>0150bf95978ad2314a3dfb5f5c82c2b9</Hash>
 </Codenesium>*/

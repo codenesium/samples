@@ -75,18 +75,25 @@ namespace FileServiceNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiFileResponseModel>> Update(
                         int id,
                         ApiFileRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.fileModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolFileMapper.MapModelToBO(id, model);
                                 await this.fileRepository.Update(this.dalFileMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.fileRepository.Get(id);
+
+                                return new UpdateResponse<ApiFileResponseModel>(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiFileResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76c6f8faaa796256db0dcc07fe7beaaf</Hash>
+    <Hash>e5f959cef6d37fbd2429c6e26f6a53dd</Hash>
 </Codenesium>*/

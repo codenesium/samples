@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
-                        variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-
-                        var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
-                        variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-
-                        var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void OwnerId_Create_null()
-                {
-                        Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
-                        variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-
-                        var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
-                }
-
-                [Fact]
-                public async void OwnerId_Update_null()
-                {
-                        Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
-                        variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-
-                        var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
-                }
-
-                [Fact]
                 public async void OwnerId_Create_length()
                 {
                         Mock<IVariableSetRepository> variableSetRepository = new Mock<IVariableSetRepository>();
@@ -99,5 +51,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>81802206eb5a3baf7814f5e0cea483e3</Hash>
+    <Hash>86804c19ea6b21f0fa5b8d714271d2d7</Hash>
 </Codenesium>*/

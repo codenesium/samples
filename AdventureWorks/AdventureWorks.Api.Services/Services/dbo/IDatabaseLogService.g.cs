@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
                         ApiDatabaseLogRequestModel model);
 
-                Task<ActionResponse> Update(int databaseLogID,
-                                            ApiDatabaseLogRequestModel model);
+                Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(int databaseLogID,
+                                                                          ApiDatabaseLogRequestModel model);
 
                 Task<ActionResponse> Delete(int databaseLogID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f483eba1f690f609a95957b2707ae3e</Hash>
+    <Hash>c2af15ac38b3fa3569c101901514e587</Hash>
 </Codenesium>*/

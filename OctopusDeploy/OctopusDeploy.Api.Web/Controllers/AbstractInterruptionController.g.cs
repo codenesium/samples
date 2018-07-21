@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiInterruptionResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiInterruptionRequestModel model)
                 {
                         CreateResponse<ApiInterruptionResponseModel> result = await this.InterruptionService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Interruptions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Interruptions/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiInterruptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiInterruptionRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiInterruptionRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.InterruptionService.Update(id, model);
+                                UpdateResponse<ApiInterruptionResponseModel> result = await this.InterruptionService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiInterruptionResponseModel response = await this.InterruptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiInterruptionResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiInterruptionRequestModel model)
                 {
-                        ApiInterruptionRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiInterruptionRequestModel request = await this.PatchModel(id, this.InterruptionModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.InterruptionService.Update(id, request);
+                                UpdateResponse<ApiInterruptionResponseModel> result = await this.InterruptionService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiInterruptionResponseModel response = await this.InterruptionService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,22 +212,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiInterruptionRequestModel> CreatePatch(ApiInterruptionRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiInterruptionRequestModel>();
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.RelatedDocumentIds, model.RelatedDocumentIds);
-                        patch.Replace(x => x.ResponsibleTeamIds, model.ResponsibleTeamIds);
-                        patch.Replace(x => x.Status, model.Status);
-                        patch.Replace(x => x.TaskId, model.TaskId);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        patch.Replace(x => x.Title, model.Title);
-                        return patch;
-                }
-
                 private async Task<ApiInterruptionRequestModel> PatchModel(string id, JsonPatchDocument<ApiInterruptionRequestModel> patch)
                 {
                         var record = await this.InterruptionService.Get(id);
@@ -251,5 +231,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>69876c93ea97dc25e1f7dca1502efb3c</Hash>
+    <Hash>84f61f659ce6f786cc77964cfbc98f05</Hash>
 </Codenesium>*/

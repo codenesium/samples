@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,17 +17,17 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSalesPersonModelMapper();
                         var model = new ApiSalesPersonRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        model.SetProperties(1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
                         ApiSalesPersonResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Bonus.Should().Be(1);
+                        response.Bonus.Should().Be(1m);
                         response.BusinessEntityID.Should().Be(1);
-                        response.CommissionPct.Should().Be(1);
+                        response.CommissionPct.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesQuota.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesQuota.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -35,21 +36,42 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiSalesPersonModelMapper();
                         var model = new ApiSalesPersonResponseModel();
-                        model.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
+                        model.SetProperties(1, 1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
                         ApiSalesPersonRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Bonus.Should().Be(1);
-                        response.CommissionPct.Should().Be(1);
+                        response.Bonus.Should().Be(1m);
+                        response.CommissionPct.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesQuota.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesQuota.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
+                        response.TerritoryID.Should().Be(1);
+                }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiSalesPersonModelMapper();
+                        var model = new ApiSalesPersonRequestModel();
+                        model.SetProperties(1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
+
+                        JsonPatchDocument<ApiSalesPersonRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiSalesPersonRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Bonus.Should().Be(1m);
+                        response.CommissionPct.Should().Be(1m);
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesQuota.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad536658f80b49715faf6653035e5d6d</Hash>
+    <Hash>13ca6020834e583011a1e18801998493</Hash>
 </Codenesium>*/

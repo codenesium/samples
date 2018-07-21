@@ -36,7 +36,6 @@ namespace StackOverflowNS.Api.Services
 
                 public virtual void TagNameRules()
                 {
-                        this.RuleFor(x => x.TagName).NotNull();
                         this.RuleFor(x => x.TagName).Length(0, 150);
                 }
 
@@ -47,5 +46,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02ff7ebce9ca3f33e699864e859f89c6</Hash>
+    <Hash>c7f3e621c4313f22bee5ff2208001baa</Hash>
 </Codenesium>*/

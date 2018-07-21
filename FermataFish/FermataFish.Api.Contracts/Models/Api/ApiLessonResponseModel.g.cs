@@ -35,32 +35,54 @@ namespace FermataFishNS.Api.Contracts
                         this.StudioIdEntity = nameof(ApiResponse.Studios);
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ActualEndDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ActualStartDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public decimal? BillAmount { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int LessonStatusId { get; private set; }
 
+                [JsonProperty]
                 public string LessonStatusIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ScheduledEndDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? ScheduledStartDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string StudentNotes { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int StudioId { get; private set; }
 
+                [JsonProperty]
                 public string StudioIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public string TeacherNotes { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1517a5ce15445c78265d9e5038026544</Hash>
+    <Hash>a1990fc8e9b573fb23548ba0a29973aa</Hash>
 </Codenesium>*/

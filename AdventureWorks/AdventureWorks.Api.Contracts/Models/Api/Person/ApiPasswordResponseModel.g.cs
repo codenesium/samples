@@ -22,18 +22,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Rowguid = rowguid;
                 }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string PasswordHash { get; private set; }
 
+                [JsonProperty]
                 public string PasswordSalt { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4beabe1a0c36da9570233f36184081dc</Hash>
+    <Hash>918a767d607c351c29a9438d343cbbdd</Hash>
 </Codenesium>*/

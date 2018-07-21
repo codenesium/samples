@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDeploymentEnvironmentRepository>();
                         var model = new ApiDeploymentEnvironmentRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentEnvironment>())).Returns(Task.FromResult(new DeploymentEnvironment()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
                         var service = new DeploymentEnvironmentService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
                                                                        mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Object,
                                                                        mock.BOLMapperMockFactory.BOLDeploymentEnvironmentMapperMock,
                                                                        mock.DALMapperMockFactory.DALDeploymentEnvironmentMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiDeploymentEnvironmentResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeploymentEnvironmentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiDeploymentEnvironmentRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>426518980f6ec385b30c212bc4df0997</Hash>
+    <Hash>7ec5bb302c913bbb875011f293f33ce7</Hash>
 </Codenesium>*/

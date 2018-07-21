@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ApiKeyHashedRules()
                 {
-                        this.RuleFor(x => x.ApiKeyHashed).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueByApiKeyHashed).When(x => x?.ApiKeyHashed != null).WithMessage("Violates unique constraint").WithName(nameof(ApiApiKeyRequestModel.ApiKeyHashed));
                         this.RuleFor(x => x.ApiKeyHashed).Length(0, 200);
                 }
@@ -39,12 +38,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void JSONRules()
                 {
-                        this.RuleFor(x => x.JSON).NotNull();
                 }
 
                 public virtual void UserIdRules()
                 {
-                        this.RuleFor(x => x.UserId).NotNull();
                         this.RuleFor(x => x.UserId).Length(0, 50);
                 }
 
@@ -65,5 +62,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c166386f447b9ef89e9e4dd147efcaaa</Hash>
+    <Hash>eab72ba6dc58f07fbe2d239b9a6aa6e6</Hash>
 </Codenesium>*/

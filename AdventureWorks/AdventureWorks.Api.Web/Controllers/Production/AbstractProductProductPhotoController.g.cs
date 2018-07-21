@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductProductPhotoResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductProductPhotoResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductProductPhotoRequestModel model)
                 {
                         CreateResponse<ApiProductProductPhotoResponseModel> result = await this.ProductProductPhotoService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductProductPhotoes/{result.Record.ProductID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductProductPhotoes/{result.Record.ProductID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductProductPhotoResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductProductPhotoResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductProductPhotoRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductProductPhotoRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductProductPhotoService.Update(id, model);
+                                UpdateResponse<ApiProductProductPhotoResponseModel> result = await this.ProductProductPhotoService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductProductPhotoResponseModel response = await this.ProductProductPhotoService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductProductPhotoResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductProductPhotoResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductProductPhotoRequestModel model)
                 {
-                        ApiProductProductPhotoRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductProductPhotoRequestModel request = await this.PatchModel(id, this.ProductProductPhotoModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductProductPhotoService.Update(id, request);
+                                UpdateResponse<ApiProductProductPhotoResponseModel> result = await this.ProductProductPhotoService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductProductPhotoResponseModel response = await this.ProductProductPhotoService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiProductProductPhotoRequestModel> CreatePatch(ApiProductProductPhotoRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductProductPhotoRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Primary, model.Primary);
-                        patch.Replace(x => x.ProductPhotoID, model.ProductPhotoID);
-                        return patch;
-                }
-
                 private async Task<ApiProductProductPhotoRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductProductPhotoRequestModel> patch)
                 {
                         var record = await this.ProductProductPhotoService.Get(id);
@@ -233,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6dfad8cf80205c2beacdbaf918567f00</Hash>
+    <Hash>a46b38fa548d5d4a982a7df7ec71f840</Hash>
 </Codenesium>*/

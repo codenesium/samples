@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiDeploymentHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentHistoryRequestModel model)
                 {
                         CreateResponse<ApiDeploymentHistoryResponseModel> result = await this.DeploymentHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentHistories/{result.Record.DeploymentId}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentHistories/{result.Record.DeploymentId}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiDeploymentHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiDeploymentHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.DeploymentHistoryService.Update(id, model);
+                                UpdateResponse<ApiDeploymentHistoryResponseModel> result = await this.DeploymentHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentHistoryResponseModel response = await this.DeploymentHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiDeploymentHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiDeploymentHistoryRequestModel model)
                 {
-                        ApiDeploymentHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiDeploymentHistoryRequestModel request = await this.PatchModel(id, this.DeploymentHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.DeploymentHistoryService.Update(id, request);
+                                UpdateResponse<ApiDeploymentHistoryResponseModel> result = await this.DeploymentHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiDeploymentHistoryResponseModel response = await this.DeploymentHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,32 +212,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiDeploymentHistoryRequestModel> CreatePatch(ApiDeploymentHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeploymentHistoryRequestModel>();
-                        patch.Replace(x => x.ChannelId, model.ChannelId);
-                        patch.Replace(x => x.ChannelName, model.ChannelName);
-                        patch.Replace(x => x.CompletedTime, model.CompletedTime);
-                        patch.Replace(x => x.Created, model.Created);
-                        patch.Replace(x => x.DeployedBy, model.DeployedBy);
-                        patch.Replace(x => x.DeploymentName, model.DeploymentName);
-                        patch.Replace(x => x.DurationSeconds, model.DurationSeconds);
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.EnvironmentName, model.EnvironmentName);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.ProjectName, model.ProjectName);
-                        patch.Replace(x => x.ProjectSlug, model.ProjectSlug);
-                        patch.Replace(x => x.QueueTime, model.QueueTime);
-                        patch.Replace(x => x.ReleaseId, model.ReleaseId);
-                        patch.Replace(x => x.ReleaseVersion, model.ReleaseVersion);
-                        patch.Replace(x => x.StartTime, model.StartTime);
-                        patch.Replace(x => x.TaskId, model.TaskId);
-                        patch.Replace(x => x.TaskState, model.TaskState);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        patch.Replace(x => x.TenantName, model.TenantName);
-                        return patch;
-                }
-
                 private async Task<ApiDeploymentHistoryRequestModel> PatchModel(string id, JsonPatchDocument<ApiDeploymentHistoryRequestModel> patch)
                 {
                         var record = await this.DeploymentHistoryService.Get(id);
@@ -261,5 +231,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1f4f50b91e50ae51e73cf3a836d02225</Hash>
+    <Hash>38db78b59c09f24a31e3ca014d19afa8</Hash>
 </Codenesium>*/

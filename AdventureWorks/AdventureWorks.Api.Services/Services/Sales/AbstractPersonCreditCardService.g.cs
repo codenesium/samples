@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiPersonCreditCardResponseModel>> Update(
                         int businessEntityID,
                         ApiPersonCreditCardRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model));
-                        if (response.Success)
+                        var validationResult = await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
                                 await this.personCreditCardRepository.Update(this.dalPersonCreditCardMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.personCreditCardRepository.Get(businessEntityID);
+
+                                return new UpdateResponse<ApiPersonCreditCardResponseModel>(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiPersonCreditCardResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc8ffba1559d9362352cac1f17314656</Hash>
+    <Hash>8b7e755a4ba1a47537fc4fb77d4e01cd</Hash>
 </Codenesium>*/

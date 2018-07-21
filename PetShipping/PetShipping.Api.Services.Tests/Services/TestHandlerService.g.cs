@@ -121,6 +121,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var model = new ApiHandlerRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Handler>())).Returns(Task.FromResult(new Handler()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Handler()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -133,7 +134,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiHandlerResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiHandlerRequestModel>()));
@@ -312,5 +313,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fda34aff06bf5acae9f442688992d38c</Hash>
+    <Hash>e784cb7e39987a861b371f4453765c50</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiFeedResponseModel>> Update(
                         string id,
                         ApiFeedRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.feedModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.feedModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolFeedMapper.MapModelToBO(id, model);
                                 await this.feedRepository.Update(this.dalFeedMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.feedRepository.Get(id);
+
+                                return new UpdateResponse<ApiFeedResponseModel>(this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiFeedResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -118,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e460212d8821b9865f7f6b2e95104f9c</Hash>
+    <Hash>782e2883c3260279cbdc838b1079e2f7</Hash>
 </Codenesium>*/

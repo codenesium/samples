@@ -17,11 +17,11 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new DALTransactionMapper();
                         var bo = new BOTransaction();
-                        bo.SetProperties(1, 1, "A", 1);
+                        bo.SetProperties(1, 1m, "A", 1);
 
                         Transaction response = mapper.MapBOToEF(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.TransactionStatusId.Should().Be(1);
@@ -32,11 +32,11 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new DALTransactionMapper();
                         Transaction entity = new Transaction();
-                        entity.SetProperties(1, "A", 1, 1);
+                        entity.SetProperties(1m, "A", 1, 1);
 
                         BOTransaction response = mapper.MapEFToBO(entity);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.TransactionStatusId.Should().Be(1);
@@ -47,7 +47,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new DALTransactionMapper();
                         Transaction entity = new Transaction();
-                        entity.SetProperties(1, "A", 1, 1);
+                        entity.SetProperties(1m, "A", 1, 1);
 
                         List<BOTransaction> response = mapper.MapEFToBO(new List<Transaction>() { entity });
 
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>922ab6c48104aad0b15901705034853c</Hash>
+    <Hash>68f52e2f88331f74761e25fd28264e15</Hash>
 </Codenesium>*/

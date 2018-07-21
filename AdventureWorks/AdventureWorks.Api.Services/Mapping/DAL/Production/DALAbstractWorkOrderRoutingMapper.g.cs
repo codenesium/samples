@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                         efWorkOrderRouting.SetProperties(
                                 bo.ActualCost,
                                 bo.ActualEndDate,
-                                bo.ActualResourceHrs,
+                                bo.ActualResourceHr,
                                 bo.ActualStartDate,
                                 bo.LocationID,
                                 bo.ModifiedDate,
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services
                                 ef.WorkOrderID,
                                 ef.ActualCost,
                                 ef.ActualEndDate,
-                                ef.ActualResourceHrs,
+                                ef.ActualResourceHr,
                                 ef.ActualStartDate,
                                 ef.LocationID,
                                 ef.ModifiedDate,
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12d7be9b6fbcfd7fbeae39c8fa366664</Hash>
+    <Hash>da390c7037699ab56ecbc1cd8fca22ce</Hash>
 </Codenesium>*/

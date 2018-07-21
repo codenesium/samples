@@ -3,8 +3,10 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,11 +15,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
         [Trait("Type", "Integration")]
         [Trait("Table", "ProductModelIllustration")]
         [Trait("Area", "Integration")]
-        public class ProductModelIllustrationIntegrationTests : IClassFixture<WebApplicationTestFixture<TestStartup>>
+        public class ProductModelIllustrationIntegrationTests : IClassFixture<TestWebApplicationFactory>
         {
-                public MyApplicationFunctionalTests(WebApplicationTestFixture<TestStartup> fixture)
+                public ProductModelIllustrationIntegrationTests(TestWebApplicationFactory fixture)
                 {
-                        this.Client = new ApiClient(fixture.Client);
+                        this.Client = new ApiClient(fixture.CreateClient());
                 }
 
                 public ApiClient Client { get; }
@@ -25,30 +27,71 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 [Fact]
                 public async void TestCreate()
                 {
+                        var response = await this.CreateRecord();
+
+                        response.Should().NotBeNull();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
+                        var model = await this.CreateRecord();
+
+                        ApiProductModelIllustrationModelMapper mapper = new ApiProductModelIllustrationModelMapper();
+
+                        UpdateResponse<ApiProductModelIllustrationResponseModel> updateResponse = await this.Client.ProductModelIllustrationUpdateAsync(model.ProductModelID, mapper.MapResponseToRequest(model));
+
+                        updateResponse.Record.Should().NotBeNull();
+                        updateResponse.Success.Should().BeTrue();
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
+                        var model = await this.CreateRecord();
+
+                        await this.Client.ProductModelIllustrationDeleteAsync(model.ProductModelID);
+
+                        await this.Cleanup();
                 }
 
                 [Fact]
                 public async void TestGet()
                 {
+                        ApiProductModelIllustrationResponseModel response = await this.Client.ProductModelIllustrationGetAsync(1);
+
+                        response.Should().NotBeNull();
                 }
 
                 [Fact]
                 public async void TestAll()
                 {
+                        List<ApiProductModelIllustrationResponseModel> response = await this.Client.ProductModelIllustrationAllAsync();
+
+                        response.Count.Should().BeGreaterThan(0);
+                }
+
+                private async Task<ApiProductModelIllustrationResponseModel> CreateRecord()
+                {
+                        var model = new ApiProductModelIllustrationRequestModel();
+                        model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+                        CreateResponse<ApiProductModelIllustrationResponseModel> result = await this.Client.ProductModelIllustrationCreateAsync(model);
+
+                        result.Success.Should().BeTrue();
+                        return result.Record;
+                }
+
+                private async Task Cleanup()
+                {
+                        await this.Client.ProductModelIllustrationDeleteAsync(2);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b3cd994b9d70743ac065053ea69eeaa8</Hash>
+    <Hash>b35753e3a200dc0782cfe439f45b5688</Hash>
 </Codenesium>*/

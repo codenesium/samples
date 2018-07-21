@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiScrapReasonResponseModel>> Create(
                         ApiScrapReasonRequestModel model);
 
-                Task<ActionResponse> Update(short scrapReasonID,
-                                            ApiScrapReasonRequestModel model);
+                Task<UpdateResponse<ApiScrapReasonResponseModel>> Update(short scrapReasonID,
+                                                                          ApiScrapReasonRequestModel model);
 
                 Task<ActionResponse> Delete(short scrapReasonID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>28d153dbae7726be90d5dd45bbd15c68</Hash>
+    <Hash>1934f8389c71cb397898e2e4d49243b1</Hash>
 </Codenesium>*/

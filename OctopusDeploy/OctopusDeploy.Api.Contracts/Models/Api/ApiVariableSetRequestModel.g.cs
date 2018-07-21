@@ -28,87 +28,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
-                private bool isFrozen;
+                [JsonProperty]
+                public bool IsFrozen { get; private set; }
 
-                [Required]
-                public bool IsFrozen
-                {
-                        get
-                        {
-                                return this.isFrozen;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.isFrozen = value;
-                        }
-                }
+                [JsonProperty]
+                public string OwnerId { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public string RelatedDocumentIds { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string ownerId;
-
-                [Required]
-                public string OwnerId
-                {
-                        get
-                        {
-                                return this.ownerId;
-                        }
-
-                        set
-                        {
-                                this.ownerId = value;
-                        }
-                }
-
-                private string relatedDocumentIds;
-
-                public string RelatedDocumentIds
-                {
-                        get
-                        {
-                                return this.relatedDocumentIds;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentIds = value;
-                        }
-                }
-
-                private int version;
-
-                [Required]
-                public int Version
-                {
-                        get
-                        {
-                                return this.version;
-                        }
-
-                        set
-                        {
-                                this.version = value;
-                        }
-                }
+                [JsonProperty]
+                public int Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0b24fc136b686f6d54afc002c6af789c</Hash>
+    <Hash>72e061c8f30f76ea55f082888bfdce72</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IWorkerRepository>();
                         var model = new ApiWorkerRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Worker>())).Returns(Task.FromResult(new Worker()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
                         var service = new WorkerService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
                                                         mock.BOLMapperMockFactory.BOLWorkerMapperMock,
                                                         mock.DALMapperMockFactory.DALWorkerMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiWorkerResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
@@ -203,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>46a61bc7f25dd67b426878e8e0042998</Hash>
+    <Hash>9835558a1c083d62e1ac1caa653d811d</Hash>
 </Codenesium>*/

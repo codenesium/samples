@@ -18,10 +18,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionMapper();
                         ApiTransactionRequestModel model = new ApiTransactionRequestModel();
-                        model.SetProperties(1, "A", 1);
+                        model.SetProperties(1m, "A", 1);
                         BOTransaction response = mapper.MapModelToBO(1, model);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.TransactionStatusId.Should().Be(1);
                 }
@@ -31,10 +31,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionMapper();
                         BOTransaction bo = new BOTransaction();
-                        bo.SetProperties(1, 1, "A", 1);
+                        bo.SetProperties(1, 1m, "A", 1);
                         ApiTransactionResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Amount.Should().Be(1);
+                        response.Amount.Should().Be(1m);
                         response.GatewayConfirmationNumber.Should().Be("A");
                         response.Id.Should().Be(1);
                         response.TransactionStatusId.Should().Be(1);
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionMapper();
                         BOTransaction bo = new BOTransaction();
-                        bo.SetProperties(1, 1, "A", 1);
+                        bo.SetProperties(1, 1m, "A", 1);
                         List<ApiTransactionResponseModel> response = mapper.MapBOToModel(new List<BOTransaction>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -54,5 +54,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e93dea2120d37243aadcb6997f02e0f7</Hash>
+    <Hash>6848d858d1d782b74fcc87c4672db3a4</Hash>
 </Codenesium>*/

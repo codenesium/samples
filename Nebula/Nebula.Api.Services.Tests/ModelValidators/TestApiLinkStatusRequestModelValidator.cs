@@ -25,30 +25,6 @@ namespace NebulaNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
-                        linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
-
-                        var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLinkStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
-                        linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
-
-                        var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLinkStatusRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
                 public async void Name_Create_length()
                 {
                         Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
@@ -75,5 +51,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9be3d3bdfdea0460436b86476bf461d1</Hash>
+    <Hash>d3310ef81375d43c86f2f494a37db1b0</Hash>
 </Codenesium>*/

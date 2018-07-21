@@ -1,0 +1,34 @@
+using Codenesium.DataConversionExtensions;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+using TestsNS.Api.Contracts;
+using TestsNS.Api.DataAccess;
+
+namespace TestsNS.Api.Services
+{
+        public partial class TestAllFieldTypeService : AbstractTestAllFieldTypeService, ITestAllFieldTypeService
+        {
+                public TestAllFieldTypeService(
+                        ILogger<ITestAllFieldTypeRepository> logger,
+                        ITestAllFieldTypeRepository testAllFieldTypeRepository,
+                        IApiTestAllFieldTypeRequestModelValidator testAllFieldTypeModelValidator,
+                        IBOLTestAllFieldTypeMapper boltestAllFieldTypeMapper,
+                        IDALTestAllFieldTypeMapper daltestAllFieldTypeMapper
+                        )
+                        : base(logger,
+                               testAllFieldTypeRepository,
+                               testAllFieldTypeModelValidator,
+                               boltestAllFieldTypeMapper,
+                               daltestAllFieldTypeMapper)
+                {
+                }
+        }
+}
+
+/*<Codenesium>
+    <Hash>fb14e44054c100554f44f15a120b91f3</Hash>
+</Codenesium>*/

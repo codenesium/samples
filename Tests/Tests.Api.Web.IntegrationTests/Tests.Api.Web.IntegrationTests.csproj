@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.1.0" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <ProjectReference Include="../Tests.Api.Client/Tests.Api.Client.csproj" />
+	<ProjectReference Include="../Tests.Api.Contracts/Tests.Api.Contracts.csproj" />
+	<ProjectReference Include="../Tests.Api.Web/Tests.Api.Web.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>Tests.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
+   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>Tests.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+</Project>

@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<ProductReview>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public async Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName)
                 {
-                        var records = await this.Where(x => x.Comments == comments && x.ProductID == productID && x.ReviewerName == reviewerName);
+                        var records = await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName);
 
                         return records;
                 }
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff08cb6323dc01506170ffca1fb92add</Hash>
+    <Hash>a9eff866aaf46fc54c3971a195c31c4f</Hash>
 </Codenesium>*/

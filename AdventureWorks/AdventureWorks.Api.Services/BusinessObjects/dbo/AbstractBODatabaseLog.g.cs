@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services
                                                   string @object,
                                                   DateTime postTime,
                                                   string schema,
-                                                  string tSQL,
+                                                  string tsql,
                                                   string xmlEvent)
                 {
                         this.DatabaseLogID = databaseLogID;
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                         this.@Object = @object;
                         this.PostTime = postTime;
                         this.Schema = schema;
-                        this.TSQL = tSQL;
+                        this.Tsql = tsql;
                         this.XmlEvent = xmlEvent;
                 }
 
@@ -41,12 +41,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public string Schema { get; private set; }
 
-                public string TSQL { get; private set; }
+                public string Tsql { get; private set; }
 
                 public string XmlEvent { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>13205d97c137ecc64c6ad414672bddbe</Hash>
+    <Hash>a4ff5c3ae08c10fba356d6d6ffaf4c6a</Hash>
 </Codenesium>*/

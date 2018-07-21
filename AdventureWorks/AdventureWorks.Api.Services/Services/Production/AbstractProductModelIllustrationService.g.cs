@@ -75,18 +75,25 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProductModelIllustrationResponseModel>> Update(
                         int productModelID,
                         ApiProductModelIllustrationRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.productModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model));
-                        if (response.Success)
+                        var validationResult = await this.productModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProductModelIllustrationMapper.MapModelToBO(productModelID, model);
                                 await this.productModelIllustrationRepository.Update(this.dalProductModelIllustrationMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.productModelIllustrationRepository.Get(productModelID);
+
+                                return new UpdateResponse<ApiProductModelIllustrationResponseModel>(this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProductModelIllustrationResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>03990b370d6c4023fa1ea4826bc987c8</Hash>
+    <Hash>eae66db43450824f5fefd7af0bf1d25b</Hash>
 </Codenesium>*/

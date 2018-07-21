@@ -28,86 +28,23 @@ namespace StackOverflowNS.Api.Contracts
                         this.UserId = userId;
                 }
 
-                private DateTime creationDate;
+                [JsonProperty]
+                public DateTime CreationDate { get; private set; }
 
-                [Required]
-                public DateTime CreationDate
-                {
-                        get
-                        {
-                                return this.creationDate;
-                        }
+                [JsonProperty]
+                public int PostId { get; private set; }
 
-                        set
-                        {
-                                this.creationDate = value;
-                        }
-                }
+                [JsonProperty]
+                public int? Score { get; private set; }
 
-                private int postId;
+                [JsonProperty]
+                public string Text { get; private set; }
 
-                [Required]
-                public int PostId
-                {
-                        get
-                        {
-                                return this.postId;
-                        }
-
-                        set
-                        {
-                                this.postId = value;
-                        }
-                }
-
-                private int? score;
-
-                public int? Score
-                {
-                        get
-                        {
-                                return this.score;
-                        }
-
-                        set
-                        {
-                                this.score = value;
-                        }
-                }
-
-                private string text;
-
-                [Required]
-                public string Text
-                {
-                        get
-                        {
-                                return this.text;
-                        }
-
-                        set
-                        {
-                                this.text = value;
-                        }
-                }
-
-                private int? userId;
-
-                public int? UserId
-                {
-                        get
-                        {
-                                return this.userId;
-                        }
-
-                        set
-                        {
-                                this.userId = value;
-                        }
-                }
+                [JsonProperty]
+                public int? UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d84f9fe884021cdb13816410650846ea</Hash>
+    <Hash>bd71176c1286d40a667501ad3eb3cd9b</Hash>
 </Codenesium>*/

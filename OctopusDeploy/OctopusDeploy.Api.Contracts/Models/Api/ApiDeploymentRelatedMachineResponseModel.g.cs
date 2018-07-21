@@ -20,16 +20,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.DeploymentIdEntity = nameof(ApiResponse.Deployments);
                 }
 
+                [Required]
+                [JsonProperty]
                 public string DeploymentId { get; private set; }
 
+                [JsonProperty]
                 public string DeploymentIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string MachineId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d694bd57dfea4fb6d2b2e4e94292a342</Hash>
+    <Hash>882482b7a2a802766ac0c2bf9e45ceab</Hash>
 </Codenesium>*/

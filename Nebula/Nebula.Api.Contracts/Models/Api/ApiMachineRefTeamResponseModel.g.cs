@@ -21,18 +21,26 @@ namespace NebulaNS.Api.Contracts
                         this.TeamIdEntity = nameof(ApiResponse.Teams);
                 }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int MachineId { get; private set; }
 
+                [JsonProperty]
                 public string MachineIdEntity { get; set; }
 
+                [Required]
+                [JsonProperty]
                 public int TeamId { get; private set; }
 
+                [JsonProperty]
                 public string TeamIdEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>aebbaccf94217cd1bd4bc6fb9c1865ad</Hash>
+    <Hash>60b2575fe6c2a519dc4874d08a9537a6</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace ESPIOTNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiDeviceActionResponseModel>> Update(
                         int id,
                         ApiDeviceActionRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.deviceActionModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.deviceActionModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolDeviceActionMapper.MapModelToBO(id, model);
                                 await this.deviceActionRepository.Update(this.dalDeviceActionMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.deviceActionRepository.Get(id);
+
+                                return new UpdateResponse<ApiDeviceActionResponseModel>(this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiDeviceActionResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -111,5 +118,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7824c2303832b00436b7b30bc1c15174</Hash>
+    <Hash>07c089f2f347bdcf2c3e73e647d9da10</Hash>
 </Codenesium>*/

@@ -90,18 +90,25 @@ namespace TicketingCRMNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiProvinceResponseModel>> Update(
                         int id,
                         ApiProvinceRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.provinceModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.provinceModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolProvinceMapper.MapModelToBO(id, model);
                                 await this.provinceRepository.Update(this.dalProvinceMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.provinceRepository.Get(id);
+
+                                return new UpdateResponse<ApiProvinceResponseModel>(this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiProvinceResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -140,5 +147,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2ecfa86cebe2a78cdfefafb5fe882c8</Hash>
+    <Hash>9cc1073e7fcbae3e271bd1b281056b6b</Hash>
 </Codenesium>*/

@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiMutexResponseModel>> Update(
                         string id,
                         ApiMutexRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.mutexModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolMutexMapper.MapModelToBO(id, model);
                                 await this.mutexRepository.Update(this.dalMutexMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.mutexRepository.Get(id);
+
+                                return new UpdateResponse<ApiMutexResponseModel>(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiMutexResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a44773bbdd7aff2d4c8036d9e1d83ba2</Hash>
+    <Hash>16c7dafd19b71cb4f008229cb0b202bb</Hash>
 </Codenesium>*/

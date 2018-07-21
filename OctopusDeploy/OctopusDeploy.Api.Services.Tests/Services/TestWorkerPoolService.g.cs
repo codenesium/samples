@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IWorkerPoolRepository>();
                         var model = new ApiWorkerPoolRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkerPool>())).Returns(Task.FromResult(new WorkerPool()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerPool()));
                         var service = new WorkerPoolService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.WorkerPoolModelValidatorMock.Object,
                                                             mock.BOLMapperMockFactory.BOLWorkerPoolMapperMock,
                                                             mock.DALMapperMockFactory.DALWorkerPoolMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiWorkerPoolResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.WorkerPoolModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiWorkerPoolRequestModel>()));
@@ -167,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aed366a454dc54d8ecffd9520e27beac</Hash>
+    <Hash>96c123290c6768527f5fc27edd61188e</Hash>
 </Codenesium>*/

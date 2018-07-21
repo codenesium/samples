@@ -28,87 +28,27 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryID = territoryID;
                 }
 
-                private DateTime? endDate;
-
-                public DateTime? EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime? EndDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private DateTime startDate;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
-
-                private int territoryID;
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
 
                 [Required]
-                public int TerritoryID
-                {
-                        get
-                        {
-                                return this.territoryID;
-                        }
-
-                        set
-                        {
-                                this.territoryID = value;
-                        }
-                }
+                [JsonProperty]
+                public int TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3184291eddf48eb91f7166957df5c1dd</Hash>
+    <Hash>46b5b722fd66b9f531583fd71580a5f6</Hash>
 </Codenesium>*/

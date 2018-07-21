@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiReleaseResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiReleaseResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiReleaseRequestModel model)
                 {
                         CreateResponse<ApiReleaseResponseModel> result = await this.ReleaseService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Releases/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Releases/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiReleaseResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiReleaseResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiReleaseRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiReleaseRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ReleaseService.Update(id, model);
+                                UpdateResponse<ApiReleaseResponseModel> result = await this.ReleaseService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiReleaseResponseModel response = await this.ReleaseService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiReleaseResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiReleaseResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiReleaseRequestModel model)
                 {
-                        ApiReleaseRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiReleaseRequestModel request = await this.PatchModel(id, this.ReleaseModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ReleaseService.Update(id, request);
+                                UpdateResponse<ApiReleaseResponseModel> result = await this.ReleaseService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiReleaseResponseModel response = await this.ReleaseService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -268,19 +264,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiReleaseRequestModel> CreatePatch(ApiReleaseRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiReleaseRequestModel>();
-                        patch.Replace(x => x.Assembled, model.Assembled);
-                        patch.Replace(x => x.ChannelId, model.ChannelId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.ProjectDeploymentProcessSnapshotId, model.ProjectDeploymentProcessSnapshotId);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.ProjectVariableSetSnapshotId, model.ProjectVariableSetSnapshotId);
-                        patch.Replace(x => x.Version, model.Version);
-                        return patch;
-                }
-
                 private async Task<ApiReleaseRequestModel> PatchModel(string id, JsonPatchDocument<ApiReleaseRequestModel> patch)
                 {
                         var record = await this.ReleaseService.Get(id);
@@ -300,5 +283,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>adeaa49a772f178f334663b8dd310946</Hash>
+    <Hash>be5738efb8fda9c8ffd98af9aafe7789</Hash>
 </Codenesium>*/

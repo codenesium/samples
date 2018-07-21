@@ -25,54 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void PackageId_Create_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.PackageId, null as string);
-                }
-
-                [Fact]
-                public async void PackageId_Update_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.PackageId, null as string);
-                }
-
-                [Fact]
                 public async void PackageId_Create_length()
                 {
                         Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
@@ -94,30 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PackageId, new string('A', 101));
-                }
-
-                [Fact]
-                public async void Version_Create_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
-                }
-
-                [Fact]
-                public async void Version_Update_null()
-                {
-                        Mock<INuGetPackageRepository> nuGetPackageRepository = new Mock<INuGetPackageRepository>();
-                        nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
-
-                        var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
                 }
 
                 [Fact]
@@ -171,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6b87709f0ec51a04db1536b95c29b90b</Hash>
+    <Hash>77c17efd05f54767c9317989e2d0130c</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiProductModelResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProductModelRequestModel model)
                 {
                         CreateResponse<ApiProductModelResponseModel> result = await this.ProductModelService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModels/{result.Record.ProductModelID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModels/{result.Record.ProductModelID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductModelResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductModelRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiProductModelRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ProductModelService.Update(id, model);
+                                UpdateResponse<ApiProductModelResponseModel> result = await this.ProductModelService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiProductModelResponseModel response = await this.ProductModelService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiProductModelResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelRequestModel model)
                 {
-                        ApiProductModelRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiProductModelRequestModel request = await this.PatchModel(id, this.ProductModelModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ProductModelService.Update(id, request);
+                                UpdateResponse<ApiProductModelResponseModel> result = await this.ProductModelService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiProductModelResponseModel response = await this.ProductModelService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -236,12 +232,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("byInstructions/{instructions}")]
+                [Route("byInstructions/{instruction}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByInstructions(string instructions)
+                public async virtual Task<IActionResult> ByInstruction(string instruction)
                 {
-                        List<ApiProductModelResponseModel> response = await this.ProductModelService.ByInstructions(instructions);
+                        List<ApiProductModelResponseModel> response = await this.ProductModelService.ByInstruction(instruction);
 
                         return this.Ok(response);
                 }
@@ -288,17 +284,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiProductModelRequestModel> CreatePatch(ApiProductModelRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductModelRequestModel>();
-                        patch.Replace(x => x.CatalogDescription, model.CatalogDescription);
-                        patch.Replace(x => x.Instructions, model.Instructions);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-
                 private async Task<ApiProductModelRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductModelRequestModel> patch)
                 {
                         var record = await this.ProductModelService.Get(id);
@@ -318,5 +303,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>17e33b4fd2992a58be096dfff1ce9c52</Hash>
+    <Hash>44aff8f9b308f67f2cb9632efaba42aa</Hash>
 </Codenesium>*/

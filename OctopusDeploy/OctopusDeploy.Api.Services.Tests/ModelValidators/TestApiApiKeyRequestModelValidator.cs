@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ApiKeyHashed_Create_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, null as string);
-                }
-
-                [Fact]
-                public async void ApiKeyHashed_Update_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, null as string);
-                }
-
-                [Fact]
                 public async void ApiKeyHashed_Create_length()
                 {
                         Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
@@ -70,54 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, new string('A', 201));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void UserId_Create_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
-                }
-
-                [Fact]
-                public async void UserId_Update_null()
-                {
-                        Mock<IApiKeyRepository> apiKeyRepository = new Mock<IApiKeyRepository>();
-                        apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
-
-                        var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
                 }
 
                 [Fact]
@@ -195,5 +123,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fdb001c355b29f22e664506919c86302</Hash>
+    <Hash>734b0f35d68bcade6eb74b9d11d34cdb</Hash>
 </Codenesium>*/

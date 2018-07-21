@@ -18,10 +18,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionHistoryArchiveMapper();
                         ApiTransactionHistoryArchiveRequestModel model = new ApiTransactionHistoryArchiveRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOTransactionHistoryArchive response = mapper.MapModelToBO(1, model);
 
-                        response.ActualCost.Should().Be(1);
+                        response.ActualCost.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
                         response.Quantity.Should().Be(1);
@@ -36,10 +36,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionHistoryArchiveMapper();
                         BOTransactionHistoryArchive bo = new BOTransactionHistoryArchive();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiTransactionHistoryArchiveResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.ActualCost.Should().Be(1);
+                        response.ActualCost.Should().Be(1m);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
                         response.Quantity.Should().Be(1);
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLTransactionHistoryArchiveMapper();
                         BOTransactionHistoryArchive bo = new BOTransactionHistoryArchive();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiTransactionHistoryArchiveResponseModel> response = mapper.MapBOToModel(new List<BOTransactionHistoryArchive>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>74ac3d8eac452cf6e7797c8b899f61bb</Hash>
+    <Hash>9ebee171b9078bc73fa4cb942dc7af99</Hash>
 </Codenesium>*/

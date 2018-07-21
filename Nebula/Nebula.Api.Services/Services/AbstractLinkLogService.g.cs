@@ -75,18 +75,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiLinkLogResponseModel>> Update(
                         int id,
                         ApiLinkLogRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.linkLogModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolLinkLogMapper.MapModelToBO(id, model);
                                 await this.linkLogRepository.Update(this.dalLinkLogMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.linkLogRepository.Get(id);
+
+                                return new UpdateResponse<ApiLinkLogResponseModel>(this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiLinkLogResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d1cda4fa2d8499e00f99c90566e9a49</Hash>
+    <Hash>c5ae2e807fe229bef1eab47da0f5ddb6</Hash>
 </Codenesium>*/

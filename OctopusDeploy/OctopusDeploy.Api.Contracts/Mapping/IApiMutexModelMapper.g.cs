@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace OctopusDeployNS.Api.Contracts
 
                 ApiMutexRequestModel MapResponseToRequest(
                         ApiMutexResponseModel response);
+
+                JsonPatchDocument<ApiMutexRequestModel> CreatePatch(ApiMutexRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>fa7f992f3881fcf93b3babfdfb47c4ea</Hash>
+    <Hash>a7a1b7773a800962e367288e58ef7380</Hash>
 </Codenesium>*/

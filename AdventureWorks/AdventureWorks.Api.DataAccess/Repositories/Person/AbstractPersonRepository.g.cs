@@ -90,9 +90,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                public async Task<List<Person>> ByDemographics(string demographics)
+                public async Task<List<Person>> ByDemographic(string demographic)
                 {
-                        var records = await this.Where(x => x.Demographics == demographics);
+                        var records = await this.Where(x => x.Demographic == demographic);
 
                         return records;
                 }
@@ -149,5 +149,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>010983e4360a7e70ab4ff434b5b71f01</Hash>
+    <Hash>e6eb10149f79f8458243efc60b49f790</Hash>
 </Codenesium>*/

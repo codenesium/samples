@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiIllustrationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiIllustrationResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiIllustrationRequestModel model)
                 {
                         CreateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Illustrations/{result.Record.IllustrationID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Illustrations/{result.Record.IllustrationID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiIllustrationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiIllustrationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiIllustrationRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiIllustrationRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.IllustrationService.Update(id, model);
+                                UpdateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiIllustrationResponseModel response = await this.IllustrationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiIllustrationResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiIllustrationResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationRequestModel model)
                 {
-                        ApiIllustrationRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiIllustrationRequestModel request = await this.PatchModel(id, this.IllustrationModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.IllustrationService.Update(id, request);
+                                UpdateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiIllustrationResponseModel response = await this.IllustrationService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -219,14 +215,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiIllustrationRequestModel> CreatePatch(ApiIllustrationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiIllustrationRequestModel>();
-                        patch.Replace(x => x.Diagram, model.Diagram);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        return patch;
-                }
-
                 private async Task<ApiIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationRequestModel> patch)
                 {
                         var record = await this.IllustrationService.Get(id);
@@ -246,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4e50700edb45f376d32019e3b66cd71</Hash>
+    <Hash>182a0f08dd13adbf8a165de69377076c</Hash>
 </Codenesium>*/

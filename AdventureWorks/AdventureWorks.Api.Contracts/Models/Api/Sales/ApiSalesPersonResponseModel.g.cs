@@ -32,28 +32,40 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
                 }
 
+                [JsonProperty]
                 public decimal Bonus { get; private set; }
 
+                [JsonProperty]
                 public int BusinessEntityID { get; private set; }
 
+                [JsonProperty]
                 public decimal CommissionPct { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public decimal SalesLastYear { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public decimal? SalesQuota { get; private set; }
 
+                [JsonProperty]
                 public decimal SalesYTD { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? TerritoryID { get; private set; }
 
+                [JsonProperty]
                 public string TerritoryIDEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>21320de576cb748e6383c3b8dd00d8e3</Hash>
+    <Hash>2c14b11d1edccda7ad320e609c1943a3</Hash>
 </Codenesium>*/

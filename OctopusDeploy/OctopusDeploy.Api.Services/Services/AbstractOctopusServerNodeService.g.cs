@@ -75,18 +75,25 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiOctopusServerNodeResponseModel>> Update(
                         string id,
                         ApiOctopusServerNodeRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.octopusServerNodeModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.octopusServerNodeModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolOctopusServerNodeMapper.MapModelToBO(id, model);
                                 await this.octopusServerNodeRepository.Update(this.dalOctopusServerNodeMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.octopusServerNodeRepository.Get(id);
+
+                                return new UpdateResponse<ApiOctopusServerNodeResponseModel>(this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiOctopusServerNodeResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -104,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>976d357315ec752f57f8d017f29449b4</Hash>
+    <Hash>aa7c6ce0ba9bb421067b3590f248e69e</Hash>
 </Codenesium>*/

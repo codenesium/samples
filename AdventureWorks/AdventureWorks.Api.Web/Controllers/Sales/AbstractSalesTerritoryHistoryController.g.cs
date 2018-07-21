@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesTerritoryHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryHistoryRequestModel model)
                 {
                         CreateResponse<ApiSalesTerritoryHistoryResponseModel> result = await this.SalesTerritoryHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesTerritoryHistories/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesTerritoryHistories/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesTerritoryHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesTerritoryHistoryService.Update(id, model);
+                                UpdateResponse<ApiSalesTerritoryHistoryResponseModel> result = await this.SalesTerritoryHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesTerritoryHistoryResponseModel response = await this.SalesTerritoryHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryHistoryRequestModel model)
                 {
-                        ApiSalesTerritoryHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesTerritoryHistoryRequestModel request = await this.PatchModel(id, this.SalesTerritoryHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesTerritoryHistoryService.Update(id, request);
+                                UpdateResponse<ApiSalesTerritoryHistoryResponseModel> result = await this.SalesTerritoryHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesTerritoryHistoryResponseModel response = await this.SalesTerritoryHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,17 +201,6 @@ namespace AdventureWorksNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel> CreatePatch(ApiSalesTerritoryHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel>();
-                        patch.Replace(x => x.EndDate, model.EndDate);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.StartDate, model.StartDate);
-                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
-                        return patch;
-                }
-
                 private async Task<ApiSalesTerritoryHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTerritoryHistoryRequestModel> patch)
                 {
                         var record = await this.SalesTerritoryHistoryService.Get(id);
@@ -235,5 +220,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c48a15824a3dd45e28a57f637e0061c4</Hash>
+    <Hash>60f0a0a0fb6201e2dcbec1cb2bce958d</Hash>
 </Codenesium>*/

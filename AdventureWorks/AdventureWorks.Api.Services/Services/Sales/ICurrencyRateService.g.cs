@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiCurrencyRateResponseModel>> Create(
                         ApiCurrencyRateRequestModel model);
 
-                Task<ActionResponse> Update(int currencyRateID,
-                                            ApiCurrencyRateRequestModel model);
+                Task<UpdateResponse<ApiCurrencyRateResponseModel>> Update(int currencyRateID,
+                                                                           ApiCurrencyRateRequestModel model);
 
                 Task<ActionResponse> Delete(int currencyRateID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45a7df057f557a93dfe9964617fea2bf</Hash>
+    <Hash>198c82a1859c9bb23e9c75694f2921ba</Hash>
 </Codenesium>*/

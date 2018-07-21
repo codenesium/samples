@@ -12,8 +12,8 @@ namespace FermataFishNS.Api.Services
                 Task<CreateResponse<ApiFamilyResponseModel>> Create(
                         ApiFamilyRequestModel model);
 
-                Task<ActionResponse> Update(int id,
-                                            ApiFamilyRequestModel model);
+                Task<UpdateResponse<ApiFamilyResponseModel>> Update(int id,
+                                                                     ApiFamilyRequestModel model);
 
                 Task<ActionResponse> Delete(int id);
 
@@ -28,5 +28,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>64b70cee7b63b3aa6318cefd7bc9ed13</Hash>
+    <Hash>df485036b27c758a8ead8a70491e7cd2</Hash>
 </Codenesium>*/

@@ -90,18 +90,25 @@ namespace NebulaNS.Api.Services
                         return response;
                 }
 
-                public virtual async Task<ActionResponse> Update(
+                public virtual async Task<UpdateResponse<ApiChainResponseModel>> Update(
                         int id,
                         ApiChainRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.chainModelValidator.ValidateUpdateAsync(id, model));
-                        if (response.Success)
+                        var validationResult = await this.chainModelValidator.ValidateUpdateAsync(id, model);
+
+                        if (validationResult.IsValid)
                         {
                                 var bo = this.bolChainMapper.MapModelToBO(id, model);
                                 await this.chainRepository.Update(this.dalChainMapper.MapBOToEF(bo));
-                        }
 
-                        return response;
+                                var record = await this.chainRepository.Get(id);
+
+                                return new UpdateResponse<ApiChainResponseModel>(this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(record)));
+                        }
+                        else
+                        {
+                                return new UpdateResponse<ApiChainResponseModel>(validationResult);
+                        }
                 }
 
                 public virtual async Task<ActionResponse> Delete(
@@ -133,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0616d0ecbf38e4cf42b91a7e96994138</Hash>
+    <Hash>a8f84b6d47e4ece5192473b6af67e065</Hash>
 </Codenesium>*/

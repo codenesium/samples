@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.Services
                                                   DateTime hireDate,
                                                   string jobTitle,
                                                   string loginID,
-                                                  string maritalStatus,
+                                                  string maritalStatu,
                                                   DateTime modifiedDate,
                                                   string nationalIDNumber,
                                                   short? organizationLevel,
                                                   Guid rowguid,
                                                   bool salariedFlag,
-                                                  short sickLeaveHours,
-                                                  short vacationHours)
+                                                  short sickLeaveHour,
+                                                  short vacationHour)
                 {
                         this.BirthDate = birthDate;
                         this.BusinessEntityID = businessEntityID;
@@ -33,14 +33,14 @@ namespace AdventureWorksNS.Api.Services
                         this.HireDate = hireDate;
                         this.JobTitle = jobTitle;
                         this.LoginID = loginID;
-                        this.MaritalStatus = maritalStatus;
+                        this.MaritalStatu = maritalStatu;
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
-                        this.SickLeaveHours = sickLeaveHours;
-                        this.VacationHours = vacationHours;
+                        this.SickLeaveHour = sickLeaveHour;
+                        this.VacationHour = vacationHour;
                 }
 
                 public DateTime BirthDate { get; private set; }
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public string LoginID { get; private set; }
 
-                public string MaritalStatus { get; private set; }
+                public string MaritalStatu { get; private set; }
 
                 public DateTime ModifiedDate { get; private set; }
 
@@ -69,12 +69,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public bool SalariedFlag { get; private set; }
 
-                public short SickLeaveHours { get; private set; }
+                public short SickLeaveHour { get; private set; }
 
-                public short VacationHours { get; private set; }
+                public short VacationHour { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2424931c97fb553f0afa87c60aafba78</Hash>
+    <Hash>43922f026ccc4eb68feb24710a58a7cf</Hash>
 </Codenesium>*/

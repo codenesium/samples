@@ -24,20 +24,32 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TriggerType = triggerType;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public bool IsDisabled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string TriggerType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9d2f8f9d4939c5cf3b1cf9dd57018d4d</Hash>
+    <Hash>3baf9a25b0c81853de346dabc1f8b267</Hash>
 </Codenesium>*/

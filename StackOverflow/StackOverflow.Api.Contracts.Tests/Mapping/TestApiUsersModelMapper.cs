@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -57,9 +58,35 @@ namespace StackOverflowNS.Api.Contracts.Tests
                         response.Views.Should().Be(1);
                         response.WebsiteUrl.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiUsersModelMapper();
+                        var model = new ApiUsersRequestModel();
+                        model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+
+                        JsonPatchDocument<ApiUsersRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiUsersRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.AboutMe.Should().Be("A");
+                        response.AccountId.Should().Be(1);
+                        response.Age.Should().Be(1);
+                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.DisplayName.Should().Be("A");
+                        response.DownVotes.Should().Be(1);
+                        response.EmailHash.Should().Be("A");
+                        response.LastAccessDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.Location.Should().Be("A");
+                        response.Reputation.Should().Be(1);
+                        response.UpVotes.Should().Be(1);
+                        response.Views.Should().Be(1);
+                        response.WebsiteUrl.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>63a6081bd28055546be086395495d4a0</Hash>
+    <Hash>55dc653897e03dbdb0754dea68900b35</Hash>
 </Codenesium>*/

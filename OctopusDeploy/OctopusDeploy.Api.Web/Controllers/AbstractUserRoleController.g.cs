@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserRoleResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiUserRoleResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiUserRoleRequestModel model)
                 {
                         CreateResponse<ApiUserRoleResponseModel> result = await this.UserRoleService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/UserRoles/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/UserRoles/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserRoleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUserRoleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUserRoleRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiUserRoleRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.UserRoleService.Update(id, model);
+                                UpdateResponse<ApiUserRoleResponseModel> result = await this.UserRoleService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiUserRoleResponseModel response = await this.UserRoleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserRoleResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiUserRoleResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUserRoleRequestModel model)
                 {
-                        ApiUserRoleRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiUserRoleRequestModel request = await this.PatchModel(id, this.UserRoleModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.UserRoleService.Update(id, request);
+                                UpdateResponse<ApiUserRoleResponseModel> result = await this.UserRoleService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiUserRoleResponseModel response = await this.UserRoleService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,14 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiUserRoleRequestModel> CreatePatch(ApiUserRoleRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiUserRoleRequestModel>();
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiUserRoleRequestModel> PatchModel(string id, JsonPatchDocument<ApiUserRoleRequestModel> patch)
                 {
                         var record = await this.UserRoleService.Get(id);
@@ -251,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b0d40eeca6e2db06eb5366da2c0580c9</Hash>
+    <Hash>6d88db68ef00c87aece1cbbe0b1c3394</Hash>
 </Codenesium>*/

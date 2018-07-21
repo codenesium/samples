@@ -106,15 +106,15 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiRateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiRateResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiRateRequestModel model)
                 {
                         CreateResponse<ApiRateResponseModel> result = await this.RateService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Rates/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Rates/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiRateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiRateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRateRequestModel> patch)
@@ -140,13 +140,11 @@ namespace FermataFishNS.Api.Web
                         {
                                 ApiRateRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.RateService.Update(id, model);
+                                UpdateResponse<ApiRateResponseModel> result = await this.RateService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiRateResponseModel response = await this.RateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace FermataFishNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiRateResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiRateResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateRequestModel model)
                 {
-                        ApiRateRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiRateRequestModel request = await this.PatchModel(id, this.RateModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace FermataFishNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.RateService.Update(id, request);
+                                UpdateResponse<ApiRateResponseModel> result = await this.RateService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiRateResponseModel response = await this.RateService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,15 +201,6 @@ namespace FermataFishNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiRateRequestModel> CreatePatch(ApiRateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiRateRequestModel>();
-                        patch.Replace(x => x.AmountPerMinute, model.AmountPerMinute);
-                        patch.Replace(x => x.TeacherId, model.TeacherId);
-                        patch.Replace(x => x.TeacherSkillId, model.TeacherSkillId);
-                        return patch;
-                }
-
                 private async Task<ApiRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiRateRequestModel> patch)
                 {
                         var record = await this.RateService.Get(id);
@@ -233,5 +220,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9989024d38ee7874d93e84e3701f6d1b</Hash>
+    <Hash>2853bbd361d3da5278b03d8145923bdf</Hash>
 </Codenesium>*/

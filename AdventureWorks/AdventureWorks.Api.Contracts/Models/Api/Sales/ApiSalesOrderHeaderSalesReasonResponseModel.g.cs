@@ -21,18 +21,23 @@ namespace AdventureWorksNS.Api.Contracts
                         this.SalesReasonIDEntity = nameof(ApiResponse.SalesReasons);
                 }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public int SalesOrderID { get; private set; }
 
+                [JsonProperty]
                 public string SalesOrderIDEntity { get; set; }
 
+                [JsonProperty]
                 public int SalesReasonID { get; private set; }
 
+                [JsonProperty]
                 public string SalesReasonIDEntity { get; set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>700438621ce5b85ab1e51c11e79f2be9</Hash>
+    <Hash>c2d6abba885c6507890acd4a8fd9d7d1</Hash>
 </Codenesium>*/

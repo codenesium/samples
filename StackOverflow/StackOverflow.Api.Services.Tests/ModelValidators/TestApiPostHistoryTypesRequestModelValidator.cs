@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Type_Create_null()
-                {
-                        Mock<IPostHistoryTypesRepository> postHistoryTypesRepository = new Mock<IPostHistoryTypesRepository>();
-                        postHistoryTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistoryTypes()));
-
-                        var validator = new ApiPostHistoryTypesRequestModelValidator(postHistoryTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostHistoryTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
-                public async void Type_Update_null()
-                {
-                        Mock<IPostHistoryTypesRepository> postHistoryTypesRepository = new Mock<IPostHistoryTypesRepository>();
-                        postHistoryTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistoryTypes()));
-
-                        var validator = new ApiPostHistoryTypesRequestModelValidator(postHistoryTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryTypesRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
-
-                [Fact]
                 public async void Type_Create_length()
                 {
                         Mock<IPostHistoryTypesRepository> postHistoryTypesRepository = new Mock<IPostHistoryTypesRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bd5c095f5f271b4953bc702a07ef5dea</Hash>
+    <Hash>eb94aeff70b9e5427a323b6f45fb79c3</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace PetStoreNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var model = new ApiSaleRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Sale>())).Returns(Task.FromResult(new Sale()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.SaleModelValidatorMock.Object,
                                                       mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiSaleResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SaleModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()));
@@ -132,5 +133,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d9419e4873823d51888bef28563a8cb9</Hash>
+    <Hash>8c0d26dfacd55de59696c84fe0550407</Hash>
 </Codenesium>*/

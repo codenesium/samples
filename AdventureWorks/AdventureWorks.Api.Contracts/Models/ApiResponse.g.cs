@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Contracts
                         from.PersonPhones.ForEach(x => this.AddPersonPhone(x));
                         from.PhoneNumberTypes.ForEach(x => this.AddPhoneNumberType(x));
                         from.StateProvinces.ForEach(x => this.AddStateProvince(x));
-                        from.BillOfMaterials.ForEach(x => this.AddBillOfMaterials(x));
+                        from.BillOfMaterials.ForEach(x => this.AddBillOfMaterial(x));
                         from.Cultures.ForEach(x => this.AddCulture(x));
                         from.Documents.ForEach(x => this.AddDocument(x));
                         from.Illustrations.ForEach(x => this.AddIllustration(x));
@@ -129,7 +129,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public List<ApiStateProvinceResponseModel> StateProvinces { get; private set; } = new List<ApiStateProvinceResponseModel>();
 
-                public List<ApiBillOfMaterialsResponseModel> BillOfMaterials { get; private set; } = new List<ApiBillOfMaterialsResponseModel>();
+                public List<ApiBillOfMaterialResponseModel> BillOfMaterials { get; private set; } = new List<ApiBillOfMaterialResponseModel>();
 
                 public List<ApiCultureResponseModel> Cultures { get; private set; } = new List<ApiCultureResponseModel>();
 
@@ -585,7 +585,7 @@ namespace AdventureWorksNS.Api.Contracts
                         return this.ShouldSerializeBillOfMaterialsValue;
                 }
 
-                public void AddBillOfMaterials(ApiBillOfMaterialsResponseModel item)
+                public void AddBillOfMaterial(ApiBillOfMaterialResponseModel item)
                 {
                         if (!this.BillOfMaterials.Any(x => x.BillOfMaterialsID == item.BillOfMaterialsID))
                         {
@@ -1701,5 +1701,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5122835a31449b59c4cf1707176bd645</Hash>
+    <Hash>14d9e84436cab16c26bf384c5301a419</Hash>
 </Codenesium>*/

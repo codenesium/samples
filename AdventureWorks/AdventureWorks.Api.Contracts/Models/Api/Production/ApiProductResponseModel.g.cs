@@ -62,58 +62,95 @@ namespace AdventureWorksNS.Api.Contracts
                         this.WeightUnitMeasureCode = weightUnitMeasureCode;
                 }
 
+                [Required]
+                [JsonProperty]
                 public string @Class { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Color { get; private set; }
 
+                [JsonProperty]
                 public int DaysToManufacture { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? DiscontinuedDate { get; private set; }
 
+                [JsonProperty]
                 public bool FinishedGoodsFlag { get; private set; }
 
+                [JsonProperty]
                 public decimal ListPrice { get; private set; }
 
+                [JsonProperty]
                 public bool MakeFlag { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
 
+                [JsonProperty]
                 public int ProductID { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProductLine { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? ProductModelID { get; private set; }
 
+                [JsonProperty]
                 public string ProductNumber { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int? ProductSubcategoryID { get; private set; }
 
+                [JsonProperty]
                 public short ReorderPoint { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public short SafetyStockLevel { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public DateTime? SellEndDate { get; private set; }
 
+                [JsonProperty]
                 public DateTime SellStartDate { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Size { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string SizeUnitMeasureCode { get; private set; }
 
+                [JsonProperty]
                 public decimal StandardCost { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Style { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public decimal? Weight { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string WeightUnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>69d6e069c6e80b62810876ee3ca7d3cb</Hash>
+    <Hash>8b37c3b690c33bcedcf56fd9b504c64d</Hash>
 </Codenesium>*/

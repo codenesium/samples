@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,23 @@ namespace StackOverflowNS.Api.Contracts.Tests
 
                         response.Type.Should().Be("A");
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiLinkTypesModelMapper();
+                        var model = new ApiLinkTypesRequestModel();
+                        model.SetProperties("A");
+
+                        JsonPatchDocument<ApiLinkTypesRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiLinkTypesRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.Type.Should().Be("A");
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f45256cb8479375a26e9d2b946aec63</Hash>
+    <Hash>23a9e667bea2c763e70b43976fae878f</Hash>
 </Codenesium>*/

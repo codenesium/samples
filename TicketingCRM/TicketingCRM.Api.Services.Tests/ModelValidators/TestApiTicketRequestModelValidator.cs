@@ -25,30 +25,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void PublicId_Create_null()
-                {
-                        Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-                        ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
-
-                        var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTicketRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.PublicId, null as string);
-                }
-
-                [Fact]
-                public async void PublicId_Update_null()
-                {
-                        Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-                        ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
-
-                        var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.PublicId, null as string);
-                }
-
-                [Fact]
                 public async void PublicId_Create_length()
                 {
                         Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
@@ -125,5 +101,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>377c8732f14fbe7c352c39e389f37795</Hash>
+    <Hash>930a37e0fd25b188220266c6d717b0d6</Hash>
 </Codenesium>*/

@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         response.AdditionalContactInfo.Should().Be("A");
                         response.BusinessEntityID.Should().Be(1);
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.EmailPromotion.Should().Be(1);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         response.AdditionalContactInfo.Should().Be("A");
                         response.BusinessEntityID.Should().Be(1);
-                        response.Demographics.Should().Be("A");
+                        response.Demographic.Should().Be("A");
                         response.EmailPromotion.Should().Be(1);
                         response.FirstName.Should().Be("A");
                         response.LastName.Should().Be("A");
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>06c17a7d4f8b4c1b38ac19aaed832717</Hash>
+    <Hash>6a92b51d059babedaabaeee47254f054</Hash>
 </Codenesium>*/

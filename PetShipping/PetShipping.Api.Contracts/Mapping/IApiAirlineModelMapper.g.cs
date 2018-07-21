@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace PetShippingNS.Api.Contracts
 
                 ApiAirlineRequestModel MapResponseToRequest(
                         ApiAirlineResponseModel response);
+
+                JsonPatchDocument<ApiAirlineRequestModel> CreatePatch(ApiAirlineRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>96293306a29f7d313fcf481f4b2d3fa1</Hash>
+    <Hash>413267c5938fd8ca8f8b09f7e9b10f5c</Hash>
 </Codenesium>*/

@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiWorkerTaskLeaseResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiWorkerTaskLeaseRequestModel model)
                 {
                         CreateResponse<ApiWorkerTaskLeaseResponseModel> result = await this.WorkerTaskLeaseService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkerTaskLeases/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkerTaskLeases/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerTaskLeaseResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiWorkerTaskLeaseRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiWorkerTaskLeaseRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.WorkerTaskLeaseService.Update(id, model);
+                                UpdateResponse<ApiWorkerTaskLeaseResponseModel> result = await this.WorkerTaskLeaseService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkerTaskLeaseResponseModel response = await this.WorkerTaskLeaseService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerTaskLeaseResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiWorkerTaskLeaseRequestModel model)
                 {
-                        ApiWorkerTaskLeaseRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiWorkerTaskLeaseRequestModel request = await this.PatchModel(id, this.WorkerTaskLeaseModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.WorkerTaskLeaseService.Update(id, request);
+                                UpdateResponse<ApiWorkerTaskLeaseResponseModel> result = await this.WorkerTaskLeaseService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiWorkerTaskLeaseResponseModel response = await this.WorkerTaskLeaseService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,17 +201,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiWorkerTaskLeaseRequestModel> CreatePatch(ApiWorkerTaskLeaseRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiWorkerTaskLeaseRequestModel>();
-                        patch.Replace(x => x.Exclusive, model.Exclusive);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.TaskId, model.TaskId);
-                        patch.Replace(x => x.WorkerId, model.WorkerId);
-                        return patch;
-                }
-
                 private async Task<ApiWorkerTaskLeaseRequestModel> PatchModel(string id, JsonPatchDocument<ApiWorkerTaskLeaseRequestModel> patch)
                 {
                         var record = await this.WorkerTaskLeaseService.Get(id);
@@ -235,5 +220,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5f8b692053383e079f176fd12e610b3b</Hash>
+    <Hash>753f89c7c0de5592c720ee89997f53c6</Hash>
 </Codenesium>*/

@@ -36,148 +36,35 @@ namespace OctopusDeployNS.Api.Contracts
                         this.WorkerPoolIds = workerPoolIds;
                 }
 
-                private string communicationStyle;
+                [JsonProperty]
+                public string CommunicationStyle { get; private set; }
 
-                [Required]
-                public string CommunicationStyle
-                {
-                        get
-                        {
-                                return this.communicationStyle;
-                        }
+                [JsonProperty]
+                public string Fingerprint { get; private set; }
 
-                        set
-                        {
-                                this.communicationStyle = value;
-                        }
-                }
+                [JsonProperty]
+                public bool IsDisabled { get; private set; }
 
-                private string fingerprint;
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                public string Fingerprint
-                {
-                        get
-                        {
-                                return this.fingerprint;
-                        }
+                [JsonProperty]
+                public string MachinePolicyId { get; private set; }
 
-                        set
-                        {
-                                this.fingerprint = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private bool isDisabled;
+                [JsonProperty]
+                public string RelatedDocumentIds { get; private set; }
 
-                [Required]
-                public bool IsDisabled
-                {
-                        get
-                        {
-                                return this.isDisabled;
-                        }
+                [JsonProperty]
+                public string Thumbprint { get; private set; }
 
-                        set
-                        {
-                                this.isDisabled = value;
-                        }
-                }
-
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string machinePolicyId;
-
-                [Required]
-                public string MachinePolicyId
-                {
-                        get
-                        {
-                                return this.machinePolicyId;
-                        }
-
-                        set
-                        {
-                                this.machinePolicyId = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string relatedDocumentIds;
-
-                public string RelatedDocumentIds
-                {
-                        get
-                        {
-                                return this.relatedDocumentIds;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentIds = value;
-                        }
-                }
-
-                private string thumbprint;
-
-                public string Thumbprint
-                {
-                        get
-                        {
-                                return this.thumbprint;
-                        }
-
-                        set
-                        {
-                                this.thumbprint = value;
-                        }
-                }
-
-                private string workerPoolIds;
-
-                public string WorkerPoolIds
-                {
-                        get
-                        {
-                                return this.workerPoolIds;
-                        }
-
-                        set
-                        {
-                                this.workerPoolIds = value;
-                        }
-                }
+                [JsonProperty]
+                public string WorkerPoolIds { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>413239002db46bf40072208afb0158fe</Hash>
+    <Hash>6acf0369db4da159edb87ece1fa5e98d</Hash>
 </Codenesium>*/

@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
                         ApiStateProvinceRequestModel model);
 
-                Task<ActionResponse> Update(int stateProvinceID,
-                                            ApiStateProvinceRequestModel model);
+                Task<UpdateResponse<ApiStateProvinceResponseModel>> Update(int stateProvinceID,
+                                                                            ApiStateProvinceRequestModel model);
 
                 Task<ActionResponse> Delete(int stateProvinceID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de62111b6cf885403df7ee8dc17c5dfa</Hash>
+    <Hash>1acbf765b1b9396c6976bdde6ea8c180</Hash>
 </Codenesium>*/

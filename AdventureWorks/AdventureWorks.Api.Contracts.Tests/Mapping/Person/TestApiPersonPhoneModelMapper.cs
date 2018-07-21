@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -37,9 +38,25 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.PhoneNumber.Should().Be("A");
                         response.PhoneNumberTypeID.Should().Be(1);
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPersonPhoneModelMapper();
+                        var model = new ApiPersonPhoneRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+
+                        JsonPatchDocument<ApiPersonPhoneRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPersonPhoneRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.PhoneNumber.Should().Be("A");
+                        response.PhoneNumberTypeID.Should().Be(1);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>276373922b64e16ab2b1d46bc5b6c2d0</Hash>
+    <Hash>3c66a8a5162a69bd96b93ae201aef297</Hash>
 </Codenesium>*/

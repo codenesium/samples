@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChannelResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiChannelResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiChannelRequestModel model)
                 {
                         CreateResponse<ApiChannelResponseModel> result = await this.ChannelService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Channels/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Channels/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChannelResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiChannelResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiChannelRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiChannelRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ChannelService.Update(id, model);
+                                UpdateResponse<ApiChannelResponseModel> result = await this.ChannelService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiChannelResponseModel response = await this.ChannelService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChannelResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiChannelResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiChannelRequestModel model)
                 {
-                        ApiChannelRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiChannelRequestModel request = await this.PatchModel(id, this.ChannelModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ChannelService.Update(id, request);
+                                UpdateResponse<ApiChannelResponseModel> result = await this.ChannelService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiChannelResponseModel response = await this.ChannelService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -246,18 +242,6 @@ namespace OctopusDeployNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiChannelRequestModel> CreatePatch(ApiChannelRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiChannelRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.LifecycleId, model.LifecycleId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        return patch;
-                }
-
                 private async Task<ApiChannelRequestModel> PatchModel(string id, JsonPatchDocument<ApiChannelRequestModel> patch)
                 {
                         var record = await this.ChannelService.Get(id);
@@ -277,5 +261,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1e7b2ef82a4a8c487846510b6f79250b</Hash>
+    <Hash>2dc2ea7d1d6e741eb5be34aef78e7683</Hash>
 </Codenesium>*/

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
@@ -59,9 +61,34 @@ namespace StackOverflowNS.Api.Contracts
                                 response.ViewCount);
                         return request;
                 }
+
+                public JsonPatchDocument<ApiPostsRequestModel> CreatePatch(ApiPostsRequestModel model)
+                {
+                        var patch = new JsonPatchDocument<ApiPostsRequestModel>();
+                        patch.Replace(x => x.AcceptedAnswerId, model.AcceptedAnswerId);
+                        patch.Replace(x => x.AnswerCount, model.AnswerCount);
+                        patch.Replace(x => x.Body, model.Body);
+                        patch.Replace(x => x.ClosedDate, model.ClosedDate);
+                        patch.Replace(x => x.CommentCount, model.CommentCount);
+                        patch.Replace(x => x.CommunityOwnedDate, model.CommunityOwnedDate);
+                        patch.Replace(x => x.CreationDate, model.CreationDate);
+                        patch.Replace(x => x.FavoriteCount, model.FavoriteCount);
+                        patch.Replace(x => x.LastActivityDate, model.LastActivityDate);
+                        patch.Replace(x => x.LastEditDate, model.LastEditDate);
+                        patch.Replace(x => x.LastEditorDisplayName, model.LastEditorDisplayName);
+                        patch.Replace(x => x.LastEditorUserId, model.LastEditorUserId);
+                        patch.Replace(x => x.OwnerUserId, model.OwnerUserId);
+                        patch.Replace(x => x.ParentId, model.ParentId);
+                        patch.Replace(x => x.PostTypeId, model.PostTypeId);
+                        patch.Replace(x => x.Score, model.Score);
+                        patch.Replace(x => x.Tags, model.Tags);
+                        patch.Replace(x => x.Title, model.Title);
+                        patch.Replace(x => x.ViewCount, model.ViewCount);
+                        return patch;
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>efb2542b6072d9f14fded028ac0b7054</Hash>
+    <Hash>1bf721ebd98bbabb5110edf68f932476</Hash>
 </Codenesium>*/

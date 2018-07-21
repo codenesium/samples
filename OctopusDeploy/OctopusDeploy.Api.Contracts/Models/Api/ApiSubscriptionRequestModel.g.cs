@@ -26,71 +26,20 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Type = type;
                 }
 
-                private bool isDisabled;
+                [JsonProperty]
+                public bool IsDisabled { get; private set; }
 
-                [Required]
-                public bool IsDisabled
-                {
-                        get
-                        {
-                                return this.isDisabled;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.isDisabled = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
-
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string type;
-
-                public string Type
-                {
-                        get
-                        {
-                                return this.type;
-                        }
-
-                        set
-                        {
-                                this.type = value;
-                        }
-                }
+                [JsonProperty]
+                public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>595ecab29a05e41706f2d1c696cef2bc</Hash>
+    <Hash>9110e508b896b2aad61bb9ec23e1da9f</Hash>
 </Codenesium>*/

@@ -30,102 +30,26 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VariableTemplateId = variableTemplateId;
                 }
 
-                private string environmentId;
+                [JsonProperty]
+                public string EnvironmentId { get; private set; }
 
-                public string EnvironmentId
-                {
-                        get
-                        {
-                                return this.environmentId;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.environmentId = value;
-                        }
-                }
+                [JsonProperty]
+                public string OwnerId { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public string RelatedDocumentId { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
+                [JsonProperty]
+                public string TenantId { get; private set; }
 
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string ownerId;
-
-                [Required]
-                public string OwnerId
-                {
-                        get
-                        {
-                                return this.ownerId;
-                        }
-
-                        set
-                        {
-                                this.ownerId = value;
-                        }
-                }
-
-                private string relatedDocumentId;
-
-                public string RelatedDocumentId
-                {
-                        get
-                        {
-                                return this.relatedDocumentId;
-                        }
-
-                        set
-                        {
-                                this.relatedDocumentId = value;
-                        }
-                }
-
-                private string tenantId;
-
-                [Required]
-                public string TenantId
-                {
-                        get
-                        {
-                                return this.tenantId;
-                        }
-
-                        set
-                        {
-                                this.tenantId = value;
-                        }
-                }
-
-                private string variableTemplateId;
-
-                [Required]
-                public string VariableTemplateId
-                {
-                        get
-                        {
-                                return this.variableTemplateId;
-                        }
-
-                        set
-                        {
-                                this.variableTemplateId = value;
-                        }
-                }
+                [JsonProperty]
+                public string VariableTemplateId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>38ac0a526ef0392a71b865124c166170</Hash>
+    <Hash>39039d3e980ed2f4446129caffd50431</Hash>
 </Codenesium>*/

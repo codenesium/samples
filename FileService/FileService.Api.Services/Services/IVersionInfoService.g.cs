@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.Services
                 Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
                         ApiVersionInfoRequestModel model);
 
-                Task<ActionResponse> Update(long version,
-                                            ApiVersionInfoRequestModel model);
+                Task<UpdateResponse<ApiVersionInfoResponseModel>> Update(long version,
+                                                                          ApiVersionInfoRequestModel model);
 
                 Task<ActionResponse> Delete(long version);
 
@@ -26,5 +26,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8df968515132404a54cf2d8483825361</Hash>
+    <Hash>d013d24d85b73fb0d85bb72e150eb059</Hash>
 </Codenesium>*/

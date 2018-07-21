@@ -26,72 +26,20 @@ namespace TicketingCRMNS.Api.Contracts
                         this.Phone = phone;
                 }
 
-                private string email;
+                [JsonProperty]
+                public string Email { get; private set; }
 
-                [Required]
-                public string Email
-                {
-                        get
-                        {
-                                return this.email;
-                        }
+                [JsonProperty]
+                public string FirstName { get; private set; }
 
-                        set
-                        {
-                                this.email = value;
-                        }
-                }
+                [JsonProperty]
+                public string LastName { get; private set; }
 
-                private string firstName;
-
-                [Required]
-                public string FirstName
-                {
-                        get
-                        {
-                                return this.firstName;
-                        }
-
-                        set
-                        {
-                                this.firstName = value;
-                        }
-                }
-
-                private string lastName;
-
-                [Required]
-                public string LastName
-                {
-                        get
-                        {
-                                return this.lastName;
-                        }
-
-                        set
-                        {
-                                this.lastName = value;
-                        }
-                }
-
-                private string phone;
-
-                [Required]
-                public string Phone
-                {
-                        get
-                        {
-                                return this.phone;
-                        }
-
-                        set
-                        {
-                                this.phone = value;
-                        }
-                }
+                [JsonProperty]
+                public string Phone { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>361e21f0d2cbc38474b18ccab453860a</Hash>
+    <Hash>be24e96eaadd0bfa4f91399e13f7cdd6</Hash>
 </Codenesium>*/

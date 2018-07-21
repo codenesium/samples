@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IKeyAllocationRepository>();
                         var model = new ApiKeyAllocationRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<KeyAllocation>())).Returns(Task.FromResult(new KeyAllocation()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new KeyAllocation()));
                         var service = new KeyAllocationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.KeyAllocationModelValidatorMock.Object,
                                                                mock.BOLMapperMockFactory.BOLKeyAllocationMapperMock,
                                                                mock.DALMapperMockFactory.DALKeyAllocationMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiKeyAllocationResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.KeyAllocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>()));
@@ -132,5 +133,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa2393a8eda474f4f377cbb91b46f1a5</Hash>
+    <Hash>54537b569ef6241ec76624509d13b1b5</Hash>
 </Codenesium>*/

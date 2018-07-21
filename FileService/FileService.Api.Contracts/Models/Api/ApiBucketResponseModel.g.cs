@@ -18,14 +18,20 @@ namespace FileServiceNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [Required]
+                [JsonProperty]
                 public Guid ExternalId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4508d1e79af0d69937588cc97eac898d</Hash>
+    <Hash>edf8caa644176c98f246d57a9d51bd8a</Hash>
 </Codenesium>*/

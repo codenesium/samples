@@ -34,135 +34,32 @@ namespace OctopusDeployNS.Api.Contracts
                         this.VersionSpecial = versionSpecial;
                 }
 
-                private string jSON;
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
+                [JsonProperty]
+                public string PackageId { get; private set; }
 
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
+                [JsonProperty]
+                public string Version { get; private set; }
 
-                private string packageId;
+                [JsonProperty]
+                public int VersionBuild { get; private set; }
 
-                [Required]
-                public string PackageId
-                {
-                        get
-                        {
-                                return this.packageId;
-                        }
+                [JsonProperty]
+                public int VersionMajor { get; private set; }
 
-                        set
-                        {
-                                this.packageId = value;
-                        }
-                }
+                [JsonProperty]
+                public int VersionMinor { get; private set; }
 
-                private string version;
+                [JsonProperty]
+                public int VersionRevision { get; private set; }
 
-                [Required]
-                public string Version
-                {
-                        get
-                        {
-                                return this.version;
-                        }
-
-                        set
-                        {
-                                this.version = value;
-                        }
-                }
-
-                private int versionBuild;
-
-                [Required]
-                public int VersionBuild
-                {
-                        get
-                        {
-                                return this.versionBuild;
-                        }
-
-                        set
-                        {
-                                this.versionBuild = value;
-                        }
-                }
-
-                private int versionMajor;
-
-                [Required]
-                public int VersionMajor
-                {
-                        get
-                        {
-                                return this.versionMajor;
-                        }
-
-                        set
-                        {
-                                this.versionMajor = value;
-                        }
-                }
-
-                private int versionMinor;
-
-                [Required]
-                public int VersionMinor
-                {
-                        get
-                        {
-                                return this.versionMinor;
-                        }
-
-                        set
-                        {
-                                this.versionMinor = value;
-                        }
-                }
-
-                private int versionRevision;
-
-                [Required]
-                public int VersionRevision
-                {
-                        get
-                        {
-                                return this.versionRevision;
-                        }
-
-                        set
-                        {
-                                this.versionRevision = value;
-                        }
-                }
-
-                private string versionSpecial;
-
-                public string VersionSpecial
-                {
-                        get
-                        {
-                                return this.versionSpecial;
-                        }
-
-                        set
-                        {
-                                this.versionSpecial = value;
-                        }
-                }
+                [JsonProperty]
+                public string VersionSpecial { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>83aaeef158c2e5f31a73b75994d7d505</Hash>
+    <Hash>4ceba327dfecc793f5804c5078894b89</Hash>
 </Codenesium>*/

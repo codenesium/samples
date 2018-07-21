@@ -97,13 +97,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var model = new ApiReleaseRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Release>())).Returns(Task.FromResult(new Release()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ActionResponse response = await service.Update(default(string), model);
+                        UpdateResponse<ApiReleaseResponseModel> response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiReleaseRequestModel>()));
@@ -311,5 +312,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>387b8d76f5845468672031f10627687c</Hash>
+    <Hash>d1709c2371fc0b39b91f60b1efc56a22</Hash>
 </Codenesium>*/

@@ -97,13 +97,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiEventResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()));
@@ -168,5 +169,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cab25f89926a4bf9b2ad42a1fb81cd06</Hash>
+    <Hash>37374e57bfcba324e802eb450a228076</Hash>
 </Codenesium>*/

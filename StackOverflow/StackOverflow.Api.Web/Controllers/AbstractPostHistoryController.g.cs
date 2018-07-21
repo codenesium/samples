@@ -106,15 +106,15 @@ namespace StackOverflowNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPostHistoryResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPostHistoryRequestModel model)
                 {
                         CreateResponse<ApiPostHistoryResponseModel> result = await this.PostHistoryService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostHistoryRequestModel> patch)
@@ -140,13 +140,11 @@ namespace StackOverflowNS.Api.Web
                         {
                                 ApiPostHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PostHistoryService.Update(id, model);
+                                UpdateResponse<ApiPostHistoryResponseModel> result = await this.PostHistoryService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPostHistoryResponseModel response = await this.PostHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace StackOverflowNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostHistoryRequestModel model)
                 {
-                        ApiPostHistoryRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPostHistoryRequestModel request = await this.PatchModel(id, this.PostHistoryModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace StackOverflowNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PostHistoryService.Update(id, request);
+                                UpdateResponse<ApiPostHistoryResponseModel> result = await this.PostHistoryService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPostHistoryResponseModel response = await this.PostHistoryService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -205,20 +201,6 @@ namespace StackOverflowNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiPostHistoryRequestModel> CreatePatch(ApiPostHistoryRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPostHistoryRequestModel>();
-                        patch.Replace(x => x.Comment, model.Comment);
-                        patch.Replace(x => x.CreationDate, model.CreationDate);
-                        patch.Replace(x => x.PostHistoryTypeId, model.PostHistoryTypeId);
-                        patch.Replace(x => x.PostId, model.PostId);
-                        patch.Replace(x => x.RevisionGUID, model.RevisionGUID);
-                        patch.Replace(x => x.Text, model.Text);
-                        patch.Replace(x => x.UserDisplayName, model.UserDisplayName);
-                        patch.Replace(x => x.UserId, model.UserId);
-                        return patch;
-                }
-
                 private async Task<ApiPostHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostHistoryRequestModel> patch)
                 {
                         var record = await this.PostHistoryService.Get(id);
@@ -238,5 +220,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>60e52277e1af0243e0ef8ca47549a349</Hash>
+    <Hash>54a95f1babebcb374248b9bdba38f4c9</Hash>
 </Codenesium>*/

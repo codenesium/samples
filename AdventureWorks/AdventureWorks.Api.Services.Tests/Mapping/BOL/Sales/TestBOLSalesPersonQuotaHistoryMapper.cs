@@ -18,13 +18,13 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
                         ApiSalesPersonQuotaHistoryRequestModel model = new ApiSalesPersonQuotaHistoryRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m);
                         BOSalesPersonQuotaHistory response = mapper.MapModelToBO(1, model);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.QuotaDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesQuota.Should().Be(1);
+                        response.SalesQuota.Should().Be(1m);
                 }
 
                 [Fact]
@@ -32,14 +32,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
                         BOSalesPersonQuotaHistory bo = new BOSalesPersonQuotaHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m);
                         ApiSalesPersonQuotaHistoryResponseModel response = mapper.MapBOToModel(bo);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.QuotaDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesQuota.Should().Be(1);
+                        response.SalesQuota.Should().Be(1m);
                 }
 
                 [Fact]
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
                         BOSalesPersonQuotaHistory bo = new BOSalesPersonQuotaHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m);
                         List<ApiSalesPersonQuotaHistoryResponseModel> response = mapper.MapBOToModel(new List<BOSalesPersonQuotaHistory>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>57bc69d0ce08c5bed998c873f1957d24</Hash>
+    <Hash>a76b02ec2e93e2939af98146089d778a</Hash>
 </Codenesium>*/

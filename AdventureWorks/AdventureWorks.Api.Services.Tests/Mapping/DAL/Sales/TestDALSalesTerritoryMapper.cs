@@ -17,19 +17,19 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTerritoryMapper();
                         var bo = new BOSalesTerritory();
-                        bo.SetProperties(1, 1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
+                        bo.SetProperties(1, 1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 
                         SalesTerritory response = mapper.MapBOToEF(bo);
 
-                        response.CostLastYear.Should().Be(1);
-                        response.CostYTD.Should().Be(1);
+                        response.CostLastYear.Should().Be(1m);
+                        response.CostYTD.Should().Be(1m);
                         response.CountryRegionCode.Should().Be("A");
                         response.@Group.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -38,19 +38,19 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTerritoryMapper();
                         SalesTerritory entity = new SalesTerritory();
-                        entity.SetProperties(1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
+                        entity.SetProperties(1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1);
 
                         BOSalesTerritory response = mapper.MapEFToBO(entity);
 
-                        response.CostLastYear.Should().Be(1);
-                        response.CostYTD.Should().Be(1);
+                        response.CostLastYear.Should().Be(1m);
+                        response.CostYTD.Should().Be(1m);
                         response.CountryRegionCode.Should().Be("A");
                         response.@Group.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalesLastYear.Should().Be(1);
-                        response.SalesYTD.Should().Be(1);
+                        response.SalesLastYear.Should().Be(1m);
+                        response.SalesYTD.Should().Be(1m);
                         response.TerritoryID.Should().Be(1);
                 }
 
@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALSalesTerritoryMapper();
                         SalesTerritory entity = new SalesTerritory();
-                        entity.SetProperties(1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
+                        entity.SetProperties(1m, 1m, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1);
 
                         List<BOSalesTerritory> response = mapper.MapEFToBO(new List<SalesTerritory>() { entity });
 
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fe0dce42d1cf767ca7037d08a8232048</Hash>
+    <Hash>6d55b7c2c70f854b3a87798276505de2</Hash>
 </Codenesium>*/

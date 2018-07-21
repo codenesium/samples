@@ -1,3 +1,4 @@
+using FermataFishNS.Api.Contracts;
 using FluentAssertions;
 using FluentValidation.Results;
 using System;
@@ -79,5 +80,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c9518d009abbe9f6bde659d72edd8049</Hash>
+    <Hash>201fb4c8fa69e7e4523b001d6314f3e6</Hash>
 </Codenesium>*/

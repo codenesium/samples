@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services
                                                   int creditRating,
                                                   DateTime modifiedDate,
                                                   string name,
-                                                  bool preferredVendorStatus,
+                                                  bool preferredVendorStatu,
                                                   string purchasingWebServiceURL)
                 {
                         this.AccountNumber = accountNumber;
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
                         this.CreditRating = creditRating;
                         this.ModifiedDate = modifiedDate;
                         this.Name = name;
-                        this.PreferredVendorStatus = preferredVendorStatus;
+                        this.PreferredVendorStatu = preferredVendorStatu;
                         this.PurchasingWebServiceURL = purchasingWebServiceURL;
                 }
 
@@ -41,12 +41,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public string Name { get; private set; }
 
-                public bool PreferredVendorStatus { get; private set; }
+                public bool PreferredVendorStatu { get; private set; }
 
                 public string PurchasingWebServiceURL { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>31e3bcf6f7f489b7fcf57dae73bc6b6b</Hash>
+    <Hash>7fd1a1f662a20322b85ea9a0490fbbbd</Hash>
 </Codenesium>*/

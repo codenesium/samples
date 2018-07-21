@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFeedResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiFeedResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiFeedRequestModel model)
                 {
                         CreateResponse<ApiFeedResponseModel> result = await this.FeedService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Feeds/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Feeds/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFeedResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiFeedResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiFeedRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiFeedRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.FeedService.Update(id, model);
+                                UpdateResponse<ApiFeedResponseModel> result = await this.FeedService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiFeedResponseModel response = await this.FeedService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFeedResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiFeedResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiFeedRequestModel model)
                 {
-                        ApiFeedRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiFeedRequestModel request = await this.PatchModel(id, this.FeedModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.FeedService.Update(id, request);
+                                UpdateResponse<ApiFeedResponseModel> result = await this.FeedService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiFeedResponseModel response = await this.FeedService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,16 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiFeedRequestModel> CreatePatch(ApiFeedRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiFeedRequestModel>();
-                        patch.Replace(x => x.FeedType, model.FeedType);
-                        patch.Replace(x => x.FeedUri, model.FeedUri);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-
                 private async Task<ApiFeedRequestModel> PatchModel(string id, JsonPatchDocument<ApiFeedRequestModel> patch)
                 {
                         var record = await this.FeedService.Get(id);
@@ -253,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0130da16a37fa45379b6063fa432b199</Hash>
+    <Hash>8b53f0e24659a97b29bad25cd30d1a3d</Hash>
 </Codenesium>*/

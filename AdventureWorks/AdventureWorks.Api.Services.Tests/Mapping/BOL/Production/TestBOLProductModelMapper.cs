@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         BOProductModel response = mapper.MapModelToBO(1, model);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         ApiProductModelResponseModel response = mapper.MapBOToModel(bo);
 
                         response.CatalogDescription.Should().Be("A");
-                        response.Instructions.Should().Be("A");
+                        response.Instruction.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
                         response.ProductModelID.Should().Be(1);
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>212f80ded600157e360ce1249eb5a9d9</Hash>
+    <Hash>89016f7af4a4f506e52383066ed86b52</Hash>
 </Codenesium>*/

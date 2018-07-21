@@ -38,167 +38,47 @@ namespace AdventureWorksNS.Api.Contracts
                         this.Type = type;
                 }
 
-                private string category;
+                [Required]
+                [JsonProperty]
+                public string Category { get; private set; }
 
                 [Required]
-                public string Category
-                {
-                        get
-                        {
-                                return this.category;
-                        }
-
-                        set
-                        {
-                                this.category = value;
-                        }
-                }
-
-                private string description;
+                [JsonProperty]
+                public string Description { get; private set; }
 
                 [Required]
-                public string Description
-                {
-                        get
-                        {
-                                return this.description;
-                        }
-
-                        set
-                        {
-                                this.description = value;
-                        }
-                }
-
-                private decimal discountPct;
+                [JsonProperty]
+                public decimal DiscountPct { get; private set; }
 
                 [Required]
-                public decimal DiscountPct
-                {
-                        get
-                        {
-                                return this.discountPct;
-                        }
+                [JsonProperty]
+                public DateTime EndDate { get; private set; }
 
-                        set
-                        {
-                                this.discountPct = value;
-                        }
-                }
-
-                private DateTime endDate;
+                [JsonProperty]
+                public int? MaxQty { get; private set; }
 
                 [Required]
-                public DateTime EndDate
-                {
-                        get
-                        {
-                                return this.endDate;
-                        }
-
-                        set
-                        {
-                                this.endDate = value;
-                        }
-                }
-
-                private int? maxQty;
-
-                public int? MaxQty
-                {
-                        get
-                        {
-                                return this.maxQty;
-                        }
-
-                        set
-                        {
-                                this.maxQty = value;
-                        }
-                }
-
-                private int minQty;
+                [JsonProperty]
+                public int MinQty { get; private set; }
 
                 [Required]
-                public int MinQty
-                {
-                        get
-                        {
-                                return this.minQty;
-                        }
-
-                        set
-                        {
-                                this.minQty = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private DateTime startDate;
+                [JsonProperty]
+                public DateTime StartDate { get; private set; }
 
                 [Required]
-                public DateTime StartDate
-                {
-                        get
-                        {
-                                return this.startDate;
-                        }
-
-                        set
-                        {
-                                this.startDate = value;
-                        }
-                }
-
-                private string type;
-
-                [Required]
-                public string Type
-                {
-                        get
-                        {
-                                return this.type;
-                        }
-
-                        set
-                        {
-                                this.type = value;
-                        }
-                }
+                [JsonProperty]
+                public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>5d2db4970d14d8e986e95419e479216b</Hash>
+    <Hash>9663af0b0aff60eab84025b7e66182d9</Hash>
 </Codenesium>*/

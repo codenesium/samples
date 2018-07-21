@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShipMethodResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiShipMethodResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiShipMethodRequestModel model)
                 {
                         CreateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShipMethods/{result.Record.ShipMethodID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShipMethods/{result.Record.ShipMethodID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShipMethodResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShipMethodRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiShipMethodRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.ShipMethodService.Update(id, model);
+                                UpdateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiShipMethodResponseModel response = await this.ShipMethodService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiShipMethodResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodRequestModel model)
                 {
-                        ApiShipMethodRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiShipMethodRequestModel request = await this.PatchModel(id, this.ShipMethodModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.ShipMethodService.Update(id, request);
+                                UpdateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiShipMethodResponseModel response = await this.ShipMethodService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -238,17 +234,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiShipMethodRequestModel> CreatePatch(ApiShipMethodRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiShipMethodRequestModel>();
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.ShipBase, model.ShipBase);
-                        patch.Replace(x => x.ShipRate, model.ShipRate);
-                        return patch;
-                }
-
                 private async Task<ApiShipMethodRequestModel> PatchModel(int id, JsonPatchDocument<ApiShipMethodRequestModel> patch)
                 {
                         var record = await this.ShipMethodService.Get(id);
@@ -268,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3164927b00d5f7e9e6c231e55fd4bb7a</Hash>
+    <Hash>19d968aa9b84b6645c171c4037ab1057</Hash>
 </Codenesium>*/

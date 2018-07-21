@@ -28,87 +28,23 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantTags = tenantTags;
                 }
 
-                private byte[] dataVersion;
+                [JsonProperty]
+                public byte[] DataVersion { get; private set; }
 
-                [Required]
-                public byte[] DataVersion
-                {
-                        get
-                        {
-                                return this.dataVersion;
-                        }
+                [JsonProperty]
+                public string JSON { get; private set; }
 
-                        set
-                        {
-                                this.dataVersion = value;
-                        }
-                }
+                [JsonProperty]
+                public string Name { get; private set; }
 
-                private string jSON;
+                [JsonProperty]
+                public string ProjectIds { get; private set; }
 
-                [Required]
-                public string JSON
-                {
-                        get
-                        {
-                                return this.jSON;
-                        }
-
-                        set
-                        {
-                                this.jSON = value;
-                        }
-                }
-
-                private string name;
-
-                [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private string projectIds;
-
-                [Required]
-                public string ProjectIds
-                {
-                        get
-                        {
-                                return this.projectIds;
-                        }
-
-                        set
-                        {
-                                this.projectIds = value;
-                        }
-                }
-
-                private string tenantTags;
-
-                public string TenantTags
-                {
-                        get
-                        {
-                                return this.tenantTags;
-                        }
-
-                        set
-                        {
-                                this.tenantTags = value;
-                        }
-                }
+                [JsonProperty]
+                public string TenantTags { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b445c39d6af99f3c55c08e4e40eb28cc</Hash>
+    <Hash>10422d709aa378f20a839dbdd78cce4b</Hash>
 </Codenesium>*/

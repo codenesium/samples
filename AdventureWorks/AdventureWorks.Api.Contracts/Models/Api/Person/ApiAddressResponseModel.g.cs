@@ -28,24 +28,33 @@ namespace AdventureWorksNS.Api.Contracts
                         this.StateProvinceID = stateProvinceID;
                 }
 
+                [JsonProperty]
                 public int AddressID { get; private set; }
 
+                [JsonProperty]
                 public string AddressLine1 { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string AddressLine2 { get; private set; }
 
+                [JsonProperty]
                 public string City { get; private set; }
 
+                [JsonProperty]
                 public DateTime ModifiedDate { get; private set; }
 
+                [JsonProperty]
                 public string PostalCode { get; private set; }
 
+                [JsonProperty]
                 public Guid Rowguid { get; private set; }
 
+                [JsonProperty]
                 public int StateProvinceID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ab8e45fddfe20eb0428cac261c547bb2</Hash>
+    <Hash>6a99bfea713c17475f37a252a6b1aab8</Hash>
 </Codenesium>*/

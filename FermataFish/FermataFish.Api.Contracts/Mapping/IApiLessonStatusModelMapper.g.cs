@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace FermataFishNS.Api.Contracts
 
                 ApiLessonStatusRequestModel MapResponseToRequest(
                         ApiLessonStatusResponseModel response);
+
+                JsonPatchDocument<ApiLessonStatusRequestModel> CreatePatch(ApiLessonStatusRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>78bf0b54abcc28739f0da71642965f6d</Hash>
+    <Hash>44f831ee0e36b0589f44fce4ccb0e13f</Hash>
 </Codenesium>*/

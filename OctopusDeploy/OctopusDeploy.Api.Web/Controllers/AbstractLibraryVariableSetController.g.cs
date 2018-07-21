@@ -106,15 +106,15 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLibraryVariableSetResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiLibraryVariableSetResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiLibraryVariableSetRequestModel model)
                 {
                         CreateResponse<ApiLibraryVariableSetResponseModel> result = await this.LibraryVariableSetService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LibraryVariableSets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/LibraryVariableSets/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLibraryVariableSetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLibraryVariableSetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiLibraryVariableSetRequestModel> patch)
@@ -140,13 +140,11 @@ namespace OctopusDeployNS.Api.Web
                         {
                                 ApiLibraryVariableSetRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.LibraryVariableSetService.Update(id, model);
+                                UpdateResponse<ApiLibraryVariableSetResponseModel> result = await this.LibraryVariableSetService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiLibraryVariableSetResponseModel response = await this.LibraryVariableSetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLibraryVariableSetResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiLibraryVariableSetResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(string id, [FromBody] ApiLibraryVariableSetRequestModel model)
                 {
-                        ApiLibraryVariableSetRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiLibraryVariableSetRequestModel request = await this.PatchModel(id, this.LibraryVariableSetModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace OctopusDeployNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.LibraryVariableSetService.Update(id, request);
+                                UpdateResponse<ApiLibraryVariableSetResponseModel> result = await this.LibraryVariableSetService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiLibraryVariableSetResponseModel response = await this.LibraryVariableSetService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -224,16 +220,6 @@ namespace OctopusDeployNS.Api.Web
                         }
                 }
 
-                private JsonPatchDocument<ApiLibraryVariableSetRequestModel> CreatePatch(ApiLibraryVariableSetRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiLibraryVariableSetRequestModel>();
-                        patch.Replace(x => x.ContentType, model.ContentType);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.VariableSetId, model.VariableSetId);
-                        return patch;
-                }
-
                 private async Task<ApiLibraryVariableSetRequestModel> PatchModel(string id, JsonPatchDocument<ApiLibraryVariableSetRequestModel> patch)
                 {
                         var record = await this.LibraryVariableSetService.Get(id);
@@ -253,5 +239,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3b320a34c2a3c918ddf1074a1e7918d5</Hash>
+    <Hash>70e691d86c6aa75c7e81fe2cc4fcbdf6</Hash>
 </Codenesium>*/

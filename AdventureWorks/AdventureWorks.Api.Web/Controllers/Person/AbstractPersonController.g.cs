@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiPersonResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPersonRequestModel model)
                 {
                         CreateResponse<ApiPersonResponseModel> result = await this.PersonService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/People/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/People/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPersonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPersonRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiPersonRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.PersonService.Update(id, model);
+                                UpdateResponse<ApiPersonResponseModel> result = await this.PersonService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiPersonResponseModel response = await this.PersonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPersonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiPersonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonRequestModel model)
                 {
-                        ApiPersonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiPersonRequestModel request = await this.PatchModel(id, this.PersonModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.PersonService.Update(id, request);
+                                UpdateResponse<ApiPersonResponseModel> result = await this.PersonService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiPersonResponseModel response = await this.PersonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -228,12 +224,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("byDemographics/{demographics}")]
+                [Route("byDemographics/{demographic}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByDemographics(string demographics)
+                public async virtual Task<IActionResult> ByDemographic(string demographic)
                 {
-                        List<ApiPersonResponseModel> response = await this.PersonService.ByDemographics(demographics);
+                        List<ApiPersonResponseModel> response = await this.PersonService.ByDemographic(demographic);
 
                         return this.Ok(response);
                 }
@@ -294,24 +290,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiPersonRequestModel> CreatePatch(ApiPersonRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiPersonRequestModel>();
-                        patch.Replace(x => x.AdditionalContactInfo, model.AdditionalContactInfo);
-                        patch.Replace(x => x.Demographics, model.Demographics);
-                        patch.Replace(x => x.EmailPromotion, model.EmailPromotion);
-                        patch.Replace(x => x.FirstName, model.FirstName);
-                        patch.Replace(x => x.LastName, model.LastName);
-                        patch.Replace(x => x.MiddleName, model.MiddleName);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.NameStyle, model.NameStyle);
-                        patch.Replace(x => x.PersonType, model.PersonType);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.Suffix, model.Suffix);
-                        patch.Replace(x => x.Title, model.Title);
-                        return patch;
-                }
-
                 private async Task<ApiPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiPersonRequestModel> patch)
                 {
                         var record = await this.PersonService.Get(id);
@@ -331,5 +309,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ad80885501bdd8afdb9f87b0f7d5362</Hash>
+    <Hash>03b21e32f26826587494dfced710a767</Hash>
 </Codenesium>*/

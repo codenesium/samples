@@ -16,12 +16,14 @@ namespace PetStoreNS.Api.Contracts
                         this.Name = name;
                 }
 
+                [JsonProperty]
                 public int Id { get; private set; }
 
+                [JsonProperty]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>feafccb046b58bc2f9a4cdf0fa49d164</Hash>
+    <Hash>a340dc2193628f3d3372d82f0a2a2e7e</Hash>
 </Codenesium>*/

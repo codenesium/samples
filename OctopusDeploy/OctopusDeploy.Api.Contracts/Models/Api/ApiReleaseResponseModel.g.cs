@@ -28,24 +28,40 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
+                [Required]
+                [JsonProperty]
                 public DateTimeOffset Assembled { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ChannelId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Id { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string JSON { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectDeploymentProcessSnapshotId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string ProjectVariableSetSnapshotId { get; private set; }
 
+                [Required]
+                [JsonProperty]
                 public string Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a4a340f67aacf251207419ce65835402</Hash>
+    <Hash>1e90abb12b641a2500fe186172e4d9ca</Hash>
 </Codenesium>*/

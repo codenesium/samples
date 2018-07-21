@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 Task<CreateResponse<ApiProxyResponseModel>> Create(
                         ApiProxyRequestModel model);
 
-                Task<ActionResponse> Update(string id,
-                                            ApiProxyRequestModel model);
+                Task<UpdateResponse<ApiProxyResponseModel>> Update(string id,
+                                                                    ApiProxyRequestModel model);
 
                 Task<ActionResponse> Delete(string id);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7458f79185700309ee5c8e5e24f98987</Hash>
+    <Hash>6d4c2f5af0d059adffa8f55c21df7ee8</Hash>
 </Codenesium>*/

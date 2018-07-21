@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void Body_Create_null()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
-
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Body, null as string);
-                }
-
-                [Fact]
-                public async void Body_Update_null()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
-
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Body, null as string);
-                }
-
-                [Fact]
                 public async void LastEditorDisplayName_Create_length()
                 {
                         Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
@@ -123,5 +99,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>26fe0b91a76099bb7286249e5ff020f2</Hash>
+    <Hash>e48134c785f1c26556978fda8ececb15</Hash>
 </Codenesium>*/

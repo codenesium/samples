@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiCreditCardResponseModel>> Create(
                         ApiCreditCardRequestModel model);
 
-                Task<ActionResponse> Update(int creditCardID,
-                                            ApiCreditCardRequestModel model);
+                Task<UpdateResponse<ApiCreditCardResponseModel>> Update(int creditCardID,
+                                                                         ApiCreditCardRequestModel model);
 
                 Task<ActionResponse> Delete(int creditCardID);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69458d9d0ef4f41d1e266a07c715a66a</Hash>
+    <Hash>8aceb8965c27c32eac4e3e12aae592d3</Hash>
 </Codenesium>*/

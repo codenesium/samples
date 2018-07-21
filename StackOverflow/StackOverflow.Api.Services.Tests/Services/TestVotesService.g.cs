@@ -97,13 +97,14 @@ namespace StackOverflowNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IVotesRepository>();
                         var model = new ApiVotesRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Votes>())).Returns(Task.FromResult(new Votes()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Votes()));
                         var service = new VotesService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.VotesModelValidatorMock.Object,
                                                        mock.BOLMapperMockFactory.BOLVotesMapperMock,
                                                        mock.DALMapperMockFactory.DALVotesMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiVotesResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VotesModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVotesRequestModel>()));
@@ -132,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>95bfeb25d65b2b9ef03e1bd6d88c0516</Hash>
+    <Hash>be6a24e40194e8432f0f9e6a16502c03</Hash>
 </Codenesium>*/

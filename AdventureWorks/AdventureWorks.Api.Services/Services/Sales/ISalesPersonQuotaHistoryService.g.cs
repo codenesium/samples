@@ -12,8 +12,8 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Create(
                         ApiSalesPersonQuotaHistoryRequestModel model);
 
-                Task<ActionResponse> Update(int businessEntityID,
-                                            ApiSalesPersonQuotaHistoryRequestModel model);
+                Task<UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Update(int businessEntityID,
+                                                                                      ApiSalesPersonQuotaHistoryRequestModel model);
 
                 Task<ActionResponse> Delete(int businessEntityID);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>60576f1b98ec8c07be1306989373076d</Hash>
+    <Hash>3397badbb0b977be0f9c9b172ec81e60</Hash>
 </Codenesium>*/

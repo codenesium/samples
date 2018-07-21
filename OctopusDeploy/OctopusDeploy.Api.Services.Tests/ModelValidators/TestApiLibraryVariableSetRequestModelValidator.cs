@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ContentType_Create_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ContentType, null as string);
-                }
-
-                [Fact]
-                public async void ContentType_Update_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ContentType, null as string);
-                }
-
-                [Fact]
                 public async void ContentType_Create_length()
                 {
                         Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
@@ -70,54 +46,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ContentType, new string('A', 51));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ILibraryVariableSetRepository> libraryVariableSetRepository = new Mock<ILibraryVariableSetRepository>();
-                        libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
-
-                        var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -219,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5a425a1192a7c59c513f885a697e38a2</Hash>
+    <Hash>0a0bddd390d0e0a02f0221b5248d3466</Hash>
 </Codenesium>*/

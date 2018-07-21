@@ -32,120 +32,36 @@ namespace AdventureWorksNS.Api.Contracts
                         this.TerritoryID = territoryID;
                 }
 
-                private string countryRegionCode;
+                [Required]
+                [JsonProperty]
+                public string CountryRegionCode { get; private set; }
 
                 [Required]
-                public string CountryRegionCode
-                {
-                        get
-                        {
-                                return this.countryRegionCode;
-                        }
-
-                        set
-                        {
-                                this.countryRegionCode = value;
-                        }
-                }
-
-                private bool isOnlyStateProvinceFlag;
+                [JsonProperty]
+                public bool IsOnlyStateProvinceFlag { get; private set; }
 
                 [Required]
-                public bool IsOnlyStateProvinceFlag
-                {
-                        get
-                        {
-                                return this.isOnlyStateProvinceFlag;
-                        }
-
-                        set
-                        {
-                                this.isOnlyStateProvinceFlag = value;
-                        }
-                }
-
-                private DateTime modifiedDate;
+                [JsonProperty]
+                public DateTime ModifiedDate { get; private set; }
 
                 [Required]
-                public DateTime ModifiedDate
-                {
-                        get
-                        {
-                                return this.modifiedDate;
-                        }
-
-                        set
-                        {
-                                this.modifiedDate = value;
-                        }
-                }
-
-                private string name;
+                [JsonProperty]
+                public string Name { get; private set; }
 
                 [Required]
-                public string Name
-                {
-                        get
-                        {
-                                return this.name;
-                        }
-
-                        set
-                        {
-                                this.name = value;
-                        }
-                }
-
-                private Guid rowguid;
+                [JsonProperty]
+                public Guid Rowguid { get; private set; }
 
                 [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
-                private string stateProvinceCode;
+                [JsonProperty]
+                public string StateProvinceCode { get; private set; }
 
                 [Required]
-                public string StateProvinceCode
-                {
-                        get
-                        {
-                                return this.stateProvinceCode;
-                        }
-
-                        set
-                        {
-                                this.stateProvinceCode = value;
-                        }
-                }
-
-                private int territoryID;
-
-                [Required]
-                public int TerritoryID
-                {
-                        get
-                        {
-                                return this.territoryID;
-                        }
-
-                        set
-                        {
-                                this.territoryID = value;
-                        }
-                }
+                [JsonProperty]
+                public int TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1a06f2406eb1ab9601238442634943bc</Hash>
+    <Hash>5c0e7ac34b3d2251b9f3f782cb197552</Hash>
 </Codenesium>*/

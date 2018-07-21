@@ -25,30 +25,6 @@ namespace StackOverflowNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void TagName_Create_null()
-                {
-                        Mock<ITagsRepository> tagsRepository = new Mock<ITagsRepository>();
-                        tagsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tags()));
-
-                        var validator = new ApiTagsRequestModelValidator(tagsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTagsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TagName, null as string);
-                }
-
-                [Fact]
-                public async void TagName_Update_null()
-                {
-                        Mock<ITagsRepository> tagsRepository = new Mock<ITagsRepository>();
-                        tagsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tags()));
-
-                        var validator = new ApiTagsRequestModelValidator(tagsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTagsRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.TagName, null as string);
-                }
-
-                [Fact]
                 public async void TagName_Create_length()
                 {
                         Mock<ITagsRepository> tagsRepository = new Mock<ITagsRepository>();
@@ -75,5 +51,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ff46ebee404ebc19ab2f0b8d6afbfdbb</Hash>
+    <Hash>d4437dab3920f36abaf58ffc17ae48f3</Hash>
 </Codenesium>*/

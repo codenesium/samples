@@ -22,40 +22,14 @@ namespace FermataFishNS.Api.Contracts
                         this.StudentId = studentId;
                 }
 
-                private int lessonId;
+                [JsonProperty]
+                public int LessonId { get; private set; }
 
-                [Required]
-                public int LessonId
-                {
-                        get
-                        {
-                                return this.lessonId;
-                        }
-
-                        set
-                        {
-                                this.lessonId = value;
-                        }
-                }
-
-                private int studentId;
-
-                [Required]
-                public int StudentId
-                {
-                        get
-                        {
-                                return this.studentId;
-                        }
-
-                        set
-                        {
-                                this.studentId = value;
-                        }
-                }
+                [JsonProperty]
+                public int StudentId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f9b8fde2b26e3daaa21cbc5f3523b22</Hash>
+    <Hash>ea75564936ef288bf1462933c1a0a262</Hash>
 </Codenesium>*/

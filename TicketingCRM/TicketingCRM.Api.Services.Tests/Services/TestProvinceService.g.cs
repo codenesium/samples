@@ -113,6 +113,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IProvinceRepository>();
                         var model = new ApiProvinceRequestModel();
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Province>())).Returns(Task.FromResult(new Province()));
+                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
                         var service = new ProvinceService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -123,7 +124,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLVenueMapperMock,
                                                           mock.DALMapperMockFactory.DALVenueMapperMock);
 
-                        ActionResponse response = await service.Update(default(int), model);
+                        UpdateResponse<ApiProvinceResponseModel> response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()));
@@ -288,5 +289,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a26c4128a7710d4be9f6a19639ce6e80</Hash>
+    <Hash>d7ae14b11de55b5315636c4ad71cccd6</Hash>
 </Codenesium>*/

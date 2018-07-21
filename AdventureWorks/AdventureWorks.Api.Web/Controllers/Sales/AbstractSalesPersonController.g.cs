@@ -106,15 +106,15 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiSalesPersonResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonRequestModel model)
                 {
                         CreateResponse<ApiSalesPersonResponseModel> result = await this.SalesPersonService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesPersons/{result.Record.BusinessEntityID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesPersons/{result.Record.BusinessEntityID}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesPersonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesPersonRequestModel> patch)
@@ -140,13 +140,11 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 ApiSalesPersonRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.SalesPersonService.Update(id, model);
+                                UpdateResponse<ApiSalesPersonResponseModel> result = await this.SalesPersonService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesPersonResponseModel response = await this.SalesPersonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesPersonResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiSalesPersonResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonRequestModel model)
                 {
-                        ApiSalesPersonRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiSalesPersonRequestModel request = await this.PatchModel(id, this.SalesPersonModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace AdventureWorksNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.SalesPersonService.Update(id, request);
+                                UpdateResponse<ApiSalesPersonResponseModel> result = await this.SalesPersonService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiSalesPersonResponseModel response = await this.SalesPersonService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -261,20 +257,6 @@ namespace AdventureWorksNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiSalesPersonRequestModel> CreatePatch(ApiSalesPersonRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSalesPersonRequestModel>();
-                        patch.Replace(x => x.Bonus, model.Bonus);
-                        patch.Replace(x => x.CommissionPct, model.CommissionPct);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalesLastYear, model.SalesLastYear);
-                        patch.Replace(x => x.SalesQuota, model.SalesQuota);
-                        patch.Replace(x => x.SalesYTD, model.SalesYTD);
-                        patch.Replace(x => x.TerritoryID, model.TerritoryID);
-                        return patch;
-                }
-
                 private async Task<ApiSalesPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesPersonRequestModel> patch)
                 {
                         var record = await this.SalesPersonService.Get(id);
@@ -294,5 +276,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>577080d02400975077562832813a535d</Hash>
+    <Hash>d0ab9f006deceebdc5ff1788674d3993</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using FluentAssertions;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -39,9 +40,26 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.PasswordSalt.Should().Be("A");
                         response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
+
+                [Fact]
+                public void CreatePatch()
+                {
+                        var mapper = new ApiPasswordModelMapper();
+                        var model = new ApiPasswordRequestModel();
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+
+                        JsonPatchDocument<ApiPasswordRequestModel> patch = mapper.CreatePatch(model);
+                        var response = new ApiPasswordRequestModel();
+                        patch.ApplyTo(response);
+
+                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        response.PasswordHash.Should().Be("A");
+                        response.PasswordSalt.Should().Be("A");
+                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d8ab9fa6af1fa35995e650dfd5ebbf77</Hash>
+    <Hash>305949a372e36fcf53e7e7ca350da54a</Hash>
 </Codenesium>*/

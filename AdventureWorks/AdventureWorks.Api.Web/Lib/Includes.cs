@@ -65,7 +65,7 @@ namespace Codenesium.Foundation.CommonMVC
 
 	/// <summary>
     /// EntityFrameworkTransactionCoordinator is the transaction coordinator when using
-	//  Entity Framework
+	///  Entity Framework
     /// </summary>
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {

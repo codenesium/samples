@@ -106,15 +106,15 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                [ProducesResponseType(typeof(CreateResponse<ApiEventResponseModel>), 201)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiEventRequestModel model)
                 {
                         CreateResponse<ApiEventResponseModel> result = await this.EventService.Create(model);
 
                         if (result.Success)
                         {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Events/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Events/{result.Record.Id}", result);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPatch]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEventRequestModel> patch)
@@ -140,13 +140,11 @@ namespace TicketingCRMNS.Api.Web
                         {
                                 ApiEventRequestModel model = await this.PatchModel(id, patch);
 
-                                ActionResponse result = await this.EventService.Update(id, model);
+                                UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, model);
 
                                 if (result.Success)
                                 {
-                                        ApiEventResponseModel response = await this.EventService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -158,12 +156,12 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPut]
                 [Route("{id}")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventResponseModel), 200)]
+                [ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
                 [ProducesResponseType(typeof(void), 404)]
                 [ProducesResponseType(typeof(ActionResponse), 422)]
                 public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEventRequestModel model)
                 {
-                        ApiEventRequestModel request = await this.PatchModel(id, this.CreatePatch(model));
+                        ApiEventRequestModel request = await this.PatchModel(id, this.EventModelMapper.CreatePatch(model));
 
                         if (request == null)
                         {
@@ -171,13 +169,11 @@ namespace TicketingCRMNS.Api.Web
                         }
                         else
                         {
-                                ActionResponse result = await this.EventService.Update(id, request);
+                                UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, request);
 
                                 if (result.Success)
                                 {
-                                        ApiEventResponseModel response = await this.EventService.Get(id);
-
-                                        return this.Ok(response);
+                                        return this.Ok(result);
                                 }
                                 else
                                 {
@@ -216,22 +212,6 @@ namespace TicketingCRMNS.Api.Web
                         return this.Ok(response);
                 }
 
-                private JsonPatchDocument<ApiEventRequestModel> CreatePatch(ApiEventRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiEventRequestModel>();
-                        patch.Replace(x => x.Address1, model.Address1);
-                        patch.Replace(x => x.Address2, model.Address2);
-                        patch.Replace(x => x.CityId, model.CityId);
-                        patch.Replace(x => x.Date, model.Date);
-                        patch.Replace(x => x.Description, model.Description);
-                        patch.Replace(x => x.EndDate, model.EndDate);
-                        patch.Replace(x => x.Facebook, model.Facebook);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.StartDate, model.StartDate);
-                        patch.Replace(x => x.Website, model.Website);
-                        return patch;
-                }
-
                 private async Task<ApiEventRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventRequestModel> patch)
                 {
                         var record = await this.EventService.Get(id);
@@ -251,5 +231,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8a8957d896a5636501efc2861c625546</Hash>
+    <Hash>c378b2eeec64b62be573ad8cb4be47be</Hash>
 </Codenesium>*/

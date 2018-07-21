@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Contracts
 {
@@ -11,9 +13,11 @@ namespace ESPIOTNS.Api.Contracts
 
                 ApiDeviceRequestModel MapResponseToRequest(
                         ApiDeviceResponseModel response);
+
+                JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model);
         }
 }
 
 /*<Codenesium>
-    <Hash>ad7007275e23db39a03288800c209479</Hash>
+    <Hash>357e1cbb58664ef6668dbb74b63e589e</Hash>
 </Codenesium>*/

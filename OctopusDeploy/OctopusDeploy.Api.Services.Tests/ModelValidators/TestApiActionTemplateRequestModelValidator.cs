@@ -25,30 +25,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 }
 
                 [Fact]
-                public async void ActionType_Create_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
-                }
-
-                [Fact]
-                public async void ActionType_Update_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
-                }
-
-                [Fact]
                 public async void ActionType_Create_length()
                 {
                         Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
@@ -94,54 +70,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CommunityActionTemplateId, new string('A', 51));
-                }
-
-                [Fact]
-                public async void JSON_Create_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void JSON_Update_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
-                }
-
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
-
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IActionTemplateRepository> actionTemplateRepository = new Mock<IActionTemplateRepository>();
-                        actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
-
-                        var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
 
                 [Fact]
@@ -219,5 +147,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5576f37818a2ce25e6078ffe9d0c5fd1</Hash>
+    <Hash>bcbb782e07be9fc79888f813909086f5</Hash>
 </Codenesium>*/
