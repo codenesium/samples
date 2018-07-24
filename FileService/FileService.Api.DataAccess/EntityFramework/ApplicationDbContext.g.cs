@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -76,6 +77,11 @@ namespace FileServiceNS.Api.DataAccess
                 {
                         base.OnConfiguring(options);
                 }
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                        var booleanStringConverter = new BoolToStringConverter("N", "Y");
+                }
         }
 
         public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -103,5 +109,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3aa9fdf1ad599ed61330d44628771d5c</Hash>
+    <Hash>cf8a8795027e16b6483aa0ac37a6f214</Hash>
 </Codenesium>*/

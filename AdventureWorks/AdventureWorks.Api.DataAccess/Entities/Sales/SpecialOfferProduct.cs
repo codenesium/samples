@@ -31,6 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ProductID")]
                 public int ProductID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -39,10 +40,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int SpecialOfferID { get; private set; }
 
                 [ForeignKey("SpecialOfferID")]
-                public virtual SpecialOffer SpecialOffer { get; set; }
+                public virtual SpecialOffer SpecialOfferNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f8add96cbebdcd5d7a7ad61a6410c407</Hash>
+    <Hash>bb87ef179f8784b875417c8a6ce37c57</Hash>
 </Codenesium>*/

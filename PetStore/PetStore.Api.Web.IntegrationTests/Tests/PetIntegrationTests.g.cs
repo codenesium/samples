@@ -78,7 +78,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
                 private async Task<ApiPetResponseModel> CreateRecord()
                 {
                         var model = new ApiPetRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 3810.59m, 1);
+                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
                         CreateResponse<ApiPetResponseModel> result = await this.Client.PetCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>31f64ec8a1c782c61c2b037f6fdea279</Hash>
+    <Hash>7bbd06091900c3066f905b78965e6c19</Hash>
 </Codenesium>*/

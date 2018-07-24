@@ -74,6 +74,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("PersonType")]
                 public string PersonType { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -86,5 +87,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>561ac61c6cb4289981f10fd2ca395b46</Hash>
+    <Hash>d29a0ebb465daba96fad8574fbcf67d9</Hash>
 </Codenesium>*/

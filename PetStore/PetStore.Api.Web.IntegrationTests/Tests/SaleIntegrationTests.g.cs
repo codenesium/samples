@@ -78,7 +78,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
                 private async Task<ApiSaleResponseModel> CreateRecord()
                 {
                         var model = new ApiSaleRequestModel();
-                        model.SetProperties(3810.59m, "B", "B", 1, 1, "B");
+                        model.SetProperties(2m, "B", "B", 1, 1, "B");
                         CreateResponse<ApiSaleResponseModel> result = await this.Client.SaleCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1a2a07d277a390a058390a16421a1739</Hash>
+    <Hash>413a62926aafdd14a0d19e3f039d99cd</Hash>
 </Codenesium>*/

@@ -11,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual void SetProperties(short locationID,
-                                                  decimal availability,
+                                                  double availability,
                                                   decimal costRate,
                                                   DateTime modifiedDate,
                                                   string name)
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
                         this.Name = name;
                 }
 
-                public decimal Availability { get; private set; }
+                public double Availability { get; private set; }
 
                 public decimal CostRate { get; private set; }
 
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>51c17bbc1d781ef5508ed87a00240e32</Hash>
+    <Hash>77807ab305459d212806e5873dc74650</Hash>
 </Codenesium>*/

@@ -39,10 +39,10 @@ namespace ESPIOTNS.Api.DataAccess
                 public string @Value { get; private set; }
 
                 [ForeignKey("DeviceId")]
-                public virtual Device Device { get; set; }
+                public virtual Device DeviceNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>94a7bfde6187ccb9f15a846ffe7b8092</Hash>
+    <Hash>35eb4b59a227f7182edd044b946f8c44</Hash>
 </Codenesium>*/

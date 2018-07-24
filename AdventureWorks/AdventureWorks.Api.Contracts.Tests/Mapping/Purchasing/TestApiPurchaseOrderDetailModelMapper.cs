@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiPurchaseOrderDetailModelMapper();
                         var model = new ApiPurchaseOrderDetailRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
                         ApiPurchaseOrderDetailResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,9 +27,9 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ProductID.Should().Be(1);
                         response.PurchaseOrderDetailID.Should().Be(1);
                         response.PurchaseOrderID.Should().Be(1);
-                        response.ReceivedQty.Should().Be(1m);
-                        response.RejectedQty.Should().Be(1m);
-                        response.StockedQty.Should().Be(1m);
+                        response.ReceivedQty.Should().Be(1);
+                        response.RejectedQty.Should().Be(1);
+                        response.StockedQty.Should().Be(1);
                         response.UnitPrice.Should().Be(1m);
                 }
 
@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiPurchaseOrderDetailModelMapper();
                         var model = new ApiPurchaseOrderDetailResponseModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
                         ApiPurchaseOrderDetailRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -47,9 +47,9 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
                         response.PurchaseOrderDetailID.Should().Be(1);
-                        response.ReceivedQty.Should().Be(1m);
-                        response.RejectedQty.Should().Be(1m);
-                        response.StockedQty.Should().Be(1m);
+                        response.ReceivedQty.Should().Be(1);
+                        response.RejectedQty.Should().Be(1);
+                        response.StockedQty.Should().Be(1);
                         response.UnitPrice.Should().Be(1m);
                 }
 
@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiPurchaseOrderDetailModelMapper();
                         var model = new ApiPurchaseOrderDetailRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
 
                         JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch = mapper.CreatePatch(model);
                         var response = new ApiPurchaseOrderDetailRequestModel();
@@ -70,14 +70,14 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
                         response.PurchaseOrderDetailID.Should().Be(1);
-                        response.ReceivedQty.Should().Be(1m);
-                        response.RejectedQty.Should().Be(1m);
-                        response.StockedQty.Should().Be(1m);
+                        response.ReceivedQty.Should().Be(1);
+                        response.RejectedQty.Should().Be(1);
+                        response.StockedQty.Should().Be(1);
                         response.UnitPrice.Should().Be(1m);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9d099ec1ad0134ff3b2d81685ccab73c</Hash>
+    <Hash>b17349c0c833a94054b60170fc34b772</Hash>
 </Codenesium>*/

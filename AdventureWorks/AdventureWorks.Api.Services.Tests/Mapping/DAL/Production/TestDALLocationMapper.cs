@@ -17,11 +17,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALLocationMapper();
                         var bo = new BOLocation();
-                        bo.SetProperties(1, 1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         Location response = mapper.MapBOToEF(bo);
 
-                        response.Availability.Should().Be(1m);
+                        response.Availability.Should().Be(1);
                         response.CostRate.Should().Be(1m);
                         response.LocationID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -33,11 +33,11 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALLocationMapper();
                         Location entity = new Location();
-                        entity.SetProperties(1m, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         BOLocation response = mapper.MapEFToBO(entity);
 
-                        response.Availability.Should().Be(1m);
+                        response.Availability.Should().Be(1);
                         response.CostRate.Should().Be(1m);
                         response.LocationID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALLocationMapper();
                         Location entity = new Location();
-                        entity.SetProperties(1m, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOLocation> response = mapper.MapEFToBO(new List<Location>() { entity });
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>da63b43e0f1b3813ea05cf390405dfc3</Hash>
+    <Hash>6c5bbcc5090a0343649705b726157b2c</Hash>
 </Codenesium>*/

@@ -39,10 +39,10 @@ namespace NebulaNS.Api.DataAccess
                 public string Log { get; private set; }
 
                 [ForeignKey("LinkId")]
-                public virtual Link Link { get; set; }
+                public virtual Link LinkNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d7eea5e220d43d848d535cf6f59a5ea</Hash>
+    <Hash>a490ded1d3b0465bbb1ef9aadadbc962</Hash>
 </Codenesium>*/

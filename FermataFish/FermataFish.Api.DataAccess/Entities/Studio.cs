@@ -59,10 +59,10 @@ namespace FermataFishNS.Api.DataAccess
                 public string Zip { get; private set; }
 
                 [ForeignKey("StateId")]
-                public virtual State State { get; set; }
+                public virtual State StateNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a1af3fd8d92d66e8ec533701ccd34a01</Hash>
+    <Hash>6c58d557d36226cec63c9005e65a38b2</Hash>
 </Codenesium>*/

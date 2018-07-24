@@ -66,11 +66,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int StockedQty { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("WorkOrderID")]
                 public int WorkOrderID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>06e620f669c0587f7962a1c9a25c4530</Hash>
+    <Hash>3887ad027e4c676e9b7d04b7be41069c</Hash>
 </Codenesium>*/

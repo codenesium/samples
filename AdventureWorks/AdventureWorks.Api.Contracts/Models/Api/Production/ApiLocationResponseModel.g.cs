@@ -10,7 +10,7 @@ namespace AdventureWorksNS.Api.Contracts
         {
                 public virtual void SetProperties(
                         short locationID,
-                        decimal availability,
+                        double availability,
                         decimal costRate,
                         DateTime modifiedDate,
                         string name)
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Contracts
                 }
 
                 [JsonProperty]
-                public decimal Availability { get; private set; }
+                public double Availability { get; private set; }
 
                 [JsonProperty]
                 public decimal CostRate { get; private set; }
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>59b1183e3730b71b2026798ac485bb5d</Hash>
+    <Hash>862280f0d2a599915f3b7f4b70ecab36</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
                         ApiPurchaseOrderDetailRequestModel model = new ApiPurchaseOrderDetailRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
                         BOPurchaseOrderDetail response = mapper.MapModelToBO(1, model);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,9 +27,9 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.OrderQty.Should().Be(1);
                         response.ProductID.Should().Be(1);
                         response.PurchaseOrderDetailID.Should().Be(1);
-                        response.ReceivedQty.Should().Be(1m);
-                        response.RejectedQty.Should().Be(1m);
-                        response.StockedQty.Should().Be(1m);
+                        response.ReceivedQty.Should().Be(1);
+                        response.RejectedQty.Should().Be(1);
+                        response.StockedQty.Should().Be(1);
                         response.UnitPrice.Should().Be(1m);
                 }
 
@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
                         BOPurchaseOrderDetail bo = new BOPurchaseOrderDetail();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
                         ApiPurchaseOrderDetailResponseModel response = mapper.MapBOToModel(bo);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,9 +48,9 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.ProductID.Should().Be(1);
                         response.PurchaseOrderDetailID.Should().Be(1);
                         response.PurchaseOrderID.Should().Be(1);
-                        response.ReceivedQty.Should().Be(1m);
-                        response.RejectedQty.Should().Be(1m);
-                        response.StockedQty.Should().Be(1m);
+                        response.ReceivedQty.Should().Be(1);
+                        response.RejectedQty.Should().Be(1);
+                        response.StockedQty.Should().Be(1);
                         response.UnitPrice.Should().Be(1m);
                 }
 
@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
                         BOPurchaseOrderDetail bo = new BOPurchaseOrderDetail();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1m, 1m);
+                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1m);
                         List<ApiPurchaseOrderDetailResponseModel> response = mapper.MapBOToModel(new List<BOPurchaseOrderDetail>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>50ef0d483ab0afb6c7cd3cbda072e8ab</Hash>
+    <Hash>6764448ab261a539d4dd29cfc0784b96</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -80,6 +81,11 @@ namespace PetStoreNS.Api.DataAccess
                 {
                         base.OnConfiguring(options);
                 }
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                        var booleanStringConverter = new BoolToStringConverter("N", "Y");
+                }
         }
 
         public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -107,5 +113,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b8d637edf884cb9165c13cfaf2f98e3</Hash>
+    <Hash>c03220add4d281b1fde564a3c234cc4d</Hash>
 </Codenesium>*/

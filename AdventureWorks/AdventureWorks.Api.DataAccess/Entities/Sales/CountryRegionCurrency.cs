@@ -34,10 +34,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime ModifiedDate { get; private set; }
 
                 [ForeignKey("CurrencyCode")]
-                public virtual Currency Currency { get; set; }
+                public virtual Currency CurrencyNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a8bd4ba4fc443fab5d7daa190bef5c6b</Hash>
+    <Hash>7f7ba4291da99e81dda6e48fc4e96957</Hash>
 </Codenesium>*/

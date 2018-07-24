@@ -34,10 +34,10 @@ namespace TicketingCRMNS.Api.DataAccess
                 public string Name { get; private set; }
 
                 [ForeignKey("CountryId")]
-                public virtual Country Country { get; set; }
+                public virtual Country CountryNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e00d3621c8f84907d75987972c43365d</Hash>
+    <Hash>cf480c2a0cc97e9da5a1d40623bb29ff</Hash>
 </Codenesium>*/

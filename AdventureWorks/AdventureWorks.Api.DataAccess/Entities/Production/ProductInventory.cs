@@ -47,6 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("Quantity")]
                 public short Quantity { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -56,5 +57,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6066b9a38cc80eeff8863d2cfa4649b7</Hash>
+    <Hash>c3aae157dd8eaa931f5d48b2166f3e25</Hash>
 </Codenesium>*/

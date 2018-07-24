@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        decimal? weight,
+                        double? weight,
                         string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.Contracts
                 public string Style { get; private set; }
 
                 [JsonProperty]
-                public decimal? Weight { get; private set; }
+                public double? Weight { get; private set; }
 
                 [JsonProperty]
                 public string WeightUnitMeasureCode { get; private set; }
@@ -153,5 +153,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7da86e81c82bd8cf7129e788515ca5a3</Hash>
+    <Hash>a9f3c6b1d736f23a895b65bb04d52ae5</Hash>
 </Codenesium>*/

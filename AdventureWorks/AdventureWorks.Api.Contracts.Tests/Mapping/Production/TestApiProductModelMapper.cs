@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiProductModelMapper();
                         var model = new ApiProductRequestModel();
-                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
                         ApiProductResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.@Class.Should().Be("A");
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.SizeUnitMeasureCode.Should().Be("A");
                         response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1m);
+                        response.Weight.Should().Be(1);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiProductModelMapper();
                         var model = new ApiProductResponseModel();
-                        model.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        model.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
                         ApiProductRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.@Class.Should().Be("A");
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.SizeUnitMeasureCode.Should().Be("A");
                         response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1m);
+                        response.Weight.Should().Be(1);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiProductModelMapper();
                         var model = new ApiProductRequestModel();
-                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 
                         JsonPatchDocument<ApiProductRequestModel> patch = mapper.CreatePatch(model);
                         var response = new ApiProductRequestModel();
@@ -114,12 +114,12 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.SizeUnitMeasureCode.Should().Be("A");
                         response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1m);
+                        response.Weight.Should().Be(1);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>88a0f0b14385ba6cf7dbf65078f1e2bc</Hash>
+    <Hash>cef7bc3f834b0b2d43f2625ad44e48c5</Hash>
 </Codenesium>*/

@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
                         ApiWorkOrderRoutingRequestModel model = new ApiWorkOrderRoutingRequestModel();
-                        model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOWorkOrderRouting response = mapper.MapModelToBO(1, model);
 
                         response.ActualCost.Should().Be(1m);
                         response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ActualResourceHr.Should().Be(1m);
+                        response.ActualResourceHr.Should().Be(1);
                         response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.LocationID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -39,12 +39,12 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
                         BOWorkOrderRouting bo = new BOWorkOrderRouting();
-                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiWorkOrderRoutingResponseModel response = mapper.MapBOToModel(bo);
 
                         response.ActualCost.Should().Be(1m);
                         response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ActualResourceHr.Should().Be(1m);
+                        response.ActualResourceHr.Should().Be(1);
                         response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.LocationID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
                         BOWorkOrderRouting bo = new BOWorkOrderRouting();
-                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+                        bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiWorkOrderRoutingResponseModel> response = mapper.MapBOToModel(new List<BOWorkOrderRouting>() { { bo } });
 
                         response.Count.Should().Be(1);
@@ -70,5 +70,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>768d663a1aedb0f15ecb7ef4b040f447</Hash>
+    <Hash>dfeebddda72b11dc18551a5cfbacc26e</Hash>
 </Codenesium>*/

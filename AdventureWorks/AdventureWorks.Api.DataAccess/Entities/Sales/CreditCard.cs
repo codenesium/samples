@@ -36,6 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string CardType { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("CreditCardID")]
                 public int CreditCardID { get; private set; }
 
@@ -51,5 +52,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b60ad4fa11b176609d6b10d20df664eb</Hash>
+    <Hash>3dd9bcf2317091c0464e5a0bdb36842e</Hash>
 </Codenesium>*/

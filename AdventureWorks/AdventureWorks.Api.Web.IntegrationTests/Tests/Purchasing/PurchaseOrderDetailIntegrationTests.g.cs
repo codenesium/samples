@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiPurchaseOrderDetailResponseModel> CreateRecord()
                 {
                         var model = new ApiPurchaseOrderDetailRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 3810.59m, 3810.59m, 3810.59m, 3810.59m);
+                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, 2, 2, 2m);
                         CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.Client.PurchaseOrderDetailCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7321f2c2c32af3006d9c8d807b105a95</Hash>
+    <Hash>a35175c113161fe1d62aae30798245ac</Hash>
 </Codenesium>*/

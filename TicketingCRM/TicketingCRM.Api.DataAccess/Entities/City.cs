@@ -34,10 +34,10 @@ namespace TicketingCRMNS.Api.DataAccess
                 public int ProvinceId { get; private set; }
 
                 [ForeignKey("ProvinceId")]
-                public virtual Province Province { get; set; }
+                public virtual Province ProvinceNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>bdb5247dd4e91bc8b7851a648219e063</Hash>
+    <Hash>f9bcb2389f7b2405fbab63919dfeba88</Hash>
 </Codenesium>*/

@@ -29,6 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int? BusinessEntityID { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("JobCandidateID")]
                 public int JobCandidateID { get; private set; }
 
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c02428010d6e08d38f32c8fb1e5bc1cf</Hash>
+    <Hash>30ac363ac2ddf9430c6711f24c1de037</Hash>
 </Codenesium>*/

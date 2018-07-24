@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web.IntegrationTests
                 private async Task<ApiLessonResponseModel> CreateRecord()
                 {
                         var model = new ApiLessonRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 1, "B");
+                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 1, "B");
                         CreateResponse<ApiLessonResponseModel> result = await this.Client.LessonCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3ad0a83ec03ca58f293eed109e9d346c</Hash>
+    <Hash>c22653cb359a88f9968f215505a4c4be</Hash>
 </Codenesium>*/

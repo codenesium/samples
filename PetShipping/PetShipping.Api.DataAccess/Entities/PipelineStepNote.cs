@@ -39,13 +39,13 @@ namespace PetShippingNS.Api.DataAccess
                 public int PipelineStepId { get; private set; }
 
                 [ForeignKey("EmployeeId")]
-                public virtual Employee Employee { get; set; }
+                public virtual Employee EmployeeNavigation { get; private set; }
 
                 [ForeignKey("PipelineStepId")]
-                public virtual PipelineStep PipelineStep { get; set; }
+                public virtual PipelineStep PipelineStepNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>82a2f81d23f8eb2492b9cd165416d384</Hash>
+    <Hash>7f1654f6f2b05e3808253cacc3cc33c9</Hash>
 </Codenesium>*/

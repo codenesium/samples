@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -162,6 +163,11 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                         base.OnConfiguring(options);
                 }
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                        var booleanStringConverter = new BoolToStringConverter("N", "Y");
+                }
         }
 
         public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -189,5 +195,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1aafe7db3cc221f6de26ccf6b60883b2</Hash>
+    <Hash>aa6ec827c48501cec070b6101dfdb599</Hash>
 </Codenesium>*/

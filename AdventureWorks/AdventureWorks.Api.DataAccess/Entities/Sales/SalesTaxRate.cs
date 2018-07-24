@@ -37,10 +37,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("Name")]
                 public string Name { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("SalesTaxRateID")]
                 public int SalesTaxRateID { get; private set; }
 
@@ -56,5 +58,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b89b906350a735cc1cd8ae85bfd4292f</Hash>
+    <Hash>8ed8750e179613762be4b55cabceb6cb</Hash>
 </Codenesium>*/

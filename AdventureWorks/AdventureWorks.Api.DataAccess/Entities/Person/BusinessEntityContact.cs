@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("PersonID")]
                 public int PersonID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>324594bd616f9523abda6351797a1de2</Hash>
+    <Hash>7240ccd482776da799a0dc125174760a</Hash>
 </Codenesium>*/

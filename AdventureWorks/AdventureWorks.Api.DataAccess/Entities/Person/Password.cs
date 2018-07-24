@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("PasswordSalt")]
                 public string PasswordSalt { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e944d905fa84a6203e7fd1baeb623a32</Hash>
+    <Hash>710b4984efa79e6450b26c5122f21d0a</Hash>
 </Codenesium>*/

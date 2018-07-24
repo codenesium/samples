@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiBillOfMaterialResponseModel> CreateRecord()
                 {
                         var model = new ApiBillOfMaterialRequestModel();
-                        model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+                        model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
                         CreateResponse<ApiBillOfMaterialResponseModel> result = await this.Client.BillOfMaterialCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>04d2235ddcde8ddb36d4196830502293</Hash>
+    <Hash>5317d7a3c745cda0f6068e978b227c01</Hash>
 </Codenesium>*/

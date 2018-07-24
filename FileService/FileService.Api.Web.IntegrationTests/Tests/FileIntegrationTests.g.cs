@@ -78,7 +78,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
                 private async Task<ApiFileResponseModel> CreateRecord()
                 {
                         var model = new ApiFileRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 3810.59m, 1, "B", "B", "B");
+                        model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
                         CreateResponse<ApiFileResponseModel> result = await this.Client.FileCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9320633b7feb7c3b38d3e16b8b551d29</Hash>
+    <Hash>286b8b70537d38210259c98ace91099c</Hash>
 </Codenesium>*/

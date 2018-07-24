@@ -44,13 +44,13 @@ namespace PetShippingNS.Api.DataAccess
                 public int Weight { get; private set; }
 
                 [ForeignKey("BreedId")]
-                public virtual Breed Breed { get; set; }
+                public virtual Breed BreedNavigation { get; private set; }
 
                 [ForeignKey("ClientId")]
-                public virtual Client Client { get; set; }
+                public virtual Client ClientNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>51ad17fe862dff506127ddf7b1e19b3e</Hash>
+    <Hash>d730d001754279095ecc09b23dbc7343</Hash>
 </Codenesium>*/

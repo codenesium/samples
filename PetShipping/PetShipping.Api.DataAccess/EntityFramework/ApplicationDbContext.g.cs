@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -112,6 +113,11 @@ namespace PetShippingNS.Api.DataAccess
                 {
                         base.OnConfiguring(options);
                 }
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                        var booleanStringConverter = new BoolToStringConverter("N", "Y");
+                }
         }
 
         public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -139,5 +145,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc43e4c7dd4c7c0cbc9855a6fb642be0</Hash>
+    <Hash>e49caec684f7ba88dfa7520aa722a4c6</Hash>
 </Codenesium>*/

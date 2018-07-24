@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f2f05db10a7b37e770a3c226b3bfded</Hash>
+    <Hash>98c011b43bbe083633439094821f94f3</Hash>
 </Codenesium>*/

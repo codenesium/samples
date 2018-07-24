@@ -34,10 +34,10 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string MachineId { get; private set; }
 
                 [ForeignKey("DeploymentId")]
-                public virtual Deployment Deployment { get; set; }
+                public virtual Deployment DeploymentNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>af9206ac88b505513481997540de2a89</Hash>
+    <Hash>e9bc13f904247421935ca79018c30751</Hash>
 </Codenesium>*/

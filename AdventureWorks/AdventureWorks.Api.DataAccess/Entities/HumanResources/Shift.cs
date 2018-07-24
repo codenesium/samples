@@ -37,6 +37,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Name { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ShiftID")]
                 public int ShiftID { get; private set; }
 
@@ -46,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>71ae76abed0845fed55b7e98047e3afa</Hash>
+    <Hash>a4c8f53ac5b6d02e6186d22fe0e21300</Hash>
 </Codenesium>*/

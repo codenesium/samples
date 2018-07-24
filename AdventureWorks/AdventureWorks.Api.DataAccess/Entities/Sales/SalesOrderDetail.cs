@@ -55,9 +55,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ProductID")]
                 public int ProductID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("SalesOrderDetailID")]
                 public int SalesOrderDetailID { get; private set; }
 
@@ -75,16 +77,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal UnitPriceDiscount { get; private set; }
 
                 [ForeignKey("ProductID")]
-                public virtual SpecialOfferProduct SpecialOfferProduct { get; set; }
+                public virtual SpecialOfferProduct SpecialOfferProductNavigation { get; private set; }
 
                 [ForeignKey("SalesOrderID")]
-                public virtual SalesOrderHeader SalesOrderHeader { get; set; }
+                public virtual SalesOrderHeader SalesOrderHeaderNavigation { get; private set; }
 
                 [ForeignKey("SpecialOfferID")]
-                public virtual SpecialOfferProduct SpecialOfferProduct1 { get; set; }
+                public virtual SpecialOfferProduct SpecialOfferProduct1Navigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6703d233eb5c15fd6b4fa6517b17208d</Hash>
+    <Hash>e6b00cb32bafd9bc9e1e3213fe0ea294</Hash>
 </Codenesium>*/

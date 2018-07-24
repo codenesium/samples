@@ -111,10 +111,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("RevisionNumber")]
                 public int RevisionNumber { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("SalesOrderID")]
                 public int SalesOrderID { get; private set; }
 
@@ -151,22 +153,22 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal TotalDue { get; private set; }
 
                 [ForeignKey("CreditCardID")]
-                public virtual CreditCard CreditCard { get; set; }
+                public virtual CreditCard CreditCardNavigation { get; private set; }
 
                 [ForeignKey("CurrencyRateID")]
-                public virtual CurrencyRate CurrencyRate { get; set; }
+                public virtual CurrencyRate CurrencyRateNavigation { get; private set; }
 
                 [ForeignKey("CustomerID")]
-                public virtual Customer Customer { get; set; }
+                public virtual Customer CustomerNavigation { get; private set; }
 
                 [ForeignKey("SalesPersonID")]
-                public virtual SalesPerson SalesPerson { get; set; }
+                public virtual SalesPerson SalesPersonNavigation { get; private set; }
 
                 [ForeignKey("TerritoryID")]
-                public virtual SalesTerritory SalesTerritory { get; set; }
+                public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e78025c58134ff754348ea2b3eb8382f</Hash>
+    <Hash>11b96bc4b5e07d4ad737cd9fe98cff47</Hash>
 </Codenesium>*/

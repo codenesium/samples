@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiWorkOrderRoutingResponseModel> CreateRecord()
                 {
                         var model = new ApiWorkOrderRoutingRequestModel();
-                        model.SetProperties(3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 3810.59m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
+                        model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
                         CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.Client.WorkOrderRoutingCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>847681f81ba002cf864d9763bb9e1f49</Hash>
+    <Hash>8ece08493069e2236a4c662f77da4287</Hash>
 </Codenesium>*/

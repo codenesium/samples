@@ -34,13 +34,13 @@ namespace NebulaNS.Api.DataAccess
                 public int PreviousChainId { get; private set; }
 
                 [ForeignKey("NextChainId")]
-                public virtual Chain Chain { get; set; }
+                public virtual Chain ChainNavigation { get; private set; }
 
                 [ForeignKey("PreviousChainId")]
-                public virtual Chain Chain1 { get; set; }
+                public virtual Chain Chain1Navigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f798888b952a9ef8ef32c3e196c161fd</Hash>
+    <Hash>ed455f3c234bf7f074069dde060e3e8e</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace TestsNS.Api.Web.IntegrationTests
                 private async Task<ApiTestAllFieldTypeResponseModel> CreateRecord()
                 {
                         var model = new ApiTestAllFieldTypeRequestModel();
-                        model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 3810.59m, 3810.59m, BitConverter.GetBytes(2), 3810.59m, "B", "B", 3810.59m, "B", 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 3810.59m, "B", TimeSpan.Parse("1"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+                        model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2m, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("1"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
                         CreateResponse<ApiTestAllFieldTypeResponseModel> result = await this.Client.TestAllFieldTypeCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>877b0dad1ee53a898590fa74d55868ce</Hash>
+    <Hash>dff3a9787c2bcd5ef6ee4b69e6ef1cc7</Hash>
 </Codenesium>*/

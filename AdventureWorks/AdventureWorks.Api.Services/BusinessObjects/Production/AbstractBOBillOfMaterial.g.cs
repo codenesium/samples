@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Services
                                                   int componentID,
                                                   DateTime? endDate,
                                                   DateTime modifiedDate,
-                                                  decimal perAssemblyQty,
+                                                  double perAssemblyQty,
                                                   int? productAssemblyID,
                                                   DateTime startDate,
                                                   string unitMeasureCode)
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public DateTime ModifiedDate { get; private set; }
 
-                public decimal PerAssemblyQty { get; private set; }
+                public double PerAssemblyQty { get; private set; }
 
                 public int? ProductAssemblyID { get; private set; }
 
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5046ba05b86275edc0dc379627fd8470</Hash>
+    <Hash>17c15628abc1b637f6114ce86a116fbd</Hash>
 </Codenesium>*/

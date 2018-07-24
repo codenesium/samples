@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -94,6 +95,11 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                         base.OnConfiguring(options);
                 }
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                        var booleanStringConverter = new BoolToStringConverter("N", "Y");
+                }
         }
 
         public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -121,5 +127,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0e8104955bccd6b060565bcf2a98bd9</Hash>
+    <Hash>a25d5203892f939cf996a84dd9bf9996</Hash>
 </Codenesium>*/

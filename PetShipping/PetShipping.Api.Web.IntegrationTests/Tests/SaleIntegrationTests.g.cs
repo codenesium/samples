@@ -78,7 +78,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
                 private async Task<ApiSaleResponseModel> CreateRecord()
                 {
                         var model = new ApiSaleRequestModel();
-                        model.SetProperties(3810.59m, 1, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+                        model.SetProperties(2m, 1, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
                         CreateResponse<ApiSaleResponseModel> result = await this.Client.SaleCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>03af1fd5118a854fb218e42159a3b4fb</Hash>
+    <Hash>4cc1f7f3dc08123561ff5f04385e8671</Hash>
 </Codenesium>*/

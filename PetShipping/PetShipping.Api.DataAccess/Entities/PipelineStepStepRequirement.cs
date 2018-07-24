@@ -39,10 +39,10 @@ namespace PetShippingNS.Api.DataAccess
                 public bool RequirementMet { get; private set; }
 
                 [ForeignKey("PipelineStepId")]
-                public virtual PipelineStep PipelineStep { get; set; }
+                public virtual PipelineStep PipelineStepNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>783fef9b50d485bf03d5273a9b970579</Hash>
+    <Hash>7660c87607a80e460d8b340aea0ae0a8</Hash>
 </Codenesium>*/

@@ -39,6 +39,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -49,13 +50,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int TerritoryID { get; private set; }
 
                 [ForeignKey("BusinessEntityID")]
-                public virtual SalesPerson SalesPerson { get; set; }
+                public virtual SalesPerson SalesPersonNavigation { get; private set; }
 
                 [ForeignKey("TerritoryID")]
-                public virtual SalesTerritory SalesTerritory { get; set; }
+                public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>228c6c15544ffa0a721c4693f1dbbd4a</Hash>
+    <Hash>12be6e108339cc75b9a1a6d5465ec415</Hash>
 </Codenesium>*/

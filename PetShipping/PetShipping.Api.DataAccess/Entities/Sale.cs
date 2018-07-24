@@ -54,13 +54,13 @@ namespace PetShippingNS.Api.DataAccess
                 public int SalesPersonId { get; private set; }
 
                 [ForeignKey("ClientId")]
-                public virtual Client Client { get; set; }
+                public virtual Client ClientNavigation { get; private set; }
 
                 [ForeignKey("PetId")]
-                public virtual Pet Pet { get; set; }
+                public virtual Pet PetNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>80a59b347fb75b15e232cdcb9fbaab46</Hash>
+    <Hash>d9d8e2def3a9305af723ecf54c1ee0c1</Hash>
 </Codenesium>*/

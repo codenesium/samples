@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductMapper();
                         var bo = new BOProduct();
-                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 
                         Product response = mapper.MapBOToEF(bo);
 
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SizeUnitMeasureCode.Should().Be("A");
                         response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1m);
+                        response.Weight.Should().Be(1);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductMapper();
                         Product entity = new Product();
-                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 
                         BOProduct response = mapper.MapEFToBO(entity);
 
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.SizeUnitMeasureCode.Should().Be("A");
                         response.StandardCost.Should().Be(1m);
                         response.Style.Should().Be("A");
-                        response.Weight.Should().Be(1m);
+                        response.Weight.Should().Be(1);
                         response.WeightUnitMeasureCode.Should().Be("A");
                 }
 
@@ -89,7 +89,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALProductMapper();
                         Product entity = new Product();
-                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 
                         List<BOProduct> response = mapper.MapEFToBO(new List<Product>() { entity });
 
@@ -99,5 +99,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>14885c7aff78f4b0739562f7a0187f48</Hash>
+    <Hash>7c27e9dbdfba0b46b5da29eddc03eeb7</Hash>
 </Codenesium>*/

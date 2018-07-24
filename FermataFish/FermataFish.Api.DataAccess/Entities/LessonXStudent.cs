@@ -34,13 +34,13 @@ namespace FermataFishNS.Api.DataAccess
                 public int StudentId { get; private set; }
 
                 [ForeignKey("LessonId")]
-                public virtual Lesson Lesson { get; set; }
+                public virtual Lesson LessonNavigation { get; private set; }
 
                 [ForeignKey("StudentId")]
-                public virtual Student Student { get; set; }
+                public virtual Student StudentNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>877e3c715a71e1a1afd3aed8e10a9293</Hash>
+    <Hash>e6caadb185198a85d8a5b2c256d9cc05</Hash>
 </Codenesium>*/

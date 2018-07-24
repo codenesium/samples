@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
                 }
 
                 public virtual void SetProperties(
-                        decimal availability,
+                        double availability,
                         decimal costRate,
                         DateTime modifiedDate,
                         string name)
@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 [Required]
                 [JsonProperty]
-                public decimal Availability { get; private set; }
+                public double Availability { get; private set; }
 
                 [Required]
                 [JsonProperty]
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a99af0055f121a0b88ebb483edaea6a6</Hash>
+    <Hash>6dd3f104fc3ce8be57492eb2ceb06302</Hash>
 </Codenesium>*/

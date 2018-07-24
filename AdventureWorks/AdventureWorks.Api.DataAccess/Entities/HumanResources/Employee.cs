@@ -82,6 +82,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("OrganizationLevel")]
                 public short? OrganizationLevel { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -97,5 +98,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>362f401eeb9fe8a0bd649328d1d7c8c3</Hash>
+    <Hash>32dea7ff7d8ec1392e8a25b661ba16e3</Hash>
 </Codenesium>*/

@@ -34,17 +34,19 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("EmailAddress")]
                 public string EmailAddress1 { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("EmailAddressID")]
                 public int EmailAddressID { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a1f556f7ded97f8fcb1c69cb4ac4a827</Hash>
+    <Hash>d3defbb9d54a5e486d4def1877593905</Hash>
 </Codenesium>*/

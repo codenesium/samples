@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.Services
                                                   short orderQty,
                                                   int productID,
                                                   int purchaseOrderDetailID,
-                                                  decimal receivedQty,
-                                                  decimal rejectedQty,
-                                                  decimal stockedQty,
+                                                  double receivedQty,
+                                                  double rejectedQty,
+                                                  double stockedQty,
                                                   decimal unitPrice)
                 {
                         this.DueDate = dueDate;
@@ -49,16 +49,16 @@ namespace AdventureWorksNS.Api.Services
 
                 public int PurchaseOrderID { get; private set; }
 
-                public decimal ReceivedQty { get; private set; }
+                public double ReceivedQty { get; private set; }
 
-                public decimal RejectedQty { get; private set; }
+                public double RejectedQty { get; private set; }
 
-                public decimal StockedQty { get; private set; }
+                public double StockedQty { get; private set; }
 
                 public decimal UnitPrice { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>170fa83df4df06e49591ad36435bf2f6</Hash>
+    <Hash>c64e290539b3d6f53ce5b781c8422b8c</Hash>
 </Codenesium>*/

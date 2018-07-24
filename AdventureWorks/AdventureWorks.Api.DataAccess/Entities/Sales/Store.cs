@@ -42,6 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("Name")]
                 public string Name { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -49,10 +50,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int? SalesPersonID { get; private set; }
 
                 [ForeignKey("SalesPersonID")]
-                public virtual SalesPerson SalesPerson { get; set; }
+                public virtual SalesPerson SalesPersonNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>92cf76765892be1b18bb549903d29d6a</Hash>
+    <Hash>49d1ab334da50529127a8f69bf7b0f76</Hash>
 </Codenesium>*/

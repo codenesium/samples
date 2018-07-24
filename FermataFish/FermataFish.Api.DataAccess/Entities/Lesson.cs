@@ -69,13 +69,13 @@ namespace FermataFishNS.Api.DataAccess
                 public string TeacherNotes { get; private set; }
 
                 [ForeignKey("LessonStatusId")]
-                public virtual LessonStatus LessonStatus { get; set; }
+                public virtual LessonStatus LessonStatusNavigation { get; private set; }
 
                 [ForeignKey("StudioId")]
-                public virtual Studio Studio { get; set; }
+                public virtual Studio StudioNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f5185bb0b66839f441dfea33b6a8783c</Hash>
+    <Hash>7a36ad8c6cd7771670b14d10f50c07e2</Hash>
 </Codenesium>*/

@@ -37,14 +37,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int ProductCategoryID { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ProductSubcategoryID")]
                 public int ProductSubcategoryID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3de375d535779cecb0850636589f07ed</Hash>
+    <Hash>c6480af57611e9fce483fb49fb51b864</Hash>
 </Codenesium>*/

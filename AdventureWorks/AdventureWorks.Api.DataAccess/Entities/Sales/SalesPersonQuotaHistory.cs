@@ -37,6 +37,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("QuotaDate")]
                 public DateTime QuotaDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -44,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal SalesQuota { get; private set; }
 
                 [ForeignKey("BusinessEntityID")]
-                public virtual SalesPerson SalesPerson { get; set; }
+                public virtual SalesPerson SalesPersonNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ebb4e42f28ddb750ee3589a67a32f1ac</Hash>
+    <Hash>30a5124b6a95901beeee4d468f9622d7</Hash>
 </Codenesium>*/

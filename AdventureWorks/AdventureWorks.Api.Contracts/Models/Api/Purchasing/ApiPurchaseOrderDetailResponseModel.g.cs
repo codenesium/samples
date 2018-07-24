@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.Contracts
                         short orderQty,
                         int productID,
                         int purchaseOrderDetailID,
-                        decimal receivedQty,
-                        decimal rejectedQty,
-                        decimal stockedQty,
+                        double receivedQty,
+                        double rejectedQty,
+                        double stockedQty,
                         decimal unitPrice)
                 {
                         this.PurchaseOrderID = purchaseOrderID;
@@ -56,13 +56,13 @@ namespace AdventureWorksNS.Api.Contracts
                 public int PurchaseOrderID { get; private set; }
 
                 [JsonProperty]
-                public decimal ReceivedQty { get; private set; }
+                public double ReceivedQty { get; private set; }
 
                 [JsonProperty]
-                public decimal RejectedQty { get; private set; }
+                public double RejectedQty { get; private set; }
 
                 [JsonProperty]
-                public decimal StockedQty { get; private set; }
+                public double StockedQty { get; private set; }
 
                 [JsonProperty]
                 public decimal UnitPrice { get; private set; }
@@ -70,5 +70,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c48b696219c88f11f4a7ecfe1e185428</Hash>
+    <Hash>323f1bc900ed82997e56c9fc89e80aa4</Hash>
 </Codenesium>*/

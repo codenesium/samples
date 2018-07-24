@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiBillOfMaterialModelMapper();
                         var model = new ApiBillOfMaterialRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiBillOfMaterialResponseModel response = mapper.MapRequestToResponse(1, model);
 
                         response.BillOfMaterialsID.Should().Be(1);
@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ComponentID.Should().Be(1);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PerAssemblyQty.Should().Be(1m);
+                        response.PerAssemblyQty.Should().Be(1);
                         response.ProductAssemblyID.Should().Be(1);
                         response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UnitMeasureCode.Should().Be("A");
@@ -36,14 +36,14 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiBillOfMaterialModelMapper();
                         var model = new ApiBillOfMaterialResponseModel();
-                        model.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiBillOfMaterialRequestModel response = mapper.MapResponseToRequest(model);
 
                         response.BOMLevel.Should().Be(1);
                         response.ComponentID.Should().Be(1);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PerAssemblyQty.Should().Be(1m);
+                        response.PerAssemblyQty.Should().Be(1);
                         response.ProductAssemblyID.Should().Be(1);
                         response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UnitMeasureCode.Should().Be("A");
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                 {
                         var mapper = new ApiBillOfMaterialModelMapper();
                         var model = new ApiBillOfMaterialRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         JsonPatchDocument<ApiBillOfMaterialRequestModel> patch = mapper.CreatePatch(model);
                         var response = new ApiBillOfMaterialRequestModel();
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Contracts.Tests
                         response.ComponentID.Should().Be(1);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PerAssemblyQty.Should().Be(1m);
+                        response.PerAssemblyQty.Should().Be(1);
                         response.ProductAssemblyID.Should().Be(1);
                         response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UnitMeasureCode.Should().Be("A");
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>b9449a91a944494331374c11bb512ecb</Hash>
+    <Hash>4ded57809d04f2834b98e6721123de52</Hash>
 </Codenesium>*/

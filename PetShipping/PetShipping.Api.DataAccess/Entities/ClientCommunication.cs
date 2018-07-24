@@ -44,13 +44,13 @@ namespace PetShippingNS.Api.DataAccess
                 public string Notes { get; private set; }
 
                 [ForeignKey("ClientId")]
-                public virtual Client Client { get; set; }
+                public virtual Client ClientNavigation { get; private set; }
 
                 [ForeignKey("EmployeeId")]
-                public virtual Employee Employee { get; set; }
+                public virtual Employee EmployeeNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a0ba26477c3d8b20ebf767cc8178b4cd</Hash>
+    <Hash>bcf3fee16c94ae70cf36b9ff295e3aec</Hash>
 </Codenesium>*/

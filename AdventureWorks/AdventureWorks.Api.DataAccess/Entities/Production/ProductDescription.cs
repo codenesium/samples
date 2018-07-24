@@ -32,14 +32,16 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime ModifiedDate { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ProductDescriptionID")]
                 public int ProductDescriptionID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>251ef67387c9a67c7ffc947a4fb5981a</Hash>
+    <Hash>c8a1b7b64e5edffd7fb884bfb33eae6b</Hash>
 </Codenesium>*/

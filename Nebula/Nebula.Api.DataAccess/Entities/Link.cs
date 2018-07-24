@@ -84,16 +84,16 @@ namespace NebulaNS.Api.DataAccess
                 public int TimeoutInSeconds { get; private set; }
 
                 [ForeignKey("AssignedMachineId")]
-                public virtual Machine Machine { get; set; }
+                public virtual Machine MachineNavigation { get; private set; }
 
                 [ForeignKey("ChainId")]
-                public virtual Chain Chain { get; set; }
+                public virtual Chain ChainNavigation { get; private set; }
 
                 [ForeignKey("LinkStatusId")]
-                public virtual LinkStatus LinkStatus { get; set; }
+                public virtual LinkStatus LinkStatusNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>818d4c5fdcd0c179cef0636a163b4105</Hash>
+    <Hash>ada4d6e309250913cedf725dcffe6ab3</Hash>
 </Codenesium>*/

@@ -79,13 +79,13 @@ namespace FileServiceNS.Api.DataAccess
                 public string PublicKey { get; private set; }
 
                 [ForeignKey("BucketId")]
-                public virtual Bucket Bucket { get; set; }
+                public virtual Bucket BucketNavigation { get; private set; }
 
                 [ForeignKey("FileTypeId")]
-                public virtual FileType FileType { get; set; }
+                public virtual FileType FileTypeNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1a7e7730a5d6935bdc46b04a2e8edc69</Hash>
+    <Hash>886d26f9146e8332e1332adfe36f21a5</Hash>
 </Codenesium>*/

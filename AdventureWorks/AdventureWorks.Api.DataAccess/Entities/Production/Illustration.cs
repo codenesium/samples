@@ -27,6 +27,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Diagram { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("IllustrationID")]
                 public int IllustrationID { get; private set; }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3993107109e3723aaa42aaae13de5961</Hash>
+    <Hash>b850b1c25051eae95d5c84984a9de510</Hash>
 </Codenesium>*/

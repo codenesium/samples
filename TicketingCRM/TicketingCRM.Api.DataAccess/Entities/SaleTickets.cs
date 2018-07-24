@@ -34,13 +34,13 @@ namespace TicketingCRMNS.Api.DataAccess
                 public int TicketId { get; private set; }
 
                 [ForeignKey("SaleId")]
-                public virtual Sale Sale { get; set; }
+                public virtual Sale SaleNavigation { get; private set; }
 
                 [ForeignKey("TicketId")]
-                public virtual Ticket Ticket { get; set; }
+                public virtual Ticket TicketNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4eb8e57146082c71fddac9f638bedb46</Hash>
+    <Hash>6abb20e9d71cf2950b2d5b843002884c</Hash>
 </Codenesium>*/

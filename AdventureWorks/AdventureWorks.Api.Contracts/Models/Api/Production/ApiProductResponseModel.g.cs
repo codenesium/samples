@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Contracts
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        decimal? weight,
+                        double? weight,
                         string weightUnitMeasureCode)
                 {
                         this.ProductID = productID;
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 [Required]
                 [JsonProperty]
-                public decimal? Weight { get; private set; }
+                public double? Weight { get; private set; }
 
                 [Required]
                 [JsonProperty]
@@ -152,5 +152,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8b37c3b690c33bcedcf56fd9b504c64d</Hash>
+    <Hash>b9673c8de1bc82f1bba02c762a4b84cb</Hash>
 </Codenesium>*/

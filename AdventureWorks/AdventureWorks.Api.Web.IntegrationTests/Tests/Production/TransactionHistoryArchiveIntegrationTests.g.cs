@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiTransactionHistoryArchiveResponseModel> CreateRecord()
                 {
                         var model = new ApiTransactionHistoryArchiveRequestModel();
-                        model.SetProperties(3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+                        model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
                         CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.Client.TransactionHistoryArchiveCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f5e367239469a0e4419f8143d5e594b8</Hash>
+    <Hash>2f9afdc7bd029f2c61c01a2ac8aa0103</Hash>
 </Codenesium>*/

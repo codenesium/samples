@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public virtual void SetProperties(
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHr,
+                        double? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime? ActualEndDate { get; private set; }
 
                 [Column("ActualResourceHrs")]
-                public decimal? ActualResourceHr { get; private set; }
+                public double? ActualResourceHr { get; private set; }
 
                 [Column("ActualStartDate")]
                 public DateTime? ActualStartDate { get; private set; }
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0e76e83695eb04e7f267b2ab245e984</Hash>
+    <Hash>4c8a1f670e539740fc5baa1869b8c49e</Hash>
 </Codenesium>*/

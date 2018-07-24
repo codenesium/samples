@@ -34,13 +34,13 @@ namespace NebulaNS.Api.DataAccess
                 public int TeamId { get; private set; }
 
                 [ForeignKey("MachineId")]
-                public virtual Machine Machine { get; set; }
+                public virtual Machine MachineNavigation { get; private set; }
 
                 [ForeignKey("TeamId")]
-                public virtual Team Team { get; set; }
+                public virtual Team TeamNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b117e9049bab7ae94c356051901a85d5</Hash>
+    <Hash>e28009f78250bd8e398345fbc4b91187</Hash>
 </Codenesium>*/

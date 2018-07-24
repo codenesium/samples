@@ -34,10 +34,10 @@ namespace PetShippingNS.Api.DataAccess
                 public int Id { get; private set; }
 
                 [ForeignKey("CountryId")]
-                public virtual Country Country { get; set; }
+                public virtual Country CountryNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>43a129fc26e699858781c088da6e2f78</Hash>
+    <Hash>1e15109c39e158d646b18d4a41104029</Hash>
 </Codenesium>*/

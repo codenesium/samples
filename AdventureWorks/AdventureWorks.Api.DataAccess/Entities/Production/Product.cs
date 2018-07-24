@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         string sizeUnitMeasureCode,
                         decimal standardCost,
                         string style,
-                        decimal? weight,
+                        double? weight,
                         string weightUnitMeasureCode)
                 {
                         this.@Class = @class;
@@ -95,6 +95,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Name { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ProductID")]
                 public int ProductID { get; private set; }
 
@@ -113,6 +114,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ReorderPoint")]
                 public short ReorderPoint { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -138,7 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string Style { get; private set; }
 
                 [Column("Weight")]
-                public decimal? Weight { get; private set; }
+                public double? Weight { get; private set; }
 
                 [Column("WeightUnitMeasureCode")]
                 public string WeightUnitMeasureCode { get; private set; }
@@ -146,5 +148,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c99b4f35a812ec24af95fb22dc2f897</Hash>
+    <Hash>07a45c5ab90779cd8bd7fdf6f9e318cc</Hash>
 </Codenesium>*/

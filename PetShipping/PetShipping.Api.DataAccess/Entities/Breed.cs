@@ -34,10 +34,10 @@ namespace PetShippingNS.Api.DataAccess
                 public int SpeciesId { get; private set; }
 
                 [ForeignKey("SpeciesId")]
-                public virtual Species Species { get; set; }
+                public virtual Species SpeciesNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2101707c6d09f3870a42a51de6fd81bd</Hash>
+    <Hash>a597776c0ac622ae37732d474827ecf4</Hash>
 </Codenesium>*/

@@ -60,10 +60,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("SpecialOfferID")]
                 public int SpecialOfferID { get; private set; }
 
@@ -76,5 +78,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4da27198a8c374c16f666258370c10c2</Hash>
+    <Hash>4fe41a87b96b0bcb753772486fe319d6</Hash>
 </Codenesium>*/

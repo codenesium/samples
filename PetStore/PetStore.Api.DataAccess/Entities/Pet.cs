@@ -55,16 +55,16 @@ namespace PetStoreNS.Api.DataAccess
                 public int SpeciesId { get; private set; }
 
                 [ForeignKey("BreedId")]
-                public virtual Breed Breed { get; set; }
+                public virtual Breed BreedNavigation { get; private set; }
 
                 [ForeignKey("PenId")]
-                public virtual Pen Pen { get; set; }
+                public virtual Pen PenNavigation { get; private set; }
 
                 [ForeignKey("SpeciesId")]
-                public virtual Species Species { get; set; }
+                public virtual Species SpeciesNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>266d5d115b479019da5f0ab7ab356a5e</Hash>
+    <Hash>9aacecda46403f7194819bf6abbe5f4b</Hash>
 </Codenesium>*/

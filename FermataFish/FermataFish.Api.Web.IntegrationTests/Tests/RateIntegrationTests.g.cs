@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web.IntegrationTests
                 private async Task<ApiRateResponseModel> CreateRecord()
                 {
                         var model = new ApiRateRequestModel();
-                        model.SetProperties(3810.59m, 1, 1);
+                        model.SetProperties(2m, 1, 1);
                         CreateResponse<ApiRateResponseModel> result = await this.Client.RateCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>cd2b67e2904b4d9092ea53b75c3b57a3</Hash>
+    <Hash>aa22ed0257ba066192c5904fc45ac837</Hash>
 </Codenesium>*/

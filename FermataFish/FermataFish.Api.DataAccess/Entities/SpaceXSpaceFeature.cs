@@ -34,13 +34,13 @@ namespace FermataFishNS.Api.DataAccess
                 public int SpaceId { get; private set; }
 
                 [ForeignKey("SpaceFeatureId")]
-                public virtual SpaceFeature SpaceFeature { get; set; }
+                public virtual SpaceFeature SpaceFeatureNavigation { get; private set; }
 
                 [ForeignKey("SpaceId")]
-                public virtual Space Space { get; set; }
+                public virtual Space SpaceNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ea5b0a4d18909ee52b0ca42bb51d5d5e</Hash>
+    <Hash>7f4de614264e08230834e52162dae6b8</Hash>
 </Codenesium>*/

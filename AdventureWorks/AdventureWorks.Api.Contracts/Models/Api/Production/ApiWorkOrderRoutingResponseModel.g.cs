@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.Contracts
                         int workOrderID,
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHr,
+                        double? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 [Required]
                 [JsonProperty]
-                public decimal? ActualResourceHr { get; private set; }
+                public double? ActualResourceHr { get; private set; }
 
                 [Required]
                 [JsonProperty]
@@ -79,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e30558a265ef639bdc5a5664f425f98d</Hash>
+    <Hash>04e0516b50fba68caa51652fc53219b4</Hash>
 </Codenesium>*/

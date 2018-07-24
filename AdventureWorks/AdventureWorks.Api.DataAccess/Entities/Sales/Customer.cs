@@ -36,6 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string AccountNumber { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("CustomerID")]
                 public int CustomerID { get; private set; }
 
@@ -45,6 +46,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("PersonID")]
                 public int? PersonID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -55,13 +57,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int? TerritoryID { get; private set; }
 
                 [ForeignKey("StoreID")]
-                public virtual Store Store { get; set; }
+                public virtual Store StoreNavigation { get; private set; }
 
                 [ForeignKey("TerritoryID")]
-                public virtual SalesTerritory SalesTerritory { get; set; }
+                public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3467b6461e9a2e0bae5077d0dbe356b3</Hash>
+    <Hash>f1cbc2cda35c038c8a135b90790bdc0e</Hash>
 </Codenesium>*/

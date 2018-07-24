@@ -78,7 +78,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
                 private async Task<ApiTransactionResponseModel> CreateRecord()
                 {
                         var model = new ApiTransactionRequestModel();
-                        model.SetProperties(3810.59m, "B", 1);
+                        model.SetProperties(2m, "B", 1);
                         CreateResponse<ApiTransactionResponseModel> result = await this.Client.TransactionCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3cae496ffa9ccd821c2eafcdff421c6d</Hash>
+    <Hash>0334c5311fa81b02204485469ed11d02</Hash>
 </Codenesium>*/

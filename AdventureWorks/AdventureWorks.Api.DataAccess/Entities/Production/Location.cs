@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 public virtual void SetProperties(
-                        decimal availability,
+                        double availability,
                         decimal costRate,
                         short locationID,
                         DateTime modifiedDate,
@@ -28,12 +28,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Column("Availability")]
-                public decimal Availability { get; private set; }
+                public double Availability { get; private set; }
 
                 [Column("CostRate")]
                 public decimal CostRate { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("LocationID")]
                 public short LocationID { get; private set; }
 
@@ -46,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc46dd3dcb426a04ee8ee2f1e3df696d</Hash>
+    <Hash>f70475ac9f26092c4e8fe5873901602c</Hash>
 </Codenesium>*/

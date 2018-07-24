@@ -35,6 +35,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("Name")]
                 public string Name { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
@@ -42,6 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public decimal ShipBase { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ShipMethodID")]
                 public int ShipMethodID { get; private set; }
 
@@ -51,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6f05f29ec0303ef13a38b7c39081e15</Hash>
+    <Hash>b3a2ccffe635f0d9191eb68bc3450153</Hash>
 </Codenesium>*/

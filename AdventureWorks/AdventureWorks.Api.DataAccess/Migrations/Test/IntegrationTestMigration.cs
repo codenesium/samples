@@ -108,7 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         this.context.SaveChanges();
                         var billOfMaterialItem1 = new BillOfMaterial();
-                        billOfMaterialItem1.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        billOfMaterialItem1.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         this.context.BillOfMaterials.Add(billOfMaterialItem1);
 
                         var cultureItem1 = new Culture();
@@ -124,11 +124,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.context.Illustrations.Add(illustrationItem1);
 
                         var locationItem1 = new Location();
-                        locationItem1.SetProperties(1m, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        locationItem1.SetProperties(1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         this.context.Locations.Add(locationItem1);
 
                         var productItem1 = new Product();
-                        productItem1.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1m, "A");
+                        productItem1.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
                         this.context.Products.Add(productItem1);
 
                         var productCategoryItem1 = new ProductCategory();
@@ -200,7 +200,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.context.WorkOrders.Add(workOrderItem1);
 
                         var workOrderRoutingItem1 = new WorkOrderRouting();
-                        workOrderRoutingItem1.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+                        workOrderRoutingItem1.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         this.context.WorkOrderRoutings.Add(workOrderRoutingItem1);
 
                         this.context.SaveChanges();
@@ -209,7 +209,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.context.ProductVendors.Add(productVendorItem1);
 
                         var purchaseOrderDetailItem1 = new PurchaseOrderDetail();
-                        purchaseOrderDetailItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1m, 1m, 1m, 1m);
+                        purchaseOrderDetailItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1, 1m);
                         this.context.PurchaseOrderDetails.Add(purchaseOrderDetailItem1);
 
                         var purchaseOrderHeaderItem1 = new PurchaseOrderHeader();
@@ -307,5 +307,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a0af3daf739af88f9e667ee51932689c</Hash>
+    <Hash>d72f7c35393b1ba8c36621af0e7e1a08</Hash>
 </Codenesium>*/

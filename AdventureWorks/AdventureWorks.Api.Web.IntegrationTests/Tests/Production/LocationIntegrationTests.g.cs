@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiLocationResponseModel> CreateRecord()
                 {
                         var model = new ApiLocationRequestModel();
-                        model.SetProperties(3810.59m, 3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+                        model.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
                         CreateResponse<ApiLocationResponseModel> result = await this.Client.LocationCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>aeb2bc9f90c4258ffd2217887f995c44</Hash>
+    <Hash>561a23ba1bfead255479c189a8ec3e7b</Hash>
 </Codenesium>*/

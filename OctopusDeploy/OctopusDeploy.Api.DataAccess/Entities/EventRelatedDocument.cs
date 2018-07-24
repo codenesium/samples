@@ -34,10 +34,10 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string RelatedDocumentId { get; private set; }
 
                 [ForeignKey("EventId")]
-                public virtual Event Event { get; set; }
+                public virtual Event EventNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad359697a1810a0b018da924dc02f16c</Hash>
+    <Hash>c0e8928d6cd307f4e6408a5d4408ed8a</Hash>
 </Codenesium>*/

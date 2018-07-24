@@ -39,10 +39,10 @@ namespace FermataFishNS.Api.DataAccess
                 public int StudioId { get; private set; }
 
                 [ForeignKey("StudioId")]
-                public virtual Studio Studio { get; set; }
+                public virtual Studio StudioNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6b278daa1a07092110e0f95ecaea66cc</Hash>
+    <Hash>d28e8d9a3911afe237bafa5391fe2372</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALBillOfMaterialMapper();
                         var bo = new BOBillOfMaterial();
-                        bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         BillOfMaterial response = mapper.MapBOToEF(bo);
 
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.ComponentID.Should().Be(1);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PerAssemblyQty.Should().Be(1m);
+                        response.PerAssemblyQty.Should().Be(1);
                         response.ProductAssemblyID.Should().Be(1);
                         response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UnitMeasureCode.Should().Be("A");
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALBillOfMaterialMapper();
                         BillOfMaterial entity = new BillOfMaterial();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         BOBillOfMaterial response = mapper.MapEFToBO(entity);
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         response.ComponentID.Should().Be(1);
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PerAssemblyQty.Should().Be(1m);
+                        response.PerAssemblyQty.Should().Be(1);
                         response.ProductAssemblyID.Should().Be(1);
                         response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.UnitMeasureCode.Should().Be("A");
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mapper = new DALBillOfMaterialMapper();
                         BillOfMaterial entity = new BillOfMaterial();
-                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+                        entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOBillOfMaterial> response = mapper.MapEFToBO(new List<BillOfMaterial>() { entity });
 
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e42e4defe61293400c4d2d9728404f70</Hash>
+    <Hash>09803fa3a38ee9452c402a420bec536d</Hash>
 </Codenesium>*/

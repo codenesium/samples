@@ -74,10 +74,10 @@ namespace TicketingCRMNS.Api.DataAccess
                 public string Website { get; private set; }
 
                 [ForeignKey("CityId")]
-                public virtual City City { get; set; }
+                public virtual City CityNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2011d64d936c91bc018c13995de77fec</Hash>
+    <Hash>a7c6da58a5a1cb0334eda310bb48fabb</Hash>
 </Codenesium>*/

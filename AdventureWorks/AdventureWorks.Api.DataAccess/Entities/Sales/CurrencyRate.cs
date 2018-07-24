@@ -38,6 +38,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime CurrencyRateDate { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("CurrencyRateID")]
                 public int CurrencyRateID { get; private set; }
 
@@ -54,13 +55,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string ToCurrencyCode { get; private set; }
 
                 [ForeignKey("FromCurrencyCode")]
-                public virtual Currency Currency { get; set; }
+                public virtual Currency CurrencyNavigation { get; private set; }
 
                 [ForeignKey("ToCurrencyCode")]
-                public virtual Currency Currency1 { get; set; }
+                public virtual Currency Currency1Navigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>57520a898ecbb92ed8d26667eb288b5d</Hash>
+    <Hash>0d9624a5c9068bc2ea5a06f51adee4f8</Hash>
 </Codenesium>*/

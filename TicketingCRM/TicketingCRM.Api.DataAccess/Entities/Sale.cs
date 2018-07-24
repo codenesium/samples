@@ -44,10 +44,10 @@ namespace TicketingCRMNS.Api.DataAccess
                 public int TransactionId { get; private set; }
 
                 [ForeignKey("TransactionId")]
-                public virtual Transaction Transaction { get; set; }
+                public virtual Transaction TransactionNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>74214c303f14952bd9b7e43953db5769</Hash>
+    <Hash>1c59ce6ece9f57cad3ae8a0fe864ac66</Hash>
 </Codenesium>*/

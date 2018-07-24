@@ -24,17 +24,19 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
                 [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7975e39689595658acc4501c90d525cb</Hash>
+    <Hash>3789deaff3a980ca0b030886a2cb5175</Hash>
 </Codenesium>*/

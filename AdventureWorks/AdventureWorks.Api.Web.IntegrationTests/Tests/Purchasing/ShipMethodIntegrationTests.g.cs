@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiShipMethodResponseModel> CreateRecord()
                 {
                         var model = new ApiShipMethodRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 3810.59m, 3810.59m);
+                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
                         CreateResponse<ApiShipMethodResponseModel> result = await this.Client.ShipMethodCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0d60068279f82532f89b047ccc57b952</Hash>
+    <Hash>86299e0c5712d67aea2424e103815c5d</Hash>
 </Codenesium>*/

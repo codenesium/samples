@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
                 private async Task<ApiCurrencyRateResponseModel> CreateRecord()
                 {
                         var model = new ApiCurrencyRateRequestModel();
-                        model.SetProperties(3810.59m, DateTime.Parse("1/1/1988 12:00:00 AM"), 3810.59m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+                        model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
                         CreateResponse<ApiCurrencyRateResponseModel> result = await this.Client.CurrencyRateCreateAsync(model);
 
                         result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9a1f55f4a4f9bc90874ec2bb1c3e5863</Hash>
+    <Hash>085c502fb37a7669ea6e3da0c040cee4</Hash>
 </Codenesium>*/

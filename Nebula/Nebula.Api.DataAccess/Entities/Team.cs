@@ -34,10 +34,10 @@ namespace NebulaNS.Api.DataAccess
                 public int OrganizationId { get; private set; }
 
                 [ForeignKey("OrganizationId")]
-                public virtual Organization Organization { get; set; }
+                public virtual Organization OrganizationNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4c7c3fe5c48b2b0d94a1bb04988831ed</Hash>
+    <Hash>f5c5c672c6f564a29f2bb8d56bb69bb5</Hash>
 </Codenesium>*/

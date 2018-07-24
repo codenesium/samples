@@ -21,9 +21,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         int productID,
                         int purchaseOrderDetailID,
                         int purchaseOrderID,
-                        decimal receivedQty,
-                        decimal rejectedQty,
-                        decimal stockedQty,
+                        double receivedQty,
+                        double rejectedQty,
+                        double stockedQty,
                         decimal unitPrice)
                 {
                         this.DueDate = dueDate;
@@ -55,6 +55,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("ProductID")]
                 public int ProductID { get; private set; }
 
+                [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("PurchaseOrderDetailID")]
                 public int PurchaseOrderDetailID { get; private set; }
 
@@ -63,14 +64,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 public int PurchaseOrderID { get; private set; }
 
                 [Column("ReceivedQty")]
-                public decimal ReceivedQty { get; private set; }
+                public double ReceivedQty { get; private set; }
 
                 [Column("RejectedQty")]
-                public decimal RejectedQty { get; private set; }
+                public double RejectedQty { get; private set; }
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
                 [Column("StockedQty")]
-                public decimal StockedQty { get; private set; }
+                public double StockedQty { get; private set; }
 
                 [Column("UnitPrice")]
                 public decimal UnitPrice { get; private set; }
@@ -78,5 +79,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8f85ad244cef26b2ec2f750eecfba2f1</Hash>
+    <Hash>cfedc8b5e82b4e66d87a4b3a6ef97880</Hash>
 </Codenesium>*/

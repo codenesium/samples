@@ -55,13 +55,13 @@ namespace PetStoreNS.Api.DataAccess
                 public string Phone { get; private set; }
 
                 [ForeignKey("PaymentTypeId")]
-                public virtual PaymentType PaymentType { get; set; }
+                public virtual PaymentType PaymentTypeNavigation { get; private set; }
 
                 [ForeignKey("PetId")]
-                public virtual Pet Pet { get; set; }
+                public virtual Pet PetNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>229e093a09b0e95e66d988fb9aa623b4</Hash>
+    <Hash>c0e59c9b7e6660ad26de6fa2b12d0ba9</Hash>
 </Codenesium>*/

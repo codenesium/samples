@@ -54,10 +54,10 @@ namespace PetShippingNS.Api.DataAccess
                 public DateTime TakeoffDate { get; private set; }
 
                 [ForeignKey("HandlerId")]
-                public virtual Handler Handler { get; set; }
+                public virtual Handler HandlerNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>969405b03b65c84f0b7e17ced85408ee</Hash>
+    <Hash>fc75262d829355aed3fbc2d0fb4ee95b</Hash>
 </Codenesium>*/

@@ -35,11 +35,12 @@ namespace AdventureWorksNS.Api.DataAccess
                 public string ReasonType { get; private set; }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("SalesReasonID")]
                 public int SalesReasonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6eba4fbd1b9aaa75e1438284e875ea96</Hash>
+    <Hash>dd6aeb6ce0d337bc3d6abbe18f2376ca</Hash>
 </Codenesium>*/

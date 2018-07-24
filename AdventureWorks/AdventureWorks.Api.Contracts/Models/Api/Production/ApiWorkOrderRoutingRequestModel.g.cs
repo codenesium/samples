@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts
                 public virtual void SetProperties(
                         decimal? actualCost,
                         DateTime? actualEndDate,
-                        decimal? actualResourceHr,
+                        double? actualResourceHr,
                         DateTime? actualStartDate,
                         short locationID,
                         DateTime modifiedDate,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Contracts
                 public DateTime? ActualEndDate { get; private set; }
 
                 [JsonProperty]
-                public decimal? ActualResourceHr { get; private set; }
+                public double? ActualResourceHr { get; private set; }
 
                 [JsonProperty]
                 public DateTime? ActualStartDate { get; private set; }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>091eed6102a69d0dbd162d4800a21158</Hash>
+    <Hash>ed27c69f1fcad027a7784b381eaa6bca</Hash>
 </Codenesium>*/

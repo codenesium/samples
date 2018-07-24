@@ -191,7 +191,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         mockResult.SetupGet(x => x.Success).Returns(true);
                         mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>()))
                         .Callback<short, ApiLocationRequestModel>(
-                                (id, model) => model.Availability.Should().Be(1m)
+                                (id, model) => model.Availability.Should().Be(1)
                                 )
                         .Returns(Task.FromResult<UpdateResponse<ApiLocationResponseModel>>(mockResult.Object));
                         mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiLocationResponseModel>(new ApiLocationResponseModel()));
@@ -200,7 +200,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
                         var patch = new JsonPatchDocument<ApiLocationRequestModel>();
-                        patch.Replace(x => x.Availability, 1m);
+                        patch.Replace(x => x.Availability, 1);
 
                         IActionResult response = await controller.Patch(default(short), patch);
 
@@ -220,7 +220,7 @@ namespace AdventureWorksNS.Api.Web.Tests
                         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
                         var patch = new JsonPatchDocument<ApiLocationRequestModel>();
-                        patch.Replace(x => x.Availability, 1m);
+                        patch.Replace(x => x.Availability, 1);
 
                         IActionResult response = await controller.Patch(default(short), patch);
 
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>755c81de391668a30a0ffa7e804d6c72</Hash>
+    <Hash>0ad760bf09d6859dbb4a70ed8fa9a7c6</Hash>
 </Codenesium>*/

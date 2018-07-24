@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("ContactTypeID")]
                 public int ContactTypeID { get; private set; }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>21cc68fda8b548f040cf74b940942436</Hash>
+    <Hash>4803620f1ed9fd2b7c31128ab5eb6dcf</Hash>
 </Codenesium>*/

@@ -26,6 +26,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("DepartmentID")]
                 public short DepartmentID { get; private set; }
 
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd7b147d05fc8f3d77599d1292e74a49</Hash>
+    <Hash>9be686e6a2d7c4ea775f8a6379434727</Hash>
 </Codenesium>*/

@@ -34,10 +34,10 @@ namespace PetShippingNS.Api.DataAccess
                 public int SaleId { get; private set; }
 
                 [ForeignKey("PipelineStatusId")]
-                public virtual PipelineStatus PipelineStatus { get; set; }
+                public virtual PipelineStatus PipelineStatusNavigation { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>86a47c18e74b33caec585d06c8b4bb2c</Hash>
+    <Hash>a6a05e7df56606c6694cf8c8dc1896ea</Hash>
 </Codenesium>*/

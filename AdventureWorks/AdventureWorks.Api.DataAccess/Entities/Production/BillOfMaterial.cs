@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         int componentID,
                         DateTime? endDate,
                         DateTime modifiedDate,
-                        decimal perAssemblyQty,
+                        double perAssemblyQty,
                         int? productAssemblyID,
                         DateTime startDate,
                         string unitMeasureCode)
@@ -36,6 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
+                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 [Column("BillOfMaterialsID")]
                 public int BillOfMaterialsID { get; private set; }
 
@@ -52,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public DateTime ModifiedDate { get; private set; }
 
                 [Column("PerAssemblyQty")]
-                public decimal PerAssemblyQty { get; private set; }
+                public double PerAssemblyQty { get; private set; }
 
                 [Column("ProductAssemblyID")]
                 public int? ProductAssemblyID { get; private set; }
@@ -66,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d531d11801469379c1bc3ce067e2202</Hash>
+    <Hash>8203ca91f4735e63e868c4e9fd3bb038</Hash>
 </Codenesium>*/
