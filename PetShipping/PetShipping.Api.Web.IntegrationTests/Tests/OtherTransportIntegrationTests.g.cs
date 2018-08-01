@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetShippingNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "OtherTransport")]
-        [Trait("Area", "Integration")]
-        public class OtherTransportIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public OtherTransportIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "OtherTransport")]
+	[Trait("Area", "Integration")]
+	public class OtherTransportIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public OtherTransportIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiOtherTransportModelMapper mapper = new ApiOtherTransportModelMapper();
+			ApiOtherTransportModelMapper mapper = new ApiOtherTransportModelMapper();
 
-                        UpdateResponse<ApiOtherTransportResponseModel> updateResponse = await this.Client.OtherTransportUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiOtherTransportResponseModel> updateResponse = await this.Client.OtherTransportUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.OtherTransportDeleteAsync(model.Id);
+			await this.Client.OtherTransportDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiOtherTransportResponseModel response = await this.Client.OtherTransportGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiOtherTransportResponseModel response = await this.Client.OtherTransportGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiOtherTransportResponseModel> response = await this.Client.OtherTransportAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiOtherTransportResponseModel> response = await this.Client.OtherTransportAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiOtherTransportResponseModel> CreateRecord()
-                {
-                        var model = new ApiOtherTransportRequestModel();
-                        model.SetProperties(1, 1);
-                        CreateResponse<ApiOtherTransportResponseModel> result = await this.Client.OtherTransportCreateAsync(model);
+		private async Task<ApiOtherTransportResponseModel> CreateRecord()
+		{
+			var model = new ApiOtherTransportRequestModel();
+			model.SetProperties(1, 1);
+			CreateResponse<ApiOtherTransportResponseModel> result = await this.Client.OtherTransportCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.OtherTransportDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.OtherTransportDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ff88f2ad2bb5bce709fb48e1d17861c2</Hash>
+    <Hash>4c0cfa9a228b630b48ab45b49dc21f41</Hash>
 </Codenesium>*/

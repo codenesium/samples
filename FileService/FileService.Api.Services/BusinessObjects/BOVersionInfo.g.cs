@@ -3,15 +3,15 @@ using System;
 
 namespace FileServiceNS.Api.Services
 {
-        public partial class BOVersionInfo : AbstractBOVersionInfo
-        {
-                public BOVersionInfo()
-                        : base()
-                {
-                }
-        }
+	public partial class BOVersionInfo : AbstractBOVersionInfo
+	{
+		public BOVersionInfo()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a960f550e532ecc703fc0ef8a2d9e1e9</Hash>
+    <Hash>bac7378ed2feddd67fe1165366bc1e7e</Hash>
 </Codenesium>*/

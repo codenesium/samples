@@ -15,224 +15,224 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Web
 {
-        public abstract class AbstractSpeciesController : AbstractApiController
-        {
-                protected ISpeciesService SpeciesService { get; private set; }
+	public abstract class AbstractSpeciesController : AbstractApiController
+	{
+		protected ISpeciesService SpeciesService { get; private set; }
 
-                protected IApiSpeciesModelMapper SpeciesModelMapper { get; private set; }
+		protected IApiSpeciesModelMapper SpeciesModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractSpeciesController(
-                        ApiSettings settings,
-                        ILogger<AbstractSpeciesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISpeciesService speciesService,
-                        IApiSpeciesModelMapper speciesModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.SpeciesService = speciesService;
-                        this.SpeciesModelMapper = speciesModelMapper;
-                }
+		public AbstractSpeciesController(
+			ApiSettings settings,
+			ILogger<AbstractSpeciesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISpeciesService speciesService,
+			IApiSpeciesModelMapper speciesModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.SpeciesService = speciesService;
+			this.SpeciesModelMapper = speciesModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSpeciesResponseModel> response = await this.SpeciesService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiSpeciesResponseModel> response = await this.SpeciesService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiSpeciesResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiSpeciesResponseModel response = await this.SpeciesService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiSpeciesResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiSpeciesResponseModel response = await this.SpeciesService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiSpeciesResponseModel> records = new List<ApiSpeciesResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
+			List<ApiSpeciesResponseModel> records = new List<ApiSpeciesResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiSpeciesResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesRequestModel model)
-                {
-                        CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiSpeciesResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesRequestModel model)
+		{
+			CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Species/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/Species/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpeciesRequestModel> patch)
-                {
-                        ApiSpeciesResponseModel record = await this.SpeciesService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpeciesRequestModel> patch)
+		{
+			ApiSpeciesResponseModel record = await this.SpeciesService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiSpeciesRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiSpeciesRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, model);
+				UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesRequestModel model)
-                {
-                        ApiSpeciesRequestModel request = await this.PatchModel(id, this.SpeciesModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesRequestModel model)
+		{
+			ApiSpeciesRequestModel request = await this.PatchModel(id, this.SpeciesModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.SpeciesService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.SpeciesService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("{speciesId}/Breeds")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
-                public async virtual Task<IActionResult> Breeds(int speciesId, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
+		[HttpGet]
+		[Route("{speciesId}/Breeds")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
+		public async virtual Task<IActionResult> Breeds(int speciesId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
 
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBreedResponseModel> response = await this.SpeciesService.Breeds(speciesId, query.Limit, query.Offset);
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiBreedResponseModel> response = await this.SpeciesService.Breeds(speciesId, query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiSpeciesRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpeciesRequestModel> patch)
-                {
-                        var record = await this.SpeciesService.Get(id);
+		private async Task<ApiSpeciesRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpeciesRequestModel> patch)
+		{
+			var record = await this.SpeciesService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiSpeciesRequestModel request = this.SpeciesModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiSpeciesRequestModel request = this.SpeciesModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>75416571a7751a58238f8cca86527b3c</Hash>
+    <Hash>7bb143f7e19c4341bb5b9ef0a2a051ed</Hash>
 </Codenesium>*/

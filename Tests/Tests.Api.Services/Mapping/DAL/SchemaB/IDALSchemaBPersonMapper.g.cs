@@ -6,19 +6,19 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IDALSchemaBPersonMapper
-        {
-                SchemaBPerson MapBOToEF(
-                        BOSchemaBPerson bo);
+	public interface IDALSchemaBPersonMapper
+	{
+		SchemaBPerson MapBOToEF(
+			BOSchemaBPerson bo);
 
-                BOSchemaBPerson MapEFToBO(
-                        SchemaBPerson efSchemaBPerson);
+		BOSchemaBPerson MapEFToBO(
+			SchemaBPerson efSchemaBPerson);
 
-                List<BOSchemaBPerson> MapEFToBO(
-                        List<SchemaBPerson> records);
-        }
+		List<BOSchemaBPerson> MapEFToBO(
+			List<SchemaBPerson> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>17cacd8b873bf118d1bdc41787a60291</Hash>
+    <Hash>63a23858e6c19e78d92b58013511bf5f</Hash>
 </Codenesium>*/

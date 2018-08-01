@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public interface ILinkLogService
-        {
-                Task<CreateResponse<ApiLinkLogResponseModel>> Create(
-                        ApiLinkLogRequestModel model);
+	public interface ILinkLogService
+	{
+		Task<CreateResponse<ApiLinkLogResponseModel>> Create(
+			ApiLinkLogRequestModel model);
 
-                Task<UpdateResponse<ApiLinkLogResponseModel>> Update(int id,
-                                                                      ApiLinkLogRequestModel model);
+		Task<UpdateResponse<ApiLinkLogResponseModel>> Update(int id,
+		                                                      ApiLinkLogRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiLinkLogResponseModel> Get(int id);
+		Task<ApiLinkLogResponseModel> Get(int id);
 
-                Task<List<ApiLinkLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiLinkLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6d87f2b43242bc0420f3a6c2681e1438</Hash>
+    <Hash>970278d339f2ad83bdc6c22e8c4939fa</Hash>
 </Codenesium>*/

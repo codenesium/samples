@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiBusinessEntityModelMapper : AbstractApiBusinessEntityModelMapper, IApiBusinessEntityModelMapper
-        {
-                public ApiBusinessEntityModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiBusinessEntityModelMapper : AbstractApiBusinessEntityModelMapper, IApiBusinessEntityModelMapper
+	{
+		public ApiBusinessEntityModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dfb15315c44af8dba9f64aa101cf0a41</Hash>
+    <Hash>a8090efe85bf6940ceee35e66122f361</Hash>
 </Codenesium>*/

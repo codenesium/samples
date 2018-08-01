@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Mutex")]
-        [Trait("Area", "Integration")]
-        public class MutexIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public MutexIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Mutex")]
+	[Trait("Area", "Integration")]
+	public class MutexIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public MutexIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiMutexModelMapper mapper = new ApiMutexModelMapper();
+			ApiMutexModelMapper mapper = new ApiMutexModelMapper();
 
-                        UpdateResponse<ApiMutexResponseModel> updateResponse = await this.Client.MutexUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiMutexResponseModel> updateResponse = await this.Client.MutexUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.MutexDeleteAsync(model.Id);
+			await this.Client.MutexDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiMutexResponseModel response = await this.Client.MutexGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiMutexResponseModel response = await this.Client.MutexGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiMutexResponseModel> response = await this.Client.MutexAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiMutexResponseModel> response = await this.Client.MutexAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiMutexResponseModel> CreateRecord()
-                {
-                        var model = new ApiMutexRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiMutexResponseModel> result = await this.Client.MutexCreateAsync(model);
+		private async Task<ApiMutexResponseModel> CreateRecord()
+		{
+			var model = new ApiMutexRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiMutexResponseModel> result = await this.Client.MutexCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.MutexDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.MutexDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f660f55b31636d008b45f255543a2e26</Hash>
+    <Hash>9a59ca33efe0373287c9ba030ddaf304</Hash>
 </Codenesium>*/

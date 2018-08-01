@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CreditCardRepository : AbstractCreditCardRepository, ICreditCardRepository
-        {
-                public CreditCardRepository(
-                        ILogger<CreditCardRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class CreditCardRepository : AbstractCreditCardRepository, ICreditCardRepository
+	{
+		public CreditCardRepository(
+			ILogger<CreditCardRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>48dbe5f7fd59ccf7ef65eb95aec163a2</Hash>
+    <Hash>94b39d071b82ffcb58ff2ba0552a8ebd</Hash>
 </Codenesium>*/

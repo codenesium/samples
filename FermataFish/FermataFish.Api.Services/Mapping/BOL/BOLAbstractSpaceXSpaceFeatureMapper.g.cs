@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class BOLAbstractSpaceXSpaceFeatureMapper
-        {
-                public virtual BOSpaceXSpaceFeature MapModelToBO(
-                        int id,
-                        ApiSpaceXSpaceFeatureRequestModel model
-                        )
-                {
-                        BOSpaceXSpaceFeature boSpaceXSpaceFeature = new BOSpaceXSpaceFeature();
-                        boSpaceXSpaceFeature.SetProperties(
-                                id,
-                                model.SpaceFeatureId,
-                                model.SpaceId);
-                        return boSpaceXSpaceFeature;
-                }
+	public abstract class BOLAbstractSpaceXSpaceFeatureMapper
+	{
+		public virtual BOSpaceXSpaceFeature MapModelToBO(
+			int id,
+			ApiSpaceXSpaceFeatureRequestModel model
+			)
+		{
+			BOSpaceXSpaceFeature boSpaceXSpaceFeature = new BOSpaceXSpaceFeature();
+			boSpaceXSpaceFeature.SetProperties(
+				id,
+				model.SpaceFeatureId,
+				model.SpaceId);
+			return boSpaceXSpaceFeature;
+		}
 
-                public virtual ApiSpaceXSpaceFeatureResponseModel MapBOToModel(
-                        BOSpaceXSpaceFeature boSpaceXSpaceFeature)
-                {
-                        var model = new ApiSpaceXSpaceFeatureResponseModel();
+		public virtual ApiSpaceXSpaceFeatureResponseModel MapBOToModel(
+			BOSpaceXSpaceFeature boSpaceXSpaceFeature)
+		{
+			var model = new ApiSpaceXSpaceFeatureResponseModel();
 
-                        model.SetProperties(boSpaceXSpaceFeature.Id, boSpaceXSpaceFeature.SpaceFeatureId, boSpaceXSpaceFeature.SpaceId);
+			model.SetProperties(boSpaceXSpaceFeature.Id, boSpaceXSpaceFeature.SpaceFeatureId, boSpaceXSpaceFeature.SpaceId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiSpaceXSpaceFeatureResponseModel> MapBOToModel(
-                        List<BOSpaceXSpaceFeature> items)
-                {
-                        List<ApiSpaceXSpaceFeatureResponseModel> response = new List<ApiSpaceXSpaceFeatureResponseModel>();
+		public virtual List<ApiSpaceXSpaceFeatureResponseModel> MapBOToModel(
+			List<BOSpaceXSpaceFeature> items)
+		{
+			List<ApiSpaceXSpaceFeatureResponseModel> response = new List<ApiSpaceXSpaceFeatureResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9bb30df92a35f17eafe80618768d57de</Hash>
+    <Hash>110b13c203066cf380865415f436809d</Hash>
 </Codenesium>*/

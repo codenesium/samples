@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public interface ITagsRepository
-        {
-                Task<Tags> Create(Tags item);
+	public interface ITagsRepository
+	{
+		Task<Tags> Create(Tags item);
 
-                Task Update(Tags item);
+		Task Update(Tags item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Tags> Get(int id);
+		Task<Tags> Get(int id);
 
-                Task<List<Tags>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Tags>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e01ab985572007a8634ca92da5820706</Hash>
+    <Hash>7d24567721e48050da2c494ec605face</Hash>
 </Codenesium>*/

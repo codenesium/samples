@@ -9,43 +9,43 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiEmployeeRequestModelValidator : AbstractValidator<ApiEmployeeRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiEmployeeRequestModelValidator : AbstractValidator<ApiEmployeeRequestModel>
+	{
+		private int existingRecordId;
 
-                private IEmployeeRepository employeeRepository;
+		private IEmployeeRepository employeeRepository;
 
-                public AbstractApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
-                {
-                        this.employeeRepository = employeeRepository;
-                }
+		public AbstractApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
+		{
+			this.employeeRepository = employeeRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiEmployeeRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiEmployeeRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void FirstNameRules()
-                {
-                        this.RuleFor(x => x.FirstName).Length(0, 128);
-                }
+		public virtual void FirstNameRules()
+		{
+			this.RuleFor(x => x.FirstName).Length(0, 128);
+		}
 
-                public virtual void IsSalesPersonRules()
-                {
-                }
+		public virtual void IsSalesPersonRules()
+		{
+		}
 
-                public virtual void IsShipperRules()
-                {
-                }
+		public virtual void IsShipperRules()
+		{
+		}
 
-                public virtual void LastNameRules()
-                {
-                        this.RuleFor(x => x.LastName).Length(0, 128);
-                }
-        }
+		public virtual void LastNameRules()
+		{
+			this.RuleFor(x => x.LastName).Length(0, 128);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4f3ca04ce7ac1605a844388cef8604ef</Hash>
+    <Hash>5bae03e06c59d8793318f430e0e0561a</Hash>
 </Codenesium>*/

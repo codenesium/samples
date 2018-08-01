@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductPhoto")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductPhotoRequestModelValidatorTest
-        {
-                public ApiProductPhotoRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductPhoto")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductPhotoRequestModelValidatorTest
+	{
+		public ApiProductPhotoRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void LargePhotoFileName_Create_length()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
+		[Fact]
+		public async void LargePhotoFileName_Create_length()
+		{
+			Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
+			productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
+			var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
+		}
 
-                [Fact]
-                public async void LargePhotoFileName_Update_length()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
+		[Fact]
+		public async void LargePhotoFileName_Update_length()
+		{
+			Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
+			productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
+			var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ThumbnailPhotoFileName_Create_length()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
+		[Fact]
+		public async void ThumbnailPhotoFileName_Create_length()
+		{
+			Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
+			productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
+			var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ThumbnailPhotoFileName_Update_length()
-                {
-                        Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
-                        productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
+		[Fact]
+		public async void ThumbnailPhotoFileName_Update_length()
+		{
+			Mock<IProductPhotoRepository> productPhotoRepository = new Mock<IProductPhotoRepository>();
+			productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
-                        var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
+			var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>490f3029f9d1be5e539de05cbfa52347</Hash>
+    <Hash>eba01f1fa6a041fad987dad4e878c896</Hash>
 </Codenesium>*/

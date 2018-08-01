@@ -6,50 +6,50 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        [Table("EmployeeDepartmentHistory", Schema="HumanResources")]
-        public partial class EmployeeDepartmentHistory : AbstractEntity
-        {
-                public EmployeeDepartmentHistory()
-                {
-                }
+	[Table("EmployeeDepartmentHistory", Schema="HumanResources")]
+	public partial class EmployeeDepartmentHistory : AbstractEntity
+	{
+		public EmployeeDepartmentHistory()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int businessEntityID,
-                        short departmentID,
-                        DateTime? endDate,
-                        DateTime modifiedDate,
-                        int shiftID,
-                        DateTime startDate)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.DepartmentID = departmentID;
-                        this.EndDate = endDate;
-                        this.ModifiedDate = modifiedDate;
-                        this.ShiftID = shiftID;
-                        this.StartDate = startDate;
-                }
+		public virtual void SetProperties(
+			int businessEntityID,
+			short departmentID,
+			DateTime? endDate,
+			DateTime modifiedDate,
+			int shiftID,
+			DateTime startDate)
+		{
+			this.BusinessEntityID = businessEntityID;
+			this.DepartmentID = departmentID;
+			this.EndDate = endDate;
+			this.ModifiedDate = modifiedDate;
+			this.ShiftID = shiftID;
+			this.StartDate = startDate;
+		}
 
-                [Key]
-                [Column("BusinessEntityID")]
-                public int BusinessEntityID { get; private set; }
+		[Key]
+		[Column("BusinessEntityID")]
+		public int BusinessEntityID { get; private set; }
 
-                [Column("DepartmentID")]
-                public short DepartmentID { get; private set; }
+		[Column("DepartmentID")]
+		public short DepartmentID { get; private set; }
 
-                [Column("EndDate")]
-                public DateTime? EndDate { get; private set; }
+		[Column("EndDate")]
+		public DateTime? EndDate { get; private set; }
 
-                [Column("ModifiedDate")]
-                public DateTime ModifiedDate { get; private set; }
+		[Column("ModifiedDate")]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Column("ShiftID")]
-                public int ShiftID { get; private set; }
+		[Column("ShiftID")]
+		public int ShiftID { get; private set; }
 
-                [Column("StartDate")]
-                public DateTime StartDate { get; private set; }
-        }
+		[Column("StartDate")]
+		public DateTime StartDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>b99755f824e3562750439597a3c04f3f</Hash>
+    <Hash>758414fa46d9b7704e928348131e3f7e</Hash>
 </Codenesium>*/

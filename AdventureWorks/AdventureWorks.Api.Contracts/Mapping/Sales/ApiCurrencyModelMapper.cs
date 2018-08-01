@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiCurrencyModelMapper : AbstractApiCurrencyModelMapper, IApiCurrencyModelMapper
-        {
-                public ApiCurrencyModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiCurrencyModelMapper : AbstractApiCurrencyModelMapper, IApiCurrencyModelMapper
+	{
+		public ApiCurrencyModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>54f271f0aba8bec9424451c045711327</Hash>
+    <Hash>ae58e3cd7844f43119474bdcebc221e0</Hash>
 </Codenesium>*/

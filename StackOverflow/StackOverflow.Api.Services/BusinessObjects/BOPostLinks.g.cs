@@ -3,15 +3,15 @@ using System;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOPostLinks : AbstractBOPostLinks
-        {
-                public BOPostLinks()
-                        : base()
-                {
-                }
-        }
+	public partial class BOPostLinks : AbstractBOPostLinks
+	{
+		public BOPostLinks()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0584313bea2dd84de5e31025f3e56400</Hash>
+    <Hash>660b5b289d7104d4754d38e133847993</Hash>
 </Codenesium>*/

@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Location")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiLocationRequestModelValidatorTest
-        {
-                public ApiLocationRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Location")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiLocationRequestModelValidatorTest
+	{
+		public ApiLocationRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
 
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLocationRequestModel());
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
 
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+			await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
 
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLocationRequestModel());
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Location()));
 
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+			await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(new Location()));
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(new Location()));
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiLocationRequestModel());
+			await validator.ValidateCreateAsync(new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(null));
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(null));
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiLocationRequestModel());
+			await validator.ValidateCreateAsync(new ApiLocationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(new Location()));
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(new Location()));
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
+			await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
-                        locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(null));
-                        var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ILocationRepository> locationRepository = new Mock<ILocationRepository>();
+			locationRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Location>(null));
+			var validator = new ApiLocationRequestModelValidator(locationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
+			await validator.ValidateUpdateAsync(default(short), new ApiLocationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5240d7513d51038d3854a5c09d2a361f</Hash>
+    <Hash>e8338ed4ed6a457aa3c355daab382a78</Hash>
 </Codenesium>*/

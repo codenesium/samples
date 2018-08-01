@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Shift")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiShiftRequestModelValidatorTest
-        {
-                public ApiShiftRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Shift")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiShiftRequestModelValidatorTest
+	{
+		public ApiShiftRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShiftRequestModel());
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShiftRequestModel());
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByStartTimeEndTime_Create_Exists()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+		[Fact]
+		private async void BeUniqueByStartTimeEndTime_Create_Exists()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiShiftRequestModel());
+			await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
+		}
 
-                [Fact]
-                private async void BeUniqueByStartTimeEndTime_Create_Not_Exists()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+		[Fact]
+		private async void BeUniqueByStartTimeEndTime_Create_Not_Exists()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiShiftRequestModel());
+			await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
+		}
 
-                [Fact]
-                private async void BeUniqueByStartTimeEndTime_Update_Exists()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+		[Fact]
+		private async void BeUniqueByStartTimeEndTime_Update_Exists()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
+		}
 
-                [Fact]
-                private async void BeUniqueByStartTimeEndTime_Update_Not_Exists()
-                {
-                        Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-                        shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
-                        var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
+		[Fact]
+		private async void BeUniqueByStartTimeEndTime_Update_Not_Exists()
+		{
+			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
+			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
+			var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>83d2a99c1801462d06e80465110fa505</Hash>
+    <Hash>7c2b3680df87e7a29f48e522213ac7f9</Hash>
 </Codenesium>*/

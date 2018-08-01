@@ -12,86 +12,86 @@ using Xunit;
 
 namespace FileServiceNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "VersionInfo")]
-        [Trait("Area", "Integration")]
-        public class VersionInfoIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public VersionInfoIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "VersionInfo")]
+	[Trait("Area", "Integration")]
+	public class VersionInfoIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public VersionInfoIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiVersionInfoModelMapper mapper = new ApiVersionInfoModelMapper();
+			ApiVersionInfoModelMapper mapper = new ApiVersionInfoModelMapper();
 
-                        UpdateResponse<ApiVersionInfoResponseModel> updateResponse = await this.Client.VersionInfoUpdateAsync(model.Version, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiVersionInfoResponseModel> updateResponse = await this.Client.VersionInfoUpdateAsync(model.Version, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.VersionInfoDeleteAsync(model.Version);
+			await this.Client.VersionInfoDeleteAsync(model.Version);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiVersionInfoResponseModel response = await this.Client.VersionInfoGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiVersionInfoResponseModel response = await this.Client.VersionInfoGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiVersionInfoResponseModel> response = await this.Client.VersionInfoAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiVersionInfoResponseModel> response = await this.Client.VersionInfoAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiVersionInfoResponseModel> CreateRecord()
-                {
-                        var model = new ApiVersionInfoRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-                        CreateResponse<ApiVersionInfoResponseModel> result = await this.Client.VersionInfoCreateAsync(model);
+		private async Task<ApiVersionInfoResponseModel> CreateRecord()
+		{
+			var model = new ApiVersionInfoRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiVersionInfoResponseModel> result = await this.Client.VersionInfoCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.VersionInfoDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.VersionInfoDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4a7dcd807d7dc804b12582f9a7f05cda</Hash>
+    <Hash>4accb7b584332d7180048383d029b093</Hash>
 </Codenesium>*/

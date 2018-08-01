@@ -9,127 +9,127 @@ using Xunit;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public partial class LinkLogRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class LinkLogRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<LinkLogRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<LinkLogRepository>>();
-                }
-        }
+		public static Mock<ILogger<LinkLogRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<LinkLogRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LinkLog")]
-        [Trait("Area", "Repositories")]
-        public partial class LinkLogRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LinkLog")]
+	[Trait("Area", "Repositories")]
+	public partial class LinkLogRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
 
-                        LinkLog entity = new LinkLog();
-                        context.Set<LinkLog>().Add(entity);
-                        await context.SaveChangesAsync();
+			LinkLog entity = new LinkLog();
+			context.Set<LinkLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
 
-                        LinkLog entity = new LinkLog();
-                        context.Set<LinkLog>().Add(entity);
-                        await context.SaveChangesAsync();
+			LinkLog entity = new LinkLog();
+			context.Set<LinkLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
 
-                        var entity = new LinkLog();
-                        await repository.Create(entity);
+			var entity = new LinkLog();
+			await repository.Create(entity);
 
-                        var record = await context.Set<LinkLog>().FirstOrDefaultAsync();
+			var record = await context.Set<LinkLog>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
-                        LinkLog entity = new LinkLog();
-                        context.Set<LinkLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
+			LinkLog entity = new LinkLog();
+			context.Set<LinkLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<LinkLog>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LinkLog>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
-                        LinkLog entity = new LinkLog();
-                        context.Set<LinkLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
+			LinkLog entity = new LinkLog();
+			context.Set<LinkLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new LinkLog());
+			await repository.Update(new LinkLog());
 
-                        var modifiedRecord = context.Set<LinkLog>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LinkLog>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
-                        var repository = new LinkLogRepository(loggerMoc.Object, context);
-                        LinkLog entity = new LinkLog();
-                        context.Set<LinkLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
+			LinkLog entity = new LinkLog();
+			context.Set<LinkLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        LinkLog modifiedRecord = await context.Set<LinkLog>().FirstOrDefaultAsync();
+			LinkLog modifiedRecord = await context.Set<LinkLog>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c667d2574ba7bf51ce1c1c131514e378</Hash>
+    <Hash>7d6d05afecddabe0cabcff3faed6a8b4</Hash>
 </Codenesium>*/

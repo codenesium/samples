@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2f3eb84420ae707a04ad969aeb4b9d7c</Hash>
+    <Hash>25a83cdeaeea11272e50956b4b9e8995</Hash>
 </Codenesium>*/

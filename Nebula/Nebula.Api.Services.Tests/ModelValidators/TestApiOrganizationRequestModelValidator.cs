@@ -15,41 +15,41 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Organization")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiOrganizationRequestModelValidatorTest
-        {
-                public ApiOrganizationRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Organization")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiOrganizationRequestModelValidatorTest
+	{
+		public ApiOrganizationRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
-                        organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
+			organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
 
-                        var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOrganizationRequestModel());
+			var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiOrganizationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
-                        organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IOrganizationRepository> organizationRepository = new Mock<IOrganizationRepository>();
+			organizationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
 
-                        var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiOrganizationRequestModel());
+			var validator = new ApiOrganizationRequestModelValidator(organizationRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiOrganizationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>91d801779d55cb751ba6581ec50425c5</Hash>
+    <Hash>b81a103cc10a3fe1ad8e29edfb43f6ee</Hash>
 </Codenesium>*/

@@ -9,41 +9,41 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiEmployeePayHistoryRequestModelValidator : AbstractValidator<ApiEmployeePayHistoryRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiEmployeePayHistoryRequestModelValidator : AbstractValidator<ApiEmployeePayHistoryRequestModel>
+	{
+		private int existingRecordId;
 
-                private IEmployeePayHistoryRepository employeePayHistoryRepository;
+		private IEmployeePayHistoryRepository employeePayHistoryRepository;
 
-                public AbstractApiEmployeePayHistoryRequestModelValidator(IEmployeePayHistoryRepository employeePayHistoryRepository)
-                {
-                        this.employeePayHistoryRepository = employeePayHistoryRepository;
-                }
+		public AbstractApiEmployeePayHistoryRequestModelValidator(IEmployeePayHistoryRepository employeePayHistoryRepository)
+		{
+			this.employeePayHistoryRepository = employeePayHistoryRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiEmployeePayHistoryRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiEmployeePayHistoryRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void PayFrequencyRules()
-                {
-                }
+		public virtual void PayFrequencyRules()
+		{
+		}
 
-                public virtual void RateRules()
-                {
-                }
+		public virtual void RateRules()
+		{
+		}
 
-                public virtual void RateChangeDateRules()
-                {
-                }
-        }
+		public virtual void RateChangeDateRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>71aff8be86eb2c6fe8d6faf7cb05c746</Hash>
+    <Hash>9c9eb7ab0ff987d359d6ae720bd9da3f</Hash>
 </Codenesium>*/

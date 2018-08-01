@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/actionTemplateVersions")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ActionTemplateVersionController : AbstractActionTemplateVersionController
-        {
-                public ActionTemplateVersionController(
-                        ApiSettings settings,
-                        ILogger<ActionTemplateVersionController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IActionTemplateVersionService actionTemplateVersionService,
-                        IApiActionTemplateVersionModelMapper actionTemplateVersionModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               actionTemplateVersionService,
-                               actionTemplateVersionModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/actionTemplateVersions")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ActionTemplateVersionController : AbstractActionTemplateVersionController
+	{
+		public ActionTemplateVersionController(
+			ApiSettings settings,
+			ILogger<ActionTemplateVersionController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IActionTemplateVersionService actionTemplateVersionService,
+			IApiActionTemplateVersionModelMapper actionTemplateVersionModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       actionTemplateVersionService,
+			       actionTemplateVersionModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>88f29b7ea2a3da33201074a906bd378e</Hash>
+    <Hash>b98f1b2d0e5607e372b0a1e35791315b</Hash>
 </Codenesium>*/

@@ -5,51 +5,51 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractAddressMapper
-        {
-                public virtual BOAddress MapModelToBO(
-                        int addressID,
-                        ApiAddressRequestModel model
-                        )
-                {
-                        BOAddress boAddress = new BOAddress();
-                        boAddress.SetProperties(
-                                addressID,
-                                model.AddressLine1,
-                                model.AddressLine2,
-                                model.City,
-                                model.ModifiedDate,
-                                model.PostalCode,
-                                model.Rowguid,
-                                model.StateProvinceID);
-                        return boAddress;
-                }
+	public abstract class BOLAbstractAddressMapper
+	{
+		public virtual BOAddress MapModelToBO(
+			int addressID,
+			ApiAddressRequestModel model
+			)
+		{
+			BOAddress boAddress = new BOAddress();
+			boAddress.SetProperties(
+				addressID,
+				model.AddressLine1,
+				model.AddressLine2,
+				model.City,
+				model.ModifiedDate,
+				model.PostalCode,
+				model.Rowguid,
+				model.StateProvinceID);
+			return boAddress;
+		}
 
-                public virtual ApiAddressResponseModel MapBOToModel(
-                        BOAddress boAddress)
-                {
-                        var model = new ApiAddressResponseModel();
+		public virtual ApiAddressResponseModel MapBOToModel(
+			BOAddress boAddress)
+		{
+			var model = new ApiAddressResponseModel();
 
-                        model.SetProperties(boAddress.AddressID, boAddress.AddressLine1, boAddress.AddressLine2, boAddress.City, boAddress.ModifiedDate, boAddress.PostalCode, boAddress.Rowguid, boAddress.StateProvinceID);
+			model.SetProperties(boAddress.AddressID, boAddress.AddressLine1, boAddress.AddressLine2, boAddress.City, boAddress.ModifiedDate, boAddress.PostalCode, boAddress.Rowguid, boAddress.StateProvinceID);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiAddressResponseModel> MapBOToModel(
-                        List<BOAddress> items)
-                {
-                        List<ApiAddressResponseModel> response = new List<ApiAddressResponseModel>();
+		public virtual List<ApiAddressResponseModel> MapBOToModel(
+			List<BOAddress> items)
+		{
+			List<ApiAddressResponseModel> response = new List<ApiAddressResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ac25cfe998d0d45102bc3a860033137d</Hash>
+    <Hash>e1745f3d786a0fa412c9881e616723f6</Hash>
 </Codenesium>*/

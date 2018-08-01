@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface IFeedRepository
-        {
-                Task<Feed> Create(Feed item);
+	public interface IFeedRepository
+	{
+		Task<Feed> Create(Feed item);
 
-                Task Update(Feed item);
+		Task Update(Feed item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<Feed> Get(string id);
+		Task<Feed> Get(string id);
 
-                Task<List<Feed>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Feed>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Feed> ByName(string name);
-        }
+		Task<Feed> ByName(string name);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c6afc91409ea2b971817343f56955d0c</Hash>
+    <Hash>b92556a64b5e541d309bdadc67f9d9b8</Hash>
 </Codenesium>*/

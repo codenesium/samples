@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IDALTeamMapper
-        {
-                Team MapBOToEF(
-                        BOTeam bo);
+	public interface IDALTeamMapper
+	{
+		Team MapBOToEF(
+			BOTeam bo);
 
-                BOTeam MapEFToBO(
-                        Team efTeam);
+		BOTeam MapEFToBO(
+			Team efTeam);
 
-                List<BOTeam> MapEFToBO(
-                        List<Team> records);
-        }
+		List<BOTeam> MapEFToBO(
+			List<Team> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>d1044a9036acd65cd00ec41cb4876849</Hash>
+    <Hash>024d72082de0d1038e167f7f5a16f3a7</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class DALProvinceMapper : DALAbstractProvinceMapper, IDALProvinceMapper
-        {
-                public DALProvinceMapper()
-                {
-                }
-        }
+	public partial class DALProvinceMapper : DALAbstractProvinceMapper, IDALProvinceMapper
+	{
+		public DALProvinceMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>80d40b29a42ad90f7ebb4e28b0859ae6</Hash>
+    <Hash>8185a8b047c4bd7718a8952db85a4193</Hash>
 </Codenesium>*/

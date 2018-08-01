@@ -9,65 +9,65 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesPersonRequestModelValidator : AbstractValidator<ApiSalesPersonRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSalesPersonRequestModelValidator : AbstractValidator<ApiSalesPersonRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISalesPersonRepository salesPersonRepository;
+		private ISalesPersonRepository salesPersonRepository;
 
-                public AbstractApiSalesPersonRequestModelValidator(ISalesPersonRepository salesPersonRepository)
-                {
-                        this.salesPersonRepository = salesPersonRepository;
-                }
+		public AbstractApiSalesPersonRequestModelValidator(ISalesPersonRepository salesPersonRepository)
+		{
+			this.salesPersonRepository = salesPersonRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSalesPersonRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSalesPersonRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void BonusRules()
-                {
-                }
+		public virtual void BonusRules()
+		{
+		}
 
-                public virtual void CommissionPctRules()
-                {
-                }
+		public virtual void CommissionPctRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
+		public virtual void RowguidRules()
+		{
+		}
 
-                public virtual void SalesLastYearRules()
-                {
-                }
+		public virtual void SalesLastYearRules()
+		{
+		}
 
-                public virtual void SalesQuotaRules()
-                {
-                }
+		public virtual void SalesQuotaRules()
+		{
+		}
 
-                public virtual void SalesYTDRules()
-                {
-                }
+		public virtual void SalesYTDRules()
+		{
+		}
 
-                public virtual void TerritoryIDRules()
-                {
-                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
-                }
+		public virtual void TerritoryIDRules()
+		{
+			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidSalesTerritory(int? id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesPersonRepository.GetSalesTerritory(id.GetValueOrDefault());
+		private async Task<bool> BeValidSalesTerritory(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesPersonRepository.GetSalesTerritory(id.GetValueOrDefault());
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1a71ac35bcbaa7cd6bcad05b345bb935</Hash>
+    <Hash>a49f52e311c516fe29ab6ae0238877b9</Hash>
 </Codenesium>*/

@@ -5,48 +5,48 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiProductModelModelMapper
-        {
-                public virtual ApiProductModelResponseModel MapRequestToResponse(
-                        int productModelID,
-                        ApiProductModelRequestModel request)
-                {
-                        var response = new ApiProductModelResponseModel();
-                        response.SetProperties(productModelID,
-                                               request.CatalogDescription,
-                                               request.Instruction,
-                                               request.ModifiedDate,
-                                               request.Name,
-                                               request.Rowguid);
-                        return response;
-                }
+	public abstract class AbstractApiProductModelModelMapper
+	{
+		public virtual ApiProductModelResponseModel MapRequestToResponse(
+			int productModelID,
+			ApiProductModelRequestModel request)
+		{
+			var response = new ApiProductModelResponseModel();
+			response.SetProperties(productModelID,
+			                       request.CatalogDescription,
+			                       request.Instruction,
+			                       request.ModifiedDate,
+			                       request.Name,
+			                       request.Rowguid);
+			return response;
+		}
 
-                public virtual ApiProductModelRequestModel MapResponseToRequest(
-                        ApiProductModelResponseModel response)
-                {
-                        var request = new ApiProductModelRequestModel();
-                        request.SetProperties(
-                                response.CatalogDescription,
-                                response.Instruction,
-                                response.ModifiedDate,
-                                response.Name,
-                                response.Rowguid);
-                        return request;
-                }
+		public virtual ApiProductModelRequestModel MapResponseToRequest(
+			ApiProductModelResponseModel response)
+		{
+			var request = new ApiProductModelRequestModel();
+			request.SetProperties(
+				response.CatalogDescription,
+				response.Instruction,
+				response.ModifiedDate,
+				response.Name,
+				response.Rowguid);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiProductModelRequestModel> CreatePatch(ApiProductModelRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiProductModelRequestModel>();
-                        patch.Replace(x => x.CatalogDescription, model.CatalogDescription);
-                        patch.Replace(x => x.Instruction, model.Instruction);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiProductModelRequestModel> CreatePatch(ApiProductModelRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiProductModelRequestModel>();
+			patch.Replace(x => x.CatalogDescription, model.CatalogDescription);
+			patch.Replace(x => x.Instruction, model.Instruction);
+			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.Rowguid, model.Rowguid);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9f709c9769eb9209f36f89e371f34bb3</Hash>
+    <Hash>493c4253b6dfde7f8bb5e1e1cba548d1</Hash>
 </Codenesium>*/

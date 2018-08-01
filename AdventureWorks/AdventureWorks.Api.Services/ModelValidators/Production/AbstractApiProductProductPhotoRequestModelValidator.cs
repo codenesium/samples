@@ -9,37 +9,37 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductProductPhotoRequestModelValidator : AbstractValidator<ApiProductProductPhotoRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiProductProductPhotoRequestModelValidator : AbstractValidator<ApiProductProductPhotoRequestModel>
+	{
+		private int existingRecordId;
 
-                private IProductProductPhotoRepository productProductPhotoRepository;
+		private IProductProductPhotoRepository productProductPhotoRepository;
 
-                public AbstractApiProductProductPhotoRequestModelValidator(IProductProductPhotoRepository productProductPhotoRepository)
-                {
-                        this.productProductPhotoRepository = productProductPhotoRepository;
-                }
+		public AbstractApiProductProductPhotoRequestModelValidator(IProductProductPhotoRepository productProductPhotoRepository)
+		{
+			this.productProductPhotoRepository = productProductPhotoRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiProductProductPhotoRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiProductProductPhotoRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void PrimaryRules()
-                {
-                }
+		public virtual void PrimaryRules()
+		{
+		}
 
-                public virtual void ProductPhotoIDRules()
-                {
-                }
-        }
+		public virtual void ProductPhotoIDRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7d566d6fef911d629d508078f9fca2b2</Hash>
+    <Hash>2f22cfc47ac3dd50819548ef9018d2b1</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLSalesTaxRateMapper
-        {
-                BOSalesTaxRate MapModelToBO(
-                        int salesTaxRateID,
-                        ApiSalesTaxRateRequestModel model);
+	public interface IBOLSalesTaxRateMapper
+	{
+		BOSalesTaxRate MapModelToBO(
+			int salesTaxRateID,
+			ApiSalesTaxRateRequestModel model);
 
-                ApiSalesTaxRateResponseModel MapBOToModel(
-                        BOSalesTaxRate boSalesTaxRate);
+		ApiSalesTaxRateResponseModel MapBOToModel(
+			BOSalesTaxRate boSalesTaxRate);
 
-                List<ApiSalesTaxRateResponseModel> MapBOToModel(
-                        List<BOSalesTaxRate> items);
-        }
+		List<ApiSalesTaxRateResponseModel> MapBOToModel(
+			List<BOSalesTaxRate> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>832c399fc99312a78c7a89269deb8cc0</Hash>
+    <Hash>155d3eeff660f97dca02627743b3b1bc</Hash>
 </Codenesium>*/

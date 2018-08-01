@@ -6,44 +6,44 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class DALAbstractLinkTypesMapper
-        {
-                public virtual LinkTypes MapBOToEF(
-                        BOLinkTypes bo)
-                {
-                        LinkTypes efLinkTypes = new LinkTypes();
-                        efLinkTypes.SetProperties(
-                                bo.Id,
-                                bo.Type);
-                        return efLinkTypes;
-                }
+	public abstract class DALAbstractLinkTypesMapper
+	{
+		public virtual LinkTypes MapBOToEF(
+			BOLinkTypes bo)
+		{
+			LinkTypes efLinkTypes = new LinkTypes();
+			efLinkTypes.SetProperties(
+				bo.Id,
+				bo.Type);
+			return efLinkTypes;
+		}
 
-                public virtual BOLinkTypes MapEFToBO(
-                        LinkTypes ef)
-                {
-                        var bo = new BOLinkTypes();
+		public virtual BOLinkTypes MapEFToBO(
+			LinkTypes ef)
+		{
+			var bo = new BOLinkTypes();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Type);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Type);
+			return bo;
+		}
 
-                public virtual List<BOLinkTypes> MapEFToBO(
-                        List<LinkTypes> records)
-                {
-                        List<BOLinkTypes> response = new List<BOLinkTypes>();
+		public virtual List<BOLinkTypes> MapEFToBO(
+			List<LinkTypes> records)
+		{
+			List<BOLinkTypes> response = new List<BOLinkTypes>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>289f784b868c92282a8c2cb6fb0960a9</Hash>
+    <Hash>51127a4d315f5e48142e57e7818a9282</Hash>
 </Codenesium>*/

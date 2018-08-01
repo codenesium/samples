@@ -5,48 +5,48 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class BOLAbstractSaleMapper
-        {
-                public virtual BOSale MapModelToBO(
-                        int id,
-                        ApiSaleRequestModel model
-                        )
-                {
-                        BOSale boSale = new BOSale();
-                        boSale.SetProperties(
-                                id,
-                                model.IpAddress,
-                                model.Notes,
-                                model.SaleDate,
-                                model.TransactionId);
-                        return boSale;
-                }
+	public abstract class BOLAbstractSaleMapper
+	{
+		public virtual BOSale MapModelToBO(
+			int id,
+			ApiSaleRequestModel model
+			)
+		{
+			BOSale boSale = new BOSale();
+			boSale.SetProperties(
+				id,
+				model.IpAddress,
+				model.Notes,
+				model.SaleDate,
+				model.TransactionId);
+			return boSale;
+		}
 
-                public virtual ApiSaleResponseModel MapBOToModel(
-                        BOSale boSale)
-                {
-                        var model = new ApiSaleResponseModel();
+		public virtual ApiSaleResponseModel MapBOToModel(
+			BOSale boSale)
+		{
+			var model = new ApiSaleResponseModel();
 
-                        model.SetProperties(boSale.Id, boSale.IpAddress, boSale.Notes, boSale.SaleDate, boSale.TransactionId);
+			model.SetProperties(boSale.Id, boSale.IpAddress, boSale.Notes, boSale.SaleDate, boSale.TransactionId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiSaleResponseModel> MapBOToModel(
-                        List<BOSale> items)
-                {
-                        List<ApiSaleResponseModel> response = new List<ApiSaleResponseModel>();
+		public virtual List<ApiSaleResponseModel> MapBOToModel(
+			List<BOSale> items)
+		{
+			List<ApiSaleResponseModel> response = new List<ApiSaleResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>adbdb3f3d92bc95ac0e8f0e010ef2531</Hash>
+    <Hash>4b34ce6ca2eea4a75eac585a7fd5614c</Hash>
 </Codenesium>*/

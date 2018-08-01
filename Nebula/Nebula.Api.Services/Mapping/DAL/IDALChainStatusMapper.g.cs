@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IDALChainStatusMapper
-        {
-                ChainStatus MapBOToEF(
-                        BOChainStatus bo);
+	public interface IDALChainStatusMapper
+	{
+		ChainStatus MapBOToEF(
+			BOChainStatus bo);
 
-                BOChainStatus MapEFToBO(
-                        ChainStatus efChainStatus);
+		BOChainStatus MapEFToBO(
+			ChainStatus efChainStatus);
 
-                List<BOChainStatus> MapEFToBO(
-                        List<ChainStatus> records);
-        }
+		List<BOChainStatus> MapEFToBO(
+			List<ChainStatus> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0926412d2a96b9ef195fc451a277f86b</Hash>
+    <Hash>682091e912c24d6a81e0a6f53fa37353</Hash>
 </Codenesium>*/

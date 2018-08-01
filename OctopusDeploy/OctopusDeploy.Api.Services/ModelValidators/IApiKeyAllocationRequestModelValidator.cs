@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IApiKeyAllocationRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiKeyAllocationRequestModel model);
+	public interface IApiKeyAllocationRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiKeyAllocationRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(string id, ApiKeyAllocationRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(string id, ApiKeyAllocationRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(string id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(string id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8fd654ea654b4c9ae802486735c14132</Hash>
+    <Hash>f9485f738bc22c6473e6c65399e48d56</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiLifecycleModelMapper
-        {
-                ApiLifecycleResponseModel MapRequestToResponse(
-                        string id,
-                        ApiLifecycleRequestModel request);
+	public interface IApiLifecycleModelMapper
+	{
+		ApiLifecycleResponseModel MapRequestToResponse(
+			string id,
+			ApiLifecycleRequestModel request);
 
-                ApiLifecycleRequestModel MapResponseToRequest(
-                        ApiLifecycleResponseModel response);
+		ApiLifecycleRequestModel MapResponseToRequest(
+			ApiLifecycleResponseModel response);
 
-                JsonPatchDocument<ApiLifecycleRequestModel> CreatePatch(ApiLifecycleRequestModel model);
-        }
+		JsonPatchDocument<ApiLifecycleRequestModel> CreatePatch(ApiLifecycleRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>f984ea7e006b95ca0daa8fc2e1d51c0c</Hash>
+    <Hash>112d6e51100bdf22a65dc80004276cfa</Hash>
 </Codenesium>*/

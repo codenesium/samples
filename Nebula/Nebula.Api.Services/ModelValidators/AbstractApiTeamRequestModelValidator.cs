@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiTeamRequestModelValidator : AbstractValidator<ApiTeamRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiTeamRequestModelValidator : AbstractValidator<ApiTeamRequestModel>
+	{
+		private int existingRecordId;
 
-                private ITeamRepository teamRepository;
+		private ITeamRepository teamRepository;
 
-                public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
-                {
-                        this.teamRepository = teamRepository;
-                }
+		public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
+		{
+			this.teamRepository = teamRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
 
-                public virtual void OrganizationIdRules()
-                {
-                        this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganization).When(x => x?.OrganizationId != null).WithMessage("Invalid reference");
-                }
+		public virtual void OrganizationIdRules()
+		{
+			this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganization).When(x => x?.OrganizationId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidOrganization(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.teamRepository.GetOrganization(id);
+		private async Task<bool> BeValidOrganization(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.teamRepository.GetOrganization(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>384dac3d3b018417178d085dc33179f7</Hash>
+    <Hash>cce6dcefe88c419b5c977dd58280cf57</Hash>
 </Codenesium>*/

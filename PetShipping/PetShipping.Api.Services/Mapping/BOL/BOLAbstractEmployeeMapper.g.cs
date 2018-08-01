@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class BOLAbstractEmployeeMapper
-        {
-                public virtual BOEmployee MapModelToBO(
-                        int id,
-                        ApiEmployeeRequestModel model
-                        )
-                {
-                        BOEmployee boEmployee = new BOEmployee();
-                        boEmployee.SetProperties(
-                                id,
-                                model.FirstName,
-                                model.IsSalesPerson,
-                                model.IsShipper,
-                                model.LastName);
-                        return boEmployee;
-                }
+	public abstract class BOLAbstractEmployeeMapper
+	{
+		public virtual BOEmployee MapModelToBO(
+			int id,
+			ApiEmployeeRequestModel model
+			)
+		{
+			BOEmployee boEmployee = new BOEmployee();
+			boEmployee.SetProperties(
+				id,
+				model.FirstName,
+				model.IsSalesPerson,
+				model.IsShipper,
+				model.LastName);
+			return boEmployee;
+		}
 
-                public virtual ApiEmployeeResponseModel MapBOToModel(
-                        BOEmployee boEmployee)
-                {
-                        var model = new ApiEmployeeResponseModel();
+		public virtual ApiEmployeeResponseModel MapBOToModel(
+			BOEmployee boEmployee)
+		{
+			var model = new ApiEmployeeResponseModel();
 
-                        model.SetProperties(boEmployee.Id, boEmployee.FirstName, boEmployee.IsSalesPerson, boEmployee.IsShipper, boEmployee.LastName);
+			model.SetProperties(boEmployee.Id, boEmployee.FirstName, boEmployee.IsSalesPerson, boEmployee.IsShipper, boEmployee.LastName);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiEmployeeResponseModel> MapBOToModel(
-                        List<BOEmployee> items)
-                {
-                        List<ApiEmployeeResponseModel> response = new List<ApiEmployeeResponseModel>();
+		public virtual List<ApiEmployeeResponseModel> MapBOToModel(
+			List<BOEmployee> items)
+		{
+			List<ApiEmployeeResponseModel> response = new List<ApiEmployeeResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>73b1d98b519b227581fa93ded1ef966b</Hash>
+    <Hash>9fcd90f300735bf5b643cbff01e79d49</Hash>
 </Codenesium>*/

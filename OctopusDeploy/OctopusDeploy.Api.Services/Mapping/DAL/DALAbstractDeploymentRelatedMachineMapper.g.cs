@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractDeploymentRelatedMachineMapper
-        {
-                public virtual DeploymentRelatedMachine MapBOToEF(
-                        BODeploymentRelatedMachine bo)
-                {
-                        DeploymentRelatedMachine efDeploymentRelatedMachine = new DeploymentRelatedMachine();
-                        efDeploymentRelatedMachine.SetProperties(
-                                bo.DeploymentId,
-                                bo.Id,
-                                bo.MachineId);
-                        return efDeploymentRelatedMachine;
-                }
+	public abstract class DALAbstractDeploymentRelatedMachineMapper
+	{
+		public virtual DeploymentRelatedMachine MapBOToEF(
+			BODeploymentRelatedMachine bo)
+		{
+			DeploymentRelatedMachine efDeploymentRelatedMachine = new DeploymentRelatedMachine();
+			efDeploymentRelatedMachine.SetProperties(
+				bo.DeploymentId,
+				bo.Id,
+				bo.MachineId);
+			return efDeploymentRelatedMachine;
+		}
 
-                public virtual BODeploymentRelatedMachine MapEFToBO(
-                        DeploymentRelatedMachine ef)
-                {
-                        var bo = new BODeploymentRelatedMachine();
+		public virtual BODeploymentRelatedMachine MapEFToBO(
+			DeploymentRelatedMachine ef)
+		{
+			var bo = new BODeploymentRelatedMachine();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.DeploymentId,
-                                ef.MachineId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.DeploymentId,
+				ef.MachineId);
+			return bo;
+		}
 
-                public virtual List<BODeploymentRelatedMachine> MapEFToBO(
-                        List<DeploymentRelatedMachine> records)
-                {
-                        List<BODeploymentRelatedMachine> response = new List<BODeploymentRelatedMachine>();
+		public virtual List<BODeploymentRelatedMachine> MapEFToBO(
+			List<DeploymentRelatedMachine> records)
+		{
+			List<BODeploymentRelatedMachine> response = new List<BODeploymentRelatedMachine>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>be9d19d8629c946927b354f4323058b3</Hash>
+    <Hash>f000849877bcb1f44ac26b2d38d36be2</Hash>
 </Codenesium>*/

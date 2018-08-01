@@ -8,61 +8,61 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "NuGetPackage")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLNuGetPackageMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLNuGetPackageMapper();
-                        ApiNuGetPackageRequestModel model = new ApiNuGetPackageRequestModel();
-                        model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
-                        BONuGetPackage response = mapper.MapModelToBO("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "NuGetPackage")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLNuGetPackageMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLNuGetPackageMapper();
+			ApiNuGetPackageRequestModel model = new ApiNuGetPackageRequestModel();
+			model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
+			BONuGetPackage response = mapper.MapModelToBO("A", model);
 
-                        response.JSON.Should().Be("A");
-                        response.PackageId.Should().Be("A");
-                        response.Version.Should().Be("A");
-                        response.VersionBuild.Should().Be(1);
-                        response.VersionMajor.Should().Be(1);
-                        response.VersionMinor.Should().Be(1);
-                        response.VersionRevision.Should().Be(1);
-                        response.VersionSpecial.Should().Be("A");
-                }
+			response.JSON.Should().Be("A");
+			response.PackageId.Should().Be("A");
+			response.Version.Should().Be("A");
+			response.VersionBuild.Should().Be(1);
+			response.VersionMajor.Should().Be(1);
+			response.VersionMinor.Should().Be(1);
+			response.VersionRevision.Should().Be(1);
+			response.VersionSpecial.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLNuGetPackageMapper();
-                        BONuGetPackage bo = new BONuGetPackage();
-                        bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
-                        ApiNuGetPackageResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLNuGetPackageMapper();
+			BONuGetPackage bo = new BONuGetPackage();
+			bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
+			ApiNuGetPackageResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.PackageId.Should().Be("A");
-                        response.Version.Should().Be("A");
-                        response.VersionBuild.Should().Be(1);
-                        response.VersionMajor.Should().Be(1);
-                        response.VersionMinor.Should().Be(1);
-                        response.VersionRevision.Should().Be(1);
-                        response.VersionSpecial.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.PackageId.Should().Be("A");
+			response.Version.Should().Be("A");
+			response.VersionBuild.Should().Be(1);
+			response.VersionMajor.Should().Be(1);
+			response.VersionMinor.Should().Be(1);
+			response.VersionRevision.Should().Be(1);
+			response.VersionSpecial.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLNuGetPackageMapper();
-                        BONuGetPackage bo = new BONuGetPackage();
-                        bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
-                        List<ApiNuGetPackageResponseModel> response = mapper.MapBOToModel(new List<BONuGetPackage>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLNuGetPackageMapper();
+			BONuGetPackage bo = new BONuGetPackage();
+			bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
+			List<ApiNuGetPackageResponseModel> response = mapper.MapBOToModel(new List<BONuGetPackage>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a12aa979c0aaf924b00d0afcf5c4b68e</Hash>
+    <Hash>7b651e82b17da1c131f4ba853b663548</Hash>
 </Codenesium>*/

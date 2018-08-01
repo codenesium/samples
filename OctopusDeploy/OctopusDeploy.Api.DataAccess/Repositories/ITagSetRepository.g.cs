@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface ITagSetRepository
-        {
-                Task<TagSet> Create(TagSet item);
+	public interface ITagSetRepository
+	{
+		Task<TagSet> Create(TagSet item);
 
-                Task Update(TagSet item);
+		Task Update(TagSet item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<TagSet> Get(string id);
+		Task<TagSet> Get(string id);
 
-                Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<TagSet> ByName(string name);
+		Task<TagSet> ByName(string name);
 
-                Task<List<TagSet>> ByDataVersion(byte[] dataVersion);
-        }
+		Task<List<TagSet>> ByDataVersion(byte[] dataVersion);
+	}
 }
 
 /*<Codenesium>
-    <Hash>80f89a635cfc1a5f45e714473b92a0bf</Hash>
+    <Hash>9f3b08b2d82e712934095e8024c1fa7d</Hash>
 </Codenesium>*/

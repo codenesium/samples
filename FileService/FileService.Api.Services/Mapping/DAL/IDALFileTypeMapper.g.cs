@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IDALFileTypeMapper
-        {
-                FileType MapBOToEF(
-                        BOFileType bo);
+	public interface IDALFileTypeMapper
+	{
+		FileType MapBOToEF(
+			BOFileType bo);
 
-                BOFileType MapEFToBO(
-                        FileType efFileType);
+		BOFileType MapEFToBO(
+			FileType efFileType);
 
-                List<BOFileType> MapEFToBO(
-                        List<FileType> records);
-        }
+		List<BOFileType> MapEFToBO(
+			List<FileType> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>cabdbe64c43e641ef888e53cc5253d29</Hash>
+    <Hash>84ccf2b175e54bf41cfa89756034d440</Hash>
 </Codenesium>*/

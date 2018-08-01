@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class PurchaseOrderHeaderService : AbstractPurchaseOrderHeaderService, IPurchaseOrderHeaderService
-        {
-                public PurchaseOrderHeaderService(
-                        ILogger<IPurchaseOrderHeaderRepository> logger,
-                        IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
-                        IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
-                        IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
-                        IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper,
-                        IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
-                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
-                        )
-                        : base(logger,
-                               purchaseOrderHeaderRepository,
-                               purchaseOrderHeaderModelValidator,
-                               bolpurchaseOrderHeaderMapper,
-                               dalpurchaseOrderHeaderMapper,
-                               bolPurchaseOrderDetailMapper,
-                               dalPurchaseOrderDetailMapper)
-                {
-                }
-        }
+	public partial class PurchaseOrderHeaderService : AbstractPurchaseOrderHeaderService, IPurchaseOrderHeaderService
+	{
+		public PurchaseOrderHeaderService(
+			ILogger<IPurchaseOrderHeaderRepository> logger,
+			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
+			IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
+			IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
+			IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper,
+			IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
+			IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
+			)
+			: base(logger,
+			       purchaseOrderHeaderRepository,
+			       purchaseOrderHeaderModelValidator,
+			       bolpurchaseOrderHeaderMapper,
+			       dalpurchaseOrderHeaderMapper,
+			       bolPurchaseOrderDetailMapper,
+			       dalPurchaseOrderDetailMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>86b76309e6813512ca2e72f51a3eec4f</Hash>
+    <Hash>e7589ca9d44c9e2ab5e369de300ec62e</Hash>
 </Codenesium>*/

@@ -13,125 +13,125 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VariableSet")]
-        [Trait("Area", "Services")]
-        public partial class VariableSetServiceTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        var records = new List<VariableSet>();
-                        records.Add(new VariableSet());
-                        mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VariableSet")]
+	[Trait("Area", "Services")]
+	public partial class VariableSetServiceTests
+	{
+		[Fact]
+		public async void All()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			var records = new List<VariableSet>();
+			records.Add(new VariableSet());
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        List<ApiVariableSetResponseModel> response = await service.All();
+			List<ApiVariableSetResponseModel> response = await service.All();
 
-                        response.Should().HaveCount(1);
-                        mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().HaveCount(1);
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        var record = new VariableSet();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+		[Fact]
+		public async void Get()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			var record = new VariableSet();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        ApiVariableSetResponseModel response = await service.Get(default(string));
+			ApiVariableSetResponseModel response = await service.Get(default(string));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Get_null_record()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<VariableSet>(null));
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+		[Fact]
+		public async void Get_null_record()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<VariableSet>(null));
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        ApiVariableSetResponseModel response = await service.Get(default(string));
+			ApiVariableSetResponseModel response = await service.Get(default(string));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        var model = new ApiVariableSetRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VariableSet>())).Returns(Task.FromResult(new VariableSet()));
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			var model = new ApiVariableSetRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VariableSet>())).Returns(Task.FromResult(new VariableSet()));
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        CreateResponse<ApiVariableSetResponseModel> response = await service.Create(model);
+			CreateResponse<ApiVariableSetResponseModel> response = await service.Create(model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVariableSetRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Create(It.IsAny<VariableSet>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVariableSetRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<VariableSet>()));
+		}
 
-                [Fact]
-                public async void Update()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        var model = new ApiVariableSetRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VariableSet>())).Returns(Task.FromResult(new VariableSet()));
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			var model = new ApiVariableSetRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VariableSet>())).Returns(Task.FromResult(new VariableSet()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        UpdateResponse<ApiVariableSetResponseModel> response = await service.Update(default(string), model);
+			UpdateResponse<ApiVariableSetResponseModel> response = await service.Update(default(string), model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiVariableSetRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Update(It.IsAny<VariableSet>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiVariableSetRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<VariableSet>()));
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        var mock = new ServiceMockFacade<IVariableSetRepository>();
-                        var model = new ApiVariableSetRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
-                        var service = new VariableSetService(mock.LoggerMock.Object,
-                                                             mock.RepositoryMock.Object,
-                                                             mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
-                                                             mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
-                                                             mock.DALMapperMockFactory.DALVariableSetMapperMock);
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<IVariableSetRepository>();
+			var model = new ApiVariableSetRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
+			var service = new VariableSetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLVariableSetMapperMock,
+			                                     mock.DALMapperMockFactory.DALVariableSetMapperMock);
 
-                        ActionResponse response = await service.Delete(default(string));
+			ActionResponse response = await service.Delete(default(string));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
-                        mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
-                }
-        }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
+			mock.ModelValidatorMockFactory.VariableSetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>efdae508a5be85ec82a213960e0ade6d</Hash>
+    <Hash>4c51a1fab84885828066df4dab83a5b4</Hash>
 </Codenesium>*/

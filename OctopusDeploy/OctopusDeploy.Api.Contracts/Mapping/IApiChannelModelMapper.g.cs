@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiChannelModelMapper
-        {
-                ApiChannelResponseModel MapRequestToResponse(
-                        string id,
-                        ApiChannelRequestModel request);
+	public interface IApiChannelModelMapper
+	{
+		ApiChannelResponseModel MapRequestToResponse(
+			string id,
+			ApiChannelRequestModel request);
 
-                ApiChannelRequestModel MapResponseToRequest(
-                        ApiChannelResponseModel response);
+		ApiChannelRequestModel MapResponseToRequest(
+			ApiChannelResponseModel response);
 
-                JsonPatchDocument<ApiChannelRequestModel> CreatePatch(ApiChannelRequestModel model);
-        }
+		JsonPatchDocument<ApiChannelRequestModel> CreatePatch(ApiChannelRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>35d16c16201d41afc2a73cf4b948df25</Hash>
+    <Hash>9df41723aac34aca89e0ec3990be463a</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALBusinessEntityAddressMapper
-        {
-                BusinessEntityAddress MapBOToEF(
-                        BOBusinessEntityAddress bo);
+	public interface IDALBusinessEntityAddressMapper
+	{
+		BusinessEntityAddress MapBOToEF(
+			BOBusinessEntityAddress bo);
 
-                BOBusinessEntityAddress MapEFToBO(
-                        BusinessEntityAddress efBusinessEntityAddress);
+		BOBusinessEntityAddress MapEFToBO(
+			BusinessEntityAddress efBusinessEntityAddress);
 
-                List<BOBusinessEntityAddress> MapEFToBO(
-                        List<BusinessEntityAddress> records);
-        }
+		List<BOBusinessEntityAddress> MapEFToBO(
+			List<BusinessEntityAddress> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4db441e90ac698dcd261b86f5a54ce5f</Hash>
+    <Hash>9f275959fc8081a6eb239fe1ddfb8078</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ShoppingCartItemRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ShoppingCartItemRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ShoppingCartItemRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ShoppingCartItemRepository>>();
-                }
-        }
+		public static Mock<ILogger<ShoppingCartItemRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ShoppingCartItemRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ShoppingCartItem")]
-        [Trait("Area", "Repositories")]
-        public partial class ShoppingCartItemRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ShoppingCartItem")]
+	[Trait("Area", "Repositories")]
+	public partial class ShoppingCartItemRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
-                        ShoppingCartItem entity = new ShoppingCartItem();
-                        context.Set<ShoppingCartItem>().Add(entity);
-                        await context.SaveChangesAsync();
+			ShoppingCartItem entity = new ShoppingCartItem();
+			context.Set<ShoppingCartItem>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
-                        ShoppingCartItem entity = new ShoppingCartItem();
-                        context.Set<ShoppingCartItem>().Add(entity);
-                        await context.SaveChangesAsync();
+			ShoppingCartItem entity = new ShoppingCartItem();
+			context.Set<ShoppingCartItem>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ShoppingCartItemID);
+			var record = await repository.Get(entity.ShoppingCartItemID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
-                        var entity = new ShoppingCartItem();
-                        await repository.Create(entity);
+			var entity = new ShoppingCartItem();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+			var record = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-                        ShoppingCartItem entity = new ShoppingCartItem();
-                        context.Set<ShoppingCartItem>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+			ShoppingCartItem entity = new ShoppingCartItem();
+			context.Set<ShoppingCartItem>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ShoppingCartItemID);
+			var record = await repository.Get(entity.ShoppingCartItemID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-                        ShoppingCartItem entity = new ShoppingCartItem();
-                        context.Set<ShoppingCartItem>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+			ShoppingCartItem entity = new ShoppingCartItem();
+			context.Set<ShoppingCartItem>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ShoppingCartItem());
+			await repository.Update(new ShoppingCartItem());
 
-                        var modifiedRecord = context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
-                        var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-                        ShoppingCartItem entity = new ShoppingCartItem();
-                        context.Set<ShoppingCartItem>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
+			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
+			ShoppingCartItem entity = new ShoppingCartItem();
+			context.Set<ShoppingCartItem>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ShoppingCartItemID);
+			await repository.Delete(entity.ShoppingCartItemID);
 
-                        ShoppingCartItem modifiedRecord = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+			ShoppingCartItem modifiedRecord = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d746fc1ad58c388b40e8ef8a2f88b0c</Hash>
+    <Hash>313684ec1baea68ecb12efeaef26fd08</Hash>
 </Codenesium>*/

@@ -5,49 +5,49 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductPhotoMapper
-        {
-                public virtual BOProductPhoto MapModelToBO(
-                        int productPhotoID,
-                        ApiProductPhotoRequestModel model
-                        )
-                {
-                        BOProductPhoto boProductPhoto = new BOProductPhoto();
-                        boProductPhoto.SetProperties(
-                                productPhotoID,
-                                model.LargePhoto,
-                                model.LargePhotoFileName,
-                                model.ModifiedDate,
-                                model.ThumbNailPhoto,
-                                model.ThumbnailPhotoFileName);
-                        return boProductPhoto;
-                }
+	public abstract class BOLAbstractProductPhotoMapper
+	{
+		public virtual BOProductPhoto MapModelToBO(
+			int productPhotoID,
+			ApiProductPhotoRequestModel model
+			)
+		{
+			BOProductPhoto boProductPhoto = new BOProductPhoto();
+			boProductPhoto.SetProperties(
+				productPhotoID,
+				model.LargePhoto,
+				model.LargePhotoFileName,
+				model.ModifiedDate,
+				model.ThumbNailPhoto,
+				model.ThumbnailPhotoFileName);
+			return boProductPhoto;
+		}
 
-                public virtual ApiProductPhotoResponseModel MapBOToModel(
-                        BOProductPhoto boProductPhoto)
-                {
-                        var model = new ApiProductPhotoResponseModel();
+		public virtual ApiProductPhotoResponseModel MapBOToModel(
+			BOProductPhoto boProductPhoto)
+		{
+			var model = new ApiProductPhotoResponseModel();
 
-                        model.SetProperties(boProductPhoto.ProductPhotoID, boProductPhoto.LargePhoto, boProductPhoto.LargePhotoFileName, boProductPhoto.ModifiedDate, boProductPhoto.ThumbNailPhoto, boProductPhoto.ThumbnailPhotoFileName);
+			model.SetProperties(boProductPhoto.ProductPhotoID, boProductPhoto.LargePhoto, boProductPhoto.LargePhotoFileName, boProductPhoto.ModifiedDate, boProductPhoto.ThumbNailPhoto, boProductPhoto.ThumbnailPhotoFileName);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductPhotoResponseModel> MapBOToModel(
-                        List<BOProductPhoto> items)
-                {
-                        List<ApiProductPhotoResponseModel> response = new List<ApiProductPhotoResponseModel>();
+		public virtual List<ApiProductPhotoResponseModel> MapBOToModel(
+			List<BOProductPhoto> items)
+		{
+			List<ApiProductPhotoResponseModel> response = new List<ApiProductPhotoResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a3517dffe025dd65fae253b751ca9993</Hash>
+    <Hash>6aa52c17613eec459aa04b1e05b07d6e</Hash>
 </Codenesium>*/

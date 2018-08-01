@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/pipelineSteps")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PipelineStepController : AbstractPipelineStepController
-        {
-                public PipelineStepController(
-                        ApiSettings settings,
-                        ILogger<PipelineStepController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPipelineStepService pipelineStepService,
-                        IApiPipelineStepModelMapper pipelineStepModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               pipelineStepService,
-                               pipelineStepModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/pipelineSteps")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PipelineStepController : AbstractPipelineStepController
+	{
+		public PipelineStepController(
+			ApiSettings settings,
+			ILogger<PipelineStepController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPipelineStepService pipelineStepService,
+			IApiPipelineStepModelMapper pipelineStepModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       pipelineStepService,
+			       pipelineStepModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b0b8d18007070085454b8ed43e061a92</Hash>
+    <Hash>5b11b8c6a028b946d5e7a1d63ce38c4e</Hash>
 </Codenesium>*/

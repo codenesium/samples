@@ -5,51 +5,51 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class BOLAbstractStudioMapper
-        {
-                public virtual BOStudio MapModelToBO(
-                        int id,
-                        ApiStudioRequestModel model
-                        )
-                {
-                        BOStudio boStudio = new BOStudio();
-                        boStudio.SetProperties(
-                                id,
-                                model.Address1,
-                                model.Address2,
-                                model.City,
-                                model.Name,
-                                model.StateId,
-                                model.Website,
-                                model.Zip);
-                        return boStudio;
-                }
+	public abstract class BOLAbstractStudioMapper
+	{
+		public virtual BOStudio MapModelToBO(
+			int id,
+			ApiStudioRequestModel model
+			)
+		{
+			BOStudio boStudio = new BOStudio();
+			boStudio.SetProperties(
+				id,
+				model.Address1,
+				model.Address2,
+				model.City,
+				model.Name,
+				model.StateId,
+				model.Website,
+				model.Zip);
+			return boStudio;
+		}
 
-                public virtual ApiStudioResponseModel MapBOToModel(
-                        BOStudio boStudio)
-                {
-                        var model = new ApiStudioResponseModel();
+		public virtual ApiStudioResponseModel MapBOToModel(
+			BOStudio boStudio)
+		{
+			var model = new ApiStudioResponseModel();
 
-                        model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.StateId, boStudio.Website, boStudio.Zip);
+			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.StateId, boStudio.Website, boStudio.Zip);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiStudioResponseModel> MapBOToModel(
-                        List<BOStudio> items)
-                {
-                        List<ApiStudioResponseModel> response = new List<ApiStudioResponseModel>();
+		public virtual List<ApiStudioResponseModel> MapBOToModel(
+			List<BOStudio> items)
+		{
+			List<ApiStudioResponseModel> response = new List<ApiStudioResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>70b5bfb754341e10374ffccc25063c84</Hash>
+    <Hash>ff127eb9d5a00acf9e20cda0597b5bb7</Hash>
 </Codenesium>*/

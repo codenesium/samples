@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class EmployeeDepartmentHistoryRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class EmployeeDepartmentHistoryRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<EmployeeDepartmentHistoryRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<EmployeeDepartmentHistoryRepository>>();
-                }
-        }
+		public static Mock<ILogger<EmployeeDepartmentHistoryRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<EmployeeDepartmentHistoryRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmployeeDepartmentHistory")]
-        [Trait("Area", "Repositories")]
-        public partial class EmployeeDepartmentHistoryRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmployeeDepartmentHistory")]
+	[Trait("Area", "Repositories")]
+	public partial class EmployeeDepartmentHistoryRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        context.Set<EmployeeDepartmentHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			context.Set<EmployeeDepartmentHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        context.Set<EmployeeDepartmentHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			context.Set<EmployeeDepartmentHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
-                        var entity = new EmployeeDepartmentHistory();
-                        await repository.Create(entity);
+			var entity = new EmployeeDepartmentHistory();
+			await repository.Create(entity);
 
-                        var record = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+			var record = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        context.Set<EmployeeDepartmentHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			context.Set<EmployeeDepartmentHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        context.Set<EmployeeDepartmentHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			context.Set<EmployeeDepartmentHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new EmployeeDepartmentHistory());
+			await repository.Update(new EmployeeDepartmentHistory());
 
-                        var modifiedRecord = context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        context.Set<EmployeeDepartmentHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			context.Set<EmployeeDepartmentHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.BusinessEntityID);
+			await repository.Delete(entity.BusinessEntityID);
 
-                        EmployeeDepartmentHistory modifiedRecord = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+			EmployeeDepartmentHistory modifiedRecord = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2520139a99112932e98368b08729a18c</Hash>
+    <Hash>383096b60912cd32c9bc4c27504f6c0d</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesPersonQuotaHistoryModelMapper : AbstractApiSalesPersonQuotaHistoryModelMapper, IApiSalesPersonQuotaHistoryModelMapper
-        {
-                public ApiSalesPersonQuotaHistoryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSalesPersonQuotaHistoryModelMapper : AbstractApiSalesPersonQuotaHistoryModelMapper, IApiSalesPersonQuotaHistoryModelMapper
+	{
+		public ApiSalesPersonQuotaHistoryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>855e63cee62bc43da09fac9416e74c48</Hash>
+    <Hash>7c40c897a4cb0dc4d18b66b652bfbb40</Hash>
 </Codenesium>*/

@@ -15,65 +15,65 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "RowVersionCheck")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiRowVersionCheckRequestModelValidatorTest
-        {
-                public ApiRowVersionCheckRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "RowVersionCheck")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiRowVersionCheckRequestModelValidatorTest
+	{
+		public ApiRowVersionCheckRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
-                        rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
+			rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 
-                        var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiRowVersionCheckRequestModel());
+			var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
+			await validator.ValidateCreateAsync(new ApiRowVersionCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
-                        rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
+			rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 
-                        var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiRowVersionCheckRequestModel());
+			var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiRowVersionCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
-                        rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
+			rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 
-                        var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiRowVersionCheckRequestModel());
+			var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
+			await validator.ValidateCreateAsync(new ApiRowVersionCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
-                        rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IRowVersionCheckRepository> rowVersionCheckRepository = new Mock<IRowVersionCheckRepository>();
+			rowVersionCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 
-                        var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiRowVersionCheckRequestModel());
+			var validator = new ApiRowVersionCheckRequestModelValidator(rowVersionCheckRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiRowVersionCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c5bb2696901aba211011585617ffc87c</Hash>
+    <Hash>adc27d8ad4cf7797e6d93cf37ff75820</Hash>
 </Codenesium>*/

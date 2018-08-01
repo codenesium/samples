@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IDALOtherTransportMapper
-        {
-                OtherTransport MapBOToEF(
-                        BOOtherTransport bo);
+	public interface IDALOtherTransportMapper
+	{
+		OtherTransport MapBOToEF(
+			BOOtherTransport bo);
 
-                BOOtherTransport MapEFToBO(
-                        OtherTransport efOtherTransport);
+		BOOtherTransport MapEFToBO(
+			OtherTransport efOtherTransport);
 
-                List<BOOtherTransport> MapEFToBO(
-                        List<OtherTransport> records);
-        }
+		List<BOOtherTransport> MapEFToBO(
+			List<OtherTransport> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2eeea15014de04a0fa0f93b1e36065b5</Hash>
+    <Hash>61f08e36d957d631e6f8c3d34463774e</Hash>
 </Codenesium>*/

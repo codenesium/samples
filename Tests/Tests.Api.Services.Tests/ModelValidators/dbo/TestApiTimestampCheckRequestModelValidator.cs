@@ -15,41 +15,41 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TimestampCheck")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTimestampCheckRequestModelValidatorTest
-        {
-                public ApiTimestampCheckRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TimestampCheck")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTimestampCheckRequestModelValidatorTest
+	{
+		public ApiTimestampCheckRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ITimestampCheckRepository> timestampCheckRepository = new Mock<ITimestampCheckRepository>();
-                        timestampCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TimestampCheck()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ITimestampCheckRepository> timestampCheckRepository = new Mock<ITimestampCheckRepository>();
+			timestampCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TimestampCheck()));
 
-                        var validator = new ApiTimestampCheckRequestModelValidator(timestampCheckRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTimestampCheckRequestModel());
+			var validator = new ApiTimestampCheckRequestModelValidator(timestampCheckRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTimestampCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ITimestampCheckRepository> timestampCheckRepository = new Mock<ITimestampCheckRepository>();
-                        timestampCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TimestampCheck()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ITimestampCheckRepository> timestampCheckRepository = new Mock<ITimestampCheckRepository>();
+			timestampCheckRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TimestampCheck()));
 
-                        var validator = new ApiTimestampCheckRequestModelValidator(timestampCheckRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTimestampCheckRequestModel());
+			var validator = new ApiTimestampCheckRequestModelValidator(timestampCheckRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTimestampCheckRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a179d2bb322bbffa28e61a36cc2ccb55</Hash>
+    <Hash>2db0f939af92450d196ac441eb794498</Hash>
 </Codenesium>*/

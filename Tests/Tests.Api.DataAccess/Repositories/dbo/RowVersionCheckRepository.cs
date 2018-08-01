@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.DataAccess
 {
-        public partial class RowVersionCheckRepository : AbstractRowVersionCheckRepository, IRowVersionCheckRepository
-        {
-                public RowVersionCheckRepository(
-                        ILogger<RowVersionCheckRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class RowVersionCheckRepository : AbstractRowVersionCheckRepository, IRowVersionCheckRepository
+	{
+		public RowVersionCheckRepository(
+			ILogger<RowVersionCheckRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aec8ae46013a749bd5659066b2e4699f</Hash>
+    <Hash>4dedccba00bef5d3756f4d03f3cd4a3c</Hash>
 </Codenesium>*/

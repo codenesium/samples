@@ -3,15 +3,15 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOClientCommunication : AbstractBOClientCommunication
-        {
-                public BOClientCommunication()
-                        : base()
-                {
-                }
-        }
+	public partial class BOClientCommunication : AbstractBOClientCommunication
+	{
+		public BOClientCommunication()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f0103e6dcd65bf176e1ada39130f8158</Hash>
+    <Hash>705bbfa4835e6411cbf6f9546798cf34</Hash>
 </Codenesium>*/

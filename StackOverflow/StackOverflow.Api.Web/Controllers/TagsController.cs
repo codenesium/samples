@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.Web
 {
-        [Route("api/tags")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TagsController : AbstractTagsController
-        {
-                public TagsController(
-                        ApiSettings settings,
-                        ILogger<TagsController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITagsService tagsService,
-                        IApiTagsModelMapper tagsModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               tagsService,
-                               tagsModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/tags")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TagsController : AbstractTagsController
+	{
+		public TagsController(
+			ApiSettings settings,
+			ILogger<TagsController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITagsService tagsService,
+			IApiTagsModelMapper tagsModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       tagsService,
+			       tagsModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>409bdff20c2249476b168805fdb9899a</Hash>
+    <Hash>08ab5a83a814924321d38177a52488ba</Hash>
 </Codenesium>*/

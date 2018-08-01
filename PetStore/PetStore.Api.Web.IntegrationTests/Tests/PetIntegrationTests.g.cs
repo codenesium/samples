@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetStoreNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Pet")]
-        [Trait("Area", "Integration")]
-        public class PetIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PetIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Pet")]
+	[Trait("Area", "Integration")]
+	public class PetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PetIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPetModelMapper mapper = new ApiPetModelMapper();
+			ApiPetModelMapper mapper = new ApiPetModelMapper();
 
-                        UpdateResponse<ApiPetResponseModel> updateResponse = await this.Client.PetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPetResponseModel> updateResponse = await this.Client.PetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PetDeleteAsync(model.Id);
+			await this.Client.PetDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPetResponseModel response = await this.Client.PetGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPetResponseModel response = await this.Client.PetGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPetResponseModel> response = await this.Client.PetAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPetResponseModel> response = await this.Client.PetAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPetResponseModel> CreateRecord()
-                {
-                        var model = new ApiPetRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
-                        CreateResponse<ApiPetResponseModel> result = await this.Client.PetCreateAsync(model);
+		private async Task<ApiPetResponseModel> CreateRecord()
+		{
+			var model = new ApiPetRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			CreateResponse<ApiPetResponseModel> result = await this.Client.PetCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PetDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PetDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7bbd06091900c3066f905b78965e6c19</Hash>
+    <Hash>cd8698e43ccd50ee0351314719de0270</Hash>
 </Codenesium>*/

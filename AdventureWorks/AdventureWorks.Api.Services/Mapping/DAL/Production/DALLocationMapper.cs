@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALLocationMapper : DALAbstractLocationMapper, IDALLocationMapper
-        {
-                public DALLocationMapper()
-                {
-                }
-        }
+	public partial class DALLocationMapper : DALAbstractLocationMapper, IDALLocationMapper
+	{
+		public DALLocationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>94e200884c873ea36f2c8a22a5e65587</Hash>
+    <Hash>591e7d0f9bcd6039607191dcc8a45cb9</Hash>
 </Codenesium>*/

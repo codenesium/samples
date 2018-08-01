@@ -7,55 +7,55 @@ using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DeviceAction")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALDeviceActionMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALDeviceActionMapper();
-                        var bo = new BODeviceAction();
-                        bo.SetProperties(1, 1, "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DeviceAction")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALDeviceActionMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALDeviceActionMapper();
+			var bo = new BODeviceAction();
+			bo.SetProperties(1, 1, "A", "A");
 
-                        DeviceAction response = mapper.MapBOToEF(bo);
+			DeviceAction response = mapper.MapBOToEF(bo);
 
-                        response.DeviceId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.@Value.Should().Be("A");
-                }
+			response.DeviceId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.@Value.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALDeviceActionMapper();
-                        DeviceAction entity = new DeviceAction();
-                        entity.SetProperties(1, 1, "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALDeviceActionMapper();
+			DeviceAction entity = new DeviceAction();
+			entity.SetProperties(1, 1, "A", "A");
 
-                        BODeviceAction response = mapper.MapEFToBO(entity);
+			BODeviceAction response = mapper.MapEFToBO(entity);
 
-                        response.DeviceId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.@Value.Should().Be("A");
-                }
+			response.DeviceId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.@Value.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALDeviceActionMapper();
-                        DeviceAction entity = new DeviceAction();
-                        entity.SetProperties(1, 1, "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALDeviceActionMapper();
+			DeviceAction entity = new DeviceAction();
+			entity.SetProperties(1, 1, "A", "A");
 
-                        List<BODeviceAction> response = mapper.MapEFToBO(new List<DeviceAction>() { entity });
+			List<BODeviceAction> response = mapper.MapEFToBO(new List<DeviceAction>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d9d60a58833ed8fe770164c24014c08a</Hash>
+    <Hash>d08ee795483087eefeeba7c40e73cb73</Hash>
 </Codenesium>*/

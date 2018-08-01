@@ -9,73 +9,73 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiTeamRequestModelValidator : AbstractValidator<ApiTeamRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiTeamRequestModelValidator : AbstractValidator<ApiTeamRequestModel>
+	{
+		private string existingRecordId;
 
-                private ITeamRepository teamRepository;
+		private ITeamRepository teamRepository;
 
-                public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
-                {
-                        this.teamRepository = teamRepository;
-                }
+		public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
+		{
+			this.teamRepository = teamRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void EnvironmentIdsRules()
-                {
-                }
+		public virtual void EnvironmentIdsRules()
+		{
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void MemberUserIdsRules()
-                {
-                }
+		public virtual void MemberUserIdsRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                public virtual void ProjectGroupIdsRules()
-                {
-                }
+		public virtual void ProjectGroupIdsRules()
+		{
+		}
 
-                public virtual void ProjectIdsRules()
-                {
-                }
+		public virtual void ProjectIdsRules()
+		{
+		}
 
-                public virtual void TenantIdsRules()
-                {
-                }
+		public virtual void TenantIdsRules()
+		{
+		}
 
-                public virtual void TenantTagsRules()
-                {
-                }
+		public virtual void TenantTagsRules()
+		{
+		}
 
-                private async Task<bool> BeUniqueByName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
-                {
-                        Team record = await this.teamRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
+		{
+			Team record = await this.teamRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>665ed97f9b8b170ff7610e6e1ab66581</Hash>
+    <Hash>41123c7ec9c9f16968238c81135e4134</Hash>
 </Codenesium>*/

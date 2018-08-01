@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ProductPhoto")]
-        [Trait("Area", "Integration")]
-        public class ProductPhotoIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ProductPhotoIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ProductPhoto")]
+	[Trait("Area", "Integration")]
+	public class ProductPhotoIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ProductPhotoIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiProductPhotoModelMapper mapper = new ApiProductPhotoModelMapper();
+			ApiProductPhotoModelMapper mapper = new ApiProductPhotoModelMapper();
 
-                        UpdateResponse<ApiProductPhotoResponseModel> updateResponse = await this.Client.ProductPhotoUpdateAsync(model.ProductPhotoID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductPhotoResponseModel> updateResponse = await this.Client.ProductPhotoUpdateAsync(model.ProductPhotoID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ProductPhotoDeleteAsync(model.ProductPhotoID);
+			await this.Client.ProductPhotoDeleteAsync(model.ProductPhotoID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiProductPhotoResponseModel response = await this.Client.ProductPhotoGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiProductPhotoResponseModel response = await this.Client.ProductPhotoGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiProductPhotoResponseModel> response = await this.Client.ProductPhotoAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiProductPhotoResponseModel> response = await this.Client.ProductPhotoAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiProductPhotoResponseModel> CreateRecord()
-                {
-                        var model = new ApiProductPhotoRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
-                        CreateResponse<ApiProductPhotoResponseModel> result = await this.Client.ProductPhotoCreateAsync(model);
+		private async Task<ApiProductPhotoResponseModel> CreateRecord()
+		{
+			var model = new ApiProductPhotoRequestModel();
+			model.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
+			CreateResponse<ApiProductPhotoResponseModel> result = await this.Client.ProductPhotoCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ProductPhotoDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ProductPhotoDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8a4ee7b76e69a5ed61fe57b3cb84224f</Hash>
+    <Hash>301ee624adc3ffa4a5fa0dd061c36f6f</Hash>
 </Codenesium>*/

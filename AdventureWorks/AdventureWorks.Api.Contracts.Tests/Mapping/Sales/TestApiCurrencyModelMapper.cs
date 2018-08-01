@@ -7,53 +7,52 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Currency")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiCurrencyModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiCurrencyModelMapper();
-                        var model = new ApiCurrencyRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiCurrencyResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Currency")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiCurrencyModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiCurrencyModelMapper();
+			var model = new ApiCurrencyRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiCurrencyResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.CurrencyCode.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
+			response.CurrencyCode.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiCurrencyModelMapper();
-                        var model = new ApiCurrencyResponseModel();
-                        model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiCurrencyRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiCurrencyModelMapper();
+			var model = new ApiCurrencyResponseModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiCurrencyRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiCurrencyModelMapper();
-                        var model = new ApiCurrencyRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiCurrencyModelMapper();
+			var model = new ApiCurrencyRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        JsonPatchDocument<ApiCurrencyRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiCurrencyRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiCurrencyRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiCurrencyRequestModel();
+			patch.ApplyTo(response);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>83cdd82d9d726fe85732135756d31081</Hash>
+    <Hash>d75da4811e9359c796e29ccc9a7935f3</Hash>
 </Codenesium>*/

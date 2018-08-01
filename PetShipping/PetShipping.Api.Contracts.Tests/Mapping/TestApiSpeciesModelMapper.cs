@@ -7,50 +7,49 @@ using Xunit;
 
 namespace PetShippingNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Species")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiSpeciesModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiSpeciesModelMapper();
-                        var model = new ApiSpeciesRequestModel();
-                        model.SetProperties("A");
-                        ApiSpeciesResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Species")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiSpeciesModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiSpeciesModelMapper();
+			var model = new ApiSpeciesRequestModel();
+			model.SetProperties("A");
+			ApiSpeciesResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiSpeciesModelMapper();
-                        var model = new ApiSpeciesResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiSpeciesRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiSpeciesModelMapper();
+			var model = new ApiSpeciesResponseModel();
+			model.SetProperties(1, "A");
+			ApiSpeciesRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiSpeciesModelMapper();
-                        var model = new ApiSpeciesRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiSpeciesModelMapper();
+			var model = new ApiSpeciesRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiSpeciesRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiSpeciesRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiSpeciesRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiSpeciesRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e05ebf99ae7367a209b6a8bc6808781d</Hash>
+    <Hash>0ff9fce0ed2109a71ccf27e0ad12479c</Hash>
 </Codenesium>*/

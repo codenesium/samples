@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IDALPipelineMapper
-        {
-                Pipeline MapBOToEF(
-                        BOPipeline bo);
+	public interface IDALPipelineMapper
+	{
+		Pipeline MapBOToEF(
+			BOPipeline bo);
 
-                BOPipeline MapEFToBO(
-                        Pipeline efPipeline);
+		BOPipeline MapEFToBO(
+			Pipeline efPipeline);
 
-                List<BOPipeline> MapEFToBO(
-                        List<Pipeline> records);
-        }
+		List<BOPipeline> MapEFToBO(
+			List<Pipeline> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ec0f23f3b1e790ce3c71b07304a7a482</Hash>
+    <Hash>bfc9b5536f60d6123aa4c3a37781a559</Hash>
 </Codenesium>*/

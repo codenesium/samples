@@ -8,51 +8,51 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Rate")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLRateMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLRateMapper();
-                        ApiRateRequestModel model = new ApiRateRequestModel();
-                        model.SetProperties(1m, 1, 1);
-                        BORate response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Rate")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLRateMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLRateMapper();
+			ApiRateRequestModel model = new ApiRateRequestModel();
+			model.SetProperties(1m, 1, 1);
+			BORate response = mapper.MapModelToBO(1, model);
 
-                        response.AmountPerMinute.Should().Be(1m);
-                        response.TeacherId.Should().Be(1);
-                        response.TeacherSkillId.Should().Be(1);
-                }
+			response.AmountPerMinute.Should().Be(1m);
+			response.TeacherId.Should().Be(1);
+			response.TeacherSkillId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLRateMapper();
-                        BORate bo = new BORate();
-                        bo.SetProperties(1, 1m, 1, 1);
-                        ApiRateResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLRateMapper();
+			BORate bo = new BORate();
+			bo.SetProperties(1, 1m, 1, 1);
+			ApiRateResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AmountPerMinute.Should().Be(1m);
-                        response.Id.Should().Be(1);
-                        response.TeacherId.Should().Be(1);
-                        response.TeacherSkillId.Should().Be(1);
-                }
+			response.AmountPerMinute.Should().Be(1m);
+			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
+			response.TeacherSkillId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLRateMapper();
-                        BORate bo = new BORate();
-                        bo.SetProperties(1, 1m, 1, 1);
-                        List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLRateMapper();
+			BORate bo = new BORate();
+			bo.SetProperties(1, 1m, 1, 1);
+			List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8bb4af51478849f6ef5b245183cf3d7d</Hash>
+    <Hash>a0dbdfbb67dfe9cbfecd103221090225</Hash>
 </Codenesium>*/

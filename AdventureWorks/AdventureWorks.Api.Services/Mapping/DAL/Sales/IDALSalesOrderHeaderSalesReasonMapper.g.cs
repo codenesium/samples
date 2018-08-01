@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALSalesOrderHeaderSalesReasonMapper
-        {
-                SalesOrderHeaderSalesReason MapBOToEF(
-                        BOSalesOrderHeaderSalesReason bo);
+	public interface IDALSalesOrderHeaderSalesReasonMapper
+	{
+		SalesOrderHeaderSalesReason MapBOToEF(
+			BOSalesOrderHeaderSalesReason bo);
 
-                BOSalesOrderHeaderSalesReason MapEFToBO(
-                        SalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason);
+		BOSalesOrderHeaderSalesReason MapEFToBO(
+			SalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason);
 
-                List<BOSalesOrderHeaderSalesReason> MapEFToBO(
-                        List<SalesOrderHeaderSalesReason> records);
-        }
+		List<BOSalesOrderHeaderSalesReason> MapEFToBO(
+			List<SalesOrderHeaderSalesReason> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a37a68b5f5cfbd2842e712e3a9285e1e</Hash>
+    <Hash>1e75fadcdfa994859bb8f50188b1b737</Hash>
 </Codenesium>*/

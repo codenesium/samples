@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractEventRelatedDocumentMapper
-        {
-                public virtual EventRelatedDocument MapBOToEF(
-                        BOEventRelatedDocument bo)
-                {
-                        EventRelatedDocument efEventRelatedDocument = new EventRelatedDocument();
-                        efEventRelatedDocument.SetProperties(
-                                bo.EventId,
-                                bo.Id,
-                                bo.RelatedDocumentId);
-                        return efEventRelatedDocument;
-                }
+	public abstract class DALAbstractEventRelatedDocumentMapper
+	{
+		public virtual EventRelatedDocument MapBOToEF(
+			BOEventRelatedDocument bo)
+		{
+			EventRelatedDocument efEventRelatedDocument = new EventRelatedDocument();
+			efEventRelatedDocument.SetProperties(
+				bo.EventId,
+				bo.Id,
+				bo.RelatedDocumentId);
+			return efEventRelatedDocument;
+		}
 
-                public virtual BOEventRelatedDocument MapEFToBO(
-                        EventRelatedDocument ef)
-                {
-                        var bo = new BOEventRelatedDocument();
+		public virtual BOEventRelatedDocument MapEFToBO(
+			EventRelatedDocument ef)
+		{
+			var bo = new BOEventRelatedDocument();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.EventId,
-                                ef.RelatedDocumentId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.EventId,
+				ef.RelatedDocumentId);
+			return bo;
+		}
 
-                public virtual List<BOEventRelatedDocument> MapEFToBO(
-                        List<EventRelatedDocument> records)
-                {
-                        List<BOEventRelatedDocument> response = new List<BOEventRelatedDocument>();
+		public virtual List<BOEventRelatedDocument> MapEFToBO(
+			List<EventRelatedDocument> records)
+		{
+			List<BOEventRelatedDocument> response = new List<BOEventRelatedDocument>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e997eea6985a82735b298ed20dcc6afd</Hash>
+    <Hash>44c0732d6c3b12588ad7995a44e66a87</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Web
 {
-        [Route("api/people")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PersonController : AbstractPersonController
-        {
-                public PersonController(
-                        ApiSettings settings,
-                        ILogger<PersonController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPersonService personService,
-                        IApiPersonModelMapper personModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               personService,
-                               personModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/people")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PersonController : AbstractPersonController
+	{
+		public PersonController(
+			ApiSettings settings,
+			ILogger<PersonController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPersonService personService,
+			IApiPersonModelMapper personModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       personService,
+			       personModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d42d390d763563f2be61b4df753ded83</Hash>
+    <Hash>3a953079eddd769fda69b81f5bff3222</Hash>
 </Codenesium>*/

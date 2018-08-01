@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class EmailAddressService : AbstractEmailAddressService, IEmailAddressService
-        {
-                public EmailAddressService(
-                        ILogger<IEmailAddressRepository> logger,
-                        IEmailAddressRepository emailAddressRepository,
-                        IApiEmailAddressRequestModelValidator emailAddressModelValidator,
-                        IBOLEmailAddressMapper bolemailAddressMapper,
-                        IDALEmailAddressMapper dalemailAddressMapper
-                        )
-                        : base(logger,
-                               emailAddressRepository,
-                               emailAddressModelValidator,
-                               bolemailAddressMapper,
-                               dalemailAddressMapper)
-                {
-                }
-        }
+	public partial class EmailAddressService : AbstractEmailAddressService, IEmailAddressService
+	{
+		public EmailAddressService(
+			ILogger<IEmailAddressRepository> logger,
+			IEmailAddressRepository emailAddressRepository,
+			IApiEmailAddressRequestModelValidator emailAddressModelValidator,
+			IBOLEmailAddressMapper bolemailAddressMapper,
+			IDALEmailAddressMapper dalemailAddressMapper
+			)
+			: base(logger,
+			       emailAddressRepository,
+			       emailAddressModelValidator,
+			       bolemailAddressMapper,
+			       dalemailAddressMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>eff8f12d963dec5cd940d801d727a137</Hash>
+    <Hash>b502a131efe8a488006251e8758aa6b1</Hash>
 </Codenesium>*/

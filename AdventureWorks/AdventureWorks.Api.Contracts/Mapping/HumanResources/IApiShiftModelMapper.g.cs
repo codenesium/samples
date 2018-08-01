@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiShiftModelMapper
-        {
-                ApiShiftResponseModel MapRequestToResponse(
-                        int shiftID,
-                        ApiShiftRequestModel request);
+	public interface IApiShiftModelMapper
+	{
+		ApiShiftResponseModel MapRequestToResponse(
+			int shiftID,
+			ApiShiftRequestModel request);
 
-                ApiShiftRequestModel MapResponseToRequest(
-                        ApiShiftResponseModel response);
+		ApiShiftRequestModel MapResponseToRequest(
+			ApiShiftResponseModel response);
 
-                JsonPatchDocument<ApiShiftRequestModel> CreatePatch(ApiShiftRequestModel model);
-        }
+		JsonPatchDocument<ApiShiftRequestModel> CreatePatch(ApiShiftRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e563245572ccb71a3954de7843101136</Hash>
+    <Hash>538bf296b7e44026db22a878f3c9dae2</Hash>
 </Codenesium>*/

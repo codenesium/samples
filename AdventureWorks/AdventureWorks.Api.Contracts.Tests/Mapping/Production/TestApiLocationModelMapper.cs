@@ -7,59 +7,58 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Location")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiLocationModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiLocationModelMapper();
-                        var model = new ApiLocationRequestModel();
-                        model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiLocationResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Location")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiLocationModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiLocationModelMapper();
+			var model = new ApiLocationRequestModel();
+			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiLocationResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Availability.Should().Be(1);
-                        response.CostRate.Should().Be(1m);
-                        response.LocationID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
+			response.Availability.Should().Be(1);
+			response.CostRate.Should().Be(1m);
+			response.LocationID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiLocationModelMapper();
-                        var model = new ApiLocationResponseModel();
-                        model.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiLocationRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiLocationModelMapper();
+			var model = new ApiLocationResponseModel();
+			model.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiLocationRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Availability.Should().Be(1);
-                        response.CostRate.Should().Be(1m);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
+			response.Availability.Should().Be(1);
+			response.CostRate.Should().Be(1m);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiLocationModelMapper();
-                        var model = new ApiLocationRequestModel();
-                        model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiLocationModelMapper();
+			var model = new ApiLocationRequestModel();
+			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        JsonPatchDocument<ApiLocationRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiLocationRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Availability.Should().Be(1);
-                        response.CostRate.Should().Be(1m);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiLocationRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiLocationRequestModel();
+			patch.ApplyTo(response);
+			response.Availability.Should().Be(1);
+			response.CostRate.Should().Be(1m);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d5d98bffe781e7bcd10c5add2179256b</Hash>
+    <Hash>be88031f7a041fa7ffc0f693f900f289</Hash>
 </Codenesium>*/

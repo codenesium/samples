@@ -7,29 +7,29 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiVersionInfoRequestModel : AbstractApiRequestModel
-        {
-                public ApiVersionInfoRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiVersionInfoRequestModel : AbstractApiRequestModel
+	{
+		public ApiVersionInfoRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        DateTime? appliedOn,
-                        string description)
-                {
-                        this.AppliedOn = appliedOn;
-                        this.Description = description;
-                }
+		public virtual void SetProperties(
+			DateTime? appliedOn,
+			string description)
+		{
+			this.AppliedOn = appliedOn;
+			this.Description = description;
+		}
 
-                [JsonProperty]
-                public DateTime? AppliedOn { get; private set; }
+		[JsonProperty]
+		public DateTime? AppliedOn { get; private set; }
 
-                [JsonProperty]
-                public string Description { get; private set; }
-        }
+		[JsonProperty]
+		public string Description { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>6408c87e308ea4777e0b7df5dc117453</Hash>
+    <Hash>ed22b029ca648dd101e8453cb6b617c0</Hash>
 </Codenesium>*/

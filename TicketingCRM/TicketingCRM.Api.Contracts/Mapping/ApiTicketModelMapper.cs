@@ -1,14 +1,14 @@
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiTicketModelMapper : AbstractApiTicketModelMapper, IApiTicketModelMapper
-        {
-                public ApiTicketModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTicketModelMapper : AbstractApiTicketModelMapper, IApiTicketModelMapper
+	{
+		public ApiTicketModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9c8085253a3ddba9b16b4e6a90195817</Hash>
+    <Hash>2751be9f968415f469056a57751fcad8</Hash>
 </Codenesium>*/

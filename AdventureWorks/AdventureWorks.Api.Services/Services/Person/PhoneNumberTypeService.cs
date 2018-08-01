@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class PhoneNumberTypeService : AbstractPhoneNumberTypeService, IPhoneNumberTypeService
-        {
-                public PhoneNumberTypeService(
-                        ILogger<IPhoneNumberTypeRepository> logger,
-                        IPhoneNumberTypeRepository phoneNumberTypeRepository,
-                        IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
-                        IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
-                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper,
-                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
-                        IDALPersonPhoneMapper dalPersonPhoneMapper
-                        )
-                        : base(logger,
-                               phoneNumberTypeRepository,
-                               phoneNumberTypeModelValidator,
-                               bolphoneNumberTypeMapper,
-                               dalphoneNumberTypeMapper,
-                               bolPersonPhoneMapper,
-                               dalPersonPhoneMapper)
-                {
-                }
-        }
+	public partial class PhoneNumberTypeService : AbstractPhoneNumberTypeService, IPhoneNumberTypeService
+	{
+		public PhoneNumberTypeService(
+			ILogger<IPhoneNumberTypeRepository> logger,
+			IPhoneNumberTypeRepository phoneNumberTypeRepository,
+			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
+			IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
+			IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper,
+			IBOLPersonPhoneMapper bolPersonPhoneMapper,
+			IDALPersonPhoneMapper dalPersonPhoneMapper
+			)
+			: base(logger,
+			       phoneNumberTypeRepository,
+			       phoneNumberTypeModelValidator,
+			       bolphoneNumberTypeMapper,
+			       dalphoneNumberTypeMapper,
+			       bolPersonPhoneMapper,
+			       dalPersonPhoneMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d8a25a10141577faeb0a1cfec0cc635b</Hash>
+    <Hash>aea34a34a2ae30195a74f07814ee3c42</Hash>
 </Codenesium>*/

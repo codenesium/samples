@@ -1,14 +1,14 @@
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiPersonModelMapper : AbstractApiPersonModelMapper, IApiPersonModelMapper
-        {
-                public ApiPersonModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiPersonModelMapper : AbstractApiPersonModelMapper, IApiPersonModelMapper
+	{
+		public ApiPersonModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>199f4726593b799e7dc485fec9b3e1f3</Hash>
+    <Hash>ab20532d0bb7abac7fd481515b125957</Hash>
 </Codenesium>*/

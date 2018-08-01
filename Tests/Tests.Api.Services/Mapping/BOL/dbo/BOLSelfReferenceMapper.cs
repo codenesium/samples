@@ -5,14 +5,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOLSelfReferenceMapper : BOLAbstractSelfReferenceMapper, IBOLSelfReferenceMapper
-        {
-                public BOLSelfReferenceMapper()
-                {
-                }
-        }
+	public partial class BOLSelfReferenceMapper : BOLAbstractSelfReferenceMapper, IBOLSelfReferenceMapper
+	{
+		public BOLSelfReferenceMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b0872030fc4ab46fe3e92d1ad8f5ede7</Hash>
+    <Hash>61ad35d15a5c4c5d2b4d865443c0ecf9</Hash>
 </Codenesium>*/

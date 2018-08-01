@@ -7,29 +7,29 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiOtherTransportRequestModel : AbstractApiRequestModel
-        {
-                public ApiOtherTransportRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiOtherTransportRequestModel : AbstractApiRequestModel
+	{
+		public ApiOtherTransportRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int handlerId,
-                        int pipelineStepId)
-                {
-                        this.HandlerId = handlerId;
-                        this.PipelineStepId = pipelineStepId;
-                }
+		public virtual void SetProperties(
+			int handlerId,
+			int pipelineStepId)
+		{
+			this.HandlerId = handlerId;
+			this.PipelineStepId = pipelineStepId;
+		}
 
-                [JsonProperty]
-                public int HandlerId { get; private set; }
+		[JsonProperty]
+		public int HandlerId { get; private set; }
 
-                [JsonProperty]
-                public int PipelineStepId { get; private set; }
-        }
+		[JsonProperty]
+		public int PipelineStepId { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>74278f08148456441a4100692a4ac3bc</Hash>
+    <Hash>777b1b0bb6661531f21f9862bd8cedee</Hash>
 </Codenesium>*/

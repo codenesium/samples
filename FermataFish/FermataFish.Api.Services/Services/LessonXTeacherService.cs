@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class LessonXTeacherService : AbstractLessonXTeacherService, ILessonXTeacherService
-        {
-                public LessonXTeacherService(
-                        ILogger<ILessonXTeacherRepository> logger,
-                        ILessonXTeacherRepository lessonXTeacherRepository,
-                        IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
-                        IBOLLessonXTeacherMapper bollessonXTeacherMapper,
-                        IDALLessonXTeacherMapper dallessonXTeacherMapper
-                        )
-                        : base(logger,
-                               lessonXTeacherRepository,
-                               lessonXTeacherModelValidator,
-                               bollessonXTeacherMapper,
-                               dallessonXTeacherMapper)
-                {
-                }
-        }
+	public partial class LessonXTeacherService : AbstractLessonXTeacherService, ILessonXTeacherService
+	{
+		public LessonXTeacherService(
+			ILogger<ILessonXTeacherRepository> logger,
+			ILessonXTeacherRepository lessonXTeacherRepository,
+			IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
+			IBOLLessonXTeacherMapper bollessonXTeacherMapper,
+			IDALLessonXTeacherMapper dallessonXTeacherMapper
+			)
+			: base(logger,
+			       lessonXTeacherRepository,
+			       lessonXTeacherModelValidator,
+			       bollessonXTeacherMapper,
+			       dallessonXTeacherMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>695ff91e221f1bd34a4649bd3e700011</Hash>
+    <Hash>804079ade57c3b3a272d87a165ae1e79</Hash>
 </Codenesium>*/

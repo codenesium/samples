@@ -5,15 +5,15 @@ using System.Text;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b6dbdc6ed2ac3e036424ed6d73b9206</Hash>
+    <Hash>3de45fbf8486e841bbdeb6579aec4322</Hash>
 </Codenesium>*/

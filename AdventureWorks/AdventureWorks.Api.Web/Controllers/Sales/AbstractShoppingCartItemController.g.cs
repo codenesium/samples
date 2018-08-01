@@ -15,221 +15,221 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractShoppingCartItemController : AbstractApiController
-        {
-                protected IShoppingCartItemService ShoppingCartItemService { get; private set; }
+	public abstract class AbstractShoppingCartItemController : AbstractApiController
+	{
+		protected IShoppingCartItemService ShoppingCartItemService { get; private set; }
 
-                protected IApiShoppingCartItemModelMapper ShoppingCartItemModelMapper { get; private set; }
+		protected IApiShoppingCartItemModelMapper ShoppingCartItemModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractShoppingCartItemController(
-                        ApiSettings settings,
-                        ILogger<AbstractShoppingCartItemController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IShoppingCartItemService shoppingCartItemService,
-                        IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.ShoppingCartItemService = shoppingCartItemService;
-                        this.ShoppingCartItemModelMapper = shoppingCartItemModelMapper;
-                }
+		public AbstractShoppingCartItemController(
+			ApiSettings settings,
+			ILogger<AbstractShoppingCartItemController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IShoppingCartItemService shoppingCartItemService,
+			IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.ShoppingCartItemService = shoppingCartItemService;
+			this.ShoppingCartItemModelMapper = shoppingCartItemModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiShoppingCartItemResponseModel> records = new List<ApiShoppingCartItemResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
+			List<ApiShoppingCartItemResponseModel> records = new List<ApiShoppingCartItemResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiShoppingCartItemResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemRequestModel model)
-                {
-                        CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiShoppingCartItemResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemRequestModel model)
+		{
+			CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShoppingCartItems/{result.Record.ShoppingCartItemID}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/ShoppingCartItems/{result.Record.ShoppingCartItemID}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
-                {
-                        ApiShoppingCartItemResponseModel record = await this.ShoppingCartItemService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
+		{
+			ApiShoppingCartItemResponseModel record = await this.ShoppingCartItemService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiShoppingCartItemRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiShoppingCartItemRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, model);
+				UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
-                {
-                        ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.ShoppingCartItemModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
+		{
+			ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.ShoppingCartItemModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.ShoppingCartItemService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.ShoppingCartItemService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("byShoppingCartIDProductID/{shoppingCartID}/{productID}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID)
-                {
-                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID);
+		[HttpGet]
+		[Route("byShoppingCartIDProductID/{shoppingCartID}/{productID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID)
+		{
+			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiShoppingCartItemRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
-                {
-                        var record = await this.ShoppingCartItemService.Get(id);
+		private async Task<ApiShoppingCartItemRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
+		{
+			var record = await this.ShoppingCartItemService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiShoppingCartItemRequestModel request = this.ShoppingCartItemModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiShoppingCartItemRequestModel request = this.ShoppingCartItemModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a1593d02b66fd5254650973af47d86b8</Hash>
+    <Hash>7f83e0cf2cc81b33e54b6418139bebda</Hash>
 </Codenesium>*/

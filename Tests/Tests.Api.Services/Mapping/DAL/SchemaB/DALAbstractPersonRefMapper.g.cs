@@ -6,46 +6,46 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class DALAbstractPersonRefMapper
-        {
-                public virtual PersonRef MapBOToEF(
-                        BOPersonRef bo)
-                {
-                        PersonRef efPersonRef = new PersonRef();
-                        efPersonRef.SetProperties(
-                                bo.Id,
-                                bo.PersonAId,
-                                bo.PersonBId);
-                        return efPersonRef;
-                }
+	public abstract class DALAbstractPersonRefMapper
+	{
+		public virtual PersonRef MapBOToEF(
+			BOPersonRef bo)
+		{
+			PersonRef efPersonRef = new PersonRef();
+			efPersonRef.SetProperties(
+				bo.Id,
+				bo.PersonAId,
+				bo.PersonBId);
+			return efPersonRef;
+		}
 
-                public virtual BOPersonRef MapEFToBO(
-                        PersonRef ef)
-                {
-                        var bo = new BOPersonRef();
+		public virtual BOPersonRef MapEFToBO(
+			PersonRef ef)
+		{
+			var bo = new BOPersonRef();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.PersonAId,
-                                ef.PersonBId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.PersonAId,
+				ef.PersonBId);
+			return bo;
+		}
 
-                public virtual List<BOPersonRef> MapEFToBO(
-                        List<PersonRef> records)
-                {
-                        List<BOPersonRef> response = new List<BOPersonRef>();
+		public virtual List<BOPersonRef> MapEFToBO(
+			List<PersonRef> records)
+		{
+			List<BOPersonRef> response = new List<BOPersonRef>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a52fcfa48d9c0e29904ad44f7234b5b1</Hash>
+    <Hash>7f5ce0a85be9badefacc32ab874478d5</Hash>
 </Codenesium>*/

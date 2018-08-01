@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLShipMethodMapper
-        {
-                BOShipMethod MapModelToBO(
-                        int shipMethodID,
-                        ApiShipMethodRequestModel model);
+	public interface IBOLShipMethodMapper
+	{
+		BOShipMethod MapModelToBO(
+			int shipMethodID,
+			ApiShipMethodRequestModel model);
 
-                ApiShipMethodResponseModel MapBOToModel(
-                        BOShipMethod boShipMethod);
+		ApiShipMethodResponseModel MapBOToModel(
+			BOShipMethod boShipMethod);
 
-                List<ApiShipMethodResponseModel> MapBOToModel(
-                        List<BOShipMethod> items);
-        }
+		List<ApiShipMethodResponseModel> MapBOToModel(
+			List<BOShipMethod> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a5fc9aa82184f750e89e2683db896b8d</Hash>
+    <Hash>3355806ef007bd983d298b7ce863a90d</Hash>
 </Codenesium>*/

@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public interface ITeamService
-        {
-                Task<CreateResponse<ApiTeamResponseModel>> Create(
-                        ApiTeamRequestModel model);
+	public interface ITeamService
+	{
+		Task<CreateResponse<ApiTeamResponseModel>> Create(
+			ApiTeamRequestModel model);
 
-                Task<UpdateResponse<ApiTeamResponseModel>> Update(int id,
-                                                                   ApiTeamRequestModel model);
+		Task<UpdateResponse<ApiTeamResponseModel>> Update(int id,
+		                                                   ApiTeamRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiTeamResponseModel> Get(int id);
+		Task<ApiTeamResponseModel> Get(int id);
 
-                Task<List<ApiTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>35675bdcac0846b59e448e06d42ac127</Hash>
+    <Hash>01cfe82fa73e37b1bc28a82a04b69976</Hash>
 </Codenesium>*/

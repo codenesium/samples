@@ -6,48 +6,48 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiLessonRequestModelValidator : AbstractApiLessonRequestModelValidator, IApiLessonRequestModelValidator
-        {
-                public ApiLessonRequestModelValidator(ILessonRepository lessonRepository)
-                        : base(lessonRepository)
-                {
-                }
+	public class ApiLessonRequestModelValidator : AbstractApiLessonRequestModelValidator, IApiLessonRequestModelValidator
+	{
+		public ApiLessonRequestModelValidator(ILessonRepository lessonRepository)
+			: base(lessonRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiLessonRequestModel model)
-                {
-                        this.ActualEndDateRules();
-                        this.ActualStartDateRules();
-                        this.BillAmountRules();
-                        this.LessonStatusIdRules();
-                        this.ScheduledEndDateRules();
-                        this.ScheduledStartDateRules();
-                        this.StudentNotesRules();
-                        this.StudioIdRules();
-                        this.TeacherNotesRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiLessonRequestModel model)
+		{
+			this.ActualEndDateRules();
+			this.ActualStartDateRules();
+			this.BillAmountRules();
+			this.LessonStatusIdRules();
+			this.ScheduledEndDateRules();
+			this.ScheduledStartDateRules();
+			this.StudentNotesRules();
+			this.StudioIdRules();
+			this.TeacherNotesRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonRequestModel model)
-                {
-                        this.ActualEndDateRules();
-                        this.ActualStartDateRules();
-                        this.BillAmountRules();
-                        this.LessonStatusIdRules();
-                        this.ScheduledEndDateRules();
-                        this.ScheduledStartDateRules();
-                        this.StudentNotesRules();
-                        this.StudioIdRules();
-                        this.TeacherNotesRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonRequestModel model)
+		{
+			this.ActualEndDateRules();
+			this.ActualStartDateRules();
+			this.BillAmountRules();
+			this.LessonStatusIdRules();
+			this.ScheduledEndDateRules();
+			this.ScheduledStartDateRules();
+			this.StudentNotesRules();
+			this.StudioIdRules();
+			this.TeacherNotesRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c2293ab5807bccf06f0da5640757037</Hash>
+    <Hash>502722884f124931f6c298e06a7bdaa3</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/lessonXTeachers")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LessonXTeacherController : AbstractLessonXTeacherController
-        {
-                public LessonXTeacherController(
-                        ApiSettings settings,
-                        ILogger<LessonXTeacherController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILessonXTeacherService lessonXTeacherService,
-                        IApiLessonXTeacherModelMapper lessonXTeacherModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               lessonXTeacherService,
-                               lessonXTeacherModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/lessonXTeachers")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LessonXTeacherController : AbstractLessonXTeacherController
+	{
+		public LessonXTeacherController(
+			ApiSettings settings,
+			ILogger<LessonXTeacherController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILessonXTeacherService lessonXTeacherService,
+			IApiLessonXTeacherModelMapper lessonXTeacherModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       lessonXTeacherService,
+			       lessonXTeacherModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6fe1c6b5aac31865298216ebb3fd0d8e</Hash>
+    <Hash>83581c1d79a0f66d11f3e9e9c3a12773</Hash>
 </Codenesium>*/

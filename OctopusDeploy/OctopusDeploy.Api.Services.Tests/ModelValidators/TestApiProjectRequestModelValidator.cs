@@ -15,209 +15,209 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Project")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProjectRequestModelValidatorTest
-        {
-                public ApiProjectRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Project")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProjectRequestModelValidatorTest
+	{
+		public ApiProjectRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void DeploymentProcessId_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void DeploymentProcessId_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentProcessId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DeploymentProcessId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void DeploymentProcessId_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void DeploymentProcessId_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DeploymentProcessId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DeploymentProcessId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void LifecycleId_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void LifecycleId_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void LifecycleId_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void LifecycleId_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void ProjectGroupId_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void ProjectGroupId_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ProjectGroupId_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void ProjectGroupId_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectGroupId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Slug_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void Slug_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Slug, new string('A', 211));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Slug, new string('A', 211));
+		}
 
-                [Fact]
-                public async void Slug_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void Slug_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Slug, new string('A', 211));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Slug, new string('A', 211));
+		}
 
-                [Fact]
-                public async void VariableSetId_Create_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void VariableSetId_Create_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void VariableSetId_Update_length()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
+		[Fact]
+		public async void VariableSetId_Update_length()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Project()));
 
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProjectRequestModel());
+			await validator.ValidateCreateAsync(new ApiProjectRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(new Project()));
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
-                        projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
-                        var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IProjectRepository> projectRepository = new Mock<IProjectRepository>();
+			projectRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Project>(null));
+			var validator = new ApiProjectRequestModelValidator(projectRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>722666ddd79f7df21cde5f3a18af7613</Hash>
+    <Hash>d74e92f1e889b7188e3d137f70bcc28f</Hash>
 </Codenesium>*/

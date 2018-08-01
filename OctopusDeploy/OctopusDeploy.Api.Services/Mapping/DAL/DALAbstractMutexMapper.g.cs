@@ -6,44 +6,44 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractMutexMapper
-        {
-                public virtual Mutex MapBOToEF(
-                        BOMutex bo)
-                {
-                        Mutex efMutex = new Mutex();
-                        efMutex.SetProperties(
-                                bo.Id,
-                                bo.JSON);
-                        return efMutex;
-                }
+	public abstract class DALAbstractMutexMapper
+	{
+		public virtual Mutex MapBOToEF(
+			BOMutex bo)
+		{
+			Mutex efMutex = new Mutex();
+			efMutex.SetProperties(
+				bo.Id,
+				bo.JSON);
+			return efMutex;
+		}
 
-                public virtual BOMutex MapEFToBO(
-                        Mutex ef)
-                {
-                        var bo = new BOMutex();
+		public virtual BOMutex MapEFToBO(
+			Mutex ef)
+		{
+			var bo = new BOMutex();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.JSON);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.JSON);
+			return bo;
+		}
 
-                public virtual List<BOMutex> MapEFToBO(
-                        List<Mutex> records)
-                {
-                        List<BOMutex> response = new List<BOMutex>();
+		public virtual List<BOMutex> MapEFToBO(
+			List<Mutex> records)
+		{
+			List<BOMutex> response = new List<BOMutex>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ec2e37fb73dbfdb543bed12e8675335a</Hash>
+    <Hash>6d6e87631baad3575af7f0996432a93f</Hash>
 </Codenesium>*/

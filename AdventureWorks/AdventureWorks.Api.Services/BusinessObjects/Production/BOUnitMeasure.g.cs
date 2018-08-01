@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOUnitMeasure : AbstractBOUnitMeasure
-        {
-                public BOUnitMeasure()
-                        : base()
-                {
-                }
-        }
+	public partial class BOUnitMeasure : AbstractBOUnitMeasure
+	{
+		public BOUnitMeasure()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fb37000b515a660f7a3e352fc4416fce</Hash>
+    <Hash>4cb0c695420b45b07df566d3d6b916aa</Hash>
 </Codenesium>*/

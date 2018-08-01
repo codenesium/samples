@@ -1,14 +1,14 @@
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiVersionInfoModelMapper : AbstractApiVersionInfoModelMapper, IApiVersionInfoModelMapper
-        {
-                public ApiVersionInfoModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiVersionInfoModelMapper : AbstractApiVersionInfoModelMapper, IApiVersionInfoModelMapper
+	{
+		public ApiVersionInfoModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9c2ba8f1dade80bc29f8908f48f84db1</Hash>
+    <Hash>ec2cbec8376df7fb23a946d1543f529e</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class DALOrganizationMapper : DALAbstractOrganizationMapper, IDALOrganizationMapper
-        {
-                public DALOrganizationMapper()
-                {
-                }
-        }
+	public partial class DALOrganizationMapper : DALAbstractOrganizationMapper, IDALOrganizationMapper
+	{
+		public DALOrganizationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>765c34c191a983ee677e47dff4f7574a</Hash>
+    <Hash>525bb194fc4fff1900397ed5ec1ab64f</Hash>
 </Codenesium>*/

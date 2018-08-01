@@ -7,51 +7,51 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Person")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALPersonMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALPersonMapper();
-                        var bo = new BOPerson();
-                        bo.SetProperties(1, "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Person")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALPersonMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALPersonMapper();
+			var bo = new BOPerson();
+			bo.SetProperties(1, "A");
 
-                        Person response = mapper.MapBOToEF(bo);
+			Person response = mapper.MapBOToEF(bo);
 
-                        response.PersonId.Should().Be(1);
-                        response.PersonName.Should().Be("A");
-                }
+			response.PersonId.Should().Be(1);
+			response.PersonName.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALPersonMapper();
-                        Person entity = new Person();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALPersonMapper();
+			Person entity = new Person();
+			entity.SetProperties(1, "A");
 
-                        BOPerson response = mapper.MapEFToBO(entity);
+			BOPerson response = mapper.MapEFToBO(entity);
 
-                        response.PersonId.Should().Be(1);
-                        response.PersonName.Should().Be("A");
-                }
+			response.PersonId.Should().Be(1);
+			response.PersonName.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALPersonMapper();
-                        Person entity = new Person();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALPersonMapper();
+			Person entity = new Person();
+			entity.SetProperties(1, "A");
 
-                        List<BOPerson> response = mapper.MapEFToBO(new List<Person>() { entity });
+			List<BOPerson> response = mapper.MapEFToBO(new List<Person>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1ccfa5e4df8eab94477f39a1b6884ae6</Hash>
+    <Hash>e3db3f05936668556415c5842b1f6604</Hash>
 </Codenesium>*/

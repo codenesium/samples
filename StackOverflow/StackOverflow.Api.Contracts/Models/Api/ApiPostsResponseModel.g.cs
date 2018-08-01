@@ -6,134 +6,134 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiPostsResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        int? acceptedAnswerId,
-                        int? answerCount,
-                        string body,
-                        DateTime? closedDate,
-                        int? commentCount,
-                        DateTime? communityOwnedDate,
-                        DateTime creationDate,
-                        int? favoriteCount,
-                        DateTime lastActivityDate,
-                        DateTime? lastEditDate,
-                        string lastEditorDisplayName,
-                        int? lastEditorUserId,
-                        int? ownerUserId,
-                        int? parentId,
-                        int postTypeId,
-                        int score,
-                        string tags,
-                        string title,
-                        int viewCount)
-                {
-                        this.Id = id;
-                        this.AcceptedAnswerId = acceptedAnswerId;
-                        this.AnswerCount = answerCount;
-                        this.Body = body;
-                        this.ClosedDate = closedDate;
-                        this.CommentCount = commentCount;
-                        this.CommunityOwnedDate = communityOwnedDate;
-                        this.CreationDate = creationDate;
-                        this.FavoriteCount = favoriteCount;
-                        this.LastActivityDate = lastActivityDate;
-                        this.LastEditDate = lastEditDate;
-                        this.LastEditorDisplayName = lastEditorDisplayName;
-                        this.LastEditorUserId = lastEditorUserId;
-                        this.OwnerUserId = ownerUserId;
-                        this.ParentId = parentId;
-                        this.PostTypeId = postTypeId;
-                        this.Score = score;
-                        this.Tags = tags;
-                        this.Title = title;
-                        this.ViewCount = viewCount;
-                }
+	public partial class ApiPostsResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			int? acceptedAnswerId,
+			int? answerCount,
+			string body,
+			DateTime? closedDate,
+			int? commentCount,
+			DateTime? communityOwnedDate,
+			DateTime creationDate,
+			int? favoriteCount,
+			DateTime lastActivityDate,
+			DateTime? lastEditDate,
+			string lastEditorDisplayName,
+			int? lastEditorUserId,
+			int? ownerUserId,
+			int? parentId,
+			int postTypeId,
+			int score,
+			string tags,
+			string title,
+			int viewCount)
+		{
+			this.Id = id;
+			this.AcceptedAnswerId = acceptedAnswerId;
+			this.AnswerCount = answerCount;
+			this.Body = body;
+			this.ClosedDate = closedDate;
+			this.CommentCount = commentCount;
+			this.CommunityOwnedDate = communityOwnedDate;
+			this.CreationDate = creationDate;
+			this.FavoriteCount = favoriteCount;
+			this.LastActivityDate = lastActivityDate;
+			this.LastEditDate = lastEditDate;
+			this.LastEditorDisplayName = lastEditorDisplayName;
+			this.LastEditorUserId = lastEditorUserId;
+			this.OwnerUserId = ownerUserId;
+			this.ParentId = parentId;
+			this.PostTypeId = postTypeId;
+			this.Score = score;
+			this.Tags = tags;
+			this.Title = title;
+			this.ViewCount = viewCount;
+		}
 
-                [Required]
-                [JsonProperty]
-                public int? AcceptedAnswerId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? AcceptedAnswerId { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? AnswerCount { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? AnswerCount { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Body { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Body { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime? ClosedDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime? ClosedDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? CommentCount { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? CommentCount { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime? CommunityOwnedDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime? CommunityOwnedDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime CreationDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime CreationDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? FavoriteCount { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? FavoriteCount { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime LastActivityDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime LastActivityDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime? LastEditDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime? LastEditDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string LastEditorDisplayName { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string LastEditorDisplayName { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? LastEditorUserId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? LastEditorUserId { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? OwnerUserId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? OwnerUserId { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? ParentId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? ParentId { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int PostTypeId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int PostTypeId { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int Score { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Score { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Tags { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Tags { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Title { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Title { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int ViewCount { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public int ViewCount { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>c70e3e7d57b040828be62748ae59de86</Hash>
+    <Hash>9262c357c97c31d26f00fcd5c2d7a1ad</Hash>
 </Codenesium>*/

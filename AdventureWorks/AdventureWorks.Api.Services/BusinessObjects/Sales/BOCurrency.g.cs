@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOCurrency : AbstractBOCurrency
-        {
-                public BOCurrency()
-                        : base()
-                {
-                }
-        }
+	public partial class BOCurrency : AbstractBOCurrency
+	{
+		public BOCurrency()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3c225c25c7615ff3ca939697d9403a22</Hash>
+    <Hash>5becc42ad7994d7a43732f68290e3461</Hash>
 </Codenesium>*/

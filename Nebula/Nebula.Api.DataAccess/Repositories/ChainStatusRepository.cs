@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public partial class ChainStatusRepository : AbstractChainStatusRepository, IChainStatusRepository
-        {
-                public ChainStatusRepository(
-                        ILogger<ChainStatusRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class ChainStatusRepository : AbstractChainStatusRepository, IChainStatusRepository
+	{
+		public ChainStatusRepository(
+			ILogger<ChainStatusRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c667b9580a2088e91fb9440b9b30e48b</Hash>
+    <Hash>2217b4b804afebda89506bab84890f62</Hash>
 </Codenesium>*/

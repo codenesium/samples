@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class AddressRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class AddressRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<AddressRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<AddressRepository>>();
-                }
-        }
+		public static Mock<ILogger<AddressRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<AddressRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Address")]
-        [Trait("Area", "Repositories")]
-        public partial class AddressRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Address")]
+	[Trait("Area", "Repositories")]
+	public partial class AddressRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
 
-                        Address entity = new Address();
-                        context.Set<Address>().Add(entity);
-                        await context.SaveChangesAsync();
+			Address entity = new Address();
+			context.Set<Address>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
 
-                        Address entity = new Address();
-                        context.Set<Address>().Add(entity);
-                        await context.SaveChangesAsync();
+			Address entity = new Address();
+			context.Set<Address>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.AddressID);
+			var record = await repository.Get(entity.AddressID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
 
-                        var entity = new Address();
-                        await repository.Create(entity);
+			var entity = new Address();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Address>().FirstOrDefaultAsync();
+			var record = await context.Set<Address>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
-                        Address entity = new Address();
-                        context.Set<Address>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
+			Address entity = new Address();
+			context.Set<Address>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.AddressID);
+			var record = await repository.Get(entity.AddressID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Address>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Address>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
-                        Address entity = new Address();
-                        context.Set<Address>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
+			Address entity = new Address();
+			context.Set<Address>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Address());
+			await repository.Update(new Address());
 
-                        var modifiedRecord = context.Set<Address>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Address>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AddressRepositoryMoc.GetContext();
-                        var repository = new AddressRepository(loggerMoc.Object, context);
-                        Address entity = new Address();
-                        context.Set<Address>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<AddressRepository>> loggerMoc = AddressRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
+			var repository = new AddressRepository(loggerMoc.Object, context);
+			Address entity = new Address();
+			context.Set<Address>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.AddressID);
+			await repository.Delete(entity.AddressID);
 
-                        Address modifiedRecord = await context.Set<Address>().FirstOrDefaultAsync();
+			Address modifiedRecord = await context.Set<Address>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>84da563291cc2371a51afe1e80457ce0</Hash>
+    <Hash>edf3fab8513f78c1cfe886c37a17a464</Hash>
 </Codenesium>*/

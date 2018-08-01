@@ -5,14 +5,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOLTimestampCheckMapper : BOLAbstractTimestampCheckMapper, IBOLTimestampCheckMapper
-        {
-                public BOLTimestampCheckMapper()
-                {
-                }
-        }
+	public partial class BOLTimestampCheckMapper : BOLAbstractTimestampCheckMapper, IBOLTimestampCheckMapper
+	{
+		public BOLTimestampCheckMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a29572a51fb2b85e634c98f8a0986ef3</Hash>
+    <Hash>86f889acea6df03f6c96d1b43b5225da</Hash>
 </Codenesium>*/

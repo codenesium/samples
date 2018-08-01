@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IFileService
-        {
-                Task<CreateResponse<ApiFileResponseModel>> Create(
-                        ApiFileRequestModel model);
+	public interface IFileService
+	{
+		Task<CreateResponse<ApiFileResponseModel>> Create(
+			ApiFileRequestModel model);
 
-                Task<UpdateResponse<ApiFileResponseModel>> Update(int id,
-                                                                   ApiFileRequestModel model);
+		Task<UpdateResponse<ApiFileResponseModel>> Update(int id,
+		                                                   ApiFileRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiFileResponseModel> Get(int id);
+		Task<ApiFileResponseModel> Get(int id);
 
-                Task<List<ApiFileResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiFileResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e20e55025b3444f2f0eeb4ec06ade305</Hash>
+    <Hash>504f053159f41afaf2b1957650916b58</Hash>
 </Codenesium>*/

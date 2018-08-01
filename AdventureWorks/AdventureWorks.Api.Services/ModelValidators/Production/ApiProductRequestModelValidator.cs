@@ -6,78 +6,78 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiProductRequestModelValidator : AbstractApiProductRequestModelValidator, IApiProductRequestModelValidator
-        {
-                public ApiProductRequestModelValidator(IProductRepository productRepository)
-                        : base(productRepository)
-                {
-                }
+	public class ApiProductRequestModelValidator : AbstractApiProductRequestModelValidator, IApiProductRequestModelValidator
+	{
+		public ApiProductRequestModelValidator(IProductRepository productRepository)
+			: base(productRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiProductRequestModel model)
-                {
-                        this.@ClassRules();
-                        this.ColorRules();
-                        this.DaysToManufactureRules();
-                        this.DiscontinuedDateRules();
-                        this.FinishedGoodsFlagRules();
-                        this.ListPriceRules();
-                        this.MakeFlagRules();
-                        this.ModifiedDateRules();
-                        this.NameRules();
-                        this.ProductLineRules();
-                        this.ProductModelIDRules();
-                        this.ProductNumberRules();
-                        this.ProductSubcategoryIDRules();
-                        this.ReorderPointRules();
-                        this.RowguidRules();
-                        this.SafetyStockLevelRules();
-                        this.SellEndDateRules();
-                        this.SellStartDateRules();
-                        this.SizeRules();
-                        this.SizeUnitMeasureCodeRules();
-                        this.StandardCostRules();
-                        this.StyleRules();
-                        this.WeightRules();
-                        this.WeightUnitMeasureCodeRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiProductRequestModel model)
+		{
+			this.@ClassRules();
+			this.ColorRules();
+			this.DaysToManufactureRules();
+			this.DiscontinuedDateRules();
+			this.FinishedGoodsFlagRules();
+			this.ListPriceRules();
+			this.MakeFlagRules();
+			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductLineRules();
+			this.ProductModelIDRules();
+			this.ProductNumberRules();
+			this.ProductSubcategoryIDRules();
+			this.ReorderPointRules();
+			this.RowguidRules();
+			this.SafetyStockLevelRules();
+			this.SellEndDateRules();
+			this.SellStartDateRules();
+			this.SizeRules();
+			this.SizeUnitMeasureCodeRules();
+			this.StandardCostRules();
+			this.StyleRules();
+			this.WeightRules();
+			this.WeightUnitMeasureCodeRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductRequestModel model)
-                {
-                        this.@ClassRules();
-                        this.ColorRules();
-                        this.DaysToManufactureRules();
-                        this.DiscontinuedDateRules();
-                        this.FinishedGoodsFlagRules();
-                        this.ListPriceRules();
-                        this.MakeFlagRules();
-                        this.ModifiedDateRules();
-                        this.NameRules();
-                        this.ProductLineRules();
-                        this.ProductModelIDRules();
-                        this.ProductNumberRules();
-                        this.ProductSubcategoryIDRules();
-                        this.ReorderPointRules();
-                        this.RowguidRules();
-                        this.SafetyStockLevelRules();
-                        this.SellEndDateRules();
-                        this.SellStartDateRules();
-                        this.SizeRules();
-                        this.SizeUnitMeasureCodeRules();
-                        this.StandardCostRules();
-                        this.StyleRules();
-                        this.WeightRules();
-                        this.WeightUnitMeasureCodeRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductRequestModel model)
+		{
+			this.@ClassRules();
+			this.ColorRules();
+			this.DaysToManufactureRules();
+			this.DiscontinuedDateRules();
+			this.FinishedGoodsFlagRules();
+			this.ListPriceRules();
+			this.MakeFlagRules();
+			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductLineRules();
+			this.ProductModelIDRules();
+			this.ProductNumberRules();
+			this.ProductSubcategoryIDRules();
+			this.ReorderPointRules();
+			this.RowguidRules();
+			this.SafetyStockLevelRules();
+			this.SellEndDateRules();
+			this.SellStartDateRules();
+			this.SizeRules();
+			this.SizeUnitMeasureCodeRules();
+			this.StandardCostRules();
+			this.StyleRules();
+			this.WeightRules();
+			this.WeightUnitMeasureCodeRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>79d67f7f65d8f9d6c0fb8d2bfb4fe2b3</Hash>
+    <Hash>799d693327673a47e94282fd66b008c3</Hash>
 </Codenesium>*/

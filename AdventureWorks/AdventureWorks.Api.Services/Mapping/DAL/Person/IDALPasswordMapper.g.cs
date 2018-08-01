@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALPasswordMapper
-        {
-                Password MapBOToEF(
-                        BOPassword bo);
+	public interface IDALPasswordMapper
+	{
+		Password MapBOToEF(
+			BOPassword bo);
 
-                BOPassword MapEFToBO(
-                        Password efPassword);
+		BOPassword MapEFToBO(
+			Password efPassword);
 
-                List<BOPassword> MapEFToBO(
-                        List<Password> records);
-        }
+		List<BOPassword> MapEFToBO(
+			List<Password> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9b33ad7449324f374bf613f4421b503b</Hash>
+    <Hash>d3e48cbd93ad87e1e30479a696d42d31</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiTransactionHistoryModelMapper : AbstractApiTransactionHistoryModelMapper, IApiTransactionHistoryModelMapper
-        {
-                public ApiTransactionHistoryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTransactionHistoryModelMapper : AbstractApiTransactionHistoryModelMapper, IApiTransactionHistoryModelMapper
+	{
+		public ApiTransactionHistoryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>305eff4260f4f1b72fef6dfd7465e738</Hash>
+    <Hash>e4c731628b40f041f78ff36ec42b16fc</Hash>
 </Codenesium>*/

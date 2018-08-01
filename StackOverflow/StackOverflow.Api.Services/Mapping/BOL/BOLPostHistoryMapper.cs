@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLPostHistoryMapper : BOLAbstractPostHistoryMapper, IBOLPostHistoryMapper
-        {
-                public BOLPostHistoryMapper()
-                {
-                }
-        }
+	public partial class BOLPostHistoryMapper : BOLAbstractPostHistoryMapper, IBOLPostHistoryMapper
+	{
+		public BOLPostHistoryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f62889a43f0c566511a20b7286c4f747</Hash>
+    <Hash>3a73aafee226e3f73e5c6ccd9b0921aa</Hash>
 </Codenesium>*/

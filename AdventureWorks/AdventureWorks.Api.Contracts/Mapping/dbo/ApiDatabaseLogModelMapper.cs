@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiDatabaseLogModelMapper : AbstractApiDatabaseLogModelMapper, IApiDatabaseLogModelMapper
-        {
-                public ApiDatabaseLogModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiDatabaseLogModelMapper : AbstractApiDatabaseLogModelMapper, IApiDatabaseLogModelMapper
+	{
+		public ApiDatabaseLogModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b9ea3771588cb607e265833b8a0fa52d</Hash>
+    <Hash>a0bf2f2bfb46fccfbac453daef4f24d5</Hash>
 </Codenesium>*/

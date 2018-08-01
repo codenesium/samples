@@ -5,20 +5,20 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public interface IBOLCityMapper
-        {
-                BOCity MapModelToBO(
-                        int id,
-                        ApiCityRequestModel model);
+	public interface IBOLCityMapper
+	{
+		BOCity MapModelToBO(
+			int id,
+			ApiCityRequestModel model);
 
-                ApiCityResponseModel MapBOToModel(
-                        BOCity boCity);
+		ApiCityResponseModel MapBOToModel(
+			BOCity boCity);
 
-                List<ApiCityResponseModel> MapBOToModel(
-                        List<BOCity> items);
-        }
+		List<ApiCityResponseModel> MapBOToModel(
+			List<BOCity> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3fb408813f08d1af18056d877d7dfce9</Hash>
+    <Hash>7007975e235af70c90ba197e1e2bbfa8</Hash>
 </Codenesium>*/

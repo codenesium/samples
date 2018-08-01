@@ -15,161 +15,161 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TenantVariable")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTenantVariableRequestModelValidatorTest
-        {
-                public ApiTenantVariableRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TenantVariable")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTenantVariableRequestModelValidatorTest
+	{
+		public ApiTenantVariableRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void EnvironmentId_Create_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void EnvironmentId_Create_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void EnvironmentId_Update_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void EnvironmentId_Update_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void OwnerId_Create_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void OwnerId_Create_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void OwnerId_Update_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void OwnerId_Update_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void TenantId_Create_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void TenantId_Create_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void TenantId_Update_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void TenantId_Update_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void VariableTemplateId_Create_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void VariableTemplateId_Create_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void VariableTemplateId_Update_length()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
+		[Fact]
+		public async void VariableTemplateId_Update_length()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Create_Exists()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(new TenantVariable()));
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+		[Fact]
+		private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Create_Exists()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(new TenantVariable()));
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Create_Not_Exists()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+		[Fact]
+		private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Create_Not_Exists()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
+			await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EnvironmentId, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EnvironmentId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Update_Exists()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(new TenantVariable()));
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+		[Fact]
+		private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Update_Exists()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(new TenantVariable()));
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Update_Not_Exists()
-                {
-                        Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
-                        tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
-                        var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
+		[Fact]
+		private async void BeUniqueByTenantIdOwnerIdEnvironmentIdVariableTemplateId_Update_Not_Exists()
+		{
+			Mock<ITenantVariableRepository> tenantVariableRepository = new Mock<ITenantVariableRepository>();
+			tenantVariableRepository.Setup(x => x.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
+			var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EnvironmentId, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EnvironmentId, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>164fb8a6127edf602faf62438bdfe8d9</Hash>
+    <Hash>f52eab305c937f14171b814827a78334</Hash>
 </Codenesium>*/

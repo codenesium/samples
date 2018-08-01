@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public interface IApiStudentXFamilyModelMapper
-        {
-                ApiStudentXFamilyResponseModel MapRequestToResponse(
-                        int id,
-                        ApiStudentXFamilyRequestModel request);
+	public interface IApiStudentXFamilyModelMapper
+	{
+		ApiStudentXFamilyResponseModel MapRequestToResponse(
+			int id,
+			ApiStudentXFamilyRequestModel request);
 
-                ApiStudentXFamilyRequestModel MapResponseToRequest(
-                        ApiStudentXFamilyResponseModel response);
+		ApiStudentXFamilyRequestModel MapResponseToRequest(
+			ApiStudentXFamilyResponseModel response);
 
-                JsonPatchDocument<ApiStudentXFamilyRequestModel> CreatePatch(ApiStudentXFamilyRequestModel model);
-        }
+		JsonPatchDocument<ApiStudentXFamilyRequestModel> CreatePatch(ApiStudentXFamilyRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>70f2a04c5f7a17f835accd9fd068e512</Hash>
+    <Hash>31914b08204b348c47394e56bb6a49dd</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALChannelMapper : DALAbstractChannelMapper, IDALChannelMapper
-        {
-                public DALChannelMapper()
-                {
-                }
-        }
+	public partial class DALChannelMapper : DALAbstractChannelMapper, IDALChannelMapper
+	{
+		public DALChannelMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0cf1ae285cadc73ba9bb74d239bddd91</Hash>
+    <Hash>43acaffd024e6d6295c5532693242ea1</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALTenantVariableMapper
-        {
-                TenantVariable MapBOToEF(
-                        BOTenantVariable bo);
+	public interface IDALTenantVariableMapper
+	{
+		TenantVariable MapBOToEF(
+			BOTenantVariable bo);
 
-                BOTenantVariable MapEFToBO(
-                        TenantVariable efTenantVariable);
+		BOTenantVariable MapEFToBO(
+			TenantVariable efTenantVariable);
 
-                List<BOTenantVariable> MapEFToBO(
-                        List<TenantVariable> records);
-        }
+		List<BOTenantVariable> MapEFToBO(
+			List<TenantVariable> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>35f1576cb82d493005615b583a8e93c7</Hash>
+    <Hash>fa77f6bf805bc980010b5508eafaa9bc</Hash>
 </Codenesium>*/

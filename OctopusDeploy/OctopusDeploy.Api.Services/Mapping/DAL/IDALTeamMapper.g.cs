@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALTeamMapper
-        {
-                Team MapBOToEF(
-                        BOTeam bo);
+	public interface IDALTeamMapper
+	{
+		Team MapBOToEF(
+			BOTeam bo);
 
-                BOTeam MapEFToBO(
-                        Team efTeam);
+		BOTeam MapEFToBO(
+			Team efTeam);
 
-                List<BOTeam> MapEFToBO(
-                        List<Team> records);
-        }
+		List<BOTeam> MapEFToBO(
+			List<Team> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>13c4d92268fb7cb8f075d5a56cd1c03a</Hash>
+    <Hash>1c2d22649ac260a29b8e40d3629f19cc</Hash>
 </Codenesium>*/

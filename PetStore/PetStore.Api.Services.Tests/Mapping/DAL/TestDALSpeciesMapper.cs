@@ -7,51 +7,51 @@ using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Species")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALSpeciesMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALSpeciesMapper();
-                        var bo = new BOSpecies();
-                        bo.SetProperties(1, "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Species")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALSpeciesMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALSpeciesMapper();
+			var bo = new BOSpecies();
+			bo.SetProperties(1, "A");
 
-                        Species response = mapper.MapBOToEF(bo);
+			Species response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALSpeciesMapper();
-                        Species entity = new Species();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALSpeciesMapper();
+			Species entity = new Species();
+			entity.SetProperties(1, "A");
 
-                        BOSpecies response = mapper.MapEFToBO(entity);
+			BOSpecies response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALSpeciesMapper();
-                        Species entity = new Species();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALSpeciesMapper();
+			Species entity = new Species();
+			entity.SetProperties(1, "A");
 
-                        List<BOSpecies> response = mapper.MapEFToBO(new List<Species>() { entity });
+			List<BOSpecies> response = mapper.MapEFToBO(new List<Species>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8bdcad3cd07fdec1b3f319b75d7c8cb9</Hash>
+    <Hash>ffe1d8e63ef1dae113d58649b5678e39</Hash>
 </Codenesium>*/

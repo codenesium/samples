@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/productSubcategories")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ProductSubcategoryController : AbstractProductSubcategoryController
-        {
-                public ProductSubcategoryController(
-                        ApiSettings settings,
-                        ILogger<ProductSubcategoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IProductSubcategoryService productSubcategoryService,
-                        IApiProductSubcategoryModelMapper productSubcategoryModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               productSubcategoryService,
-                               productSubcategoryModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/productSubcategories")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ProductSubcategoryController : AbstractProductSubcategoryController
+	{
+		public ProductSubcategoryController(
+			ApiSettings settings,
+			ILogger<ProductSubcategoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IProductSubcategoryService productSubcategoryService,
+			IApiProductSubcategoryModelMapper productSubcategoryModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       productSubcategoryService,
+			       productSubcategoryModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b48840ff64828bfb9c0980d364fe483</Hash>
+    <Hash>12aec4df85485035493faab18e3909ca</Hash>
 </Codenesium>*/

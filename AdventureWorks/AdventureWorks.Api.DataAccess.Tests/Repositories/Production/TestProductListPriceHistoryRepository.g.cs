@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ProductListPriceHistoryRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ProductListPriceHistoryRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ProductListPriceHistoryRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ProductListPriceHistoryRepository>>();
-                }
-        }
+		public static Mock<ILogger<ProductListPriceHistoryRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ProductListPriceHistoryRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductListPriceHistory")]
-        [Trait("Area", "Repositories")]
-        public partial class ProductListPriceHistoryRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductListPriceHistory")]
+	[Trait("Area", "Repositories")]
+	public partial class ProductListPriceHistoryRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
 
-                        ProductListPriceHistory entity = new ProductListPriceHistory();
-                        context.Set<ProductListPriceHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductListPriceHistory entity = new ProductListPriceHistory();
+			context.Set<ProductListPriceHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
 
-                        ProductListPriceHistory entity = new ProductListPriceHistory();
-                        context.Set<ProductListPriceHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductListPriceHistory entity = new ProductListPriceHistory();
+			context.Set<ProductListPriceHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
 
-                        var entity = new ProductListPriceHistory();
-                        await repository.Create(entity);
+			var entity = new ProductListPriceHistory();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
+			var record = await context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
-                        ProductListPriceHistory entity = new ProductListPriceHistory();
-                        context.Set<ProductListPriceHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+			ProductListPriceHistory entity = new ProductListPriceHistory();
+			context.Set<ProductListPriceHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
-                        ProductListPriceHistory entity = new ProductListPriceHistory();
-                        context.Set<ProductListPriceHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+			ProductListPriceHistory entity = new ProductListPriceHistory();
+			context.Set<ProductListPriceHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ProductListPriceHistory());
+			await repository.Update(new ProductListPriceHistory());
 
-                        var modifiedRecord = context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
-                        ProductListPriceHistory entity = new ProductListPriceHistory();
-                        context.Set<ProductListPriceHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ProductListPriceHistoryRepository>> loggerMoc = ProductListPriceHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductListPriceHistoryRepositoryMoc.GetContext();
+			var repository = new ProductListPriceHistoryRepository(loggerMoc.Object, context);
+			ProductListPriceHistory entity = new ProductListPriceHistory();
+			context.Set<ProductListPriceHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ProductID);
+			await repository.Delete(entity.ProductID);
 
-                        ProductListPriceHistory modifiedRecord = await context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
+			ProductListPriceHistory modifiedRecord = await context.Set<ProductListPriceHistory>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df32a35b8da6b096889e75d9fe5bc6b3</Hash>
+    <Hash>038078655d1ab581e2fccfeb8da3926d</Hash>
 </Codenesium>*/

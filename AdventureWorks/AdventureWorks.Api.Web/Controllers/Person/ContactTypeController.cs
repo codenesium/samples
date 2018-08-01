@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/contactTypes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ContactTypeController : AbstractContactTypeController
-        {
-                public ContactTypeController(
-                        ApiSettings settings,
-                        ILogger<ContactTypeController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IContactTypeService contactTypeService,
-                        IApiContactTypeModelMapper contactTypeModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               contactTypeService,
-                               contactTypeModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/contactTypes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ContactTypeController : AbstractContactTypeController
+	{
+		public ContactTypeController(
+			ApiSettings settings,
+			ILogger<ContactTypeController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IContactTypeService contactTypeService,
+			IApiContactTypeModelMapper contactTypeModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       contactTypeService,
+			       contactTypeModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ba80f996c0ab29b80b2f43d99744c474</Hash>
+    <Hash>e82437a342b04df0704bcc539e4795de</Hash>
 </Codenesium>*/

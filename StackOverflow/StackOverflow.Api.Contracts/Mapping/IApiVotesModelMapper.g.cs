@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public interface IApiVotesModelMapper
-        {
-                ApiVotesResponseModel MapRequestToResponse(
-                        int id,
-                        ApiVotesRequestModel request);
+	public interface IApiVotesModelMapper
+	{
+		ApiVotesResponseModel MapRequestToResponse(
+			int id,
+			ApiVotesRequestModel request);
 
-                ApiVotesRequestModel MapResponseToRequest(
-                        ApiVotesResponseModel response);
+		ApiVotesRequestModel MapResponseToRequest(
+			ApiVotesResponseModel response);
 
-                JsonPatchDocument<ApiVotesRequestModel> CreatePatch(ApiVotesRequestModel model);
-        }
+		JsonPatchDocument<ApiVotesRequestModel> CreatePatch(ApiVotesRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3ca4b94e1b915254697cb3331da741fa</Hash>
+    <Hash>da789bf336a6855c90acadb3570af497</Hash>
 </Codenesium>*/

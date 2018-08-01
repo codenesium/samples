@@ -5,50 +5,50 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractCustomerMapper
-        {
-                public virtual BOCustomer MapModelToBO(
-                        int customerID,
-                        ApiCustomerRequestModel model
-                        )
-                {
-                        BOCustomer boCustomer = new BOCustomer();
-                        boCustomer.SetProperties(
-                                customerID,
-                                model.AccountNumber,
-                                model.ModifiedDate,
-                                model.PersonID,
-                                model.Rowguid,
-                                model.StoreID,
-                                model.TerritoryID);
-                        return boCustomer;
-                }
+	public abstract class BOLAbstractCustomerMapper
+	{
+		public virtual BOCustomer MapModelToBO(
+			int customerID,
+			ApiCustomerRequestModel model
+			)
+		{
+			BOCustomer boCustomer = new BOCustomer();
+			boCustomer.SetProperties(
+				customerID,
+				model.AccountNumber,
+				model.ModifiedDate,
+				model.PersonID,
+				model.Rowguid,
+				model.StoreID,
+				model.TerritoryID);
+			return boCustomer;
+		}
 
-                public virtual ApiCustomerResponseModel MapBOToModel(
-                        BOCustomer boCustomer)
-                {
-                        var model = new ApiCustomerResponseModel();
+		public virtual ApiCustomerResponseModel MapBOToModel(
+			BOCustomer boCustomer)
+		{
+			var model = new ApiCustomerResponseModel();
 
-                        model.SetProperties(boCustomer.CustomerID, boCustomer.AccountNumber, boCustomer.ModifiedDate, boCustomer.PersonID, boCustomer.Rowguid, boCustomer.StoreID, boCustomer.TerritoryID);
+			model.SetProperties(boCustomer.CustomerID, boCustomer.AccountNumber, boCustomer.ModifiedDate, boCustomer.PersonID, boCustomer.Rowguid, boCustomer.StoreID, boCustomer.TerritoryID);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiCustomerResponseModel> MapBOToModel(
-                        List<BOCustomer> items)
-                {
-                        List<ApiCustomerResponseModel> response = new List<ApiCustomerResponseModel>();
+		public virtual List<ApiCustomerResponseModel> MapBOToModel(
+			List<BOCustomer> items)
+		{
+			List<ApiCustomerResponseModel> response = new List<ApiCustomerResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>71d77ed59be3cf0b16e8d6d663f075fe</Hash>
+    <Hash>e8a78d66361d983a2cc5be7d1123662f</Hash>
 </Codenesium>*/

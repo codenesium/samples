@@ -7,62 +7,61 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ActionTemplateVersion")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiActionTemplateVersionModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiActionTemplateVersionModelMapper();
-                        var model = new ApiActionTemplateVersionRequestModel();
-                        model.SetProperties("A", "A", "A", "A", 1);
-                        ApiActionTemplateVersionResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ActionTemplateVersion")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiActionTemplateVersionModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiActionTemplateVersionModelMapper();
+			var model = new ApiActionTemplateVersionRequestModel();
+			model.SetProperties("A", "A", "A", "A", 1);
+			ApiActionTemplateVersionResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.ActionType.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.LatestActionTemplateId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.Version.Should().Be(1);
-                }
+			response.ActionType.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.LatestActionTemplateId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.Version.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiActionTemplateVersionModelMapper();
-                        var model = new ApiActionTemplateVersionResponseModel();
-                        model.SetProperties("A", "A", "A", "A", "A", 1);
-                        ApiActionTemplateVersionRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiActionTemplateVersionModelMapper();
+			var model = new ApiActionTemplateVersionResponseModel();
+			model.SetProperties("A", "A", "A", "A", "A", 1);
+			ApiActionTemplateVersionRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.ActionType.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.LatestActionTemplateId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.Version.Should().Be(1);
-                }
+			response.ActionType.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.LatestActionTemplateId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.Version.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiActionTemplateVersionModelMapper();
-                        var model = new ApiActionTemplateVersionRequestModel();
-                        model.SetProperties("A", "A", "A", "A", 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiActionTemplateVersionModelMapper();
+			var model = new ApiActionTemplateVersionRequestModel();
+			model.SetProperties("A", "A", "A", "A", 1);
 
-                        JsonPatchDocument<ApiActionTemplateVersionRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiActionTemplateVersionRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.ActionType.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.LatestActionTemplateId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.Version.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiActionTemplateVersionRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiActionTemplateVersionRequestModel();
+			patch.ApplyTo(response);
+			response.ActionType.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.LatestActionTemplateId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.Version.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>92ee804a4c6d9c46d84c239f2329ceeb</Hash>
+    <Hash>d98336136494098e33ba7bd7ff7583c7</Hash>
 </Codenesium>*/

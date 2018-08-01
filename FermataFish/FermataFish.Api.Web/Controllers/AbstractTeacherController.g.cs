@@ -15,238 +15,238 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Web
 {
-        public abstract class AbstractTeacherController : AbstractApiController
-        {
-                protected ITeacherService TeacherService { get; private set; }
+	public abstract class AbstractTeacherController : AbstractApiController
+	{
+		protected ITeacherService TeacherService { get; private set; }
 
-                protected IApiTeacherModelMapper TeacherModelMapper { get; private set; }
+		protected IApiTeacherModelMapper TeacherModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractTeacherController(
-                        ApiSettings settings,
-                        ILogger<AbstractTeacherController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITeacherService teacherService,
-                        IApiTeacherModelMapper teacherModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.TeacherService = teacherService;
-                        this.TeacherModelMapper = teacherModelMapper;
-                }
+		public AbstractTeacherController(
+			ApiSettings settings,
+			ILogger<AbstractTeacherController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITeacherService teacherService,
+			IApiTeacherModelMapper teacherModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.TeacherService = teacherService;
+			this.TeacherModelMapper = teacherModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiTeacherResponseModel> response = await this.TeacherService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiTeacherResponseModel> response = await this.TeacherService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiTeacherResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiTeacherResponseModel response = await this.TeacherService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiTeacherResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiTeacherResponseModel response = await this.TeacherService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiTeacherResponseModel> records = new List<ApiTeacherResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
+			List<ApiTeacherResponseModel> records = new List<ApiTeacherResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiTeacherResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiTeacherRequestModel model)
-                {
-                        CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiTeacherResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherRequestModel model)
+		{
+			CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeacherRequestModel> patch)
-                {
-                        ApiTeacherResponseModel record = await this.TeacherService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeacherRequestModel> patch)
+		{
+			ApiTeacherResponseModel record = await this.TeacherService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiTeacherRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiTeacherRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, model);
+				UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherRequestModel model)
-                {
-                        ApiTeacherRequestModel request = await this.PatchModel(id, this.TeacherModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherRequestModel model)
+		{
+			ApiTeacherRequestModel request = await this.PatchModel(id, this.TeacherModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.TeacherService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.TeacherService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("{teacherId}/Rates")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-                public async virtual Task<IActionResult> Rates(int teacherId, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
+		[HttpGet]
+		[Route("{teacherId}/Rates")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> Rates(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
 
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiRateResponseModel> response = await this.TeacherService.Rates(teacherId, query.Limit, query.Offset);
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiRateResponseModel> response = await this.TeacherService.Rates(teacherId, query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{teacherId}/TeacherXTeacherSkills")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-                public async virtual Task<IActionResult> TeacherXTeacherSkills(int teacherId, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
+		[HttpGet]
+		[Route("{teacherId}/TeacherXTeacherSkills")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> TeacherXTeacherSkills(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
 
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiTeacherXTeacherSkillResponseModel> response = await this.TeacherService.TeacherXTeacherSkills(teacherId, query.Limit, query.Offset);
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiTeacherXTeacherSkillResponseModel> response = await this.TeacherService.TeacherXTeacherSkills(teacherId, query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherRequestModel> patch)
-                {
-                        var record = await this.TeacherService.Get(id);
+		private async Task<ApiTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherRequestModel> patch)
+		{
+			var record = await this.TeacherService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiTeacherRequestModel request = this.TeacherModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiTeacherRequestModel request = this.TeacherModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aaaaf71084395bdba3553a3192c45dbd</Hash>
+    <Hash>2e53991acef8ed60ac4b8d3dfe57dcfc</Hash>
 </Codenesium>*/

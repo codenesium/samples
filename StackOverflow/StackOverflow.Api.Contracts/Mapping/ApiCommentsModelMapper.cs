@@ -1,14 +1,14 @@
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiCommentsModelMapper : AbstractApiCommentsModelMapper, IApiCommentsModelMapper
-        {
-                public ApiCommentsModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiCommentsModelMapper : AbstractApiCommentsModelMapper, IApiCommentsModelMapper
+	{
+		public ApiCommentsModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1c6ccfd557888e1689c14500ec48b194</Hash>
+    <Hash>8df6f0ffffbbde82fc7d3d38dc353f03</Hash>
 </Codenesium>*/

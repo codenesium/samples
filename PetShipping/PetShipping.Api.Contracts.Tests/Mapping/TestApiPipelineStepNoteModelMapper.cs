@@ -7,56 +7,55 @@ using Xunit;
 
 namespace PetShippingNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PipelineStepNote")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiPipelineStepNoteModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiPipelineStepNoteModelMapper();
-                        var model = new ApiPipelineStepNoteRequestModel();
-                        model.SetProperties(1, "A", 1);
-                        ApiPipelineStepNoteResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PipelineStepNote")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiPipelineStepNoteModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiPipelineStepNoteModelMapper();
+			var model = new ApiPipelineStepNoteRequestModel();
+			model.SetProperties(1, "A", 1);
+			ApiPipelineStepNoteResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.EmployeeId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Note.Should().Be("A");
-                        response.PipelineStepId.Should().Be(1);
-                }
+			response.EmployeeId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Note.Should().Be("A");
+			response.PipelineStepId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiPipelineStepNoteModelMapper();
-                        var model = new ApiPipelineStepNoteResponseModel();
-                        model.SetProperties(1, 1, "A", 1);
-                        ApiPipelineStepNoteRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiPipelineStepNoteModelMapper();
+			var model = new ApiPipelineStepNoteResponseModel();
+			model.SetProperties(1, 1, "A", 1);
+			ApiPipelineStepNoteRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.EmployeeId.Should().Be(1);
-                        response.Note.Should().Be("A");
-                        response.PipelineStepId.Should().Be(1);
-                }
+			response.EmployeeId.Should().Be(1);
+			response.Note.Should().Be("A");
+			response.PipelineStepId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiPipelineStepNoteModelMapper();
-                        var model = new ApiPipelineStepNoteRequestModel();
-                        model.SetProperties(1, "A", 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiPipelineStepNoteModelMapper();
+			var model = new ApiPipelineStepNoteRequestModel();
+			model.SetProperties(1, "A", 1);
 
-                        JsonPatchDocument<ApiPipelineStepNoteRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiPipelineStepNoteRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.EmployeeId.Should().Be(1);
-                        response.Note.Should().Be("A");
-                        response.PipelineStepId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiPipelineStepNoteRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiPipelineStepNoteRequestModel();
+			patch.ApplyTo(response);
+			response.EmployeeId.Should().Be(1);
+			response.Note.Should().Be("A");
+			response.PipelineStepId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6a95d6dbea5661f0c3bfdb4fa827f07e</Hash>
+    <Hash>69405c5943c6d3c7ee408e8dbbb2f2d9</Hash>
 </Codenesium>*/

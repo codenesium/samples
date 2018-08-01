@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALProductModelMapper
-        {
-                ProductModel MapBOToEF(
-                        BOProductModel bo);
+	public interface IDALProductModelMapper
+	{
+		ProductModel MapBOToEF(
+			BOProductModel bo);
 
-                BOProductModel MapEFToBO(
-                        ProductModel efProductModel);
+		BOProductModel MapEFToBO(
+			ProductModel efProductModel);
 
-                List<BOProductModel> MapEFToBO(
-                        List<ProductModel> records);
-        }
+		List<BOProductModel> MapEFToBO(
+			List<ProductModel> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>dbcd7664e9e3a417d0631188025b3546</Hash>
+    <Hash>3cbcc05c1edc8de3f4d90e31bc85d8e4</Hash>
 </Codenesium>*/

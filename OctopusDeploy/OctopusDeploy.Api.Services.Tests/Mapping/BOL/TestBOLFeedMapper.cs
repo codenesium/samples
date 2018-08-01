@@ -8,53 +8,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Feed")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLFeedMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLFeedMapper();
-                        ApiFeedRequestModel model = new ApiFeedRequestModel();
-                        model.SetProperties("A", "A", "A", "A");
-                        BOFeed response = mapper.MapModelToBO("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Feed")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLFeedMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLFeedMapper();
+			ApiFeedRequestModel model = new ApiFeedRequestModel();
+			model.SetProperties("A", "A", "A", "A");
+			BOFeed response = mapper.MapModelToBO("A", model);
 
-                        response.FeedType.Should().Be("A");
-                        response.FeedUri.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.FeedType.Should().Be("A");
+			response.FeedUri.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLFeedMapper();
-                        BOFeed bo = new BOFeed();
-                        bo.SetProperties("A", "A", "A", "A", "A");
-                        ApiFeedResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLFeedMapper();
+			BOFeed bo = new BOFeed();
+			bo.SetProperties("A", "A", "A", "A", "A");
+			ApiFeedResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.FeedType.Should().Be("A");
-                        response.FeedUri.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.FeedType.Should().Be("A");
+			response.FeedUri.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLFeedMapper();
-                        BOFeed bo = new BOFeed();
-                        bo.SetProperties("A", "A", "A", "A", "A");
-                        List<ApiFeedResponseModel> response = mapper.MapBOToModel(new List<BOFeed>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLFeedMapper();
+			BOFeed bo = new BOFeed();
+			bo.SetProperties("A", "A", "A", "A", "A");
+			List<ApiFeedResponseModel> response = mapper.MapBOToModel(new List<BOFeed>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b6f33722003fc4a830a2911f0efdcb27</Hash>
+    <Hash>880f77df003a626d09929cb7b59e0bf4</Hash>
 </Codenesium>*/

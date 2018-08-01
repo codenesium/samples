@@ -12,31 +12,31 @@ using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Web
 {
-        [Route("api/transactionStatus")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TransactionStatusController : AbstractTransactionStatusController
-        {
-                public TransactionStatusController(
-                        ApiSettings settings,
-                        ILogger<TransactionStatusController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITransactionStatusService transactionStatusService,
-                        IApiTransactionStatusModelMapper transactionStatusModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               transactionStatusService,
-                               transactionStatusModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/transactionStatus")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TransactionStatusController : AbstractTransactionStatusController
+	{
+		public TransactionStatusController(
+			ApiSettings settings,
+			ILogger<TransactionStatusController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITransactionStatusService transactionStatusService,
+			IApiTransactionStatusModelMapper transactionStatusModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       transactionStatusService,
+			       transactionStatusModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5a94e1d9fadc3fee6897fcdccb3c2283</Hash>
+    <Hash>1e7f1793ec2c303a8e36dc021ad64871</Hash>
 </Codenesium>*/

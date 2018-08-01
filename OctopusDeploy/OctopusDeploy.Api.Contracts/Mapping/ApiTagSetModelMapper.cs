@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiTagSetModelMapper : AbstractApiTagSetModelMapper, IApiTagSetModelMapper
-        {
-                public ApiTagSetModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTagSetModelMapper : AbstractApiTagSetModelMapper, IApiTagSetModelMapper
+	{
+		public ApiTagSetModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>10b98146a7424132f07b291cf069f859</Hash>
+    <Hash>bf2ada53236f4204c008da403e3967fe</Hash>
 </Codenesium>*/

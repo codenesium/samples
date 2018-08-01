@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class AWBuildVersionService : AbstractAWBuildVersionService, IAWBuildVersionService
-        {
-                public AWBuildVersionService(
-                        ILogger<IAWBuildVersionRepository> logger,
-                        IAWBuildVersionRepository aWBuildVersionRepository,
-                        IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
-                        IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
-                        IDALAWBuildVersionMapper dalaWBuildVersionMapper
-                        )
-                        : base(logger,
-                               aWBuildVersionRepository,
-                               aWBuildVersionModelValidator,
-                               bolaWBuildVersionMapper,
-                               dalaWBuildVersionMapper)
-                {
-                }
-        }
+	public partial class AWBuildVersionService : AbstractAWBuildVersionService, IAWBuildVersionService
+	{
+		public AWBuildVersionService(
+			ILogger<IAWBuildVersionRepository> logger,
+			IAWBuildVersionRepository aWBuildVersionRepository,
+			IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
+			IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
+			IDALAWBuildVersionMapper dalaWBuildVersionMapper
+			)
+			: base(logger,
+			       aWBuildVersionRepository,
+			       aWBuildVersionModelValidator,
+			       bolaWBuildVersionMapper,
+			       dalaWBuildVersionMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6c1ec3c744dbeebddb6ca92692297079</Hash>
+    <Hash>dccdfd0c937e783e7c205cb6a1227969</Hash>
 </Codenesium>*/

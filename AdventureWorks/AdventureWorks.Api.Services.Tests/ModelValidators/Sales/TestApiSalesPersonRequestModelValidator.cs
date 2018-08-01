@@ -15,67 +15,67 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SalesPerson")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSalesPersonRequestModelValidatorTest
-        {
-                public ApiSalesPersonRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SalesPerson")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSalesPersonRequestModelValidatorTest
+	{
+		public ApiSalesPersonRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void TerritoryID_Create_Valid_Reference()
-                {
-                        Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-                        salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+		[Fact]
+		public async void TerritoryID_Create_Valid_Reference()
+		{
+			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
+			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
-                        var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesPersonRequestModel());
+			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesPersonRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Create_Invalid_Reference()
-                {
-                        Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-                        salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+		[Fact]
+		public async void TerritoryID_Create_Invalid_Reference()
+		{
+			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
+			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
-                        var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
+			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSalesPersonRequestModel());
+			await validator.ValidateCreateAsync(new ApiSalesPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Update_Valid_Reference()
-                {
-                        Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-                        salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+		[Fact]
+		public async void TerritoryID_Update_Valid_Reference()
+		{
+			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
+			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
-                        var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesPersonRequestModel());
+			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesPersonRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Update_Invalid_Reference()
-                {
-                        Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-                        salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+		[Fact]
+		public async void TerritoryID_Update_Invalid_Reference()
+		{
+			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
+			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
-                        var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
+			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesPersonRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f55b098d4a47bfe3312e79197a31e30d</Hash>
+    <Hash>a65dfa36b79759f31f849a612618bf03</Hash>
 </Codenesium>*/

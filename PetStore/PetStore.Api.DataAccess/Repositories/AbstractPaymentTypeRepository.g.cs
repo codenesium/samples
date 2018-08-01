@@ -11,107 +11,107 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public abstract class AbstractPaymentTypeRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractPaymentTypeRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractPaymentTypeRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractPaymentTypeRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<PaymentType>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<PaymentType>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<PaymentType> Get(int id)
-                {
-                        return await this.GetById(id);
-                }
+		public async virtual Task<PaymentType> Get(int id)
+		{
+			return await this.GetById(id);
+		}
 
-                public async virtual Task<PaymentType> Create(PaymentType item)
-                {
-                        this.Context.Set<PaymentType>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<PaymentType> Create(PaymentType item)
+		{
+			this.Context.Set<PaymentType>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(PaymentType item)
-                {
-                        var entity = this.Context.Set<PaymentType>().Local.FirstOrDefault(x => x.Id == item.Id);
-                        if (entity == null)
-                        {
-                                this.Context.Set<PaymentType>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(PaymentType item)
+		{
+			var entity = this.Context.Set<PaymentType>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<PaymentType>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        int id)
-                {
-                        PaymentType record = await this.GetById(id);
+		public async virtual Task Delete(
+			int id)
+		{
+			PaymentType record = await this.GetById(id);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<PaymentType>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<PaymentType>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
-                }
+		public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+		}
 
-                protected async Task<List<PaymentType>> Where(
-                        Expression<Func<PaymentType, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<PaymentType, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.Id;
-                        }
+		protected async Task<List<PaymentType>> Where(
+			Expression<Func<PaymentType, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<PaymentType, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Id;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
+			}
+			else
+			{
+				return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
+			}
+		}
 
-                private async Task<PaymentType> GetById(int id)
-                {
-                        List<PaymentType> records = await this.Where(x => x.Id == id);
+		private async Task<PaymentType> GetById(int id)
+		{
+			List<PaymentType> records = await this.Where(x => x.Id == id);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b06557db626002362d6298ec8296c01e</Hash>
+    <Hash>8bcc12b0b3e39d644cb452b8f0b3692b</Hash>
 </Codenesium>*/

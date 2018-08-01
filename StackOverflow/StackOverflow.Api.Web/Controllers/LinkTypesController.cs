@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.Web
 {
-        [Route("api/linkTypes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LinkTypesController : AbstractLinkTypesController
-        {
-                public LinkTypesController(
-                        ApiSettings settings,
-                        ILogger<LinkTypesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILinkTypesService linkTypesService,
-                        IApiLinkTypesModelMapper linkTypesModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               linkTypesService,
-                               linkTypesModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/linkTypes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LinkTypesController : AbstractLinkTypesController
+	{
+		public LinkTypesController(
+			ApiSettings settings,
+			ILogger<LinkTypesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILinkTypesService linkTypesService,
+			IApiLinkTypesModelMapper linkTypesModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       linkTypesService,
+			       linkTypesModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>31c29d89361cb362ea121504cdff430f</Hash>
+    <Hash>282311b56089ab2d95b0e6e053b10f34</Hash>
 </Codenesium>*/

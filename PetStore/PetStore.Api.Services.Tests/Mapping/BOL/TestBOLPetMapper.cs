@@ -8,57 +8,57 @@ using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pet")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPetMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPetMapper();
-                        ApiPetRequestModel model = new ApiPetRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
-                        BOPet response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pet")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPetMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPetMapper();
+			ApiPetRequestModel model = new ApiPetRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			BOPet response = mapper.MapModelToBO(1, model);
 
-                        response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.BreedId.Should().Be(1);
-                        response.Description.Should().Be("A");
-                        response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1m);
-                        response.SpeciesId.Should().Be(1);
-                }
+			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.BreedId.Should().Be(1);
+			response.Description.Should().Be("A");
+			response.PenId.Should().Be(1);
+			response.Price.Should().Be(1m);
+			response.SpeciesId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPetMapper();
-                        BOPet bo = new BOPet();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
-                        ApiPetResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPetMapper();
+			BOPet bo = new BOPet();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			ApiPetResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.BreedId.Should().Be(1);
-                        response.Description.Should().Be("A");
-                        response.Id.Should().Be(1);
-                        response.PenId.Should().Be(1);
-                        response.Price.Should().Be(1m);
-                        response.SpeciesId.Should().Be(1);
-                }
+			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.BreedId.Should().Be(1);
+			response.Description.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.PenId.Should().Be(1);
+			response.Price.Should().Be(1m);
+			response.SpeciesId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPetMapper();
-                        BOPet bo = new BOPet();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
-                        List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPetMapper();
+			BOPet bo = new BOPet();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1338d5d1142291a051bdd1ddd61edfc4</Hash>
+    <Hash>904f8e2bed1c4107077452bc64530ba6</Hash>
 </Codenesium>*/

@@ -6,66 +6,66 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractPurchaseOrderHeaderMapper
-        {
-                public virtual PurchaseOrderHeader MapBOToEF(
-                        BOPurchaseOrderHeader bo)
-                {
-                        PurchaseOrderHeader efPurchaseOrderHeader = new PurchaseOrderHeader();
-                        efPurchaseOrderHeader.SetProperties(
-                                bo.EmployeeID,
-                                bo.Freight,
-                                bo.ModifiedDate,
-                                bo.OrderDate,
-                                bo.PurchaseOrderID,
-                                bo.RevisionNumber,
-                                bo.ShipDate,
-                                bo.ShipMethodID,
-                                bo.Status,
-                                bo.SubTotal,
-                                bo.TaxAmt,
-                                bo.TotalDue,
-                                bo.VendorID);
-                        return efPurchaseOrderHeader;
-                }
+	public abstract class DALAbstractPurchaseOrderHeaderMapper
+	{
+		public virtual PurchaseOrderHeader MapBOToEF(
+			BOPurchaseOrderHeader bo)
+		{
+			PurchaseOrderHeader efPurchaseOrderHeader = new PurchaseOrderHeader();
+			efPurchaseOrderHeader.SetProperties(
+				bo.EmployeeID,
+				bo.Freight,
+				bo.ModifiedDate,
+				bo.OrderDate,
+				bo.PurchaseOrderID,
+				bo.RevisionNumber,
+				bo.ShipDate,
+				bo.ShipMethodID,
+				bo.Status,
+				bo.SubTotal,
+				bo.TaxAmt,
+				bo.TotalDue,
+				bo.VendorID);
+			return efPurchaseOrderHeader;
+		}
 
-                public virtual BOPurchaseOrderHeader MapEFToBO(
-                        PurchaseOrderHeader ef)
-                {
-                        var bo = new BOPurchaseOrderHeader();
+		public virtual BOPurchaseOrderHeader MapEFToBO(
+			PurchaseOrderHeader ef)
+		{
+			var bo = new BOPurchaseOrderHeader();
 
-                        bo.SetProperties(
-                                ef.PurchaseOrderID,
-                                ef.EmployeeID,
-                                ef.Freight,
-                                ef.ModifiedDate,
-                                ef.OrderDate,
-                                ef.RevisionNumber,
-                                ef.ShipDate,
-                                ef.ShipMethodID,
-                                ef.Status,
-                                ef.SubTotal,
-                                ef.TaxAmt,
-                                ef.TotalDue,
-                                ef.VendorID);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.PurchaseOrderID,
+				ef.EmployeeID,
+				ef.Freight,
+				ef.ModifiedDate,
+				ef.OrderDate,
+				ef.RevisionNumber,
+				ef.ShipDate,
+				ef.ShipMethodID,
+				ef.Status,
+				ef.SubTotal,
+				ef.TaxAmt,
+				ef.TotalDue,
+				ef.VendorID);
+			return bo;
+		}
 
-                public virtual List<BOPurchaseOrderHeader> MapEFToBO(
-                        List<PurchaseOrderHeader> records)
-                {
-                        List<BOPurchaseOrderHeader> response = new List<BOPurchaseOrderHeader>();
+		public virtual List<BOPurchaseOrderHeader> MapEFToBO(
+			List<PurchaseOrderHeader> records)
+		{
+			List<BOPurchaseOrderHeader> response = new List<BOPurchaseOrderHeader>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5e173fd158ff16287b4c75c0476224c2</Hash>
+    <Hash>bd175c118d75721c2e73fdaf02e19eff</Hash>
 </Codenesium>*/

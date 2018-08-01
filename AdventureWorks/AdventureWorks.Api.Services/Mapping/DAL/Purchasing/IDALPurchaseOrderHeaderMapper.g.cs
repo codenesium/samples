@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALPurchaseOrderHeaderMapper
-        {
-                PurchaseOrderHeader MapBOToEF(
-                        BOPurchaseOrderHeader bo);
+	public interface IDALPurchaseOrderHeaderMapper
+	{
+		PurchaseOrderHeader MapBOToEF(
+			BOPurchaseOrderHeader bo);
 
-                BOPurchaseOrderHeader MapEFToBO(
-                        PurchaseOrderHeader efPurchaseOrderHeader);
+		BOPurchaseOrderHeader MapEFToBO(
+			PurchaseOrderHeader efPurchaseOrderHeader);
 
-                List<BOPurchaseOrderHeader> MapEFToBO(
-                        List<PurchaseOrderHeader> records);
-        }
+		List<BOPurchaseOrderHeader> MapEFToBO(
+			List<PurchaseOrderHeader> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>83e008ce4740d35bb9c9ee107eb9da3c</Hash>
+    <Hash>35d1ef6f11eabb8d639a9dd749dd883e</Hash>
 </Codenesium>*/

@@ -15,41 +15,41 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Badges")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiBadgesRequestModelValidatorTest
-        {
-                public ApiBadgesRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Badges")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiBadgesRequestModelValidatorTest
+	{
+		public ApiBadgesRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
-                        badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
+			badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
 
-                        var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBadgesRequestModel());
+			var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBadgesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 41));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
-                        badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IBadgesRepository> badgesRepository = new Mock<IBadgesRepository>();
+			badgesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badges()));
 
-                        var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBadgesRequestModel());
+			var validator = new ApiBadgesRequestModelValidator(badgesRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBadgesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 41));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 41));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>46eea63f85260f8f869e415b0a0a952a</Hash>
+    <Hash>8fe9129f58eb9a6489368f778c14bc35</Hash>
 </Codenesium>*/

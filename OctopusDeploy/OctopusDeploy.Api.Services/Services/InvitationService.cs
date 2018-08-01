@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class InvitationService : AbstractInvitationService, IInvitationService
-        {
-                public InvitationService(
-                        ILogger<IInvitationRepository> logger,
-                        IInvitationRepository invitationRepository,
-                        IApiInvitationRequestModelValidator invitationModelValidator,
-                        IBOLInvitationMapper bolinvitationMapper,
-                        IDALInvitationMapper dalinvitationMapper
-                        )
-                        : base(logger,
-                               invitationRepository,
-                               invitationModelValidator,
-                               bolinvitationMapper,
-                               dalinvitationMapper)
-                {
-                }
-        }
+	public partial class InvitationService : AbstractInvitationService, IInvitationService
+	{
+		public InvitationService(
+			ILogger<IInvitationRepository> logger,
+			IInvitationRepository invitationRepository,
+			IApiInvitationRequestModelValidator invitationModelValidator,
+			IBOLInvitationMapper bolinvitationMapper,
+			IDALInvitationMapper dalinvitationMapper
+			)
+			: base(logger,
+			       invitationRepository,
+			       invitationModelValidator,
+			       bolinvitationMapper,
+			       dalinvitationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dc587a8ae7c98cdf6b7fce85ec38bbe9</Hash>
+    <Hash>2c5381e4bc9e5c984003120d001d3bfc</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiTestAllFieldTypeModelMapper : AbstractApiTestAllFieldTypeModelMapper, IApiTestAllFieldTypeModelMapper
-        {
-                public ApiTestAllFieldTypeModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTestAllFieldTypeModelMapper : AbstractApiTestAllFieldTypeModelMapper, IApiTestAllFieldTypeModelMapper
+	{
+		public ApiTestAllFieldTypeModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>85363f40108a184ebd119a00098702f9</Hash>
+    <Hash>bcd8334873ee36a071d9c101a8b01a6e</Hash>
 </Codenesium>*/

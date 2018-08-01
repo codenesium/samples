@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UserRole")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiUserRoleRequestModelValidatorTest
-        {
-                public ApiUserRoleRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UserRole")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiUserRoleRequestModelValidatorTest
+	{
+		public ApiUserRoleRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
 
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UserRole()));
 
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
+			await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
+			await validator.ValidateCreateAsync(new ApiUserRoleRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(new UserRole()));
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
-                        userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
-                        var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IUserRoleRepository> userRoleRepository = new Mock<IUserRoleRepository>();
+			userRoleRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UserRole>(null));
+			var validator = new ApiUserRoleRequestModelValidator(userRoleRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiUserRoleRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>823520ee1152ae3606be0c3241cf68b5</Hash>
+    <Hash>fbc6187007cf0f90636944d82345bbe4</Hash>
 </Codenesium>*/

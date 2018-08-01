@@ -4,14 +4,14 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class DALPostHistoryMapper : DALAbstractPostHistoryMapper, IDALPostHistoryMapper
-        {
-                public DALPostHistoryMapper()
-                {
-                }
-        }
+	public partial class DALPostHistoryMapper : DALAbstractPostHistoryMapper, IDALPostHistoryMapper
+	{
+		public DALPostHistoryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e59bc0d134b9fcb8d0fb5f287ef3fa69</Hash>
+    <Hash>50bbaef0d1a14ad934fd2cb3ac46a1e6</Hash>
 </Codenesium>*/

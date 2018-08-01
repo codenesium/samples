@@ -7,59 +7,59 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmployeeDepartmentHistory")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALEmployeeDepartmentHistoryMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALEmployeeDepartmentHistoryMapper();
-                        var bo = new BOEmployeeDepartmentHistory();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmployeeDepartmentHistory")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALEmployeeDepartmentHistoryMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALEmployeeDepartmentHistoryMapper();
+			var bo = new BOEmployeeDepartmentHistory();
+			bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        EmployeeDepartmentHistory response = mapper.MapBOToEF(bo);
+			EmployeeDepartmentHistory response = mapper.MapBOToEF(bo);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.DepartmentID.Should().Be(1);
-                        response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ShiftID.Should().Be(1);
-                        response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.DepartmentID.Should().Be(1);
+			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ShiftID.Should().Be(1);
+			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALEmployeeDepartmentHistoryMapper();
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALEmployeeDepartmentHistoryMapper();
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOEmployeeDepartmentHistory response = mapper.MapEFToBO(entity);
+			BOEmployeeDepartmentHistory response = mapper.MapEFToBO(entity);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.DepartmentID.Should().Be(1);
-                        response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ShiftID.Should().Be(1);
-                        response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.DepartmentID.Should().Be(1);
+			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ShiftID.Should().Be(1);
+			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALEmployeeDepartmentHistoryMapper();
-                        EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-                        entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALEmployeeDepartmentHistoryMapper();
+			EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
+			entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        List<BOEmployeeDepartmentHistory> response = mapper.MapEFToBO(new List<EmployeeDepartmentHistory>() { entity });
+			List<BOEmployeeDepartmentHistory> response = mapper.MapEFToBO(new List<EmployeeDepartmentHistory>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ece0aa73305e6055e031385845d1f45f</Hash>
+    <Hash>d4081fe24659d31158bc758e01cd05b7</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/locations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LocationController : AbstractLocationController
-        {
-                public LocationController(
-                        ApiSettings settings,
-                        ILogger<LocationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILocationService locationService,
-                        IApiLocationModelMapper locationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               locationService,
-                               locationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/locations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LocationController : AbstractLocationController
+	{
+		public LocationController(
+			ApiSettings settings,
+			ILogger<LocationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILocationService locationService,
+			IApiLocationModelMapper locationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       locationService,
+			       locationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ac98d444749da33c705839990d863361</Hash>
+    <Hash>1cfa3a988592ef15cc04d9f47c6dc49b</Hash>
 </Codenesium>*/

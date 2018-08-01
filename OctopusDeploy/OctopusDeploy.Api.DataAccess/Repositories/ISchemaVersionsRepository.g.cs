@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface ISchemaVersionsRepository
-        {
-                Task<SchemaVersions> Create(SchemaVersions item);
+	public interface ISchemaVersionsRepository
+	{
+		Task<SchemaVersions> Create(SchemaVersions item);
 
-                Task Update(SchemaVersions item);
+		Task Update(SchemaVersions item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<SchemaVersions> Get(int id);
+		Task<SchemaVersions> Get(int id);
 
-                Task<List<SchemaVersions>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<SchemaVersions>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f281d88d040e1493f77440526f40f90</Hash>
+    <Hash>dde9984b48438b41ebe07f1bcd81c214</Hash>
 </Codenesium>*/

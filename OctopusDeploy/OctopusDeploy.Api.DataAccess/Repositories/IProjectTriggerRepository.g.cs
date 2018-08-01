@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface IProjectTriggerRepository
-        {
-                Task<ProjectTrigger> Create(ProjectTrigger item);
+	public interface IProjectTriggerRepository
+	{
+		Task<ProjectTrigger> Create(ProjectTrigger item);
 
-                Task Update(ProjectTrigger item);
+		Task Update(ProjectTrigger item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<ProjectTrigger> Get(string id);
+		Task<ProjectTrigger> Get(string id);
 
-                Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ProjectTrigger> ByProjectIdName(string projectId, string name);
+		Task<ProjectTrigger> ByProjectIdName(string projectId, string name);
 
-                Task<List<ProjectTrigger>> ByProjectId(string projectId);
-        }
+		Task<List<ProjectTrigger>> ByProjectId(string projectId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8560878ed6d97255b3944171a9518063</Hash>
+    <Hash>a22fae6b09de6db929ff51bdf211b2c9</Hash>
 </Codenesium>*/

@@ -6,34 +6,34 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALPersonMapper DALPersonMapperMock { get; set; } = new DALPersonMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALPersonMapper DALPersonMapperMock { get; set; } = new DALPersonMapper();
 
-                public IDALRowVersionCheckMapper DALRowVersionCheckMapperMock { get; set; } = new DALRowVersionCheckMapper();
+		public IDALRowVersionCheckMapper DALRowVersionCheckMapperMock { get; set; } = new DALRowVersionCheckMapper();
 
-                public IDALSelfReferenceMapper DALSelfReferenceMapperMock { get; set; } = new DALSelfReferenceMapper();
+		public IDALSelfReferenceMapper DALSelfReferenceMapperMock { get; set; } = new DALSelfReferenceMapper();
 
-                public IDALTableMapper DALTableMapperMock { get; set; } = new DALTableMapper();
+		public IDALTableMapper DALTableMapperMock { get; set; } = new DALTableMapper();
 
-                public IDALTestAllFieldTypeMapper DALTestAllFieldTypeMapperMock { get; set; } = new DALTestAllFieldTypeMapper();
+		public IDALTestAllFieldTypeMapper DALTestAllFieldTypeMapperMock { get; set; } = new DALTestAllFieldTypeMapper();
 
-                public IDALTestAllFieldTypesNullableMapper DALTestAllFieldTypesNullableMapperMock { get; set; } = new DALTestAllFieldTypesNullableMapper();
+		public IDALTestAllFieldTypesNullableMapper DALTestAllFieldTypesNullableMapperMock { get; set; } = new DALTestAllFieldTypesNullableMapper();
 
-                public IDALTimestampCheckMapper DALTimestampCheckMapperMock { get; set; } = new DALTimestampCheckMapper();
+		public IDALTimestampCheckMapper DALTimestampCheckMapperMock { get; set; } = new DALTimestampCheckMapper();
 
-                public IDALSchemaAPersonMapper DALSchemaAPersonMapperMock { get; set; } = new DALSchemaAPersonMapper();
+		public IDALSchemaAPersonMapper DALSchemaAPersonMapperMock { get; set; } = new DALSchemaAPersonMapper();
 
-                public IDALSchemaBPersonMapper DALSchemaBPersonMapperMock { get; set; } = new DALSchemaBPersonMapper();
+		public IDALSchemaBPersonMapper DALSchemaBPersonMapperMock { get; set; } = new DALSchemaBPersonMapper();
 
-                public IDALPersonRefMapper DALPersonRefMapperMock { get; set; } = new DALPersonRefMapper();
+		public IDALPersonRefMapper DALPersonRefMapperMock { get; set; } = new DALPersonRefMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1fadde4a69c0631745c3d5920a7b6aad</Hash>
+    <Hash>f04e631f1d28b6c9754ac70474ddf029</Hash>
 </Codenesium>*/

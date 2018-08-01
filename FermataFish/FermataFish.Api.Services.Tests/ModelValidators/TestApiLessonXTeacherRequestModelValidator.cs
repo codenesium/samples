@@ -15,117 +15,117 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LessonXTeacher")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiLessonXTeacherRequestModelValidatorTest
-        {
-                public ApiLessonXTeacherRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LessonXTeacher")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiLessonXTeacherRequestModelValidatorTest
+	{
+		public ApiLessonXTeacherRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void LessonId_Create_Valid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
+		[Fact]
+		public async void LessonId_Create_Valid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
+		}
 
-                [Fact]
-                public async void LessonId_Create_Invalid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(null));
+		[Fact]
+		public async void LessonId_Create_Invalid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(null));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
+			await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LessonId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LessonId, 1);
+		}
 
-                [Fact]
-                public async void LessonId_Update_Valid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
+		[Fact]
+		public async void LessonId_Update_Valid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
+		}
 
-                [Fact]
-                public async void LessonId_Update_Invalid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(null));
+		[Fact]
+		public async void LessonId_Update_Invalid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(null));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LessonId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LessonId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Create_Valid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
+		[Fact]
+		public async void StudentId_Create_Valid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Create_Invalid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
+		[Fact]
+		public async void StudentId_Create_Invalid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
+			await validator.ValidateCreateAsync(new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Update_Valid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
+		[Fact]
+		public async void StudentId_Update_Valid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Update_Invalid_Reference()
-                {
-                        Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
-                        lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
+		[Fact]
+		public async void StudentId_Update_Invalid_Reference()
+		{
+			Mock<ILessonXTeacherRepository> lessonXTeacherRepository = new Mock<ILessonXTeacherRepository>();
+			lessonXTeacherRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
 
-                        var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
+			var validator = new ApiLessonXTeacherRequestModelValidator(lessonXTeacherRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXTeacherRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f81c798bb601e26748842dbed83b46ab</Hash>
+    <Hash>05aa553157371d4ccc87307dd2618684</Hash>
 </Codenesium>*/

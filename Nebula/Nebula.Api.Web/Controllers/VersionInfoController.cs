@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/versionInfoes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class VersionInfoController : AbstractVersionInfoController
-        {
-                public VersionInfoController(
-                        ApiSettings settings,
-                        ILogger<VersionInfoController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IVersionInfoService versionInfoService,
-                        IApiVersionInfoModelMapper versionInfoModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               versionInfoService,
-                               versionInfoModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/versionInfoes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class VersionInfoController : AbstractVersionInfoController
+	{
+		public VersionInfoController(
+			ApiSettings settings,
+			ILogger<VersionInfoController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IVersionInfoService versionInfoService,
+			IApiVersionInfoModelMapper versionInfoModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       versionInfoService,
+			       versionInfoModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>949c47712bde385eeab60126f0c5c024</Hash>
+    <Hash>0529f21e8659aea973a66640f9441929</Hash>
 </Codenesium>*/

@@ -15,17 +15,17 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Configuration")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiConfigurationRequestModelValidatorTest
-        {
-                public ApiConfigurationRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Configuration")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiConfigurationRequestModelValidatorTest
+	{
+		public ApiConfigurationRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>49eab2de5c9973d5513ce72cdbd10245</Hash>
+    <Hash>fe6867d76420e40818ae7981da14524e</Hash>
 </Codenesium>*/

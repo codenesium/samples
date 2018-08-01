@@ -15,240 +15,240 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractWorkerController : AbstractApiController
-        {
-                protected IWorkerService WorkerService { get; private set; }
+	public abstract class AbstractWorkerController : AbstractApiController
+	{
+		protected IWorkerService WorkerService { get; private set; }
 
-                protected IApiWorkerModelMapper WorkerModelMapper { get; private set; }
+		protected IApiWorkerModelMapper WorkerModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractWorkerController(
-                        ApiSettings settings,
-                        ILogger<AbstractWorkerController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IWorkerService workerService,
-                        IApiWorkerModelMapper workerModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.WorkerService = workerService;
-                        this.WorkerModelMapper = workerModelMapper;
-                }
+		public AbstractWorkerController(
+			ApiSettings settings,
+			ILogger<AbstractWorkerController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IWorkerService workerService,
+			IApiWorkerModelMapper workerModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.WorkerService = workerService;
+			this.WorkerModelMapper = workerModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiWorkerResponseModel> response = await this.WorkerService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiWorkerResponseModel> response = await this.WorkerService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(string id)
-                {
-                        ApiWorkerResponseModel response = await this.WorkerService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(string id)
+		{
+			ApiWorkerResponseModel response = await this.WorkerService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkerRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkerRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiWorkerResponseModel> records = new List<ApiWorkerResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Create(model);
+			List<ApiWorkerResponseModel> records = new List<ApiWorkerResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiWorkerResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiWorkerRequestModel model)
-                {
-                        CreateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiWorkerResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiWorkerRequestModel model)
+		{
+			CreateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Workers/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/Workers/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiWorkerRequestModel> patch)
-                {
-                        ApiWorkerResponseModel record = await this.WorkerService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiWorkerRequestModel> patch)
+		{
+			ApiWorkerResponseModel record = await this.WorkerService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiWorkerRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiWorkerRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, model);
+				UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(string id, [FromBody] ApiWorkerRequestModel model)
-                {
-                        ApiWorkerRequestModel request = await this.PatchModel(id, this.WorkerModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiWorkerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiWorkerRequestModel model)
+		{
+			ApiWorkerRequestModel request = await this.PatchModel(id, this.WorkerModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiWorkerResponseModel> result = await this.WorkerService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(string id)
-                {
-                        ActionResponse result = await this.WorkerService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(string id)
+		{
+			ActionResponse result = await this.WorkerService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("byName/{name}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> ByName(string name)
-                {
-                        ApiWorkerResponseModel response = await this.WorkerService.ByName(name);
+		[HttpGet]
+		[Route("byName/{name}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiWorkerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByName(string name)
+		{
+			ApiWorkerResponseModel response = await this.WorkerService.ByName(name);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpGet]
-                [Route("byMachinePolicyId/{machinePolicyId}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByMachinePolicyId(string machinePolicyId)
-                {
-                        List<ApiWorkerResponseModel> response = await this.WorkerService.ByMachinePolicyId(machinePolicyId);
+		[HttpGet]
+		[Route("byMachinePolicyId/{machinePolicyId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiWorkerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByMachinePolicyId(string machinePolicyId)
+		{
+			List<ApiWorkerResponseModel> response = await this.WorkerService.ByMachinePolicyId(machinePolicyId);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiWorkerRequestModel> PatchModel(string id, JsonPatchDocument<ApiWorkerRequestModel> patch)
-                {
-                        var record = await this.WorkerService.Get(id);
+		private async Task<ApiWorkerRequestModel> PatchModel(string id, JsonPatchDocument<ApiWorkerRequestModel> patch)
+		{
+			var record = await this.WorkerService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiWorkerRequestModel request = this.WorkerModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiWorkerRequestModel request = this.WorkerModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2a42ac130e93ca5ea388f9dc284136c0</Hash>
+    <Hash>4e9bb83f9f32b884880aae52823ce750</Hash>
 </Codenesium>*/

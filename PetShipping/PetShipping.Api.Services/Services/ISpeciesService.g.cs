@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface ISpeciesService
-        {
-                Task<CreateResponse<ApiSpeciesResponseModel>> Create(
-                        ApiSpeciesRequestModel model);
+	public interface ISpeciesService
+	{
+		Task<CreateResponse<ApiSpeciesResponseModel>> Create(
+			ApiSpeciesRequestModel model);
 
-                Task<UpdateResponse<ApiSpeciesResponseModel>> Update(int id,
-                                                                      ApiSpeciesRequestModel model);
+		Task<UpdateResponse<ApiSpeciesResponseModel>> Update(int id,
+		                                                      ApiSpeciesRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiSpeciesResponseModel> Get(int id);
+		Task<ApiSpeciesResponseModel> Get(int id);
 
-                Task<List<ApiSpeciesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpeciesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiBreedResponseModel>> Breeds(int speciesId, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiBreedResponseModel>> Breeds(int speciesId, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9fac341a0338ce8dec05cf7a82984d53</Hash>
+    <Hash>07ef7818013e1ab4766a2d166d97fc5e</Hash>
 </Codenesium>*/

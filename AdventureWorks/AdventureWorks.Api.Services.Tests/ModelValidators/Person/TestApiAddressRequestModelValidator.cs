@@ -15,233 +15,233 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Address")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiAddressRequestModelValidatorTest
-        {
-                public ApiAddressRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Address")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiAddressRequestModelValidatorTest
+	{
+		public ApiAddressRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void AddressLine1_Create_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine1_Create_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
+		}
 
-                [Fact]
-                public async void AddressLine1_Update_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine1_Update_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
+		}
 
-                [Fact]
-                public async void AddressLine1_Create_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine1_Create_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
+		}
 
-                [Fact]
-                public async void AddressLine1_Update_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine1_Update_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
+		}
 
-                [Fact]
-                public async void AddressLine2_Create_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine2_Create_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
+		}
 
-                [Fact]
-                public async void AddressLine2_Update_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void AddressLine2_Update_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
+		}
 
-                [Fact]
-                public async void City_Create_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void City_Create_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
+		}
 
-                [Fact]
-                public async void City_Update_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void City_Update_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
+		}
 
-                [Fact]
-                public async void City_Create_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void City_Create_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
+		}
 
-                [Fact]
-                public async void City_Update_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void City_Update_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
+		}
 
-                [Fact]
-                public async void PostalCode_Create_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void PostalCode_Create_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
+		}
 
-                [Fact]
-                public async void PostalCode_Update_null()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void PostalCode_Update_null()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
+		}
 
-                [Fact]
-                public async void PostalCode_Create_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void PostalCode_Create_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
+		}
 
-                [Fact]
-                public async void PostalCode_Update_length()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
+		[Fact]
+		public async void PostalCode_Update_length()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
+		}
 
-                [Fact]
-                private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Create_Exists()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(new Address()));
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+		[Fact]
+		private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Create_Exists()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(new Address()));
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Create_Not_Exists()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(null));
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+		[Fact]
+		private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Create_Not_Exists()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(null));
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiAddressRequestModel());
+			await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AddressLine1, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.AddressLine1, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Update_Exists()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(new Address()));
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+		[Fact]
+		private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Update_Exists()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(new Address()));
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Update_Not_Exists()
-                {
-                        Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
-                        addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(null));
-                        var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
+		[Fact]
+		private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Update_Not_Exists()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(null));
+			var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AddressLine1, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.AddressLine1, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bfc0b5b3104753aa0505dea8ead569e7</Hash>
+    <Hash>b6b3ea0763d46aafba71177795b29ef4</Hash>
 </Codenesium>*/

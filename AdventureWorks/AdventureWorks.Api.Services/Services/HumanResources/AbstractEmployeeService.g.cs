@@ -12,175 +12,175 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractEmployeeService : AbstractService
-        {
-                private IEmployeeRepository employeeRepository;
+	public abstract class AbstractEmployeeService : AbstractService
+	{
+		private IEmployeeRepository employeeRepository;
 
-                private IApiEmployeeRequestModelValidator employeeModelValidator;
+		private IApiEmployeeRequestModelValidator employeeModelValidator;
 
-                private IBOLEmployeeMapper bolEmployeeMapper;
+		private IBOLEmployeeMapper bolEmployeeMapper;
 
-                private IDALEmployeeMapper dalEmployeeMapper;
+		private IDALEmployeeMapper dalEmployeeMapper;
 
-                private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+		private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
 
-                private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
-                private IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper;
+		private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+		private IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper;
 
-                private IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper;
-                private IBOLJobCandidateMapper bolJobCandidateMapper;
+		private IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper;
+		private IBOLJobCandidateMapper bolJobCandidateMapper;
 
-                private IDALJobCandidateMapper dalJobCandidateMapper;
+		private IDALJobCandidateMapper dalJobCandidateMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractEmployeeService(
-                        ILogger logger,
-                        IEmployeeRepository employeeRepository,
-                        IApiEmployeeRequestModelValidator employeeModelValidator,
-                        IBOLEmployeeMapper bolEmployeeMapper,
-                        IDALEmployeeMapper dalEmployeeMapper,
-                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper,
-                        IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
-                        IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper,
-                        IBOLJobCandidateMapper bolJobCandidateMapper,
-                        IDALJobCandidateMapper dalJobCandidateMapper)
-                        : base()
-                {
-                        this.employeeRepository = employeeRepository;
-                        this.employeeModelValidator = employeeModelValidator;
-                        this.bolEmployeeMapper = bolEmployeeMapper;
-                        this.dalEmployeeMapper = dalEmployeeMapper;
-                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
-                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
-                        this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
-                        this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
-                        this.bolJobCandidateMapper = bolJobCandidateMapper;
-                        this.dalJobCandidateMapper = dalJobCandidateMapper;
-                        this.logger = logger;
-                }
+		public AbstractEmployeeService(
+			ILogger logger,
+			IEmployeeRepository employeeRepository,
+			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper bolEmployeeMapper,
+			IDALEmployeeMapper dalEmployeeMapper,
+			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper,
+			IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
+			IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper,
+			IBOLJobCandidateMapper bolJobCandidateMapper,
+			IDALJobCandidateMapper dalJobCandidateMapper)
+			: base()
+		{
+			this.employeeRepository = employeeRepository;
+			this.employeeModelValidator = employeeModelValidator;
+			this.bolEmployeeMapper = bolEmployeeMapper;
+			this.dalEmployeeMapper = dalEmployeeMapper;
+			this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+			this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
+			this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
+			this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
+			this.bolJobCandidateMapper = bolJobCandidateMapper;
+			this.dalJobCandidateMapper = dalJobCandidateMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.employeeRepository.All(limit, offset);
+		public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.employeeRepository.All(limit, offset);
 
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
-                }
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiEmployeeResponseModel> Get(int businessEntityID)
-                {
-                        var record = await this.employeeRepository.Get(businessEntityID);
+		public virtual async Task<ApiEmployeeResponseModel> Get(int businessEntityID)
+		{
+			var record = await this.employeeRepository.Get(businessEntityID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
-                        ApiEmployeeRequestModel model)
-                {
-                        CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolEmployeeMapper.MapModelToBO(default(int), model);
-                                var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
+			ApiEmployeeRequestModel model)
+		{
+			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolEmployeeMapper.MapModelToBO(default(int), model);
+				var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiEmployeeResponseModel>> Update(
-                        int businessEntityID,
-                        ApiEmployeeRequestModel model)
-                {
-                        var validationResult = await this.employeeModelValidator.ValidateUpdateAsync(businessEntityID, model);
+		public virtual async Task<UpdateResponse<ApiEmployeeResponseModel>> Update(
+			int businessEntityID,
+			ApiEmployeeRequestModel model)
+		{
+			var validationResult = await this.employeeModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolEmployeeMapper.MapModelToBO(businessEntityID, model);
-                                await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolEmployeeMapper.MapModelToBO(businessEntityID, model);
+				await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
 
-                                var record = await this.employeeRepository.Get(businessEntityID);
+				var record = await this.employeeRepository.Get(businessEntityID);
 
-                                return new UpdateResponse<ApiEmployeeResponseModel>(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiEmployeeResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiEmployeeResponseModel>(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiEmployeeResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int businessEntityID)
-                {
-                        ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(businessEntityID));
-                        if (response.Success)
-                        {
-                                await this.employeeRepository.Delete(businessEntityID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int businessEntityID)
+		{
+			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(businessEntityID));
+			if (response.Success)
+			{
+				await this.employeeRepository.Delete(businessEntityID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiEmployeeResponseModel> ByLoginID(string loginID)
-                {
-                        Employee record = await this.employeeRepository.ByLoginID(loginID);
+		public async Task<ApiEmployeeResponseModel> ByLoginID(string loginID)
+		{
+			Employee record = await this.employeeRepository.ByLoginID(loginID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+			}
+		}
 
-                public async Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber)
-                {
-                        Employee record = await this.employeeRepository.ByNationalIDNumber(nationalIDNumber);
+		public async Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber)
+		{
+			Employee record = await this.employeeRepository.ByNationalIDNumber(nationalIDNumber);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+			}
+		}
 
-                public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<EmployeeDepartmentHistory> records = await this.employeeRepository.EmployeeDepartmentHistories(businessEntityID, limit, offset);
+		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EmployeeDepartmentHistory> records = await this.employeeRepository.EmployeeDepartmentHistories(businessEntityID, limit, offset);
 
-                        return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
-                }
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+		}
 
-                public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<EmployeePayHistory> records = await this.employeeRepository.EmployeePayHistories(businessEntityID, limit, offset);
+		public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EmployeePayHistory> records = await this.employeeRepository.EmployeePayHistories(businessEntityID, limit, offset);
 
-                        return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
-                }
+			return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
+		}
 
-                public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<JobCandidate> records = await this.employeeRepository.JobCandidates(businessEntityID, limit, offset);
+		public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<JobCandidate> records = await this.employeeRepository.JobCandidates(businessEntityID, limit, offset);
 
-                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c49d82e65457d209230d451d846e7c6e</Hash>
+    <Hash>0ea8cf1909493e61e0523250a50728be</Hash>
 </Codenesium>*/

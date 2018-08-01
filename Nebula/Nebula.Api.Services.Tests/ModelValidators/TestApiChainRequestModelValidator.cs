@@ -15,141 +15,141 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Chain")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiChainRequestModelValidatorTest
-        {
-                public ApiChainRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Chain")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiChainRequestModelValidatorTest
+	{
+		public ApiChainRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ChainStatusId_Create_Valid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
+		[Fact]
+		public async void ChainStatusId_Create_Valid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ChainStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ChainStatusId, 1);
+		}
 
-                [Fact]
-                public async void ChainStatusId_Create_Invalid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
+		[Fact]
+		public async void ChainStatusId_Create_Invalid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiChainRequestModel());
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ChainStatusId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ChainStatusId, 1);
+		}
 
-                [Fact]
-                public async void ChainStatusId_Update_Valid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
+		[Fact]
+		public async void ChainStatusId_Update_Valid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ChainStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ChainStatusId, 1);
+		}
 
-                [Fact]
-                public async void ChainStatusId_Update_Invalid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
+		[Fact]
+		public async void ChainStatusId_Update_Invalid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ChainStatusId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ChainStatusId, 1);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void TeamId_Create_Valid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+		[Fact]
+		public async void TeamId_Create_Valid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Create_Invalid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+		[Fact]
+		public async void TeamId_Create_Invalid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiChainRequestModel());
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Update_Valid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+		[Fact]
+		public async void TeamId_Update_Valid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Update_Invalid_Reference()
-                {
-                        Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-                        chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+		[Fact]
+		public async void TeamId_Update_Invalid_Reference()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
-                        var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9964c919252448d90854847fa87a1db4</Hash>
+    <Hash>5ba6506d05073e59200cd4c7b0f71ac6</Hash>
 </Codenesium>*/

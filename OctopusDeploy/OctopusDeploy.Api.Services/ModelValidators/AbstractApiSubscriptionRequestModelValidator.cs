@@ -9,58 +9,58 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiSubscriptionRequestModelValidator : AbstractValidator<ApiSubscriptionRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiSubscriptionRequestModelValidator : AbstractValidator<ApiSubscriptionRequestModel>
+	{
+		private string existingRecordId;
 
-                private ISubscriptionRepository subscriptionRepository;
+		private ISubscriptionRepository subscriptionRepository;
 
-                public AbstractApiSubscriptionRequestModelValidator(ISubscriptionRepository subscriptionRepository)
-                {
-                        this.subscriptionRepository = subscriptionRepository;
-                }
+		public AbstractApiSubscriptionRequestModelValidator(ISubscriptionRepository subscriptionRepository)
+		{
+			this.subscriptionRepository = subscriptionRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSubscriptionRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSubscriptionRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void IsDisabledRules()
-                {
-                }
+		public virtual void IsDisabledRules()
+		{
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                public virtual void TypeRules()
-                {
-                        this.RuleFor(x => x.Type).Length(0, 50);
-                }
+		public virtual void TypeRules()
+		{
+			this.RuleFor(x => x.Type).Length(0, 50);
+		}
 
-                private async Task<bool> BeUniqueByName(ApiSubscriptionRequestModel model,  CancellationToken cancellationToken)
-                {
-                        Subscription record = await this.subscriptionRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiSubscriptionRequestModel model,  CancellationToken cancellationToken)
+		{
+			Subscription record = await this.subscriptionRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>98f4dabedc68b24afcf700af774f8d12</Hash>
+    <Hash>a5b0a3b5fcbc697bde8b3e2a657a6e3f</Hash>
 </Codenesium>*/

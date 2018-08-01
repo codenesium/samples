@@ -6,52 +6,52 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractShoppingCartItemMapper
-        {
-                public virtual ShoppingCartItem MapBOToEF(
-                        BOShoppingCartItem bo)
-                {
-                        ShoppingCartItem efShoppingCartItem = new ShoppingCartItem();
-                        efShoppingCartItem.SetProperties(
-                                bo.DateCreated,
-                                bo.ModifiedDate,
-                                bo.ProductID,
-                                bo.Quantity,
-                                bo.ShoppingCartID,
-                                bo.ShoppingCartItemID);
-                        return efShoppingCartItem;
-                }
+	public abstract class DALAbstractShoppingCartItemMapper
+	{
+		public virtual ShoppingCartItem MapBOToEF(
+			BOShoppingCartItem bo)
+		{
+			ShoppingCartItem efShoppingCartItem = new ShoppingCartItem();
+			efShoppingCartItem.SetProperties(
+				bo.DateCreated,
+				bo.ModifiedDate,
+				bo.ProductID,
+				bo.Quantity,
+				bo.ShoppingCartID,
+				bo.ShoppingCartItemID);
+			return efShoppingCartItem;
+		}
 
-                public virtual BOShoppingCartItem MapEFToBO(
-                        ShoppingCartItem ef)
-                {
-                        var bo = new BOShoppingCartItem();
+		public virtual BOShoppingCartItem MapEFToBO(
+			ShoppingCartItem ef)
+		{
+			var bo = new BOShoppingCartItem();
 
-                        bo.SetProperties(
-                                ef.ShoppingCartItemID,
-                                ef.DateCreated,
-                                ef.ModifiedDate,
-                                ef.ProductID,
-                                ef.Quantity,
-                                ef.ShoppingCartID);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.ShoppingCartItemID,
+				ef.DateCreated,
+				ef.ModifiedDate,
+				ef.ProductID,
+				ef.Quantity,
+				ef.ShoppingCartID);
+			return bo;
+		}
 
-                public virtual List<BOShoppingCartItem> MapEFToBO(
-                        List<ShoppingCartItem> records)
-                {
-                        List<BOShoppingCartItem> response = new List<BOShoppingCartItem>();
+		public virtual List<BOShoppingCartItem> MapEFToBO(
+			List<ShoppingCartItem> records)
+		{
+			List<BOShoppingCartItem> response = new List<BOShoppingCartItem>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2969350917481ab13f487c7f941b6ecb</Hash>
+    <Hash>698505a8f87d4f8c2fa1f4e715eff22f</Hash>
 </Codenesium>*/

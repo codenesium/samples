@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLSpecialOfferMapper : BOLAbstractSpecialOfferMapper, IBOLSpecialOfferMapper
-        {
-                public BOLSpecialOfferMapper()
-                {
-                }
-        }
+	public partial class BOLSpecialOfferMapper : BOLAbstractSpecialOfferMapper, IBOLSpecialOfferMapper
+	{
+		public BOLSpecialOfferMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9adbe2b270a57a8b3b65a944ac97d238</Hash>
+    <Hash>19bcdb5c9619914778a17022975150c5</Hash>
 </Codenesium>*/

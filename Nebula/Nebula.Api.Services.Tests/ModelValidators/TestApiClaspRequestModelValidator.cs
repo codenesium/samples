@@ -15,117 +15,117 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Clasp")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiClaspRequestModelValidatorTest
-        {
-                public ApiClaspRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Clasp")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiClaspRequestModelValidatorTest
+	{
+		public ApiClaspRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void NextChainId_Create_Valid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+		[Fact]
+		public async void NextChainId_Create_Valid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiClaspRequestModel());
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
+		}
 
-                [Fact]
-                public async void NextChainId_Create_Invalid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+		[Fact]
+		public async void NextChainId_Create_Invalid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiClaspRequestModel());
+			await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.NextChainId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.NextChainId, 1);
+		}
 
-                [Fact]
-                public async void NextChainId_Update_Valid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+		[Fact]
+		public async void NextChainId_Update_Valid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
+		}
 
-                [Fact]
-                public async void NextChainId_Update_Invalid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+		[Fact]
+		public async void NextChainId_Update_Invalid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.NextChainId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.NextChainId, 1);
+		}
 
-                [Fact]
-                public async void PreviousChainId_Create_Valid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+		[Fact]
+		public async void PreviousChainId_Create_Valid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiClaspRequestModel());
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
+		}
 
-                [Fact]
-                public async void PreviousChainId_Create_Invalid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+		[Fact]
+		public async void PreviousChainId_Create_Invalid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiClaspRequestModel());
+			await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PreviousChainId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PreviousChainId, 1);
+		}
 
-                [Fact]
-                public async void PreviousChainId_Update_Valid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+		[Fact]
+		public async void PreviousChainId_Update_Valid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
+		}
 
-                [Fact]
-                public async void PreviousChainId_Update_Invalid_Reference()
-                {
-                        Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
-                        claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+		[Fact]
+		public async void PreviousChainId_Update_Invalid_Reference()
+		{
+			Mock<IClaspRepository> claspRepository = new Mock<IClaspRepository>();
+			claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
-                        var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
+			var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PreviousChainId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PreviousChainId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed7f97c3ca9ef8e433b1bc10bfaa6d02</Hash>
+    <Hash>94e94507f3bdd0d5b39037a3d54e831c</Hash>
 </Codenesium>*/

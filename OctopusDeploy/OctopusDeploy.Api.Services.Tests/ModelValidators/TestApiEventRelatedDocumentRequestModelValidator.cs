@@ -15,115 +15,115 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EventRelatedDocument")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiEventRelatedDocumentRequestModelValidatorTest
-        {
-                public ApiEventRelatedDocumentRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EventRelatedDocument")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiEventRelatedDocumentRequestModelValidatorTest
+	{
+		public ApiEventRelatedDocumentRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void EventId_Create_length()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
+		[Fact]
+		public async void EventId_Create_length()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void EventId_Update_length()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
+		[Fact]
+		public async void EventId_Update_length()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void EventId_Create_Valid_Reference()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
+		[Fact]
+		public async void EventId_Create_Valid_Reference()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
+		}
 
-                [Fact]
-                public async void EventId_Create_Invalid_Reference()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(null));
+		[Fact]
+		public async void EventId_Create_Invalid_Reference()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(null));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
+			await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, "A");
+		}
 
-                [Fact]
-                public async void EventId_Update_Valid_Reference()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
+		[Fact]
+		public async void EventId_Update_Valid_Reference()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
+		}
 
-                [Fact]
-                public async void EventId_Update_Invalid_Reference()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(null));
+		[Fact]
+		public async void EventId_Update_Invalid_Reference()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(null));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EventId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, "A");
+		}
 
-                [Fact]
-                public async void RelatedDocumentId_Create_length()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
+		[Fact]
+		public async void RelatedDocumentId_Create_length()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
+		}
 
-                [Fact]
-                public async void RelatedDocumentId_Update_length()
-                {
-                        Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
-                        eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
+		[Fact]
+		public async void RelatedDocumentId_Update_length()
+		{
+			Mock<IEventRelatedDocumentRepository> eventRelatedDocumentRepository = new Mock<IEventRelatedDocumentRepository>();
+			eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
-                        var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
+			var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e3bfdf5eb91f2eb8aa83aaffb5efae7b</Hash>
+    <Hash>d0ecf2ad408ce0ce888addb5205d0635</Hash>
 </Codenesium>*/

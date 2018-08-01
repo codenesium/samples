@@ -4,14 +4,14 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class DALPetMapper : DALAbstractPetMapper, IDALPetMapper
-        {
-                public DALPetMapper()
-                {
-                }
-        }
+	public partial class DALPetMapper : DALAbstractPetMapper, IDALPetMapper
+	{
+		public DALPetMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d9aebb1e2de16ea73d8799ebd07b80f</Hash>
+    <Hash>8c06635a0403fdba09b129ef9c7bb407</Hash>
 </Codenesium>*/

@@ -15,89 +15,89 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Posts")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPostsRequestModelValidatorTest
-        {
-                public ApiPostsRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Posts")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPostsRequestModelValidatorTest
+	{
+		public ApiPostsRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void LastEditorDisplayName_Create_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void LastEditorDisplayName_Create_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LastEditorDisplayName, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LastEditorDisplayName, new string('A', 41));
+		}
 
-                [Fact]
-                public async void LastEditorDisplayName_Update_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void LastEditorDisplayName_Update_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.LastEditorDisplayName, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.LastEditorDisplayName, new string('A', 41));
+		}
 
-                [Fact]
-                public async void Tags_Create_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void Tags_Create_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Tags, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Tags, new string('A', 151));
+		}
 
-                [Fact]
-                public async void Tags_Update_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void Tags_Update_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Tags, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Tags, new string('A', 151));
+		}
 
-                [Fact]
-                public async void Title_Create_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void Title_Create_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 251));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 251));
+		}
 
-                [Fact]
-                public async void Title_Update_length()
-                {
-                        Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
-                        postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
+		[Fact]
+		public async void Title_Update_length()
+		{
+			Mock<IPostsRepository> postsRepository = new Mock<IPostsRepository>();
+			postsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Posts()));
 
-                        var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
+			var validator = new ApiPostsRequestModelValidator(postsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 251));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 251));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e48134c785f1c26556978fda8ececb15</Hash>
+    <Hash>2fe3f93d45bdb28906c52c339e3c7cbc</Hash>
 </Codenesium>*/

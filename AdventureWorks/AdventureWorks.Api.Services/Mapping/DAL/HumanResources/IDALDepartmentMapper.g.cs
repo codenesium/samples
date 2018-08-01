@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALDepartmentMapper
-        {
-                Department MapBOToEF(
-                        BODepartment bo);
+	public interface IDALDepartmentMapper
+	{
+		Department MapBOToEF(
+			BODepartment bo);
 
-                BODepartment MapEFToBO(
-                        Department efDepartment);
+		BODepartment MapEFToBO(
+			Department efDepartment);
 
-                List<BODepartment> MapEFToBO(
-                        List<Department> records);
-        }
+		List<BODepartment> MapEFToBO(
+			List<Department> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>836a7fe3272ae29ab30b5a604b9f1843</Hash>
+    <Hash>f1e6802756daf4da6eaca465e9bc832b</Hash>
 </Codenesium>*/

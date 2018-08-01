@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class PaymentTypeService : AbstractPaymentTypeService, IPaymentTypeService
-        {
-                public PaymentTypeService(
-                        ILogger<IPaymentTypeRepository> logger,
-                        IPaymentTypeRepository paymentTypeRepository,
-                        IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
-                        IBOLPaymentTypeMapper bolpaymentTypeMapper,
-                        IDALPaymentTypeMapper dalpaymentTypeMapper,
-                        IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-                        )
-                        : base(logger,
-                               paymentTypeRepository,
-                               paymentTypeModelValidator,
-                               bolpaymentTypeMapper,
-                               dalpaymentTypeMapper,
-                               bolSaleMapper,
-                               dalSaleMapper)
-                {
-                }
-        }
+	public partial class PaymentTypeService : AbstractPaymentTypeService, IPaymentTypeService
+	{
+		public PaymentTypeService(
+			ILogger<IPaymentTypeRepository> logger,
+			IPaymentTypeRepository paymentTypeRepository,
+			IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
+			IBOLPaymentTypeMapper bolpaymentTypeMapper,
+			IDALPaymentTypeMapper dalpaymentTypeMapper,
+			IBOLSaleMapper bolSaleMapper,
+			IDALSaleMapper dalSaleMapper
+			)
+			: base(logger,
+			       paymentTypeRepository,
+			       paymentTypeModelValidator,
+			       bolpaymentTypeMapper,
+			       dalpaymentTypeMapper,
+			       bolSaleMapper,
+			       dalSaleMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5a16cde454444a0d25c4cd7fa5681a13</Hash>
+    <Hash>a1af5a8a6cab4df51f2e22b95a681aa7</Hash>
 </Codenesium>*/

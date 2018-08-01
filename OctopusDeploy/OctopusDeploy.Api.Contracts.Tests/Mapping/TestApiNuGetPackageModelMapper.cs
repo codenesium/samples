@@ -7,71 +7,70 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "NuGetPackage")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiNuGetPackageModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiNuGetPackageModelMapper();
-                        var model = new ApiNuGetPackageRequestModel();
-                        model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
-                        ApiNuGetPackageResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "NuGetPackage")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiNuGetPackageModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiNuGetPackageModelMapper();
+			var model = new ApiNuGetPackageRequestModel();
+			model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
+			ApiNuGetPackageResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.PackageId.Should().Be("A");
-                        response.Version.Should().Be("A");
-                        response.VersionBuild.Should().Be(1);
-                        response.VersionMajor.Should().Be(1);
-                        response.VersionMinor.Should().Be(1);
-                        response.VersionRevision.Should().Be(1);
-                        response.VersionSpecial.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.PackageId.Should().Be("A");
+			response.Version.Should().Be("A");
+			response.VersionBuild.Should().Be(1);
+			response.VersionMajor.Should().Be(1);
+			response.VersionMinor.Should().Be(1);
+			response.VersionRevision.Should().Be(1);
+			response.VersionSpecial.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiNuGetPackageModelMapper();
-                        var model = new ApiNuGetPackageResponseModel();
-                        model.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
-                        ApiNuGetPackageRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiNuGetPackageModelMapper();
+			var model = new ApiNuGetPackageResponseModel();
+			model.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
+			ApiNuGetPackageRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.JSON.Should().Be("A");
-                        response.PackageId.Should().Be("A");
-                        response.Version.Should().Be("A");
-                        response.VersionBuild.Should().Be(1);
-                        response.VersionMajor.Should().Be(1);
-                        response.VersionMinor.Should().Be(1);
-                        response.VersionRevision.Should().Be(1);
-                        response.VersionSpecial.Should().Be("A");
-                }
+			response.JSON.Should().Be("A");
+			response.PackageId.Should().Be("A");
+			response.Version.Should().Be("A");
+			response.VersionBuild.Should().Be(1);
+			response.VersionMajor.Should().Be(1);
+			response.VersionMinor.Should().Be(1);
+			response.VersionRevision.Should().Be(1);
+			response.VersionSpecial.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiNuGetPackageModelMapper();
-                        var model = new ApiNuGetPackageRequestModel();
-                        model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiNuGetPackageModelMapper();
+			var model = new ApiNuGetPackageRequestModel();
+			model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
 
-                        JsonPatchDocument<ApiNuGetPackageRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiNuGetPackageRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.JSON.Should().Be("A");
-                        response.PackageId.Should().Be("A");
-                        response.Version.Should().Be("A");
-                        response.VersionBuild.Should().Be(1);
-                        response.VersionMajor.Should().Be(1);
-                        response.VersionMinor.Should().Be(1);
-                        response.VersionRevision.Should().Be(1);
-                        response.VersionSpecial.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiNuGetPackageRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiNuGetPackageRequestModel();
+			patch.ApplyTo(response);
+			response.JSON.Should().Be("A");
+			response.PackageId.Should().Be("A");
+			response.Version.Should().Be("A");
+			response.VersionBuild.Should().Be(1);
+			response.VersionMajor.Should().Be(1);
+			response.VersionMinor.Should().Be(1);
+			response.VersionRevision.Should().Be(1);
+			response.VersionSpecial.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ee6bdd14855de1c21cb1233fead379ce</Hash>
+    <Hash>0fece8ac38be2e576b833ae3a04ce5e2</Hash>
 </Codenesium>*/

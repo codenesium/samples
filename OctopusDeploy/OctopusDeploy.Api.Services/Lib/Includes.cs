@@ -5,15 +5,15 @@ using System.Text;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>92f04dbc1bda669bf742a7fbfa6c9439</Hash>
+    <Hash>6150fe70563b938894666fc9b42f02b9</Hash>
 </Codenesium>*/

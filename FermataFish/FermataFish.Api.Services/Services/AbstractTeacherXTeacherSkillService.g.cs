@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractTeacherXTeacherSkillService : AbstractService
-        {
-                private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
+	public abstract class AbstractTeacherXTeacherSkillService : AbstractService
+	{
+		private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
 
-                private IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator;
+		private IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator;
 
-                private IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper;
+		private IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper;
 
-                private IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper;
+		private IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractTeacherXTeacherSkillService(
-                        ILogger logger,
-                        ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-                        IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
-                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper)
-                        : base()
-                {
-                        this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
-                        this.teacherXTeacherSkillModelValidator = teacherXTeacherSkillModelValidator;
-                        this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
-                        this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
-                        this.logger = logger;
-                }
+		public AbstractTeacherXTeacherSkillService(
+			ILogger logger,
+			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
+			IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
+			IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+			IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper)
+			: base()
+		{
+			this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
+			this.teacherXTeacherSkillModelValidator = teacherXTeacherSkillModelValidator;
+			this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
+			this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.teacherXTeacherSkillRepository.All(limit, offset);
+		public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.teacherXTeacherSkillRepository.All(limit, offset);
 
-                        return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
-                }
+			return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiTeacherXTeacherSkillResponseModel> Get(int id)
-                {
-                        var record = await this.teacherXTeacherSkillRepository.Get(id);
+		public virtual async Task<ApiTeacherXTeacherSkillResponseModel> Get(int id)
+		{
+			var record = await this.teacherXTeacherSkillRepository.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiTeacherXTeacherSkillResponseModel>> Create(
-                        ApiTeacherXTeacherSkillRequestModel model)
-                {
-                        CreateResponse<ApiTeacherXTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(default(int), model);
-                                var record = await this.teacherXTeacherSkillRepository.Create(this.dalTeacherXTeacherSkillMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiTeacherXTeacherSkillResponseModel>> Create(
+			ApiTeacherXTeacherSkillRequestModel model)
+		{
+			CreateResponse<ApiTeacherXTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(default(int), model);
+				var record = await this.teacherXTeacherSkillRepository.Create(this.dalTeacherXTeacherSkillMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiTeacherXTeacherSkillResponseModel>> Update(
-                        int id,
-                        ApiTeacherXTeacherSkillRequestModel model)
-                {
-                        var validationResult = await this.teacherXTeacherSkillModelValidator.ValidateUpdateAsync(id, model);
+		public virtual async Task<UpdateResponse<ApiTeacherXTeacherSkillResponseModel>> Update(
+			int id,
+			ApiTeacherXTeacherSkillRequestModel model)
+		{
+			var validationResult = await this.teacherXTeacherSkillModelValidator.ValidateUpdateAsync(id, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(id, model);
-                                await this.teacherXTeacherSkillRepository.Update(this.dalTeacherXTeacherSkillMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(id, model);
+				await this.teacherXTeacherSkillRepository.Update(this.dalTeacherXTeacherSkillMapper.MapBOToEF(bo));
 
-                                var record = await this.teacherXTeacherSkillRepository.Get(id);
+				var record = await this.teacherXTeacherSkillRepository.Get(id);
 
-                                return new UpdateResponse<ApiTeacherXTeacherSkillResponseModel>(this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiTeacherXTeacherSkillResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiTeacherXTeacherSkillResponseModel>(this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiTeacherXTeacherSkillResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int id)
-                {
-                        ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateDeleteAsync(id));
-                        if (response.Success)
-                        {
-                                await this.teacherXTeacherSkillRepository.Delete(id);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int id)
+		{
+			ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateDeleteAsync(id));
+			if (response.Success)
+			{
+				await this.teacherXTeacherSkillRepository.Delete(id);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3673c06a8382fca23c0103f1a7a60e98</Hash>
+    <Hash>58a504c96650dc56b35d3cdb91c5bd2b</Hash>
 </Codenesium>*/

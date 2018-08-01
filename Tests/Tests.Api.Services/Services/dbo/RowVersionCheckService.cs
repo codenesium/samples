@@ -10,25 +10,25 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class RowVersionCheckService : AbstractRowVersionCheckService, IRowVersionCheckService
-        {
-                public RowVersionCheckService(
-                        ILogger<IRowVersionCheckRepository> logger,
-                        IRowVersionCheckRepository rowVersionCheckRepository,
-                        IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator,
-                        IBOLRowVersionCheckMapper bolrowVersionCheckMapper,
-                        IDALRowVersionCheckMapper dalrowVersionCheckMapper
-                        )
-                        : base(logger,
-                               rowVersionCheckRepository,
-                               rowVersionCheckModelValidator,
-                               bolrowVersionCheckMapper,
-                               dalrowVersionCheckMapper)
-                {
-                }
-        }
+	public partial class RowVersionCheckService : AbstractRowVersionCheckService, IRowVersionCheckService
+	{
+		public RowVersionCheckService(
+			ILogger<IRowVersionCheckRepository> logger,
+			IRowVersionCheckRepository rowVersionCheckRepository,
+			IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator,
+			IBOLRowVersionCheckMapper bolrowVersionCheckMapper,
+			IDALRowVersionCheckMapper dalrowVersionCheckMapper
+			)
+			: base(logger,
+			       rowVersionCheckRepository,
+			       rowVersionCheckModelValidator,
+			       bolrowVersionCheckMapper,
+			       dalrowVersionCheckMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5f305aadda8acd8d8b7988bbe54d98f4</Hash>
+    <Hash>c690d22969f7d8a44c71c3eb55d258d4</Hash>
 </Codenesium>*/

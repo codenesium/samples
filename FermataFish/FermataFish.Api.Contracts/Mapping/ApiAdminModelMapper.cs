@@ -1,14 +1,14 @@
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiAdminModelMapper : AbstractApiAdminModelMapper, IApiAdminModelMapper
-        {
-                public ApiAdminModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiAdminModelMapper : AbstractApiAdminModelMapper, IApiAdminModelMapper
+	{
+		public ApiAdminModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9858e8d033dcd24678127765942e26dd</Hash>
+    <Hash>889931fdebb808a7a61e0ee714d0be6d</Hash>
 </Codenesium>*/

@@ -3,15 +3,15 @@ using System;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOComments : AbstractBOComments
-        {
-                public BOComments()
-                        : base()
-                {
-                }
-        }
+	public partial class BOComments : AbstractBOComments
+	{
+		public BOComments()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>41b208000905ba42cbb8d392584a06ec</Hash>
+    <Hash>2977c157bd333be1dca663e7e3d227db</Hash>
 </Codenesium>*/

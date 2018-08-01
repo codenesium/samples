@@ -9,58 +9,58 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiClientCommunicationRequestModelValidator : AbstractValidator<ApiClientCommunicationRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiClientCommunicationRequestModelValidator : AbstractValidator<ApiClientCommunicationRequestModel>
+	{
+		private int existingRecordId;
 
-                private IClientCommunicationRepository clientCommunicationRepository;
+		private IClientCommunicationRepository clientCommunicationRepository;
 
-                public AbstractApiClientCommunicationRequestModelValidator(IClientCommunicationRepository clientCommunicationRepository)
-                {
-                        this.clientCommunicationRepository = clientCommunicationRepository;
-                }
+		public AbstractApiClientCommunicationRequestModelValidator(IClientCommunicationRepository clientCommunicationRepository)
+		{
+			this.clientCommunicationRepository = clientCommunicationRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiClientCommunicationRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiClientCommunicationRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ClientIdRules()
-                {
-                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
-                }
+		public virtual void ClientIdRules()
+		{
+			this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void DateCreatedRules()
-                {
-                }
+		public virtual void DateCreatedRules()
+		{
+		}
 
-                public virtual void EmployeeIdRules()
-                {
-                        this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
-                }
+		public virtual void EmployeeIdRules()
+		{
+			this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void NotesRules()
-                {
-                        this.RuleFor(x => x.Notes).Length(0, 2147483647);
-                }
+		public virtual void NotesRules()
+		{
+			this.RuleFor(x => x.Notes).Length(0, 2147483647);
+		}
 
-                private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.clientCommunicationRepository.GetClient(id);
+		private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.clientCommunicationRepository.GetClient(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.clientCommunicationRepository.GetEmployee(id);
+		private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.clientCommunicationRepository.GetEmployee(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>45832e919cf01b967cc5b2533909e4fe</Hash>
+    <Hash>67ad7f04f7b4d7a5e9045083ead1cba3</Hash>
 </Codenesium>*/

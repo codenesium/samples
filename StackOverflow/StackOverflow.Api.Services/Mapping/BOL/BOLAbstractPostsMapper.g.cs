@@ -5,63 +5,63 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class BOLAbstractPostsMapper
-        {
-                public virtual BOPosts MapModelToBO(
-                        int id,
-                        ApiPostsRequestModel model
-                        )
-                {
-                        BOPosts boPosts = new BOPosts();
-                        boPosts.SetProperties(
-                                id,
-                                model.AcceptedAnswerId,
-                                model.AnswerCount,
-                                model.Body,
-                                model.ClosedDate,
-                                model.CommentCount,
-                                model.CommunityOwnedDate,
-                                model.CreationDate,
-                                model.FavoriteCount,
-                                model.LastActivityDate,
-                                model.LastEditDate,
-                                model.LastEditorDisplayName,
-                                model.LastEditorUserId,
-                                model.OwnerUserId,
-                                model.ParentId,
-                                model.PostTypeId,
-                                model.Score,
-                                model.Tags,
-                                model.Title,
-                                model.ViewCount);
-                        return boPosts;
-                }
+	public abstract class BOLAbstractPostsMapper
+	{
+		public virtual BOPosts MapModelToBO(
+			int id,
+			ApiPostsRequestModel model
+			)
+		{
+			BOPosts boPosts = new BOPosts();
+			boPosts.SetProperties(
+				id,
+				model.AcceptedAnswerId,
+				model.AnswerCount,
+				model.Body,
+				model.ClosedDate,
+				model.CommentCount,
+				model.CommunityOwnedDate,
+				model.CreationDate,
+				model.FavoriteCount,
+				model.LastActivityDate,
+				model.LastEditDate,
+				model.LastEditorDisplayName,
+				model.LastEditorUserId,
+				model.OwnerUserId,
+				model.ParentId,
+				model.PostTypeId,
+				model.Score,
+				model.Tags,
+				model.Title,
+				model.ViewCount);
+			return boPosts;
+		}
 
-                public virtual ApiPostsResponseModel MapBOToModel(
-                        BOPosts boPosts)
-                {
-                        var model = new ApiPostsResponseModel();
+		public virtual ApiPostsResponseModel MapBOToModel(
+			BOPosts boPosts)
+		{
+			var model = new ApiPostsResponseModel();
 
-                        model.SetProperties(boPosts.Id, boPosts.AcceptedAnswerId, boPosts.AnswerCount, boPosts.Body, boPosts.ClosedDate, boPosts.CommentCount, boPosts.CommunityOwnedDate, boPosts.CreationDate, boPosts.FavoriteCount, boPosts.LastActivityDate, boPosts.LastEditDate, boPosts.LastEditorDisplayName, boPosts.LastEditorUserId, boPosts.OwnerUserId, boPosts.ParentId, boPosts.PostTypeId, boPosts.Score, boPosts.Tags, boPosts.Title, boPosts.ViewCount);
+			model.SetProperties(boPosts.Id, boPosts.AcceptedAnswerId, boPosts.AnswerCount, boPosts.Body, boPosts.ClosedDate, boPosts.CommentCount, boPosts.CommunityOwnedDate, boPosts.CreationDate, boPosts.FavoriteCount, boPosts.LastActivityDate, boPosts.LastEditDate, boPosts.LastEditorDisplayName, boPosts.LastEditorUserId, boPosts.OwnerUserId, boPosts.ParentId, boPosts.PostTypeId, boPosts.Score, boPosts.Tags, boPosts.Title, boPosts.ViewCount);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiPostsResponseModel> MapBOToModel(
-                        List<BOPosts> items)
-                {
-                        List<ApiPostsResponseModel> response = new List<ApiPostsResponseModel>();
+		public virtual List<ApiPostsResponseModel> MapBOToModel(
+			List<BOPosts> items)
+		{
+			List<ApiPostsResponseModel> response = new List<ApiPostsResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6ececfafcf67cac2a64f19429a06280f</Hash>
+    <Hash>e8b38253e13a57e110009184bb09d0c1</Hash>
 </Codenesium>*/

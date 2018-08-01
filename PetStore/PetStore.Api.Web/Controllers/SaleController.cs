@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetStoreNS.Api.Web
 {
-        [Route("api/sales")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SaleController : AbstractSaleController
-        {
-                public SaleController(
-                        ApiSettings settings,
-                        ILogger<SaleController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISaleService saleService,
-                        IApiSaleModelMapper saleModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               saleService,
-                               saleModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/sales")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SaleController : AbstractSaleController
+	{
+		public SaleController(
+			ApiSettings settings,
+			ILogger<SaleController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISaleService saleService,
+			IApiSaleModelMapper saleModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       saleService,
+			       saleModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0dc5605438b8fe911b32f364869c053c</Hash>
+    <Hash>1860c8113aef6832c8c9a22249d3f581</Hash>
 </Codenesium>*/

@@ -9,53 +9,53 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiProjectGroupRequestModelValidator : AbstractValidator<ApiProjectGroupRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiProjectGroupRequestModelValidator : AbstractValidator<ApiProjectGroupRequestModel>
+	{
+		private string existingRecordId;
 
-                private IProjectGroupRepository projectGroupRepository;
+		private IProjectGroupRepository projectGroupRepository;
 
-                public AbstractApiProjectGroupRequestModelValidator(IProjectGroupRepository projectGroupRepository)
-                {
-                        this.projectGroupRepository = projectGroupRepository;
-                }
+		public AbstractApiProjectGroupRequestModelValidator(IProjectGroupRepository projectGroupRepository)
+		{
+			this.projectGroupRepository = projectGroupRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiProjectGroupRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiProjectGroupRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void DataVersionRules()
-                {
-                }
+		public virtual void DataVersionRules()
+		{
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectGroupRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectGroupRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                private async Task<bool> BeUniqueByName(ApiProjectGroupRequestModel model,  CancellationToken cancellationToken)
-                {
-                        ProjectGroup record = await this.projectGroupRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiProjectGroupRequestModel model,  CancellationToken cancellationToken)
+		{
+			ProjectGroup record = await this.projectGroupRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b0c9a030aa732accf554ddb022fad61a</Hash>
+    <Hash>992c1cc1a477a6d2a53f1ba90c14e8d8</Hash>
 </Codenesium>*/

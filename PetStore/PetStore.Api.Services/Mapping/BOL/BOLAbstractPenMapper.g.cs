@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class BOLAbstractPenMapper
-        {
-                public virtual BOPen MapModelToBO(
-                        int id,
-                        ApiPenRequestModel model
-                        )
-                {
-                        BOPen boPen = new BOPen();
-                        boPen.SetProperties(
-                                id,
-                                model.Name);
-                        return boPen;
-                }
+	public abstract class BOLAbstractPenMapper
+	{
+		public virtual BOPen MapModelToBO(
+			int id,
+			ApiPenRequestModel model
+			)
+		{
+			BOPen boPen = new BOPen();
+			boPen.SetProperties(
+				id,
+				model.Name);
+			return boPen;
+		}
 
-                public virtual ApiPenResponseModel MapBOToModel(
-                        BOPen boPen)
-                {
-                        var model = new ApiPenResponseModel();
+		public virtual ApiPenResponseModel MapBOToModel(
+			BOPen boPen)
+		{
+			var model = new ApiPenResponseModel();
 
-                        model.SetProperties(boPen.Id, boPen.Name);
+			model.SetProperties(boPen.Id, boPen.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiPenResponseModel> MapBOToModel(
-                        List<BOPen> items)
-                {
-                        List<ApiPenResponseModel> response = new List<ApiPenResponseModel>();
+		public virtual List<ApiPenResponseModel> MapBOToModel(
+			List<BOPen> items)
+		{
+			List<ApiPenResponseModel> response = new List<ApiPenResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0fe610f3926bc4c2ef0515b997ee6080</Hash>
+    <Hash>a04a650fce63699eb40ee43d2201ff24</Hash>
 </Codenesium>*/

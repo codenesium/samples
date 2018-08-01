@@ -6,40 +6,40 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLAdminMapper BOLAdminMapperMock { get; set; } = new BOLAdminMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLAdminMapper BOLAdminMapperMock { get; set; } = new BOLAdminMapper();
 
-                public IBOLCityMapper BOLCityMapperMock { get; set; } = new BOLCityMapper();
+		public IBOLCityMapper BOLCityMapperMock { get; set; } = new BOLCityMapper();
 
-                public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
+		public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
 
-                public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
+		public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
 
-                public IBOLEventMapper BOLEventMapperMock { get; set; } = new BOLEventMapper();
+		public IBOLEventMapper BOLEventMapperMock { get; set; } = new BOLEventMapper();
 
-                public IBOLProvinceMapper BOLProvinceMapperMock { get; set; } = new BOLProvinceMapper();
+		public IBOLProvinceMapper BOLProvinceMapperMock { get; set; } = new BOLProvinceMapper();
 
-                public IBOLSaleMapper BOLSaleMapperMock { get; set; } = new BOLSaleMapper();
+		public IBOLSaleMapper BOLSaleMapperMock { get; set; } = new BOLSaleMapper();
 
-                public IBOLSaleTicketsMapper BOLSaleTicketsMapperMock { get; set; } = new BOLSaleTicketsMapper();
+		public IBOLSaleTicketsMapper BOLSaleTicketsMapperMock { get; set; } = new BOLSaleTicketsMapper();
 
-                public IBOLTicketMapper BOLTicketMapperMock { get; set; } = new BOLTicketMapper();
+		public IBOLTicketMapper BOLTicketMapperMock { get; set; } = new BOLTicketMapper();
 
-                public IBOLTicketStatusMapper BOLTicketStatusMapperMock { get; set; } = new BOLTicketStatusMapper();
+		public IBOLTicketStatusMapper BOLTicketStatusMapperMock { get; set; } = new BOLTicketStatusMapper();
 
-                public IBOLTransactionMapper BOLTransactionMapperMock { get; set; } = new BOLTransactionMapper();
+		public IBOLTransactionMapper BOLTransactionMapperMock { get; set; } = new BOLTransactionMapper();
 
-                public IBOLTransactionStatusMapper BOLTransactionStatusMapperMock { get; set; } = new BOLTransactionStatusMapper();
+		public IBOLTransactionStatusMapper BOLTransactionStatusMapperMock { get; set; } = new BOLTransactionStatusMapper();
 
-                public IBOLVenueMapper BOLVenueMapperMock { get; set; } = new BOLVenueMapper();
+		public IBOLVenueMapper BOLVenueMapperMock { get; set; } = new BOLVenueMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a71daad662a2dd867df7271641e4fdea</Hash>
+    <Hash>e320a46a5b026171a42f86a58e3df360</Hash>
 </Codenesium>*/

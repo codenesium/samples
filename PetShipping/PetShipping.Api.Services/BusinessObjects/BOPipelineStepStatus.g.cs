@@ -3,15 +3,15 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOPipelineStepStatus : AbstractBOPipelineStepStatus
-        {
-                public BOPipelineStepStatus()
-                        : base()
-                {
-                }
-        }
+	public partial class BOPipelineStepStatus : AbstractBOPipelineStepStatus
+	{
+		public BOPipelineStepStatus()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a03bd155a9b5b52808430fe6a3a7160a</Hash>
+    <Hash>2c294f103e61a58689038a80e598aec1</Hash>
 </Codenesium>*/

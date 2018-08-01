@@ -10,33 +10,33 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class ChainService : AbstractChainService, IChainService
-        {
-                public ChainService(
-                        ILogger<IChainRepository> logger,
-                        IChainRepository chainRepository,
-                        IApiChainRequestModelValidator chainModelValidator,
-                        IBOLChainMapper bolchainMapper,
-                        IDALChainMapper dalchainMapper,
-                        IBOLClaspMapper bolClaspMapper,
-                        IDALClaspMapper dalClaspMapper,
-                        IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper
-                        )
-                        : base(logger,
-                               chainRepository,
-                               chainModelValidator,
-                               bolchainMapper,
-                               dalchainMapper,
-                               bolClaspMapper,
-                               dalClaspMapper,
-                               bolLinkMapper,
-                               dalLinkMapper)
-                {
-                }
-        }
+	public partial class ChainService : AbstractChainService, IChainService
+	{
+		public ChainService(
+			ILogger<IChainRepository> logger,
+			IChainRepository chainRepository,
+			IApiChainRequestModelValidator chainModelValidator,
+			IBOLChainMapper bolchainMapper,
+			IDALChainMapper dalchainMapper,
+			IBOLClaspMapper bolClaspMapper,
+			IDALClaspMapper dalClaspMapper,
+			IBOLLinkMapper bolLinkMapper,
+			IDALLinkMapper dalLinkMapper
+			)
+			: base(logger,
+			       chainRepository,
+			       chainModelValidator,
+			       bolchainMapper,
+			       dalchainMapper,
+			       bolClaspMapper,
+			       dalClaspMapper,
+			       bolLinkMapper,
+			       dalLinkMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1323dc1fed263d01b07ada983754a978</Hash>
+    <Hash>bb97e1aca4512b2490a6d0eee661d7bb</Hash>
 </Codenesium>*/

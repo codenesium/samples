@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/configurations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ConfigurationController : AbstractConfigurationController
-        {
-                public ConfigurationController(
-                        ApiSettings settings,
-                        ILogger<ConfigurationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IConfigurationService configurationService,
-                        IApiConfigurationModelMapper configurationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               configurationService,
-                               configurationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/configurations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ConfigurationController : AbstractConfigurationController
+	{
+		public ConfigurationController(
+			ApiSettings settings,
+			ILogger<ConfigurationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IConfigurationService configurationService,
+			IApiConfigurationModelMapper configurationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       configurationService,
+			       configurationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>64dc26745f99443601e7bb418f170d01</Hash>
+    <Hash>4be6eb4aea42641ff43157582bfc1052</Hash>
 </Codenesium>*/

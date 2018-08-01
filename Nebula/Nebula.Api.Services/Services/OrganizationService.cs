@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class OrganizationService : AbstractOrganizationService, IOrganizationService
-        {
-                public OrganizationService(
-                        ILogger<IOrganizationRepository> logger,
-                        IOrganizationRepository organizationRepository,
-                        IApiOrganizationRequestModelValidator organizationModelValidator,
-                        IBOLOrganizationMapper bolorganizationMapper,
-                        IDALOrganizationMapper dalorganizationMapper,
-                        IBOLTeamMapper bolTeamMapper,
-                        IDALTeamMapper dalTeamMapper
-                        )
-                        : base(logger,
-                               organizationRepository,
-                               organizationModelValidator,
-                               bolorganizationMapper,
-                               dalorganizationMapper,
-                               bolTeamMapper,
-                               dalTeamMapper)
-                {
-                }
-        }
+	public partial class OrganizationService : AbstractOrganizationService, IOrganizationService
+	{
+		public OrganizationService(
+			ILogger<IOrganizationRepository> logger,
+			IOrganizationRepository organizationRepository,
+			IApiOrganizationRequestModelValidator organizationModelValidator,
+			IBOLOrganizationMapper bolorganizationMapper,
+			IDALOrganizationMapper dalorganizationMapper,
+			IBOLTeamMapper bolTeamMapper,
+			IDALTeamMapper dalTeamMapper
+			)
+			: base(logger,
+			       organizationRepository,
+			       organizationModelValidator,
+			       bolorganizationMapper,
+			       dalorganizationMapper,
+			       bolTeamMapper,
+			       dalTeamMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>deb3dbdead5e48ac127131b5a1148d18</Hash>
+    <Hash>779709febf5ed516010ea44c28017e89</Hash>
 </Codenesium>*/

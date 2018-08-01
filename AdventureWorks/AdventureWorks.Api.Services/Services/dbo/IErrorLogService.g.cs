@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IErrorLogService
-        {
-                Task<CreateResponse<ApiErrorLogResponseModel>> Create(
-                        ApiErrorLogRequestModel model);
+	public interface IErrorLogService
+	{
+		Task<CreateResponse<ApiErrorLogResponseModel>> Create(
+			ApiErrorLogRequestModel model);
 
-                Task<UpdateResponse<ApiErrorLogResponseModel>> Update(int errorLogID,
-                                                                       ApiErrorLogRequestModel model);
+		Task<UpdateResponse<ApiErrorLogResponseModel>> Update(int errorLogID,
+		                                                       ApiErrorLogRequestModel model);
 
-                Task<ActionResponse> Delete(int errorLogID);
+		Task<ActionResponse> Delete(int errorLogID);
 
-                Task<ApiErrorLogResponseModel> Get(int errorLogID);
+		Task<ApiErrorLogResponseModel> Get(int errorLogID);
 
-                Task<List<ApiErrorLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiErrorLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c29ad4868bc64134f9072a7cc254ae6</Hash>
+    <Hash>e95fd7947858d00e5a302ad6e49a989b</Hash>
 </Codenesium>*/

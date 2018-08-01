@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLErrorLogMapper : BOLAbstractErrorLogMapper, IBOLErrorLogMapper
-        {
-                public BOLErrorLogMapper()
-                {
-                }
-        }
+	public partial class BOLErrorLogMapper : BOLAbstractErrorLogMapper, IBOLErrorLogMapper
+	{
+		public BOLErrorLogMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9938f767e5afd849aaffda0a888580c5</Hash>
+    <Hash>c83f488cfc8ac3a42ec6cdfaf64ff3e1</Hash>
 </Codenesium>*/

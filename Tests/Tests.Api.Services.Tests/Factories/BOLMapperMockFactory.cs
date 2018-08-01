@@ -6,34 +6,34 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLPersonMapper BOLPersonMapperMock { get; set; } = new BOLPersonMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLPersonMapper BOLPersonMapperMock { get; set; } = new BOLPersonMapper();
 
-                public IBOLRowVersionCheckMapper BOLRowVersionCheckMapperMock { get; set; } = new BOLRowVersionCheckMapper();
+		public IBOLRowVersionCheckMapper BOLRowVersionCheckMapperMock { get; set; } = new BOLRowVersionCheckMapper();
 
-                public IBOLSelfReferenceMapper BOLSelfReferenceMapperMock { get; set; } = new BOLSelfReferenceMapper();
+		public IBOLSelfReferenceMapper BOLSelfReferenceMapperMock { get; set; } = new BOLSelfReferenceMapper();
 
-                public IBOLTableMapper BOLTableMapperMock { get; set; } = new BOLTableMapper();
+		public IBOLTableMapper BOLTableMapperMock { get; set; } = new BOLTableMapper();
 
-                public IBOLTestAllFieldTypeMapper BOLTestAllFieldTypeMapperMock { get; set; } = new BOLTestAllFieldTypeMapper();
+		public IBOLTestAllFieldTypeMapper BOLTestAllFieldTypeMapperMock { get; set; } = new BOLTestAllFieldTypeMapper();
 
-                public IBOLTestAllFieldTypesNullableMapper BOLTestAllFieldTypesNullableMapperMock { get; set; } = new BOLTestAllFieldTypesNullableMapper();
+		public IBOLTestAllFieldTypesNullableMapper BOLTestAllFieldTypesNullableMapperMock { get; set; } = new BOLTestAllFieldTypesNullableMapper();
 
-                public IBOLTimestampCheckMapper BOLTimestampCheckMapperMock { get; set; } = new BOLTimestampCheckMapper();
+		public IBOLTimestampCheckMapper BOLTimestampCheckMapperMock { get; set; } = new BOLTimestampCheckMapper();
 
-                public IBOLSchemaAPersonMapper BOLSchemaAPersonMapperMock { get; set; } = new BOLSchemaAPersonMapper();
+		public IBOLSchemaAPersonMapper BOLSchemaAPersonMapperMock { get; set; } = new BOLSchemaAPersonMapper();
 
-                public IBOLSchemaBPersonMapper BOLSchemaBPersonMapperMock { get; set; } = new BOLSchemaBPersonMapper();
+		public IBOLSchemaBPersonMapper BOLSchemaBPersonMapperMock { get; set; } = new BOLSchemaBPersonMapper();
 
-                public IBOLPersonRefMapper BOLPersonRefMapperMock { get; set; } = new BOLPersonRefMapper();
+		public IBOLPersonRefMapper BOLPersonRefMapperMock { get; set; } = new BOLPersonRefMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1e4d1457feb9238b9b9de2e719799408</Hash>
+    <Hash>3b38fbe8bfe168401decb1d6bca35db2</Hash>
 </Codenesium>*/

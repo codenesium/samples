@@ -15,117 +15,117 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "OtherTransport")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiOtherTransportRequestModelValidatorTest
-        {
-                public ApiOtherTransportRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "OtherTransport")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiOtherTransportRequestModelValidatorTest
+	{
+		public ApiOtherTransportRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void HandlerId_Create_Valid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
+		[Fact]
+		public async void HandlerId_Create_Valid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
+		}
 
-                [Fact]
-                public async void HandlerId_Create_Invalid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
+		[Fact]
+		public async void HandlerId_Create_Invalid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
+			await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
+		}
 
-                [Fact]
-                public async void HandlerId_Update_Valid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
+		[Fact]
+		public async void HandlerId_Update_Valid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
+		}
 
-                [Fact]
-                public async void HandlerId_Update_Invalid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
+		[Fact]
+		public async void HandlerId_Update_Invalid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepId_Create_Valid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
+		[Fact]
+		public async void PipelineStepId_Create_Valid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepId_Create_Invalid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
+		[Fact]
+		public async void PipelineStepId_Create_Invalid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
+			await validator.ValidateCreateAsync(new ApiOtherTransportRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepId_Update_Valid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
+		[Fact]
+		public async void PipelineStepId_Update_Valid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepId_Update_Invalid_Reference()
-                {
-                        Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
-                        otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
+		[Fact]
+		public async void PipelineStepId_Update_Invalid_Reference()
+		{
+			Mock<IOtherTransportRepository> otherTransportRepository = new Mock<IOtherTransportRepository>();
+			otherTransportRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
 
-                        var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
+			var validator = new ApiOtherTransportRequestModelValidator(otherTransportRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiOtherTransportRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f2e05c9e6d35a1ba7b8c02074b0b586b</Hash>
+    <Hash>02180494d87e9b0c4f7241971953de9c</Hash>
 </Codenesium>*/

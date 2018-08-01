@@ -7,30 +7,30 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiTimestampCheckRequestModel : AbstractApiRequestModel
-        {
-                public ApiTimestampCheckRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiTimestampCheckRequestModel : AbstractApiRequestModel
+	{
+		public ApiTimestampCheckRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name,
-                        byte[] timestamp)
-                {
-                        this.Name = name;
-                        this.Timestamp = timestamp;
-                }
+		public virtual void SetProperties(
+			string name,
+			byte[] timestamp)
+		{
+			this.Name = name;
+			this.Timestamp = timestamp;
+		}
 
-                [JsonProperty]
-                public string Name { get; private set; }
+		[JsonProperty]
+		public string Name { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public byte[] Timestamp { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public byte[] Timestamp { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>e0423895c90069ff613dbbf1637d3732</Hash>
+    <Hash>5e02599f3d356805a5484eb782f45608</Hash>
 </Codenesium>*/

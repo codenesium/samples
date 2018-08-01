@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class BOLAbstractAirlineMapper
-        {
-                public virtual BOAirline MapModelToBO(
-                        int id,
-                        ApiAirlineRequestModel model
-                        )
-                {
-                        BOAirline boAirline = new BOAirline();
-                        boAirline.SetProperties(
-                                id,
-                                model.Name);
-                        return boAirline;
-                }
+	public abstract class BOLAbstractAirlineMapper
+	{
+		public virtual BOAirline MapModelToBO(
+			int id,
+			ApiAirlineRequestModel model
+			)
+		{
+			BOAirline boAirline = new BOAirline();
+			boAirline.SetProperties(
+				id,
+				model.Name);
+			return boAirline;
+		}
 
-                public virtual ApiAirlineResponseModel MapBOToModel(
-                        BOAirline boAirline)
-                {
-                        var model = new ApiAirlineResponseModel();
+		public virtual ApiAirlineResponseModel MapBOToModel(
+			BOAirline boAirline)
+		{
+			var model = new ApiAirlineResponseModel();
 
-                        model.SetProperties(boAirline.Id, boAirline.Name);
+			model.SetProperties(boAirline.Id, boAirline.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiAirlineResponseModel> MapBOToModel(
-                        List<BOAirline> items)
-                {
-                        List<ApiAirlineResponseModel> response = new List<ApiAirlineResponseModel>();
+		public virtual List<ApiAirlineResponseModel> MapBOToModel(
+			List<BOAirline> items)
+		{
+			List<ApiAirlineResponseModel> response = new List<ApiAirlineResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>71aad8a6d3a262ecb91667c19ad90aab</Hash>
+    <Hash>4f404905b5e15b704a4d16774944ae9e</Hash>
 </Codenesium>*/

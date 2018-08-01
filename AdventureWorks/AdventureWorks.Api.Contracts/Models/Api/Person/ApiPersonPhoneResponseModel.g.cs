@@ -6,34 +6,34 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonPhoneResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int businessEntityID,
-                        DateTime modifiedDate,
-                        string phoneNumber,
-                        int phoneNumberTypeID)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.ModifiedDate = modifiedDate;
-                        this.PhoneNumber = phoneNumber;
-                        this.PhoneNumberTypeID = phoneNumberTypeID;
-                }
+	public partial class ApiPersonPhoneResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int businessEntityID,
+			DateTime modifiedDate,
+			string phoneNumber,
+			int phoneNumberTypeID)
+		{
+			this.BusinessEntityID = businessEntityID;
+			this.ModifiedDate = modifiedDate;
+			this.PhoneNumber = phoneNumber;
+			this.PhoneNumberTypeID = phoneNumberTypeID;
+		}
 
-                [JsonProperty]
-                public int BusinessEntityID { get; private set; }
+		[JsonProperty]
+		public int BusinessEntityID { get; private set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [JsonProperty]
-                public string PhoneNumber { get; private set; }
+		[JsonProperty]
+		public string PhoneNumber { get; private set; }
 
-                [JsonProperty]
-                public int PhoneNumberTypeID { get; private set; }
-        }
+		[JsonProperty]
+		public int PhoneNumberTypeID { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>d08b19f10097143aab1484b156ac8ddb</Hash>
+    <Hash>d692409150a51a7001a3ea5fd2a3cf6e</Hash>
 </Codenesium>*/

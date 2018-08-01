@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9d0ec46b060d4fd5f5f72ff0623aa782</Hash>
+    <Hash>42a7d3b29fa885836340657c3548968c</Hash>
 </Codenesium>*/

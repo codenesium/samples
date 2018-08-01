@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class MachineRefTeamService : AbstractMachineRefTeamService, IMachineRefTeamService
-        {
-                public MachineRefTeamService(
-                        ILogger<IMachineRefTeamRepository> logger,
-                        IMachineRefTeamRepository machineRefTeamRepository,
-                        IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
-                        IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalmachineRefTeamMapper
-                        )
-                        : base(logger,
-                               machineRefTeamRepository,
-                               machineRefTeamModelValidator,
-                               bolmachineRefTeamMapper,
-                               dalmachineRefTeamMapper)
-                {
-                }
-        }
+	public partial class MachineRefTeamService : AbstractMachineRefTeamService, IMachineRefTeamService
+	{
+		public MachineRefTeamService(
+			ILogger<IMachineRefTeamRepository> logger,
+			IMachineRefTeamRepository machineRefTeamRepository,
+			IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
+			IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
+			IDALMachineRefTeamMapper dalmachineRefTeamMapper
+			)
+			: base(logger,
+			       machineRefTeamRepository,
+			       machineRefTeamModelValidator,
+			       bolmachineRefTeamMapper,
+			       dalmachineRefTeamMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5d5e8c893f845bc5a9d712b2ff124f94</Hash>
+    <Hash>36279018922487c76e724a03bcf89f0d</Hash>
 </Codenesium>*/

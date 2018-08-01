@@ -7,29 +7,29 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiTeacherSkillRequestModel : AbstractApiRequestModel
-        {
-                public ApiTeacherSkillRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiTeacherSkillRequestModel : AbstractApiRequestModel
+	{
+		public ApiTeacherSkillRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name,
-                        int studioId)
-                {
-                        this.Name = name;
-                        this.StudioId = studioId;
-                }
+		public virtual void SetProperties(
+			string name,
+			int studioId)
+		{
+			this.Name = name;
+			this.StudioId = studioId;
+		}
 
-                [JsonProperty]
-                public string Name { get; private set; }
+		[JsonProperty]
+		public string Name { get; private set; }
 
-                [JsonProperty]
-                public int StudioId { get; private set; }
-        }
+		[JsonProperty]
+		public int StudioId { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>fe1cb7bb7c8780126ec48ac919ec7558</Hash>
+    <Hash>fedc5cb9a3019ba6df5c380915274cbe</Hash>
 </Codenesium>*/

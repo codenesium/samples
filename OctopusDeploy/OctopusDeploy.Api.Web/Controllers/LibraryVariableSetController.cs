@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/libraryVariableSets")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LibraryVariableSetController : AbstractLibraryVariableSetController
-        {
-                public LibraryVariableSetController(
-                        ApiSettings settings,
-                        ILogger<LibraryVariableSetController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILibraryVariableSetService libraryVariableSetService,
-                        IApiLibraryVariableSetModelMapper libraryVariableSetModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               libraryVariableSetService,
-                               libraryVariableSetModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/libraryVariableSets")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LibraryVariableSetController : AbstractLibraryVariableSetController
+	{
+		public LibraryVariableSetController(
+			ApiSettings settings,
+			ILogger<LibraryVariableSetController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILibraryVariableSetService libraryVariableSetService,
+			IApiLibraryVariableSetModelMapper libraryVariableSetModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       libraryVariableSetService,
+			       libraryVariableSetModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dcbb2bc67744064407bf5ffe73b56f1e</Hash>
+    <Hash>7b0790a7bef3e75a061ad016184cb36b</Hash>
 </Codenesium>*/

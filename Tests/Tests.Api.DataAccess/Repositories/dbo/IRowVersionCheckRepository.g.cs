@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-        public interface IRowVersionCheckRepository
-        {
-                Task<RowVersionCheck> Create(RowVersionCheck item);
+	public interface IRowVersionCheckRepository
+	{
+		Task<RowVersionCheck> Create(RowVersionCheck item);
 
-                Task Update(RowVersionCheck item);
+		Task Update(RowVersionCheck item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<RowVersionCheck> Get(int id);
+		Task<RowVersionCheck> Get(int id);
 
-                Task<List<RowVersionCheck>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<RowVersionCheck>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>28a8b440f0a5928509c63dcb7f9457c5</Hash>
+    <Hash>b73d16d1f68d692ca4a76962b622ade6</Hash>
 </Codenesium>*/

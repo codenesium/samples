@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLEmailAddressMapper
-        {
-                BOEmailAddress MapModelToBO(
-                        int businessEntityID,
-                        ApiEmailAddressRequestModel model);
+	public interface IBOLEmailAddressMapper
+	{
+		BOEmailAddress MapModelToBO(
+			int businessEntityID,
+			ApiEmailAddressRequestModel model);
 
-                ApiEmailAddressResponseModel MapBOToModel(
-                        BOEmailAddress boEmailAddress);
+		ApiEmailAddressResponseModel MapBOToModel(
+			BOEmailAddress boEmailAddress);
 
-                List<ApiEmailAddressResponseModel> MapBOToModel(
-                        List<BOEmailAddress> items);
-        }
+		List<ApiEmailAddressResponseModel> MapBOToModel(
+			List<BOEmailAddress> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2cc6c4022d949c6c48fba15f069db92f</Hash>
+    <Hash>77fa508c68782f6663aada2999b51c0e</Hash>
 </Codenesium>*/

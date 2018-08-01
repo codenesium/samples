@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALDeploymentEnvironmentMapper
-        {
-                DeploymentEnvironment MapBOToEF(
-                        BODeploymentEnvironment bo);
+	public interface IDALDeploymentEnvironmentMapper
+	{
+		DeploymentEnvironment MapBOToEF(
+			BODeploymentEnvironment bo);
 
-                BODeploymentEnvironment MapEFToBO(
-                        DeploymentEnvironment efDeploymentEnvironment);
+		BODeploymentEnvironment MapEFToBO(
+			DeploymentEnvironment efDeploymentEnvironment);
 
-                List<BODeploymentEnvironment> MapEFToBO(
-                        List<DeploymentEnvironment> records);
-        }
+		List<BODeploymentEnvironment> MapEFToBO(
+			List<DeploymentEnvironment> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6ef2748c684ae21d59d94f73ea3d2a28</Hash>
+    <Hash>3bccb8f266832f81a82eaec816468c84</Hash>
 </Codenesium>*/

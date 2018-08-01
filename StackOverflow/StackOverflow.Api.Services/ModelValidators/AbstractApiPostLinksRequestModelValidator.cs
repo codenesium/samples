@@ -9,41 +9,41 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class AbstractApiPostLinksRequestModelValidator : AbstractValidator<ApiPostLinksRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiPostLinksRequestModelValidator : AbstractValidator<ApiPostLinksRequestModel>
+	{
+		private int existingRecordId;
 
-                private IPostLinksRepository postLinksRepository;
+		private IPostLinksRepository postLinksRepository;
 
-                public AbstractApiPostLinksRequestModelValidator(IPostLinksRepository postLinksRepository)
-                {
-                        this.postLinksRepository = postLinksRepository;
-                }
+		public AbstractApiPostLinksRequestModelValidator(IPostLinksRepository postLinksRepository)
+		{
+			this.postLinksRepository = postLinksRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiPostLinksRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiPostLinksRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void CreationDateRules()
-                {
-                }
+		public virtual void CreationDateRules()
+		{
+		}
 
-                public virtual void LinkTypeIdRules()
-                {
-                }
+		public virtual void LinkTypeIdRules()
+		{
+		}
 
-                public virtual void PostIdRules()
-                {
-                }
+		public virtual void PostIdRules()
+		{
+		}
 
-                public virtual void RelatedPostIdRules()
-                {
-                }
-        }
+		public virtual void RelatedPostIdRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b190d132a75270d263072a83c911c767</Hash>
+    <Hash>af5d5c3f92cf297bb002cec6276f7d1c</Hash>
 </Codenesium>*/

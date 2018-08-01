@@ -5,51 +5,51 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductReviewMapper
-        {
-                public virtual BOProductReview MapModelToBO(
-                        int productReviewID,
-                        ApiProductReviewRequestModel model
-                        )
-                {
-                        BOProductReview boProductReview = new BOProductReview();
-                        boProductReview.SetProperties(
-                                productReviewID,
-                                model.Comment,
-                                model.EmailAddress,
-                                model.ModifiedDate,
-                                model.ProductID,
-                                model.Rating,
-                                model.ReviewDate,
-                                model.ReviewerName);
-                        return boProductReview;
-                }
+	public abstract class BOLAbstractProductReviewMapper
+	{
+		public virtual BOProductReview MapModelToBO(
+			int productReviewID,
+			ApiProductReviewRequestModel model
+			)
+		{
+			BOProductReview boProductReview = new BOProductReview();
+			boProductReview.SetProperties(
+				productReviewID,
+				model.Comment,
+				model.EmailAddress,
+				model.ModifiedDate,
+				model.ProductID,
+				model.Rating,
+				model.ReviewDate,
+				model.ReviewerName);
+			return boProductReview;
+		}
 
-                public virtual ApiProductReviewResponseModel MapBOToModel(
-                        BOProductReview boProductReview)
-                {
-                        var model = new ApiProductReviewResponseModel();
+		public virtual ApiProductReviewResponseModel MapBOToModel(
+			BOProductReview boProductReview)
+		{
+			var model = new ApiProductReviewResponseModel();
 
-                        model.SetProperties(boProductReview.ProductReviewID, boProductReview.Comment, boProductReview.EmailAddress, boProductReview.ModifiedDate, boProductReview.ProductID, boProductReview.Rating, boProductReview.ReviewDate, boProductReview.ReviewerName);
+			model.SetProperties(boProductReview.ProductReviewID, boProductReview.Comment, boProductReview.EmailAddress, boProductReview.ModifiedDate, boProductReview.ProductID, boProductReview.Rating, boProductReview.ReviewDate, boProductReview.ReviewerName);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductReviewResponseModel> MapBOToModel(
-                        List<BOProductReview> items)
-                {
-                        List<ApiProductReviewResponseModel> response = new List<ApiProductReviewResponseModel>();
+		public virtual List<ApiProductReviewResponseModel> MapBOToModel(
+			List<BOProductReview> items)
+		{
+			List<ApiProductReviewResponseModel> response = new List<ApiProductReviewResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>91589183542a40fb1617b5756cd36862</Hash>
+    <Hash>55eb00fe616dab2b0fd8da2e5c6ee7e3</Hash>
 </Codenesium>*/

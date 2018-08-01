@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IBOLTeamMapper
-        {
-                BOTeam MapModelToBO(
-                        string id,
-                        ApiTeamRequestModel model);
+	public interface IBOLTeamMapper
+	{
+		BOTeam MapModelToBO(
+			string id,
+			ApiTeamRequestModel model);
 
-                ApiTeamResponseModel MapBOToModel(
-                        BOTeam boTeam);
+		ApiTeamResponseModel MapBOToModel(
+			BOTeam boTeam);
 
-                List<ApiTeamResponseModel> MapBOToModel(
-                        List<BOTeam> items);
-        }
+		List<ApiTeamResponseModel> MapBOToModel(
+			List<BOTeam> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>db0c63b0ad009031d7eab7653a9a4371</Hash>
+    <Hash>4dd6121c871717afc2f5eb2f3537e9ba</Hash>
 </Codenesium>*/

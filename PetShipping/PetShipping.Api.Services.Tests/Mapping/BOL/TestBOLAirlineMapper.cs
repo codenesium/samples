@@ -8,47 +8,47 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Airline")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLAirlineMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLAirlineMapper();
-                        ApiAirlineRequestModel model = new ApiAirlineRequestModel();
-                        model.SetProperties("A");
-                        BOAirline response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Airline")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLAirlineMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLAirlineMapper();
+			ApiAirlineRequestModel model = new ApiAirlineRequestModel();
+			model.SetProperties("A");
+			BOAirline response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLAirlineMapper();
-                        BOAirline bo = new BOAirline();
-                        bo.SetProperties(1, "A");
-                        ApiAirlineResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLAirlineMapper();
+			BOAirline bo = new BOAirline();
+			bo.SetProperties(1, "A");
+			ApiAirlineResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLAirlineMapper();
-                        BOAirline bo = new BOAirline();
-                        bo.SetProperties(1, "A");
-                        List<ApiAirlineResponseModel> response = mapper.MapBOToModel(new List<BOAirline>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLAirlineMapper();
+			BOAirline bo = new BOAirline();
+			bo.SetProperties(1, "A");
+			List<ApiAirlineResponseModel> response = mapper.MapBOToModel(new List<BOAirline>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>186ce83e0da045cbc88ff8b9d9f578ea</Hash>
+    <Hash>2fd2b632f9291f88c2e39f9310d15b57</Hash>
 </Codenesium>*/

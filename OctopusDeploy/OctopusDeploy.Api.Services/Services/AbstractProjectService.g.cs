@@ -12,146 +12,146 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractProjectService : AbstractService
-        {
-                private IProjectRepository projectRepository;
+	public abstract class AbstractProjectService : AbstractService
+	{
+		private IProjectRepository projectRepository;
 
-                private IApiProjectRequestModelValidator projectModelValidator;
+		private IApiProjectRequestModelValidator projectModelValidator;
 
-                private IBOLProjectMapper bolProjectMapper;
+		private IBOLProjectMapper bolProjectMapper;
 
-                private IDALProjectMapper dalProjectMapper;
+		private IDALProjectMapper dalProjectMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractProjectService(
-                        ILogger logger,
-                        IProjectRepository projectRepository,
-                        IApiProjectRequestModelValidator projectModelValidator,
-                        IBOLProjectMapper bolProjectMapper,
-                        IDALProjectMapper dalProjectMapper)
-                        : base()
-                {
-                        this.projectRepository = projectRepository;
-                        this.projectModelValidator = projectModelValidator;
-                        this.bolProjectMapper = bolProjectMapper;
-                        this.dalProjectMapper = dalProjectMapper;
-                        this.logger = logger;
-                }
+		public AbstractProjectService(
+			ILogger logger,
+			IProjectRepository projectRepository,
+			IApiProjectRequestModelValidator projectModelValidator,
+			IBOLProjectMapper bolProjectMapper,
+			IDALProjectMapper dalProjectMapper)
+			: base()
+		{
+			this.projectRepository = projectRepository;
+			this.projectModelValidator = projectModelValidator;
+			this.bolProjectMapper = bolProjectMapper;
+			this.dalProjectMapper = dalProjectMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiProjectResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.projectRepository.All(limit, offset);
+		public virtual async Task<List<ApiProjectResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.projectRepository.All(limit, offset);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
-                }
+			return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiProjectResponseModel> Get(string id)
-                {
-                        var record = await this.projectRepository.Get(id);
+		public virtual async Task<ApiProjectResponseModel> Get(string id)
+		{
+			var record = await this.projectRepository.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiProjectResponseModel>> Create(
-                        ApiProjectRequestModel model)
-                {
-                        CreateResponse<ApiProjectResponseModel> response = new CreateResponse<ApiProjectResponseModel>(await this.projectModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolProjectMapper.MapModelToBO(default(string), model);
-                                var record = await this.projectRepository.Create(this.dalProjectMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiProjectResponseModel>> Create(
+			ApiProjectRequestModel model)
+		{
+			CreateResponse<ApiProjectResponseModel> response = new CreateResponse<ApiProjectResponseModel>(await this.projectModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolProjectMapper.MapModelToBO(default(string), model);
+				var record = await this.projectRepository.Create(this.dalProjectMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiProjectResponseModel>> Update(
-                        string id,
-                        ApiProjectRequestModel model)
-                {
-                        var validationResult = await this.projectModelValidator.ValidateUpdateAsync(id, model);
+		public virtual async Task<UpdateResponse<ApiProjectResponseModel>> Update(
+			string id,
+			ApiProjectRequestModel model)
+		{
+			var validationResult = await this.projectModelValidator.ValidateUpdateAsync(id, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolProjectMapper.MapModelToBO(id, model);
-                                await this.projectRepository.Update(this.dalProjectMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolProjectMapper.MapModelToBO(id, model);
+				await this.projectRepository.Update(this.dalProjectMapper.MapBOToEF(bo));
 
-                                var record = await this.projectRepository.Get(id);
+				var record = await this.projectRepository.Get(id);
 
-                                return new UpdateResponse<ApiProjectResponseModel>(this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiProjectResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiProjectResponseModel>(this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiProjectResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        string id)
-                {
-                        ActionResponse response = new ActionResponse(await this.projectModelValidator.ValidateDeleteAsync(id));
-                        if (response.Success)
-                        {
-                                await this.projectRepository.Delete(id);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			string id)
+		{
+			ActionResponse response = new ActionResponse(await this.projectModelValidator.ValidateDeleteAsync(id));
+			if (response.Success)
+			{
+				await this.projectRepository.Delete(id);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiProjectResponseModel> ByName(string name)
-                {
-                        Project record = await this.projectRepository.ByName(name);
+		public async Task<ApiProjectResponseModel> ByName(string name)
+		{
+			Project record = await this.projectRepository.ByName(name);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+			}
+		}
 
-                public async Task<ApiProjectResponseModel> BySlug(string slug)
-                {
-                        Project record = await this.projectRepository.BySlug(slug);
+		public async Task<ApiProjectResponseModel> BySlug(string slug)
+		{
+			Project record = await this.projectRepository.BySlug(slug);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+			}
+		}
 
-                public async Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion)
-                {
-                        List<Project> records = await this.projectRepository.ByDataVersion(dataVersion);
+		public async Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion)
+		{
+			List<Project> records = await this.projectRepository.ByDataVersion(dataVersion);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
-                }
+			return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
+		}
 
-                public async Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
-                {
-                        List<Project> records = await this.projectRepository.ByDiscreteChannelReleaseId(discreteChannelRelease, id);
+		public async Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+		{
+			List<Project> records = await this.projectRepository.ByDiscreteChannelReleaseId(discreteChannelRelease, id);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2c2ed7792d584ce364e4d254deb29fac</Hash>
+    <Hash>3bfde682ead75ac297d81f2ec6d0f9e9</Hash>
 </Codenesium>*/

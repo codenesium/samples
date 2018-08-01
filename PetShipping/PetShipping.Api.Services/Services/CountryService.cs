@@ -10,33 +10,33 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class CountryService : AbstractCountryService, ICountryService
-        {
-                public CountryService(
-                        ILogger<ICountryRepository> logger,
-                        ICountryRepository countryRepository,
-                        IApiCountryRequestModelValidator countryModelValidator,
-                        IBOLCountryMapper bolcountryMapper,
-                        IDALCountryMapper dalcountryMapper,
-                        IBOLCountryRequirementMapper bolCountryRequirementMapper,
-                        IDALCountryRequirementMapper dalCountryRequirementMapper,
-                        IBOLDestinationMapper bolDestinationMapper,
-                        IDALDestinationMapper dalDestinationMapper
-                        )
-                        : base(logger,
-                               countryRepository,
-                               countryModelValidator,
-                               bolcountryMapper,
-                               dalcountryMapper,
-                               bolCountryRequirementMapper,
-                               dalCountryRequirementMapper,
-                               bolDestinationMapper,
-                               dalDestinationMapper)
-                {
-                }
-        }
+	public partial class CountryService : AbstractCountryService, ICountryService
+	{
+		public CountryService(
+			ILogger<ICountryRepository> logger,
+			ICountryRepository countryRepository,
+			IApiCountryRequestModelValidator countryModelValidator,
+			IBOLCountryMapper bolcountryMapper,
+			IDALCountryMapper dalcountryMapper,
+			IBOLCountryRequirementMapper bolCountryRequirementMapper,
+			IDALCountryRequirementMapper dalCountryRequirementMapper,
+			IBOLDestinationMapper bolDestinationMapper,
+			IDALDestinationMapper dalDestinationMapper
+			)
+			: base(logger,
+			       countryRepository,
+			       countryModelValidator,
+			       bolcountryMapper,
+			       dalcountryMapper,
+			       bolCountryRequirementMapper,
+			       dalCountryRequirementMapper,
+			       bolDestinationMapper,
+			       dalDestinationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dcd2ebfe55b68a63ca4c652444746b64</Hash>
+    <Hash>6d53d0202c73ba511ab75b9a32438e4a</Hash>
 </Codenesium>*/

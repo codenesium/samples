@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface ISaleService
-        {
-                Task<CreateResponse<ApiSaleResponseModel>> Create(
-                        ApiSaleRequestModel model);
+	public interface ISaleService
+	{
+		Task<CreateResponse<ApiSaleResponseModel>> Create(
+			ApiSaleRequestModel model);
 
-                Task<UpdateResponse<ApiSaleResponseModel>> Update(int id,
-                                                                   ApiSaleRequestModel model);
+		Task<UpdateResponse<ApiSaleResponseModel>> Update(int id,
+		                                                   ApiSaleRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiSaleResponseModel> Get(int id);
+		Task<ApiSaleResponseModel> Get(int id);
 
-                Task<List<ApiSaleResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiSaleResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>550e2b803b9fca414acc078eeb85379d</Hash>
+    <Hash>4c7a9fe103387f6679085257cdcb8210</Hash>
 </Codenesium>*/

@@ -10,29 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class TicketStatusService : AbstractTicketStatusService, ITicketStatusService
-        {
-                public TicketStatusService(
-                        ILogger<ITicketStatusRepository> logger,
-                        ITicketStatusRepository ticketStatusRepository,
-                        IApiTicketStatusRequestModelValidator ticketStatusModelValidator,
-                        IBOLTicketStatusMapper bolticketStatusMapper,
-                        IDALTicketStatusMapper dalticketStatusMapper,
-                        IBOLTicketMapper bolTicketMapper,
-                        IDALTicketMapper dalTicketMapper
-                        )
-                        : base(logger,
-                               ticketStatusRepository,
-                               ticketStatusModelValidator,
-                               bolticketStatusMapper,
-                               dalticketStatusMapper,
-                               bolTicketMapper,
-                               dalTicketMapper)
-                {
-                }
-        }
+	public partial class TicketStatusService : AbstractTicketStatusService, ITicketStatusService
+	{
+		public TicketStatusService(
+			ILogger<ITicketStatusRepository> logger,
+			ITicketStatusRepository ticketStatusRepository,
+			IApiTicketStatusRequestModelValidator ticketStatusModelValidator,
+			IBOLTicketStatusMapper bolticketStatusMapper,
+			IDALTicketStatusMapper dalticketStatusMapper,
+			IBOLTicketMapper bolTicketMapper,
+			IDALTicketMapper dalTicketMapper
+			)
+			: base(logger,
+			       ticketStatusRepository,
+			       ticketStatusModelValidator,
+			       bolticketStatusMapper,
+			       dalticketStatusMapper,
+			       bolTicketMapper,
+			       dalTicketMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b45b839d291c0c75aa70afe318d36c55</Hash>
+    <Hash>74b0573646d2e26e9247d7e4fb87c828</Hash>
 </Codenesium>*/

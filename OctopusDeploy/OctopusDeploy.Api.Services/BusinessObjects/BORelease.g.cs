@@ -3,15 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BORelease : AbstractBORelease
-        {
-                public BORelease()
-                        : base()
-                {
-                }
-        }
+	public partial class BORelease : AbstractBORelease
+	{
+		public BORelease()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fbf9c2c07dab77c4d03c0664390cd662</Hash>
+    <Hash>aaddd80ba2b63fb5d0b1de69dc9d5992</Hash>
 </Codenesium>*/

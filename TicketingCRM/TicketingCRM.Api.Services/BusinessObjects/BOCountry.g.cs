@@ -3,15 +3,15 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOCountry : AbstractBOCountry
-        {
-                public BOCountry()
-                        : base()
-                {
-                }
-        }
+	public partial class BOCountry : AbstractBOCountry
+	{
+		public BOCountry()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4fd75d679deebcb3c91e84c92e5b2bb9</Hash>
+    <Hash>c00f8edf78ffc0fc9dae17627b2d640b</Hash>
 </Codenesium>*/

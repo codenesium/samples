@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALReleaseMapper
-        {
-                Release MapBOToEF(
-                        BORelease bo);
+	public interface IDALReleaseMapper
+	{
+		Release MapBOToEF(
+			BORelease bo);
 
-                BORelease MapEFToBO(
-                        Release efRelease);
+		BORelease MapEFToBO(
+			Release efRelease);
 
-                List<BORelease> MapEFToBO(
-                        List<Release> records);
-        }
+		List<BORelease> MapEFToBO(
+			List<Release> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>67a9fb1e64936a6d168f946cd52297e7</Hash>
+    <Hash>2e955f2987977b8e7b90fb7e284cccd5</Hash>
 </Codenesium>*/

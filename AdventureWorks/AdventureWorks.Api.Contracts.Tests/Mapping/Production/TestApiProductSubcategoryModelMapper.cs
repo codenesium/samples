@@ -7,59 +7,58 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductSubcategory")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiProductSubcategoryModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiProductSubcategoryModelMapper();
-                        var model = new ApiProductSubcategoryRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        ApiProductSubcategoryResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductSubcategory")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiProductSubcategoryModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiProductSubcategoryModelMapper();
+			var model = new ApiProductSubcategoryRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			ApiProductSubcategoryResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.ProductCategoryID.Should().Be(1);
-                        response.ProductSubcategoryID.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.ProductCategoryID.Should().Be(1);
+			response.ProductSubcategoryID.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiProductSubcategoryModelMapper();
-                        var model = new ApiProductSubcategoryResponseModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        ApiProductSubcategoryRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiProductSubcategoryModelMapper();
+			var model = new ApiProductSubcategoryResponseModel();
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			ApiProductSubcategoryRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.ProductCategoryID.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.ProductCategoryID.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiProductSubcategoryModelMapper();
-                        var model = new ApiProductSubcategoryRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiProductSubcategoryModelMapper();
+			var model = new ApiProductSubcategoryRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        JsonPatchDocument<ApiProductSubcategoryRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiProductSubcategoryRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.ProductCategoryID.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
-        }
+			JsonPatchDocument<ApiProductSubcategoryRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiProductSubcategoryRequestModel();
+			patch.ApplyTo(response);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.ProductCategoryID.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>92a1fc1f0a8aa381b4f775ab8c313da2</Hash>
+    <Hash>296bb615b49a5ee224925949ad864763</Hash>
 </Codenesium>*/

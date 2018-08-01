@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public interface IApiBucketModelMapper
-        {
-                ApiBucketResponseModel MapRequestToResponse(
-                        int id,
-                        ApiBucketRequestModel request);
+	public interface IApiBucketModelMapper
+	{
+		ApiBucketResponseModel MapRequestToResponse(
+			int id,
+			ApiBucketRequestModel request);
 
-                ApiBucketRequestModel MapResponseToRequest(
-                        ApiBucketResponseModel response);
+		ApiBucketRequestModel MapResponseToRequest(
+			ApiBucketResponseModel response);
 
-                JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model);
-        }
+		JsonPatchDocument<ApiBucketRequestModel> CreatePatch(ApiBucketRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>b070427bda3ed9e5e7030c5d384e469e</Hash>
+    <Hash>2155ac81e3fc12b7854b3f9e4ae1dee4</Hash>
 </Codenesium>*/

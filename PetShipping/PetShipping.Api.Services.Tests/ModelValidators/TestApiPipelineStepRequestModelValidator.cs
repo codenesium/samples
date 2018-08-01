@@ -15,141 +15,141 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PipelineStep")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPipelineStepRequestModelValidatorTest
-        {
-                public ApiPipelineStepRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PipelineStep")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPipelineStepRequestModelValidatorTest
+	{
+		public ApiPipelineStepRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStep()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStep()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStep()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStep()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void PipelineStepStatusId_Create_Valid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
+		[Fact]
+		public async void PipelineStepStatusId_Create_Valid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepStatusId_Create_Invalid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
+		[Fact]
+		public async void PipelineStepStatusId_Create_Invalid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
+			await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepStatusId_Update_Valid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
+		[Fact]
+		public async void PipelineStepStatusId_Update_Valid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStepStatusId_Update_Invalid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
+		[Fact]
+		public async void PipelineStepStatusId_Update_Invalid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetPipelineStepStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStepStatusId, 1);
+		}
 
-                [Fact]
-                public async void ShipperId_Create_Valid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+		[Fact]
+		public async void ShipperId_Create_Valid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ShipperId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ShipperId, 1);
+		}
 
-                [Fact]
-                public async void ShipperId_Create_Invalid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+		[Fact]
+		public async void ShipperId_Create_Invalid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
+			await validator.ValidateCreateAsync(new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShipperId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ShipperId, 1);
+		}
 
-                [Fact]
-                public async void ShipperId_Update_Valid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+		[Fact]
+		public async void ShipperId_Update_Valid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ShipperId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ShipperId, 1);
+		}
 
-                [Fact]
-                public async void ShipperId_Update_Invalid_Reference()
-                {
-                        Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-                        pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+		[Fact]
+		public async void ShipperId_Update_Invalid_Reference()
+		{
+			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
+			pipelineStepRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
-                        var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
+			var validator = new ApiPipelineStepRequestModelValidator(pipelineStepRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShipperId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ShipperId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ee54be5b06b10229bc93b5e60453676f</Hash>
+    <Hash>021847708e475798910dcddf9c67db6f</Hash>
 </Codenesium>*/

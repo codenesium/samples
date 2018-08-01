@@ -15,113 +15,113 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Users")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiUsersRequestModelValidatorTest
-        {
-                public ApiUsersRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Users")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiUsersRequestModelValidatorTest
+	{
+		public ApiUsersRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void DisplayName_Create_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void DisplayName_Create_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 41));
+		}
 
-                [Fact]
-                public async void DisplayName_Update_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void DisplayName_Update_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 41));
+		}
 
-                [Fact]
-                public async void EmailHash_Create_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void EmailHash_Create_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailHash, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailHash, new string('A', 41));
+		}
 
-                [Fact]
-                public async void EmailHash_Update_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void EmailHash_Update_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailHash, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailHash, new string('A', 41));
+		}
 
-                [Fact]
-                public async void Location_Create_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void Location_Create_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 101));
+		}
 
-                [Fact]
-                public async void Location_Update_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void Location_Update_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 101));
+		}
 
-                [Fact]
-                public async void WebsiteUrl_Create_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void WebsiteUrl_Create_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.WebsiteUrl, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.WebsiteUrl, new string('A', 201));
+		}
 
-                [Fact]
-                public async void WebsiteUrl_Update_length()
-                {
-                        Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
-                        usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
+		[Fact]
+		public async void WebsiteUrl_Update_length()
+		{
+			Mock<IUsersRepository> usersRepository = new Mock<IUsersRepository>();
+			usersRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Users()));
 
-                        var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
+			var validator = new ApiUsersRequestModelValidator(usersRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiUsersRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.WebsiteUrl, new string('A', 201));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.WebsiteUrl, new string('A', 201));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7abc436875e450b1939b2ec9930e31e7</Hash>
+    <Hash>9857d5f094f56da755df4b4ae909d8b3</Hash>
 </Codenesium>*/

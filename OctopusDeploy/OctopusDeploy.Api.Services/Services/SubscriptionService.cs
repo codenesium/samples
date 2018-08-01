@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class SubscriptionService : AbstractSubscriptionService, ISubscriptionService
-        {
-                public SubscriptionService(
-                        ILogger<ISubscriptionRepository> logger,
-                        ISubscriptionRepository subscriptionRepository,
-                        IApiSubscriptionRequestModelValidator subscriptionModelValidator,
-                        IBOLSubscriptionMapper bolsubscriptionMapper,
-                        IDALSubscriptionMapper dalsubscriptionMapper
-                        )
-                        : base(logger,
-                               subscriptionRepository,
-                               subscriptionModelValidator,
-                               bolsubscriptionMapper,
-                               dalsubscriptionMapper)
-                {
-                }
-        }
+	public partial class SubscriptionService : AbstractSubscriptionService, ISubscriptionService
+	{
+		public SubscriptionService(
+			ILogger<ISubscriptionRepository> logger,
+			ISubscriptionRepository subscriptionRepository,
+			IApiSubscriptionRequestModelValidator subscriptionModelValidator,
+			IBOLSubscriptionMapper bolsubscriptionMapper,
+			IDALSubscriptionMapper dalsubscriptionMapper
+			)
+			: base(logger,
+			       subscriptionRepository,
+			       subscriptionModelValidator,
+			       bolsubscriptionMapper,
+			       dalsubscriptionMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4389a0e728a9b3e2880cb899fa5c8136</Hash>
+    <Hash>7e101a00f4f447a980eae209f0242793</Hash>
 </Codenesium>*/

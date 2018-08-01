@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ProductModelProductDescriptionCultureService : AbstractProductModelProductDescriptionCultureService, IProductModelProductDescriptionCultureService
-        {
-                public ProductModelProductDescriptionCultureService(
-                        ILogger<IProductModelProductDescriptionCultureRepository> logger,
-                        IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
-                        IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
-                        IBOLProductModelProductDescriptionCultureMapper bolproductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalproductModelProductDescriptionCultureMapper
-                        )
-                        : base(logger,
-                               productModelProductDescriptionCultureRepository,
-                               productModelProductDescriptionCultureModelValidator,
-                               bolproductModelProductDescriptionCultureMapper,
-                               dalproductModelProductDescriptionCultureMapper)
-                {
-                }
-        }
+	public partial class ProductModelProductDescriptionCultureService : AbstractProductModelProductDescriptionCultureService, IProductModelProductDescriptionCultureService
+	{
+		public ProductModelProductDescriptionCultureService(
+			ILogger<IProductModelProductDescriptionCultureRepository> logger,
+			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
+			IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
+			IBOLProductModelProductDescriptionCultureMapper bolproductModelProductDescriptionCultureMapper,
+			IDALProductModelProductDescriptionCultureMapper dalproductModelProductDescriptionCultureMapper
+			)
+			: base(logger,
+			       productModelProductDescriptionCultureRepository,
+			       productModelProductDescriptionCultureModelValidator,
+			       bolproductModelProductDescriptionCultureMapper,
+			       dalproductModelProductDescriptionCultureMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>70b0cd1045306698e5e2e9d885761f38</Hash>
+    <Hash>26671955362f67454653f99533007b50</Hash>
 </Codenesium>*/

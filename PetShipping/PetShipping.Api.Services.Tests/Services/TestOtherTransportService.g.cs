@@ -13,125 +13,125 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "OtherTransport")]
-        [Trait("Area", "Services")]
-        public partial class OtherTransportServiceTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        var records = new List<OtherTransport>();
-                        records.Add(new OtherTransport());
-                        mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "OtherTransport")]
+	[Trait("Area", "Services")]
+	public partial class OtherTransportServiceTests
+	{
+		[Fact]
+		public async void All()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var records = new List<OtherTransport>();
+			records.Add(new OtherTransport());
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiOtherTransportResponseModel> response = await service.All();
+			List<ApiOtherTransportResponseModel> response = await service.All();
 
-                        response.Should().HaveCount(1);
-                        mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().HaveCount(1);
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        var record = new OtherTransport();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+		[Fact]
+		public async void Get()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var record = new OtherTransport();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ApiOtherTransportResponseModel response = await service.Get(default(int));
+			ApiOtherTransportResponseModel response = await service.Get(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_null_record()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<OtherTransport>(null));
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+		[Fact]
+		public async void Get_null_record()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<OtherTransport>(null));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ApiOtherTransportResponseModel response = await service.Get(default(int));
+			ApiOtherTransportResponseModel response = await service.Get(default(int));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        var model = new ApiOtherTransportRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<OtherTransport>())).Returns(Task.FromResult(new OtherTransport()));
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<OtherTransport>())).Returns(Task.FromResult(new OtherTransport()));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        CreateResponse<ApiOtherTransportResponseModel> response = await service.Create(model);
+			CreateResponse<ApiOtherTransportResponseModel> response = await service.Create(model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOtherTransportRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Create(It.IsAny<OtherTransport>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOtherTransportRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<OtherTransport>()));
+		}
 
-                [Fact]
-                public async void Update()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        var model = new ApiOtherTransportRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<OtherTransport>())).Returns(Task.FromResult(new OtherTransport()));
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new OtherTransport()));
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<OtherTransport>())).Returns(Task.FromResult(new OtherTransport()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new OtherTransport()));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        UpdateResponse<ApiOtherTransportResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiOtherTransportResponseModel> response = await service.Update(default(int), model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Update(It.IsAny<OtherTransport>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<OtherTransport>()));
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        var mock = new ServiceMockFacade<IOtherTransportRepository>();
-                        var model = new ApiOtherTransportRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
-                        var service = new OtherTransportService(mock.LoggerMock.Object,
-                                                                mock.RepositoryMock.Object,
-                                                                mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-                                                                mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-                                                                mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ActionResponse response = await service.Delete(default(int));
+			ActionResponse response = await service.Delete(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
-                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-                }
-        }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
+			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2a74d8f7c1ef4e51e35d3ee1d7d9e8d0</Hash>
+    <Hash>4e2b438af50e2af76fafe6847d12986e</Hash>
 </Codenesium>*/

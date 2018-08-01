@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        [Table("PostHistoryTypes", Schema="dbo")]
-        public partial class PostHistoryTypes : AbstractEntity
-        {
-                public PostHistoryTypes()
-                {
-                }
+	[Table("PostHistoryTypes", Schema="dbo")]
+	public partial class PostHistoryTypes : AbstractEntity
+	{
+		public PostHistoryTypes()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string type)
-                {
-                        this.Id = id;
-                        this.Type = type;
-                }
+		public virtual void SetProperties(
+			int id,
+			string type)
+		{
+			this.Id = id;
+			this.Type = type;
+		}
 
-                [Key]
-                [Column("Id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("Id")]
+		public int Id { get; private set; }
 
-                [Column("Type")]
-                public string Type { get; private set; }
-        }
+		[Column("Type")]
+		public string Type { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>cec44a060101f7bef57569ded85973cf</Hash>
+    <Hash>c2c795684af1a029ec47ddad93e146da</Hash>
 </Codenesium>*/

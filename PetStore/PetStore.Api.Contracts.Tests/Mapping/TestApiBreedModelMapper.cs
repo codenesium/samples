@@ -7,50 +7,49 @@ using Xunit;
 
 namespace PetStoreNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Breed")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiBreedModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiBreedModelMapper();
-                        var model = new ApiBreedRequestModel();
-                        model.SetProperties("A");
-                        ApiBreedResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Breed")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiBreedModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiBreedModelMapper();
+			var model = new ApiBreedRequestModel();
+			model.SetProperties("A");
+			ApiBreedResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiBreedModelMapper();
-                        var model = new ApiBreedResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiBreedRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiBreedModelMapper();
+			var model = new ApiBreedResponseModel();
+			model.SetProperties(1, "A");
+			ApiBreedRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiBreedModelMapper();
-                        var model = new ApiBreedRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiBreedModelMapper();
+			var model = new ApiBreedRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiBreedRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiBreedRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiBreedRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiBreedRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>73ce1dbd3f01f2f5a5569d76e65aa839</Hash>
+    <Hash>4a084e9ffd5c4729f8300230635e1e19</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiServerTaskModelMapper : AbstractApiServerTaskModelMapper, IApiServerTaskModelMapper
-        {
-                public ApiServerTaskModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiServerTaskModelMapper : AbstractApiServerTaskModelMapper, IApiServerTaskModelMapper
+	{
+		public ApiServerTaskModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f16a3e6563602059fe001b3689c784bc</Hash>
+    <Hash>72c5da666a547215eca351ce29d08b47</Hash>
 </Codenesium>*/

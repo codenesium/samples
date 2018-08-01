@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALErrorLogMapper
-        {
-                ErrorLog MapBOToEF(
-                        BOErrorLog bo);
+	public interface IDALErrorLogMapper
+	{
+		ErrorLog MapBOToEF(
+			BOErrorLog bo);
 
-                BOErrorLog MapEFToBO(
-                        ErrorLog efErrorLog);
+		BOErrorLog MapEFToBO(
+			ErrorLog efErrorLog);
 
-                List<BOErrorLog> MapEFToBO(
-                        List<ErrorLog> records);
-        }
+		List<BOErrorLog> MapEFToBO(
+			List<ErrorLog> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0d03a909766381c86797042ce9c727bc</Hash>
+    <Hash>782b0ed60adc36a0d96ffc319a8353b0</Hash>
 </Codenesium>*/

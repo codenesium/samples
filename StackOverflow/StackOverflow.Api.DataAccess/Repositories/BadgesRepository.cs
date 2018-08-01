@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public partial class BadgesRepository : AbstractBadgesRepository, IBadgesRepository
-        {
-                public BadgesRepository(
-                        ILogger<BadgesRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class BadgesRepository : AbstractBadgesRepository, IBadgesRepository
+	{
+		public BadgesRepository(
+			ILogger<BadgesRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>134c8c6e79ffd6859fb78a114f3046cd</Hash>
+    <Hash>9a904303065503982eb18924f1cf5e54</Hash>
 </Codenesium>*/

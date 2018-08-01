@@ -8,53 +8,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Subscription")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLSubscriptionMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLSubscriptionMapper();
-                        ApiSubscriptionRequestModel model = new ApiSubscriptionRequestModel();
-                        model.SetProperties(true, "A", "A", "A");
-                        BOSubscription response = mapper.MapModelToBO("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Subscription")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLSubscriptionMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLSubscriptionMapper();
+			ApiSubscriptionRequestModel model = new ApiSubscriptionRequestModel();
+			model.SetProperties(true, "A", "A", "A");
+			BOSubscription response = mapper.MapModelToBO("A", model);
 
-                        response.IsDisabled.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.Type.Should().Be("A");
-                }
+			response.IsDisabled.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLSubscriptionMapper();
-                        BOSubscription bo = new BOSubscription();
-                        bo.SetProperties("A", true, "A", "A", "A");
-                        ApiSubscriptionResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLSubscriptionMapper();
+			BOSubscription bo = new BOSubscription();
+			bo.SetProperties("A", true, "A", "A", "A");
+			ApiSubscriptionResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be("A");
-                        response.IsDisabled.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.Type.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.IsDisabled.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLSubscriptionMapper();
-                        BOSubscription bo = new BOSubscription();
-                        bo.SetProperties("A", true, "A", "A", "A");
-                        List<ApiSubscriptionResponseModel> response = mapper.MapBOToModel(new List<BOSubscription>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLSubscriptionMapper();
+			BOSubscription bo = new BOSubscription();
+			bo.SetProperties("A", true, "A", "A", "A");
+			List<ApiSubscriptionResponseModel> response = mapper.MapBOToModel(new List<BOSubscription>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e43594bf52bbe453da535eeef63afedb</Hash>
+    <Hash>43f3b010d62db83a469b626ffd411df8</Hash>
 </Codenesium>*/

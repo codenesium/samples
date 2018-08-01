@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface IVariableSetRepository
-        {
-                Task<VariableSet> Create(VariableSet item);
+	public interface IVariableSetRepository
+	{
+		Task<VariableSet> Create(VariableSet item);
 
-                Task Update(VariableSet item);
+		Task Update(VariableSet item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<VariableSet> Get(string id);
+		Task<VariableSet> Get(string id);
 
-                Task<List<VariableSet>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<VariableSet>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>95825b83b9e915c0a5b088ea7f562f57</Hash>
+    <Hash>64148152e822d5265246f1d38755bfe1</Hash>
 </Codenesium>*/

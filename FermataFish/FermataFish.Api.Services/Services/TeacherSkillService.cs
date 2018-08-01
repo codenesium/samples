@@ -10,33 +10,33 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class TeacherSkillService : AbstractTeacherSkillService, ITeacherSkillService
-        {
-                public TeacherSkillService(
-                        ILogger<ITeacherSkillRepository> logger,
-                        ITeacherSkillRepository teacherSkillRepository,
-                        IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
-                        IBOLTeacherSkillMapper bolteacherSkillMapper,
-                        IDALTeacherSkillMapper dalteacherSkillMapper,
-                        IBOLRateMapper bolRateMapper,
-                        IDALRateMapper dalRateMapper,
-                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
-                        )
-                        : base(logger,
-                               teacherSkillRepository,
-                               teacherSkillModelValidator,
-                               bolteacherSkillMapper,
-                               dalteacherSkillMapper,
-                               bolRateMapper,
-                               dalRateMapper,
-                               bolTeacherXTeacherSkillMapper,
-                               dalTeacherXTeacherSkillMapper)
-                {
-                }
-        }
+	public partial class TeacherSkillService : AbstractTeacherSkillService, ITeacherSkillService
+	{
+		public TeacherSkillService(
+			ILogger<ITeacherSkillRepository> logger,
+			ITeacherSkillRepository teacherSkillRepository,
+			IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
+			IBOLTeacherSkillMapper bolteacherSkillMapper,
+			IDALTeacherSkillMapper dalteacherSkillMapper,
+			IBOLRateMapper bolRateMapper,
+			IDALRateMapper dalRateMapper,
+			IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+			IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
+			)
+			: base(logger,
+			       teacherSkillRepository,
+			       teacherSkillModelValidator,
+			       bolteacherSkillMapper,
+			       dalteacherSkillMapper,
+			       bolRateMapper,
+			       dalRateMapper,
+			       bolTeacherXTeacherSkillMapper,
+			       dalTeacherXTeacherSkillMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fc11e9fe20ed484ee5568713a9fba89e</Hash>
+    <Hash>57d40872600222b011f115f30a3b0eb9</Hash>
 </Codenesium>*/

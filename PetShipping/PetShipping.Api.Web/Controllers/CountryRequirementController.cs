@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/countryRequirements")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class CountryRequirementController : AbstractCountryRequirementController
-        {
-                public CountryRequirementController(
-                        ApiSettings settings,
-                        ILogger<CountryRequirementController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ICountryRequirementService countryRequirementService,
-                        IApiCountryRequirementModelMapper countryRequirementModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               countryRequirementService,
-                               countryRequirementModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/countryRequirements")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class CountryRequirementController : AbstractCountryRequirementController
+	{
+		public CountryRequirementController(
+			ApiSettings settings,
+			ILogger<CountryRequirementController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ICountryRequirementService countryRequirementService,
+			IApiCountryRequirementModelMapper countryRequirementModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       countryRequirementService,
+			       countryRequirementModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b9958c2022f888817f2967dfdad2eaed</Hash>
+    <Hash>d16355fc2fd8d1b85515a8db9a2f4af3</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiCurrencyRateModelMapper
-        {
-                ApiCurrencyRateResponseModel MapRequestToResponse(
-                        int currencyRateID,
-                        ApiCurrencyRateRequestModel request);
+	public interface IApiCurrencyRateModelMapper
+	{
+		ApiCurrencyRateResponseModel MapRequestToResponse(
+			int currencyRateID,
+			ApiCurrencyRateRequestModel request);
 
-                ApiCurrencyRateRequestModel MapResponseToRequest(
-                        ApiCurrencyRateResponseModel response);
+		ApiCurrencyRateRequestModel MapResponseToRequest(
+			ApiCurrencyRateResponseModel response);
 
-                JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model);
-        }
+		JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7d388c744feff9e3bb9e8840e0e8615a</Hash>
+    <Hash>34eeff4e23351f1585cf2a75440c1d0b</Hash>
 </Codenesium>*/

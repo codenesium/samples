@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public interface IApiSaleModelMapper
-        {
-                ApiSaleResponseModel MapRequestToResponse(
-                        int id,
-                        ApiSaleRequestModel request);
+	public interface IApiSaleModelMapper
+	{
+		ApiSaleResponseModel MapRequestToResponse(
+			int id,
+			ApiSaleRequestModel request);
 
-                ApiSaleRequestModel MapResponseToRequest(
-                        ApiSaleResponseModel response);
+		ApiSaleRequestModel MapResponseToRequest(
+			ApiSaleResponseModel response);
 
-                JsonPatchDocument<ApiSaleRequestModel> CreatePatch(ApiSaleRequestModel model);
-        }
+		JsonPatchDocument<ApiSaleRequestModel> CreatePatch(ApiSaleRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e0a060b58b8b53dc95221ef0c98b1900</Hash>
+    <Hash>2919b147750f4f8e4aa35376ba3ade27</Hash>
 </Codenesium>*/

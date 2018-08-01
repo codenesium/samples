@@ -6,56 +6,56 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiDatabaseLogResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int databaseLogID,
-                        string databaseUser,
-                        string @event,
-                        string @object,
-                        DateTime postTime,
-                        string schema,
-                        string tsql,
-                        string xmlEvent)
-                {
-                        this.DatabaseLogID = databaseLogID;
-                        this.DatabaseUser = databaseUser;
-                        this.@Event = @event;
-                        this.@Object = @object;
-                        this.PostTime = postTime;
-                        this.Schema = schema;
-                        this.Tsql = tsql;
-                        this.XmlEvent = xmlEvent;
-                }
+	public partial class ApiDatabaseLogResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int databaseLogID,
+			string databaseUser,
+			string @event,
+			string @object,
+			DateTime postTime,
+			string schema,
+			string tsql,
+			string xmlEvent)
+		{
+			this.DatabaseLogID = databaseLogID;
+			this.DatabaseUser = databaseUser;
+			this.@Event = @event;
+			this.@Object = @object;
+			this.PostTime = postTime;
+			this.Schema = schema;
+			this.Tsql = tsql;
+			this.XmlEvent = xmlEvent;
+		}
 
-                [JsonProperty]
-                public int DatabaseLogID { get; private set; }
+		[JsonProperty]
+		public int DatabaseLogID { get; private set; }
 
-                [JsonProperty]
-                public string DatabaseUser { get; private set; }
+		[JsonProperty]
+		public string DatabaseUser { get; private set; }
 
-                [JsonProperty]
-                public string @Event { get; private set; }
+		[JsonProperty]
+		public string @Event { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string @Object { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string @Object { get; private set; }
 
-                [JsonProperty]
-                public DateTime PostTime { get; private set; }
+		[JsonProperty]
+		public DateTime PostTime { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Schema { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Schema { get; private set; }
 
-                [JsonProperty]
-                public string Tsql { get; private set; }
+		[JsonProperty]
+		public string Tsql { get; private set; }
 
-                [JsonProperty]
-                public string XmlEvent { get; private set; }
-        }
+		[JsonProperty]
+		public string XmlEvent { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>ee13b27d0e02d063d0750965ce0b90b8</Hash>
+    <Hash>54e3b5ab00321d2a1ab6ce8be9543c98</Hash>
 </Codenesium>*/

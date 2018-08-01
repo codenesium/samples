@@ -6,36 +6,36 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLChainMapper BOLChainMapperMock { get; set; } = new BOLChainMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLChainMapper BOLChainMapperMock { get; set; } = new BOLChainMapper();
 
-                public IBOLChainStatusMapper BOLChainStatusMapperMock { get; set; } = new BOLChainStatusMapper();
+		public IBOLChainStatusMapper BOLChainStatusMapperMock { get; set; } = new BOLChainStatusMapper();
 
-                public IBOLClaspMapper BOLClaspMapperMock { get; set; } = new BOLClaspMapper();
+		public IBOLClaspMapper BOLClaspMapperMock { get; set; } = new BOLClaspMapper();
 
-                public IBOLLinkMapper BOLLinkMapperMock { get; set; } = new BOLLinkMapper();
+		public IBOLLinkMapper BOLLinkMapperMock { get; set; } = new BOLLinkMapper();
 
-                public IBOLLinkLogMapper BOLLinkLogMapperMock { get; set; } = new BOLLinkLogMapper();
+		public IBOLLinkLogMapper BOLLinkLogMapperMock { get; set; } = new BOLLinkLogMapper();
 
-                public IBOLLinkStatusMapper BOLLinkStatusMapperMock { get; set; } = new BOLLinkStatusMapper();
+		public IBOLLinkStatusMapper BOLLinkStatusMapperMock { get; set; } = new BOLLinkStatusMapper();
 
-                public IBOLMachineMapper BOLMachineMapperMock { get; set; } = new BOLMachineMapper();
+		public IBOLMachineMapper BOLMachineMapperMock { get; set; } = new BOLMachineMapper();
 
-                public IBOLMachineRefTeamMapper BOLMachineRefTeamMapperMock { get; set; } = new BOLMachineRefTeamMapper();
+		public IBOLMachineRefTeamMapper BOLMachineRefTeamMapperMock { get; set; } = new BOLMachineRefTeamMapper();
 
-                public IBOLOrganizationMapper BOLOrganizationMapperMock { get; set; } = new BOLOrganizationMapper();
+		public IBOLOrganizationMapper BOLOrganizationMapperMock { get; set; } = new BOLOrganizationMapper();
 
-                public IBOLTeamMapper BOLTeamMapperMock { get; set; } = new BOLTeamMapper();
+		public IBOLTeamMapper BOLTeamMapperMock { get; set; } = new BOLTeamMapper();
 
-                public IBOLVersionInfoMapper BOLVersionInfoMapperMock { get; set; } = new BOLVersionInfoMapper();
+		public IBOLVersionInfoMapper BOLVersionInfoMapperMock { get; set; } = new BOLVersionInfoMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7055feb7c0bef1a832c838ed9dfcbfa8</Hash>
+    <Hash>f3fd9e488e54ed837ede2cea84113cbb</Hash>
 </Codenesium>*/

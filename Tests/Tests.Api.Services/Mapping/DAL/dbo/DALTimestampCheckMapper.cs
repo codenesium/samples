@@ -4,14 +4,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class DALTimestampCheckMapper : DALAbstractTimestampCheckMapper, IDALTimestampCheckMapper
-        {
-                public DALTimestampCheckMapper()
-                {
-                }
-        }
+	public partial class DALTimestampCheckMapper : DALAbstractTimestampCheckMapper, IDALTimestampCheckMapper
+	{
+		public DALTimestampCheckMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>08f56f0a116be70fa233794b04d9a371</Hash>
+    <Hash>1c0396acd1acc98f14a9df4d294c299b</Hash>
 </Codenesium>*/

@@ -11,121 +11,121 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractPurchaseOrderHeaderRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractPurchaseOrderHeaderRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractPurchaseOrderHeaderRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractPurchaseOrderHeaderRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<PurchaseOrderHeader> Get(int purchaseOrderID)
-                {
-                        return await this.GetById(purchaseOrderID);
-                }
+		public async virtual Task<PurchaseOrderHeader> Get(int purchaseOrderID)
+		{
+			return await this.GetById(purchaseOrderID);
+		}
 
-                public async virtual Task<PurchaseOrderHeader> Create(PurchaseOrderHeader item)
-                {
-                        this.Context.Set<PurchaseOrderHeader>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<PurchaseOrderHeader> Create(PurchaseOrderHeader item)
+		{
+			this.Context.Set<PurchaseOrderHeader>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(PurchaseOrderHeader item)
-                {
-                        var entity = this.Context.Set<PurchaseOrderHeader>().Local.FirstOrDefault(x => x.PurchaseOrderID == item.PurchaseOrderID);
-                        if (entity == null)
-                        {
-                                this.Context.Set<PurchaseOrderHeader>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(PurchaseOrderHeader item)
+		{
+			var entity = this.Context.Set<PurchaseOrderHeader>().Local.FirstOrDefault(x => x.PurchaseOrderID == item.PurchaseOrderID);
+			if (entity == null)
+			{
+				this.Context.Set<PurchaseOrderHeader>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        int purchaseOrderID)
-                {
-                        PurchaseOrderHeader record = await this.GetById(purchaseOrderID);
+		public async virtual Task Delete(
+			int purchaseOrderID)
+		{
+			PurchaseOrderHeader record = await this.GetById(purchaseOrderID);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<PurchaseOrderHeader>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<PurchaseOrderHeader>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID)
-                {
-                        var records = await this.Where(x => x.EmployeeID == employeeID);
+		public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID)
+		{
+			var records = await this.Where(x => x.EmployeeID == employeeID);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID)
-                {
-                        var records = await this.Where(x => x.VendorID == vendorID);
+		public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID)
+		{
+			var records = await this.Where(x => x.VendorID == vendorID);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async virtual Task<List<PurchaseOrderDetail>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PurchaseOrderDetail>().Where(x => x.PurchaseOrderID == purchaseOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderDetail>();
-                }
+		public async virtual Task<List<PurchaseOrderDetail>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<PurchaseOrderDetail>().Where(x => x.PurchaseOrderID == purchaseOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderDetail>();
+		}
 
-                protected async Task<List<PurchaseOrderHeader>> Where(
-                        Expression<Func<PurchaseOrderHeader, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<PurchaseOrderHeader, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.PurchaseOrderID;
-                        }
+		protected async Task<List<PurchaseOrderHeader>> Where(
+			Expression<Func<PurchaseOrderHeader, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<PurchaseOrderHeader, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.PurchaseOrderID;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+			}
+			else
+			{
+				return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+			}
+		}
 
-                private async Task<PurchaseOrderHeader> GetById(int purchaseOrderID)
-                {
-                        List<PurchaseOrderHeader> records = await this.Where(x => x.PurchaseOrderID == purchaseOrderID);
+		private async Task<PurchaseOrderHeader> GetById(int purchaseOrderID)
+		{
+			List<PurchaseOrderHeader> records = await this.Where(x => x.PurchaseOrderID == purchaseOrderID);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>88ef73009880c7f88b082d6a2696b94e</Hash>
+    <Hash>bc2d9685ec04bba4a3c628157dfbee5b</Hash>
 </Codenesium>*/

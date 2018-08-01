@@ -8,49 +8,49 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LessonXTeacher")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLLessonXTeacherMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLLessonXTeacherMapper();
-                        ApiLessonXTeacherRequestModel model = new ApiLessonXTeacherRequestModel();
-                        model.SetProperties(1, 1);
-                        BOLessonXTeacher response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LessonXTeacher")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLLessonXTeacherMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLLessonXTeacherMapper();
+			ApiLessonXTeacherRequestModel model = new ApiLessonXTeacherRequestModel();
+			model.SetProperties(1, 1);
+			BOLessonXTeacher response = mapper.MapModelToBO(1, model);
 
-                        response.LessonId.Should().Be(1);
-                        response.StudentId.Should().Be(1);
-                }
+			response.LessonId.Should().Be(1);
+			response.StudentId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLLessonXTeacherMapper();
-                        BOLessonXTeacher bo = new BOLessonXTeacher();
-                        bo.SetProperties(1, 1, 1);
-                        ApiLessonXTeacherResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLLessonXTeacherMapper();
+			BOLessonXTeacher bo = new BOLessonXTeacher();
+			bo.SetProperties(1, 1, 1);
+			ApiLessonXTeacherResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.LessonId.Should().Be(1);
-                        response.StudentId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.LessonId.Should().Be(1);
+			response.StudentId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLLessonXTeacherMapper();
-                        BOLessonXTeacher bo = new BOLessonXTeacher();
-                        bo.SetProperties(1, 1, 1);
-                        List<ApiLessonXTeacherResponseModel> response = mapper.MapBOToModel(new List<BOLessonXTeacher>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLLessonXTeacherMapper();
+			BOLessonXTeacher bo = new BOLessonXTeacher();
+			bo.SetProperties(1, 1, 1);
+			List<ApiLessonXTeacherResponseModel> response = mapper.MapBOToModel(new List<BOLessonXTeacher>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fe211dca5bcce9ea28a78fbccb92bb2e</Hash>
+    <Hash>f1be139d6a1d02552acb6fb245b412d8</Hash>
 </Codenesium>*/

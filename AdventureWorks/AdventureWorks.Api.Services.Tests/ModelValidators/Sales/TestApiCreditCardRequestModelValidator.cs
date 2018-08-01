@@ -15,161 +15,161 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "CreditCard")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCreditCardRequestModelValidatorTest
-        {
-                public ApiCreditCardRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "CreditCard")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCreditCardRequestModelValidatorTest
+	{
+		public ApiCreditCardRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CardNumber_Create_null()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardNumber_Create_null()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, null as string);
+		}
 
-                [Fact]
-                public async void CardNumber_Update_null()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardNumber_Update_null()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, null as string);
+		}
 
-                [Fact]
-                public async void CardNumber_Create_length()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardNumber_Create_length()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, new string('A', 26));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, new string('A', 26));
+		}
 
-                [Fact]
-                public async void CardNumber_Update_length()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardNumber_Update_length()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, new string('A', 26));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, new string('A', 26));
+		}
 
-                [Fact]
-                public async void CardType_Create_null()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardType_Create_null()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardType, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardType, null as string);
+		}
 
-                [Fact]
-                public async void CardType_Update_null()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardType_Update_null()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardType, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardType, null as string);
+		}
 
-                [Fact]
-                public async void CardType_Create_length()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardType_Create_length()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardType, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardType, new string('A', 51));
+		}
 
-                [Fact]
-                public async void CardType_Update_length()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
+		[Fact]
+		public async void CardType_Update_length()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardType, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardType, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByCardNumber_Create_Exists()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+		[Fact]
+		private async void BeUniqueByCardNumber_Create_Exists()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByCardNumber_Create_Not_Exists()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(null));
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+		[Fact]
+		private async void BeUniqueByCardNumber_Create_Not_Exists()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(null));
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
+			await validator.ValidateCreateAsync(new ApiCreditCardRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CardNumber, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CardNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByCardNumber_Update_Exists()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+		[Fact]
+		private async void BeUniqueByCardNumber_Update_Exists()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CardNumber, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CardNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByCardNumber_Update_Not_Exists()
-                {
-                        Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
-                        creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(null));
-                        var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
+		[Fact]
+		private async void BeUniqueByCardNumber_Update_Not_Exists()
+		{
+			Mock<ICreditCardRepository> creditCardRepository = new Mock<ICreditCardRepository>();
+			creditCardRepository.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(null));
+			var validator = new ApiCreditCardRequestModelValidator(creditCardRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCreditCardRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CardNumber, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CardNumber, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6bfb7eacdfedefe4d388903d7b182c9c</Hash>
+    <Hash>8c34c676c57c05cedb128759751807e6</Hash>
 </Codenesium>*/

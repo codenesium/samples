@@ -7,30 +7,30 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiIllustrationRequestModel : AbstractApiRequestModel
-        {
-                public ApiIllustrationRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiIllustrationRequestModel : AbstractApiRequestModel
+	{
+		public ApiIllustrationRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string diagram,
-                        DateTime modifiedDate)
-                {
-                        this.Diagram = diagram;
-                        this.ModifiedDate = modifiedDate;
-                }
+		public virtual void SetProperties(
+			string diagram,
+			DateTime modifiedDate)
+		{
+			this.Diagram = diagram;
+			this.ModifiedDate = modifiedDate;
+		}
 
-                [JsonProperty]
-                public string Diagram { get; private set; }
+		[JsonProperty]
+		public string Diagram { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>c30a211f2a7943c7ac0176fbb94e2bab</Hash>
+    <Hash>ae43c398f37a41be068704312060dbd0</Hash>
 </Codenesium>*/

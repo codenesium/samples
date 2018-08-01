@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ScrapReasonService : AbstractScrapReasonService, IScrapReasonService
-        {
-                public ScrapReasonService(
-                        ILogger<IScrapReasonRepository> logger,
-                        IScrapReasonRepository scrapReasonRepository,
-                        IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
-                        IBOLScrapReasonMapper bolscrapReasonMapper,
-                        IDALScrapReasonMapper dalscrapReasonMapper,
-                        IBOLWorkOrderMapper bolWorkOrderMapper,
-                        IDALWorkOrderMapper dalWorkOrderMapper
-                        )
-                        : base(logger,
-                               scrapReasonRepository,
-                               scrapReasonModelValidator,
-                               bolscrapReasonMapper,
-                               dalscrapReasonMapper,
-                               bolWorkOrderMapper,
-                               dalWorkOrderMapper)
-                {
-                }
-        }
+	public partial class ScrapReasonService : AbstractScrapReasonService, IScrapReasonService
+	{
+		public ScrapReasonService(
+			ILogger<IScrapReasonRepository> logger,
+			IScrapReasonRepository scrapReasonRepository,
+			IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
+			IBOLScrapReasonMapper bolscrapReasonMapper,
+			IDALScrapReasonMapper dalscrapReasonMapper,
+			IBOLWorkOrderMapper bolWorkOrderMapper,
+			IDALWorkOrderMapper dalWorkOrderMapper
+			)
+			: base(logger,
+			       scrapReasonRepository,
+			       scrapReasonModelValidator,
+			       bolscrapReasonMapper,
+			       dalscrapReasonMapper,
+			       bolWorkOrderMapper,
+			       dalWorkOrderMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f95f2587ba144ca1a80cc4885b17969b</Hash>
+    <Hash>74921b039c5e459323e912b77e6af6eb</Hash>
 </Codenesium>*/

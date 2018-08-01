@@ -1,14 +1,14 @@
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiVoteTypesModelMapper : AbstractApiVoteTypesModelMapper, IApiVoteTypesModelMapper
-        {
-                public ApiVoteTypesModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiVoteTypesModelMapper : AbstractApiVoteTypesModelMapper, IApiVoteTypesModelMapper
+	{
+		public ApiVoteTypesModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>523a49f63753998c0653ece537c1ce9b</Hash>
+    <Hash>24aefa23cbac6bede8a06f004ba83c18</Hash>
 </Codenesium>*/

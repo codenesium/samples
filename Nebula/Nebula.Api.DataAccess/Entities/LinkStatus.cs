@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace NebulaNS.Api.DataAccess
 {
-        [Table("LinkStatus", Schema="dbo")]
-        public partial class LinkStatus : AbstractEntity
-        {
-                public LinkStatus()
-                {
-                }
+	[Table("LinkStatus", Schema="dbo")]
+	public partial class LinkStatus : AbstractEntity
+	{
+		public LinkStatus()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
-        }
+		[Column("name")]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>3339b971d6450bb9b728a9f07cb7e3fb</Hash>
+    <Hash>c5d6bef7e7cf18e1a23b0eb21d3f2479</Hash>
 </Codenesium>*/

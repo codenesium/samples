@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IBOLStudentMapper
-        {
-                BOStudent MapModelToBO(
-                        int id,
-                        ApiStudentRequestModel model);
+	public interface IBOLStudentMapper
+	{
+		BOStudent MapModelToBO(
+			int id,
+			ApiStudentRequestModel model);
 
-                ApiStudentResponseModel MapBOToModel(
-                        BOStudent boStudent);
+		ApiStudentResponseModel MapBOToModel(
+			BOStudent boStudent);
 
-                List<ApiStudentResponseModel> MapBOToModel(
-                        List<BOStudent> items);
-        }
+		List<ApiStudentResponseModel> MapBOToModel(
+			List<BOStudent> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0e866c08a3a6beb20fc3dce33fd663ca</Hash>
+    <Hash>0bfe488f3f94d5dfa0b02ba25dbf6f61</Hash>
 </Codenesium>*/

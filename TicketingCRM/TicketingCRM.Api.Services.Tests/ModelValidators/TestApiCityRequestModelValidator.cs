@@ -15,91 +15,91 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "City")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCityRequestModelValidatorTest
-        {
-                public ApiCityRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "City")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCityRequestModelValidatorTest
+	{
+		public ApiCityRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCityRequestModel());
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void ProvinceId_Create_Valid_Reference()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+		[Fact]
+		public async void ProvinceId_Create_Valid_Reference()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCityRequestModel());
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Create_Invalid_Reference()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+		[Fact]
+		public async void ProvinceId_Create_Invalid_Reference()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCityRequestModel());
+			await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Update_Valid_Reference()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+		[Fact]
+		public async void ProvinceId_Update_Valid_Reference()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Update_Invalid_Reference()
-                {
-                        Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-                        cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+		[Fact]
+		public async void ProvinceId_Update_Invalid_Reference()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
-                        var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b02f1df2964516638d41baa80656cc4f</Hash>
+    <Hash>4bc50037c3dd164273d31bbcdb90f04d</Hash>
 </Codenesium>*/

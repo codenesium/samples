@@ -9,34 +9,34 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiInvitationRequestModelValidator : AbstractValidator<ApiInvitationRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiInvitationRequestModelValidator : AbstractValidator<ApiInvitationRequestModel>
+	{
+		private string existingRecordId;
 
-                private IInvitationRepository invitationRepository;
+		private IInvitationRepository invitationRepository;
 
-                public AbstractApiInvitationRequestModelValidator(IInvitationRepository invitationRepository)
-                {
-                        this.invitationRepository = invitationRepository;
-                }
+		public AbstractApiInvitationRequestModelValidator(IInvitationRepository invitationRepository)
+		{
+			this.invitationRepository = invitationRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiInvitationRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiInvitationRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void InvitationCodeRules()
-                {
-                        this.RuleFor(x => x.InvitationCode).Length(0, 200);
-                }
+		public virtual void InvitationCodeRules()
+		{
+			this.RuleFor(x => x.InvitationCode).Length(0, 200);
+		}
 
-                public virtual void JSONRules()
-                {
-                }
-        }
+		public virtual void JSONRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cd0a5fc99b41eec2b26ca16945718549</Hash>
+    <Hash>6ae83ae4eb2735e62b5fe835917b1784</Hash>
 </Codenesium>*/

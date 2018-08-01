@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IApiFileTypeRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiFileTypeRequestModel model);
+	public interface IApiFileTypeRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiFileTypeRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiFileTypeRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiFileTypeRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c686e936c124a47f9f9cd48d30cfd789</Hash>
+    <Hash>1c2284cb5d8e7735fae697cf935f429f</Hash>
 </Codenesium>*/

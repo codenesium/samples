@@ -5,45 +5,45 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class BOLAbstractSchemaBPersonMapper
-        {
-                public virtual BOSchemaBPerson MapModelToBO(
-                        int id,
-                        ApiSchemaBPersonRequestModel model
-                        )
-                {
-                        BOSchemaBPerson boSchemaBPerson = new BOSchemaBPerson();
-                        boSchemaBPerson.SetProperties(
-                                id,
-                                model.Name);
-                        return boSchemaBPerson;
-                }
+	public abstract class BOLAbstractSchemaBPersonMapper
+	{
+		public virtual BOSchemaBPerson MapModelToBO(
+			int id,
+			ApiSchemaBPersonRequestModel model
+			)
+		{
+			BOSchemaBPerson boSchemaBPerson = new BOSchemaBPerson();
+			boSchemaBPerson.SetProperties(
+				id,
+				model.Name);
+			return boSchemaBPerson;
+		}
 
-                public virtual ApiSchemaBPersonResponseModel MapBOToModel(
-                        BOSchemaBPerson boSchemaBPerson)
-                {
-                        var model = new ApiSchemaBPersonResponseModel();
+		public virtual ApiSchemaBPersonResponseModel MapBOToModel(
+			BOSchemaBPerson boSchemaBPerson)
+		{
+			var model = new ApiSchemaBPersonResponseModel();
 
-                        model.SetProperties(boSchemaBPerson.Id, boSchemaBPerson.Name);
+			model.SetProperties(boSchemaBPerson.Id, boSchemaBPerson.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiSchemaBPersonResponseModel> MapBOToModel(
-                        List<BOSchemaBPerson> items)
-                {
-                        List<ApiSchemaBPersonResponseModel> response = new List<ApiSchemaBPersonResponseModel>();
+		public virtual List<ApiSchemaBPersonResponseModel> MapBOToModel(
+			List<BOSchemaBPerson> items)
+		{
+			List<ApiSchemaBPersonResponseModel> response = new List<ApiSchemaBPersonResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4801f9810499cdb20a1473cee2ba741c</Hash>
+    <Hash>47bdda9ed2e97177a4636e7ea21b7e39</Hash>
 </Codenesium>*/

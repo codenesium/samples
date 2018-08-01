@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSpecialOfferModelMapper : AbstractApiSpecialOfferModelMapper, IApiSpecialOfferModelMapper
-        {
-                public ApiSpecialOfferModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSpecialOfferModelMapper : AbstractApiSpecialOfferModelMapper, IApiSpecialOfferModelMapper
+	{
+		public ApiSpecialOfferModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c89780becb5a58da9247042028170bb0</Hash>
+    <Hash>19ac45bb2a06b2c002e199b63048a08a</Hash>
 </Codenesium>*/

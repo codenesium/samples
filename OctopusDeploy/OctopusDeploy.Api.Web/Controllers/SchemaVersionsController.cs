@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/schemaVersions")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SchemaVersionsController : AbstractSchemaVersionsController
-        {
-                public SchemaVersionsController(
-                        ApiSettings settings,
-                        ILogger<SchemaVersionsController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISchemaVersionsService schemaVersionsService,
-                        IApiSchemaVersionsModelMapper schemaVersionsModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               schemaVersionsService,
-                               schemaVersionsModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/schemaVersions")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SchemaVersionsController : AbstractSchemaVersionsController
+	{
+		public SchemaVersionsController(
+			ApiSettings settings,
+			ILogger<SchemaVersionsController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISchemaVersionsService schemaVersionsService,
+			IApiSchemaVersionsModelMapper schemaVersionsModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       schemaVersionsService,
+			       schemaVersionsModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>64673cb5ffa9f58f68a9ccfb4fc98458</Hash>
+    <Hash>058b7625f3d4e97d2c7a691d4216d711</Hash>
 </Codenesium>*/

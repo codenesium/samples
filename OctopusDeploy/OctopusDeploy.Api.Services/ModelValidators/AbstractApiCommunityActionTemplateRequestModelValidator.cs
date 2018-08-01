@@ -9,68 +9,68 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiCommunityActionTemplateRequestModelValidator : AbstractValidator<ApiCommunityActionTemplateRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiCommunityActionTemplateRequestModelValidator : AbstractValidator<ApiCommunityActionTemplateRequestModel>
+	{
+		private string existingRecordId;
 
-                private ICommunityActionTemplateRepository communityActionTemplateRepository;
+		private ICommunityActionTemplateRepository communityActionTemplateRepository;
 
-                public AbstractApiCommunityActionTemplateRequestModelValidator(ICommunityActionTemplateRepository communityActionTemplateRepository)
-                {
-                        this.communityActionTemplateRepository = communityActionTemplateRepository;
-                }
+		public AbstractApiCommunityActionTemplateRequestModelValidator(ICommunityActionTemplateRepository communityActionTemplateRepository)
+		{
+			this.communityActionTemplateRepository = communityActionTemplateRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiCommunityActionTemplateRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiCommunityActionTemplateRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ExternalIdRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
-                }
+		public virtual void ExternalIdRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                private async Task<bool> BeUniqueByExternalId(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
-                {
-                        CommunityActionTemplate record = await this.communityActionTemplateRepository.ByExternalId(model.ExternalId);
+		private async Task<bool> BeUniqueByExternalId(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
+		{
+			CommunityActionTemplate record = await this.communityActionTemplateRepository.ByExternalId(model.ExternalId);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
-                private async Task<bool> BeUniqueByName(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
-                {
-                        CommunityActionTemplate record = await this.communityActionTemplateRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
+		{
+			CommunityActionTemplate record = await this.communityActionTemplateRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4b4807209e9e6fb3af683e9312171c4f</Hash>
+    <Hash>c6871d8100234a6841efb0e848711407</Hash>
 </Codenesium>*/

@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Team")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTeamRequestModelValidatorTest
-        {
-                public ApiTeamRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Team")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTeamRequestModelValidatorTest
+	{
+		public ApiTeamRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Team()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Team()));
 
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Team()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Team()));
 
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-                        teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
-                        var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>248a0a10095232d87da51eed1967d16d</Hash>
+    <Hash>0e1203d0732b24b42cdfeaabaf7c384f</Hash>
 </Codenesium>*/

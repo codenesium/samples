@@ -9,63 +9,63 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiActionTemplateRequestModelValidator : AbstractValidator<ApiActionTemplateRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiActionTemplateRequestModelValidator : AbstractValidator<ApiActionTemplateRequestModel>
+	{
+		private string existingRecordId;
 
-                private IActionTemplateRepository actionTemplateRepository;
+		private IActionTemplateRepository actionTemplateRepository;
 
-                public AbstractApiActionTemplateRequestModelValidator(IActionTemplateRepository actionTemplateRepository)
-                {
-                        this.actionTemplateRepository = actionTemplateRepository;
-                }
+		public AbstractApiActionTemplateRequestModelValidator(IActionTemplateRepository actionTemplateRepository)
+		{
+			this.actionTemplateRepository = actionTemplateRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiActionTemplateRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiActionTemplateRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ActionTypeRules()
-                {
-                        this.RuleFor(x => x.ActionType).Length(0, 50);
-                }
+		public virtual void ActionTypeRules()
+		{
+			this.RuleFor(x => x.ActionType).Length(0, 50);
+		}
 
-                public virtual void CommunityActionTemplateIdRules()
-                {
-                        this.RuleFor(x => x.CommunityActionTemplateId).Length(0, 50);
-                }
+		public virtual void CommunityActionTemplateIdRules()
+		{
+			this.RuleFor(x => x.CommunityActionTemplateId).Length(0, 50);
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                public virtual void VersionRules()
-                {
-                }
+		public virtual void VersionRules()
+		{
+		}
 
-                private async Task<bool> BeUniqueByName(ApiActionTemplateRequestModel model,  CancellationToken cancellationToken)
-                {
-                        ActionTemplate record = await this.actionTemplateRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiActionTemplateRequestModel model,  CancellationToken cancellationToken)
+		{
+			ActionTemplate record = await this.actionTemplateRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ffe0e79911e697e7890287f65b7f51ec</Hash>
+    <Hash>4ba3bcb8d304fd99f16fb6a0bb64e988</Hash>
 </Codenesium>*/

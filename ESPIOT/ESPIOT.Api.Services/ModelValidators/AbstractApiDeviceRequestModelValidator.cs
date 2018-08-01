@@ -9,49 +9,49 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class AbstractApiDeviceRequestModelValidator : AbstractValidator<ApiDeviceRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiDeviceRequestModelValidator : AbstractValidator<ApiDeviceRequestModel>
+	{
+		private int existingRecordId;
 
-                private IDeviceRepository deviceRepository;
+		private IDeviceRepository deviceRepository;
 
-                public AbstractApiDeviceRequestModelValidator(IDeviceRepository deviceRepository)
-                {
-                        this.deviceRepository = deviceRepository;
-                }
+		public AbstractApiDeviceRequestModelValidator(IDeviceRepository deviceRepository)
+		{
+			this.deviceRepository = deviceRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiDeviceRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiDeviceRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 90);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 90);
+		}
 
-                public virtual void PublicIdRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => x?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
-                }
+		public virtual void PublicIdRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => x?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
+		}
 
-                private async Task<bool> BeUniqueByPublicId(ApiDeviceRequestModel model,  CancellationToken cancellationToken)
-                {
-                        Device record = await this.deviceRepository.ByPublicId(model.PublicId);
+		private async Task<bool> BeUniqueByPublicId(ApiDeviceRequestModel model,  CancellationToken cancellationToken)
+		{
+			Device record = await this.deviceRepository.ByPublicId(model.PublicId);
 
-                        if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b644a5c3fb461538d219a2bef800fe81</Hash>
+    <Hash>bb7245073197391a98ddcd9aa1a3c68d</Hash>
 </Codenesium>*/

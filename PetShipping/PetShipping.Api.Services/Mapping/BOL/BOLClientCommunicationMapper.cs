@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOLClientCommunicationMapper : BOLAbstractClientCommunicationMapper, IBOLClientCommunicationMapper
-        {
-                public BOLClientCommunicationMapper()
-                {
-                }
-        }
+	public partial class BOLClientCommunicationMapper : BOLAbstractClientCommunicationMapper, IBOLClientCommunicationMapper
+	{
+		public BOLClientCommunicationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a059e1140b5d65764ea5d58e44f6ea7d</Hash>
+    <Hash>1eb4462e6c3e519ab095f08e01b0b8b2</Hash>
 </Codenesium>*/

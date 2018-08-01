@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALStateProvinceMapper
-        {
-                StateProvince MapBOToEF(
-                        BOStateProvince bo);
+	public interface IDALStateProvinceMapper
+	{
+		StateProvince MapBOToEF(
+			BOStateProvince bo);
 
-                BOStateProvince MapEFToBO(
-                        StateProvince efStateProvince);
+		BOStateProvince MapEFToBO(
+			StateProvince efStateProvince);
 
-                List<BOStateProvince> MapEFToBO(
-                        List<StateProvince> records);
-        }
+		List<BOStateProvince> MapEFToBO(
+			List<StateProvince> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9ca5f255e24f4982fc6dd28a46162f23</Hash>
+    <Hash>0c5d3d67c9116bef88d529afc02b1f93</Hash>
 </Codenesium>*/

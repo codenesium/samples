@@ -5,15 +5,15 @@ using System.Text;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>836e3f4eca33e3709e7e06d8d75f9681</Hash>
+    <Hash>70a181a7570800558f4f10d23f4c8a42</Hash>
 </Codenesium>*/

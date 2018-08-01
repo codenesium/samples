@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesTerritoryModelMapper : AbstractApiSalesTerritoryModelMapper, IApiSalesTerritoryModelMapper
-        {
-                public ApiSalesTerritoryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSalesTerritoryModelMapper : AbstractApiSalesTerritoryModelMapper, IApiSalesTerritoryModelMapper
+	{
+		public ApiSalesTerritoryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b3156be6438cd0561f34997c5c69371d</Hash>
+    <Hash>8cdfda997c7d943ca60626c00c41e3c7</Hash>
 </Codenesium>*/

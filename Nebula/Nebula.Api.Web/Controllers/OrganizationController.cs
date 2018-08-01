@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/organizations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class OrganizationController : AbstractOrganizationController
-        {
-                public OrganizationController(
-                        ApiSettings settings,
-                        ILogger<OrganizationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IOrganizationService organizationService,
-                        IApiOrganizationModelMapper organizationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               organizationService,
-                               organizationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/organizations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class OrganizationController : AbstractOrganizationController
+	{
+		public OrganizationController(
+			ApiSettings settings,
+			ILogger<OrganizationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IOrganizationService organizationService,
+			IApiOrganizationModelMapper organizationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       organizationService,
+			       organizationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f3d6cca85155bb09b6956ae2562ed7b9</Hash>
+    <Hash>2f52c04465c17198bcbf986995aa0d7e</Hash>
 </Codenesium>*/

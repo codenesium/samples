@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiCultureModelMapper : AbstractApiCultureModelMapper, IApiCultureModelMapper
-        {
-                public ApiCultureModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiCultureModelMapper : AbstractApiCultureModelMapper, IApiCultureModelMapper
+	{
+		public ApiCultureModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>76073ef843e5e257a16e65b978cf42fa</Hash>
+    <Hash>8cf7122fbce979679d9939b02ab6f585</Hash>
 </Codenesium>*/

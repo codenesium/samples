@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-        public interface IApiTestAllFieldTypeModelMapper
-        {
-                ApiTestAllFieldTypeResponseModel MapRequestToResponse(
-                        int id,
-                        ApiTestAllFieldTypeRequestModel request);
+	public interface IApiTestAllFieldTypeModelMapper
+	{
+		ApiTestAllFieldTypeResponseModel MapRequestToResponse(
+			int id,
+			ApiTestAllFieldTypeRequestModel request);
 
-                ApiTestAllFieldTypeRequestModel MapResponseToRequest(
-                        ApiTestAllFieldTypeResponseModel response);
+		ApiTestAllFieldTypeRequestModel MapResponseToRequest(
+			ApiTestAllFieldTypeResponseModel response);
 
-                JsonPatchDocument<ApiTestAllFieldTypeRequestModel> CreatePatch(ApiTestAllFieldTypeRequestModel model);
-        }
+		JsonPatchDocument<ApiTestAllFieldTypeRequestModel> CreatePatch(ApiTestAllFieldTypeRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6dbbbf26d7b3fb1e08128504b2d07eb5</Hash>
+    <Hash>d8caef4fb8fcf22140eb4b4a3723aabf</Hash>
 </Codenesium>*/

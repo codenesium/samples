@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FileServiceNS.Api.Web
 {
-        [Route("api/buckets")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class BucketController : AbstractBucketController
-        {
-                public BucketController(
-                        ApiSettings settings,
-                        ILogger<BucketController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IBucketService bucketService,
-                        IApiBucketModelMapper bucketModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               bucketService,
-                               bucketModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/buckets")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class BucketController : AbstractBucketController
+	{
+		public BucketController(
+			ApiSettings settings,
+			ILogger<BucketController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IBucketService bucketService,
+			IApiBucketModelMapper bucketModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       bucketService,
+			       bucketModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7558a8fbf22339012e28dcddc4d11071</Hash>
+    <Hash>0dca8b3b91caf0664a7aa2c65bdb7f63</Hash>
 </Codenesium>*/

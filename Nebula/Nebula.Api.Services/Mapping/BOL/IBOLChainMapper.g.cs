@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IBOLChainMapper
-        {
-                BOChain MapModelToBO(
-                        int id,
-                        ApiChainRequestModel model);
+	public interface IBOLChainMapper
+	{
+		BOChain MapModelToBO(
+			int id,
+			ApiChainRequestModel model);
 
-                ApiChainResponseModel MapBOToModel(
-                        BOChain boChain);
+		ApiChainResponseModel MapBOToModel(
+			BOChain boChain);
 
-                List<ApiChainResponseModel> MapBOToModel(
-                        List<BOChain> items);
-        }
+		List<ApiChainResponseModel> MapBOToModel(
+			List<BOChain> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4a7a44832e4ed5255e6c13ef7db2099f</Hash>
+    <Hash>2cfadf993d72d9b42915819e3b0ed254</Hash>
 </Codenesium>*/

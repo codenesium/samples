@@ -15,210 +15,210 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Web
 {
-        public abstract class AbstractPostTypesController : AbstractApiController
-        {
-                protected IPostTypesService PostTypesService { get; private set; }
+	public abstract class AbstractPostTypesController : AbstractApiController
+	{
+		protected IPostTypesService PostTypesService { get; private set; }
 
-                protected IApiPostTypesModelMapper PostTypesModelMapper { get; private set; }
+		protected IApiPostTypesModelMapper PostTypesModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractPostTypesController(
-                        ApiSettings settings,
-                        ILogger<AbstractPostTypesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPostTypesService postTypesService,
-                        IApiPostTypesModelMapper postTypesModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.PostTypesService = postTypesService;
-                        this.PostTypesModelMapper = postTypesModelMapper;
-                }
+		public AbstractPostTypesController(
+			ApiSettings settings,
+			ILogger<AbstractPostTypesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPostTypesService postTypesService,
+			IApiPostTypesModelMapper postTypesModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.PostTypesService = postTypesService;
+			this.PostTypesModelMapper = postTypesModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiPostTypesResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPostTypesResponseModel> response = await this.PostTypesService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPostTypesResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiPostTypesResponseModel> response = await this.PostTypesService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiPostTypesResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiPostTypesResponseModel response = await this.PostTypesService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiPostTypesResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiPostTypesResponseModel response = await this.PostTypesService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiPostTypesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostTypesRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiPostTypesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostTypesRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiPostTypesResponseModel> records = new List<ApiPostTypesResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Create(model);
+			List<ApiPostTypesResponseModel> records = new List<ApiPostTypesResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiPostTypesResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPostTypesRequestModel model)
-                {
-                        CreateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiPostTypesResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiPostTypesRequestModel model)
+		{
+			CreateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostTypes/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostTypes/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostTypesRequestModel> patch)
-                {
-                        ApiPostTypesResponseModel record = await this.PostTypesService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostTypesRequestModel> patch)
+		{
+			ApiPostTypesResponseModel record = await this.PostTypesService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiPostTypesRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiPostTypesRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, model);
+				UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostTypesRequestModel model)
-                {
-                        ApiPostTypesRequestModel request = await this.PatchModel(id, this.PostTypesModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostTypesResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostTypesRequestModel model)
+		{
+			ApiPostTypesRequestModel request = await this.PatchModel(id, this.PostTypesModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiPostTypesResponseModel> result = await this.PostTypesService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.PostTypesService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.PostTypesService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                private async Task<ApiPostTypesRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostTypesRequestModel> patch)
-                {
-                        var record = await this.PostTypesService.Get(id);
+		private async Task<ApiPostTypesRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostTypesRequestModel> patch)
+		{
+			var record = await this.PostTypesService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiPostTypesRequestModel request = this.PostTypesModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiPostTypesRequestModel request = this.PostTypesModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>518d8766ff654f4af5dc6572454902b6</Hash>
+    <Hash>92dfd491c3dd67dd4ebab7ab219869e4</Hash>
 </Codenesium>*/

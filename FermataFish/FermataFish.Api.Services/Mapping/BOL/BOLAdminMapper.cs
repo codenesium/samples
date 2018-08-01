@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOLAdminMapper : BOLAbstractAdminMapper, IBOLAdminMapper
-        {
-                public BOLAdminMapper()
-                {
-                }
-        }
+	public partial class BOLAdminMapper : BOLAbstractAdminMapper, IBOLAdminMapper
+	{
+		public BOLAdminMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>772735a15d1d7e19d364a1e6f67058f6</Hash>
+    <Hash>481dcbe4cf4b33f720d811e0335ef10b</Hash>
 </Codenesium>*/

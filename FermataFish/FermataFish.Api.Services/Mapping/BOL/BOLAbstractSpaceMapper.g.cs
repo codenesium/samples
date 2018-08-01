@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class BOLAbstractSpaceMapper
-        {
-                public virtual BOSpace MapModelToBO(
-                        int id,
-                        ApiSpaceRequestModel model
-                        )
-                {
-                        BOSpace boSpace = new BOSpace();
-                        boSpace.SetProperties(
-                                id,
-                                model.Description,
-                                model.Name,
-                                model.StudioId);
-                        return boSpace;
-                }
+	public abstract class BOLAbstractSpaceMapper
+	{
+		public virtual BOSpace MapModelToBO(
+			int id,
+			ApiSpaceRequestModel model
+			)
+		{
+			BOSpace boSpace = new BOSpace();
+			boSpace.SetProperties(
+				id,
+				model.Description,
+				model.Name,
+				model.StudioId);
+			return boSpace;
+		}
 
-                public virtual ApiSpaceResponseModel MapBOToModel(
-                        BOSpace boSpace)
-                {
-                        var model = new ApiSpaceResponseModel();
+		public virtual ApiSpaceResponseModel MapBOToModel(
+			BOSpace boSpace)
+		{
+			var model = new ApiSpaceResponseModel();
 
-                        model.SetProperties(boSpace.Id, boSpace.Description, boSpace.Name, boSpace.StudioId);
+			model.SetProperties(boSpace.Id, boSpace.Description, boSpace.Name, boSpace.StudioId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiSpaceResponseModel> MapBOToModel(
-                        List<BOSpace> items)
-                {
-                        List<ApiSpaceResponseModel> response = new List<ApiSpaceResponseModel>();
+		public virtual List<ApiSpaceResponseModel> MapBOToModel(
+			List<BOSpace> items)
+		{
+			List<ApiSpaceResponseModel> response = new List<ApiSpaceResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f2ca2188e9fbf3e3b841cbdf5b85c0c</Hash>
+    <Hash>d834684e8e3a3ad4bb1168de3e86cd18</Hash>
 </Codenesium>*/

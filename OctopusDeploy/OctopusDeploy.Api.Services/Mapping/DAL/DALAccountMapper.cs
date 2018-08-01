@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALAccountMapper : DALAbstractAccountMapper, IDALAccountMapper
-        {
-                public DALAccountMapper()
-                {
-                }
-        }
+	public partial class DALAccountMapper : DALAbstractAccountMapper, IDALAccountMapper
+	{
+		public DALAccountMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b50875e548877ec0b177527ee656f2c4</Hash>
+    <Hash>a8f2a32d422355ae115e4dfb7ef23aea</Hash>
 </Codenesium>*/

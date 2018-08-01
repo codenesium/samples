@@ -26,6 +26,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
+using System.Net;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FermataFishNS.Api.DataAccess;
@@ -281,6 +286,11 @@ namespace FermataFishNS.Api.Web
             
 			loggerFactory.AddDebug();
 
+            app.UseExceptionHandler(new ExceptionHandlerOptions
+            {
+                ExceptionHandler = new ExceptionMiddleWare(env, loggerFactory).Invoke
+            });
+
 		    this.MigrateDatabase(context);
 
 			this.EnableSecurity(app);
@@ -296,11 +306,6 @@ namespace FermataFishNS.Api.Web
             });
 
             app.UseMvc();
-
-			if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             // If you want to dispose of resources that have been resolved in the
             // application container, register for the "ApplicationStopped" event.
@@ -339,4 +344,80 @@ namespace FermataFishNS.Api.Web
             return info;
         }
     }
+
+	public static class ExceptionMiddleWareExtentions
+    {
+        public static IApplicationBuilder UseExceptionMiddleWare(
+            this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ExceptionMiddleWare>();
+        }
+    }
+
+	/// <summary>
+    ///  This middleware lets us return errors as a json object intead of html.
+    /// </summary>
+    public class ExceptionMiddleWare
+    {
+		private IHostingEnvironment env;
+
+        private ILogger logger;
+
+        public ExceptionMiddleWare(IHostingEnvironment env, ILoggerFactory loggerFactory)
+		{
+			this.env = env;
+            this.logger = loggerFactory.CreateLogger<ExceptionMiddleWare>();
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            Exception ex = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+            if (ex == null)
+            {
+                return;
+            }
+            else
+            {
+                this.logger.LogError(ex, null);
+
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                ApiError error = new ApiError();
+
+                if (this.env.IsDevelopment())
+                {
+					error.SetProperties(ex.Message, ex.Source, ex.StackTrace);
+                }
+                else
+                {
+                    error.SetProperties("Internal Server Error", string.Empty, string.Empty);
+                }
+
+                context.Response.ContentType = "application/json";
+
+                using (var writer = new StreamWriter(context.Response.Body))
+                {
+                    new JsonSerializer().Serialize(writer, error);
+                    await writer.FlushAsync().ConfigureAwait(false);
+                }
+            }
+        }
+	}
+
+	public class ApiError
+	{
+		public string Message { get; private set; }
+
+		public string Source { get; private set; }
+
+		public string StackTrace { get; private set; }
+
+		public void SetProperties(string message, string source, string stackTrace)
+		{
+			this.Message = message;
+			this.Source = source;
+			this.StackTrace = stackTrace;
+		}
+	}
 }

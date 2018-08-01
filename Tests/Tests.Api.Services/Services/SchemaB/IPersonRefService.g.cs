@@ -7,22 +7,22 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IPersonRefService
-        {
-                Task<CreateResponse<ApiPersonRefResponseModel>> Create(
-                        ApiPersonRefRequestModel model);
+	public interface IPersonRefService
+	{
+		Task<CreateResponse<ApiPersonRefResponseModel>> Create(
+			ApiPersonRefRequestModel model);
 
-                Task<UpdateResponse<ApiPersonRefResponseModel>> Update(int id,
-                                                                        ApiPersonRefRequestModel model);
+		Task<UpdateResponse<ApiPersonRefResponseModel>> Update(int id,
+		                                                        ApiPersonRefRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiPersonRefResponseModel> Get(int id);
+		Task<ApiPersonRefResponseModel> Get(int id);
 
-                Task<List<ApiPersonRefResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiPersonRefResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>de7e47fcf6d5c5f6caee3b6882bafeb6</Hash>
+    <Hash>5339fbe6e290d29fb080ceb446b3755d</Hash>
 </Codenesium>*/

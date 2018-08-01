@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/lifecycles")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LifecycleController : AbstractLifecycleController
-        {
-                public LifecycleController(
-                        ApiSettings settings,
-                        ILogger<LifecycleController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILifecycleService lifecycleService,
-                        IApiLifecycleModelMapper lifecycleModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               lifecycleService,
-                               lifecycleModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/lifecycles")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LifecycleController : AbstractLifecycleController
+	{
+		public LifecycleController(
+			ApiSettings settings,
+			ILogger<LifecycleController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILifecycleService lifecycleService,
+			IApiLifecycleModelMapper lifecycleModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       lifecycleService,
+			       lifecycleModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>03b8556d5d843f0689688b82f55f5f14</Hash>
+    <Hash>c28b367a191ab6229e0de3811a75dcd3</Hash>
 </Codenesium>*/

@@ -5,15 +5,15 @@ using System.Text;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>145002199db1fbe2ae529f943dc984f6</Hash>
+    <Hash>30b4eb35bafea95ef92193a584d8f98b</Hash>
 </Codenesium>*/

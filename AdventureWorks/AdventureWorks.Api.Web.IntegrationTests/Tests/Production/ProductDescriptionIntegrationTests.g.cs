@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ProductDescription")]
-        [Trait("Area", "Integration")]
-        public class ProductDescriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ProductDescriptionIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ProductDescription")]
+	[Trait("Area", "Integration")]
+	public class ProductDescriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ProductDescriptionIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiProductDescriptionModelMapper mapper = new ApiProductDescriptionModelMapper();
+			ApiProductDescriptionModelMapper mapper = new ApiProductDescriptionModelMapper();
 
-                        UpdateResponse<ApiProductDescriptionResponseModel> updateResponse = await this.Client.ProductDescriptionUpdateAsync(model.ProductDescriptionID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductDescriptionResponseModel> updateResponse = await this.Client.ProductDescriptionUpdateAsync(model.ProductDescriptionID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ProductDescriptionDeleteAsync(model.ProductDescriptionID);
+			await this.Client.ProductDescriptionDeleteAsync(model.ProductDescriptionID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiProductDescriptionResponseModel response = await this.Client.ProductDescriptionGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiProductDescriptionResponseModel response = await this.Client.ProductDescriptionGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiProductDescriptionResponseModel> response = await this.Client.ProductDescriptionAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiProductDescriptionResponseModel> response = await this.Client.ProductDescriptionAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiProductDescriptionResponseModel> CreateRecord()
-                {
-                        var model = new ApiProductDescriptionRequestModel();
-                        model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-                        CreateResponse<ApiProductDescriptionResponseModel> result = await this.Client.ProductDescriptionCreateAsync(model);
+		private async Task<ApiProductDescriptionResponseModel> CreateRecord()
+		{
+			var model = new ApiProductDescriptionRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			CreateResponse<ApiProductDescriptionResponseModel> result = await this.Client.ProductDescriptionCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ProductDescriptionDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ProductDescriptionDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0da7dae42019bd83708501fd3c4e06f3</Hash>
+    <Hash>6cce3c9bb4043785fcca967ef70e2b1f</Hash>
 </Codenesium>*/

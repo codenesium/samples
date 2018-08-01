@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALAWBuildVersionMapper : DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
-        {
-                public DALAWBuildVersionMapper()
-                {
-                }
-        }
+	public partial class DALAWBuildVersionMapper : DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
+	{
+		public DALAWBuildVersionMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>351dd8965778b50b8159e3deb0a23f0c</Hash>
+    <Hash>dc01336ee2faa13150aa46284d6ef39e</Hash>
 </Codenesium>*/

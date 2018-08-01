@@ -9,41 +9,41 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductCostHistoryRequestModelValidator : AbstractValidator<ApiProductCostHistoryRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiProductCostHistoryRequestModelValidator : AbstractValidator<ApiProductCostHistoryRequestModel>
+	{
+		private int existingRecordId;
 
-                private IProductCostHistoryRepository productCostHistoryRepository;
+		private IProductCostHistoryRepository productCostHistoryRepository;
 
-                public AbstractApiProductCostHistoryRequestModelValidator(IProductCostHistoryRepository productCostHistoryRepository)
-                {
-                        this.productCostHistoryRepository = productCostHistoryRepository;
-                }
+		public AbstractApiProductCostHistoryRequestModelValidator(IProductCostHistoryRepository productCostHistoryRepository)
+		{
+			this.productCostHistoryRepository = productCostHistoryRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiProductCostHistoryRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiProductCostHistoryRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void EndDateRules()
-                {
-                }
+		public virtual void EndDateRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void StandardCostRules()
-                {
-                }
+		public virtual void StandardCostRules()
+		{
+		}
 
-                public virtual void StartDateRules()
-                {
-                }
-        }
+		public virtual void StartDateRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>95983cb9442b9c033c670fca1818546f</Hash>
+    <Hash>f0213f4ffbe7e68cfcddcd9a92408d7b</Hash>
 </Codenesium>*/

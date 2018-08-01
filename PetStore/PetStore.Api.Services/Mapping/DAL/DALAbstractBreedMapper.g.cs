@@ -6,44 +6,44 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class DALAbstractBreedMapper
-        {
-                public virtual Breed MapBOToEF(
-                        BOBreed bo)
-                {
-                        Breed efBreed = new Breed();
-                        efBreed.SetProperties(
-                                bo.Id,
-                                bo.Name);
-                        return efBreed;
-                }
+	public abstract class DALAbstractBreedMapper
+	{
+		public virtual Breed MapBOToEF(
+			BOBreed bo)
+		{
+			Breed efBreed = new Breed();
+			efBreed.SetProperties(
+				bo.Id,
+				bo.Name);
+			return efBreed;
+		}
 
-                public virtual BOBreed MapEFToBO(
-                        Breed ef)
-                {
-                        var bo = new BOBreed();
+		public virtual BOBreed MapEFToBO(
+			Breed ef)
+		{
+			var bo = new BOBreed();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOBreed> MapEFToBO(
-                        List<Breed> records)
-                {
-                        List<BOBreed> response = new List<BOBreed>();
+		public virtual List<BOBreed> MapEFToBO(
+			List<Breed> records)
+		{
+			List<BOBreed> response = new List<BOBreed>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>387be5b7fe94b6b58b8d49acbaec3f30</Hash>
+    <Hash>b427c6d970df80ba5ec809436b30c221</Hash>
 </Codenesium>*/

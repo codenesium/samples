@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class ChannelService : AbstractChannelService, IChannelService
-        {
-                public ChannelService(
-                        ILogger<IChannelRepository> logger,
-                        IChannelRepository channelRepository,
-                        IApiChannelRequestModelValidator channelModelValidator,
-                        IBOLChannelMapper bolchannelMapper,
-                        IDALChannelMapper dalchannelMapper
-                        )
-                        : base(logger,
-                               channelRepository,
-                               channelModelValidator,
-                               bolchannelMapper,
-                               dalchannelMapper)
-                {
-                }
-        }
+	public partial class ChannelService : AbstractChannelService, IChannelService
+	{
+		public ChannelService(
+			ILogger<IChannelRepository> logger,
+			IChannelRepository channelRepository,
+			IApiChannelRequestModelValidator channelModelValidator,
+			IBOLChannelMapper bolchannelMapper,
+			IDALChannelMapper dalchannelMapper
+			)
+			: base(logger,
+			       channelRepository,
+			       channelModelValidator,
+			       bolchannelMapper,
+			       dalchannelMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c6722f4eceed1b8e1e54d8bae73e2c9a</Hash>
+    <Hash>a298545cbc5f67895bf6b2e76ed0afca</Hash>
 </Codenesium>*/

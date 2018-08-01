@@ -15,67 +15,67 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pipeline")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPipelineRequestModelValidatorTest
-        {
-                public ApiPipelineRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pipeline")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPipelineRequestModelValidatorTest
+	{
+		public ApiPipelineRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void PipelineStatusId_Create_Valid_Reference()
-                {
-                        Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-                        pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
+		[Fact]
+		public async void PipelineStatusId_Create_Valid_Reference()
+		{
+			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
+			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
 
-                        var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPipelineRequestModel());
+			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPipelineRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStatusId_Create_Invalid_Reference()
-                {
-                        Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-                        pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
+		[Fact]
+		public async void PipelineStatusId_Create_Invalid_Reference()
+		{
+			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
+			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
 
-                        var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
+			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiPipelineRequestModel());
+			await validator.ValidateCreateAsync(new ApiPipelineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStatusId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStatusId_Update_Valid_Reference()
-                {
-                        Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-                        pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
+		[Fact]
+		public async void PipelineStatusId_Update_Valid_Reference()
+		{
+			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
+			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
 
-                        var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineRequestModel());
+			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStatusId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStatusId, 1);
+		}
 
-                [Fact]
-                public async void PipelineStatusId_Update_Invalid_Reference()
-                {
-                        Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-                        pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
+		[Fact]
+		public async void PipelineStatusId_Update_Invalid_Reference()
+		{
+			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
+			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
 
-                        var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
+			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PipelineStatusId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PipelineStatusId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>daaeaca20e97594e0901a19f1052ed82</Hash>
+    <Hash>36dce84d80f48268a3f4d76ef4ff8f15</Hash>
 </Codenesium>*/

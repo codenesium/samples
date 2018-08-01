@@ -15,41 +15,41 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VoteTypes")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiVoteTypesRequestModelValidatorTest
-        {
-                public ApiVoteTypesRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VoteTypes")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiVoteTypesRequestModelValidatorTest
+	{
+		public ApiVoteTypesRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
-                        voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
+			voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
 
-                        var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVoteTypesRequestModel());
+			var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVoteTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
-                        voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IVoteTypesRepository> voteTypesRepository = new Mock<IVoteTypesRepository>();
+			voteTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteTypes()));
 
-                        var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVoteTypesRequestModel());
+			var validator = new ApiVoteTypesRequestModelValidator(voteTypesRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVoteTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>89700630045e6e5ecb3485fafa91b36a</Hash>
+    <Hash>0051042d3fd342c8308f4f4e07004054</Hash>
 </Codenesium>*/

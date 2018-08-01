@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/chains")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ChainController : AbstractChainController
-        {
-                public ChainController(
-                        ApiSettings settings,
-                        ILogger<ChainController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IChainService chainService,
-                        IApiChainModelMapper chainModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               chainService,
-                               chainModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/chains")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ChainController : AbstractChainController
+	{
+		public ChainController(
+			ApiSettings settings,
+			ILogger<ChainController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IChainService chainService,
+			IApiChainModelMapper chainModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       chainService,
+			       chainModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>04e7dec8003863efce494fc227b6bb7b</Hash>
+    <Hash>dcd16875d4cd9ab717192b51eac68513</Hash>
 </Codenesium>*/

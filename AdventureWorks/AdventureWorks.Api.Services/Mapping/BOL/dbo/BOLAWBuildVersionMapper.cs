@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLAWBuildVersionMapper : BOLAbstractAWBuildVersionMapper, IBOLAWBuildVersionMapper
-        {
-                public BOLAWBuildVersionMapper()
-                {
-                }
-        }
+	public partial class BOLAWBuildVersionMapper : BOLAbstractAWBuildVersionMapper, IBOLAWBuildVersionMapper
+	{
+		public BOLAWBuildVersionMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e256aa10b199bdd94676ef91b077abfe</Hash>
+    <Hash>2c5cc642eef0ce427bbeb7a5a9706a90</Hash>
 </Codenesium>*/

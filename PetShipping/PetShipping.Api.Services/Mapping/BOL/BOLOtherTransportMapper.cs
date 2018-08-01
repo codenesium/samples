@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOLOtherTransportMapper : BOLAbstractOtherTransportMapper, IBOLOtherTransportMapper
-        {
-                public BOLOtherTransportMapper()
-                {
-                }
-        }
+	public partial class BOLOtherTransportMapper : BOLAbstractOtherTransportMapper, IBOLOtherTransportMapper
+	{
+		public BOLOtherTransportMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fe068b4b4b2a25566fdac249de2e15a7</Hash>
+    <Hash>f4b4f2df4b5d2ed3090ce36a77deea62</Hash>
 </Codenesium>*/

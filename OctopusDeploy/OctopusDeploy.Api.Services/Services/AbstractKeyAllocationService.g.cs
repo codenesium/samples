@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractKeyAllocationService : AbstractService
-        {
-                private IKeyAllocationRepository keyAllocationRepository;
+	public abstract class AbstractKeyAllocationService : AbstractService
+	{
+		private IKeyAllocationRepository keyAllocationRepository;
 
-                private IApiKeyAllocationRequestModelValidator keyAllocationModelValidator;
+		private IApiKeyAllocationRequestModelValidator keyAllocationModelValidator;
 
-                private IBOLKeyAllocationMapper bolKeyAllocationMapper;
+		private IBOLKeyAllocationMapper bolKeyAllocationMapper;
 
-                private IDALKeyAllocationMapper dalKeyAllocationMapper;
+		private IDALKeyAllocationMapper dalKeyAllocationMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractKeyAllocationService(
-                        ILogger logger,
-                        IKeyAllocationRepository keyAllocationRepository,
-                        IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
-                        IBOLKeyAllocationMapper bolKeyAllocationMapper,
-                        IDALKeyAllocationMapper dalKeyAllocationMapper)
-                        : base()
-                {
-                        this.keyAllocationRepository = keyAllocationRepository;
-                        this.keyAllocationModelValidator = keyAllocationModelValidator;
-                        this.bolKeyAllocationMapper = bolKeyAllocationMapper;
-                        this.dalKeyAllocationMapper = dalKeyAllocationMapper;
-                        this.logger = logger;
-                }
+		public AbstractKeyAllocationService(
+			ILogger logger,
+			IKeyAllocationRepository keyAllocationRepository,
+			IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
+			IBOLKeyAllocationMapper bolKeyAllocationMapper,
+			IDALKeyAllocationMapper dalKeyAllocationMapper)
+			: base()
+		{
+			this.keyAllocationRepository = keyAllocationRepository;
+			this.keyAllocationModelValidator = keyAllocationModelValidator;
+			this.bolKeyAllocationMapper = bolKeyAllocationMapper;
+			this.dalKeyAllocationMapper = dalKeyAllocationMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiKeyAllocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.keyAllocationRepository.All(limit, offset);
+		public virtual async Task<List<ApiKeyAllocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.keyAllocationRepository.All(limit, offset);
 
-                        return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(records));
-                }
+			return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiKeyAllocationResponseModel> Get(string collectionName)
-                {
-                        var record = await this.keyAllocationRepository.Get(collectionName);
+		public virtual async Task<ApiKeyAllocationResponseModel> Get(string collectionName)
+		{
+			var record = await this.keyAllocationRepository.Get(collectionName);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiKeyAllocationResponseModel>> Create(
-                        ApiKeyAllocationRequestModel model)
-                {
-                        CreateResponse<ApiKeyAllocationResponseModel> response = new CreateResponse<ApiKeyAllocationResponseModel>(await this.keyAllocationModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolKeyAllocationMapper.MapModelToBO(default(string), model);
-                                var record = await this.keyAllocationRepository.Create(this.dalKeyAllocationMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiKeyAllocationResponseModel>> Create(
+			ApiKeyAllocationRequestModel model)
+		{
+			CreateResponse<ApiKeyAllocationResponseModel> response = new CreateResponse<ApiKeyAllocationResponseModel>(await this.keyAllocationModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolKeyAllocationMapper.MapModelToBO(default(string), model);
+				var record = await this.keyAllocationRepository.Create(this.dalKeyAllocationMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiKeyAllocationResponseModel>> Update(
-                        string collectionName,
-                        ApiKeyAllocationRequestModel model)
-                {
-                        var validationResult = await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model);
+		public virtual async Task<UpdateResponse<ApiKeyAllocationResponseModel>> Update(
+			string collectionName,
+			ApiKeyAllocationRequestModel model)
+		{
+			var validationResult = await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolKeyAllocationMapper.MapModelToBO(collectionName, model);
-                                await this.keyAllocationRepository.Update(this.dalKeyAllocationMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolKeyAllocationMapper.MapModelToBO(collectionName, model);
+				await this.keyAllocationRepository.Update(this.dalKeyAllocationMapper.MapBOToEF(bo));
 
-                                var record = await this.keyAllocationRepository.Get(collectionName);
+				var record = await this.keyAllocationRepository.Get(collectionName);
 
-                                return new UpdateResponse<ApiKeyAllocationResponseModel>(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiKeyAllocationResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiKeyAllocationResponseModel>(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiKeyAllocationResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        string collectionName)
-                {
-                        ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateDeleteAsync(collectionName));
-                        if (response.Success)
-                        {
-                                await this.keyAllocationRepository.Delete(collectionName);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			string collectionName)
+		{
+			ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateDeleteAsync(collectionName));
+			if (response.Success)
+			{
+				await this.keyAllocationRepository.Delete(collectionName);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5ce48e16ff7739bdc695210aa0a65eaf</Hash>
+    <Hash>94146be2cbbcecf75882dda2a7c9ac1b</Hash>
 </Codenesium>*/

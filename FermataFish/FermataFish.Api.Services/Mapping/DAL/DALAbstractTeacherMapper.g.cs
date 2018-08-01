@@ -6,54 +6,54 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class DALAbstractTeacherMapper
-        {
-                public virtual Teacher MapBOToEF(
-                        BOTeacher bo)
-                {
-                        Teacher efTeacher = new Teacher();
-                        efTeacher.SetProperties(
-                                bo.Birthday,
-                                bo.Email,
-                                bo.FirstName,
-                                bo.Id,
-                                bo.LastName,
-                                bo.Phone,
-                                bo.StudioId);
-                        return efTeacher;
-                }
+	public abstract class DALAbstractTeacherMapper
+	{
+		public virtual Teacher MapBOToEF(
+			BOTeacher bo)
+		{
+			Teacher efTeacher = new Teacher();
+			efTeacher.SetProperties(
+				bo.Birthday,
+				bo.Email,
+				bo.FirstName,
+				bo.Id,
+				bo.LastName,
+				bo.Phone,
+				bo.StudioId);
+			return efTeacher;
+		}
 
-                public virtual BOTeacher MapEFToBO(
-                        Teacher ef)
-                {
-                        var bo = new BOTeacher();
+		public virtual BOTeacher MapEFToBO(
+			Teacher ef)
+		{
+			var bo = new BOTeacher();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Birthday,
-                                ef.Email,
-                                ef.FirstName,
-                                ef.LastName,
-                                ef.Phone,
-                                ef.StudioId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Birthday,
+				ef.Email,
+				ef.FirstName,
+				ef.LastName,
+				ef.Phone,
+				ef.StudioId);
+			return bo;
+		}
 
-                public virtual List<BOTeacher> MapEFToBO(
-                        List<Teacher> records)
-                {
-                        List<BOTeacher> response = new List<BOTeacher>();
+		public virtual List<BOTeacher> MapEFToBO(
+			List<Teacher> records)
+		{
+			List<BOTeacher> response = new List<BOTeacher>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1a21927b38a32713d0cdd653066c4b0b</Hash>
+    <Hash>72cf39b1a2ecc377e04b989562c66177</Hash>
 </Codenesium>*/

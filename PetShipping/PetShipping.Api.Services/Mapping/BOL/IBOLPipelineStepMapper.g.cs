@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IBOLPipelineStepMapper
-        {
-                BOPipelineStep MapModelToBO(
-                        int id,
-                        ApiPipelineStepRequestModel model);
+	public interface IBOLPipelineStepMapper
+	{
+		BOPipelineStep MapModelToBO(
+			int id,
+			ApiPipelineStepRequestModel model);
 
-                ApiPipelineStepResponseModel MapBOToModel(
-                        BOPipelineStep boPipelineStep);
+		ApiPipelineStepResponseModel MapBOToModel(
+			BOPipelineStep boPipelineStep);
 
-                List<ApiPipelineStepResponseModel> MapBOToModel(
-                        List<BOPipelineStep> items);
-        }
+		List<ApiPipelineStepResponseModel> MapBOToModel(
+			List<BOPipelineStep> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>bfdf47c12fd904bf8e8ab8a6b84a8970</Hash>
+    <Hash>f6552cca39b7e91f42bf40e6b1b37074</Hash>
 </Codenesium>*/

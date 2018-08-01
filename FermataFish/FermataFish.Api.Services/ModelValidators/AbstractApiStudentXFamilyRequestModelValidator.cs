@@ -9,49 +9,49 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStudentXFamilyRequestModelValidator : AbstractValidator<ApiStudentXFamilyRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiStudentXFamilyRequestModelValidator : AbstractValidator<ApiStudentXFamilyRequestModel>
+	{
+		private int existingRecordId;
 
-                private IStudentXFamilyRepository studentXFamilyRepository;
+		private IStudentXFamilyRepository studentXFamilyRepository;
 
-                public AbstractApiStudentXFamilyRequestModelValidator(IStudentXFamilyRepository studentXFamilyRepository)
-                {
-                        this.studentXFamilyRepository = studentXFamilyRepository;
-                }
+		public AbstractApiStudentXFamilyRequestModelValidator(IStudentXFamilyRepository studentXFamilyRepository)
+		{
+			this.studentXFamilyRepository = studentXFamilyRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiStudentXFamilyRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiStudentXFamilyRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void FamilyIdRules()
-                {
-                        this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x?.FamilyId != null).WithMessage("Invalid reference");
-                }
+		public virtual void FamilyIdRules()
+		{
+			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x?.FamilyId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void StudentIdRules()
-                {
-                        this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
-                }
+		public virtual void StudentIdRules()
+		{
+			this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.studentXFamilyRepository.GetFamily(id);
+		private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.studentXFamilyRepository.GetFamily(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.studentXFamilyRepository.GetStudent(id);
+		private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.studentXFamilyRepository.GetStudent(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5877a22deba2ffc913cfec89cc5dbecb</Hash>
+    <Hash>837ecb78d731ec30a18d3dbc34c9c472</Hash>
 </Codenesium>*/

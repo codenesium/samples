@@ -12,119 +12,119 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductPhotoService : AbstractService
-        {
-                private IProductPhotoRepository productPhotoRepository;
+	public abstract class AbstractProductPhotoService : AbstractService
+	{
+		private IProductPhotoRepository productPhotoRepository;
 
-                private IApiProductPhotoRequestModelValidator productPhotoModelValidator;
+		private IApiProductPhotoRequestModelValidator productPhotoModelValidator;
 
-                private IBOLProductPhotoMapper bolProductPhotoMapper;
+		private IBOLProductPhotoMapper bolProductPhotoMapper;
 
-                private IDALProductPhotoMapper dalProductPhotoMapper;
+		private IDALProductPhotoMapper dalProductPhotoMapper;
 
-                private IBOLProductProductPhotoMapper bolProductProductPhotoMapper;
+		private IBOLProductProductPhotoMapper bolProductProductPhotoMapper;
 
-                private IDALProductProductPhotoMapper dalProductProductPhotoMapper;
+		private IDALProductProductPhotoMapper dalProductProductPhotoMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractProductPhotoService(
-                        ILogger logger,
-                        IProductPhotoRepository productPhotoRepository,
-                        IApiProductPhotoRequestModelValidator productPhotoModelValidator,
-                        IBOLProductPhotoMapper bolProductPhotoMapper,
-                        IDALProductPhotoMapper dalProductPhotoMapper,
-                        IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
-                        IDALProductProductPhotoMapper dalProductProductPhotoMapper)
-                        : base()
-                {
-                        this.productPhotoRepository = productPhotoRepository;
-                        this.productPhotoModelValidator = productPhotoModelValidator;
-                        this.bolProductPhotoMapper = bolProductPhotoMapper;
-                        this.dalProductPhotoMapper = dalProductPhotoMapper;
-                        this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
-                        this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
-                        this.logger = logger;
-                }
+		public AbstractProductPhotoService(
+			ILogger logger,
+			IProductPhotoRepository productPhotoRepository,
+			IApiProductPhotoRequestModelValidator productPhotoModelValidator,
+			IBOLProductPhotoMapper bolProductPhotoMapper,
+			IDALProductPhotoMapper dalProductPhotoMapper,
+			IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
+			IDALProductProductPhotoMapper dalProductProductPhotoMapper)
+			: base()
+		{
+			this.productPhotoRepository = productPhotoRepository;
+			this.productPhotoModelValidator = productPhotoModelValidator;
+			this.bolProductPhotoMapper = bolProductPhotoMapper;
+			this.dalProductPhotoMapper = dalProductPhotoMapper;
+			this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
+			this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.productPhotoRepository.All(limit, offset);
+		public virtual async Task<List<ApiProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.productPhotoRepository.All(limit, offset);
 
-                        return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(records));
-                }
+			return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiProductPhotoResponseModel> Get(int productPhotoID)
-                {
-                        var record = await this.productPhotoRepository.Get(productPhotoID);
+		public virtual async Task<ApiProductPhotoResponseModel> Get(int productPhotoID)
+		{
+			var record = await this.productPhotoRepository.Get(productPhotoID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
-                        ApiProductPhotoRequestModel model)
-                {
-                        CreateResponse<ApiProductPhotoResponseModel> response = new CreateResponse<ApiProductPhotoResponseModel>(await this.productPhotoModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolProductPhotoMapper.MapModelToBO(default(int), model);
-                                var record = await this.productPhotoRepository.Create(this.dalProductPhotoMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
+			ApiProductPhotoRequestModel model)
+		{
+			CreateResponse<ApiProductPhotoResponseModel> response = new CreateResponse<ApiProductPhotoResponseModel>(await this.productPhotoModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolProductPhotoMapper.MapModelToBO(default(int), model);
+				var record = await this.productPhotoRepository.Create(this.dalProductPhotoMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiProductPhotoResponseModel>> Update(
-                        int productPhotoID,
-                        ApiProductPhotoRequestModel model)
-                {
-                        var validationResult = await this.productPhotoModelValidator.ValidateUpdateAsync(productPhotoID, model);
+		public virtual async Task<UpdateResponse<ApiProductPhotoResponseModel>> Update(
+			int productPhotoID,
+			ApiProductPhotoRequestModel model)
+		{
+			var validationResult = await this.productPhotoModelValidator.ValidateUpdateAsync(productPhotoID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolProductPhotoMapper.MapModelToBO(productPhotoID, model);
-                                await this.productPhotoRepository.Update(this.dalProductPhotoMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolProductPhotoMapper.MapModelToBO(productPhotoID, model);
+				await this.productPhotoRepository.Update(this.dalProductPhotoMapper.MapBOToEF(bo));
 
-                                var record = await this.productPhotoRepository.Get(productPhotoID);
+				var record = await this.productPhotoRepository.Get(productPhotoID);
 
-                                return new UpdateResponse<ApiProductPhotoResponseModel>(this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiProductPhotoResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiProductPhotoResponseModel>(this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiProductPhotoResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int productPhotoID)
-                {
-                        ActionResponse response = new ActionResponse(await this.productPhotoModelValidator.ValidateDeleteAsync(productPhotoID));
-                        if (response.Success)
-                        {
-                                await this.productPhotoRepository.Delete(productPhotoID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int productPhotoID)
+		{
+			ActionResponse response = new ActionResponse(await this.productPhotoModelValidator.ValidateDeleteAsync(productPhotoID));
+			if (response.Success)
+			{
+				await this.productPhotoRepository.Delete(productPhotoID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<ProductProductPhoto> records = await this.productPhotoRepository.ProductProductPhotoes(productPhotoID, limit, offset);
+		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<ProductProductPhoto> records = await this.productPhotoRepository.ProductProductPhotoes(productPhotoID, limit, offset);
 
-                        return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>541310227b254150f1a930bf652fd9e6</Hash>
+    <Hash>6ecf64d497814a5c053ee387beb1fddc</Hash>
 </Codenesium>*/

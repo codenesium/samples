@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public interface IDALDeviceMapper
-        {
-                Device MapBOToEF(
-                        BODevice bo);
+	public interface IDALDeviceMapper
+	{
+		Device MapBOToEF(
+			BODevice bo);
 
-                BODevice MapEFToBO(
-                        Device efDevice);
+		BODevice MapEFToBO(
+			Device efDevice);
 
-                List<BODevice> MapEFToBO(
-                        List<Device> records);
-        }
+		List<BODevice> MapEFToBO(
+			List<Device> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2c88cc986d6618362324eb18f598f2a5</Hash>
+    <Hash>4fe75110ecc9c8609d0a615d4225c102</Hash>
 </Codenesium>*/

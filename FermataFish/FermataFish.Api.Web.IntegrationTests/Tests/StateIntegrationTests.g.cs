@@ -12,86 +12,86 @@ using Xunit;
 
 namespace FermataFishNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "State")]
-        [Trait("Area", "Integration")]
-        public class StateIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public StateIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "State")]
+	[Trait("Area", "Integration")]
+	public class StateIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public StateIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiStateModelMapper mapper = new ApiStateModelMapper();
+			ApiStateModelMapper mapper = new ApiStateModelMapper();
 
-                        UpdateResponse<ApiStateResponseModel> updateResponse = await this.Client.StateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiStateResponseModel> updateResponse = await this.Client.StateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.StateDeleteAsync(model.Id);
+			await this.Client.StateDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiStateResponseModel response = await this.Client.StateGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiStateResponseModel response = await this.Client.StateGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiStateResponseModel> response = await this.Client.StateAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiStateResponseModel> response = await this.Client.StateAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiStateResponseModel> CreateRecord()
-                {
-                        var model = new ApiStateRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiStateResponseModel> result = await this.Client.StateCreateAsync(model);
+		private async Task<ApiStateResponseModel> CreateRecord()
+		{
+			var model = new ApiStateRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiStateResponseModel> result = await this.Client.StateCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.StateDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.StateDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b426091b54e04e63243c73e23273ced9</Hash>
+    <Hash>dadaffb14b523dce3be674e66d922cee</Hash>
 </Codenesium>*/

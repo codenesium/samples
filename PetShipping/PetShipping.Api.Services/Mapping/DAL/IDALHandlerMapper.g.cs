@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IDALHandlerMapper
-        {
-                Handler MapBOToEF(
-                        BOHandler bo);
+	public interface IDALHandlerMapper
+	{
+		Handler MapBOToEF(
+			BOHandler bo);
 
-                BOHandler MapEFToBO(
-                        Handler efHandler);
+		BOHandler MapEFToBO(
+			Handler efHandler);
 
-                List<BOHandler> MapEFToBO(
-                        List<Handler> records);
-        }
+		List<BOHandler> MapEFToBO(
+			List<Handler> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>432739fd3fe78f555cea9fdbb470998b</Hash>
+    <Hash>9ffea33447d007d577b8622cebee69d7</Hash>
 </Codenesium>*/

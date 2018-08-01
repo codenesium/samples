@@ -6,40 +6,40 @@ using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALAdminMapper DALAdminMapperMock { get; set; } = new DALAdminMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALAdminMapper DALAdminMapperMock { get; set; } = new DALAdminMapper();
 
-                public IDALCityMapper DALCityMapperMock { get; set; } = new DALCityMapper();
+		public IDALCityMapper DALCityMapperMock { get; set; } = new DALCityMapper();
 
-                public IDALCountryMapper DALCountryMapperMock { get; set; } = new DALCountryMapper();
+		public IDALCountryMapper DALCountryMapperMock { get; set; } = new DALCountryMapper();
 
-                public IDALCustomerMapper DALCustomerMapperMock { get; set; } = new DALCustomerMapper();
+		public IDALCustomerMapper DALCustomerMapperMock { get; set; } = new DALCustomerMapper();
 
-                public IDALEventMapper DALEventMapperMock { get; set; } = new DALEventMapper();
+		public IDALEventMapper DALEventMapperMock { get; set; } = new DALEventMapper();
 
-                public IDALProvinceMapper DALProvinceMapperMock { get; set; } = new DALProvinceMapper();
+		public IDALProvinceMapper DALProvinceMapperMock { get; set; } = new DALProvinceMapper();
 
-                public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
+		public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
 
-                public IDALSaleTicketsMapper DALSaleTicketsMapperMock { get; set; } = new DALSaleTicketsMapper();
+		public IDALSaleTicketsMapper DALSaleTicketsMapperMock { get; set; } = new DALSaleTicketsMapper();
 
-                public IDALTicketMapper DALTicketMapperMock { get; set; } = new DALTicketMapper();
+		public IDALTicketMapper DALTicketMapperMock { get; set; } = new DALTicketMapper();
 
-                public IDALTicketStatusMapper DALTicketStatusMapperMock { get; set; } = new DALTicketStatusMapper();
+		public IDALTicketStatusMapper DALTicketStatusMapperMock { get; set; } = new DALTicketStatusMapper();
 
-                public IDALTransactionMapper DALTransactionMapperMock { get; set; } = new DALTransactionMapper();
+		public IDALTransactionMapper DALTransactionMapperMock { get; set; } = new DALTransactionMapper();
 
-                public IDALTransactionStatusMapper DALTransactionStatusMapperMock { get; set; } = new DALTransactionStatusMapper();
+		public IDALTransactionStatusMapper DALTransactionStatusMapperMock { get; set; } = new DALTransactionStatusMapper();
 
-                public IDALVenueMapper DALVenueMapperMock { get; set; } = new DALVenueMapper();
+		public IDALVenueMapper DALVenueMapperMock { get; set; } = new DALVenueMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ad328c25bc0def9fa83ee257c407eb8d</Hash>
+    <Hash>7100d793492511133d65a3494b728427</Hash>
 </Codenesium>*/

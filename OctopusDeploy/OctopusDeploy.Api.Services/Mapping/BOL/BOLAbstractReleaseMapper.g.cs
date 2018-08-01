@@ -5,51 +5,51 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractReleaseMapper
-        {
-                public virtual BORelease MapModelToBO(
-                        string id,
-                        ApiReleaseRequestModel model
-                        )
-                {
-                        BORelease boRelease = new BORelease();
-                        boRelease.SetProperties(
-                                id,
-                                model.Assembled,
-                                model.ChannelId,
-                                model.JSON,
-                                model.ProjectDeploymentProcessSnapshotId,
-                                model.ProjectId,
-                                model.ProjectVariableSetSnapshotId,
-                                model.Version);
-                        return boRelease;
-                }
+	public abstract class BOLAbstractReleaseMapper
+	{
+		public virtual BORelease MapModelToBO(
+			string id,
+			ApiReleaseRequestModel model
+			)
+		{
+			BORelease boRelease = new BORelease();
+			boRelease.SetProperties(
+				id,
+				model.Assembled,
+				model.ChannelId,
+				model.JSON,
+				model.ProjectDeploymentProcessSnapshotId,
+				model.ProjectId,
+				model.ProjectVariableSetSnapshotId,
+				model.Version);
+			return boRelease;
+		}
 
-                public virtual ApiReleaseResponseModel MapBOToModel(
-                        BORelease boRelease)
-                {
-                        var model = new ApiReleaseResponseModel();
+		public virtual ApiReleaseResponseModel MapBOToModel(
+			BORelease boRelease)
+		{
+			var model = new ApiReleaseResponseModel();
 
-                        model.SetProperties(boRelease.Id, boRelease.Assembled, boRelease.ChannelId, boRelease.JSON, boRelease.ProjectDeploymentProcessSnapshotId, boRelease.ProjectId, boRelease.ProjectVariableSetSnapshotId, boRelease.Version);
+			model.SetProperties(boRelease.Id, boRelease.Assembled, boRelease.ChannelId, boRelease.JSON, boRelease.ProjectDeploymentProcessSnapshotId, boRelease.ProjectId, boRelease.ProjectVariableSetSnapshotId, boRelease.Version);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiReleaseResponseModel> MapBOToModel(
-                        List<BORelease> items)
-                {
-                        List<ApiReleaseResponseModel> response = new List<ApiReleaseResponseModel>();
+		public virtual List<ApiReleaseResponseModel> MapBOToModel(
+			List<BORelease> items)
+		{
+			List<ApiReleaseResponseModel> response = new List<ApiReleaseResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a345c71a237a34fe4ffcb9003855ff89</Hash>
+    <Hash>2caa9e702dfe80a8650430953d3d10bf</Hash>
 </Codenesium>*/

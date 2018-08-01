@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLSelfReferenceMapper
-        {
-                BOSelfReference MapModelToBO(
-                        int id,
-                        ApiSelfReferenceRequestModel model);
+	public interface IBOLSelfReferenceMapper
+	{
+		BOSelfReference MapModelToBO(
+			int id,
+			ApiSelfReferenceRequestModel model);
 
-                ApiSelfReferenceResponseModel MapBOToModel(
-                        BOSelfReference boSelfReference);
+		ApiSelfReferenceResponseModel MapBOToModel(
+			BOSelfReference boSelfReference);
 
-                List<ApiSelfReferenceResponseModel> MapBOToModel(
-                        List<BOSelfReference> items);
-        }
+		List<ApiSelfReferenceResponseModel> MapBOToModel(
+			List<BOSelfReference> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7a4ea7f83227fb9f1414bd559ef54cf6</Hash>
+    <Hash>22f1b04e8dcd16cac2a1fe264d106b79</Hash>
 </Codenesium>*/

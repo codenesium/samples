@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IBOLDeploymentProcessMapper
-        {
-                BODeploymentProcess MapModelToBO(
-                        string id,
-                        ApiDeploymentProcessRequestModel model);
+	public interface IBOLDeploymentProcessMapper
+	{
+		BODeploymentProcess MapModelToBO(
+			string id,
+			ApiDeploymentProcessRequestModel model);
 
-                ApiDeploymentProcessResponseModel MapBOToModel(
-                        BODeploymentProcess boDeploymentProcess);
+		ApiDeploymentProcessResponseModel MapBOToModel(
+			BODeploymentProcess boDeploymentProcess);
 
-                List<ApiDeploymentProcessResponseModel> MapBOToModel(
-                        List<BODeploymentProcess> items);
-        }
+		List<ApiDeploymentProcessResponseModel> MapBOToModel(
+			List<BODeploymentProcess> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0b4012cbdb7674cfac9d39660d6afa8a</Hash>
+    <Hash>e0fa187fccc99cc1295a06dadfdc9b0a</Hash>
 </Codenesium>*/

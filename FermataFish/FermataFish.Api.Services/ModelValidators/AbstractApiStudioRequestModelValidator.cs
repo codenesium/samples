@@ -9,67 +9,67 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStudioRequestModelValidator : AbstractValidator<ApiStudioRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiStudioRequestModelValidator : AbstractValidator<ApiStudioRequestModel>
+	{
+		private int existingRecordId;
 
-                private IStudioRepository studioRepository;
+		private IStudioRepository studioRepository;
 
-                public AbstractApiStudioRequestModelValidator(IStudioRepository studioRepository)
-                {
-                        this.studioRepository = studioRepository;
-                }
+		public AbstractApiStudioRequestModelValidator(IStudioRepository studioRepository)
+		{
+			this.studioRepository = studioRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiStudioRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiStudioRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void Address1Rules()
-                {
-                        this.RuleFor(x => x.Address1).Length(0, 128);
-                }
+		public virtual void Address1Rules()
+		{
+			this.RuleFor(x => x.Address1).Length(0, 128);
+		}
 
-                public virtual void Address2Rules()
-                {
-                        this.RuleFor(x => x.Address2).Length(0, 128);
-                }
+		public virtual void Address2Rules()
+		{
+			this.RuleFor(x => x.Address2).Length(0, 128);
+		}
 
-                public virtual void CityRules()
-                {
-                        this.RuleFor(x => x.City).Length(0, 128);
-                }
+		public virtual void CityRules()
+		{
+			this.RuleFor(x => x.City).Length(0, 128);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
 
-                public virtual void StateIdRules()
-                {
-                        this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x?.StateId != null).WithMessage("Invalid reference");
-                }
+		public virtual void StateIdRules()
+		{
+			this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x?.StateId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void WebsiteRules()
-                {
-                        this.RuleFor(x => x.Website).Length(0, 128);
-                }
+		public virtual void WebsiteRules()
+		{
+			this.RuleFor(x => x.Website).Length(0, 128);
+		}
 
-                public virtual void ZipRules()
-                {
-                        this.RuleFor(x => x.Zip).Length(0, 128);
-                }
+		public virtual void ZipRules()
+		{
+			this.RuleFor(x => x.Zip).Length(0, 128);
+		}
 
-                private async Task<bool> BeValidState(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.studioRepository.GetState(id);
+		private async Task<bool> BeValidState(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.studioRepository.GetState(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>72da74257a28cc37683e2f9cae98645e</Hash>
+    <Hash>779d13cd29d5557e079ee3bd058ea5ef</Hash>
 </Codenesium>*/

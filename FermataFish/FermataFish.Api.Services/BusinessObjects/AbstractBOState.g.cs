@@ -3,26 +3,26 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractBOState : AbstractBusinessObject
-        {
-                public AbstractBOState()
-                        : base()
-                {
-                }
+	public abstract class AbstractBOState : AbstractBusinessObject
+	{
+		public AbstractBOState()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(int id,
-                                                  string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+		public virtual void SetProperties(int id,
+		                                  string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                public int Id { get; private set; }
+		public int Id { get; private set; }
 
-                public string Name { get; private set; }
-        }
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>e7371f514a5bcf4bcf6bc979a8bdd4ff</Hash>
+    <Hash>6d72699d3169da9f0b0c7cc97f0abe81</Hash>
 </Codenesium>*/

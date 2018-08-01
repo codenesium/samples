@@ -10,37 +10,37 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class ClientService : AbstractClientService, IClientService
-        {
-                public ClientService(
-                        ILogger<IClientRepository> logger,
-                        IClientRepository clientRepository,
-                        IApiClientRequestModelValidator clientModelValidator,
-                        IBOLClientMapper bolclientMapper,
-                        IDALClientMapper dalclientMapper,
-                        IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper,
-                        IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper,
-                        IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-                        )
-                        : base(logger,
-                               clientRepository,
-                               clientModelValidator,
-                               bolclientMapper,
-                               dalclientMapper,
-                               bolClientCommunicationMapper,
-                               dalClientCommunicationMapper,
-                               bolPetMapper,
-                               dalPetMapper,
-                               bolSaleMapper,
-                               dalSaleMapper)
-                {
-                }
-        }
+	public partial class ClientService : AbstractClientService, IClientService
+	{
+		public ClientService(
+			ILogger<IClientRepository> logger,
+			IClientRepository clientRepository,
+			IApiClientRequestModelValidator clientModelValidator,
+			IBOLClientMapper bolclientMapper,
+			IDALClientMapper dalclientMapper,
+			IBOLClientCommunicationMapper bolClientCommunicationMapper,
+			IDALClientCommunicationMapper dalClientCommunicationMapper,
+			IBOLPetMapper bolPetMapper,
+			IDALPetMapper dalPetMapper,
+			IBOLSaleMapper bolSaleMapper,
+			IDALSaleMapper dalSaleMapper
+			)
+			: base(logger,
+			       clientRepository,
+			       clientModelValidator,
+			       bolclientMapper,
+			       dalclientMapper,
+			       bolClientCommunicationMapper,
+			       dalClientCommunicationMapper,
+			       bolPetMapper,
+			       dalPetMapper,
+			       bolSaleMapper,
+			       dalSaleMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>939cefb050f5cd9978188927c56402ec</Hash>
+    <Hash>a71b2c37bfd75cfd1f5c12dc91b7c9f8</Hash>
 </Codenesium>*/

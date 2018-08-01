@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bd4bacaa89ae4d0a0d374b69956550ca</Hash>
+    <Hash>0c715d11a32acaf346feb641cb077925</Hash>
 </Codenesium>*/

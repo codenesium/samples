@@ -12,126 +12,126 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSpecialOfferProductService : AbstractService
-        {
-                private ISpecialOfferProductRepository specialOfferProductRepository;
+	public abstract class AbstractSpecialOfferProductService : AbstractService
+	{
+		private ISpecialOfferProductRepository specialOfferProductRepository;
 
-                private IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator;
+		private IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator;
 
-                private IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper;
+		private IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper;
 
-                private IDALSpecialOfferProductMapper dalSpecialOfferProductMapper;
+		private IDALSpecialOfferProductMapper dalSpecialOfferProductMapper;
 
-                private IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper;
+		private IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper;
 
-                private IDALSalesOrderDetailMapper dalSalesOrderDetailMapper;
+		private IDALSalesOrderDetailMapper dalSalesOrderDetailMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractSpecialOfferProductService(
-                        ILogger logger,
-                        ISpecialOfferProductRepository specialOfferProductRepository,
-                        IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
-                        IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
-                        IDALSpecialOfferProductMapper dalSpecialOfferProductMapper,
-                        IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
-                        : base()
-                {
-                        this.specialOfferProductRepository = specialOfferProductRepository;
-                        this.specialOfferProductModelValidator = specialOfferProductModelValidator;
-                        this.bolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
-                        this.dalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
-                        this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
-                        this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
-                        this.logger = logger;
-                }
+		public AbstractSpecialOfferProductService(
+			ILogger logger,
+			ISpecialOfferProductRepository specialOfferProductRepository,
+			IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
+			IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
+			IDALSpecialOfferProductMapper dalSpecialOfferProductMapper,
+			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
+			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
+			: base()
+		{
+			this.specialOfferProductRepository = specialOfferProductRepository;
+			this.specialOfferProductModelValidator = specialOfferProductModelValidator;
+			this.bolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
+			this.dalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
+			this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
+			this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiSpecialOfferProductResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.specialOfferProductRepository.All(limit, offset);
+		public virtual async Task<List<ApiSpecialOfferProductResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.specialOfferProductRepository.All(limit, offset);
 
-                        return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
-                }
+			return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiSpecialOfferProductResponseModel> Get(int specialOfferID)
-                {
-                        var record = await this.specialOfferProductRepository.Get(specialOfferID);
+		public virtual async Task<ApiSpecialOfferProductResponseModel> Get(int specialOfferID)
+		{
+			var record = await this.specialOfferProductRepository.Get(specialOfferID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiSpecialOfferProductResponseModel>> Create(
-                        ApiSpecialOfferProductRequestModel model)
-                {
-                        CreateResponse<ApiSpecialOfferProductResponseModel> response = new CreateResponse<ApiSpecialOfferProductResponseModel>(await this.specialOfferProductModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolSpecialOfferProductMapper.MapModelToBO(default(int), model);
-                                var record = await this.specialOfferProductRepository.Create(this.dalSpecialOfferProductMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiSpecialOfferProductResponseModel>> Create(
+			ApiSpecialOfferProductRequestModel model)
+		{
+			CreateResponse<ApiSpecialOfferProductResponseModel> response = new CreateResponse<ApiSpecialOfferProductResponseModel>(await this.specialOfferProductModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolSpecialOfferProductMapper.MapModelToBO(default(int), model);
+				var record = await this.specialOfferProductRepository.Create(this.dalSpecialOfferProductMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiSpecialOfferProductResponseModel>> Update(
-                        int specialOfferID,
-                        ApiSpecialOfferProductRequestModel model)
-                {
-                        var validationResult = await this.specialOfferProductModelValidator.ValidateUpdateAsync(specialOfferID, model);
+		public virtual async Task<UpdateResponse<ApiSpecialOfferProductResponseModel>> Update(
+			int specialOfferID,
+			ApiSpecialOfferProductRequestModel model)
+		{
+			var validationResult = await this.specialOfferProductModelValidator.ValidateUpdateAsync(specialOfferID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolSpecialOfferProductMapper.MapModelToBO(specialOfferID, model);
-                                await this.specialOfferProductRepository.Update(this.dalSpecialOfferProductMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolSpecialOfferProductMapper.MapModelToBO(specialOfferID, model);
+				await this.specialOfferProductRepository.Update(this.dalSpecialOfferProductMapper.MapBOToEF(bo));
 
-                                var record = await this.specialOfferProductRepository.Get(specialOfferID);
+				var record = await this.specialOfferProductRepository.Get(specialOfferID);
 
-                                return new UpdateResponse<ApiSpecialOfferProductResponseModel>(this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiSpecialOfferProductResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiSpecialOfferProductResponseModel>(this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiSpecialOfferProductResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int specialOfferID)
-                {
-                        ActionResponse response = new ActionResponse(await this.specialOfferProductModelValidator.ValidateDeleteAsync(specialOfferID));
-                        if (response.Success)
-                        {
-                                await this.specialOfferProductRepository.Delete(specialOfferID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int specialOfferID)
+		{
+			ActionResponse response = new ActionResponse(await this.specialOfferProductModelValidator.ValidateDeleteAsync(specialOfferID));
+			if (response.Success)
+			{
+				await this.specialOfferProductRepository.Delete(specialOfferID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<List<ApiSpecialOfferProductResponseModel>> ByProductID(int productID)
-                {
-                        List<SpecialOfferProduct> records = await this.specialOfferProductRepository.ByProductID(productID);
+		public async Task<List<ApiSpecialOfferProductResponseModel>> ByProductID(int productID)
+		{
+			List<SpecialOfferProduct> records = await this.specialOfferProductRepository.ByProductID(productID);
 
-                        return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
-                }
+			return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
+		}
 
-                public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int specialOfferID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<SalesOrderDetail> records = await this.specialOfferProductRepository.SalesOrderDetails(specialOfferID, limit, offset);
+		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int specialOfferID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SalesOrderDetail> records = await this.specialOfferProductRepository.SalesOrderDetails(specialOfferID, limit, offset);
 
-                        return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c245bdc06671ed25ea983b894c1da070</Hash>
+    <Hash>f4de35fd975e472e2cea08de4990efd4</Hash>
 </Codenesium>*/

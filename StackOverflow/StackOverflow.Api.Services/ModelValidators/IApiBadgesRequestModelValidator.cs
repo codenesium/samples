@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IApiBadgesRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiBadgesRequestModel model);
+	public interface IApiBadgesRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiBadgesRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiBadgesRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiBadgesRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e8033231f90bc67748ecb3071a3cc567</Hash>
+    <Hash>45e2ceec65b711f925eba1ca633a3d1a</Hash>
 </Codenesium>*/

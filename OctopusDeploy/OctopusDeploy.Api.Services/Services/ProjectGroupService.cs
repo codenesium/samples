@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class ProjectGroupService : AbstractProjectGroupService, IProjectGroupService
-        {
-                public ProjectGroupService(
-                        ILogger<IProjectGroupRepository> logger,
-                        IProjectGroupRepository projectGroupRepository,
-                        IApiProjectGroupRequestModelValidator projectGroupModelValidator,
-                        IBOLProjectGroupMapper bolprojectGroupMapper,
-                        IDALProjectGroupMapper dalprojectGroupMapper
-                        )
-                        : base(logger,
-                               projectGroupRepository,
-                               projectGroupModelValidator,
-                               bolprojectGroupMapper,
-                               dalprojectGroupMapper)
-                {
-                }
-        }
+	public partial class ProjectGroupService : AbstractProjectGroupService, IProjectGroupService
+	{
+		public ProjectGroupService(
+			ILogger<IProjectGroupRepository> logger,
+			IProjectGroupRepository projectGroupRepository,
+			IApiProjectGroupRequestModelValidator projectGroupModelValidator,
+			IBOLProjectGroupMapper bolprojectGroupMapper,
+			IDALProjectGroupMapper dalprojectGroupMapper
+			)
+			: base(logger,
+			       projectGroupRepository,
+			       projectGroupModelValidator,
+			       bolprojectGroupMapper,
+			       dalprojectGroupMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d3e89e43cd8607f32b1b7c5e167b6fda</Hash>
+    <Hash>9d7db676451da8898f957a9830680554</Hash>
 </Codenesium>*/

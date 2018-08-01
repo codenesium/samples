@@ -7,53 +7,52 @@ using Xunit;
 
 namespace FermataFishNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpaceXSpaceFeature")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiSpaceXSpaceFeatureModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiSpaceXSpaceFeatureModelMapper();
-                        var model = new ApiSpaceXSpaceFeatureRequestModel();
-                        model.SetProperties(1, 1);
-                        ApiSpaceXSpaceFeatureResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpaceXSpaceFeature")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiSpaceXSpaceFeatureModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
+			var model = new ApiSpaceXSpaceFeatureRequestModel();
+			model.SetProperties(1, 1);
+			ApiSpaceXSpaceFeatureResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.SpaceFeatureId.Should().Be(1);
-                        response.SpaceId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiSpaceXSpaceFeatureModelMapper();
-                        var model = new ApiSpaceXSpaceFeatureResponseModel();
-                        model.SetProperties(1, 1, 1);
-                        ApiSpaceXSpaceFeatureRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
+			var model = new ApiSpaceXSpaceFeatureResponseModel();
+			model.SetProperties(1, 1, 1);
+			ApiSpaceXSpaceFeatureRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.SpaceFeatureId.Should().Be(1);
-                        response.SpaceId.Should().Be(1);
-                }
+			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiSpaceXSpaceFeatureModelMapper();
-                        var model = new ApiSpaceXSpaceFeatureRequestModel();
-                        model.SetProperties(1, 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
+			var model = new ApiSpaceXSpaceFeatureRequestModel();
+			model.SetProperties(1, 1);
 
-                        JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiSpaceXSpaceFeatureRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.SpaceFeatureId.Should().Be(1);
-                        response.SpaceId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiSpaceXSpaceFeatureRequestModel();
+			patch.ApplyTo(response);
+			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3fa88d57b6ccdda8c0fd488f413ca818</Hash>
+    <Hash>d1ddbde5842c1a9959f0fb9d5841dfda</Hash>
 </Codenesium>*/

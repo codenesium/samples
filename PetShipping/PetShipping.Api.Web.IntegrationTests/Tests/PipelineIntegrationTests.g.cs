@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetShippingNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Pipeline")]
-        [Trait("Area", "Integration")]
-        public class PipelineIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PipelineIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Pipeline")]
+	[Trait("Area", "Integration")]
+	public class PipelineIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PipelineIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPipelineModelMapper mapper = new ApiPipelineModelMapper();
+			ApiPipelineModelMapper mapper = new ApiPipelineModelMapper();
 
-                        UpdateResponse<ApiPipelineResponseModel> updateResponse = await this.Client.PipelineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPipelineResponseModel> updateResponse = await this.Client.PipelineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PipelineDeleteAsync(model.Id);
+			await this.Client.PipelineDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPipelineResponseModel response = await this.Client.PipelineGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPipelineResponseModel response = await this.Client.PipelineGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPipelineResponseModel> response = await this.Client.PipelineAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPipelineResponseModel> response = await this.Client.PipelineAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPipelineResponseModel> CreateRecord()
-                {
-                        var model = new ApiPipelineRequestModel();
-                        model.SetProperties(1, 2);
-                        CreateResponse<ApiPipelineResponseModel> result = await this.Client.PipelineCreateAsync(model);
+		private async Task<ApiPipelineResponseModel> CreateRecord()
+		{
+			var model = new ApiPipelineRequestModel();
+			model.SetProperties(1, 2);
+			CreateResponse<ApiPipelineResponseModel> result = await this.Client.PipelineCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PipelineDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PipelineDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52657cea1f7dc0cfc303da43ad2f9efc</Hash>
+    <Hash>dee55d6a8cf2d2d24929f27cfa017f3f</Hash>
 </Codenesium>*/

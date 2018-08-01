@@ -8,53 +8,53 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Customer")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLCustomerMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLCustomerMapper();
-                        ApiCustomerRequestModel model = new ApiCustomerRequestModel();
-                        model.SetProperties("A", "A", "A", "A");
-                        BOCustomer response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Customer")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLCustomerMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLCustomerMapper();
+			ApiCustomerRequestModel model = new ApiCustomerRequestModel();
+			model.SetProperties("A", "A", "A", "A");
+			BOCustomer response = mapper.MapModelToBO(1, model);
 
-                        response.Email.Should().Be("A");
-                        response.FirstName.Should().Be("A");
-                        response.LastName.Should().Be("A");
-                        response.Phone.Should().Be("A");
-                }
+			response.Email.Should().Be("A");
+			response.FirstName.Should().Be("A");
+			response.LastName.Should().Be("A");
+			response.Phone.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLCustomerMapper();
-                        BOCustomer bo = new BOCustomer();
-                        bo.SetProperties(1, "A", "A", "A", "A");
-                        ApiCustomerResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLCustomerMapper();
+			BOCustomer bo = new BOCustomer();
+			bo.SetProperties(1, "A", "A", "A", "A");
+			ApiCustomerResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Email.Should().Be("A");
-                        response.FirstName.Should().Be("A");
-                        response.Id.Should().Be(1);
-                        response.LastName.Should().Be("A");
-                        response.Phone.Should().Be("A");
-                }
+			response.Email.Should().Be("A");
+			response.FirstName.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.LastName.Should().Be("A");
+			response.Phone.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLCustomerMapper();
-                        BOCustomer bo = new BOCustomer();
-                        bo.SetProperties(1, "A", "A", "A", "A");
-                        List<ApiCustomerResponseModel> response = mapper.MapBOToModel(new List<BOCustomer>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLCustomerMapper();
+			BOCustomer bo = new BOCustomer();
+			bo.SetProperties(1, "A", "A", "A", "A");
+			List<ApiCustomerResponseModel> response = mapper.MapBOToModel(new List<BOCustomer>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f49ce7fe430263043b7d4838ce6fffee</Hash>
+    <Hash>66ecf2f4ce349c786a90f486817f4876</Hash>
 </Codenesium>*/

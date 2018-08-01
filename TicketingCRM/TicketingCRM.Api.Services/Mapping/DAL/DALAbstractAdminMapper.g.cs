@@ -6,54 +6,54 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class DALAbstractAdminMapper
-        {
-                public virtual Admin MapBOToEF(
-                        BOAdmin bo)
-                {
-                        Admin efAdmin = new Admin();
-                        efAdmin.SetProperties(
-                                bo.Email,
-                                bo.FirstName,
-                                bo.Id,
-                                bo.LastName,
-                                bo.Password,
-                                bo.Phone,
-                                bo.Username);
-                        return efAdmin;
-                }
+	public abstract class DALAbstractAdminMapper
+	{
+		public virtual Admin MapBOToEF(
+			BOAdmin bo)
+		{
+			Admin efAdmin = new Admin();
+			efAdmin.SetProperties(
+				bo.Email,
+				bo.FirstName,
+				bo.Id,
+				bo.LastName,
+				bo.Password,
+				bo.Phone,
+				bo.Username);
+			return efAdmin;
+		}
 
-                public virtual BOAdmin MapEFToBO(
-                        Admin ef)
-                {
-                        var bo = new BOAdmin();
+		public virtual BOAdmin MapEFToBO(
+			Admin ef)
+		{
+			var bo = new BOAdmin();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Email,
-                                ef.FirstName,
-                                ef.LastName,
-                                ef.Password,
-                                ef.Phone,
-                                ef.Username);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Email,
+				ef.FirstName,
+				ef.LastName,
+				ef.Password,
+				ef.Phone,
+				ef.Username);
+			return bo;
+		}
 
-                public virtual List<BOAdmin> MapEFToBO(
-                        List<Admin> records)
-                {
-                        List<BOAdmin> response = new List<BOAdmin>();
+		public virtual List<BOAdmin> MapEFToBO(
+			List<Admin> records)
+		{
+			List<BOAdmin> response = new List<BOAdmin>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4cbaafc5aa9416ffd621db57ea10af01</Hash>
+    <Hash>e687523f148812341a574e2f1ddc9f4a</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLTestAllFieldTypesNullableMapper
-        {
-                BOTestAllFieldTypesNullable MapModelToBO(
-                        int id,
-                        ApiTestAllFieldTypesNullableRequestModel model);
+	public interface IBOLTestAllFieldTypesNullableMapper
+	{
+		BOTestAllFieldTypesNullable MapModelToBO(
+			int id,
+			ApiTestAllFieldTypesNullableRequestModel model);
 
-                ApiTestAllFieldTypesNullableResponseModel MapBOToModel(
-                        BOTestAllFieldTypesNullable boTestAllFieldTypesNullable);
+		ApiTestAllFieldTypesNullableResponseModel MapBOToModel(
+			BOTestAllFieldTypesNullable boTestAllFieldTypesNullable);
 
-                List<ApiTestAllFieldTypesNullableResponseModel> MapBOToModel(
-                        List<BOTestAllFieldTypesNullable> items);
-        }
+		List<ApiTestAllFieldTypesNullableResponseModel> MapBOToModel(
+			List<BOTestAllFieldTypesNullable> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0482a1103462ac60ef46714b9b36482e</Hash>
+    <Hash>504e80cd34978b3139ebc0587fc993ed</Hash>
 </Codenesium>*/

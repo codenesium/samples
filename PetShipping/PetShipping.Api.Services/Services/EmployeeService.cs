@@ -10,37 +10,37 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class EmployeeService : AbstractEmployeeService, IEmployeeService
-        {
-                public EmployeeService(
-                        ILogger<IEmployeeRepository> logger,
-                        IEmployeeRepository employeeRepository,
-                        IApiEmployeeRequestModelValidator employeeModelValidator,
-                        IBOLEmployeeMapper bolemployeeMapper,
-                        IDALEmployeeMapper dalemployeeMapper,
-                        IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper,
-                        IBOLPipelineStepMapper bolPipelineStepMapper,
-                        IDALPipelineStepMapper dalPipelineStepMapper,
-                        IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
-                        )
-                        : base(logger,
-                               employeeRepository,
-                               employeeModelValidator,
-                               bolemployeeMapper,
-                               dalemployeeMapper,
-                               bolClientCommunicationMapper,
-                               dalClientCommunicationMapper,
-                               bolPipelineStepMapper,
-                               dalPipelineStepMapper,
-                               bolPipelineStepNoteMapper,
-                               dalPipelineStepNoteMapper)
-                {
-                }
-        }
+	public partial class EmployeeService : AbstractEmployeeService, IEmployeeService
+	{
+		public EmployeeService(
+			ILogger<IEmployeeRepository> logger,
+			IEmployeeRepository employeeRepository,
+			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper bolemployeeMapper,
+			IDALEmployeeMapper dalemployeeMapper,
+			IBOLClientCommunicationMapper bolClientCommunicationMapper,
+			IDALClientCommunicationMapper dalClientCommunicationMapper,
+			IBOLPipelineStepMapper bolPipelineStepMapper,
+			IDALPipelineStepMapper dalPipelineStepMapper,
+			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
+			)
+			: base(logger,
+			       employeeRepository,
+			       employeeModelValidator,
+			       bolemployeeMapper,
+			       dalemployeeMapper,
+			       bolClientCommunicationMapper,
+			       dalClientCommunicationMapper,
+			       bolPipelineStepMapper,
+			       dalPipelineStepMapper,
+			       bolPipelineStepNoteMapper,
+			       dalPipelineStepNoteMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a066732fef873dc5f69ba2959683c862</Hash>
+    <Hash>b8273011a0be5414159ffcd0300a9224</Hash>
 </Codenesium>*/

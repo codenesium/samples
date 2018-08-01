@@ -9,30 +9,30 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiChainStatusRequestModelValidator : AbstractValidator<ApiChainStatusRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiChainStatusRequestModelValidator : AbstractValidator<ApiChainStatusRequestModel>
+	{
+		private int existingRecordId;
 
-                private IChainStatusRepository chainStatusRepository;
+		private IChainStatusRepository chainStatusRepository;
 
-                public AbstractApiChainStatusRequestModelValidator(IChainStatusRepository chainStatusRepository)
-                {
-                        this.chainStatusRepository = chainStatusRepository;
-                }
+		public AbstractApiChainStatusRequestModelValidator(IChainStatusRepository chainStatusRepository)
+		{
+			this.chainStatusRepository = chainStatusRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiChainStatusRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiChainStatusRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>82c618217f2dfb5894d19b7e2a2ca40d</Hash>
+    <Hash>431d41f1cdecd8bc2a26ed661f38f693</Hash>
 </Codenesium>*/

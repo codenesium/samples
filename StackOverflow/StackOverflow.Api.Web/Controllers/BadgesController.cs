@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.Web
 {
-        [Route("api/badges")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class BadgesController : AbstractBadgesController
-        {
-                public BadgesController(
-                        ApiSettings settings,
-                        ILogger<BadgesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IBadgesService badgesService,
-                        IApiBadgesModelMapper badgesModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               badgesService,
-                               badgesModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/badges")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class BadgesController : AbstractBadgesController
+	{
+		public BadgesController(
+			ApiSettings settings,
+			ILogger<BadgesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IBadgesService badgesService,
+			IApiBadgesModelMapper badgesModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       badgesService,
+			       badgesModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>38d8c01d47de0a9d6774ab562d734530</Hash>
+    <Hash>38841f54ed8718d738e3a8e475687f1b</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/variableSets")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class VariableSetController : AbstractVariableSetController
-        {
-                public VariableSetController(
-                        ApiSettings settings,
-                        ILogger<VariableSetController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IVariableSetService variableSetService,
-                        IApiVariableSetModelMapper variableSetModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               variableSetService,
-                               variableSetModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/variableSets")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class VariableSetController : AbstractVariableSetController
+	{
+		public VariableSetController(
+			ApiSettings settings,
+			ILogger<VariableSetController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IVariableSetService variableSetService,
+			IApiVariableSetModelMapper variableSetModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       variableSetService,
+			       variableSetModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>79f04653c74194c0e9ae422fce4e6cfa</Hash>
+    <Hash>83f39cb05cd5f111c23264bdc99db926</Hash>
 </Codenesium>*/

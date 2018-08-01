@@ -6,19 +6,19 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IDALPersonRefMapper
-        {
-                PersonRef MapBOToEF(
-                        BOPersonRef bo);
+	public interface IDALPersonRefMapper
+	{
+		PersonRef MapBOToEF(
+			BOPersonRef bo);
 
-                BOPersonRef MapEFToBO(
-                        PersonRef efPersonRef);
+		BOPersonRef MapEFToBO(
+			PersonRef efPersonRef);
 
-                List<BOPersonRef> MapEFToBO(
-                        List<PersonRef> records);
-        }
+		List<BOPersonRef> MapEFToBO(
+			List<PersonRef> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>dfe07ec1a190efad3dc470958c13a3a0</Hash>
+    <Hash>7d216a3e57386d2a0c26c34303e725af</Hash>
 </Codenesium>*/

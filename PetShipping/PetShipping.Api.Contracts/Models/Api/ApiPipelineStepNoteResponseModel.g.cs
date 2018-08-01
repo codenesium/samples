@@ -6,47 +6,47 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineStepNoteResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        int employeeId,
-                        string note,
-                        int pipelineStepId)
-                {
-                        this.Id = id;
-                        this.EmployeeId = employeeId;
-                        this.Note = note;
-                        this.PipelineStepId = pipelineStepId;
+	public partial class ApiPipelineStepNoteResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			int employeeId,
+			string note,
+			int pipelineStepId)
+		{
+			this.Id = id;
+			this.EmployeeId = employeeId;
+			this.Note = note;
+			this.PipelineStepId = pipelineStepId;
 
-                        this.EmployeeIdEntity = nameof(ApiResponse.Employees);
-                        this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
-                }
+			this.EmployeeIdEntity = nameof(ApiResponse.Employees);
+			this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
+		}
 
-                [Required]
-                [JsonProperty]
-                public int EmployeeId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int EmployeeId { get; private set; }
 
-                [JsonProperty]
-                public string EmployeeIdEntity { get; set; }
+		[JsonProperty]
+		public string EmployeeIdEntity { get; set; }
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Note { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Note { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int PipelineStepId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int PipelineStepId { get; private set; }
 
-                [JsonProperty]
-                public string PipelineStepIdEntity { get; set; }
-        }
+		[JsonProperty]
+		public string PipelineStepIdEntity { get; set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>2282bc5e375889c588402787f28dd985</Hash>
+    <Hash>df6f28dba2aff5012c0c30102e0894a7</Hash>
 </Codenesium>*/

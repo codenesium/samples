@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class TagsService : AbstractTagsService, ITagsService
-        {
-                public TagsService(
-                        ILogger<ITagsRepository> logger,
-                        ITagsRepository tagsRepository,
-                        IApiTagsRequestModelValidator tagsModelValidator,
-                        IBOLTagsMapper boltagsMapper,
-                        IDALTagsMapper daltagsMapper
-                        )
-                        : base(logger,
-                               tagsRepository,
-                               tagsModelValidator,
-                               boltagsMapper,
-                               daltagsMapper)
-                {
-                }
-        }
+	public partial class TagsService : AbstractTagsService, ITagsService
+	{
+		public TagsService(
+			ILogger<ITagsRepository> logger,
+			ITagsRepository tagsRepository,
+			IApiTagsRequestModelValidator tagsModelValidator,
+			IBOLTagsMapper boltagsMapper,
+			IDALTagsMapper daltagsMapper
+			)
+			: base(logger,
+			       tagsRepository,
+			       tagsModelValidator,
+			       boltagsMapper,
+			       daltagsMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>949248c31d3b8f0bbbae09785614dc5a</Hash>
+    <Hash>150213587a117fb52de2a4a4503633ac</Hash>
 </Codenesium>*/

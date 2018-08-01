@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiCultureModelMapper
-        {
-                ApiCultureResponseModel MapRequestToResponse(
-                        string cultureID,
-                        ApiCultureRequestModel request);
+	public interface IApiCultureModelMapper
+	{
+		ApiCultureResponseModel MapRequestToResponse(
+			string cultureID,
+			ApiCultureRequestModel request);
 
-                ApiCultureRequestModel MapResponseToRequest(
-                        ApiCultureResponseModel response);
+		ApiCultureRequestModel MapResponseToRequest(
+			ApiCultureResponseModel response);
 
-                JsonPatchDocument<ApiCultureRequestModel> CreatePatch(ApiCultureRequestModel model);
-        }
+		JsonPatchDocument<ApiCultureRequestModel> CreatePatch(ApiCultureRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>b967dd6ba07dc9c4a19ce7ce2a55624a</Hash>
+    <Hash>2fa2691cc404972704fd9734b23f4fa6</Hash>
 </Codenesium>*/

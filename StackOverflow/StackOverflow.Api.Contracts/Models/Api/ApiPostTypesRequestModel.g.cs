@@ -7,24 +7,24 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiPostTypesRequestModel : AbstractApiRequestModel
-        {
-                public ApiPostTypesRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiPostTypesRequestModel : AbstractApiRequestModel
+	{
+		public ApiPostTypesRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string type)
-                {
-                        this.Type = type;
-                }
+		public virtual void SetProperties(
+			string type)
+		{
+			this.Type = type;
+		}
 
-                [JsonProperty]
-                public string Type { get; private set; }
-        }
+		[JsonProperty]
+		public string Type { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>7f9a92338037e92282d74a66b4dcd60f</Hash>
+    <Hash>4f62aa1e8c3d661034f228bfedebc313</Hash>
 </Codenesium>*/

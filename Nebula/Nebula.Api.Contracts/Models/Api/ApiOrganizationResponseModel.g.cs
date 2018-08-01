@@ -6,26 +6,26 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiOrganizationResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+	public partial class ApiOrganizationResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>61e24b2655d05fd57feabef9354d6fa3</Hash>
+    <Hash>fe958d23693049685d753d609ad8237e</Hash>
 </Codenesium>*/

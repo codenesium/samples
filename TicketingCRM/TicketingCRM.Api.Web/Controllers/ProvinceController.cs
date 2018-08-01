@@ -12,31 +12,31 @@ using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Web
 {
-        [Route("api/provinces")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ProvinceController : AbstractProvinceController
-        {
-                public ProvinceController(
-                        ApiSettings settings,
-                        ILogger<ProvinceController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IProvinceService provinceService,
-                        IApiProvinceModelMapper provinceModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               provinceService,
-                               provinceModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/provinces")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ProvinceController : AbstractProvinceController
+	{
+		public ProvinceController(
+			ApiSettings settings,
+			ILogger<ProvinceController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IProvinceService provinceService,
+			IApiProvinceModelMapper provinceModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       provinceService,
+			       provinceModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>270584cca29871c17aeb20f6cd1dd9f2</Hash>
+    <Hash>fded0449bfc9511285379b997429988f</Hash>
 </Codenesium>*/

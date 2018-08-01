@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALSalesPersonQuotaHistoryMapper : DALAbstractSalesPersonQuotaHistoryMapper, IDALSalesPersonQuotaHistoryMapper
-        {
-                public DALSalesPersonQuotaHistoryMapper()
-                {
-                }
-        }
+	public partial class DALSalesPersonQuotaHistoryMapper : DALAbstractSalesPersonQuotaHistoryMapper, IDALSalesPersonQuotaHistoryMapper
+	{
+		public DALSalesPersonQuotaHistoryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dd73a3f3331fdf8517b16e6d0fce0bc3</Hash>
+    <Hash>6a739aef685dc690cf9c6d5c804acf76</Hash>
 </Codenesium>*/

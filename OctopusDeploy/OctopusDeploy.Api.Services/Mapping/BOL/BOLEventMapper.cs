@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOLEventMapper : BOLAbstractEventMapper, IBOLEventMapper
-        {
-                public BOLEventMapper()
-                {
-                }
-        }
+	public partial class BOLEventMapper : BOLAbstractEventMapper, IBOLEventMapper
+	{
+		public BOLEventMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b6f08c8d9bb6d250f3f899d4a4bcc682</Hash>
+    <Hash>19fb77cfff337e0d2b49729436c10738</Hash>
 </Codenesium>*/

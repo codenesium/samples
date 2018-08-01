@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ProductReviewRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ProductReviewRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ProductReviewRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ProductReviewRepository>>();
-                }
-        }
+		public static Mock<ILogger<ProductReviewRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ProductReviewRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductReview")]
-        [Trait("Area", "Repositories")]
-        public partial class ProductReviewRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductReview")]
+	[Trait("Area", "Repositories")]
+	public partial class ProductReviewRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
-                        ProductReview entity = new ProductReview();
-                        context.Set<ProductReview>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductReview entity = new ProductReview();
+			context.Set<ProductReview>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
-                        ProductReview entity = new ProductReview();
-                        context.Set<ProductReview>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductReview entity = new ProductReview();
+			context.Set<ProductReview>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductReviewID);
+			var record = await repository.Get(entity.ProductReviewID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
-                        var entity = new ProductReview();
-                        await repository.Create(entity);
+			var entity = new ProductReview();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ProductReview>().FirstOrDefaultAsync();
+			var record = await context.Set<ProductReview>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
-                        ProductReview entity = new ProductReview();
-                        context.Set<ProductReview>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
+			ProductReview entity = new ProductReview();
+			context.Set<ProductReview>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductReviewID);
+			var record = await repository.Get(entity.ProductReviewID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
-                        ProductReview entity = new ProductReview();
-                        context.Set<ProductReview>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
+			ProductReview entity = new ProductReview();
+			context.Set<ProductReview>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ProductReview());
+			await repository.Update(new ProductReview());
 
-                        var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
-                        var repository = new ProductReviewRepository(loggerMoc.Object, context);
-                        ProductReview entity = new ProductReview();
-                        context.Set<ProductReview>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
+			var repository = new ProductReviewRepository(loggerMoc.Object, context);
+			ProductReview entity = new ProductReview();
+			context.Set<ProductReview>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ProductReviewID);
+			await repository.Delete(entity.ProductReviewID);
 
-                        ProductReview modifiedRecord = await context.Set<ProductReview>().FirstOrDefaultAsync();
+			ProductReview modifiedRecord = await context.Set<ProductReview>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>333c4228bd953f2c0cac7f71879688b3</Hash>
+    <Hash>56454f9be7f426bd49bc8493db419d7f</Hash>
 </Codenesium>*/

@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public class ApiClaspRequestModelValidator : AbstractApiClaspRequestModelValidator, IApiClaspRequestModelValidator
-        {
-                public ApiClaspRequestModelValidator(IClaspRepository claspRepository)
-                        : base(claspRepository)
-                {
-                }
+	public class ApiClaspRequestModelValidator : AbstractApiClaspRequestModelValidator, IApiClaspRequestModelValidator
+	{
+		public ApiClaspRequestModelValidator(IClaspRepository claspRepository)
+			: base(claspRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiClaspRequestModel model)
-                {
-                        this.NextChainIdRules();
-                        this.PreviousChainIdRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiClaspRequestModel model)
+		{
+			this.NextChainIdRules();
+			this.PreviousChainIdRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiClaspRequestModel model)
-                {
-                        this.NextChainIdRules();
-                        this.PreviousChainIdRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiClaspRequestModel model)
+		{
+			this.NextChainIdRules();
+			this.PreviousChainIdRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>146c1bfe4a6da6356ae0c819a1ab59c3</Hash>
+    <Hash>bb5fb8088c8365e5910d546d11cc7af1</Hash>
 </Codenesium>*/

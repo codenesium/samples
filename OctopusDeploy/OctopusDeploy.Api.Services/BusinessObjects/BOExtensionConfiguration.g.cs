@@ -3,15 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOExtensionConfiguration : AbstractBOExtensionConfiguration
-        {
-                public BOExtensionConfiguration()
-                        : base()
-                {
-                }
-        }
+	public partial class BOExtensionConfiguration : AbstractBOExtensionConfiguration
+	{
+		public BOExtensionConfiguration()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>479ffbe94c00a868aba7ceca92e729e0</Hash>
+    <Hash>906dbe7e2ff1473dc81ceffd4a17a83e</Hash>
 </Codenesium>*/

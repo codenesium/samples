@@ -15,41 +15,41 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TicketStatus")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTicketStatusRequestModelValidatorTest
-        {
-                public ApiTicketStatusRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TicketStatus")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTicketStatusRequestModelValidatorTest
+	{
+		public ApiTicketStatusRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
-                        ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
+			ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
 
-                        var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTicketStatusRequestModel());
+			var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTicketStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
-                        ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ITicketStatusRepository> ticketStatusRepository = new Mock<ITicketStatusRepository>();
+			ticketStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatus()));
 
-                        var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTicketStatusRequestModel());
+			var validator = new ApiTicketStatusRequestModelValidator(ticketStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTicketStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2443d060d45b04b66bcc12d50f2186bd</Hash>
+    <Hash>6131406de7c57b28f1c8e3740db5b618</Hash>
 </Codenesium>*/

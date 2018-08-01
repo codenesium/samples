@@ -6,58 +6,58 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLAirlineMapper BOLAirlineMapperMock { get; set; } = new BOLAirlineMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLAirlineMapper BOLAirlineMapperMock { get; set; } = new BOLAirlineMapper();
 
-                public IBOLAirTransportMapper BOLAirTransportMapperMock { get; set; } = new BOLAirTransportMapper();
+		public IBOLAirTransportMapper BOLAirTransportMapperMock { get; set; } = new BOLAirTransportMapper();
 
-                public IBOLBreedMapper BOLBreedMapperMock { get; set; } = new BOLBreedMapper();
+		public IBOLBreedMapper BOLBreedMapperMock { get; set; } = new BOLBreedMapper();
 
-                public IBOLClientMapper BOLClientMapperMock { get; set; } = new BOLClientMapper();
+		public IBOLClientMapper BOLClientMapperMock { get; set; } = new BOLClientMapper();
 
-                public IBOLClientCommunicationMapper BOLClientCommunicationMapperMock { get; set; } = new BOLClientCommunicationMapper();
+		public IBOLClientCommunicationMapper BOLClientCommunicationMapperMock { get; set; } = new BOLClientCommunicationMapper();
 
-                public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
+		public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
 
-                public IBOLCountryRequirementMapper BOLCountryRequirementMapperMock { get; set; } = new BOLCountryRequirementMapper();
+		public IBOLCountryRequirementMapper BOLCountryRequirementMapperMock { get; set; } = new BOLCountryRequirementMapper();
 
-                public IBOLDestinationMapper BOLDestinationMapperMock { get; set; } = new BOLDestinationMapper();
+		public IBOLDestinationMapper BOLDestinationMapperMock { get; set; } = new BOLDestinationMapper();
 
-                public IBOLEmployeeMapper BOLEmployeeMapperMock { get; set; } = new BOLEmployeeMapper();
+		public IBOLEmployeeMapper BOLEmployeeMapperMock { get; set; } = new BOLEmployeeMapper();
 
-                public IBOLHandlerMapper BOLHandlerMapperMock { get; set; } = new BOLHandlerMapper();
+		public IBOLHandlerMapper BOLHandlerMapperMock { get; set; } = new BOLHandlerMapper();
 
-                public IBOLHandlerPipelineStepMapper BOLHandlerPipelineStepMapperMock { get; set; } = new BOLHandlerPipelineStepMapper();
+		public IBOLHandlerPipelineStepMapper BOLHandlerPipelineStepMapperMock { get; set; } = new BOLHandlerPipelineStepMapper();
 
-                public IBOLOtherTransportMapper BOLOtherTransportMapperMock { get; set; } = new BOLOtherTransportMapper();
+		public IBOLOtherTransportMapper BOLOtherTransportMapperMock { get; set; } = new BOLOtherTransportMapper();
 
-                public IBOLPetMapper BOLPetMapperMock { get; set; } = new BOLPetMapper();
+		public IBOLPetMapper BOLPetMapperMock { get; set; } = new BOLPetMapper();
 
-                public IBOLPipelineMapper BOLPipelineMapperMock { get; set; } = new BOLPipelineMapper();
+		public IBOLPipelineMapper BOLPipelineMapperMock { get; set; } = new BOLPipelineMapper();
 
-                public IBOLPipelineStatusMapper BOLPipelineStatusMapperMock { get; set; } = new BOLPipelineStatusMapper();
+		public IBOLPipelineStatusMapper BOLPipelineStatusMapperMock { get; set; } = new BOLPipelineStatusMapper();
 
-                public IBOLPipelineStepMapper BOLPipelineStepMapperMock { get; set; } = new BOLPipelineStepMapper();
+		public IBOLPipelineStepMapper BOLPipelineStepMapperMock { get; set; } = new BOLPipelineStepMapper();
 
-                public IBOLPipelineStepDestinationMapper BOLPipelineStepDestinationMapperMock { get; set; } = new BOLPipelineStepDestinationMapper();
+		public IBOLPipelineStepDestinationMapper BOLPipelineStepDestinationMapperMock { get; set; } = new BOLPipelineStepDestinationMapper();
 
-                public IBOLPipelineStepNoteMapper BOLPipelineStepNoteMapperMock { get; set; } = new BOLPipelineStepNoteMapper();
+		public IBOLPipelineStepNoteMapper BOLPipelineStepNoteMapperMock { get; set; } = new BOLPipelineStepNoteMapper();
 
-                public IBOLPipelineStepStatusMapper BOLPipelineStepStatusMapperMock { get; set; } = new BOLPipelineStepStatusMapper();
+		public IBOLPipelineStepStatusMapper BOLPipelineStepStatusMapperMock { get; set; } = new BOLPipelineStepStatusMapper();
 
-                public IBOLPipelineStepStepRequirementMapper BOLPipelineStepStepRequirementMapperMock { get; set; } = new BOLPipelineStepStepRequirementMapper();
+		public IBOLPipelineStepStepRequirementMapper BOLPipelineStepStepRequirementMapperMock { get; set; } = new BOLPipelineStepStepRequirementMapper();
 
-                public IBOLSaleMapper BOLSaleMapperMock { get; set; } = new BOLSaleMapper();
+		public IBOLSaleMapper BOLSaleMapperMock { get; set; } = new BOLSaleMapper();
 
-                public IBOLSpeciesMapper BOLSpeciesMapperMock { get; set; } = new BOLSpeciesMapper();
+		public IBOLSpeciesMapper BOLSpeciesMapperMock { get; set; } = new BOLSpeciesMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ac44f3869309e43bff43dc20d11dbea7</Hash>
+    <Hash>2c115a939a57c4ea51238a934004f8d4</Hash>
 </Codenesium>*/

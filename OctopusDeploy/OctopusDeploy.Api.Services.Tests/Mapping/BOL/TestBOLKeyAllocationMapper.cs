@@ -8,47 +8,47 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "KeyAllocation")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLKeyAllocationMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLKeyAllocationMapper();
-                        ApiKeyAllocationRequestModel model = new ApiKeyAllocationRequestModel();
-                        model.SetProperties(1);
-                        BOKeyAllocation response = mapper.MapModelToBO("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "KeyAllocation")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLKeyAllocationMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLKeyAllocationMapper();
+			ApiKeyAllocationRequestModel model = new ApiKeyAllocationRequestModel();
+			model.SetProperties(1);
+			BOKeyAllocation response = mapper.MapModelToBO("A", model);
 
-                        response.Allocated.Should().Be(1);
-                }
+			response.Allocated.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLKeyAllocationMapper();
-                        BOKeyAllocation bo = new BOKeyAllocation();
-                        bo.SetProperties("A", 1);
-                        ApiKeyAllocationResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLKeyAllocationMapper();
+			BOKeyAllocation bo = new BOKeyAllocation();
+			bo.SetProperties("A", 1);
+			ApiKeyAllocationResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Allocated.Should().Be(1);
-                        response.CollectionName.Should().Be("A");
-                }
+			response.Allocated.Should().Be(1);
+			response.CollectionName.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLKeyAllocationMapper();
-                        BOKeyAllocation bo = new BOKeyAllocation();
-                        bo.SetProperties("A", 1);
-                        List<ApiKeyAllocationResponseModel> response = mapper.MapBOToModel(new List<BOKeyAllocation>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLKeyAllocationMapper();
+			BOKeyAllocation bo = new BOKeyAllocation();
+			bo.SetProperties("A", 1);
+			List<ApiKeyAllocationResponseModel> response = mapper.MapBOToModel(new List<BOKeyAllocation>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>60efcdad0a4f7a501e24d985e4e75535</Hash>
+    <Hash>ec5139b10d90f94543c38920da01b654</Hash>
 </Codenesium>*/

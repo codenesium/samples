@@ -7,53 +7,52 @@ using Xunit;
 
 namespace NebulaNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "MachineRefTeam")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiMachineRefTeamModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiMachineRefTeamModelMapper();
-                        var model = new ApiMachineRefTeamRequestModel();
-                        model.SetProperties(1, 1);
-                        ApiMachineRefTeamResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "MachineRefTeam")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiMachineRefTeamModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiMachineRefTeamModelMapper();
+			var model = new ApiMachineRefTeamRequestModel();
+			model.SetProperties(1, 1);
+			ApiMachineRefTeamResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.MachineId.Should().Be(1);
-                        response.TeamId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.MachineId.Should().Be(1);
+			response.TeamId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiMachineRefTeamModelMapper();
-                        var model = new ApiMachineRefTeamResponseModel();
-                        model.SetProperties(1, 1, 1);
-                        ApiMachineRefTeamRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiMachineRefTeamModelMapper();
+			var model = new ApiMachineRefTeamResponseModel();
+			model.SetProperties(1, 1, 1);
+			ApiMachineRefTeamRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.MachineId.Should().Be(1);
-                        response.TeamId.Should().Be(1);
-                }
+			response.MachineId.Should().Be(1);
+			response.TeamId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiMachineRefTeamModelMapper();
-                        var model = new ApiMachineRefTeamRequestModel();
-                        model.SetProperties(1, 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiMachineRefTeamModelMapper();
+			var model = new ApiMachineRefTeamRequestModel();
+			model.SetProperties(1, 1);
 
-                        JsonPatchDocument<ApiMachineRefTeamRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiMachineRefTeamRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.MachineId.Should().Be(1);
-                        response.TeamId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiMachineRefTeamRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiMachineRefTeamRequestModel();
+			patch.ApplyTo(response);
+			response.MachineId.Should().Be(1);
+			response.TeamId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0b380f092ff9c89f2996779ca70aa15f</Hash>
+    <Hash>c367f4596e9f340aa37eb43acfddf52e</Hash>
 </Codenesium>*/

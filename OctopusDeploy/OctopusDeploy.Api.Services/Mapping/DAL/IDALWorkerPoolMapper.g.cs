@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALWorkerPoolMapper
-        {
-                WorkerPool MapBOToEF(
-                        BOWorkerPool bo);
+	public interface IDALWorkerPoolMapper
+	{
+		WorkerPool MapBOToEF(
+			BOWorkerPool bo);
 
-                BOWorkerPool MapEFToBO(
-                        WorkerPool efWorkerPool);
+		BOWorkerPool MapEFToBO(
+			WorkerPool efWorkerPool);
 
-                List<BOWorkerPool> MapEFToBO(
-                        List<WorkerPool> records);
-        }
+		List<BOWorkerPool> MapEFToBO(
+			List<WorkerPool> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7f2079ced3105c846fadd05b91eedb6c</Hash>
+    <Hash>d23fc57a4aba3ae91e8ad5084effa484</Hash>
 </Codenesium>*/

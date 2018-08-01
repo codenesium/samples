@@ -6,76 +6,76 @@ using System.Linq;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        [Table("Lesson", Schema="dbo")]
-        public partial class Lesson : AbstractEntity
-        {
-                public Lesson()
-                {
-                }
+	[Table("Lesson", Schema="dbo")]
+	public partial class Lesson : AbstractEntity
+	{
+		public Lesson()
+		{
+		}
 
-                public virtual void SetProperties(
-                        DateTime? actualEndDate,
-                        DateTime? actualStartDate,
-                        decimal? billAmount,
-                        int id,
-                        int lessonStatusId,
-                        DateTime? scheduledEndDate,
-                        DateTime? scheduledStartDate,
-                        string studentNotes,
-                        int studioId,
-                        string teacherNotes)
-                {
-                        this.ActualEndDate = actualEndDate;
-                        this.ActualStartDate = actualStartDate;
-                        this.BillAmount = billAmount;
-                        this.Id = id;
-                        this.LessonStatusId = lessonStatusId;
-                        this.ScheduledEndDate = scheduledEndDate;
-                        this.ScheduledStartDate = scheduledStartDate;
-                        this.StudentNotes = studentNotes;
-                        this.StudioId = studioId;
-                        this.TeacherNotes = teacherNotes;
-                }
+		public virtual void SetProperties(
+			DateTime? actualEndDate,
+			DateTime? actualStartDate,
+			decimal? billAmount,
+			int id,
+			int lessonStatusId,
+			DateTime? scheduledEndDate,
+			DateTime? scheduledStartDate,
+			string studentNotes,
+			int studioId,
+			string teacherNotes)
+		{
+			this.ActualEndDate = actualEndDate;
+			this.ActualStartDate = actualStartDate;
+			this.BillAmount = billAmount;
+			this.Id = id;
+			this.LessonStatusId = lessonStatusId;
+			this.ScheduledEndDate = scheduledEndDate;
+			this.ScheduledStartDate = scheduledStartDate;
+			this.StudentNotes = studentNotes;
+			this.StudioId = studioId;
+			this.TeacherNotes = teacherNotes;
+		}
 
-                [Column("actualEndDate")]
-                public DateTime? ActualEndDate { get; private set; }
+		[Column("actualEndDate")]
+		public DateTime? ActualEndDate { get; private set; }
 
-                [Column("actualStartDate")]
-                public DateTime? ActualStartDate { get; private set; }
+		[Column("actualStartDate")]
+		public DateTime? ActualStartDate { get; private set; }
 
-                [Column("billAmount")]
-                public decimal? BillAmount { get; private set; }
+		[Column("billAmount")]
+		public decimal? BillAmount { get; private set; }
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("lessonStatusId")]
-                public int LessonStatusId { get; private set; }
+		[Column("lessonStatusId")]
+		public int LessonStatusId { get; private set; }
 
-                [Column("scheduledEndDate")]
-                public DateTime? ScheduledEndDate { get; private set; }
+		[Column("scheduledEndDate")]
+		public DateTime? ScheduledEndDate { get; private set; }
 
-                [Column("scheduledStartDate")]
-                public DateTime? ScheduledStartDate { get; private set; }
+		[Column("scheduledStartDate")]
+		public DateTime? ScheduledStartDate { get; private set; }
 
-                [Column("studentNotes")]
-                public string StudentNotes { get; private set; }
+		[Column("studentNotes")]
+		public string StudentNotes { get; private set; }
 
-                [Column("studioId")]
-                public int StudioId { get; private set; }
+		[Column("studioId")]
+		public int StudioId { get; private set; }
 
-                [Column("teacherNotes")]
-                public string TeacherNotes { get; private set; }
+		[Column("teacherNotes")]
+		public string TeacherNotes { get; private set; }
 
-                [ForeignKey("LessonStatusId")]
-                public virtual LessonStatus LessonStatusNavigation { get; private set; }
+		[ForeignKey("LessonStatusId")]
+		public virtual LessonStatus LessonStatusNavigation { get; private set; }
 
-                [ForeignKey("StudioId")]
-                public virtual Studio StudioNavigation { get; private set; }
-        }
+		[ForeignKey("StudioId")]
+		public virtual Studio StudioNavigation { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>7a36ad8c6cd7771670b14d10f50c07e2</Hash>
+    <Hash>68a013f2ddb864c2a0b3465d9372b305</Hash>
 </Codenesium>*/

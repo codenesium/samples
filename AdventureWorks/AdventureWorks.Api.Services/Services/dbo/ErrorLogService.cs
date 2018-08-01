@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ErrorLogService : AbstractErrorLogService, IErrorLogService
-        {
-                public ErrorLogService(
-                        ILogger<IErrorLogRepository> logger,
-                        IErrorLogRepository errorLogRepository,
-                        IApiErrorLogRequestModelValidator errorLogModelValidator,
-                        IBOLErrorLogMapper bolerrorLogMapper,
-                        IDALErrorLogMapper dalerrorLogMapper
-                        )
-                        : base(logger,
-                               errorLogRepository,
-                               errorLogModelValidator,
-                               bolerrorLogMapper,
-                               dalerrorLogMapper)
-                {
-                }
-        }
+	public partial class ErrorLogService : AbstractErrorLogService, IErrorLogService
+	{
+		public ErrorLogService(
+			ILogger<IErrorLogRepository> logger,
+			IErrorLogRepository errorLogRepository,
+			IApiErrorLogRequestModelValidator errorLogModelValidator,
+			IBOLErrorLogMapper bolerrorLogMapper,
+			IDALErrorLogMapper dalerrorLogMapper
+			)
+			: base(logger,
+			       errorLogRepository,
+			       errorLogModelValidator,
+			       bolerrorLogMapper,
+			       dalerrorLogMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>55af94f9ef9d98366a311067461a2b5d</Hash>
+    <Hash>19bdf4e61f4973b9b2b2e98deb9db0ae</Hash>
 </Codenesium>*/

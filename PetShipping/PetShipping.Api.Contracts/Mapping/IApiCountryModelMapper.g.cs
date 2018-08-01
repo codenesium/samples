@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public interface IApiCountryModelMapper
-        {
-                ApiCountryResponseModel MapRequestToResponse(
-                        int id,
-                        ApiCountryRequestModel request);
+	public interface IApiCountryModelMapper
+	{
+		ApiCountryResponseModel MapRequestToResponse(
+			int id,
+			ApiCountryRequestModel request);
 
-                ApiCountryRequestModel MapResponseToRequest(
-                        ApiCountryResponseModel response);
+		ApiCountryRequestModel MapResponseToRequest(
+			ApiCountryResponseModel response);
 
-                JsonPatchDocument<ApiCountryRequestModel> CreatePatch(ApiCountryRequestModel model);
-        }
+		JsonPatchDocument<ApiCountryRequestModel> CreatePatch(ApiCountryRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>fdfa6f49f81cf9280a4bd813ef39c014</Hash>
+    <Hash>92049a5051b5f973463325772d604948</Hash>
 </Codenesium>*/

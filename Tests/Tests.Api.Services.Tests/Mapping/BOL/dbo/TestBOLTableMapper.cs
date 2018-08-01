@@ -8,47 +8,47 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Table")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLTableMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLTableMapper();
-                        ApiTableRequestModel model = new ApiTableRequestModel();
-                        model.SetProperties("A");
-                        BOTable response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Table")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLTableMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLTableMapper();
+			ApiTableRequestModel model = new ApiTableRequestModel();
+			model.SetProperties("A");
+			BOTable response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLTableMapper();
-                        BOTable bo = new BOTable();
-                        bo.SetProperties(1, "A");
-                        ApiTableResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLTableMapper();
+			BOTable bo = new BOTable();
+			bo.SetProperties(1, "A");
+			ApiTableResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLTableMapper();
-                        BOTable bo = new BOTable();
-                        bo.SetProperties(1, "A");
-                        List<ApiTableResponseModel> response = mapper.MapBOToModel(new List<BOTable>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLTableMapper();
+			BOTable bo = new BOTable();
+			bo.SetProperties(1, "A");
+			List<ApiTableResponseModel> response = mapper.MapBOToModel(new List<BOTable>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fd3c96051d7568200d9eec544f620043</Hash>
+    <Hash>e1c79d1a3d85965a8c561b7358bbc79d</Hash>
 </Codenesium>*/

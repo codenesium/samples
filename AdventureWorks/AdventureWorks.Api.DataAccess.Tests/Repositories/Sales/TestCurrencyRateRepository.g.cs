@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CurrencyRateRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class CurrencyRateRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<CurrencyRateRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<CurrencyRateRepository>>();
-                }
-        }
+		public static Mock<ILogger<CurrencyRateRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<CurrencyRateRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "CurrencyRate")]
-        [Trait("Area", "Repositories")]
-        public partial class CurrencyRateRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "CurrencyRate")]
+	[Trait("Area", "Repositories")]
+	public partial class CurrencyRateRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
-                        CurrencyRate entity = new CurrencyRate();
-                        context.Set<CurrencyRate>().Add(entity);
-                        await context.SaveChangesAsync();
+			CurrencyRate entity = new CurrencyRate();
+			context.Set<CurrencyRate>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
-                        CurrencyRate entity = new CurrencyRate();
-                        context.Set<CurrencyRate>().Add(entity);
-                        await context.SaveChangesAsync();
+			CurrencyRate entity = new CurrencyRate();
+			context.Set<CurrencyRate>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CurrencyRateID);
+			var record = await repository.Get(entity.CurrencyRateID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
-                        var entity = new CurrencyRate();
-                        await repository.Create(entity);
+			var entity = new CurrencyRate();
+			await repository.Create(entity);
 
-                        var record = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
+			var record = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-                        CurrencyRate entity = new CurrencyRate();
-                        context.Set<CurrencyRate>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+			CurrencyRate entity = new CurrencyRate();
+			context.Set<CurrencyRate>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CurrencyRateID);
+			var record = await repository.Get(entity.CurrencyRateID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<CurrencyRate>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<CurrencyRate>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-                        CurrencyRate entity = new CurrencyRate();
-                        context.Set<CurrencyRate>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+			CurrencyRate entity = new CurrencyRate();
+			context.Set<CurrencyRate>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new CurrencyRate());
+			await repository.Update(new CurrencyRate());
 
-                        var modifiedRecord = context.Set<CurrencyRate>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<CurrencyRate>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
-                        var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-                        CurrencyRate entity = new CurrencyRate();
-                        context.Set<CurrencyRate>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
+			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
+			CurrencyRate entity = new CurrencyRate();
+			context.Set<CurrencyRate>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.CurrencyRateID);
+			await repository.Delete(entity.CurrencyRateID);
 
-                        CurrencyRate modifiedRecord = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
+			CurrencyRate modifiedRecord = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b55c3601e4bf83ff70c63b861f042e2a</Hash>
+    <Hash>2b00e8400574f6e642b8cd95cb2be4a7</Hash>
 </Codenesium>*/

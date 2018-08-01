@@ -12,86 +12,86 @@ using Xunit;
 
 namespace FermataFishNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "LessonXTeacher")]
-        [Trait("Area", "Integration")]
-        public class LessonXTeacherIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public LessonXTeacherIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "LessonXTeacher")]
+	[Trait("Area", "Integration")]
+	public class LessonXTeacherIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public LessonXTeacherIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiLessonXTeacherModelMapper mapper = new ApiLessonXTeacherModelMapper();
+			ApiLessonXTeacherModelMapper mapper = new ApiLessonXTeacherModelMapper();
 
-                        UpdateResponse<ApiLessonXTeacherResponseModel> updateResponse = await this.Client.LessonXTeacherUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLessonXTeacherResponseModel> updateResponse = await this.Client.LessonXTeacherUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.LessonXTeacherDeleteAsync(model.Id);
+			await this.Client.LessonXTeacherDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiLessonXTeacherResponseModel response = await this.Client.LessonXTeacherGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiLessonXTeacherResponseModel response = await this.Client.LessonXTeacherGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiLessonXTeacherResponseModel> response = await this.Client.LessonXTeacherAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiLessonXTeacherResponseModel> response = await this.Client.LessonXTeacherAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiLessonXTeacherResponseModel> CreateRecord()
-                {
-                        var model = new ApiLessonXTeacherRequestModel();
-                        model.SetProperties(1, 1);
-                        CreateResponse<ApiLessonXTeacherResponseModel> result = await this.Client.LessonXTeacherCreateAsync(model);
+		private async Task<ApiLessonXTeacherResponseModel> CreateRecord()
+		{
+			var model = new ApiLessonXTeacherRequestModel();
+			model.SetProperties(1, 1);
+			CreateResponse<ApiLessonXTeacherResponseModel> result = await this.Client.LessonXTeacherCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.LessonXTeacherDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.LessonXTeacherDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>94a05458f5c53e6d36c7b84f425c6cbd</Hash>
+    <Hash>4d7c73d56322c77ab1874ca9b3d94f73</Hash>
 </Codenesium>*/

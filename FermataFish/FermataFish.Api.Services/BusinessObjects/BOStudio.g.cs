@@ -3,15 +3,15 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOStudio : AbstractBOStudio
-        {
-                public BOStudio()
-                        : base()
-                {
-                }
-        }
+	public partial class BOStudio : AbstractBOStudio
+	{
+		public BOStudio()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ae6e5345e100036a203ddae615e89827</Hash>
+    <Hash>3db2cf8c70f37854bd726405230cc461</Hash>
 </Codenesium>*/

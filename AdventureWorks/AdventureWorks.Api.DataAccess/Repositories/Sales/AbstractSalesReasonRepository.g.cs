@@ -11,107 +11,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesReasonRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractSalesReasonRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractSalesReasonRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractSalesReasonRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<SalesReason>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<SalesReason>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<SalesReason> Get(int salesReasonID)
-                {
-                        return await this.GetById(salesReasonID);
-                }
+		public async virtual Task<SalesReason> Get(int salesReasonID)
+		{
+			return await this.GetById(salesReasonID);
+		}
 
-                public async virtual Task<SalesReason> Create(SalesReason item)
-                {
-                        this.Context.Set<SalesReason>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<SalesReason> Create(SalesReason item)
+		{
+			this.Context.Set<SalesReason>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(SalesReason item)
-                {
-                        var entity = this.Context.Set<SalesReason>().Local.FirstOrDefault(x => x.SalesReasonID == item.SalesReasonID);
-                        if (entity == null)
-                        {
-                                this.Context.Set<SalesReason>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(SalesReason item)
+		{
+			var entity = this.Context.Set<SalesReason>().Local.FirstOrDefault(x => x.SalesReasonID == item.SalesReasonID);
+			if (entity == null)
+			{
+				this.Context.Set<SalesReason>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        int salesReasonID)
-                {
-                        SalesReason record = await this.GetById(salesReasonID);
+		public async virtual Task Delete(
+			int salesReasonID)
+		{
+			SalesReason record = await this.GetById(salesReasonID);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<SalesReason>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<SalesReason>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesReasonID == salesReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
-                }
+		public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesReasonID == salesReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
+		}
 
-                protected async Task<List<SalesReason>> Where(
-                        Expression<Func<SalesReason, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<SalesReason, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.SalesReasonID;
-                        }
+		protected async Task<List<SalesReason>> Where(
+			Expression<Func<SalesReason, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<SalesReason, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.SalesReasonID;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<SalesReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesReason>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<SalesReason>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesReason>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<SalesReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesReason>();
+			}
+			else
+			{
+				return await this.Context.Set<SalesReason>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesReason>();
+			}
+		}
 
-                private async Task<SalesReason> GetById(int salesReasonID)
-                {
-                        List<SalesReason> records = await this.Where(x => x.SalesReasonID == salesReasonID);
+		private async Task<SalesReason> GetById(int salesReasonID)
+		{
+			List<SalesReason> records = await this.Where(x => x.SalesReasonID == salesReasonID);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e44ad91ab62098bc080de72fadcb6542</Hash>
+    <Hash>0ab04c1ad85cfeb0a122aa4e82636287</Hash>
 </Codenesium>*/

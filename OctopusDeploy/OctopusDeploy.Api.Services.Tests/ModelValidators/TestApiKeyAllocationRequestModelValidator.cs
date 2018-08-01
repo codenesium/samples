@@ -15,17 +15,17 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "KeyAllocation")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiKeyAllocationRequestModelValidatorTest
-        {
-                public ApiKeyAllocationRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "KeyAllocation")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiKeyAllocationRequestModelValidatorTest
+	{
+		public ApiKeyAllocationRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>17b92235c8e165500171b5ba26292509</Hash>
+    <Hash>e6d387c632e585152dd81420fc52ad71</Hash>
 </Codenesium>*/

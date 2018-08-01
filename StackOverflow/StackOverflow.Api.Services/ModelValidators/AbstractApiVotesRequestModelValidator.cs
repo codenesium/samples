@@ -9,45 +9,45 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class AbstractApiVotesRequestModelValidator : AbstractValidator<ApiVotesRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiVotesRequestModelValidator : AbstractValidator<ApiVotesRequestModel>
+	{
+		private int existingRecordId;
 
-                private IVotesRepository votesRepository;
+		private IVotesRepository votesRepository;
 
-                public AbstractApiVotesRequestModelValidator(IVotesRepository votesRepository)
-                {
-                        this.votesRepository = votesRepository;
-                }
+		public AbstractApiVotesRequestModelValidator(IVotesRepository votesRepository)
+		{
+			this.votesRepository = votesRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiVotesRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiVotesRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void BountyAmountRules()
-                {
-                }
+		public virtual void BountyAmountRules()
+		{
+		}
 
-                public virtual void CreationDateRules()
-                {
-                }
+		public virtual void CreationDateRules()
+		{
+		}
 
-                public virtual void PostIdRules()
-                {
-                }
+		public virtual void PostIdRules()
+		{
+		}
 
-                public virtual void UserIdRules()
-                {
-                }
+		public virtual void UserIdRules()
+		{
+		}
 
-                public virtual void VoteTypeIdRules()
-                {
-                }
-        }
+		public virtual void VoteTypeIdRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a19156de1c9d08b5464d2f3950f59ca1</Hash>
+    <Hash>968b82215c66aecca685071033bb2523</Hash>
 </Codenesium>*/

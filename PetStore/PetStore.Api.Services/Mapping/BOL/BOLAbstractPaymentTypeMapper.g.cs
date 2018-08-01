@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class BOLAbstractPaymentTypeMapper
-        {
-                public virtual BOPaymentType MapModelToBO(
-                        int id,
-                        ApiPaymentTypeRequestModel model
-                        )
-                {
-                        BOPaymentType boPaymentType = new BOPaymentType();
-                        boPaymentType.SetProperties(
-                                id,
-                                model.Name);
-                        return boPaymentType;
-                }
+	public abstract class BOLAbstractPaymentTypeMapper
+	{
+		public virtual BOPaymentType MapModelToBO(
+			int id,
+			ApiPaymentTypeRequestModel model
+			)
+		{
+			BOPaymentType boPaymentType = new BOPaymentType();
+			boPaymentType.SetProperties(
+				id,
+				model.Name);
+			return boPaymentType;
+		}
 
-                public virtual ApiPaymentTypeResponseModel MapBOToModel(
-                        BOPaymentType boPaymentType)
-                {
-                        var model = new ApiPaymentTypeResponseModel();
+		public virtual ApiPaymentTypeResponseModel MapBOToModel(
+			BOPaymentType boPaymentType)
+		{
+			var model = new ApiPaymentTypeResponseModel();
 
-                        model.SetProperties(boPaymentType.Id, boPaymentType.Name);
+			model.SetProperties(boPaymentType.Id, boPaymentType.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiPaymentTypeResponseModel> MapBOToModel(
-                        List<BOPaymentType> items)
-                {
-                        List<ApiPaymentTypeResponseModel> response = new List<ApiPaymentTypeResponseModel>();
+		public virtual List<ApiPaymentTypeResponseModel> MapBOToModel(
+			List<BOPaymentType> items)
+		{
+			List<ApiPaymentTypeResponseModel> response = new List<ApiPaymentTypeResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0941e9abd416543db08c6ad8db497aa5</Hash>
+    <Hash>3ba338a9a34ff8846b73a7289ec36131</Hash>
 </Codenesium>*/

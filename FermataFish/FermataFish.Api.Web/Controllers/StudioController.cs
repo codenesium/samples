@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/studios")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class StudioController : AbstractStudioController
-        {
-                public StudioController(
-                        ApiSettings settings,
-                        ILogger<StudioController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IStudioService studioService,
-                        IApiStudioModelMapper studioModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               studioService,
-                               studioModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/studios")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class StudioController : AbstractStudioController
+	{
+		public StudioController(
+			ApiSettings settings,
+			ILogger<StudioController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IStudioService studioService,
+			IApiStudioModelMapper studioModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       studioService,
+			       studioModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c88a3bc4dead9605d1cbee754b792b88</Hash>
+    <Hash>b3381f060da1d5b01900ceb6855ca945</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLTestAllFieldTypeMapper
-        {
-                BOTestAllFieldType MapModelToBO(
-                        int id,
-                        ApiTestAllFieldTypeRequestModel model);
+	public interface IBOLTestAllFieldTypeMapper
+	{
+		BOTestAllFieldType MapModelToBO(
+			int id,
+			ApiTestAllFieldTypeRequestModel model);
 
-                ApiTestAllFieldTypeResponseModel MapBOToModel(
-                        BOTestAllFieldType boTestAllFieldType);
+		ApiTestAllFieldTypeResponseModel MapBOToModel(
+			BOTestAllFieldType boTestAllFieldType);
 
-                List<ApiTestAllFieldTypeResponseModel> MapBOToModel(
-                        List<BOTestAllFieldType> items);
-        }
+		List<ApiTestAllFieldTypeResponseModel> MapBOToModel(
+			List<BOTestAllFieldType> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0c201958a1429dd42348a688a2f4a136</Hash>
+    <Hash>3fb4c803333f85dd0d987e5b74c6b86c</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class MutexService : AbstractMutexService, IMutexService
-        {
-                public MutexService(
-                        ILogger<IMutexRepository> logger,
-                        IMutexRepository mutexRepository,
-                        IApiMutexRequestModelValidator mutexModelValidator,
-                        IBOLMutexMapper bolmutexMapper,
-                        IDALMutexMapper dalmutexMapper
-                        )
-                        : base(logger,
-                               mutexRepository,
-                               mutexModelValidator,
-                               bolmutexMapper,
-                               dalmutexMapper)
-                {
-                }
-        }
+	public partial class MutexService : AbstractMutexService, IMutexService
+	{
+		public MutexService(
+			ILogger<IMutexRepository> logger,
+			IMutexRepository mutexRepository,
+			IApiMutexRequestModelValidator mutexModelValidator,
+			IBOLMutexMapper bolmutexMapper,
+			IDALMutexMapper dalmutexMapper
+			)
+			: base(logger,
+			       mutexRepository,
+			       mutexModelValidator,
+			       bolmutexMapper,
+			       dalmutexMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3a2735d8946488d7e9c361a08bf23bf9</Hash>
+    <Hash>73fedc1589071c9ec318230ce1d9e5c1</Hash>
 </Codenesium>*/

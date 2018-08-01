@@ -12,86 +12,86 @@ using Xunit;
 
 namespace FermataFishNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Teacher")]
-        [Trait("Area", "Integration")]
-        public class TeacherIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TeacherIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Teacher")]
+	[Trait("Area", "Integration")]
+	public class TeacherIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TeacherIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTeacherModelMapper mapper = new ApiTeacherModelMapper();
+			ApiTeacherModelMapper mapper = new ApiTeacherModelMapper();
 
-                        UpdateResponse<ApiTeacherResponseModel> updateResponse = await this.Client.TeacherUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTeacherResponseModel> updateResponse = await this.Client.TeacherUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TeacherDeleteAsync(model.Id);
+			await this.Client.TeacherDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTeacherResponseModel response = await this.Client.TeacherGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTeacherResponseModel response = await this.Client.TeacherGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTeacherResponseModel> response = await this.Client.TeacherAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTeacherResponseModel> response = await this.Client.TeacherAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTeacherResponseModel> CreateRecord()
-                {
-                        var model = new ApiTeacherRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
-                        CreateResponse<ApiTeacherResponseModel> result = await this.Client.TeacherCreateAsync(model);
+		private async Task<ApiTeacherResponseModel> CreateRecord()
+		{
+			var model = new ApiTeacherRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			CreateResponse<ApiTeacherResponseModel> result = await this.Client.TeacherCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TeacherDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TeacherDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b0645d36288beca3d96fa4e44531f5bf</Hash>
+    <Hash>e6e1eb94a0a211a82dd02015392b0834</Hash>
 </Codenesium>*/

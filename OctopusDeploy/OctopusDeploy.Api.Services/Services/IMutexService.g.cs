@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IMutexService
-        {
-                Task<CreateResponse<ApiMutexResponseModel>> Create(
-                        ApiMutexRequestModel model);
+	public interface IMutexService
+	{
+		Task<CreateResponse<ApiMutexResponseModel>> Create(
+			ApiMutexRequestModel model);
 
-                Task<UpdateResponse<ApiMutexResponseModel>> Update(string id,
-                                                                    ApiMutexRequestModel model);
+		Task<UpdateResponse<ApiMutexResponseModel>> Update(string id,
+		                                                    ApiMutexRequestModel model);
 
-                Task<ActionResponse> Delete(string id);
+		Task<ActionResponse> Delete(string id);
 
-                Task<ApiMutexResponseModel> Get(string id);
+		Task<ApiMutexResponseModel> Get(string id);
 
-                Task<List<ApiMutexResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiMutexResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>65a0f418feccd26ecaa0983de68fb8ad</Hash>
+    <Hash>b1f849110b9d020ffb0afd75eb22ebc2</Hash>
 </Codenesium>*/

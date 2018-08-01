@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public interface IPipelineStepNoteRepository
-        {
-                Task<PipelineStepNote> Create(PipelineStepNote item);
+	public interface IPipelineStepNoteRepository
+	{
+		Task<PipelineStepNote> Create(PipelineStepNote item);
 
-                Task Update(PipelineStepNote item);
+		Task Update(PipelineStepNote item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<PipelineStepNote> Get(int id);
+		Task<PipelineStepNote> Get(int id);
 
-                Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Employee> GetEmployee(int employeeId);
+		Task<Employee> GetEmployee(int employeeId);
 
-                Task<PipelineStep> GetPipelineStep(int pipelineStepId);
-        }
+		Task<PipelineStep> GetPipelineStep(int pipelineStepId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a17819e7de8d03de2170fb56ca45f668</Hash>
+    <Hash>924be84442aed12515f88b467c089e44</Hash>
 </Codenesium>*/

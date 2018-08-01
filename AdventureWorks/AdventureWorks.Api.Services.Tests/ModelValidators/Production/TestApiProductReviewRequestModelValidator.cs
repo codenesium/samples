@@ -15,137 +15,137 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductReview")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductReviewRequestModelValidatorTest
-        {
-                public ApiProductReviewRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductReview")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductReviewRequestModelValidatorTest
+	{
+		public ApiProductReviewRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Comment_Create_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void Comment_Create_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
+		}
 
-                [Fact]
-                public async void Comment_Update_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void Comment_Update_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 3851));
+		}
 
-                [Fact]
-                public async void EmailAddress_Create_null()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void EmailAddress_Create_null()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, null as string);
+		}
 
-                [Fact]
-                public async void EmailAddress_Update_null()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void EmailAddress_Update_null()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, null as string);
+		}
 
-                [Fact]
-                public async void EmailAddress_Create_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void EmailAddress_Create_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 51));
+		}
 
-                [Fact]
-                public async void EmailAddress_Update_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void EmailAddress_Update_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ReviewerName_Create_null()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void ReviewerName_Create_null()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, null as string);
+		}
 
-                [Fact]
-                public async void ReviewerName_Update_null()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void ReviewerName_Update_null()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, null as string);
+		}
 
-                [Fact]
-                public async void ReviewerName_Create_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void ReviewerName_Create_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ReviewerName_Update_length()
-                {
-                        Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
-                        productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+		[Fact]
+		public async void ReviewerName_Update_length()
+		{
+			Mock<IProductReviewRepository> productReviewRepository = new Mock<IProductReviewRepository>();
+			productReviewRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 
-                        var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
+			var validator = new ApiProductReviewRequestModelValidator(productReviewRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductReviewRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ReviewerName, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fb40c57af78b837adf59c5e4a792027b</Hash>
+    <Hash>7f4889b69a29724b2f0a3d773c72c72b</Hash>
 </Codenesium>*/

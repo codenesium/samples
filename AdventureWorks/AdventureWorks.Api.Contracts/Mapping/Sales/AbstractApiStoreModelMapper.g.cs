@@ -5,48 +5,48 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiStoreModelMapper
-        {
-                public virtual ApiStoreResponseModel MapRequestToResponse(
-                        int businessEntityID,
-                        ApiStoreRequestModel request)
-                {
-                        var response = new ApiStoreResponseModel();
-                        response.SetProperties(businessEntityID,
-                                               request.Demographic,
-                                               request.ModifiedDate,
-                                               request.Name,
-                                               request.Rowguid,
-                                               request.SalesPersonID);
-                        return response;
-                }
+	public abstract class AbstractApiStoreModelMapper
+	{
+		public virtual ApiStoreResponseModel MapRequestToResponse(
+			int businessEntityID,
+			ApiStoreRequestModel request)
+		{
+			var response = new ApiStoreResponseModel();
+			response.SetProperties(businessEntityID,
+			                       request.Demographic,
+			                       request.ModifiedDate,
+			                       request.Name,
+			                       request.Rowguid,
+			                       request.SalesPersonID);
+			return response;
+		}
 
-                public virtual ApiStoreRequestModel MapResponseToRequest(
-                        ApiStoreResponseModel response)
-                {
-                        var request = new ApiStoreRequestModel();
-                        request.SetProperties(
-                                response.Demographic,
-                                response.ModifiedDate,
-                                response.Name,
-                                response.Rowguid,
-                                response.SalesPersonID);
-                        return request;
-                }
+		public virtual ApiStoreRequestModel MapResponseToRequest(
+			ApiStoreResponseModel response)
+		{
+			var request = new ApiStoreRequestModel();
+			request.SetProperties(
+				response.Demographic,
+				response.ModifiedDate,
+				response.Name,
+				response.Rowguid,
+				response.SalesPersonID);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiStoreRequestModel> CreatePatch(ApiStoreRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiStoreRequestModel>();
-                        patch.Replace(x => x.Demographic, model.Demographic);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.Rowguid, model.Rowguid);
-                        patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiStoreRequestModel> CreatePatch(ApiStoreRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiStoreRequestModel>();
+			patch.Replace(x => x.Demographic, model.Demographic);
+			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.Rowguid, model.Rowguid);
+			patch.Replace(x => x.SalesPersonID, model.SalesPersonID);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>212040f371ca432f4abfcec0df8d8663</Hash>
+    <Hash>e84559e6efd1f11e1b43d9f3a8275c05</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALWorkOrderRoutingMapper
-        {
-                WorkOrderRouting MapBOToEF(
-                        BOWorkOrderRouting bo);
+	public interface IDALWorkOrderRoutingMapper
+	{
+		WorkOrderRouting MapBOToEF(
+			BOWorkOrderRouting bo);
 
-                BOWorkOrderRouting MapEFToBO(
-                        WorkOrderRouting efWorkOrderRouting);
+		BOWorkOrderRouting MapEFToBO(
+			WorkOrderRouting efWorkOrderRouting);
 
-                List<BOWorkOrderRouting> MapEFToBO(
-                        List<WorkOrderRouting> records);
-        }
+		List<BOWorkOrderRouting> MapEFToBO(
+			List<WorkOrderRouting> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>db5fb3ff4d6434939b6cc04dcf33842e</Hash>
+    <Hash>06f885cdc172f20b6ea7fc92f527a370</Hash>
 </Codenesium>*/

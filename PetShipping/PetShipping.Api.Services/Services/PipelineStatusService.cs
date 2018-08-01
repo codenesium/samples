@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PipelineStatusService : AbstractPipelineStatusService, IPipelineStatusService
-        {
-                public PipelineStatusService(
-                        ILogger<IPipelineStatusRepository> logger,
-                        IPipelineStatusRepository pipelineStatusRepository,
-                        IApiPipelineStatusRequestModelValidator pipelineStatusModelValidator,
-                        IBOLPipelineStatusMapper bolpipelineStatusMapper,
-                        IDALPipelineStatusMapper dalpipelineStatusMapper,
-                        IBOLPipelineMapper bolPipelineMapper,
-                        IDALPipelineMapper dalPipelineMapper
-                        )
-                        : base(logger,
-                               pipelineStatusRepository,
-                               pipelineStatusModelValidator,
-                               bolpipelineStatusMapper,
-                               dalpipelineStatusMapper,
-                               bolPipelineMapper,
-                               dalPipelineMapper)
-                {
-                }
-        }
+	public partial class PipelineStatusService : AbstractPipelineStatusService, IPipelineStatusService
+	{
+		public PipelineStatusService(
+			ILogger<IPipelineStatusRepository> logger,
+			IPipelineStatusRepository pipelineStatusRepository,
+			IApiPipelineStatusRequestModelValidator pipelineStatusModelValidator,
+			IBOLPipelineStatusMapper bolpipelineStatusMapper,
+			IDALPipelineStatusMapper dalpipelineStatusMapper,
+			IBOLPipelineMapper bolPipelineMapper,
+			IDALPipelineMapper dalPipelineMapper
+			)
+			: base(logger,
+			       pipelineStatusRepository,
+			       pipelineStatusModelValidator,
+			       bolpipelineStatusMapper,
+			       dalpipelineStatusMapper,
+			       bolPipelineMapper,
+			       dalPipelineMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>573943424d719262ac71bdde3d8aa6b6</Hash>
+    <Hash>0702d5043bbb4e541533143b4169fe1d</Hash>
 </Codenesium>*/

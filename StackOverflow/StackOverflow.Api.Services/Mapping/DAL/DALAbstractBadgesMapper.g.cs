@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class DALAbstractBadgesMapper
-        {
-                public virtual Badges MapBOToEF(
-                        BOBadges bo)
-                {
-                        Badges efBadges = new Badges();
-                        efBadges.SetProperties(
-                                bo.Date,
-                                bo.Id,
-                                bo.Name,
-                                bo.UserId);
-                        return efBadges;
-                }
+	public abstract class DALAbstractBadgesMapper
+	{
+		public virtual Badges MapBOToEF(
+			BOBadges bo)
+		{
+			Badges efBadges = new Badges();
+			efBadges.SetProperties(
+				bo.Date,
+				bo.Id,
+				bo.Name,
+				bo.UserId);
+			return efBadges;
+		}
 
-                public virtual BOBadges MapEFToBO(
-                        Badges ef)
-                {
-                        var bo = new BOBadges();
+		public virtual BOBadges MapEFToBO(
+			Badges ef)
+		{
+			var bo = new BOBadges();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Date,
-                                ef.Name,
-                                ef.UserId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Date,
+				ef.Name,
+				ef.UserId);
+			return bo;
+		}
 
-                public virtual List<BOBadges> MapEFToBO(
-                        List<Badges> records)
-                {
-                        List<BOBadges> response = new List<BOBadges>();
+		public virtual List<BOBadges> MapEFToBO(
+			List<Badges> records)
+		{
+			List<BOBadges> response = new List<BOBadges>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6c24dbcee6e11b3c3cf35951823fb7f7</Hash>
+    <Hash>b4a70647d72c1f688c965da588613434</Hash>
 </Codenesium>*/

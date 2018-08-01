@@ -7,53 +7,53 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TeacherXTeacherSkill")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALTeacherXTeacherSkillMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALTeacherXTeacherSkillMapper();
-                        var bo = new BOTeacherXTeacherSkill();
-                        bo.SetProperties(1, 1, 1);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TeacherXTeacherSkill")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALTeacherXTeacherSkillMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALTeacherXTeacherSkillMapper();
+			var bo = new BOTeacherXTeacherSkill();
+			bo.SetProperties(1, 1, 1);
 
-                        TeacherXTeacherSkill response = mapper.MapBOToEF(bo);
+			TeacherXTeacherSkill response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.TeacherId.Should().Be(1);
-                        response.TeacherSkillId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
+			response.TeacherSkillId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALTeacherXTeacherSkillMapper();
-                        TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-                        entity.SetProperties(1, 1, 1);
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALTeacherXTeacherSkillMapper();
+			TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
+			entity.SetProperties(1, 1, 1);
 
-                        BOTeacherXTeacherSkill response = mapper.MapEFToBO(entity);
+			BOTeacherXTeacherSkill response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.TeacherId.Should().Be(1);
-                        response.TeacherSkillId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
+			response.TeacherSkillId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALTeacherXTeacherSkillMapper();
-                        TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-                        entity.SetProperties(1, 1, 1);
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALTeacherXTeacherSkillMapper();
+			TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
+			entity.SetProperties(1, 1, 1);
 
-                        List<BOTeacherXTeacherSkill> response = mapper.MapEFToBO(new List<TeacherXTeacherSkill>() { entity });
+			List<BOTeacherXTeacherSkill> response = mapper.MapEFToBO(new List<TeacherXTeacherSkill>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1b1729935118d286835ff1d0ee9ac1c1</Hash>
+    <Hash>8decdc9b2ce009a752ce67e745ffc21a</Hash>
 </Codenesium>*/

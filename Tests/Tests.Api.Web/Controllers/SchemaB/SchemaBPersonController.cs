@@ -12,31 +12,31 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Web
 {
-        [Route("api/schemaBPersons")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SchemaBPersonController : AbstractSchemaBPersonController
-        {
-                public SchemaBPersonController(
-                        ApiSettings settings,
-                        ILogger<SchemaBPersonController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISchemaBPersonService schemaBPersonService,
-                        IApiSchemaBPersonModelMapper schemaBPersonModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               schemaBPersonService,
-                               schemaBPersonModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/schemaBPersons")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SchemaBPersonController : AbstractSchemaBPersonController
+	{
+		public SchemaBPersonController(
+			ApiSettings settings,
+			ILogger<SchemaBPersonController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISchemaBPersonService schemaBPersonService,
+			IApiSchemaBPersonModelMapper schemaBPersonModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       schemaBPersonService,
+			       schemaBPersonModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0d9c4566164c877b4f98dd20a235a504</Hash>
+    <Hash>2beacae96711c569017cb3fb7d50072d</Hash>
 </Codenesium>*/

@@ -6,26 +6,26 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineStatusResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+	public partial class ApiPipelineStatusResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>695f4da2f2c9b49ba22f419a4fdf49d6</Hash>
+    <Hash>723182291b3d2ea5e246a2d22bbeab02</Hash>
 </Codenesium>*/

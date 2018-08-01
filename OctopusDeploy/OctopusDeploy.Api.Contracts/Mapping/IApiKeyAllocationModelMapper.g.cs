@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiKeyAllocationModelMapper
-        {
-                ApiKeyAllocationResponseModel MapRequestToResponse(
-                        string collectionName,
-                        ApiKeyAllocationRequestModel request);
+	public interface IApiKeyAllocationModelMapper
+	{
+		ApiKeyAllocationResponseModel MapRequestToResponse(
+			string collectionName,
+			ApiKeyAllocationRequestModel request);
 
-                ApiKeyAllocationRequestModel MapResponseToRequest(
-                        ApiKeyAllocationResponseModel response);
+		ApiKeyAllocationRequestModel MapResponseToRequest(
+			ApiKeyAllocationResponseModel response);
 
-                JsonPatchDocument<ApiKeyAllocationRequestModel> CreatePatch(ApiKeyAllocationRequestModel model);
-        }
+		JsonPatchDocument<ApiKeyAllocationRequestModel> CreatePatch(ApiKeyAllocationRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8b54303fccede9dc10302e6c370e2170</Hash>
+    <Hash>0a83de19197093af5325c47e95012a18</Hash>
 </Codenesium>*/

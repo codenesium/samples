@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "MachinePolicy")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiMachinePolicyRequestModelValidatorTest
-        {
-                public ApiMachinePolicyRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "MachinePolicy")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiMachinePolicyRequestModelValidatorTest
+	{
+		public ApiMachinePolicyRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
 
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new MachinePolicy()));
 
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(new MachinePolicy()));
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
-                        machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
-                        var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IMachinePolicyRepository> machinePolicyRepository = new Mock<IMachinePolicyRepository>();
+			machinePolicyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<MachinePolicy>(null));
+			var validator = new ApiMachinePolicyRequestModelValidator(machinePolicyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiMachinePolicyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f31eeb5a374a6c2b538782225474f0d7</Hash>
+    <Hash>a758e6115c3d4646a905a7cd8e861f6d</Hash>
 </Codenesium>*/

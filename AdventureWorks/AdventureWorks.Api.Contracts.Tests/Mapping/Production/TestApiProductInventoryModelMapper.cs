@@ -7,65 +7,64 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductInventory")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiProductInventoryModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiProductInventoryModelMapper();
-                        var model = new ApiProductInventoryRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-                        ApiProductInventoryResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductInventory")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiProductInventoryModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiProductInventoryModelMapper();
+			var model = new ApiProductInventoryRequestModel();
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+			ApiProductInventoryResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Bin.Should().Be(1);
-                        response.LocationID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductID.Should().Be(1);
-                        response.Quantity.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.Shelf.Should().Be("A");
-                }
+			response.Bin.Should().Be(1);
+			response.LocationID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductID.Should().Be(1);
+			response.Quantity.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.Shelf.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiProductInventoryModelMapper();
-                        var model = new ApiProductInventoryResponseModel();
-                        model.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-                        ApiProductInventoryRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiProductInventoryModelMapper();
+			var model = new ApiProductInventoryResponseModel();
+			model.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+			ApiProductInventoryRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Bin.Should().Be(1);
-                        response.LocationID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Quantity.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.Shelf.Should().Be("A");
-                }
+			response.Bin.Should().Be(1);
+			response.LocationID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Quantity.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.Shelf.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiProductInventoryModelMapper();
-                        var model = new ApiProductInventoryRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiProductInventoryModelMapper();
+			var model = new ApiProductInventoryRequestModel();
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 
-                        JsonPatchDocument<ApiProductInventoryRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiProductInventoryRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Bin.Should().Be(1);
-                        response.LocationID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Quantity.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.Shelf.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiProductInventoryRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiProductInventoryRequestModel();
+			patch.ApplyTo(response);
+			response.Bin.Should().Be(1);
+			response.LocationID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Quantity.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.Shelf.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d1fb7e3ef8840cd8495c22e367c275e4</Hash>
+    <Hash>c05342c90d21e0e2a36f9b761c488c9f</Hash>
 </Codenesium>*/

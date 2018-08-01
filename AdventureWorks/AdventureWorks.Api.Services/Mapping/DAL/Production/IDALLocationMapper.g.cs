@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALLocationMapper
-        {
-                Location MapBOToEF(
-                        BOLocation bo);
+	public interface IDALLocationMapper
+	{
+		Location MapBOToEF(
+			BOLocation bo);
 
-                BOLocation MapEFToBO(
-                        Location efLocation);
+		BOLocation MapEFToBO(
+			Location efLocation);
 
-                List<BOLocation> MapEFToBO(
-                        List<Location> records);
-        }
+		List<BOLocation> MapEFToBO(
+			List<Location> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4dc71f66ba3ed06f2bb51852b6fba6a3</Hash>
+    <Hash>c8d7b1048f52e21d81514d2632e60b31</Hash>
 </Codenesium>*/

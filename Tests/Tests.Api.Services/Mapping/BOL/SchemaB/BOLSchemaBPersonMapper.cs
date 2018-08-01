@@ -5,14 +5,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOLSchemaBPersonMapper : BOLAbstractSchemaBPersonMapper, IBOLSchemaBPersonMapper
-        {
-                public BOLSchemaBPersonMapper()
-                {
-                }
-        }
+	public partial class BOLSchemaBPersonMapper : BOLAbstractSchemaBPersonMapper, IBOLSchemaBPersonMapper
+	{
+		public BOLSchemaBPersonMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>470b7a5a3adedc1bbb4598c4bd040208</Hash>
+    <Hash>6cf4fd811c38426d628c5894aa92bc3e</Hash>
 </Codenesium>*/

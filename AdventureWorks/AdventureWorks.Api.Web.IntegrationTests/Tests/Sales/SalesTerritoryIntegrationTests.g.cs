@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "SalesTerritory")]
-        [Trait("Area", "Integration")]
-        public class SalesTerritoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public SalesTerritoryIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "SalesTerritory")]
+	[Trait("Area", "Integration")]
+	public class SalesTerritoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public SalesTerritoryIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiSalesTerritoryModelMapper mapper = new ApiSalesTerritoryModelMapper();
+			ApiSalesTerritoryModelMapper mapper = new ApiSalesTerritoryModelMapper();
 
-                        UpdateResponse<ApiSalesTerritoryResponseModel> updateResponse = await this.Client.SalesTerritoryUpdateAsync(model.TerritoryID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSalesTerritoryResponseModel> updateResponse = await this.Client.SalesTerritoryUpdateAsync(model.TerritoryID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.SalesTerritoryDeleteAsync(model.TerritoryID);
+			await this.Client.SalesTerritoryDeleteAsync(model.TerritoryID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiSalesTerritoryResponseModel response = await this.Client.SalesTerritoryGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiSalesTerritoryResponseModel response = await this.Client.SalesTerritoryGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiSalesTerritoryResponseModel> response = await this.Client.SalesTerritoryAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiSalesTerritoryResponseModel> response = await this.Client.SalesTerritoryAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiSalesTerritoryResponseModel> CreateRecord()
-                {
-                        var model = new ApiSalesTerritoryRequestModel();
-                        model.SetProperties(2m, 2m, "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
-                        CreateResponse<ApiSalesTerritoryResponseModel> result = await this.Client.SalesTerritoryCreateAsync(model);
+		private async Task<ApiSalesTerritoryResponseModel> CreateRecord()
+		{
+			var model = new ApiSalesTerritoryRequestModel();
+			model.SetProperties(2m, 2m, "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
+			CreateResponse<ApiSalesTerritoryResponseModel> result = await this.Client.SalesTerritoryCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.SalesTerritoryDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.SalesTerritoryDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9a59a021e203a22501f388ee247ac979</Hash>
+    <Hash>ac7388c9dcd148a88f1fe05d0c94cd04</Hash>
 </Codenesium>*/

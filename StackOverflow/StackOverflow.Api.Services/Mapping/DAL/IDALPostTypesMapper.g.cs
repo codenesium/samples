@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IDALPostTypesMapper
-        {
-                PostTypes MapBOToEF(
-                        BOPostTypes bo);
+	public interface IDALPostTypesMapper
+	{
+		PostTypes MapBOToEF(
+			BOPostTypes bo);
 
-                BOPostTypes MapEFToBO(
-                        PostTypes efPostTypes);
+		BOPostTypes MapEFToBO(
+			PostTypes efPostTypes);
 
-                List<BOPostTypes> MapEFToBO(
-                        List<PostTypes> records);
-        }
+		List<BOPostTypes> MapEFToBO(
+			List<PostTypes> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ef54421c6b4b5a212322270b6065b8ce</Hash>
+    <Hash>ba1b23ef7e8e73c1d5ae9815c1e9b5fd</Hash>
 </Codenesium>*/

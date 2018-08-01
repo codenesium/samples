@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IApiCertificateRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiCertificateRequestModel model);
+	public interface IApiCertificateRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiCertificateRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(string id, ApiCertificateRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(string id, ApiCertificateRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(string id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(string id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e6b9a0e3bfa4b8c9ce6460c059d1d438</Hash>
+    <Hash>de14ed583b6f766f9dee6e7f841dd021</Hash>
 </Codenesium>*/

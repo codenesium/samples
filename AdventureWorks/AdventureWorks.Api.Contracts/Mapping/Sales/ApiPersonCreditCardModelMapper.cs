@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonCreditCardModelMapper : AbstractApiPersonCreditCardModelMapper, IApiPersonCreditCardModelMapper
-        {
-                public ApiPersonCreditCardModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiPersonCreditCardModelMapper : AbstractApiPersonCreditCardModelMapper, IApiPersonCreditCardModelMapper
+	{
+		public ApiPersonCreditCardModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0c1e213d673995347eea3d49cf00dcb3</Hash>
+    <Hash>2c6c0c23dd671a540ee9ef3977f9fb1b</Hash>
 </Codenesium>*/

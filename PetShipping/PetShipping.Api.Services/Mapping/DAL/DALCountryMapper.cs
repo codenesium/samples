@@ -4,14 +4,14 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class DALCountryMapper : DALAbstractCountryMapper, IDALCountryMapper
-        {
-                public DALCountryMapper()
-                {
-                }
-        }
+	public partial class DALCountryMapper : DALAbstractCountryMapper, IDALCountryMapper
+	{
+		public DALCountryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>16c59aa39a575ea37e4a9135492534b4</Hash>
+    <Hash>d9830d13103344ac4c7826914ed10ccb</Hash>
 </Codenesium>*/

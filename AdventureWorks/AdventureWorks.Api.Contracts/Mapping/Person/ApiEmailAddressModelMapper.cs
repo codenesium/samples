@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiEmailAddressModelMapper : AbstractApiEmailAddressModelMapper, IApiEmailAddressModelMapper
-        {
-                public ApiEmailAddressModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiEmailAddressModelMapper : AbstractApiEmailAddressModelMapper, IApiEmailAddressModelMapper
+	{
+		public ApiEmailAddressModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed37fc7cc88eba885b0cf0b5f92cd712</Hash>
+    <Hash>2935c8bba47e0d8947db23d601496d7b</Hash>
 </Codenesium>*/

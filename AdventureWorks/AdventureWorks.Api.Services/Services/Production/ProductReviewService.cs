@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ProductReviewService : AbstractProductReviewService, IProductReviewService
-        {
-                public ProductReviewService(
-                        ILogger<IProductReviewRepository> logger,
-                        IProductReviewRepository productReviewRepository,
-                        IApiProductReviewRequestModelValidator productReviewModelValidator,
-                        IBOLProductReviewMapper bolproductReviewMapper,
-                        IDALProductReviewMapper dalproductReviewMapper
-                        )
-                        : base(logger,
-                               productReviewRepository,
-                               productReviewModelValidator,
-                               bolproductReviewMapper,
-                               dalproductReviewMapper)
-                {
-                }
-        }
+	public partial class ProductReviewService : AbstractProductReviewService, IProductReviewService
+	{
+		public ProductReviewService(
+			ILogger<IProductReviewRepository> logger,
+			IProductReviewRepository productReviewRepository,
+			IApiProductReviewRequestModelValidator productReviewModelValidator,
+			IBOLProductReviewMapper bolproductReviewMapper,
+			IDALProductReviewMapper dalproductReviewMapper
+			)
+			: base(logger,
+			       productReviewRepository,
+			       productReviewModelValidator,
+			       bolproductReviewMapper,
+			       dalproductReviewMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>944e342d3747b54a8ddd29c38e916eee</Hash>
+    <Hash>c11ed33c1ce8addca31035166956bf71</Hash>
 </Codenesium>*/

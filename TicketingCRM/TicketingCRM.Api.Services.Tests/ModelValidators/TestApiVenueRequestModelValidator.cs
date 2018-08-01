@@ -15,285 +15,285 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Venue")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiVenueRequestModelValidatorTest
-        {
-                public ApiVenueRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Venue")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiVenueRequestModelValidatorTest
+	{
+		public ApiVenueRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Address1_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+		[Fact]
+		public async void Address1_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address1_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+		[Fact]
+		public async void Address1_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+		[Fact]
+		public async void Address2_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+		[Fact]
+		public async void Address2_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void AdminId_Create_Valid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
-
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AdminId, 1);
-                }
+		[Fact]
+		public async void AdminId_Create_Valid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.AdminId, 1);
+		}
 
-                [Fact]
-                public async void AdminId_Create_Invalid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+		[Fact]
+		public async void AdminId_Create_Invalid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
-
-                        validator.ShouldHaveValidationErrorFor(x => x.AdminId, 1);
-                }
-
-                [Fact]
-                public async void AdminId_Update_Valid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
-
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AdminId, 1);
-                }
-
-                [Fact]
-                public async void AdminId_Update_Invalid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
-
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.AdminId, 1);
+		}
+
+		[Fact]
+		public async void AdminId_Update_Valid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.AdminId, 1);
+		}
+
+		[Fact]
+		public async void AdminId_Update_Invalid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
+
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AdminId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AdminId, 1);
+		}
 
-                [Fact]
-                public async void Email_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Email_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Email_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Email_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Facebook_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Facebook_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Facebook_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Facebook_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Phone_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Phone_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Phone_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Phone_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
+		}
 
-                [Fact]
-                public async void ProvinceId_Create_Valid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+		[Fact]
+		public async void ProvinceId_Create_Valid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Create_Invalid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+		[Fact]
+		public async void ProvinceId_Create_Invalid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Update_Valid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+		[Fact]
+		public async void ProvinceId_Update_Valid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void ProvinceId_Update_Invalid_Reference()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+		[Fact]
+		public async void ProvinceId_Update_Invalid_Reference()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
+		}
 
-                [Fact]
-                public async void Website_Create_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Website_Create_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Website_Update_length()
-                {
-                        Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-                        venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
+		[Fact]
+		public async void Website_Update_length()
+		{
+			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
+			venueRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 
-                        var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
+			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a22b20cabc13aa3a9715dbcbed1e851d</Hash>
+    <Hash>4103ea90724107fe3527bb3b60563ff1</Hash>
 </Codenesium>*/

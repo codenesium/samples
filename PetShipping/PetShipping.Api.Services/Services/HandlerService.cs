@@ -10,37 +10,37 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class HandlerService : AbstractHandlerService, IHandlerService
-        {
-                public HandlerService(
-                        ILogger<IHandlerRepository> logger,
-                        IHandlerRepository handlerRepository,
-                        IApiHandlerRequestModelValidator handlerModelValidator,
-                        IBOLHandlerMapper bolhandlerMapper,
-                        IDALHandlerMapper dalhandlerMapper,
-                        IBOLAirTransportMapper bolAirTransportMapper,
-                        IDALAirTransportMapper dalAirTransportMapper,
-                        IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
-                        IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
-                        IBOLOtherTransportMapper bolOtherTransportMapper,
-                        IDALOtherTransportMapper dalOtherTransportMapper
-                        )
-                        : base(logger,
-                               handlerRepository,
-                               handlerModelValidator,
-                               bolhandlerMapper,
-                               dalhandlerMapper,
-                               bolAirTransportMapper,
-                               dalAirTransportMapper,
-                               bolHandlerPipelineStepMapper,
-                               dalHandlerPipelineStepMapper,
-                               bolOtherTransportMapper,
-                               dalOtherTransportMapper)
-                {
-                }
-        }
+	public partial class HandlerService : AbstractHandlerService, IHandlerService
+	{
+		public HandlerService(
+			ILogger<IHandlerRepository> logger,
+			IHandlerRepository handlerRepository,
+			IApiHandlerRequestModelValidator handlerModelValidator,
+			IBOLHandlerMapper bolhandlerMapper,
+			IDALHandlerMapper dalhandlerMapper,
+			IBOLAirTransportMapper bolAirTransportMapper,
+			IDALAirTransportMapper dalAirTransportMapper,
+			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
+			IBOLOtherTransportMapper bolOtherTransportMapper,
+			IDALOtherTransportMapper dalOtherTransportMapper
+			)
+			: base(logger,
+			       handlerRepository,
+			       handlerModelValidator,
+			       bolhandlerMapper,
+			       dalhandlerMapper,
+			       bolAirTransportMapper,
+			       dalAirTransportMapper,
+			       bolHandlerPipelineStepMapper,
+			       dalHandlerPipelineStepMapper,
+			       bolOtherTransportMapper,
+			       dalOtherTransportMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df030fcd91c2fb1b074da4bd59d1e7ee</Hash>
+    <Hash>51c694a5eb41572edc884f3f74d98ad3</Hash>
 </Codenesium>*/

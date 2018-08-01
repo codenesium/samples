@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/employeePayHistories")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class EmployeePayHistoryController : AbstractEmployeePayHistoryController
-        {
-                public EmployeePayHistoryController(
-                        ApiSettings settings,
-                        ILogger<EmployeePayHistoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IEmployeePayHistoryService employeePayHistoryService,
-                        IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               employeePayHistoryService,
-                               employeePayHistoryModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/employeePayHistories")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class EmployeePayHistoryController : AbstractEmployeePayHistoryController
+	{
+		public EmployeePayHistoryController(
+			ApiSettings settings,
+			ILogger<EmployeePayHistoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IEmployeePayHistoryService employeePayHistoryService,
+			IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       employeePayHistoryService,
+			       employeePayHistoryModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d68ddbcbd00cc5440b05c04da34880b2</Hash>
+    <Hash>315ca24ce5235b06c38a49eab8439e36</Hash>
 </Codenesium>*/

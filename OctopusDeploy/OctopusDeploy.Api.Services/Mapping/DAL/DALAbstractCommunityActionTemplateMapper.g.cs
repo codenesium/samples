@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractCommunityActionTemplateMapper
-        {
-                public virtual CommunityActionTemplate MapBOToEF(
-                        BOCommunityActionTemplate bo)
-                {
-                        CommunityActionTemplate efCommunityActionTemplate = new CommunityActionTemplate();
-                        efCommunityActionTemplate.SetProperties(
-                                bo.ExternalId,
-                                bo.Id,
-                                bo.JSON,
-                                bo.Name);
-                        return efCommunityActionTemplate;
-                }
+	public abstract class DALAbstractCommunityActionTemplateMapper
+	{
+		public virtual CommunityActionTemplate MapBOToEF(
+			BOCommunityActionTemplate bo)
+		{
+			CommunityActionTemplate efCommunityActionTemplate = new CommunityActionTemplate();
+			efCommunityActionTemplate.SetProperties(
+				bo.ExternalId,
+				bo.Id,
+				bo.JSON,
+				bo.Name);
+			return efCommunityActionTemplate;
+		}
 
-                public virtual BOCommunityActionTemplate MapEFToBO(
-                        CommunityActionTemplate ef)
-                {
-                        var bo = new BOCommunityActionTemplate();
+		public virtual BOCommunityActionTemplate MapEFToBO(
+			CommunityActionTemplate ef)
+		{
+			var bo = new BOCommunityActionTemplate();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.ExternalId,
-                                ef.JSON,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.ExternalId,
+				ef.JSON,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOCommunityActionTemplate> MapEFToBO(
-                        List<CommunityActionTemplate> records)
-                {
-                        List<BOCommunityActionTemplate> response = new List<BOCommunityActionTemplate>();
+		public virtual List<BOCommunityActionTemplate> MapEFToBO(
+			List<CommunityActionTemplate> records)
+		{
+			List<BOCommunityActionTemplate> response = new List<BOCommunityActionTemplate>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9c0e588d55cf9c8923997e4cea38a192</Hash>
+    <Hash>cc2289e4330f71b5714f6838e74bef02</Hash>
 </Codenesium>*/

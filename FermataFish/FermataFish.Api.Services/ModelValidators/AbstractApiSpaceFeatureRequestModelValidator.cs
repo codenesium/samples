@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiSpaceFeatureRequestModelValidator : AbstractValidator<ApiSpaceFeatureRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSpaceFeatureRequestModelValidator : AbstractValidator<ApiSpaceFeatureRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISpaceFeatureRepository spaceFeatureRepository;
+		private ISpaceFeatureRepository spaceFeatureRepository;
 
-                public AbstractApiSpaceFeatureRequestModelValidator(ISpaceFeatureRepository spaceFeatureRepository)
-                {
-                        this.spaceFeatureRepository = spaceFeatureRepository;
-                }
+		public AbstractApiSpaceFeatureRequestModelValidator(ISpaceFeatureRepository spaceFeatureRepository)
+		{
+			this.spaceFeatureRepository = spaceFeatureRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSpaceFeatureRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSpaceFeatureRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
 
-                public virtual void StudioIdRules()
-                {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
-                }
+		public virtual void StudioIdRules()
+		{
+			this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.spaceFeatureRepository.GetStudio(id);
+		private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.spaceFeatureRepository.GetStudio(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a47990544e11e22dc51d85b0e8ec42f3</Hash>
+    <Hash>3b578163458846b41b10245562efca7b</Hash>
 </Codenesium>*/

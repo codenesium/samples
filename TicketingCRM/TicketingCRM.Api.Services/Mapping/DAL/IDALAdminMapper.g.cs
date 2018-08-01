@@ -6,19 +6,19 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public interface IDALAdminMapper
-        {
-                Admin MapBOToEF(
-                        BOAdmin bo);
+	public interface IDALAdminMapper
+	{
+		Admin MapBOToEF(
+			BOAdmin bo);
 
-                BOAdmin MapEFToBO(
-                        Admin efAdmin);
+		BOAdmin MapEFToBO(
+			Admin efAdmin);
 
-                List<BOAdmin> MapEFToBO(
-                        List<Admin> records);
-        }
+		List<BOAdmin> MapEFToBO(
+			List<Admin> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>cc89c293171b70da8181efccaad067c8</Hash>
+    <Hash>cd2f47960601f55a7c9f6e0446617ed4</Hash>
 </Codenesium>*/

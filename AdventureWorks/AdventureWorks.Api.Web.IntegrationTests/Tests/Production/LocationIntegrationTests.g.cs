@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Location")]
-        [Trait("Area", "Integration")]
-        public class LocationIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public LocationIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Location")]
+	[Trait("Area", "Integration")]
+	public class LocationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public LocationIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiLocationModelMapper mapper = new ApiLocationModelMapper();
+			ApiLocationModelMapper mapper = new ApiLocationModelMapper();
 
-                        UpdateResponse<ApiLocationResponseModel> updateResponse = await this.Client.LocationUpdateAsync(model.LocationID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLocationResponseModel> updateResponse = await this.Client.LocationUpdateAsync(model.LocationID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.LocationDeleteAsync(model.LocationID);
+			await this.Client.LocationDeleteAsync(model.LocationID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiLocationResponseModel response = await this.Client.LocationGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiLocationResponseModel response = await this.Client.LocationGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiLocationResponseModel> response = await this.Client.LocationAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiLocationResponseModel> response = await this.Client.LocationAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiLocationResponseModel> CreateRecord()
-                {
-                        var model = new ApiLocationRequestModel();
-                        model.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-                        CreateResponse<ApiLocationResponseModel> result = await this.Client.LocationCreateAsync(model);
+		private async Task<ApiLocationResponseModel> CreateRecord()
+		{
+			var model = new ApiLocationRequestModel();
+			model.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiLocationResponseModel> result = await this.Client.LocationCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.LocationDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.LocationDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>561a23ba1bfead255479c189a8ec3e7b</Hash>
+    <Hash>d750436247cb10b85751bbd14264b816</Hash>
 </Codenesium>*/

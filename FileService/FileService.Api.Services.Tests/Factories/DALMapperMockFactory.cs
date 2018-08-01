@@ -6,22 +6,22 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALBucketMapper DALBucketMapperMock { get; set; } = new DALBucketMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALBucketMapper DALBucketMapperMock { get; set; } = new DALBucketMapper();
 
-                public IDALFileMapper DALFileMapperMock { get; set; } = new DALFileMapper();
+		public IDALFileMapper DALFileMapperMock { get; set; } = new DALFileMapper();
 
-                public IDALFileTypeMapper DALFileTypeMapperMock { get; set; } = new DALFileTypeMapper();
+		public IDALFileTypeMapper DALFileTypeMapperMock { get; set; } = new DALFileTypeMapper();
 
-                public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
+		public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a2562149db3c3ff6c257913f3239e32c</Hash>
+    <Hash>fcaa6d538e3c48e7a358e2c477551561</Hash>
 </Codenesium>*/

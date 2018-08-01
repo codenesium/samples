@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PipelineStepStepRequirementService : AbstractPipelineStepStepRequirementService, IPipelineStepStepRequirementService
-        {
-                public PipelineStepStepRequirementService(
-                        ILogger<IPipelineStepStepRequirementRepository> logger,
-                        IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
-                        IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
-                        IBOLPipelineStepStepRequirementMapper bolpipelineStepStepRequirementMapper,
-                        IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper
-                        )
-                        : base(logger,
-                               pipelineStepStepRequirementRepository,
-                               pipelineStepStepRequirementModelValidator,
-                               bolpipelineStepStepRequirementMapper,
-                               dalpipelineStepStepRequirementMapper)
-                {
-                }
-        }
+	public partial class PipelineStepStepRequirementService : AbstractPipelineStepStepRequirementService, IPipelineStepStepRequirementService
+	{
+		public PipelineStepStepRequirementService(
+			ILogger<IPipelineStepStepRequirementRepository> logger,
+			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
+			IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
+			IBOLPipelineStepStepRequirementMapper bolpipelineStepStepRequirementMapper,
+			IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper
+			)
+			: base(logger,
+			       pipelineStepStepRequirementRepository,
+			       pipelineStepStepRequirementModelValidator,
+			       bolpipelineStepStepRequirementMapper,
+			       dalpipelineStepStepRequirementMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2bc30cca0a9b63b84eb44da8b1ba3b12</Hash>
+    <Hash>7355cb9950fae3f4e7df5a87c8bd783a</Hash>
 </Codenesium>*/

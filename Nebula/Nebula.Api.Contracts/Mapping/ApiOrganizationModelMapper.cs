@@ -1,14 +1,14 @@
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiOrganizationModelMapper : AbstractApiOrganizationModelMapper, IApiOrganizationModelMapper
-        {
-                public ApiOrganizationModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiOrganizationModelMapper : AbstractApiOrganizationModelMapper, IApiOrganizationModelMapper
+	{
+		public ApiOrganizationModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c1308de17c39b91e8cbfeceb3d195b34</Hash>
+    <Hash>ff9c6aca6a8a8734459d0c0f6221eca0</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public interface IApiFileTypeModelMapper
-        {
-                ApiFileTypeResponseModel MapRequestToResponse(
-                        int id,
-                        ApiFileTypeRequestModel request);
+	public interface IApiFileTypeModelMapper
+	{
+		ApiFileTypeResponseModel MapRequestToResponse(
+			int id,
+			ApiFileTypeRequestModel request);
 
-                ApiFileTypeRequestModel MapResponseToRequest(
-                        ApiFileTypeResponseModel response);
+		ApiFileTypeRequestModel MapResponseToRequest(
+			ApiFileTypeResponseModel response);
 
-                JsonPatchDocument<ApiFileTypeRequestModel> CreatePatch(ApiFileTypeRequestModel model);
-        }
+		JsonPatchDocument<ApiFileTypeRequestModel> CreatePatch(ApiFileTypeRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c0a6c32407badfaef8a187626d089396</Hash>
+    <Hash>f589a74005ee8c29349a373d2866c7b8</Hash>
 </Codenesium>*/

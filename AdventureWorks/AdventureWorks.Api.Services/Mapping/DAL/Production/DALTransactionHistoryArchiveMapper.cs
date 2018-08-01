@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALTransactionHistoryArchiveMapper : DALAbstractTransactionHistoryArchiveMapper, IDALTransactionHistoryArchiveMapper
-        {
-                public DALTransactionHistoryArchiveMapper()
-                {
-                }
-        }
+	public partial class DALTransactionHistoryArchiveMapper : DALAbstractTransactionHistoryArchiveMapper, IDALTransactionHistoryArchiveMapper
+	{
+		public DALTransactionHistoryArchiveMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>36d3d84524d92cf13fede86ba7642770</Hash>
+    <Hash>4a02a780830b0bbf540582548921ae02</Hash>
 </Codenesium>*/

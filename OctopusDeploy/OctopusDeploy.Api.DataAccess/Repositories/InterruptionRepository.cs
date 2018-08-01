@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class InterruptionRepository : AbstractInterruptionRepository, IInterruptionRepository
-        {
-                public InterruptionRepository(
-                        ILogger<InterruptionRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class InterruptionRepository : AbstractInterruptionRepository, IInterruptionRepository
+	{
+		public InterruptionRepository(
+			ILogger<InterruptionRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3b53b9e98f4a2268020ffbdbc36d195c</Hash>
+    <Hash>aed201a0ed585f20ece684774667edd2</Hash>
 </Codenesium>*/

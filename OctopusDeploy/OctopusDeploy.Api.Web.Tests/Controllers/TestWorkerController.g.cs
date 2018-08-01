@@ -15,328 +15,328 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Worker")]
-        [Trait("Area", "Controllers")]
-        public partial class WorkerControllerTests
-        {
-                [Fact]
-                public async void All_Exists()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var record = new ApiWorkerResponseModel();
-                        var records = new List<ApiWorkerResponseModel>();
-                        records.Add(record);
-                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Worker")]
+	[Trait("Area", "Controllers")]
+	public partial class WorkerControllerTests
+	{
+		[Fact]
+		public async void All_Exists()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var record = new ApiWorkerResponseModel();
+			var records = new List<ApiWorkerResponseModel>();
+			records.Add(record);
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var items = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
-                        items.Count.Should().Be(1);
-                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var items = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
+			items.Count.Should().Be(1);
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void All_Not_Exists()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiWorkerResponseModel>>(new List<ApiWorkerResponseModel>()));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void All_Not_Exists()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiWorkerResponseModel>>(new List<ApiWorkerResponseModel>()));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var items = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
-                        items.Should().BeEmpty();
-                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var items = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
+			items.Should().BeEmpty();
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_Exists()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Get_Exists()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Get(default(string));
+			IActionResult response = await controller.Get(default(string));
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var record = (response as OkObjectResult).Value as ApiWorkerResponseModel;
-                        record.Should().NotBeNull();
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var record = (response as OkObjectResult).Value as ApiWorkerResponseModel;
+			record.Should().NotBeNull();
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Get_Not_Exists()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Get_Not_Exists()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Get(default(string));
+			IActionResult response = await controller.Get(default(string));
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void BulkInsert_No_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+		[Fact]
+		public async void BulkInsert_No_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
 
-                        var mockResponse = new CreateResponse<ApiWorkerResponseModel>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetRecord(new ApiWorkerResponseModel());
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			var mockResponse = new CreateResponse<ApiWorkerResponseModel>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetRecord(new ApiWorkerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var records = new List<ApiWorkerRequestModel>();
-                        records.Add(new ApiWorkerRequestModel());
-                        IActionResult response = await controller.BulkInsert(records);
+			var records = new List<ApiWorkerRequestModel>();
+			records.Add(new ApiWorkerRequestModel());
+			IActionResult response = await controller.BulkInsert(records);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var result = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
-                        result.Should().NotBeEmpty();
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var result = (response as OkObjectResult).Value as List<ApiWorkerResponseModel>;
+			result.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void BulkInsert_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+		[Fact]
+		public async void BulkInsert_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
 
-                        var mockResponse = new Mock<CreateResponse<ApiWorkerResponseModel>>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetupGet(x => x.Success).Returns(false);
+			var mockResponse = new Mock<CreateResponse<ApiWorkerResponseModel>>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse.Object));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse.Object));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var records = new List<ApiWorkerRequestModel>();
-                        records.Add(new ApiWorkerRequestModel());
-                        IActionResult response = await controller.BulkInsert(records);
+			var records = new List<ApiWorkerRequestModel>();
+			records.Add(new ApiWorkerRequestModel());
+			IActionResult response = await controller.BulkInsert(records);
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Create_No_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+		[Fact]
+		public async void Create_No_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
 
-                        var mockResponse = new CreateResponse<ApiWorkerResponseModel>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetRecord(new ApiWorkerResponseModel());
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			var mockResponse = new CreateResponse<ApiWorkerResponseModel>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetRecord(new ApiWorkerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Create(new ApiWorkerRequestModel());
+			IActionResult response = await controller.Create(new ApiWorkerRequestModel());
 
-                        response.Should().BeOfType<CreatedResult>();
-                        (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiWorkerResponseModel>;
-                        createResponse.Record.Should().NotBeNull();
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<CreatedResult>();
+			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiWorkerResponseModel>;
+			createResponse.Record.Should().NotBeNull();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Create_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+		[Fact]
+		public async void Create_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
 
-                        var mockResponse = new Mock<CreateResponse<ApiWorkerResponseModel>>(new FluentValidation.Results.ValidationResult());
-                        var mockRecord = new ApiWorkerResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiWorkerResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockRecord = new ApiWorkerResponseModel();
 
-                        mockResponse.SetupGet(x => x.Success).Returns(false);
+			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse.Object));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiWorkerResponseModel>>(mockResponse.Object));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Create(new ApiWorkerRequestModel());
+			IActionResult response = await controller.Create(new ApiWorkerRequestModel());
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Patch_No_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()))
-                        .Callback<string, ApiWorkerRequestModel>(
-                                (id, model) => model.CommunicationStyle.Should().Be("A")
-                                )
-                        .Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(new ApiWorkerResponseModel()));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Patch_No_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()))
+			.Callback<string, ApiWorkerRequestModel>(
+				(id, model) => model.CommunicationStyle.Should().Be("A")
+				)
+			.Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(new ApiWorkerResponseModel()));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var patch = new JsonPatchDocument<ApiWorkerRequestModel>();
-                        patch.Replace(x => x.CommunicationStyle, "A");
+			var patch = new JsonPatchDocument<ApiWorkerRequestModel>();
+			patch.Replace(x => x.CommunicationStyle, "A");
 
-                        IActionResult response = await controller.Patch(default(string), patch);
+			IActionResult response = await controller.Patch(default(string), patch);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Patch_Record_Not_Found()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Patch_Record_Not_Found()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var patch = new JsonPatchDocument<ApiWorkerRequestModel>();
-                        patch.Replace(x => x.CommunicationStyle, "A");
+			var patch = new JsonPatchDocument<ApiWorkerRequestModel>();
+			patch.Replace(x => x.CommunicationStyle, "A");
 
-                        IActionResult response = await controller.Patch(default(string), patch);
+			IActionResult response = await controller.Patch(default(string), patch);
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Update_No_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_No_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Update_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiWorkerResponseModel()));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>()));
+		}
 
-                [Fact]
-                public async void Update_NotFound()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_NotFound()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiWorkerResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiWorkerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiWorkerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiWorkerResponseModel>(null));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiWorkerModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiWorkerRequestModel());
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Delete_No_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Delete_No_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Delete(default(string));
+			IActionResult response = await controller.Delete(default(string));
 
-                        response.Should().BeOfType<NoContentResult>();
-                        (response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
-                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
-                }
+			response.Should().BeOfType<NoContentResult>();
+			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Delete_Errors()
-                {
-                        WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Delete_Errors()
+		{
+			WorkerControllerMockFacade mock = new WorkerControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+			WorkerController controller = new WorkerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Delete(default(string));
+			IActionResult response = await controller.Delete(default(string));
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
-                }
-        }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
+		}
+	}
 
-        public class WorkerControllerMockFacade
-        {
-                public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
+	public class WorkerControllerMockFacade
+	{
+		public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
 
-                public Mock<ILogger<WorkerController>> LoggerMock { get; set; } = new Mock<ILogger<WorkerController>>();
+		public Mock<ILogger<WorkerController>> LoggerMock { get; set; } = new Mock<ILogger<WorkerController>>();
 
-                public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
+		public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
-                public Mock<IWorkerService> ServiceMock { get; set; } = new Mock<IWorkerService>();
+		public Mock<IWorkerService> ServiceMock { get; set; } = new Mock<IWorkerService>();
 
-                public Mock<IApiWorkerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiWorkerModelMapper>();
-        }
+		public Mock<IApiWorkerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiWorkerModelMapper>();
+	}
 }
 
 /*<Codenesium>
-    <Hash>f557a2deb6bdabaa19627863b89508e4</Hash>
+    <Hash>700f0d1baf2a74dad41ab264d3859584</Hash>
 </Codenesium>*/

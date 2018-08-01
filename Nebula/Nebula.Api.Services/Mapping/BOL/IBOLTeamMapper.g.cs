@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IBOLTeamMapper
-        {
-                BOTeam MapModelToBO(
-                        int id,
-                        ApiTeamRequestModel model);
+	public interface IBOLTeamMapper
+	{
+		BOTeam MapModelToBO(
+			int id,
+			ApiTeamRequestModel model);
 
-                ApiTeamResponseModel MapBOToModel(
-                        BOTeam boTeam);
+		ApiTeamResponseModel MapBOToModel(
+			BOTeam boTeam);
 
-                List<ApiTeamResponseModel> MapBOToModel(
-                        List<BOTeam> items);
-        }
+		List<ApiTeamResponseModel> MapBOToModel(
+			List<BOTeam> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>415f47c5babf0242899678dc34e03848</Hash>
+    <Hash>0fa076e792a18cbfd87f1b6d51f1b87a</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Web
 {
-        [Route("api/tables")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TableController : AbstractTableController
-        {
-                public TableController(
-                        ApiSettings settings,
-                        ILogger<TableController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITableService tableService,
-                        IApiTableModelMapper tableModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               tableService,
-                               tableModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/tables")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TableController : AbstractTableController
+	{
+		public TableController(
+			ApiSettings settings,
+			ILogger<TableController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITableService tableService,
+			IApiTableModelMapper tableModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       tableService,
+			       tableModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>57f17083a2c275be9fc15cbb8a95ddb1</Hash>
+    <Hash>8017504142ebf1e8a2d39d34ab1d6027</Hash>
 </Codenesium>*/

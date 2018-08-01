@@ -15,185 +15,185 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ServerTask")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiServerTaskRequestModelValidatorTest
-        {
-                public ApiServerTaskRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ServerTask")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiServerTaskRequestModelValidatorTest
+	{
+		public ApiServerTaskRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ConcurrencyTag_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ConcurrencyTag_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
+		}
 
-                [Fact]
-                public async void ConcurrencyTag_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ConcurrencyTag_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
+		}
 
-                [Fact]
-                public async void EnvironmentId_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void EnvironmentId_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void EnvironmentId_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void EnvironmentId_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ProjectId_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ProjectId_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ProjectId_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ProjectId_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ServerNodeId_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ServerNodeId_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
+		}
 
-                [Fact]
-                public async void ServerNodeId_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void ServerNodeId_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
+		}
 
-                [Fact]
-                public async void State_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void State_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
+		}
 
-                [Fact]
-                public async void State_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void State_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
+		}
 
-                [Fact]
-                public async void TenantId_Create_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void TenantId_Create_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void TenantId_Update_length()
-                {
-                        Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
-                        serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
+		[Fact]
+		public async void TenantId_Update_length()
+		{
+			Mock<IServerTaskRepository> serverTaskRepository = new Mock<IServerTaskRepository>();
+			serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
-                        var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
+			var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed6df7ae7163db3fb112ea7a2d352d4b</Hash>
+    <Hash>3de7b9605b70e7e210dea0490321c868</Hash>
 </Codenesium>*/

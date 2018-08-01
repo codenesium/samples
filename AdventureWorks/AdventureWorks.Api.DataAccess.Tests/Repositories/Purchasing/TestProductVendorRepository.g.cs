@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ProductVendorRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ProductVendorRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ProductVendorRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ProductVendorRepository>>();
-                }
-        }
+		public static Mock<ILogger<ProductVendorRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ProductVendorRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductVendor")]
-        [Trait("Area", "Repositories")]
-        public partial class ProductVendorRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductVendor")]
+	[Trait("Area", "Repositories")]
+	public partial class ProductVendorRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
 
-                        ProductVendor entity = new ProductVendor();
-                        context.Set<ProductVendor>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductVendor entity = new ProductVendor();
+			context.Set<ProductVendor>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
 
-                        ProductVendor entity = new ProductVendor();
-                        context.Set<ProductVendor>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductVendor entity = new ProductVendor();
+			context.Set<ProductVendor>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
 
-                        var entity = new ProductVendor();
-                        await repository.Create(entity);
+			var entity = new ProductVendor();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ProductVendor>().FirstOrDefaultAsync();
+			var record = await context.Set<ProductVendor>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
-                        ProductVendor entity = new ProductVendor();
-                        context.Set<ProductVendor>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
+			ProductVendor entity = new ProductVendor();
+			context.Set<ProductVendor>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ProductVendor>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductVendor>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
-                        ProductVendor entity = new ProductVendor();
-                        context.Set<ProductVendor>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
+			ProductVendor entity = new ProductVendor();
+			context.Set<ProductVendor>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ProductVendor());
+			await repository.Update(new ProductVendor());
 
-                        var modifiedRecord = context.Set<ProductVendor>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductVendor>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
-                        var repository = new ProductVendorRepository(loggerMoc.Object, context);
-                        ProductVendor entity = new ProductVendor();
-                        context.Set<ProductVendor>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ProductVendorRepository>> loggerMoc = ProductVendorRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductVendorRepositoryMoc.GetContext();
+			var repository = new ProductVendorRepository(loggerMoc.Object, context);
+			ProductVendor entity = new ProductVendor();
+			context.Set<ProductVendor>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ProductID);
+			await repository.Delete(entity.ProductID);
 
-                        ProductVendor modifiedRecord = await context.Set<ProductVendor>().FirstOrDefaultAsync();
+			ProductVendor modifiedRecord = await context.Set<ProductVendor>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1c57ed6dc99a854b9096e6b66bb57004</Hash>
+    <Hash>f4c20fd98b59e2518792990f4a7c821b</Hash>
 </Codenesium>*/

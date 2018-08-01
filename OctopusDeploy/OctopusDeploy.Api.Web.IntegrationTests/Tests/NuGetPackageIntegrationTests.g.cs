@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "NuGetPackage")]
-        [Trait("Area", "Integration")]
-        public class NuGetPackageIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public NuGetPackageIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "NuGetPackage")]
+	[Trait("Area", "Integration")]
+	public class NuGetPackageIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public NuGetPackageIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiNuGetPackageModelMapper mapper = new ApiNuGetPackageModelMapper();
+			ApiNuGetPackageModelMapper mapper = new ApiNuGetPackageModelMapper();
 
-                        UpdateResponse<ApiNuGetPackageResponseModel> updateResponse = await this.Client.NuGetPackageUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiNuGetPackageResponseModel> updateResponse = await this.Client.NuGetPackageUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.NuGetPackageDeleteAsync(model.Id);
+			await this.Client.NuGetPackageDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiNuGetPackageResponseModel response = await this.Client.NuGetPackageGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiNuGetPackageResponseModel response = await this.Client.NuGetPackageGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiNuGetPackageResponseModel> response = await this.Client.NuGetPackageAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiNuGetPackageResponseModel> response = await this.Client.NuGetPackageAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiNuGetPackageResponseModel> CreateRecord()
-                {
-                        var model = new ApiNuGetPackageRequestModel();
-                        model.SetProperties("B", "B", "B", 2, 2, 2, 2, "B");
-                        CreateResponse<ApiNuGetPackageResponseModel> result = await this.Client.NuGetPackageCreateAsync(model);
+		private async Task<ApiNuGetPackageResponseModel> CreateRecord()
+		{
+			var model = new ApiNuGetPackageRequestModel();
+			model.SetProperties("B", "B", "B", 2, 2, 2, 2, "B");
+			CreateResponse<ApiNuGetPackageResponseModel> result = await this.Client.NuGetPackageCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.NuGetPackageDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.NuGetPackageDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1432f29b25d3524d512697217b1c8587</Hash>
+    <Hash>5e79833e88a172d24816f16a5af7bfd6</Hash>
 </Codenesium>*/

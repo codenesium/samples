@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CustomerRepository : AbstractCustomerRepository, ICustomerRepository
-        {
-                public CustomerRepository(
-                        ILogger<CustomerRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class CustomerRepository : AbstractCustomerRepository, ICustomerRepository
+	{
+		public CustomerRepository(
+			ILogger<CustomerRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7ca7a2b8bd9af7fb1ff2370c79bf5aa8</Hash>
+    <Hash>36e7dd8c51c9e4e5fd8dc4e688c9eef0</Hash>
 </Codenesium>*/

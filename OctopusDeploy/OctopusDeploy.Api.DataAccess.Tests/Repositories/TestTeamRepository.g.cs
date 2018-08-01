@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class TeamRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class TeamRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<TeamRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<TeamRepository>>();
-                }
-        }
+		public static Mock<ILogger<TeamRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<TeamRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Team")]
-        [Trait("Area", "Repositories")]
-        public partial class TeamRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Team")]
+	[Trait("Area", "Repositories")]
+	public partial class TeamRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
 
-                        Team entity = new Team();
-                        context.Set<Team>().Add(entity);
-                        await context.SaveChangesAsync();
+			Team entity = new Team();
+			context.Set<Team>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
 
-                        Team entity = new Team();
-                        context.Set<Team>().Add(entity);
-                        await context.SaveChangesAsync();
+			Team entity = new Team();
+			context.Set<Team>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
 
-                        var entity = new Team();
-                        await repository.Create(entity);
+			var entity = new Team();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Team>().FirstOrDefaultAsync();
+			var record = await context.Set<Team>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
-                        Team entity = new Team();
-                        context.Set<Team>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
+			Team entity = new Team();
+			context.Set<Team>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Team>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Team>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
-                        Team entity = new Team();
-                        context.Set<Team>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
+			Team entity = new Team();
+			context.Set<Team>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Team());
+			await repository.Update(new Team());
 
-                        var modifiedRecord = context.Set<Team>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Team>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeamRepositoryMoc.GetContext();
-                        var repository = new TeamRepository(loggerMoc.Object, context);
-                        Team entity = new Team();
-                        context.Set<Team>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
+			Team entity = new Team();
+			context.Set<Team>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Team modifiedRecord = await context.Set<Team>().FirstOrDefaultAsync();
+			Team modifiedRecord = await context.Set<Team>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5d8ff5c8e616d13296970b7d49216efc</Hash>
+    <Hash>4a72a4e5b796d0e7a38dd9c9878db1d1</Hash>
 </Codenesium>*/

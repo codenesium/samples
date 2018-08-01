@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractSalesPersonQuotaHistoryMapper
-        {
-                public virtual BOSalesPersonQuotaHistory MapModelToBO(
-                        int businessEntityID,
-                        ApiSalesPersonQuotaHistoryRequestModel model
-                        )
-                {
-                        BOSalesPersonQuotaHistory boSalesPersonQuotaHistory = new BOSalesPersonQuotaHistory();
-                        boSalesPersonQuotaHistory.SetProperties(
-                                businessEntityID,
-                                model.ModifiedDate,
-                                model.QuotaDate,
-                                model.Rowguid,
-                                model.SalesQuota);
-                        return boSalesPersonQuotaHistory;
-                }
+	public abstract class BOLAbstractSalesPersonQuotaHistoryMapper
+	{
+		public virtual BOSalesPersonQuotaHistory MapModelToBO(
+			int businessEntityID,
+			ApiSalesPersonQuotaHistoryRequestModel model
+			)
+		{
+			BOSalesPersonQuotaHistory boSalesPersonQuotaHistory = new BOSalesPersonQuotaHistory();
+			boSalesPersonQuotaHistory.SetProperties(
+				businessEntityID,
+				model.ModifiedDate,
+				model.QuotaDate,
+				model.Rowguid,
+				model.SalesQuota);
+			return boSalesPersonQuotaHistory;
+		}
 
-                public virtual ApiSalesPersonQuotaHistoryResponseModel MapBOToModel(
-                        BOSalesPersonQuotaHistory boSalesPersonQuotaHistory)
-                {
-                        var model = new ApiSalesPersonQuotaHistoryResponseModel();
+		public virtual ApiSalesPersonQuotaHistoryResponseModel MapBOToModel(
+			BOSalesPersonQuotaHistory boSalesPersonQuotaHistory)
+		{
+			var model = new ApiSalesPersonQuotaHistoryResponseModel();
 
-                        model.SetProperties(boSalesPersonQuotaHistory.BusinessEntityID, boSalesPersonQuotaHistory.ModifiedDate, boSalesPersonQuotaHistory.QuotaDate, boSalesPersonQuotaHistory.Rowguid, boSalesPersonQuotaHistory.SalesQuota);
+			model.SetProperties(boSalesPersonQuotaHistory.BusinessEntityID, boSalesPersonQuotaHistory.ModifiedDate, boSalesPersonQuotaHistory.QuotaDate, boSalesPersonQuotaHistory.Rowguid, boSalesPersonQuotaHistory.SalesQuota);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiSalesPersonQuotaHistoryResponseModel> MapBOToModel(
-                        List<BOSalesPersonQuotaHistory> items)
-                {
-                        List<ApiSalesPersonQuotaHistoryResponseModel> response = new List<ApiSalesPersonQuotaHistoryResponseModel>();
+		public virtual List<ApiSalesPersonQuotaHistoryResponseModel> MapBOToModel(
+			List<BOSalesPersonQuotaHistory> items)
+		{
+			List<ApiSalesPersonQuotaHistoryResponseModel> response = new List<ApiSalesPersonQuotaHistoryResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>729b620589451f4651a867e7f6cc22f2</Hash>
+    <Hash>190e839431ef0871a6d52ed3e8f1160d</Hash>
 </Codenesium>*/

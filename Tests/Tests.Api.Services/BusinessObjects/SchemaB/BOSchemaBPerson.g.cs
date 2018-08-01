@@ -3,15 +3,15 @@ using System;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOSchemaBPerson : AbstractBOSchemaBPerson
-        {
-                public BOSchemaBPerson()
-                        : base()
-                {
-                }
-        }
+	public partial class BOSchemaBPerson : AbstractBOSchemaBPerson
+	{
+		public BOSchemaBPerson()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>68f32943e6d5c833e781b8a70c03f7f7</Hash>
+    <Hash>2bd24bc4fd7269e0358488c9082478e3</Hash>
 </Codenesium>*/

@@ -6,108 +6,108 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLAccountMapper BOLAccountMapperMock { get; set; } = new BOLAccountMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLAccountMapper BOLAccountMapperMock { get; set; } = new BOLAccountMapper();
 
-                public IBOLActionTemplateMapper BOLActionTemplateMapperMock { get; set; } = new BOLActionTemplateMapper();
+		public IBOLActionTemplateMapper BOLActionTemplateMapperMock { get; set; } = new BOLActionTemplateMapper();
 
-                public IBOLActionTemplateVersionMapper BOLActionTemplateVersionMapperMock { get; set; } = new BOLActionTemplateVersionMapper();
+		public IBOLActionTemplateVersionMapper BOLActionTemplateVersionMapperMock { get; set; } = new BOLActionTemplateVersionMapper();
 
-                public IBOLApiKeyMapper BOLApiKeyMapperMock { get; set; } = new BOLApiKeyMapper();
+		public IBOLApiKeyMapper BOLApiKeyMapperMock { get; set; } = new BOLApiKeyMapper();
 
-                public IBOLArtifactMapper BOLArtifactMapperMock { get; set; } = new BOLArtifactMapper();
+		public IBOLArtifactMapper BOLArtifactMapperMock { get; set; } = new BOLArtifactMapper();
 
-                public IBOLCertificateMapper BOLCertificateMapperMock { get; set; } = new BOLCertificateMapper();
+		public IBOLCertificateMapper BOLCertificateMapperMock { get; set; } = new BOLCertificateMapper();
 
-                public IBOLChannelMapper BOLChannelMapperMock { get; set; } = new BOLChannelMapper();
+		public IBOLChannelMapper BOLChannelMapperMock { get; set; } = new BOLChannelMapper();
 
-                public IBOLCommunityActionTemplateMapper BOLCommunityActionTemplateMapperMock { get; set; } = new BOLCommunityActionTemplateMapper();
+		public IBOLCommunityActionTemplateMapper BOLCommunityActionTemplateMapperMock { get; set; } = new BOLCommunityActionTemplateMapper();
 
-                public IBOLConfigurationMapper BOLConfigurationMapperMock { get; set; } = new BOLConfigurationMapper();
+		public IBOLConfigurationMapper BOLConfigurationMapperMock { get; set; } = new BOLConfigurationMapper();
 
-                public IBOLDashboardConfigurationMapper BOLDashboardConfigurationMapperMock { get; set; } = new BOLDashboardConfigurationMapper();
+		public IBOLDashboardConfigurationMapper BOLDashboardConfigurationMapperMock { get; set; } = new BOLDashboardConfigurationMapper();
 
-                public IBOLDeploymentMapper BOLDeploymentMapperMock { get; set; } = new BOLDeploymentMapper();
+		public IBOLDeploymentMapper BOLDeploymentMapperMock { get; set; } = new BOLDeploymentMapper();
 
-                public IBOLDeploymentEnvironmentMapper BOLDeploymentEnvironmentMapperMock { get; set; } = new BOLDeploymentEnvironmentMapper();
+		public IBOLDeploymentEnvironmentMapper BOLDeploymentEnvironmentMapperMock { get; set; } = new BOLDeploymentEnvironmentMapper();
 
-                public IBOLDeploymentHistoryMapper BOLDeploymentHistoryMapperMock { get; set; } = new BOLDeploymentHistoryMapper();
+		public IBOLDeploymentHistoryMapper BOLDeploymentHistoryMapperMock { get; set; } = new BOLDeploymentHistoryMapper();
 
-                public IBOLDeploymentProcessMapper BOLDeploymentProcessMapperMock { get; set; } = new BOLDeploymentProcessMapper();
+		public IBOLDeploymentProcessMapper BOLDeploymentProcessMapperMock { get; set; } = new BOLDeploymentProcessMapper();
 
-                public IBOLDeploymentRelatedMachineMapper BOLDeploymentRelatedMachineMapperMock { get; set; } = new BOLDeploymentRelatedMachineMapper();
+		public IBOLDeploymentRelatedMachineMapper BOLDeploymentRelatedMachineMapperMock { get; set; } = new BOLDeploymentRelatedMachineMapper();
 
-                public IBOLEventMapper BOLEventMapperMock { get; set; } = new BOLEventMapper();
+		public IBOLEventMapper BOLEventMapperMock { get; set; } = new BOLEventMapper();
 
-                public IBOLEventRelatedDocumentMapper BOLEventRelatedDocumentMapperMock { get; set; } = new BOLEventRelatedDocumentMapper();
+		public IBOLEventRelatedDocumentMapper BOLEventRelatedDocumentMapperMock { get; set; } = new BOLEventRelatedDocumentMapper();
 
-                public IBOLExtensionConfigurationMapper BOLExtensionConfigurationMapperMock { get; set; } = new BOLExtensionConfigurationMapper();
+		public IBOLExtensionConfigurationMapper BOLExtensionConfigurationMapperMock { get; set; } = new BOLExtensionConfigurationMapper();
 
-                public IBOLFeedMapper BOLFeedMapperMock { get; set; } = new BOLFeedMapper();
+		public IBOLFeedMapper BOLFeedMapperMock { get; set; } = new BOLFeedMapper();
 
-                public IBOLInterruptionMapper BOLInterruptionMapperMock { get; set; } = new BOLInterruptionMapper();
+		public IBOLInterruptionMapper BOLInterruptionMapperMock { get; set; } = new BOLInterruptionMapper();
 
-                public IBOLInvitationMapper BOLInvitationMapperMock { get; set; } = new BOLInvitationMapper();
+		public IBOLInvitationMapper BOLInvitationMapperMock { get; set; } = new BOLInvitationMapper();
 
-                public IBOLKeyAllocationMapper BOLKeyAllocationMapperMock { get; set; } = new BOLKeyAllocationMapper();
+		public IBOLKeyAllocationMapper BOLKeyAllocationMapperMock { get; set; } = new BOLKeyAllocationMapper();
 
-                public IBOLLibraryVariableSetMapper BOLLibraryVariableSetMapperMock { get; set; } = new BOLLibraryVariableSetMapper();
+		public IBOLLibraryVariableSetMapper BOLLibraryVariableSetMapperMock { get; set; } = new BOLLibraryVariableSetMapper();
 
-                public IBOLLifecycleMapper BOLLifecycleMapperMock { get; set; } = new BOLLifecycleMapper();
+		public IBOLLifecycleMapper BOLLifecycleMapperMock { get; set; } = new BOLLifecycleMapper();
 
-                public IBOLMachineMapper BOLMachineMapperMock { get; set; } = new BOLMachineMapper();
+		public IBOLMachineMapper BOLMachineMapperMock { get; set; } = new BOLMachineMapper();
 
-                public IBOLMachinePolicyMapper BOLMachinePolicyMapperMock { get; set; } = new BOLMachinePolicyMapper();
+		public IBOLMachinePolicyMapper BOLMachinePolicyMapperMock { get; set; } = new BOLMachinePolicyMapper();
 
-                public IBOLMutexMapper BOLMutexMapperMock { get; set; } = new BOLMutexMapper();
+		public IBOLMutexMapper BOLMutexMapperMock { get; set; } = new BOLMutexMapper();
 
-                public IBOLNuGetPackageMapper BOLNuGetPackageMapperMock { get; set; } = new BOLNuGetPackageMapper();
+		public IBOLNuGetPackageMapper BOLNuGetPackageMapperMock { get; set; } = new BOLNuGetPackageMapper();
 
-                public IBOLOctopusServerNodeMapper BOLOctopusServerNodeMapperMock { get; set; } = new BOLOctopusServerNodeMapper();
+		public IBOLOctopusServerNodeMapper BOLOctopusServerNodeMapperMock { get; set; } = new BOLOctopusServerNodeMapper();
 
-                public IBOLProjectMapper BOLProjectMapperMock { get; set; } = new BOLProjectMapper();
+		public IBOLProjectMapper BOLProjectMapperMock { get; set; } = new BOLProjectMapper();
 
-                public IBOLProjectGroupMapper BOLProjectGroupMapperMock { get; set; } = new BOLProjectGroupMapper();
+		public IBOLProjectGroupMapper BOLProjectGroupMapperMock { get; set; } = new BOLProjectGroupMapper();
 
-                public IBOLProjectTriggerMapper BOLProjectTriggerMapperMock { get; set; } = new BOLProjectTriggerMapper();
+		public IBOLProjectTriggerMapper BOLProjectTriggerMapperMock { get; set; } = new BOLProjectTriggerMapper();
 
-                public IBOLProxyMapper BOLProxyMapperMock { get; set; } = new BOLProxyMapper();
+		public IBOLProxyMapper BOLProxyMapperMock { get; set; } = new BOLProxyMapper();
 
-                public IBOLReleaseMapper BOLReleaseMapperMock { get; set; } = new BOLReleaseMapper();
+		public IBOLReleaseMapper BOLReleaseMapperMock { get; set; } = new BOLReleaseMapper();
 
-                public IBOLSchemaVersionsMapper BOLSchemaVersionsMapperMock { get; set; } = new BOLSchemaVersionsMapper();
+		public IBOLSchemaVersionsMapper BOLSchemaVersionsMapperMock { get; set; } = new BOLSchemaVersionsMapper();
 
-                public IBOLServerTaskMapper BOLServerTaskMapperMock { get; set; } = new BOLServerTaskMapper();
+		public IBOLServerTaskMapper BOLServerTaskMapperMock { get; set; } = new BOLServerTaskMapper();
 
-                public IBOLSubscriptionMapper BOLSubscriptionMapperMock { get; set; } = new BOLSubscriptionMapper();
+		public IBOLSubscriptionMapper BOLSubscriptionMapperMock { get; set; } = new BOLSubscriptionMapper();
 
-                public IBOLTagSetMapper BOLTagSetMapperMock { get; set; } = new BOLTagSetMapper();
+		public IBOLTagSetMapper BOLTagSetMapperMock { get; set; } = new BOLTagSetMapper();
 
-                public IBOLTeamMapper BOLTeamMapperMock { get; set; } = new BOLTeamMapper();
+		public IBOLTeamMapper BOLTeamMapperMock { get; set; } = new BOLTeamMapper();
 
-                public IBOLTenantMapper BOLTenantMapperMock { get; set; } = new BOLTenantMapper();
+		public IBOLTenantMapper BOLTenantMapperMock { get; set; } = new BOLTenantMapper();
 
-                public IBOLTenantVariableMapper BOLTenantVariableMapperMock { get; set; } = new BOLTenantVariableMapper();
+		public IBOLTenantVariableMapper BOLTenantVariableMapperMock { get; set; } = new BOLTenantVariableMapper();
 
-                public IBOLUserMapper BOLUserMapperMock { get; set; } = new BOLUserMapper();
+		public IBOLUserMapper BOLUserMapperMock { get; set; } = new BOLUserMapper();
 
-                public IBOLUserRoleMapper BOLUserRoleMapperMock { get; set; } = new BOLUserRoleMapper();
+		public IBOLUserRoleMapper BOLUserRoleMapperMock { get; set; } = new BOLUserRoleMapper();
 
-                public IBOLVariableSetMapper BOLVariableSetMapperMock { get; set; } = new BOLVariableSetMapper();
+		public IBOLVariableSetMapper BOLVariableSetMapperMock { get; set; } = new BOLVariableSetMapper();
 
-                public IBOLWorkerMapper BOLWorkerMapperMock { get; set; } = new BOLWorkerMapper();
+		public IBOLWorkerMapper BOLWorkerMapperMock { get; set; } = new BOLWorkerMapper();
 
-                public IBOLWorkerPoolMapper BOLWorkerPoolMapperMock { get; set; } = new BOLWorkerPoolMapper();
+		public IBOLWorkerPoolMapper BOLWorkerPoolMapperMock { get; set; } = new BOLWorkerPoolMapper();
 
-                public IBOLWorkerTaskLeaseMapper BOLWorkerTaskLeaseMapperMock { get; set; } = new BOLWorkerTaskLeaseMapper();
+		public IBOLWorkerTaskLeaseMapper BOLWorkerTaskLeaseMapperMock { get; set; } = new BOLWorkerTaskLeaseMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>488fdc657654962925cee872eb58d662</Hash>
+    <Hash>906b1c8ab675da33fc72315220155d2e</Hash>
 </Codenesium>*/

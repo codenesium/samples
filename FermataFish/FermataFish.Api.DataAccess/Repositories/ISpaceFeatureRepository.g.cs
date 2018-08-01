@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public interface ISpaceFeatureRepository
-        {
-                Task<SpaceFeature> Create(SpaceFeature item);
+	public interface ISpaceFeatureRepository
+	{
+		Task<SpaceFeature> Create(SpaceFeature item);
 
-                Task Update(SpaceFeature item);
+		Task Update(SpaceFeature item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<SpaceFeature> Get(int id);
+		Task<SpaceFeature> Get(int id);
 
-                Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
+		Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
 
-                Task<Studio> GetStudio(int studioId);
-        }
+		Task<Studio> GetStudio(int studioId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>edad3e94759b088c2f212ee8636a01ec</Hash>
+    <Hash>7f76e94607f1bbe5659768bb9a843282</Hash>
 </Codenesium>*/

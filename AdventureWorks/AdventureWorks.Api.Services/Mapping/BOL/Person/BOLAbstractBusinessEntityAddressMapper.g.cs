@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractBusinessEntityAddressMapper
-        {
-                public virtual BOBusinessEntityAddress MapModelToBO(
-                        int businessEntityID,
-                        ApiBusinessEntityAddressRequestModel model
-                        )
-                {
-                        BOBusinessEntityAddress boBusinessEntityAddress = new BOBusinessEntityAddress();
-                        boBusinessEntityAddress.SetProperties(
-                                businessEntityID,
-                                model.AddressID,
-                                model.AddressTypeID,
-                                model.ModifiedDate,
-                                model.Rowguid);
-                        return boBusinessEntityAddress;
-                }
+	public abstract class BOLAbstractBusinessEntityAddressMapper
+	{
+		public virtual BOBusinessEntityAddress MapModelToBO(
+			int businessEntityID,
+			ApiBusinessEntityAddressRequestModel model
+			)
+		{
+			BOBusinessEntityAddress boBusinessEntityAddress = new BOBusinessEntityAddress();
+			boBusinessEntityAddress.SetProperties(
+				businessEntityID,
+				model.AddressID,
+				model.AddressTypeID,
+				model.ModifiedDate,
+				model.Rowguid);
+			return boBusinessEntityAddress;
+		}
 
-                public virtual ApiBusinessEntityAddressResponseModel MapBOToModel(
-                        BOBusinessEntityAddress boBusinessEntityAddress)
-                {
-                        var model = new ApiBusinessEntityAddressResponseModel();
+		public virtual ApiBusinessEntityAddressResponseModel MapBOToModel(
+			BOBusinessEntityAddress boBusinessEntityAddress)
+		{
+			var model = new ApiBusinessEntityAddressResponseModel();
 
-                        model.SetProperties(boBusinessEntityAddress.BusinessEntityID, boBusinessEntityAddress.AddressID, boBusinessEntityAddress.AddressTypeID, boBusinessEntityAddress.ModifiedDate, boBusinessEntityAddress.Rowguid);
+			model.SetProperties(boBusinessEntityAddress.BusinessEntityID, boBusinessEntityAddress.AddressID, boBusinessEntityAddress.AddressTypeID, boBusinessEntityAddress.ModifiedDate, boBusinessEntityAddress.Rowguid);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiBusinessEntityAddressResponseModel> MapBOToModel(
-                        List<BOBusinessEntityAddress> items)
-                {
-                        List<ApiBusinessEntityAddressResponseModel> response = new List<ApiBusinessEntityAddressResponseModel>();
+		public virtual List<ApiBusinessEntityAddressResponseModel> MapBOToModel(
+			List<BOBusinessEntityAddress> items)
+		{
+			List<ApiBusinessEntityAddressResponseModel> response = new List<ApiBusinessEntityAddressResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed98cba0e133aab94a839ba111dd7ee0</Hash>
+    <Hash>22431ca4e4c80e8f6de9380dfce9a48b</Hash>
 </Codenesium>*/

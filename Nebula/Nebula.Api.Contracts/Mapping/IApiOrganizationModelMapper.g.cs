@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-        public interface IApiOrganizationModelMapper
-        {
-                ApiOrganizationResponseModel MapRequestToResponse(
-                        int id,
-                        ApiOrganizationRequestModel request);
+	public interface IApiOrganizationModelMapper
+	{
+		ApiOrganizationResponseModel MapRequestToResponse(
+			int id,
+			ApiOrganizationRequestModel request);
 
-                ApiOrganizationRequestModel MapResponseToRequest(
-                        ApiOrganizationResponseModel response);
+		ApiOrganizationRequestModel MapResponseToRequest(
+			ApiOrganizationResponseModel response);
 
-                JsonPatchDocument<ApiOrganizationRequestModel> CreatePatch(ApiOrganizationRequestModel model);
-        }
+		JsonPatchDocument<ApiOrganizationRequestModel> CreatePatch(ApiOrganizationRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>88f11955f5aada1ee26b674d4ee0764e</Hash>
+    <Hash>f592562548312b8855316eb3cea8dc8c</Hash>
 </Codenesium>*/

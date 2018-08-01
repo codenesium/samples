@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "UserRole")]
-        [Trait("Area", "Integration")]
-        public class UserRoleIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public UserRoleIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "UserRole")]
+	[Trait("Area", "Integration")]
+	public class UserRoleIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public UserRoleIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiUserRoleModelMapper mapper = new ApiUserRoleModelMapper();
+			ApiUserRoleModelMapper mapper = new ApiUserRoleModelMapper();
 
-                        UpdateResponse<ApiUserRoleResponseModel> updateResponse = await this.Client.UserRoleUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiUserRoleResponseModel> updateResponse = await this.Client.UserRoleUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.UserRoleDeleteAsync(model.Id);
+			await this.Client.UserRoleDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiUserRoleResponseModel response = await this.Client.UserRoleGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiUserRoleResponseModel response = await this.Client.UserRoleGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiUserRoleResponseModel> response = await this.Client.UserRoleAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiUserRoleResponseModel> response = await this.Client.UserRoleAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiUserRoleResponseModel> CreateRecord()
-                {
-                        var model = new ApiUserRoleRequestModel();
-                        model.SetProperties("B", "B");
-                        CreateResponse<ApiUserRoleResponseModel> result = await this.Client.UserRoleCreateAsync(model);
+		private async Task<ApiUserRoleResponseModel> CreateRecord()
+		{
+			var model = new ApiUserRoleRequestModel();
+			model.SetProperties("B", "B");
+			CreateResponse<ApiUserRoleResponseModel> result = await this.Client.UserRoleCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.UserRoleDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.UserRoleDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b665375ba4966484dd9b4ad983990fbc</Hash>
+    <Hash>4441bda17225f788294b38aec8985483</Hash>
 </Codenesium>*/

@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cd64c2e541990c61f03bf0893c6e24ce</Hash>
+    <Hash>dbefbba16b2135d3c2246d23d1c03d93</Hash>
 </Codenesium>*/

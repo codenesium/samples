@@ -1,14 +1,14 @@
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiVersionInfoModelMapper : AbstractApiVersionInfoModelMapper, IApiVersionInfoModelMapper
-        {
-                public ApiVersionInfoModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiVersionInfoModelMapper : AbstractApiVersionInfoModelMapper, IApiVersionInfoModelMapper
+	{
+		public ApiVersionInfoModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3848d15b43b1f11913d77f14f42b5745</Hash>
+    <Hash>56373e002dacb1145d0b219dcb3aa943</Hash>
 </Codenesium>*/

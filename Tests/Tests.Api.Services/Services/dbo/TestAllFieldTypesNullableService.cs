@@ -10,25 +10,25 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class TestAllFieldTypesNullableService : AbstractTestAllFieldTypesNullableService, ITestAllFieldTypesNullableService
-        {
-                public TestAllFieldTypesNullableService(
-                        ILogger<ITestAllFieldTypesNullableRepository> logger,
-                        ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
-                        IApiTestAllFieldTypesNullableRequestModelValidator testAllFieldTypesNullableModelValidator,
-                        IBOLTestAllFieldTypesNullableMapper boltestAllFieldTypesNullableMapper,
-                        IDALTestAllFieldTypesNullableMapper daltestAllFieldTypesNullableMapper
-                        )
-                        : base(logger,
-                               testAllFieldTypesNullableRepository,
-                               testAllFieldTypesNullableModelValidator,
-                               boltestAllFieldTypesNullableMapper,
-                               daltestAllFieldTypesNullableMapper)
-                {
-                }
-        }
+	public partial class TestAllFieldTypesNullableService : AbstractTestAllFieldTypesNullableService, ITestAllFieldTypesNullableService
+	{
+		public TestAllFieldTypesNullableService(
+			ILogger<ITestAllFieldTypesNullableRepository> logger,
+			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
+			IApiTestAllFieldTypesNullableRequestModelValidator testAllFieldTypesNullableModelValidator,
+			IBOLTestAllFieldTypesNullableMapper boltestAllFieldTypesNullableMapper,
+			IDALTestAllFieldTypesNullableMapper daltestAllFieldTypesNullableMapper
+			)
+			: base(logger,
+			       testAllFieldTypesNullableRepository,
+			       testAllFieldTypesNullableModelValidator,
+			       boltestAllFieldTypesNullableMapper,
+			       daltestAllFieldTypesNullableMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d047d001836327771c5d4ca410a71d39</Hash>
+    <Hash>c9965455c7c33ee2cd3a51808ea50423</Hash>
 </Codenesium>*/

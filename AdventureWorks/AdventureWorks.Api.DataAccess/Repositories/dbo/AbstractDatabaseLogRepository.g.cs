@@ -11,102 +11,102 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractDatabaseLogRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractDatabaseLogRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractDatabaseLogRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractDatabaseLogRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<DatabaseLog> Get(int databaseLogID)
-                {
-                        return await this.GetById(databaseLogID);
-                }
+		public async virtual Task<DatabaseLog> Get(int databaseLogID)
+		{
+			return await this.GetById(databaseLogID);
+		}
 
-                public async virtual Task<DatabaseLog> Create(DatabaseLog item)
-                {
-                        this.Context.Set<DatabaseLog>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<DatabaseLog> Create(DatabaseLog item)
+		{
+			this.Context.Set<DatabaseLog>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(DatabaseLog item)
-                {
-                        var entity = this.Context.Set<DatabaseLog>().Local.FirstOrDefault(x => x.DatabaseLogID == item.DatabaseLogID);
-                        if (entity == null)
-                        {
-                                this.Context.Set<DatabaseLog>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(DatabaseLog item)
+		{
+			var entity = this.Context.Set<DatabaseLog>().Local.FirstOrDefault(x => x.DatabaseLogID == item.DatabaseLogID);
+			if (entity == null)
+			{
+				this.Context.Set<DatabaseLog>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        int databaseLogID)
-                {
-                        DatabaseLog record = await this.GetById(databaseLogID);
+		public async virtual Task Delete(
+			int databaseLogID)
+		{
+			DatabaseLog record = await this.GetById(databaseLogID);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<DatabaseLog>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<DatabaseLog>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                protected async Task<List<DatabaseLog>> Where(
-                        Expression<Func<DatabaseLog, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<DatabaseLog, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.DatabaseLogID;
-                        }
+		protected async Task<List<DatabaseLog>> Where(
+			Expression<Func<DatabaseLog, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<DatabaseLog, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.DatabaseLogID;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
+			}
+			else
+			{
+				return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
+			}
+		}
 
-                private async Task<DatabaseLog> GetById(int databaseLogID)
-                {
-                        List<DatabaseLog> records = await this.Where(x => x.DatabaseLogID == databaseLogID);
+		private async Task<DatabaseLog> GetById(int databaseLogID)
+		{
+			List<DatabaseLog> records = await this.Where(x => x.DatabaseLogID == databaseLogID);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>04227fb1a63a7bae8bbbcd4847673374</Hash>
+    <Hash>f224bd344aa8280a85db05957c782c16</Hash>
 </Codenesium>*/

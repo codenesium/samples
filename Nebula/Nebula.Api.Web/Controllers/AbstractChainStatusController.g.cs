@@ -15,224 +15,224 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Web
 {
-        public abstract class AbstractChainStatusController : AbstractApiController
-        {
-                protected IChainStatusService ChainStatusService { get; private set; }
+	public abstract class AbstractChainStatusController : AbstractApiController
+	{
+		protected IChainStatusService ChainStatusService { get; private set; }
 
-                protected IApiChainStatusModelMapper ChainStatusModelMapper { get; private set; }
+		protected IApiChainStatusModelMapper ChainStatusModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractChainStatusController(
-                        ApiSettings settings,
-                        ILogger<AbstractChainStatusController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IChainStatusService chainStatusService,
-                        IApiChainStatusModelMapper chainStatusModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.ChainStatusService = chainStatusService;
-                        this.ChainStatusModelMapper = chainStatusModelMapper;
-                }
+		public AbstractChainStatusController(
+			ApiSettings settings,
+			ILogger<AbstractChainStatusController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IChainStatusService chainStatusService,
+			IApiChainStatusModelMapper chainStatusModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.ChainStatusService = chainStatusService;
+			this.ChainStatusModelMapper = chainStatusModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiChainStatusResponseModel response = await this.ChainStatusService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiChainStatusResponseModel response = await this.ChainStatusService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiChainStatusResponseModel> records = new List<ApiChainStatusResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
+			List<ApiChainStatusResponseModel> records = new List<ApiChainStatusResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiChainStatusResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusRequestModel model)
-                {
-                        CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiChainStatusResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusRequestModel model)
+		{
+			CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiChainStatusRequestModel> patch)
-                {
-                        ApiChainStatusResponseModel record = await this.ChainStatusService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiChainStatusRequestModel> patch)
+		{
+			ApiChainStatusResponseModel record = await this.ChainStatusService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiChainStatusRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiChainStatusRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, model);
+				UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusRequestModel model)
-                {
-                        ApiChainStatusRequestModel request = await this.PatchModel(id, this.ChainStatusModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusRequestModel model)
+		{
+			ApiChainStatusRequestModel request = await this.PatchModel(id, this.ChainStatusModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.ChainStatusService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.ChainStatusService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("{chainStatusId}/Chains")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
-                public async virtual Task<IActionResult> Chains(int chainStatusId, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
+		[HttpGet]
+		[Route("{chainStatusId}/Chains")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		public async virtual Task<IActionResult> Chains(int chainStatusId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
 
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiChainResponseModel> response = await this.ChainStatusService.Chains(chainStatusId, query.Limit, query.Offset);
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiChainResponseModel> response = await this.ChainStatusService.Chains(chainStatusId, query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiChainStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainStatusRequestModel> patch)
-                {
-                        var record = await this.ChainStatusService.Get(id);
+		private async Task<ApiChainStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainStatusRequestModel> patch)
+		{
+			var record = await this.ChainStatusService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiChainStatusRequestModel request = this.ChainStatusModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiChainStatusRequestModel request = this.ChainStatusModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f3b5034a79e3c494a7352438b4dedb5c</Hash>
+    <Hash>5eb990cc14fa4a863b00f82c47d8fc1d</Hash>
 </Codenesium>*/

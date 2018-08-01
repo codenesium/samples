@@ -5,50 +5,50 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductInventoryMapper
-        {
-                public virtual BOProductInventory MapModelToBO(
-                        int productID,
-                        ApiProductInventoryRequestModel model
-                        )
-                {
-                        BOProductInventory boProductInventory = new BOProductInventory();
-                        boProductInventory.SetProperties(
-                                productID,
-                                model.Bin,
-                                model.LocationID,
-                                model.ModifiedDate,
-                                model.Quantity,
-                                model.Rowguid,
-                                model.Shelf);
-                        return boProductInventory;
-                }
+	public abstract class BOLAbstractProductInventoryMapper
+	{
+		public virtual BOProductInventory MapModelToBO(
+			int productID,
+			ApiProductInventoryRequestModel model
+			)
+		{
+			BOProductInventory boProductInventory = new BOProductInventory();
+			boProductInventory.SetProperties(
+				productID,
+				model.Bin,
+				model.LocationID,
+				model.ModifiedDate,
+				model.Quantity,
+				model.Rowguid,
+				model.Shelf);
+			return boProductInventory;
+		}
 
-                public virtual ApiProductInventoryResponseModel MapBOToModel(
-                        BOProductInventory boProductInventory)
-                {
-                        var model = new ApiProductInventoryResponseModel();
+		public virtual ApiProductInventoryResponseModel MapBOToModel(
+			BOProductInventory boProductInventory)
+		{
+			var model = new ApiProductInventoryResponseModel();
 
-                        model.SetProperties(boProductInventory.ProductID, boProductInventory.Bin, boProductInventory.LocationID, boProductInventory.ModifiedDate, boProductInventory.Quantity, boProductInventory.Rowguid, boProductInventory.Shelf);
+			model.SetProperties(boProductInventory.ProductID, boProductInventory.Bin, boProductInventory.LocationID, boProductInventory.ModifiedDate, boProductInventory.Quantity, boProductInventory.Rowguid, boProductInventory.Shelf);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductInventoryResponseModel> MapBOToModel(
-                        List<BOProductInventory> items)
-                {
-                        List<ApiProductInventoryResponseModel> response = new List<ApiProductInventoryResponseModel>();
+		public virtual List<ApiProductInventoryResponseModel> MapBOToModel(
+			List<BOProductInventory> items)
+		{
+			List<ApiProductInventoryResponseModel> response = new List<ApiProductInventoryResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f020cd2916500e5ee92a694eb8a358be</Hash>
+    <Hash>0f61c9abcb41fa0e305619a8c2362f7a</Hash>
 </Codenesium>*/

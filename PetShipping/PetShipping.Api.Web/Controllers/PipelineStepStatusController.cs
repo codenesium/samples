@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/pipelineStepStatus")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PipelineStepStatusController : AbstractPipelineStepStatusController
-        {
-                public PipelineStepStatusController(
-                        ApiSettings settings,
-                        ILogger<PipelineStepStatusController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPipelineStepStatusService pipelineStepStatusService,
-                        IApiPipelineStepStatusModelMapper pipelineStepStatusModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               pipelineStepStatusService,
-                               pipelineStepStatusModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/pipelineStepStatus")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PipelineStepStatusController : AbstractPipelineStepStatusController
+	{
+		public PipelineStepStatusController(
+			ApiSettings settings,
+			ILogger<PipelineStepStatusController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPipelineStepStatusService pipelineStepStatusService,
+			IApiPipelineStepStatusModelMapper pipelineStepStatusModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       pipelineStepStatusService,
+			       pipelineStepStatusModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52ae012a846cee351e7e0c04fd40e201</Hash>
+    <Hash>28e3cf6babf95c23d40a8d3e9e2bdf46</Hash>
 </Codenesium>*/

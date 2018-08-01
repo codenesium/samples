@@ -6,19 +6,19 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public interface IDALEventMapper
-        {
-                Event MapBOToEF(
-                        BOEvent bo);
+	public interface IDALEventMapper
+	{
+		Event MapBOToEF(
+			BOEvent bo);
 
-                BOEvent MapEFToBO(
-                        Event efEvent);
+		BOEvent MapEFToBO(
+			Event efEvent);
 
-                List<BOEvent> MapEFToBO(
-                        List<Event> records);
-        }
+		List<BOEvent> MapEFToBO(
+			List<Event> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>d07d636e6e6da649406f7a03c6837ee3</Hash>
+    <Hash>bdaba860c6f417271c0658722df1f75a</Hash>
 </Codenesium>*/

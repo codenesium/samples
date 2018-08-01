@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class BOLAbstractPetMapper
-        {
-                public virtual BOPet MapModelToBO(
-                        int id,
-                        ApiPetRequestModel model
-                        )
-                {
-                        BOPet boPet = new BOPet();
-                        boPet.SetProperties(
-                                id,
-                                model.BreedId,
-                                model.ClientId,
-                                model.Name,
-                                model.Weight);
-                        return boPet;
-                }
+	public abstract class BOLAbstractPetMapper
+	{
+		public virtual BOPet MapModelToBO(
+			int id,
+			ApiPetRequestModel model
+			)
+		{
+			BOPet boPet = new BOPet();
+			boPet.SetProperties(
+				id,
+				model.BreedId,
+				model.ClientId,
+				model.Name,
+				model.Weight);
+			return boPet;
+		}
 
-                public virtual ApiPetResponseModel MapBOToModel(
-                        BOPet boPet)
-                {
-                        var model = new ApiPetResponseModel();
+		public virtual ApiPetResponseModel MapBOToModel(
+			BOPet boPet)
+		{
+			var model = new ApiPetResponseModel();
 
-                        model.SetProperties(boPet.Id, boPet.BreedId, boPet.ClientId, boPet.Name, boPet.Weight);
+			model.SetProperties(boPet.Id, boPet.BreedId, boPet.ClientId, boPet.Name, boPet.Weight);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiPetResponseModel> MapBOToModel(
-                        List<BOPet> items)
-                {
-                        List<ApiPetResponseModel> response = new List<ApiPetResponseModel>();
+		public virtual List<ApiPetResponseModel> MapBOToModel(
+			List<BOPet> items)
+		{
+			List<ApiPetResponseModel> response = new List<ApiPetResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b5dd83f056142aa57495288a409e1b88</Hash>
+    <Hash>d1c9c27635d257dc2382638dc859360e</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class WorkerService : AbstractWorkerService, IWorkerService
-        {
-                public WorkerService(
-                        ILogger<IWorkerRepository> logger,
-                        IWorkerRepository workerRepository,
-                        IApiWorkerRequestModelValidator workerModelValidator,
-                        IBOLWorkerMapper bolworkerMapper,
-                        IDALWorkerMapper dalworkerMapper
-                        )
-                        : base(logger,
-                               workerRepository,
-                               workerModelValidator,
-                               bolworkerMapper,
-                               dalworkerMapper)
-                {
-                }
-        }
+	public partial class WorkerService : AbstractWorkerService, IWorkerService
+	{
+		public WorkerService(
+			ILogger<IWorkerRepository> logger,
+			IWorkerRepository workerRepository,
+			IApiWorkerRequestModelValidator workerModelValidator,
+			IBOLWorkerMapper bolworkerMapper,
+			IDALWorkerMapper dalworkerMapper
+			)
+			: base(logger,
+			       workerRepository,
+			       workerModelValidator,
+			       bolworkerMapper,
+			       dalworkerMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4ec458ee3465020b0449f06a4dacb7b2</Hash>
+    <Hash>a9c5c0d9d718f1c152ffae6fe53abc4d</Hash>
 </Codenesium>*/

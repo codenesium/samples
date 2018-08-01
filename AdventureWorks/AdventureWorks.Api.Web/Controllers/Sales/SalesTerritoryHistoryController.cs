@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/salesTerritoryHistories")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SalesTerritoryHistoryController : AbstractSalesTerritoryHistoryController
-        {
-                public SalesTerritoryHistoryController(
-                        ApiSettings settings,
-                        ILogger<SalesTerritoryHistoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISalesTerritoryHistoryService salesTerritoryHistoryService,
-                        IApiSalesTerritoryHistoryModelMapper salesTerritoryHistoryModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               salesTerritoryHistoryService,
-                               salesTerritoryHistoryModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/salesTerritoryHistories")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SalesTerritoryHistoryController : AbstractSalesTerritoryHistoryController
+	{
+		public SalesTerritoryHistoryController(
+			ApiSettings settings,
+			ILogger<SalesTerritoryHistoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISalesTerritoryHistoryService salesTerritoryHistoryService,
+			IApiSalesTerritoryHistoryModelMapper salesTerritoryHistoryModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       salesTerritoryHistoryService,
+			       salesTerritoryHistoryModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1d635bda499220be1b5893a299bfb872</Hash>
+    <Hash>5cf5e25dbfe44d5654e84a0a67072c04</Hash>
 </Codenesium>*/

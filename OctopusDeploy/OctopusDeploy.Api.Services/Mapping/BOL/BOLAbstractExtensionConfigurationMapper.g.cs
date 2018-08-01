@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractExtensionConfigurationMapper
-        {
-                public virtual BOExtensionConfiguration MapModelToBO(
-                        string id,
-                        ApiExtensionConfigurationRequestModel model
-                        )
-                {
-                        BOExtensionConfiguration boExtensionConfiguration = new BOExtensionConfiguration();
-                        boExtensionConfiguration.SetProperties(
-                                id,
-                                model.ExtensionAuthor,
-                                model.JSON,
-                                model.Name);
-                        return boExtensionConfiguration;
-                }
+	public abstract class BOLAbstractExtensionConfigurationMapper
+	{
+		public virtual BOExtensionConfiguration MapModelToBO(
+			string id,
+			ApiExtensionConfigurationRequestModel model
+			)
+		{
+			BOExtensionConfiguration boExtensionConfiguration = new BOExtensionConfiguration();
+			boExtensionConfiguration.SetProperties(
+				id,
+				model.ExtensionAuthor,
+				model.JSON,
+				model.Name);
+			return boExtensionConfiguration;
+		}
 
-                public virtual ApiExtensionConfigurationResponseModel MapBOToModel(
-                        BOExtensionConfiguration boExtensionConfiguration)
-                {
-                        var model = new ApiExtensionConfigurationResponseModel();
+		public virtual ApiExtensionConfigurationResponseModel MapBOToModel(
+			BOExtensionConfiguration boExtensionConfiguration)
+		{
+			var model = new ApiExtensionConfigurationResponseModel();
 
-                        model.SetProperties(boExtensionConfiguration.Id, boExtensionConfiguration.ExtensionAuthor, boExtensionConfiguration.JSON, boExtensionConfiguration.Name);
+			model.SetProperties(boExtensionConfiguration.Id, boExtensionConfiguration.ExtensionAuthor, boExtensionConfiguration.JSON, boExtensionConfiguration.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiExtensionConfigurationResponseModel> MapBOToModel(
-                        List<BOExtensionConfiguration> items)
-                {
-                        List<ApiExtensionConfigurationResponseModel> response = new List<ApiExtensionConfigurationResponseModel>();
+		public virtual List<ApiExtensionConfigurationResponseModel> MapBOToModel(
+			List<BOExtensionConfiguration> items)
+		{
+			List<ApiExtensionConfigurationResponseModel> response = new List<ApiExtensionConfigurationResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9691a66241eaaf59801d8a3fc15321c5</Hash>
+    <Hash>63d491f2128ef58caca4c02051a3ed55</Hash>
 </Codenesium>*/

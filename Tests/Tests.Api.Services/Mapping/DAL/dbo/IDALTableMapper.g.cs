@@ -6,19 +6,19 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IDALTableMapper
-        {
-                Table MapBOToEF(
-                        BOTable bo);
+	public interface IDALTableMapper
+	{
+		Table MapBOToEF(
+			BOTable bo);
 
-                BOTable MapEFToBO(
-                        Table efTable);
+		BOTable MapEFToBO(
+			Table efTable);
 
-                List<BOTable> MapEFToBO(
-                        List<Table> records);
-        }
+		List<BOTable> MapEFToBO(
+			List<Table> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>688864a6eed204cfec5177833bf4c647</Hash>
+    <Hash>22afb8f6712333a57c064548f2a7d359</Hash>
 </Codenesium>*/

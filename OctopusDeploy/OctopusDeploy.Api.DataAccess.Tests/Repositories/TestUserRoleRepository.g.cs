@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class UserRoleRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class UserRoleRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<UserRoleRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<UserRoleRepository>>();
-                }
-        }
+		public static Mock<ILogger<UserRoleRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<UserRoleRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UserRole")]
-        [Trait("Area", "Repositories")]
-        public partial class UserRoleRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UserRole")]
+	[Trait("Area", "Repositories")]
+	public partial class UserRoleRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
 
-                        UserRole entity = new UserRole();
-                        context.Set<UserRole>().Add(entity);
-                        await context.SaveChangesAsync();
+			UserRole entity = new UserRole();
+			context.Set<UserRole>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
 
-                        UserRole entity = new UserRole();
-                        context.Set<UserRole>().Add(entity);
-                        await context.SaveChangesAsync();
+			UserRole entity = new UserRole();
+			context.Set<UserRole>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
 
-                        var entity = new UserRole();
-                        await repository.Create(entity);
+			var entity = new UserRole();
+			await repository.Create(entity);
 
-                        var record = await context.Set<UserRole>().FirstOrDefaultAsync();
+			var record = await context.Set<UserRole>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
-                        UserRole entity = new UserRole();
-                        context.Set<UserRole>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
+			UserRole entity = new UserRole();
+			context.Set<UserRole>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<UserRole>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<UserRole>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
-                        UserRole entity = new UserRole();
-                        context.Set<UserRole>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
+			UserRole entity = new UserRole();
+			context.Set<UserRole>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new UserRole());
+			await repository.Update(new UserRole());
 
-                        var modifiedRecord = context.Set<UserRole>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<UserRole>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
-                        var repository = new UserRoleRepository(loggerMoc.Object, context);
-                        UserRole entity = new UserRole();
-                        context.Set<UserRole>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
+			var repository = new UserRoleRepository(loggerMoc.Object, context);
+			UserRole entity = new UserRole();
+			context.Set<UserRole>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        UserRole modifiedRecord = await context.Set<UserRole>().FirstOrDefaultAsync();
+			UserRole modifiedRecord = await context.Set<UserRole>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9ffded836744c399260aa738042c8498</Hash>
+    <Hash>01b85ad1e4e7a2e26b83d2f6edc86b4d</Hash>
 </Codenesium>*/

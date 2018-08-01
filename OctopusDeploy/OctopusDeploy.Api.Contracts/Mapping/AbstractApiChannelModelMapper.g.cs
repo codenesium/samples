@@ -5,51 +5,51 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiChannelModelMapper
-        {
-                public virtual ApiChannelResponseModel MapRequestToResponse(
-                        string id,
-                        ApiChannelRequestModel request)
-                {
-                        var response = new ApiChannelResponseModel();
-                        response.SetProperties(id,
-                                               request.DataVersion,
-                                               request.JSON,
-                                               request.LifecycleId,
-                                               request.Name,
-                                               request.ProjectId,
-                                               request.TenantTags);
-                        return response;
-                }
+	public abstract class AbstractApiChannelModelMapper
+	{
+		public virtual ApiChannelResponseModel MapRequestToResponse(
+			string id,
+			ApiChannelRequestModel request)
+		{
+			var response = new ApiChannelResponseModel();
+			response.SetProperties(id,
+			                       request.DataVersion,
+			                       request.JSON,
+			                       request.LifecycleId,
+			                       request.Name,
+			                       request.ProjectId,
+			                       request.TenantTags);
+			return response;
+		}
 
-                public virtual ApiChannelRequestModel MapResponseToRequest(
-                        ApiChannelResponseModel response)
-                {
-                        var request = new ApiChannelRequestModel();
-                        request.SetProperties(
-                                response.DataVersion,
-                                response.JSON,
-                                response.LifecycleId,
-                                response.Name,
-                                response.ProjectId,
-                                response.TenantTags);
-                        return request;
-                }
+		public virtual ApiChannelRequestModel MapResponseToRequest(
+			ApiChannelResponseModel response)
+		{
+			var request = new ApiChannelRequestModel();
+			request.SetProperties(
+				response.DataVersion,
+				response.JSON,
+				response.LifecycleId,
+				response.Name,
+				response.ProjectId,
+				response.TenantTags);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiChannelRequestModel> CreatePatch(ApiChannelRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiChannelRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.LifecycleId, model.LifecycleId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.ProjectId, model.ProjectId);
-                        patch.Replace(x => x.TenantTags, model.TenantTags);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiChannelRequestModel> CreatePatch(ApiChannelRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiChannelRequestModel>();
+			patch.Replace(x => x.DataVersion, model.DataVersion);
+			patch.Replace(x => x.JSON, model.JSON);
+			patch.Replace(x => x.LifecycleId, model.LifecycleId);
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.ProjectId, model.ProjectId);
+			patch.Replace(x => x.TenantTags, model.TenantTags);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f94c9a4edfc0553e314c945ba488865c</Hash>
+    <Hash>3c4f752deeb6251281624abcd98b5598</Hash>
 </Codenesium>*/

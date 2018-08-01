@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLSalesPersonQuotaHistoryMapper : BOLAbstractSalesPersonQuotaHistoryMapper, IBOLSalesPersonQuotaHistoryMapper
-        {
-                public BOLSalesPersonQuotaHistoryMapper()
-                {
-                }
-        }
+	public partial class BOLSalesPersonQuotaHistoryMapper : BOLAbstractSalesPersonQuotaHistoryMapper, IBOLSalesPersonQuotaHistoryMapper
+	{
+		public BOLSalesPersonQuotaHistoryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>90f3e8c731673310f105347c4b7c3d03</Hash>
+    <Hash>132c51705c20b38cbc15b96bd6ec2d36</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALProductMapper : DALAbstractProductMapper, IDALProductMapper
-        {
-                public DALProductMapper()
-                {
-                }
-        }
+	public partial class DALProductMapper : DALAbstractProductMapper, IDALProductMapper
+	{
+		public DALProductMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>eed099e66286a25cc850443ef13d4f2c</Hash>
+    <Hash>243b105ee57b3de29b446360ef5d7a94</Hash>
 </Codenesium>*/

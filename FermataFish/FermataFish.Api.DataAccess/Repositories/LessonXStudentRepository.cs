@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class LessonXStudentRepository : AbstractLessonXStudentRepository, ILessonXStudentRepository
-        {
-                public LessonXStudentRepository(
-                        ILogger<LessonXStudentRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class LessonXStudentRepository : AbstractLessonXStudentRepository, ILessonXStudentRepository
+	{
+		public LessonXStudentRepository(
+			ILogger<LessonXStudentRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ff820f44e264a00dac12fbfd30f86130</Hash>
+    <Hash>108ed62a41955565423242c196fdb347</Hash>
 </Codenesium>*/

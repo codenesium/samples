@@ -7,24 +7,24 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineStatusRequestModel : AbstractApiRequestModel
-        {
-                public ApiPipelineStatusRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiPipelineStatusRequestModel : AbstractApiRequestModel
+	{
+		public ApiPipelineStatusRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name)
-                {
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			string name)
+		{
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>2929eab57e56bdb27e003d22abfa2b9d</Hash>
+    <Hash>f2291988d9f82ef69c12612ba38ac9ee</Hash>
 </Codenesium>*/

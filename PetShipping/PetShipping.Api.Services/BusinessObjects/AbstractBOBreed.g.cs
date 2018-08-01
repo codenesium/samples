@@ -3,30 +3,30 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractBOBreed : AbstractBusinessObject
-        {
-                public AbstractBOBreed()
-                        : base()
-                {
-                }
+	public abstract class AbstractBOBreed : AbstractBusinessObject
+	{
+		public AbstractBOBreed()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(int id,
-                                                  string name,
-                                                  int speciesId)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                        this.SpeciesId = speciesId;
-                }
+		public virtual void SetProperties(int id,
+		                                  string name,
+		                                  int speciesId)
+		{
+			this.Id = id;
+			this.Name = name;
+			this.SpeciesId = speciesId;
+		}
 
-                public int Id { get; private set; }
+		public int Id { get; private set; }
 
-                public string Name { get; private set; }
+		public string Name { get; private set; }
 
-                public int SpeciesId { get; private set; }
-        }
+		public int SpeciesId { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a392bdcfe0b5013ade129518251b0d13</Hash>
+    <Hash>91aa0c33f63808a722d71a4842f43f1a</Hash>
 </Codenesium>*/

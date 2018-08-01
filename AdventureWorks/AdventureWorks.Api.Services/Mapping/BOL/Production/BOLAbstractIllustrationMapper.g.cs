@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractIllustrationMapper
-        {
-                public virtual BOIllustration MapModelToBO(
-                        int illustrationID,
-                        ApiIllustrationRequestModel model
-                        )
-                {
-                        BOIllustration boIllustration = new BOIllustration();
-                        boIllustration.SetProperties(
-                                illustrationID,
-                                model.Diagram,
-                                model.ModifiedDate);
-                        return boIllustration;
-                }
+	public abstract class BOLAbstractIllustrationMapper
+	{
+		public virtual BOIllustration MapModelToBO(
+			int illustrationID,
+			ApiIllustrationRequestModel model
+			)
+		{
+			BOIllustration boIllustration = new BOIllustration();
+			boIllustration.SetProperties(
+				illustrationID,
+				model.Diagram,
+				model.ModifiedDate);
+			return boIllustration;
+		}
 
-                public virtual ApiIllustrationResponseModel MapBOToModel(
-                        BOIllustration boIllustration)
-                {
-                        var model = new ApiIllustrationResponseModel();
+		public virtual ApiIllustrationResponseModel MapBOToModel(
+			BOIllustration boIllustration)
+		{
+			var model = new ApiIllustrationResponseModel();
 
-                        model.SetProperties(boIllustration.IllustrationID, boIllustration.Diagram, boIllustration.ModifiedDate);
+			model.SetProperties(boIllustration.IllustrationID, boIllustration.Diagram, boIllustration.ModifiedDate);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiIllustrationResponseModel> MapBOToModel(
-                        List<BOIllustration> items)
-                {
-                        List<ApiIllustrationResponseModel> response = new List<ApiIllustrationResponseModel>();
+		public virtual List<ApiIllustrationResponseModel> MapBOToModel(
+			List<BOIllustration> items)
+		{
+			List<ApiIllustrationResponseModel> response = new List<ApiIllustrationResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8b73199754a7b0199deccd2bdf9f52d3</Hash>
+    <Hash>6c7b3c7a89dbe3dde7c10fe9bee79563</Hash>
 </Codenesium>*/

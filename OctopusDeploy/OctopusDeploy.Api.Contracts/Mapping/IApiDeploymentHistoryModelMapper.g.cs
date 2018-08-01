@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiDeploymentHistoryModelMapper
-        {
-                ApiDeploymentHistoryResponseModel MapRequestToResponse(
-                        string deploymentId,
-                        ApiDeploymentHistoryRequestModel request);
+	public interface IApiDeploymentHistoryModelMapper
+	{
+		ApiDeploymentHistoryResponseModel MapRequestToResponse(
+			string deploymentId,
+			ApiDeploymentHistoryRequestModel request);
 
-                ApiDeploymentHistoryRequestModel MapResponseToRequest(
-                        ApiDeploymentHistoryResponseModel response);
+		ApiDeploymentHistoryRequestModel MapResponseToRequest(
+			ApiDeploymentHistoryResponseModel response);
 
-                JsonPatchDocument<ApiDeploymentHistoryRequestModel> CreatePatch(ApiDeploymentHistoryRequestModel model);
-        }
+		JsonPatchDocument<ApiDeploymentHistoryRequestModel> CreatePatch(ApiDeploymentHistoryRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>99d3fe381173c9aa214e37b0cc235943</Hash>
+    <Hash>4cfd81ad0e2996c9ee56fd0823fbfbc8</Hash>
 </Codenesium>*/

@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public interface IClaspRepository
-        {
-                Task<Clasp> Create(Clasp item);
+	public interface IClaspRepository
+	{
+		Task<Clasp> Create(Clasp item);
 
-                Task Update(Clasp item);
+		Task Update(Clasp item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Clasp> Get(int id);
+		Task<Clasp> Get(int id);
 
-                Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Chain> GetChain(int nextChainId);
-        }
+		Task<Chain> GetChain(int nextChainId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8215a83aecc245308ecc6fe609f08168</Hash>
+    <Hash>53942c5ca6253dc864842a6f8573c834</Hash>
 </Codenesium>*/

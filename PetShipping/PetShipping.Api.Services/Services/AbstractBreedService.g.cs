@@ -12,119 +12,119 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractBreedService : AbstractService
-        {
-                private IBreedRepository breedRepository;
+	public abstract class AbstractBreedService : AbstractService
+	{
+		private IBreedRepository breedRepository;
 
-                private IApiBreedRequestModelValidator breedModelValidator;
+		private IApiBreedRequestModelValidator breedModelValidator;
 
-                private IBOLBreedMapper bolBreedMapper;
+		private IBOLBreedMapper bolBreedMapper;
 
-                private IDALBreedMapper dalBreedMapper;
+		private IDALBreedMapper dalBreedMapper;
 
-                private IBOLPetMapper bolPetMapper;
+		private IBOLPetMapper bolPetMapper;
 
-                private IDALPetMapper dalPetMapper;
+		private IDALPetMapper dalPetMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractBreedService(
-                        ILogger logger,
-                        IBreedRepository breedRepository,
-                        IApiBreedRequestModelValidator breedModelValidator,
-                        IBOLBreedMapper bolBreedMapper,
-                        IDALBreedMapper dalBreedMapper,
-                        IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper)
-                        : base()
-                {
-                        this.breedRepository = breedRepository;
-                        this.breedModelValidator = breedModelValidator;
-                        this.bolBreedMapper = bolBreedMapper;
-                        this.dalBreedMapper = dalBreedMapper;
-                        this.bolPetMapper = bolPetMapper;
-                        this.dalPetMapper = dalPetMapper;
-                        this.logger = logger;
-                }
+		public AbstractBreedService(
+			ILogger logger,
+			IBreedRepository breedRepository,
+			IApiBreedRequestModelValidator breedModelValidator,
+			IBOLBreedMapper bolBreedMapper,
+			IDALBreedMapper dalBreedMapper,
+			IBOLPetMapper bolPetMapper,
+			IDALPetMapper dalPetMapper)
+			: base()
+		{
+			this.breedRepository = breedRepository;
+			this.breedModelValidator = breedModelValidator;
+			this.bolBreedMapper = bolBreedMapper;
+			this.dalBreedMapper = dalBreedMapper;
+			this.bolPetMapper = bolPetMapper;
+			this.dalPetMapper = dalPetMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiBreedResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.breedRepository.All(limit, offset);
+		public virtual async Task<List<ApiBreedResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.breedRepository.All(limit, offset);
 
-                        return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
-                }
+			return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiBreedResponseModel> Get(int id)
-                {
-                        var record = await this.breedRepository.Get(id);
+		public virtual async Task<ApiBreedResponseModel> Get(int id)
+		{
+			var record = await this.breedRepository.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiBreedResponseModel>> Create(
-                        ApiBreedRequestModel model)
-                {
-                        CreateResponse<ApiBreedResponseModel> response = new CreateResponse<ApiBreedResponseModel>(await this.breedModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolBreedMapper.MapModelToBO(default(int), model);
-                                var record = await this.breedRepository.Create(this.dalBreedMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiBreedResponseModel>> Create(
+			ApiBreedRequestModel model)
+		{
+			CreateResponse<ApiBreedResponseModel> response = new CreateResponse<ApiBreedResponseModel>(await this.breedModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolBreedMapper.MapModelToBO(default(int), model);
+				var record = await this.breedRepository.Create(this.dalBreedMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiBreedResponseModel>> Update(
-                        int id,
-                        ApiBreedRequestModel model)
-                {
-                        var validationResult = await this.breedModelValidator.ValidateUpdateAsync(id, model);
+		public virtual async Task<UpdateResponse<ApiBreedResponseModel>> Update(
+			int id,
+			ApiBreedRequestModel model)
+		{
+			var validationResult = await this.breedModelValidator.ValidateUpdateAsync(id, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolBreedMapper.MapModelToBO(id, model);
-                                await this.breedRepository.Update(this.dalBreedMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolBreedMapper.MapModelToBO(id, model);
+				await this.breedRepository.Update(this.dalBreedMapper.MapBOToEF(bo));
 
-                                var record = await this.breedRepository.Get(id);
+				var record = await this.breedRepository.Get(id);
 
-                                return new UpdateResponse<ApiBreedResponseModel>(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiBreedResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiBreedResponseModel>(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiBreedResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int id)
-                {
-                        ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateDeleteAsync(id));
-                        if (response.Success)
-                        {
-                                await this.breedRepository.Delete(id);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int id)
+		{
+			ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateDeleteAsync(id));
+			if (response.Success)
+			{
+				await this.breedRepository.Delete(id);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async virtual Task<List<ApiPetResponseModel>> Pets(int breedId, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<Pet> records = await this.breedRepository.Pets(breedId, limit, offset);
+		public async virtual Task<List<ApiPetResponseModel>> Pets(int breedId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Pet> records = await this.breedRepository.Pets(breedId, limit, offset);
 
-                        return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e20d24fa4fdfe523316ada2f0c0de9d9</Hash>
+    <Hash>326bd247234f31cbc2755925d61704cd</Hash>
 </Codenesium>*/

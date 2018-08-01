@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class SubscriptionRepository : AbstractSubscriptionRepository, ISubscriptionRepository
-        {
-                public SubscriptionRepository(
-                        ILogger<SubscriptionRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class SubscriptionRepository : AbstractSubscriptionRepository, ISubscriptionRepository
+	{
+		public SubscriptionRepository(
+			ILogger<SubscriptionRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>13f83c0f5af532f67980e35276c04d73</Hash>
+    <Hash>bb6dabba7b2c979e0092baabb89348d1</Hash>
 </Codenesium>*/

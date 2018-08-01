@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class CountryRequirementService : AbstractCountryRequirementService, ICountryRequirementService
-        {
-                public CountryRequirementService(
-                        ILogger<ICountryRequirementRepository> logger,
-                        ICountryRequirementRepository countryRequirementRepository,
-                        IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
-                        IBOLCountryRequirementMapper bolcountryRequirementMapper,
-                        IDALCountryRequirementMapper dalcountryRequirementMapper
-                        )
-                        : base(logger,
-                               countryRequirementRepository,
-                               countryRequirementModelValidator,
-                               bolcountryRequirementMapper,
-                               dalcountryRequirementMapper)
-                {
-                }
-        }
+	public partial class CountryRequirementService : AbstractCountryRequirementService, ICountryRequirementService
+	{
+		public CountryRequirementService(
+			ILogger<ICountryRequirementRepository> logger,
+			ICountryRequirementRepository countryRequirementRepository,
+			IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
+			IBOLCountryRequirementMapper bolcountryRequirementMapper,
+			IDALCountryRequirementMapper dalcountryRequirementMapper
+			)
+			: base(logger,
+			       countryRequirementRepository,
+			       countryRequirementModelValidator,
+			       bolcountryRequirementMapper,
+			       dalcountryRequirementMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d5d5dcd6d127d1f494630775e8a7a8f4</Hash>
+    <Hash>fbaef0ebb2b015f70f175afccfe6e0b5</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class BillOfMaterialRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class BillOfMaterialRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<BillOfMaterialRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<BillOfMaterialRepository>>();
-                }
-        }
+		public static Mock<ILogger<BillOfMaterialRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<BillOfMaterialRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "BillOfMaterial")]
-        [Trait("Area", "Repositories")]
-        public partial class BillOfMaterialRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "BillOfMaterial")]
+	[Trait("Area", "Repositories")]
+	public partial class BillOfMaterialRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 
-                        BillOfMaterial entity = new BillOfMaterial();
-                        context.Set<BillOfMaterial>().Add(entity);
-                        await context.SaveChangesAsync();
+			BillOfMaterial entity = new BillOfMaterial();
+			context.Set<BillOfMaterial>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 
-                        BillOfMaterial entity = new BillOfMaterial();
-                        context.Set<BillOfMaterial>().Add(entity);
-                        await context.SaveChangesAsync();
+			BillOfMaterial entity = new BillOfMaterial();
+			context.Set<BillOfMaterial>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BillOfMaterialsID);
+			var record = await repository.Get(entity.BillOfMaterialsID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 
-                        var entity = new BillOfMaterial();
-                        await repository.Create(entity);
+			var entity = new BillOfMaterial();
+			await repository.Create(entity);
 
-                        var record = await context.Set<BillOfMaterial>().FirstOrDefaultAsync();
+			var record = await context.Set<BillOfMaterial>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
-                        BillOfMaterial entity = new BillOfMaterial();
-                        context.Set<BillOfMaterial>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+			BillOfMaterial entity = new BillOfMaterial();
+			context.Set<BillOfMaterial>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BillOfMaterialsID);
+			var record = await repository.Get(entity.BillOfMaterialsID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<BillOfMaterial>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<BillOfMaterial>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
-                        BillOfMaterial entity = new BillOfMaterial();
-                        context.Set<BillOfMaterial>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+			BillOfMaterial entity = new BillOfMaterial();
+			context.Set<BillOfMaterial>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new BillOfMaterial());
+			await repository.Update(new BillOfMaterial());
 
-                        var modifiedRecord = context.Set<BillOfMaterial>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<BillOfMaterial>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
-                        var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
-                        BillOfMaterial entity = new BillOfMaterial();
-                        context.Set<BillOfMaterial>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<BillOfMaterialRepository>> loggerMoc = BillOfMaterialRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
+			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
+			BillOfMaterial entity = new BillOfMaterial();
+			context.Set<BillOfMaterial>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.BillOfMaterialsID);
+			await repository.Delete(entity.BillOfMaterialsID);
 
-                        BillOfMaterial modifiedRecord = await context.Set<BillOfMaterial>().FirstOrDefaultAsync();
+			BillOfMaterial modifiedRecord = await context.Set<BillOfMaterial>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>14c2b312df7ce9731e161ae91aae1713</Hash>
+    <Hash>43c1624e4144012b984c0783c073b9d5</Hash>
 </Codenesium>*/

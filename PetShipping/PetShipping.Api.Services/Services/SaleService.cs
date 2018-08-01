@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class SaleService : AbstractSaleService, ISaleService
-        {
-                public SaleService(
-                        ILogger<ISaleRepository> logger,
-                        ISaleRepository saleRepository,
-                        IApiSaleRequestModelValidator saleModelValidator,
-                        IBOLSaleMapper bolsaleMapper,
-                        IDALSaleMapper dalsaleMapper
-                        )
-                        : base(logger,
-                               saleRepository,
-                               saleModelValidator,
-                               bolsaleMapper,
-                               dalsaleMapper)
-                {
-                }
-        }
+	public partial class SaleService : AbstractSaleService, ISaleService
+	{
+		public SaleService(
+			ILogger<ISaleRepository> logger,
+			ISaleRepository saleRepository,
+			IApiSaleRequestModelValidator saleModelValidator,
+			IBOLSaleMapper bolsaleMapper,
+			IDALSaleMapper dalsaleMapper
+			)
+			: base(logger,
+			       saleRepository,
+			       saleModelValidator,
+			       bolsaleMapper,
+			       dalsaleMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3edb498a2c4395085db975c77cc6a749</Hash>
+    <Hash>bc96e2edfaf3dcc8649910227f33e5b4</Hash>
 </Codenesium>*/

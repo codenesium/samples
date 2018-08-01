@@ -7,53 +7,52 @@ using Xunit;
 
 namespace NebulaNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Clasp")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiClaspModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiClaspModelMapper();
-                        var model = new ApiClaspRequestModel();
-                        model.SetProperties(1, 1);
-                        ApiClaspResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Clasp")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiClaspModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiClaspModelMapper();
+			var model = new ApiClaspRequestModel();
+			model.SetProperties(1, 1);
+			ApiClaspResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.NextChainId.Should().Be(1);
-                        response.PreviousChainId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.NextChainId.Should().Be(1);
+			response.PreviousChainId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiClaspModelMapper();
-                        var model = new ApiClaspResponseModel();
-                        model.SetProperties(1, 1, 1);
-                        ApiClaspRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiClaspModelMapper();
+			var model = new ApiClaspResponseModel();
+			model.SetProperties(1, 1, 1);
+			ApiClaspRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.NextChainId.Should().Be(1);
-                        response.PreviousChainId.Should().Be(1);
-                }
+			response.NextChainId.Should().Be(1);
+			response.PreviousChainId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiClaspModelMapper();
-                        var model = new ApiClaspRequestModel();
-                        model.SetProperties(1, 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiClaspModelMapper();
+			var model = new ApiClaspRequestModel();
+			model.SetProperties(1, 1);
 
-                        JsonPatchDocument<ApiClaspRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiClaspRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.NextChainId.Should().Be(1);
-                        response.PreviousChainId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiClaspRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiClaspRequestModel();
+			patch.ApplyTo(response);
+			response.NextChainId.Should().Be(1);
+			response.PreviousChainId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3bf6554af9aa6ee1e5e3aa52c3ef37d0</Hash>
+    <Hash>976bfa01c9f4bd0a65c5782f63081f35</Hash>
 </Codenesium>*/

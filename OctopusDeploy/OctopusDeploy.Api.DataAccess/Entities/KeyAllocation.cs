@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        [Table("KeyAllocation", Schema="dbo")]
-        public partial class KeyAllocation : AbstractEntity
-        {
-                public KeyAllocation()
-                {
-                }
+	[Table("KeyAllocation", Schema="dbo")]
+	public partial class KeyAllocation : AbstractEntity
+	{
+		public KeyAllocation()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int allocated,
-                        string collectionName)
-                {
-                        this.Allocated = allocated;
-                        this.CollectionName = collectionName;
-                }
+		public virtual void SetProperties(
+			int allocated,
+			string collectionName)
+		{
+			this.Allocated = allocated;
+			this.CollectionName = collectionName;
+		}
 
-                [Column("Allocated")]
-                public int Allocated { get; private set; }
+		[Column("Allocated")]
+		public int Allocated { get; private set; }
 
-                [Key]
-                [Column("CollectionName")]
-                public string CollectionName { get; private set; }
-        }
+		[Key]
+		[Column("CollectionName")]
+		public string CollectionName { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>09783462aeee01496b6df07a4ac01537</Hash>
+    <Hash>9bf77a09d7fbb48fc5902e333aedd080</Hash>
 </Codenesium>*/

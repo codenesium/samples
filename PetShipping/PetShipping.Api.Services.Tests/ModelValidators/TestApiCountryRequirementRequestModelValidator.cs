@@ -15,67 +15,67 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "CountryRequirement")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCountryRequirementRequestModelValidatorTest
-        {
-                public ApiCountryRequirementRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "CountryRequirement")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCountryRequirementRequestModelValidatorTest
+	{
+		public ApiCountryRequirementRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CountryId_Create_Valid_Reference()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+		[Fact]
+		public async void CountryId_Create_Valid_Reference()
+		{
+			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
+			countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRequirementRequestModel());
+			var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCountryRequirementRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Create_Invalid_Reference()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+		[Fact]
+		public async void CountryId_Create_Invalid_Reference()
+		{
+			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
+			countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
+			var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCountryRequirementRequestModel());
+			await validator.ValidateCreateAsync(new ApiCountryRequirementRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Update_Valid_Reference()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+		[Fact]
+		public async void CountryId_Update_Valid_Reference()
+		{
+			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
+			countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementRequestModel());
+			var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Update_Invalid_Reference()
-                {
-                        Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
-                        countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+		[Fact]
+		public async void CountryId_Update_Invalid_Reference()
+		{
+			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
+			countryRequirementRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
-                        var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
+			var validator = new ApiCountryRequirementRequestModelValidator(countryRequirementRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2181e8d3edd54d6ec57695aef9a68ee8</Hash>
+    <Hash>d7a2fa7ba93daaf79d24db78e291d3e7</Hash>
 </Codenesium>*/

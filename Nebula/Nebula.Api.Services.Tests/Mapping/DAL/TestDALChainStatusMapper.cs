@@ -7,51 +7,51 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ChainStatus")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALChainStatusMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALChainStatusMapper();
-                        var bo = new BOChainStatus();
-                        bo.SetProperties(1, "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ChainStatus")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALChainStatusMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALChainStatusMapper();
+			var bo = new BOChainStatus();
+			bo.SetProperties(1, "A");
 
-                        ChainStatus response = mapper.MapBOToEF(bo);
+			ChainStatus response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALChainStatusMapper();
-                        ChainStatus entity = new ChainStatus();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALChainStatusMapper();
+			ChainStatus entity = new ChainStatus();
+			entity.SetProperties(1, "A");
 
-                        BOChainStatus response = mapper.MapEFToBO(entity);
+			BOChainStatus response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALChainStatusMapper();
-                        ChainStatus entity = new ChainStatus();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALChainStatusMapper();
+			ChainStatus entity = new ChainStatus();
+			entity.SetProperties(1, "A");
 
-                        List<BOChainStatus> response = mapper.MapEFToBO(new List<ChainStatus>() { entity });
+			List<BOChainStatus> response = mapper.MapEFToBO(new List<ChainStatus>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b10a38fa34e7cd167e569e66b1fbe601</Hash>
+    <Hash>2610e2665318e8d243e1a445dea8a315</Hash>
 </Codenesium>*/

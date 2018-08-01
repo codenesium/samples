@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractLibraryVariableSetMapper
-        {
-                public virtual BOLibraryVariableSet MapModelToBO(
-                        string id,
-                        ApiLibraryVariableSetRequestModel model
-                        )
-                {
-                        BOLibraryVariableSet boLibraryVariableSet = new BOLibraryVariableSet();
-                        boLibraryVariableSet.SetProperties(
-                                id,
-                                model.ContentType,
-                                model.JSON,
-                                model.Name,
-                                model.VariableSetId);
-                        return boLibraryVariableSet;
-                }
+	public abstract class BOLAbstractLibraryVariableSetMapper
+	{
+		public virtual BOLibraryVariableSet MapModelToBO(
+			string id,
+			ApiLibraryVariableSetRequestModel model
+			)
+		{
+			BOLibraryVariableSet boLibraryVariableSet = new BOLibraryVariableSet();
+			boLibraryVariableSet.SetProperties(
+				id,
+				model.ContentType,
+				model.JSON,
+				model.Name,
+				model.VariableSetId);
+			return boLibraryVariableSet;
+		}
 
-                public virtual ApiLibraryVariableSetResponseModel MapBOToModel(
-                        BOLibraryVariableSet boLibraryVariableSet)
-                {
-                        var model = new ApiLibraryVariableSetResponseModel();
+		public virtual ApiLibraryVariableSetResponseModel MapBOToModel(
+			BOLibraryVariableSet boLibraryVariableSet)
+		{
+			var model = new ApiLibraryVariableSetResponseModel();
 
-                        model.SetProperties(boLibraryVariableSet.Id, boLibraryVariableSet.ContentType, boLibraryVariableSet.JSON, boLibraryVariableSet.Name, boLibraryVariableSet.VariableSetId);
+			model.SetProperties(boLibraryVariableSet.Id, boLibraryVariableSet.ContentType, boLibraryVariableSet.JSON, boLibraryVariableSet.Name, boLibraryVariableSet.VariableSetId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiLibraryVariableSetResponseModel> MapBOToModel(
-                        List<BOLibraryVariableSet> items)
-                {
-                        List<ApiLibraryVariableSetResponseModel> response = new List<ApiLibraryVariableSetResponseModel>();
+		public virtual List<ApiLibraryVariableSetResponseModel> MapBOToModel(
+			List<BOLibraryVariableSet> items)
+		{
+			List<ApiLibraryVariableSetResponseModel> response = new List<ApiLibraryVariableSetResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8102ace20d918f22c288f5cdbb46ebc6</Hash>
+    <Hash>cade9800efe1edbed7003581d6557490</Hash>
 </Codenesium>*/

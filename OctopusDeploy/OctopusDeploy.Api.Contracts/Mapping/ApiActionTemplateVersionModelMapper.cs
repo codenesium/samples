@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiActionTemplateVersionModelMapper : AbstractApiActionTemplateVersionModelMapper, IApiActionTemplateVersionModelMapper
-        {
-                public ApiActionTemplateVersionModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiActionTemplateVersionModelMapper : AbstractApiActionTemplateVersionModelMapper, IApiActionTemplateVersionModelMapper
+	{
+		public ApiActionTemplateVersionModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>818bb4305e5d62c732d100e9e1f46dd0</Hash>
+    <Hash>73d8c50c2a38ff2898b44aba01725bd1</Hash>
 </Codenesium>*/

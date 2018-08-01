@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/userRoles")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class UserRoleController : AbstractUserRoleController
-        {
-                public UserRoleController(
-                        ApiSettings settings,
-                        ILogger<UserRoleController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IUserRoleService userRoleService,
-                        IApiUserRoleModelMapper userRoleModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               userRoleService,
-                               userRoleModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/userRoles")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class UserRoleController : AbstractUserRoleController
+	{
+		public UserRoleController(
+			ApiSettings settings,
+			ILogger<UserRoleController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IUserRoleService userRoleService,
+			IApiUserRoleModelMapper userRoleModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       userRoleService,
+			       userRoleModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e3f46e932d4742acaaea6b5a4d937989</Hash>
+    <Hash>aee2917bf785ab4dc82bd167479f8543</Hash>
 </Codenesium>*/

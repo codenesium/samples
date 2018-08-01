@@ -4,14 +4,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class DALTableMapper : DALAbstractTableMapper, IDALTableMapper
-        {
-                public DALTableMapper()
-                {
-                }
-        }
+	public partial class DALTableMapper : DALAbstractTableMapper, IDALTableMapper
+	{
+		public DALTableMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aa31ff898c4292f8967d6917018ccc5c</Hash>
+    <Hash>68bf06c75371babaca7f3c215f99468d</Hash>
 </Codenesium>*/

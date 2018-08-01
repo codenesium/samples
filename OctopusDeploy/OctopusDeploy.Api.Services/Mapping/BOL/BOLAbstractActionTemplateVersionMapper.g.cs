@@ -5,49 +5,49 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractActionTemplateVersionMapper
-        {
-                public virtual BOActionTemplateVersion MapModelToBO(
-                        string id,
-                        ApiActionTemplateVersionRequestModel model
-                        )
-                {
-                        BOActionTemplateVersion boActionTemplateVersion = new BOActionTemplateVersion();
-                        boActionTemplateVersion.SetProperties(
-                                id,
-                                model.ActionType,
-                                model.JSON,
-                                model.LatestActionTemplateId,
-                                model.Name,
-                                model.Version);
-                        return boActionTemplateVersion;
-                }
+	public abstract class BOLAbstractActionTemplateVersionMapper
+	{
+		public virtual BOActionTemplateVersion MapModelToBO(
+			string id,
+			ApiActionTemplateVersionRequestModel model
+			)
+		{
+			BOActionTemplateVersion boActionTemplateVersion = new BOActionTemplateVersion();
+			boActionTemplateVersion.SetProperties(
+				id,
+				model.ActionType,
+				model.JSON,
+				model.LatestActionTemplateId,
+				model.Name,
+				model.Version);
+			return boActionTemplateVersion;
+		}
 
-                public virtual ApiActionTemplateVersionResponseModel MapBOToModel(
-                        BOActionTemplateVersion boActionTemplateVersion)
-                {
-                        var model = new ApiActionTemplateVersionResponseModel();
+		public virtual ApiActionTemplateVersionResponseModel MapBOToModel(
+			BOActionTemplateVersion boActionTemplateVersion)
+		{
+			var model = new ApiActionTemplateVersionResponseModel();
 
-                        model.SetProperties(boActionTemplateVersion.Id, boActionTemplateVersion.ActionType, boActionTemplateVersion.JSON, boActionTemplateVersion.LatestActionTemplateId, boActionTemplateVersion.Name, boActionTemplateVersion.Version);
+			model.SetProperties(boActionTemplateVersion.Id, boActionTemplateVersion.ActionType, boActionTemplateVersion.JSON, boActionTemplateVersion.LatestActionTemplateId, boActionTemplateVersion.Name, boActionTemplateVersion.Version);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiActionTemplateVersionResponseModel> MapBOToModel(
-                        List<BOActionTemplateVersion> items)
-                {
-                        List<ApiActionTemplateVersionResponseModel> response = new List<ApiActionTemplateVersionResponseModel>();
+		public virtual List<ApiActionTemplateVersionResponseModel> MapBOToModel(
+			List<BOActionTemplateVersion> items)
+		{
+			List<ApiActionTemplateVersionResponseModel> response = new List<ApiActionTemplateVersionResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0d696bd3e0a24b5f21839d2e18512d72</Hash>
+    <Hash>8c7f7b8d2079dfe9083bd09b9aba6c9a</Hash>
 </Codenesium>*/

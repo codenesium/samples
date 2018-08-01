@@ -15,117 +15,117 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ClientCommunication")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiClientCommunicationRequestModelValidatorTest
-        {
-                public ApiClientCommunicationRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ClientCommunication")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiClientCommunicationRequestModelValidatorTest
+	{
+		public ApiClientCommunicationRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ClientId_Create_Valid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+		[Fact]
+		public async void ClientId_Create_Valid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
+		}
 
-                [Fact]
-                public async void ClientId_Create_Invalid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+		[Fact]
+		public async void ClientId_Create_Invalid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
+			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
+		}
 
-                [Fact]
-                public async void ClientId_Update_Valid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+		[Fact]
+		public async void ClientId_Update_Valid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
+		}
 
-                [Fact]
-                public async void ClientId_Update_Invalid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+		[Fact]
+		public async void ClientId_Update_Invalid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
+		}
 
-                [Fact]
-                public async void EmployeeId_Create_Valid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+		[Fact]
+		public async void EmployeeId_Create_Valid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
+		}
 
-                [Fact]
-                public async void EmployeeId_Create_Invalid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+		[Fact]
+		public async void EmployeeId_Create_Invalid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
+			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
+		}
 
-                [Fact]
-                public async void EmployeeId_Update_Valid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+		[Fact]
+		public async void EmployeeId_Update_Valid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
+		}
 
-                [Fact]
-                public async void EmployeeId_Update_Invalid_Reference()
-                {
-                        Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-                        clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+		[Fact]
+		public async void EmployeeId_Update_Invalid_Reference()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
-                        var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4b4b0fdaafb1bd34189aa0f78e5afa36</Hash>
+    <Hash>f512e9c79545de85a87135f78539532b</Hash>
 </Codenesium>*/

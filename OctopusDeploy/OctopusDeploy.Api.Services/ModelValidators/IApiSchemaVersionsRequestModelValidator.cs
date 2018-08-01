@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IApiSchemaVersionsRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiSchemaVersionsRequestModel model);
+	public interface IApiSchemaVersionsRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSchemaVersionsRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiSchemaVersionsRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSchemaVersionsRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7cf67ed8ce7ba6c0b9b5bd1c2208acce</Hash>
+    <Hash>afe2d7b3e6c459e5da6a180bd4a8afa2</Hash>
 </Codenesium>*/

@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class BOLAbstractOrganizationMapper
-        {
-                public virtual BOOrganization MapModelToBO(
-                        int id,
-                        ApiOrganizationRequestModel model
-                        )
-                {
-                        BOOrganization boOrganization = new BOOrganization();
-                        boOrganization.SetProperties(
-                                id,
-                                model.Name);
-                        return boOrganization;
-                }
+	public abstract class BOLAbstractOrganizationMapper
+	{
+		public virtual BOOrganization MapModelToBO(
+			int id,
+			ApiOrganizationRequestModel model
+			)
+		{
+			BOOrganization boOrganization = new BOOrganization();
+			boOrganization.SetProperties(
+				id,
+				model.Name);
+			return boOrganization;
+		}
 
-                public virtual ApiOrganizationResponseModel MapBOToModel(
-                        BOOrganization boOrganization)
-                {
-                        var model = new ApiOrganizationResponseModel();
+		public virtual ApiOrganizationResponseModel MapBOToModel(
+			BOOrganization boOrganization)
+		{
+			var model = new ApiOrganizationResponseModel();
 
-                        model.SetProperties(boOrganization.Id, boOrganization.Name);
+			model.SetProperties(boOrganization.Id, boOrganization.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiOrganizationResponseModel> MapBOToModel(
-                        List<BOOrganization> items)
-                {
-                        List<ApiOrganizationResponseModel> response = new List<ApiOrganizationResponseModel>();
+		public virtual List<ApiOrganizationResponseModel> MapBOToModel(
+			List<BOOrganization> items)
+		{
+			List<ApiOrganizationResponseModel> response = new List<ApiOrganizationResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e576169153c34604acd78e51fbf36415</Hash>
+    <Hash>7f8d7491c5d214dc26b48ec4d2328c81</Hash>
 </Codenesium>*/

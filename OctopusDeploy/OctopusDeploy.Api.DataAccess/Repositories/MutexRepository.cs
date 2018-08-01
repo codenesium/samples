@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class MutexRepository : AbstractMutexRepository, IMutexRepository
-        {
-                public MutexRepository(
-                        ILogger<MutexRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class MutexRepository : AbstractMutexRepository, IMutexRepository
+	{
+		public MutexRepository(
+			ILogger<MutexRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed4253b8e992744dead8abbfdcb6e1be</Hash>
+    <Hash>dc5cb1f1ce3ef8f1ba2694c801313fc5</Hash>
 </Codenesium>*/

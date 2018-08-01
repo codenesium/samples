@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiCertificateModelMapper : AbstractApiCertificateModelMapper, IApiCertificateModelMapper
-        {
-                public ApiCertificateModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiCertificateModelMapper : AbstractApiCertificateModelMapper, IApiCertificateModelMapper
+	{
+		public ApiCertificateModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5d56a4ae3aea49fed80c6387230bd9d8</Hash>
+    <Hash>6bea2402e9045540d76440f3c3e290bb</Hash>
 </Codenesium>*/

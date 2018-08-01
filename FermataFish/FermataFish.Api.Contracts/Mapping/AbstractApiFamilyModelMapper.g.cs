@@ -5,51 +5,51 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public abstract class AbstractApiFamilyModelMapper
-        {
-                public virtual ApiFamilyResponseModel MapRequestToResponse(
-                        int id,
-                        ApiFamilyRequestModel request)
-                {
-                        var response = new ApiFamilyResponseModel();
-                        response.SetProperties(id,
-                                               request.Notes,
-                                               request.PcEmail,
-                                               request.PcFirstName,
-                                               request.PcLastName,
-                                               request.PcPhone,
-                                               request.StudioId);
-                        return response;
-                }
+	public abstract class AbstractApiFamilyModelMapper
+	{
+		public virtual ApiFamilyResponseModel MapRequestToResponse(
+			int id,
+			ApiFamilyRequestModel request)
+		{
+			var response = new ApiFamilyResponseModel();
+			response.SetProperties(id,
+			                       request.Notes,
+			                       request.PcEmail,
+			                       request.PcFirstName,
+			                       request.PcLastName,
+			                       request.PcPhone,
+			                       request.StudioId);
+			return response;
+		}
 
-                public virtual ApiFamilyRequestModel MapResponseToRequest(
-                        ApiFamilyResponseModel response)
-                {
-                        var request = new ApiFamilyRequestModel();
-                        request.SetProperties(
-                                response.Notes,
-                                response.PcEmail,
-                                response.PcFirstName,
-                                response.PcLastName,
-                                response.PcPhone,
-                                response.StudioId);
-                        return request;
-                }
+		public virtual ApiFamilyRequestModel MapResponseToRequest(
+			ApiFamilyResponseModel response)
+		{
+			var request = new ApiFamilyRequestModel();
+			request.SetProperties(
+				response.Notes,
+				response.PcEmail,
+				response.PcFirstName,
+				response.PcLastName,
+				response.PcPhone,
+				response.StudioId);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiFamilyRequestModel> CreatePatch(ApiFamilyRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
-                        patch.Replace(x => x.Notes, model.Notes);
-                        patch.Replace(x => x.PcEmail, model.PcEmail);
-                        patch.Replace(x => x.PcFirstName, model.PcFirstName);
-                        patch.Replace(x => x.PcLastName, model.PcLastName);
-                        patch.Replace(x => x.PcPhone, model.PcPhone);
-                        patch.Replace(x => x.StudioId, model.StudioId);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiFamilyRequestModel> CreatePatch(ApiFamilyRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
+			patch.Replace(x => x.Notes, model.Notes);
+			patch.Replace(x => x.PcEmail, model.PcEmail);
+			patch.Replace(x => x.PcFirstName, model.PcFirstName);
+			patch.Replace(x => x.PcLastName, model.PcLastName);
+			patch.Replace(x => x.PcPhone, model.PcPhone);
+			patch.Replace(x => x.StudioId, model.StudioId);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a639963d564c1a81b83f0ae7716d656e</Hash>
+    <Hash>7e68a4575f17d0a70050f3644c5a3459</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ProductModelIllustrationService : AbstractProductModelIllustrationService, IProductModelIllustrationService
-        {
-                public ProductModelIllustrationService(
-                        ILogger<IProductModelIllustrationRepository> logger,
-                        IProductModelIllustrationRepository productModelIllustrationRepository,
-                        IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator,
-                        IBOLProductModelIllustrationMapper bolproductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalproductModelIllustrationMapper
-                        )
-                        : base(logger,
-                               productModelIllustrationRepository,
-                               productModelIllustrationModelValidator,
-                               bolproductModelIllustrationMapper,
-                               dalproductModelIllustrationMapper)
-                {
-                }
-        }
+	public partial class ProductModelIllustrationService : AbstractProductModelIllustrationService, IProductModelIllustrationService
+	{
+		public ProductModelIllustrationService(
+			ILogger<IProductModelIllustrationRepository> logger,
+			IProductModelIllustrationRepository productModelIllustrationRepository,
+			IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator,
+			IBOLProductModelIllustrationMapper bolproductModelIllustrationMapper,
+			IDALProductModelIllustrationMapper dalproductModelIllustrationMapper
+			)
+			: base(logger,
+			       productModelIllustrationRepository,
+			       productModelIllustrationModelValidator,
+			       bolproductModelIllustrationMapper,
+			       dalproductModelIllustrationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>da370eaaceb158a13792f2787f1c998e</Hash>
+    <Hash>ba6da638d941a7759df027ff98810505</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class PostHistoryTypesService : AbstractPostHistoryTypesService, IPostHistoryTypesService
-        {
-                public PostHistoryTypesService(
-                        ILogger<IPostHistoryTypesRepository> logger,
-                        IPostHistoryTypesRepository postHistoryTypesRepository,
-                        IApiPostHistoryTypesRequestModelValidator postHistoryTypesModelValidator,
-                        IBOLPostHistoryTypesMapper bolpostHistoryTypesMapper,
-                        IDALPostHistoryTypesMapper dalpostHistoryTypesMapper
-                        )
-                        : base(logger,
-                               postHistoryTypesRepository,
-                               postHistoryTypesModelValidator,
-                               bolpostHistoryTypesMapper,
-                               dalpostHistoryTypesMapper)
-                {
-                }
-        }
+	public partial class PostHistoryTypesService : AbstractPostHistoryTypesService, IPostHistoryTypesService
+	{
+		public PostHistoryTypesService(
+			ILogger<IPostHistoryTypesRepository> logger,
+			IPostHistoryTypesRepository postHistoryTypesRepository,
+			IApiPostHistoryTypesRequestModelValidator postHistoryTypesModelValidator,
+			IBOLPostHistoryTypesMapper bolpostHistoryTypesMapper,
+			IDALPostHistoryTypesMapper dalpostHistoryTypesMapper
+			)
+			: base(logger,
+			       postHistoryTypesRepository,
+			       postHistoryTypesModelValidator,
+			       bolpostHistoryTypesMapper,
+			       dalpostHistoryTypesMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f9345c5615c602e074cd9691da64d1ae</Hash>
+    <Hash>281ec47bdf7adf6d658871845a7bd3ab</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiTagSetModelMapper
-        {
-                ApiTagSetResponseModel MapRequestToResponse(
-                        string id,
-                        ApiTagSetRequestModel request);
+	public interface IApiTagSetModelMapper
+	{
+		ApiTagSetResponseModel MapRequestToResponse(
+			string id,
+			ApiTagSetRequestModel request);
 
-                ApiTagSetRequestModel MapResponseToRequest(
-                        ApiTagSetResponseModel response);
+		ApiTagSetRequestModel MapResponseToRequest(
+			ApiTagSetResponseModel response);
 
-                JsonPatchDocument<ApiTagSetRequestModel> CreatePatch(ApiTagSetRequestModel model);
-        }
+		JsonPatchDocument<ApiTagSetRequestModel> CreatePatch(ApiTagSetRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>cf568c1af64684449cdbbac16a336ed8</Hash>
+    <Hash>2b8c6812d49e449ddd9aaa0ffc8adbaa</Hash>
 </Codenesium>*/

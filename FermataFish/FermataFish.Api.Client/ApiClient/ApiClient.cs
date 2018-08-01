@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>660f77b657a386feb79f8880fa053f6e</Hash>
+    <Hash>bce2e195ebd9341f2134200d61c80362</Hash>
 </Codenesium>*/

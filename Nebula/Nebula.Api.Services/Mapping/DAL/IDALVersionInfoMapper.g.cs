@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IDALVersionInfoMapper
-        {
-                VersionInfo MapBOToEF(
-                        BOVersionInfo bo);
+	public interface IDALVersionInfoMapper
+	{
+		VersionInfo MapBOToEF(
+			BOVersionInfo bo);
 
-                BOVersionInfo MapEFToBO(
-                        VersionInfo efVersionInfo);
+		BOVersionInfo MapEFToBO(
+			VersionInfo efVersionInfo);
 
-                List<BOVersionInfo> MapEFToBO(
-                        List<VersionInfo> records);
-        }
+		List<BOVersionInfo> MapEFToBO(
+			List<VersionInfo> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3850aabd37eadce8f12defa92d99d64f</Hash>
+    <Hash>d9734abc893fe6d88dbfaa5dc3710a8c</Hash>
 </Codenesium>*/

@@ -5,15 +5,15 @@ using System.Text;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>fc2bc7fa4d05698964ab5ea61ad98f43</Hash>
+    <Hash>c12e7e53bf2a07b22ad7b1cb815d7991</Hash>
 </Codenesium>*/

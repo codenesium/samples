@@ -7,53 +7,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Invitation")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALInvitationMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALInvitationMapper();
-                        var bo = new BOInvitation();
-                        bo.SetProperties("A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Invitation")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALInvitationMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALInvitationMapper();
+			var bo = new BOInvitation();
+			bo.SetProperties("A", "A", "A");
 
-                        Invitation response = mapper.MapBOToEF(bo);
+			Invitation response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be("A");
-                        response.InvitationCode.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.InvitationCode.Should().Be("A");
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALInvitationMapper();
-                        Invitation entity = new Invitation();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALInvitationMapper();
+			Invitation entity = new Invitation();
+			entity.SetProperties("A", "A", "A");
 
-                        BOInvitation response = mapper.MapEFToBO(entity);
+			BOInvitation response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be("A");
-                        response.InvitationCode.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.InvitationCode.Should().Be("A");
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALInvitationMapper();
-                        Invitation entity = new Invitation();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALInvitationMapper();
+			Invitation entity = new Invitation();
+			entity.SetProperties("A", "A", "A");
 
-                        List<BOInvitation> response = mapper.MapEFToBO(new List<Invitation>() { entity });
+			List<BOInvitation> response = mapper.MapEFToBO(new List<Invitation>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>529a35d775a7611101e9c27f2b68ac38</Hash>
+    <Hash>f475385a597b36e112b8776778e4bb2c</Hash>
 </Codenesium>*/

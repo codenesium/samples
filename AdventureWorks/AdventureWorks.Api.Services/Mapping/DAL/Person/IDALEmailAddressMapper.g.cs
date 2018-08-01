@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALEmailAddressMapper
-        {
-                EmailAddress MapBOToEF(
-                        BOEmailAddress bo);
+	public interface IDALEmailAddressMapper
+	{
+		EmailAddress MapBOToEF(
+			BOEmailAddress bo);
 
-                BOEmailAddress MapEFToBO(
-                        EmailAddress efEmailAddress);
+		BOEmailAddress MapEFToBO(
+			EmailAddress efEmailAddress);
 
-                List<BOEmailAddress> MapEFToBO(
-                        List<EmailAddress> records);
-        }
+		List<BOEmailAddress> MapEFToBO(
+			List<EmailAddress> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>b3721d9f8648d7be47daa39110f3ee9f</Hash>
+    <Hash>2279a78af5b16251ca0ca4121cad30cb</Hash>
 </Codenesium>*/

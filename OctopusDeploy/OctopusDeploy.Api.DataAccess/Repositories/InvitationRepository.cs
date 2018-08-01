@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class InvitationRepository : AbstractInvitationRepository, IInvitationRepository
-        {
-                public InvitationRepository(
-                        ILogger<InvitationRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class InvitationRepository : AbstractInvitationRepository, IInvitationRepository
+	{
+		public InvitationRepository(
+			ILogger<InvitationRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>25d540e87a5999ec7d2a9415710f2034</Hash>
+    <Hash>78da35283733f122a5814e4fe7cd5725</Hash>
 </Codenesium>*/

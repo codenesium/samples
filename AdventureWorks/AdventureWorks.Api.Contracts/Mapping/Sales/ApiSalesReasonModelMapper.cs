@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesReasonModelMapper : AbstractApiSalesReasonModelMapper, IApiSalesReasonModelMapper
-        {
-                public ApiSalesReasonModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSalesReasonModelMapper : AbstractApiSalesReasonModelMapper, IApiSalesReasonModelMapper
+	{
+		public ApiSalesReasonModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3be851365d7b2d898f6799247af13281</Hash>
+    <Hash>5c5d4867c01ca85089755e7cf127448b</Hash>
 </Codenesium>*/

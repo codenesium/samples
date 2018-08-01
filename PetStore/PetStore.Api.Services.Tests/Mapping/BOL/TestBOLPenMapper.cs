@@ -8,47 +8,47 @@ using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pen")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPenMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPenMapper();
-                        ApiPenRequestModel model = new ApiPenRequestModel();
-                        model.SetProperties("A");
-                        BOPen response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pen")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPenMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPenMapper();
+			ApiPenRequestModel model = new ApiPenRequestModel();
+			model.SetProperties("A");
+			BOPen response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPenMapper();
-                        BOPen bo = new BOPen();
-                        bo.SetProperties(1, "A");
-                        ApiPenResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPenMapper();
+			BOPen bo = new BOPen();
+			bo.SetProperties(1, "A");
+			ApiPenResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPenMapper();
-                        BOPen bo = new BOPen();
-                        bo.SetProperties(1, "A");
-                        List<ApiPenResponseModel> response = mapper.MapBOToModel(new List<BOPen>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPenMapper();
+			BOPen bo = new BOPen();
+			bo.SetProperties(1, "A");
+			List<ApiPenResponseModel> response = mapper.MapBOToModel(new List<BOPen>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0ee0de980218f8a6a3eca1b411945166</Hash>
+    <Hash>4e0935f217cd25a20e5a7bd75f27fb3f</Hash>
 </Codenesium>*/

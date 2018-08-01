@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FileServiceNS.Api.Web
 {
-        [Route("api/versionInfoes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class VersionInfoController : AbstractVersionInfoController
-        {
-                public VersionInfoController(
-                        ApiSettings settings,
-                        ILogger<VersionInfoController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IVersionInfoService versionInfoService,
-                        IApiVersionInfoModelMapper versionInfoModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               versionInfoService,
-                               versionInfoModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/versionInfoes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class VersionInfoController : AbstractVersionInfoController
+	{
+		public VersionInfoController(
+			ApiSettings settings,
+			ILogger<VersionInfoController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IVersionInfoService versionInfoService,
+			IApiVersionInfoModelMapper versionInfoModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       versionInfoService,
+			       versionInfoModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8e424d640e3270376dab88512d4c96c2</Hash>
+    <Hash>0689fa48111bc75cd0b4d02baea31072</Hash>
 </Codenesium>*/

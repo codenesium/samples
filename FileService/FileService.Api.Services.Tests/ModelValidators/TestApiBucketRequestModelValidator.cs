@@ -15,89 +15,89 @@ using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Bucket")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiBucketRequestModelValidatorTest
-        {
-                public ApiBucketRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Bucket")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiBucketRequestModelValidatorTest
+	{
+		public ApiBucketRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBucketRequestModel());
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBucketRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
+		}
 
-                [Fact]
-                private async void BeUniqueByExternalId_Create_Exists()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Exists()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiBucketRequestModel());
+			await validator.ValidateCreateAsync(new ApiBucketRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                private async void BeUniqueByExternalId_Create_Not_Exists()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Not_Exists()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiBucketRequestModel());
+			await validator.ValidateCreateAsync(new ApiBucketRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                private async void BeUniqueByExternalId_Update_Exists()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Exists()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                private async void BeUniqueByExternalId_Update_Not_Exists()
-                {
-                        Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
-                        bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
-                        var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Not_Exists()
+		{
+			Mock<IBucketRepository> bucketRepository = new Mock<IBucketRepository>();
+			bucketRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
+			var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8d1fb05a937c4d04a2c231783cd9433d</Hash>
+    <Hash>9a94d5e0ea7c35c5234a2a2670f1a124</Hash>
 </Codenesium>*/

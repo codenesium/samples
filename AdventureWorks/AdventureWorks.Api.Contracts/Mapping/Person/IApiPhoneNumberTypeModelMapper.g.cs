@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiPhoneNumberTypeModelMapper
-        {
-                ApiPhoneNumberTypeResponseModel MapRequestToResponse(
-                        int phoneNumberTypeID,
-                        ApiPhoneNumberTypeRequestModel request);
+	public interface IApiPhoneNumberTypeModelMapper
+	{
+		ApiPhoneNumberTypeResponseModel MapRequestToResponse(
+			int phoneNumberTypeID,
+			ApiPhoneNumberTypeRequestModel request);
 
-                ApiPhoneNumberTypeRequestModel MapResponseToRequest(
-                        ApiPhoneNumberTypeResponseModel response);
+		ApiPhoneNumberTypeRequestModel MapResponseToRequest(
+			ApiPhoneNumberTypeResponseModel response);
 
-                JsonPatchDocument<ApiPhoneNumberTypeRequestModel> CreatePatch(ApiPhoneNumberTypeRequestModel model);
-        }
+		JsonPatchDocument<ApiPhoneNumberTypeRequestModel> CreatePatch(ApiPhoneNumberTypeRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7b44c546ee609c922df54378ca046b88</Hash>
+    <Hash>fab169cedb983559ceed9c0dc0dabf06</Hash>
 </Codenesium>*/

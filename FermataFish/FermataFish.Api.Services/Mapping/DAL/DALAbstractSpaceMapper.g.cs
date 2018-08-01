@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class DALAbstractSpaceMapper
-        {
-                public virtual Space MapBOToEF(
-                        BOSpace bo)
-                {
-                        Space efSpace = new Space();
-                        efSpace.SetProperties(
-                                bo.Description,
-                                bo.Id,
-                                bo.Name,
-                                bo.StudioId);
-                        return efSpace;
-                }
+	public abstract class DALAbstractSpaceMapper
+	{
+		public virtual Space MapBOToEF(
+			BOSpace bo)
+		{
+			Space efSpace = new Space();
+			efSpace.SetProperties(
+				bo.Description,
+				bo.Id,
+				bo.Name,
+				bo.StudioId);
+			return efSpace;
+		}
 
-                public virtual BOSpace MapEFToBO(
-                        Space ef)
-                {
-                        var bo = new BOSpace();
+		public virtual BOSpace MapEFToBO(
+			Space ef)
+		{
+			var bo = new BOSpace();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Description,
-                                ef.Name,
-                                ef.StudioId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Description,
+				ef.Name,
+				ef.StudioId);
+			return bo;
+		}
 
-                public virtual List<BOSpace> MapEFToBO(
-                        List<Space> records)
-                {
-                        List<BOSpace> response = new List<BOSpace>();
+		public virtual List<BOSpace> MapEFToBO(
+			List<Space> records)
+		{
+			List<BOSpace> response = new List<BOSpace>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>436b3c193bab3b21efe6d0e0e9cb7446</Hash>
+    <Hash>4394792a28e5afc2f30f90c62f412097</Hash>
 </Codenesium>*/

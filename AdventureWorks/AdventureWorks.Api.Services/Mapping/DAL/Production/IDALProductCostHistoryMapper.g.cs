@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALProductCostHistoryMapper
-        {
-                ProductCostHistory MapBOToEF(
-                        BOProductCostHistory bo);
+	public interface IDALProductCostHistoryMapper
+	{
+		ProductCostHistory MapBOToEF(
+			BOProductCostHistory bo);
 
-                BOProductCostHistory MapEFToBO(
-                        ProductCostHistory efProductCostHistory);
+		BOProductCostHistory MapEFToBO(
+			ProductCostHistory efProductCostHistory);
 
-                List<BOProductCostHistory> MapEFToBO(
-                        List<ProductCostHistory> records);
-        }
+		List<BOProductCostHistory> MapEFToBO(
+			List<ProductCostHistory> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>70ed2276d1ed8f9ea376f3cae6871a91</Hash>
+    <Hash>4a85d602f878503cbdb8784d6b442446</Hash>
 </Codenesium>*/

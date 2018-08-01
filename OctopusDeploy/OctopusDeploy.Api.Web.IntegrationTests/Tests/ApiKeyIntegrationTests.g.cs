@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ApiKey")]
-        [Trait("Area", "Integration")]
-        public class ApiKeyIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ApiKeyIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ApiKey")]
+	[Trait("Area", "Integration")]
+	public class ApiKeyIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ApiKeyIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiApiKeyModelMapper mapper = new ApiApiKeyModelMapper();
+			ApiApiKeyModelMapper mapper = new ApiApiKeyModelMapper();
 
-                        UpdateResponse<ApiApiKeyResponseModel> updateResponse = await this.Client.ApiKeyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiApiKeyResponseModel> updateResponse = await this.Client.ApiKeyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ApiKeyDeleteAsync(model.Id);
+			await this.Client.ApiKeyDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiApiKeyResponseModel response = await this.Client.ApiKeyGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiApiKeyResponseModel response = await this.Client.ApiKeyGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiApiKeyResponseModel> response = await this.Client.ApiKeyAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiApiKeyResponseModel> response = await this.Client.ApiKeyAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiApiKeyResponseModel> CreateRecord()
-                {
-                        var model = new ApiApiKeyRequestModel();
-                        model.SetProperties("B", DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), "B", "B");
-                        CreateResponse<ApiApiKeyResponseModel> result = await this.Client.ApiKeyCreateAsync(model);
+		private async Task<ApiApiKeyResponseModel> CreateRecord()
+		{
+			var model = new ApiApiKeyRequestModel();
+			model.SetProperties("B", DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			CreateResponse<ApiApiKeyResponseModel> result = await this.Client.ApiKeyCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ApiKeyDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ApiKeyDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1939d9c6a3ce745c0befe26268e66edd</Hash>
+    <Hash>7675c8ef80c79da1e74ee2af8e57ca23</Hash>
 </Codenesium>*/

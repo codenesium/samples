@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class FeedRepository : AbstractFeedRepository, IFeedRepository
-        {
-                public FeedRepository(
-                        ILogger<FeedRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class FeedRepository : AbstractFeedRepository, IFeedRepository
+	{
+		public FeedRepository(
+			ILogger<FeedRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e645a77ef1e02e2db69eb4ff30ab6518</Hash>
+    <Hash>770c062992e8697fb3c6e41641b0fac9</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-        public interface IApiRowVersionCheckModelMapper
-        {
-                ApiRowVersionCheckResponseModel MapRequestToResponse(
-                        int id,
-                        ApiRowVersionCheckRequestModel request);
+	public interface IApiRowVersionCheckModelMapper
+	{
+		ApiRowVersionCheckResponseModel MapRequestToResponse(
+			int id,
+			ApiRowVersionCheckRequestModel request);
 
-                ApiRowVersionCheckRequestModel MapResponseToRequest(
-                        ApiRowVersionCheckResponseModel response);
+		ApiRowVersionCheckRequestModel MapResponseToRequest(
+			ApiRowVersionCheckResponseModel response);
 
-                JsonPatchDocument<ApiRowVersionCheckRequestModel> CreatePatch(ApiRowVersionCheckRequestModel model);
-        }
+		JsonPatchDocument<ApiRowVersionCheckRequestModel> CreatePatch(ApiRowVersionCheckRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e075ef6454e5910948c2344644856867</Hash>
+    <Hash>301efc6df220a14b3d099100148347df</Hash>
 </Codenesium>*/

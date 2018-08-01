@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/passwords")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PasswordController : AbstractPasswordController
-        {
-                public PasswordController(
-                        ApiSettings settings,
-                        ILogger<PasswordController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPasswordService passwordService,
-                        IApiPasswordModelMapper passwordModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               passwordService,
-                               passwordModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/passwords")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PasswordController : AbstractPasswordController
+	{
+		public PasswordController(
+			ApiSettings settings,
+			ILogger<PasswordController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPasswordService passwordService,
+			IApiPasswordModelMapper passwordModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       passwordService,
+			       passwordModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>37e68d3c07cdd36007891586f7017d83</Hash>
+    <Hash>241f1dd57074c93a513fc784a98ce3cd</Hash>
 </Codenesium>*/

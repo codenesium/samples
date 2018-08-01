@@ -5,45 +5,45 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public abstract class AbstractApiClientCommunicationModelMapper
-        {
-                public virtual ApiClientCommunicationResponseModel MapRequestToResponse(
-                        int id,
-                        ApiClientCommunicationRequestModel request)
-                {
-                        var response = new ApiClientCommunicationResponseModel();
-                        response.SetProperties(id,
-                                               request.ClientId,
-                                               request.DateCreated,
-                                               request.EmployeeId,
-                                               request.Notes);
-                        return response;
-                }
+	public abstract class AbstractApiClientCommunicationModelMapper
+	{
+		public virtual ApiClientCommunicationResponseModel MapRequestToResponse(
+			int id,
+			ApiClientCommunicationRequestModel request)
+		{
+			var response = new ApiClientCommunicationResponseModel();
+			response.SetProperties(id,
+			                       request.ClientId,
+			                       request.DateCreated,
+			                       request.EmployeeId,
+			                       request.Notes);
+			return response;
+		}
 
-                public virtual ApiClientCommunicationRequestModel MapResponseToRequest(
-                        ApiClientCommunicationResponseModel response)
-                {
-                        var request = new ApiClientCommunicationRequestModel();
-                        request.SetProperties(
-                                response.ClientId,
-                                response.DateCreated,
-                                response.EmployeeId,
-                                response.Notes);
-                        return request;
-                }
+		public virtual ApiClientCommunicationRequestModel MapResponseToRequest(
+			ApiClientCommunicationResponseModel response)
+		{
+			var request = new ApiClientCommunicationRequestModel();
+			request.SetProperties(
+				response.ClientId,
+				response.DateCreated,
+				response.EmployeeId,
+				response.Notes);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiClientCommunicationRequestModel> CreatePatch(ApiClientCommunicationRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
-                        patch.Replace(x => x.ClientId, model.ClientId);
-                        patch.Replace(x => x.DateCreated, model.DateCreated);
-                        patch.Replace(x => x.EmployeeId, model.EmployeeId);
-                        patch.Replace(x => x.Notes, model.Notes);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiClientCommunicationRequestModel> CreatePatch(ApiClientCommunicationRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
+			patch.Replace(x => x.ClientId, model.ClientId);
+			patch.Replace(x => x.DateCreated, model.DateCreated);
+			patch.Replace(x => x.EmployeeId, model.EmployeeId);
+			patch.Replace(x => x.Notes, model.Notes);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8765a79d5b105e1217140cb46114de6f</Hash>
+    <Hash>325d87158723e1061880be726feac1aa</Hash>
 </Codenesium>*/

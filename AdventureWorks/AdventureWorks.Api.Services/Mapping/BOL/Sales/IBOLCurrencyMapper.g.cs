@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLCurrencyMapper
-        {
-                BOCurrency MapModelToBO(
-                        string currencyCode,
-                        ApiCurrencyRequestModel model);
+	public interface IBOLCurrencyMapper
+	{
+		BOCurrency MapModelToBO(
+			string currencyCode,
+			ApiCurrencyRequestModel model);
 
-                ApiCurrencyResponseModel MapBOToModel(
-                        BOCurrency boCurrency);
+		ApiCurrencyResponseModel MapBOToModel(
+			BOCurrency boCurrency);
 
-                List<ApiCurrencyResponseModel> MapBOToModel(
-                        List<BOCurrency> items);
-        }
+		List<ApiCurrencyResponseModel> MapBOToModel(
+			List<BOCurrency> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>777121ae6dfde9fe76c0c7689b31fc63</Hash>
+    <Hash>4f6a6f66f10acd6dda9ff32810205dbc</Hash>
 </Codenesium>*/

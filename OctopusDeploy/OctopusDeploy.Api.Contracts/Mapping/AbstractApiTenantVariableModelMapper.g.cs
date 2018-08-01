@@ -5,51 +5,51 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiTenantVariableModelMapper
-        {
-                public virtual ApiTenantVariableResponseModel MapRequestToResponse(
-                        string id,
-                        ApiTenantVariableRequestModel request)
-                {
-                        var response = new ApiTenantVariableResponseModel();
-                        response.SetProperties(id,
-                                               request.EnvironmentId,
-                                               request.JSON,
-                                               request.OwnerId,
-                                               request.RelatedDocumentId,
-                                               request.TenantId,
-                                               request.VariableTemplateId);
-                        return response;
-                }
+	public abstract class AbstractApiTenantVariableModelMapper
+	{
+		public virtual ApiTenantVariableResponseModel MapRequestToResponse(
+			string id,
+			ApiTenantVariableRequestModel request)
+		{
+			var response = new ApiTenantVariableResponseModel();
+			response.SetProperties(id,
+			                       request.EnvironmentId,
+			                       request.JSON,
+			                       request.OwnerId,
+			                       request.RelatedDocumentId,
+			                       request.TenantId,
+			                       request.VariableTemplateId);
+			return response;
+		}
 
-                public virtual ApiTenantVariableRequestModel MapResponseToRequest(
-                        ApiTenantVariableResponseModel response)
-                {
-                        var request = new ApiTenantVariableRequestModel();
-                        request.SetProperties(
-                                response.EnvironmentId,
-                                response.JSON,
-                                response.OwnerId,
-                                response.RelatedDocumentId,
-                                response.TenantId,
-                                response.VariableTemplateId);
-                        return request;
-                }
+		public virtual ApiTenantVariableRequestModel MapResponseToRequest(
+			ApiTenantVariableResponseModel response)
+		{
+			var request = new ApiTenantVariableRequestModel();
+			request.SetProperties(
+				response.EnvironmentId,
+				response.JSON,
+				response.OwnerId,
+				response.RelatedDocumentId,
+				response.TenantId,
+				response.VariableTemplateId);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiTenantVariableRequestModel> CreatePatch(ApiTenantVariableRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTenantVariableRequestModel>();
-                        patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.OwnerId, model.OwnerId);
-                        patch.Replace(x => x.RelatedDocumentId, model.RelatedDocumentId);
-                        patch.Replace(x => x.TenantId, model.TenantId);
-                        patch.Replace(x => x.VariableTemplateId, model.VariableTemplateId);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiTenantVariableRequestModel> CreatePatch(ApiTenantVariableRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiTenantVariableRequestModel>();
+			patch.Replace(x => x.EnvironmentId, model.EnvironmentId);
+			patch.Replace(x => x.JSON, model.JSON);
+			patch.Replace(x => x.OwnerId, model.OwnerId);
+			patch.Replace(x => x.RelatedDocumentId, model.RelatedDocumentId);
+			patch.Replace(x => x.TenantId, model.TenantId);
+			patch.Replace(x => x.VariableTemplateId, model.VariableTemplateId);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>24306cbc9f4c1cdb95c6bdac92be5406</Hash>
+    <Hash>0a3d41cd7413f5a7eee431856b8cf92f</Hash>
 </Codenesium>*/

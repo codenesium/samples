@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/dashboardConfigurations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class DashboardConfigurationController : AbstractDashboardConfigurationController
-        {
-                public DashboardConfigurationController(
-                        ApiSettings settings,
-                        ILogger<DashboardConfigurationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IDashboardConfigurationService dashboardConfigurationService,
-                        IApiDashboardConfigurationModelMapper dashboardConfigurationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               dashboardConfigurationService,
-                               dashboardConfigurationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/dashboardConfigurations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class DashboardConfigurationController : AbstractDashboardConfigurationController
+	{
+		public DashboardConfigurationController(
+			ApiSettings settings,
+			ILogger<DashboardConfigurationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IDashboardConfigurationService dashboardConfigurationService,
+			IApiDashboardConfigurationModelMapper dashboardConfigurationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       dashboardConfigurationService,
+			       dashboardConfigurationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b083213abce8536a1d06c7c8ef0ff2aa</Hash>
+    <Hash>fb2692dc1a0977f85a01511e95f60cfc</Hash>
 </Codenesium>*/

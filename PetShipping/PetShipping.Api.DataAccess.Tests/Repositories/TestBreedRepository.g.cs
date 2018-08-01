@@ -9,127 +9,127 @@ using Xunit;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public partial class BreedRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class BreedRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<BreedRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<BreedRepository>>();
-                }
-        }
+		public static Mock<ILogger<BreedRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<BreedRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Breed")]
-        [Trait("Area", "Repositories")]
-        public partial class BreedRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Breed")]
+	[Trait("Area", "Repositories")]
+	public partial class BreedRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
 
-                        Breed entity = new Breed();
-                        context.Set<Breed>().Add(entity);
-                        await context.SaveChangesAsync();
+			Breed entity = new Breed();
+			context.Set<Breed>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
 
-                        Breed entity = new Breed();
-                        context.Set<Breed>().Add(entity);
-                        await context.SaveChangesAsync();
+			Breed entity = new Breed();
+			context.Set<Breed>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
 
-                        var entity = new Breed();
-                        await repository.Create(entity);
+			var entity = new Breed();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Breed>().FirstOrDefaultAsync();
+			var record = await context.Set<Breed>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
-                        Breed entity = new Breed();
-                        context.Set<Breed>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
+			Breed entity = new Breed();
+			context.Set<Breed>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Breed>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Breed>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
-                        Breed entity = new Breed();
-                        context.Set<Breed>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
+			Breed entity = new Breed();
+			context.Set<Breed>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Breed());
+			await repository.Update(new Breed());
 
-                        var modifiedRecord = context.Set<Breed>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Breed>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = BreedRepositoryMoc.GetContext();
-                        var repository = new BreedRepository(loggerMoc.Object, context);
-                        Breed entity = new Breed();
-                        context.Set<Breed>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
+			Breed entity = new Breed();
+			context.Set<Breed>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Breed modifiedRecord = await context.Set<Breed>().FirstOrDefaultAsync();
+			Breed modifiedRecord = await context.Set<Breed>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d5016f7853b388a6e997b24fb69a7712</Hash>
+    <Hash>a442c7476d15ef741b2a7be65be79ce5</Hash>
 </Codenesium>*/

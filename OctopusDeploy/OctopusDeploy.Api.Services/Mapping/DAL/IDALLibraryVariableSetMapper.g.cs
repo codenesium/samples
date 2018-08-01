@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALLibraryVariableSetMapper
-        {
-                LibraryVariableSet MapBOToEF(
-                        BOLibraryVariableSet bo);
+	public interface IDALLibraryVariableSetMapper
+	{
+		LibraryVariableSet MapBOToEF(
+			BOLibraryVariableSet bo);
 
-                BOLibraryVariableSet MapEFToBO(
-                        LibraryVariableSet efLibraryVariableSet);
+		BOLibraryVariableSet MapEFToBO(
+			LibraryVariableSet efLibraryVariableSet);
 
-                List<BOLibraryVariableSet> MapEFToBO(
-                        List<LibraryVariableSet> records);
-        }
+		List<BOLibraryVariableSet> MapEFToBO(
+			List<LibraryVariableSet> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a38a32240c02cc4df238d604e7df5a6b</Hash>
+    <Hash>884f9a90e0b68675d8742009cba7a77c</Hash>
 </Codenesium>*/

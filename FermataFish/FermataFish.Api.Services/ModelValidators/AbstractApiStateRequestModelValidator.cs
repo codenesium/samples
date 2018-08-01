@@ -9,30 +9,30 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStateRequestModelValidator : AbstractValidator<ApiStateRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiStateRequestModelValidator : AbstractValidator<ApiStateRequestModel>
+	{
+		private int existingRecordId;
 
-                private IStateRepository stateRepository;
+		private IStateRepository stateRepository;
 
-                public AbstractApiStateRequestModelValidator(IStateRepository stateRepository)
-                {
-                        this.stateRepository = stateRepository;
-                }
+		public AbstractApiStateRequestModelValidator(IStateRepository stateRepository)
+		{
+			this.stateRepository = stateRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiStateRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiStateRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 2);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>036b173103fe9bb966d4a300799fd599</Hash>
+    <Hash>3a9e4a7fb03b4f778fb4482dde7a8675</Hash>
 </Codenesium>*/

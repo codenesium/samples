@@ -10,41 +10,41 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class PersonService : AbstractPersonService, IPersonService
-        {
-                public PersonService(
-                        ILogger<IPersonRepository> logger,
-                        IPersonRepository personRepository,
-                        IApiPersonRequestModelValidator personModelValidator,
-                        IBOLPersonMapper bolpersonMapper,
-                        IDALPersonMapper dalpersonMapper,
-                        IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
-                        IBOLEmailAddressMapper bolEmailAddressMapper,
-                        IDALEmailAddressMapper dalEmailAddressMapper,
-                        IBOLPasswordMapper bolPasswordMapper,
-                        IDALPasswordMapper dalPasswordMapper,
-                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
-                        IDALPersonPhoneMapper dalPersonPhoneMapper
-                        )
-                        : base(logger,
-                               personRepository,
-                               personModelValidator,
-                               bolpersonMapper,
-                               dalpersonMapper,
-                               bolBusinessEntityContactMapper,
-                               dalBusinessEntityContactMapper,
-                               bolEmailAddressMapper,
-                               dalEmailAddressMapper,
-                               bolPasswordMapper,
-                               dalPasswordMapper,
-                               bolPersonPhoneMapper,
-                               dalPersonPhoneMapper)
-                {
-                }
-        }
+	public partial class PersonService : AbstractPersonService, IPersonService
+	{
+		public PersonService(
+			ILogger<IPersonRepository> logger,
+			IPersonRepository personRepository,
+			IApiPersonRequestModelValidator personModelValidator,
+			IBOLPersonMapper bolpersonMapper,
+			IDALPersonMapper dalpersonMapper,
+			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
+			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
+			IBOLEmailAddressMapper bolEmailAddressMapper,
+			IDALEmailAddressMapper dalEmailAddressMapper,
+			IBOLPasswordMapper bolPasswordMapper,
+			IDALPasswordMapper dalPasswordMapper,
+			IBOLPersonPhoneMapper bolPersonPhoneMapper,
+			IDALPersonPhoneMapper dalPersonPhoneMapper
+			)
+			: base(logger,
+			       personRepository,
+			       personModelValidator,
+			       bolpersonMapper,
+			       dalpersonMapper,
+			       bolBusinessEntityContactMapper,
+			       dalBusinessEntityContactMapper,
+			       bolEmailAddressMapper,
+			       dalEmailAddressMapper,
+			       bolPasswordMapper,
+			       dalPasswordMapper,
+			       bolPersonPhoneMapper,
+			       dalPersonPhoneMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f691119fc14a6f95b41ee9e16a6034a5</Hash>
+    <Hash>7fce3ac704cdd920d3ba407c5a912dbb</Hash>
 </Codenesium>*/

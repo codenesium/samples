@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/pipelineStepDestinations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PipelineStepDestinationController : AbstractPipelineStepDestinationController
-        {
-                public PipelineStepDestinationController(
-                        ApiSettings settings,
-                        ILogger<PipelineStepDestinationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPipelineStepDestinationService pipelineStepDestinationService,
-                        IApiPipelineStepDestinationModelMapper pipelineStepDestinationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               pipelineStepDestinationService,
-                               pipelineStepDestinationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/pipelineStepDestinations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PipelineStepDestinationController : AbstractPipelineStepDestinationController
+	{
+		public PipelineStepDestinationController(
+			ApiSettings settings,
+			ILogger<PipelineStepDestinationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPipelineStepDestinationService pipelineStepDestinationService,
+			IApiPipelineStepDestinationModelMapper pipelineStepDestinationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       pipelineStepDestinationService,
+			       pipelineStepDestinationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>80c52f4ce0e911bfc97d00f8b7c3d6a3</Hash>
+    <Hash>4ad983ebe657a1affc62a84099a0edce</Hash>
 </Codenesium>*/

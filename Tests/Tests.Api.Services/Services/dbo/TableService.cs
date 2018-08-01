@@ -10,25 +10,25 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class TableService : AbstractTableService, ITableService
-        {
-                public TableService(
-                        ILogger<ITableRepository> logger,
-                        ITableRepository tableRepository,
-                        IApiTableRequestModelValidator tableModelValidator,
-                        IBOLTableMapper boltableMapper,
-                        IDALTableMapper daltableMapper
-                        )
-                        : base(logger,
-                               tableRepository,
-                               tableModelValidator,
-                               boltableMapper,
-                               daltableMapper)
-                {
-                }
-        }
+	public partial class TableService : AbstractTableService, ITableService
+	{
+		public TableService(
+			ILogger<ITableRepository> logger,
+			ITableRepository tableRepository,
+			IApiTableRequestModelValidator tableModelValidator,
+			IBOLTableMapper boltableMapper,
+			IDALTableMapper daltableMapper
+			)
+			: base(logger,
+			       tableRepository,
+			       tableModelValidator,
+			       boltableMapper,
+			       daltableMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>81c18580231642cee24385249a40aa70</Hash>
+    <Hash>b9b30ee5c71fafbfaf6bc67111ddbca8</Hash>
 </Codenesium>*/

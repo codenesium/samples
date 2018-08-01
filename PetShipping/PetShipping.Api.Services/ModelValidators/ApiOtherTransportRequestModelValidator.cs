@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public class ApiOtherTransportRequestModelValidator : AbstractApiOtherTransportRequestModelValidator, IApiOtherTransportRequestModelValidator
-        {
-                public ApiOtherTransportRequestModelValidator(IOtherTransportRepository otherTransportRepository)
-                        : base(otherTransportRepository)
-                {
-                }
+	public class ApiOtherTransportRequestModelValidator : AbstractApiOtherTransportRequestModelValidator, IApiOtherTransportRequestModelValidator
+	{
+		public ApiOtherTransportRequestModelValidator(IOtherTransportRepository otherTransportRepository)
+			: base(otherTransportRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiOtherTransportRequestModel model)
-                {
-                        this.HandlerIdRules();
-                        this.PipelineStepIdRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiOtherTransportRequestModel model)
+		{
+			this.HandlerIdRules();
+			this.PipelineStepIdRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiOtherTransportRequestModel model)
-                {
-                        this.HandlerIdRules();
-                        this.PipelineStepIdRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiOtherTransportRequestModel model)
+		{
+			this.HandlerIdRules();
+			this.PipelineStepIdRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b5430124160071b4bf3fddd00d84825</Hash>
+    <Hash>0da4ece17db73529187de301d1f30bb0</Hash>
 </Codenesium>*/

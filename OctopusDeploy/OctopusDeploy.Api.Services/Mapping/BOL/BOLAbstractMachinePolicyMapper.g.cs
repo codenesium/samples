@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractMachinePolicyMapper
-        {
-                public virtual BOMachinePolicy MapModelToBO(
-                        string id,
-                        ApiMachinePolicyRequestModel model
-                        )
-                {
-                        BOMachinePolicy boMachinePolicy = new BOMachinePolicy();
-                        boMachinePolicy.SetProperties(
-                                id,
-                                model.IsDefault,
-                                model.JSON,
-                                model.Name);
-                        return boMachinePolicy;
-                }
+	public abstract class BOLAbstractMachinePolicyMapper
+	{
+		public virtual BOMachinePolicy MapModelToBO(
+			string id,
+			ApiMachinePolicyRequestModel model
+			)
+		{
+			BOMachinePolicy boMachinePolicy = new BOMachinePolicy();
+			boMachinePolicy.SetProperties(
+				id,
+				model.IsDefault,
+				model.JSON,
+				model.Name);
+			return boMachinePolicy;
+		}
 
-                public virtual ApiMachinePolicyResponseModel MapBOToModel(
-                        BOMachinePolicy boMachinePolicy)
-                {
-                        var model = new ApiMachinePolicyResponseModel();
+		public virtual ApiMachinePolicyResponseModel MapBOToModel(
+			BOMachinePolicy boMachinePolicy)
+		{
+			var model = new ApiMachinePolicyResponseModel();
 
-                        model.SetProperties(boMachinePolicy.Id, boMachinePolicy.IsDefault, boMachinePolicy.JSON, boMachinePolicy.Name);
+			model.SetProperties(boMachinePolicy.Id, boMachinePolicy.IsDefault, boMachinePolicy.JSON, boMachinePolicy.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiMachinePolicyResponseModel> MapBOToModel(
-                        List<BOMachinePolicy> items)
-                {
-                        List<ApiMachinePolicyResponseModel> response = new List<ApiMachinePolicyResponseModel>();
+		public virtual List<ApiMachinePolicyResponseModel> MapBOToModel(
+			List<BOMachinePolicy> items)
+		{
+			List<ApiMachinePolicyResponseModel> response = new List<ApiMachinePolicyResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>240e0985413cf80251a56e2090f5ebed</Hash>
+    <Hash>7af438c9a7ebb431d2cefefd37f254d4</Hash>
 </Codenesium>*/

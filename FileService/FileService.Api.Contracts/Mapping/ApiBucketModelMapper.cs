@@ -1,14 +1,14 @@
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiBucketModelMapper : AbstractApiBucketModelMapper, IApiBucketModelMapper
-        {
-                public ApiBucketModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiBucketModelMapper : AbstractApiBucketModelMapper, IApiBucketModelMapper
+	{
+		public ApiBucketModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>730c50ccfa908c8ec608548ebce77594</Hash>
+    <Hash>e5e11790477717141467b8917b7a2cf4</Hash>
 </Codenesium>*/

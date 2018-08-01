@@ -9,41 +9,41 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class AbstractApiPersonRefRequestModelValidator : AbstractValidator<ApiPersonRefRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiPersonRefRequestModelValidator : AbstractValidator<ApiPersonRefRequestModel>
+	{
+		private int existingRecordId;
 
-                private IPersonRefRepository personRefRepository;
+		private IPersonRefRepository personRefRepository;
 
-                public AbstractApiPersonRefRequestModelValidator(IPersonRefRepository personRefRepository)
-                {
-                        this.personRefRepository = personRefRepository;
-                }
+		public AbstractApiPersonRefRequestModelValidator(IPersonRefRepository personRefRepository)
+		{
+			this.personRefRepository = personRefRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiPersonRefRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiPersonRefRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void PersonAIdRules()
-                {
-                }
+		public virtual void PersonAIdRules()
+		{
+		}
 
-                public virtual void PersonBIdRules()
-                {
-                        this.RuleFor(x => x.PersonBId).MustAsync(this.BeValidSchemaBPerson).When(x => x?.PersonBId != null).WithMessage("Invalid reference");
-                }
+		public virtual void PersonBIdRules()
+		{
+			this.RuleFor(x => x.PersonBId).MustAsync(this.BeValidSchemaBPerson).When(x => x?.PersonBId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidSchemaBPerson(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.personRefRepository.GetSchemaBPerson(id);
+		private async Task<bool> BeValidSchemaBPerson(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.personRefRepository.GetSchemaBPerson(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>004699c576f2b74d90c671c8e25a9c8d</Hash>
+    <Hash>83b7970cfaa6a3f0ab6cb7d3bd3354a0</Hash>
 </Codenesium>*/

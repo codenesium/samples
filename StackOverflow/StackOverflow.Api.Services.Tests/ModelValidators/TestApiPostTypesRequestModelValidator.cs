@@ -15,41 +15,41 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PostTypes")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPostTypesRequestModelValidatorTest
-        {
-                public ApiPostTypesRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PostTypes")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPostTypesRequestModelValidatorTest
+	{
+		public ApiPostTypesRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Type_Create_length()
-                {
-                        Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
-                        postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
+		[Fact]
+		public async void Type_Create_length()
+		{
+			Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
+			postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
 
-                        var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostTypesRequestModel());
+			var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Type_Update_length()
-                {
-                        Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
-                        postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
+		[Fact]
+		public async void Type_Update_length()
+		{
+			Mock<IPostTypesRepository> postTypesRepository = new Mock<IPostTypesRepository>();
+			postTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostTypes()));
 
-                        var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostTypesRequestModel());
+			var validator = new ApiPostTypesRequestModelValidator(postTypesRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f88e4da4036e5c23f4b035a65e8485d6</Hash>
+    <Hash>ad669be5f216b66552ec09b281156555</Hash>
 </Codenesium>*/

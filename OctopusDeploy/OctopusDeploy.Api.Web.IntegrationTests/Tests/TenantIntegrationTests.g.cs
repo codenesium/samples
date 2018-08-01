@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Tenant")]
-        [Trait("Area", "Integration")]
-        public class TenantIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TenantIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Tenant")]
+	[Trait("Area", "Integration")]
+	public class TenantIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TenantIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTenantModelMapper mapper = new ApiTenantModelMapper();
+			ApiTenantModelMapper mapper = new ApiTenantModelMapper();
 
-                        UpdateResponse<ApiTenantResponseModel> updateResponse = await this.Client.TenantUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTenantResponseModel> updateResponse = await this.Client.TenantUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TenantDeleteAsync(model.Id);
+			await this.Client.TenantDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTenantResponseModel response = await this.Client.TenantGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTenantResponseModel response = await this.Client.TenantGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTenantResponseModel> response = await this.Client.TenantAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTenantResponseModel> response = await this.Client.TenantAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTenantResponseModel> CreateRecord()
-                {
-                        var model = new ApiTenantRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(2), "B", "B", "B", "B");
-                        CreateResponse<ApiTenantResponseModel> result = await this.Client.TenantCreateAsync(model);
+		private async Task<ApiTenantResponseModel> CreateRecord()
+		{
+			var model = new ApiTenantRequestModel();
+			model.SetProperties(BitConverter.GetBytes(2), "B", "B", "B", "B");
+			CreateResponse<ApiTenantResponseModel> result = await this.Client.TenantCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TenantDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TenantDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>86a272d77c93c59dc540542abf9e1fad</Hash>
+    <Hash>7db4be1fb62905c2fc526748e0aec146</Hash>
 </Codenesium>*/

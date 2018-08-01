@@ -15,41 +15,41 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TransactionStatus")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTransactionStatusRequestModelValidatorTest
-        {
-                public ApiTransactionStatusRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TransactionStatus")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTransactionStatusRequestModelValidatorTest
+	{
+		public ApiTransactionStatusRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
-                        transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
+			transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
 
-                        var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTransactionStatusRequestModel());
+			var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTransactionStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
-                        transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ITransactionStatusRepository> transactionStatusRepository = new Mock<ITransactionStatusRepository>();
+			transactionStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionStatus()));
 
-                        var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionStatusRequestModel());
+			var validator = new ApiTransactionStatusRequestModelValidator(transactionStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>34e4391e1c195cf45405b942d28d383a</Hash>
+    <Hash>d14c6187bc23d957defff288566b8bb2</Hash>
 </Codenesium>*/

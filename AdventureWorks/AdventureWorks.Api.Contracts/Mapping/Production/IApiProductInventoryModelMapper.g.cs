@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiProductInventoryModelMapper
-        {
-                ApiProductInventoryResponseModel MapRequestToResponse(
-                        int productID,
-                        ApiProductInventoryRequestModel request);
+	public interface IApiProductInventoryModelMapper
+	{
+		ApiProductInventoryResponseModel MapRequestToResponse(
+			int productID,
+			ApiProductInventoryRequestModel request);
 
-                ApiProductInventoryRequestModel MapResponseToRequest(
-                        ApiProductInventoryResponseModel response);
+		ApiProductInventoryRequestModel MapResponseToRequest(
+			ApiProductInventoryResponseModel response);
 
-                JsonPatchDocument<ApiProductInventoryRequestModel> CreatePatch(ApiProductInventoryRequestModel model);
-        }
+		JsonPatchDocument<ApiProductInventoryRequestModel> CreatePatch(ApiProductInventoryRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4865863605b95c47ca863fe10e8e256a</Hash>
+    <Hash>ab2fa0022fda36d92fb38962be9fdd6d</Hash>
 </Codenesium>*/

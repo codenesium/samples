@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IDALAdminMapper
-        {
-                Admin MapBOToEF(
-                        BOAdmin bo);
+	public interface IDALAdminMapper
+	{
+		Admin MapBOToEF(
+			BOAdmin bo);
 
-                BOAdmin MapEFToBO(
-                        Admin efAdmin);
+		BOAdmin MapEFToBO(
+			Admin efAdmin);
 
-                List<BOAdmin> MapEFToBO(
-                        List<Admin> records);
-        }
+		List<BOAdmin> MapEFToBO(
+			List<Admin> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0b9140aa41996e4db6ac7b33b6bf3df1</Hash>
+    <Hash>dc2bd9c7c796849b1fd2a2148b13f5d7</Hash>
 </Codenesium>*/

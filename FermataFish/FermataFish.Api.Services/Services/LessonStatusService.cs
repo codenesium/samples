@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class LessonStatusService : AbstractLessonStatusService, ILessonStatusService
-        {
-                public LessonStatusService(
-                        ILogger<ILessonStatusRepository> logger,
-                        ILessonStatusRepository lessonStatusRepository,
-                        IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
-                        IBOLLessonStatusMapper bollessonStatusMapper,
-                        IDALLessonStatusMapper dallessonStatusMapper,
-                        IBOLLessonMapper bolLessonMapper,
-                        IDALLessonMapper dalLessonMapper
-                        )
-                        : base(logger,
-                               lessonStatusRepository,
-                               lessonStatusModelValidator,
-                               bollessonStatusMapper,
-                               dallessonStatusMapper,
-                               bolLessonMapper,
-                               dalLessonMapper)
-                {
-                }
-        }
+	public partial class LessonStatusService : AbstractLessonStatusService, ILessonStatusService
+	{
+		public LessonStatusService(
+			ILogger<ILessonStatusRepository> logger,
+			ILessonStatusRepository lessonStatusRepository,
+			IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
+			IBOLLessonStatusMapper bollessonStatusMapper,
+			IDALLessonStatusMapper dallessonStatusMapper,
+			IBOLLessonMapper bolLessonMapper,
+			IDALLessonMapper dalLessonMapper
+			)
+			: base(logger,
+			       lessonStatusRepository,
+			       lessonStatusModelValidator,
+			       bollessonStatusMapper,
+			       dallessonStatusMapper,
+			       bolLessonMapper,
+			       dalLessonMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7d79acec1c8c68ea8cc4d11b18673e84</Hash>
+    <Hash>7b9e554003ea5095eb30f57ec4973ab6</Hash>
 </Codenesium>*/

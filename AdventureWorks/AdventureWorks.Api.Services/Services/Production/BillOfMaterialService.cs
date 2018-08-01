@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BillOfMaterialService : AbstractBillOfMaterialService, IBillOfMaterialService
-        {
-                public BillOfMaterialService(
-                        ILogger<IBillOfMaterialRepository> logger,
-                        IBillOfMaterialRepository billOfMaterialRepository,
-                        IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator,
-                        IBOLBillOfMaterialMapper bolbillOfMaterialMapper,
-                        IDALBillOfMaterialMapper dalbillOfMaterialMapper
-                        )
-                        : base(logger,
-                               billOfMaterialRepository,
-                               billOfMaterialModelValidator,
-                               bolbillOfMaterialMapper,
-                               dalbillOfMaterialMapper)
-                {
-                }
-        }
+	public partial class BillOfMaterialService : AbstractBillOfMaterialService, IBillOfMaterialService
+	{
+		public BillOfMaterialService(
+			ILogger<IBillOfMaterialRepository> logger,
+			IBillOfMaterialRepository billOfMaterialRepository,
+			IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator,
+			IBOLBillOfMaterialMapper bolbillOfMaterialMapper,
+			IDALBillOfMaterialMapper dalbillOfMaterialMapper
+			)
+			: base(logger,
+			       billOfMaterialRepository,
+			       billOfMaterialModelValidator,
+			       bolbillOfMaterialMapper,
+			       dalbillOfMaterialMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1fecaf35d21721902589e203a825df79</Hash>
+    <Hash>ce9634e922f374b0e58b0eb4c2bd8082</Hash>
 </Codenesium>*/

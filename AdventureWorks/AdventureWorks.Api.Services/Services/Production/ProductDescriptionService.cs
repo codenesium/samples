@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ProductDescriptionService : AbstractProductDescriptionService, IProductDescriptionService
-        {
-                public ProductDescriptionService(
-                        ILogger<IProductDescriptionRepository> logger,
-                        IProductDescriptionRepository productDescriptionRepository,
-                        IApiProductDescriptionRequestModelValidator productDescriptionModelValidator,
-                        IBOLProductDescriptionMapper bolproductDescriptionMapper,
-                        IDALProductDescriptionMapper dalproductDescriptionMapper,
-                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-                        )
-                        : base(logger,
-                               productDescriptionRepository,
-                               productDescriptionModelValidator,
-                               bolproductDescriptionMapper,
-                               dalproductDescriptionMapper,
-                               bolProductModelProductDescriptionCultureMapper,
-                               dalProductModelProductDescriptionCultureMapper)
-                {
-                }
-        }
+	public partial class ProductDescriptionService : AbstractProductDescriptionService, IProductDescriptionService
+	{
+		public ProductDescriptionService(
+			ILogger<IProductDescriptionRepository> logger,
+			IProductDescriptionRepository productDescriptionRepository,
+			IApiProductDescriptionRequestModelValidator productDescriptionModelValidator,
+			IBOLProductDescriptionMapper bolproductDescriptionMapper,
+			IDALProductDescriptionMapper dalproductDescriptionMapper,
+			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+			)
+			: base(logger,
+			       productDescriptionRepository,
+			       productDescriptionModelValidator,
+			       bolproductDescriptionMapper,
+			       dalproductDescriptionMapper,
+			       bolProductModelProductDescriptionCultureMapper,
+			       dalProductModelProductDescriptionCultureMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d790839789cc1445b1a3d0a59d66b690</Hash>
+    <Hash>cd79ac01c4f98ad4c9f8c34c92f3bd99</Hash>
 </Codenesium>*/

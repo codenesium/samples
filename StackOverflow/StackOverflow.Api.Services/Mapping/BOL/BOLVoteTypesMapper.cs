@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLVoteTypesMapper : BOLAbstractVoteTypesMapper, IBOLVoteTypesMapper
-        {
-                public BOLVoteTypesMapper()
-                {
-                }
-        }
+	public partial class BOLVoteTypesMapper : BOLAbstractVoteTypesMapper, IBOLVoteTypesMapper
+	{
+		public BOLVoteTypesMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bf3868325a5e33ad93d74e57c5ae800a</Hash>
+    <Hash>24939977ef52f003488cf005fb99f70c</Hash>
 </Codenesium>*/

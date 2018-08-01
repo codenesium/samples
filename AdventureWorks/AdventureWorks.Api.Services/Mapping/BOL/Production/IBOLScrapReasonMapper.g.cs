@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLScrapReasonMapper
-        {
-                BOScrapReason MapModelToBO(
-                        short scrapReasonID,
-                        ApiScrapReasonRequestModel model);
+	public interface IBOLScrapReasonMapper
+	{
+		BOScrapReason MapModelToBO(
+			short scrapReasonID,
+			ApiScrapReasonRequestModel model);
 
-                ApiScrapReasonResponseModel MapBOToModel(
-                        BOScrapReason boScrapReason);
+		ApiScrapReasonResponseModel MapBOToModel(
+			BOScrapReason boScrapReason);
 
-                List<ApiScrapReasonResponseModel> MapBOToModel(
-                        List<BOScrapReason> items);
-        }
+		List<ApiScrapReasonResponseModel> MapBOToModel(
+			List<BOScrapReason> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>1140740761c38732d72abb489f4df682</Hash>
+    <Hash>edf65f87de4582ef3893d0e8ac1d43c4</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IDALPostHistoryTypesMapper
-        {
-                PostHistoryTypes MapBOToEF(
-                        BOPostHistoryTypes bo);
+	public interface IDALPostHistoryTypesMapper
+	{
+		PostHistoryTypes MapBOToEF(
+			BOPostHistoryTypes bo);
 
-                BOPostHistoryTypes MapEFToBO(
-                        PostHistoryTypes efPostHistoryTypes);
+		BOPostHistoryTypes MapEFToBO(
+			PostHistoryTypes efPostHistoryTypes);
 
-                List<BOPostHistoryTypes> MapEFToBO(
-                        List<PostHistoryTypes> records);
-        }
+		List<BOPostHistoryTypes> MapEFToBO(
+			List<PostHistoryTypes> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>84c9563a53d70442a58fc533481cbc46</Hash>
+    <Hash>30c4276446b6510e55423148467e4cd9</Hash>
 </Codenesium>*/

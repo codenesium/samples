@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class VariableSetRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class VariableSetRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<VariableSetRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<VariableSetRepository>>();
-                }
-        }
+		public static Mock<ILogger<VariableSetRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<VariableSetRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VariableSet")]
-        [Trait("Area", "Repositories")]
-        public partial class VariableSetRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VariableSet")]
+	[Trait("Area", "Repositories")]
+	public partial class VariableSetRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
 
-                        VariableSet entity = new VariableSet();
-                        context.Set<VariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+			VariableSet entity = new VariableSet();
+			context.Set<VariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
 
-                        VariableSet entity = new VariableSet();
-                        context.Set<VariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+			VariableSet entity = new VariableSet();
+			context.Set<VariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
 
-                        var entity = new VariableSet();
-                        await repository.Create(entity);
+			var entity = new VariableSet();
+			await repository.Create(entity);
 
-                        var record = await context.Set<VariableSet>().FirstOrDefaultAsync();
+			var record = await context.Set<VariableSet>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
-                        VariableSet entity = new VariableSet();
-                        context.Set<VariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
+			VariableSet entity = new VariableSet();
+			context.Set<VariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<VariableSet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<VariableSet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
-                        VariableSet entity = new VariableSet();
-                        context.Set<VariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
+			VariableSet entity = new VariableSet();
+			context.Set<VariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new VariableSet());
+			await repository.Update(new VariableSet());
 
-                        var modifiedRecord = context.Set<VariableSet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<VariableSet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
-                        var repository = new VariableSetRepository(loggerMoc.Object, context);
-                        VariableSet entity = new VariableSet();
-                        context.Set<VariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
+			var repository = new VariableSetRepository(loggerMoc.Object, context);
+			VariableSet entity = new VariableSet();
+			context.Set<VariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        VariableSet modifiedRecord = await context.Set<VariableSet>().FirstOrDefaultAsync();
+			VariableSet modifiedRecord = await context.Set<VariableSet>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b25c5ce01820ba1857bed201cf43a59</Hash>
+    <Hash>4e21db3e7a988d519200aa3708753b08</Hash>
 </Codenesium>*/

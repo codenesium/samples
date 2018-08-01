@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/teams")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TeamController : AbstractTeamController
-        {
-                public TeamController(
-                        ApiSettings settings,
-                        ILogger<TeamController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITeamService teamService,
-                        IApiTeamModelMapper teamModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               teamService,
-                               teamModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/teams")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TeamController : AbstractTeamController
+	{
+		public TeamController(
+			ApiSettings settings,
+			ILogger<TeamController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITeamService teamService,
+			IApiTeamModelMapper teamModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       teamService,
+			       teamModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d50d1908126045e0c7fc8bada25fdc6</Hash>
+    <Hash>767faedba387a5ea748a065cea81e88c</Hash>
 </Codenesium>*/

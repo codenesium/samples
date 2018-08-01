@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/feeds")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class FeedController : AbstractFeedController
-        {
-                public FeedController(
-                        ApiSettings settings,
-                        ILogger<FeedController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IFeedService feedService,
-                        IApiFeedModelMapper feedModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               feedService,
-                               feedModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/feeds")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class FeedController : AbstractFeedController
+	{
+		public FeedController(
+			ApiSettings settings,
+			ILogger<FeedController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IFeedService feedService,
+			IApiFeedModelMapper feedModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       feedService,
+			       feedModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>17aed5a7e00b9b1c5239dcfa25f9b924</Hash>
+    <Hash>82be1eb73815407ab536346eafd822b1</Hash>
 </Codenesium>*/

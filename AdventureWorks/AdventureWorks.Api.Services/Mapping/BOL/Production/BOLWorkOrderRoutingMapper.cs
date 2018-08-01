@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLWorkOrderRoutingMapper : BOLAbstractWorkOrderRoutingMapper, IBOLWorkOrderRoutingMapper
-        {
-                public BOLWorkOrderRoutingMapper()
-                {
-                }
-        }
+	public partial class BOLWorkOrderRoutingMapper : BOLAbstractWorkOrderRoutingMapper, IBOLWorkOrderRoutingMapper
+	{
+		public BOLWorkOrderRoutingMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1a881e88e5a5b04af338fc620ebe5d3c</Hash>
+    <Hash>c5f41f68c1a6041b3aa3621e1d99d811</Hash>
 </Codenesium>*/

@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PipelineStepStatusService : AbstractPipelineStepStatusService, IPipelineStepStatusService
-        {
-                public PipelineStepStatusService(
-                        ILogger<IPipelineStepStatusRepository> logger,
-                        IPipelineStepStatusRepository pipelineStepStatusRepository,
-                        IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator,
-                        IBOLPipelineStepStatusMapper bolpipelineStepStatusMapper,
-                        IDALPipelineStepStatusMapper dalpipelineStepStatusMapper,
-                        IBOLPipelineStepMapper bolPipelineStepMapper,
-                        IDALPipelineStepMapper dalPipelineStepMapper
-                        )
-                        : base(logger,
-                               pipelineStepStatusRepository,
-                               pipelineStepStatusModelValidator,
-                               bolpipelineStepStatusMapper,
-                               dalpipelineStepStatusMapper,
-                               bolPipelineStepMapper,
-                               dalPipelineStepMapper)
-                {
-                }
-        }
+	public partial class PipelineStepStatusService : AbstractPipelineStepStatusService, IPipelineStepStatusService
+	{
+		public PipelineStepStatusService(
+			ILogger<IPipelineStepStatusRepository> logger,
+			IPipelineStepStatusRepository pipelineStepStatusRepository,
+			IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator,
+			IBOLPipelineStepStatusMapper bolpipelineStepStatusMapper,
+			IDALPipelineStepStatusMapper dalpipelineStepStatusMapper,
+			IBOLPipelineStepMapper bolPipelineStepMapper,
+			IDALPipelineStepMapper dalPipelineStepMapper
+			)
+			: base(logger,
+			       pipelineStepStatusRepository,
+			       pipelineStepStatusModelValidator,
+			       bolpipelineStepStatusMapper,
+			       dalpipelineStepStatusMapper,
+			       bolPipelineStepMapper,
+			       dalPipelineStepMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3db81400098ed3de618fa357e99039fd</Hash>
+    <Hash>3df1a428bd68e72812910f40b62f67a7</Hash>
 </Codenesium>*/

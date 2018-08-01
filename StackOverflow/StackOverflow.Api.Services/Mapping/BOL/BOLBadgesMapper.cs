@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLBadgesMapper : BOLAbstractBadgesMapper, IBOLBadgesMapper
-        {
-                public BOLBadgesMapper()
-                {
-                }
-        }
+	public partial class BOLBadgesMapper : BOLAbstractBadgesMapper, IBOLBadgesMapper
+	{
+		public BOLBadgesMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f67a2b2ac00b7655e9ab3757e8406ceb</Hash>
+    <Hash>9b050f5a531fadb25dda0ad308c4b885</Hash>
 </Codenesium>*/

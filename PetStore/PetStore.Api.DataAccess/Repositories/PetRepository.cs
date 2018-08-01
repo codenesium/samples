@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public partial class PetRepository : AbstractPetRepository, IPetRepository
-        {
-                public PetRepository(
-                        ILogger<PetRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class PetRepository : AbstractPetRepository, IPetRepository
+	{
+		public PetRepository(
+			ILogger<PetRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7cd47bcee0549b344fb9a716208f0947</Hash>
+    <Hash>bf6f2199da2631eb7606058a3e155667</Hash>
 </Codenesium>*/

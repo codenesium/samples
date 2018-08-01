@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductCostHistoryService : AbstractService
-        {
-                private IProductCostHistoryRepository productCostHistoryRepository;
+	public abstract class AbstractProductCostHistoryService : AbstractService
+	{
+		private IProductCostHistoryRepository productCostHistoryRepository;
 
-                private IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator;
+		private IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator;
 
-                private IBOLProductCostHistoryMapper bolProductCostHistoryMapper;
+		private IBOLProductCostHistoryMapper bolProductCostHistoryMapper;
 
-                private IDALProductCostHistoryMapper dalProductCostHistoryMapper;
+		private IDALProductCostHistoryMapper dalProductCostHistoryMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractProductCostHistoryService(
-                        ILogger logger,
-                        IProductCostHistoryRepository productCostHistoryRepository,
-                        IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
-                        IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
-                        IDALProductCostHistoryMapper dalProductCostHistoryMapper)
-                        : base()
-                {
-                        this.productCostHistoryRepository = productCostHistoryRepository;
-                        this.productCostHistoryModelValidator = productCostHistoryModelValidator;
-                        this.bolProductCostHistoryMapper = bolProductCostHistoryMapper;
-                        this.dalProductCostHistoryMapper = dalProductCostHistoryMapper;
-                        this.logger = logger;
-                }
+		public AbstractProductCostHistoryService(
+			ILogger logger,
+			IProductCostHistoryRepository productCostHistoryRepository,
+			IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
+			IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
+			IDALProductCostHistoryMapper dalProductCostHistoryMapper)
+			: base()
+		{
+			this.productCostHistoryRepository = productCostHistoryRepository;
+			this.productCostHistoryModelValidator = productCostHistoryModelValidator;
+			this.bolProductCostHistoryMapper = bolProductCostHistoryMapper;
+			this.dalProductCostHistoryMapper = dalProductCostHistoryMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiProductCostHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.productCostHistoryRepository.All(limit, offset);
+		public virtual async Task<List<ApiProductCostHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.productCostHistoryRepository.All(limit, offset);
 
-                        return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(records));
-                }
+			return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiProductCostHistoryResponseModel> Get(int productID)
-                {
-                        var record = await this.productCostHistoryRepository.Get(productID);
+		public virtual async Task<ApiProductCostHistoryResponseModel> Get(int productID)
+		{
+			var record = await this.productCostHistoryRepository.Get(productID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiProductCostHistoryResponseModel>> Create(
-                        ApiProductCostHistoryRequestModel model)
-                {
-                        CreateResponse<ApiProductCostHistoryResponseModel> response = new CreateResponse<ApiProductCostHistoryResponseModel>(await this.productCostHistoryModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolProductCostHistoryMapper.MapModelToBO(default(int), model);
-                                var record = await this.productCostHistoryRepository.Create(this.dalProductCostHistoryMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiProductCostHistoryResponseModel>> Create(
+			ApiProductCostHistoryRequestModel model)
+		{
+			CreateResponse<ApiProductCostHistoryResponseModel> response = new CreateResponse<ApiProductCostHistoryResponseModel>(await this.productCostHistoryModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolProductCostHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.productCostHistoryRepository.Create(this.dalProductCostHistoryMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiProductCostHistoryResponseModel>> Update(
-                        int productID,
-                        ApiProductCostHistoryRequestModel model)
-                {
-                        var validationResult = await this.productCostHistoryModelValidator.ValidateUpdateAsync(productID, model);
+		public virtual async Task<UpdateResponse<ApiProductCostHistoryResponseModel>> Update(
+			int productID,
+			ApiProductCostHistoryRequestModel model)
+		{
+			var validationResult = await this.productCostHistoryModelValidator.ValidateUpdateAsync(productID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolProductCostHistoryMapper.MapModelToBO(productID, model);
-                                await this.productCostHistoryRepository.Update(this.dalProductCostHistoryMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolProductCostHistoryMapper.MapModelToBO(productID, model);
+				await this.productCostHistoryRepository.Update(this.dalProductCostHistoryMapper.MapBOToEF(bo));
 
-                                var record = await this.productCostHistoryRepository.Get(productID);
+				var record = await this.productCostHistoryRepository.Get(productID);
 
-                                return new UpdateResponse<ApiProductCostHistoryResponseModel>(this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiProductCostHistoryResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiProductCostHistoryResponseModel>(this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiProductCostHistoryResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int productID)
-                {
-                        ActionResponse response = new ActionResponse(await this.productCostHistoryModelValidator.ValidateDeleteAsync(productID));
-                        if (response.Success)
-                        {
-                                await this.productCostHistoryRepository.Delete(productID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int productID)
+		{
+			ActionResponse response = new ActionResponse(await this.productCostHistoryModelValidator.ValidateDeleteAsync(productID));
+			if (response.Success)
+			{
+				await this.productCostHistoryRepository.Delete(productID);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df24c65873c92cb737ff0dd913749da2</Hash>
+    <Hash>1a0a6256f807ff962723fd3b3478658c</Hash>
 </Codenesium>*/

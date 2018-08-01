@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface ITenantService
-        {
-                Task<CreateResponse<ApiTenantResponseModel>> Create(
-                        ApiTenantRequestModel model);
+	public interface ITenantService
+	{
+		Task<CreateResponse<ApiTenantResponseModel>> Create(
+			ApiTenantRequestModel model);
 
-                Task<UpdateResponse<ApiTenantResponseModel>> Update(string id,
-                                                                     ApiTenantRequestModel model);
+		Task<UpdateResponse<ApiTenantResponseModel>> Update(string id,
+		                                                     ApiTenantRequestModel model);
 
-                Task<ActionResponse> Delete(string id);
+		Task<ActionResponse> Delete(string id);
 
-                Task<ApiTenantResponseModel> Get(string id);
+		Task<ApiTenantResponseModel> Get(string id);
 
-                Task<List<ApiTenantResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTenantResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiTenantResponseModel> ByName(string name);
+		Task<ApiTenantResponseModel> ByName(string name);
 
-                Task<List<ApiTenantResponseModel>> ByDataVersion(byte[] dataVersion);
-        }
+		Task<List<ApiTenantResponseModel>> ByDataVersion(byte[] dataVersion);
+	}
 }
 
 /*<Codenesium>
-    <Hash>5de9127a61c231058c58fb08f510418b</Hash>
+    <Hash>ec0790a82cc5ff96f9b638ad9107b3b7</Hash>
 </Codenesium>*/

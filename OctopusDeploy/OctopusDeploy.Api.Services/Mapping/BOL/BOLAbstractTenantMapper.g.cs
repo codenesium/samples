@@ -5,49 +5,49 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractTenantMapper
-        {
-                public virtual BOTenant MapModelToBO(
-                        string id,
-                        ApiTenantRequestModel model
-                        )
-                {
-                        BOTenant boTenant = new BOTenant();
-                        boTenant.SetProperties(
-                                id,
-                                model.DataVersion,
-                                model.JSON,
-                                model.Name,
-                                model.ProjectIds,
-                                model.TenantTags);
-                        return boTenant;
-                }
+	public abstract class BOLAbstractTenantMapper
+	{
+		public virtual BOTenant MapModelToBO(
+			string id,
+			ApiTenantRequestModel model
+			)
+		{
+			BOTenant boTenant = new BOTenant();
+			boTenant.SetProperties(
+				id,
+				model.DataVersion,
+				model.JSON,
+				model.Name,
+				model.ProjectIds,
+				model.TenantTags);
+			return boTenant;
+		}
 
-                public virtual ApiTenantResponseModel MapBOToModel(
-                        BOTenant boTenant)
-                {
-                        var model = new ApiTenantResponseModel();
+		public virtual ApiTenantResponseModel MapBOToModel(
+			BOTenant boTenant)
+		{
+			var model = new ApiTenantResponseModel();
 
-                        model.SetProperties(boTenant.Id, boTenant.DataVersion, boTenant.JSON, boTenant.Name, boTenant.ProjectIds, boTenant.TenantTags);
+			model.SetProperties(boTenant.Id, boTenant.DataVersion, boTenant.JSON, boTenant.Name, boTenant.ProjectIds, boTenant.TenantTags);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiTenantResponseModel> MapBOToModel(
-                        List<BOTenant> items)
-                {
-                        List<ApiTenantResponseModel> response = new List<ApiTenantResponseModel>();
+		public virtual List<ApiTenantResponseModel> MapBOToModel(
+			List<BOTenant> items)
+		{
+			List<ApiTenantResponseModel> response = new List<ApiTenantResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5f86ed8370e62e91838af9d652ab14f0</Hash>
+    <Hash>d668f049783ac91a3e9d1475ee75c1a9</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public partial class CommentsRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class CommentsRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<CommentsRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<CommentsRepository>>();
-                }
-        }
+		public static Mock<ILogger<CommentsRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<CommentsRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Comments")]
-        [Trait("Area", "Repositories")]
-        public partial class CommentsRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Comments")]
+	[Trait("Area", "Repositories")]
+	public partial class CommentsRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
 
-                        Comments entity = new Comments();
-                        context.Set<Comments>().Add(entity);
-                        await context.SaveChangesAsync();
+			Comments entity = new Comments();
+			context.Set<Comments>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
 
-                        Comments entity = new Comments();
-                        context.Set<Comments>().Add(entity);
-                        await context.SaveChangesAsync();
+			Comments entity = new Comments();
+			context.Set<Comments>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
 
-                        var entity = new Comments();
-                        await repository.Create(entity);
+			var entity = new Comments();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Comments>().FirstOrDefaultAsync();
+			var record = await context.Set<Comments>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
-                        Comments entity = new Comments();
-                        context.Set<Comments>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
+			Comments entity = new Comments();
+			context.Set<Comments>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Comments>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Comments>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
-                        Comments entity = new Comments();
-                        context.Set<Comments>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
+			Comments entity = new Comments();
+			context.Set<Comments>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Comments());
+			await repository.Update(new Comments());
 
-                        var modifiedRecord = context.Set<Comments>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Comments>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
-                        var repository = new CommentsRepository(loggerMoc.Object, context);
-                        Comments entity = new Comments();
-                        context.Set<Comments>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<CommentsRepository>> loggerMoc = CommentsRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CommentsRepositoryMoc.GetContext();
+			var repository = new CommentsRepository(loggerMoc.Object, context);
+			Comments entity = new Comments();
+			context.Set<Comments>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Comments modifiedRecord = await context.Set<Comments>().FirstOrDefaultAsync();
+			Comments modifiedRecord = await context.Set<Comments>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e7ef48e3ed7e6bb5c319c4ceeb4b273c</Hash>
+    <Hash>8b133efd576e446d70de0b38588b8597</Hash>
 </Codenesium>*/

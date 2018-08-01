@@ -1,14 +1,14 @@
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiSelfReferenceModelMapper : AbstractApiSelfReferenceModelMapper, IApiSelfReferenceModelMapper
-        {
-                public ApiSelfReferenceModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSelfReferenceModelMapper : AbstractApiSelfReferenceModelMapper, IApiSelfReferenceModelMapper
+	{
+		public ApiSelfReferenceModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>03e91169a2783962e587f0af01a38d1e</Hash>
+    <Hash>e117300af32ac9f25aab93f1228b752d</Hash>
 </Codenesium>*/

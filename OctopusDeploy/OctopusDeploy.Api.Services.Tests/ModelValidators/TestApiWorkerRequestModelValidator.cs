@@ -15,185 +15,185 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Worker")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiWorkerRequestModelValidatorTest
-        {
-                public ApiWorkerRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Worker")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiWorkerRequestModelValidatorTest
+	{
+		public ApiWorkerRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CommunicationStyle_Create_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void CommunicationStyle_Create_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
+		}
 
-                [Fact]
-                public async void CommunicationStyle_Update_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void CommunicationStyle_Update_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Fingerprint_Create_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Fingerprint_Create_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Fingerprint_Update_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Fingerprint_Update_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void MachinePolicyId_Create_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void MachinePolicyId_Create_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void MachinePolicyId_Update_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void MachinePolicyId_Update_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Thumbprint_Create_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Thumbprint_Create_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Thumbprint_Update_length()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
+		[Fact]
+		public async void Thumbprint_Update_length()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Worker()));
 
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
+			await validator.ValidateCreateAsync(new ApiWorkerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(new Worker()));
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
-                        workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
-                        var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IWorkerRepository> workerRepository = new Mock<IWorkerRepository>();
+			workerRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Worker>(null));
+			var validator = new ApiWorkerRequestModelValidator(workerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiWorkerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>74582e8be6a34beaae3d29a1ab373a0c</Hash>
+    <Hash>3b61354a3604aa7c6d07af32dd0b3403</Hash>
 </Codenesium>*/

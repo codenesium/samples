@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public interface ISaleRepository
-        {
-                Task<Sale> Create(Sale item);
+	public interface ISaleRepository
+	{
+		Task<Sale> Create(Sale item);
 
-                Task Update(Sale item);
+		Task Update(Sale item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Sale> Get(int id);
+		Task<Sale> Get(int id);
 
-                Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<PaymentType> GetPaymentType(int paymentTypeId);
+		Task<PaymentType> GetPaymentType(int paymentTypeId);
 
-                Task<Pet> GetPet(int petId);
-        }
+		Task<Pet> GetPet(int petId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>30d9f163ea081db244c496314f9f0229</Hash>
+    <Hash>8a1610361e2e523dbc89c6216253a63c</Hash>
 </Codenesium>*/

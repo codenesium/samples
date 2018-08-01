@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IApiEmployeePayHistoryRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiEmployeePayHistoryRequestModel model);
+	public interface IApiEmployeePayHistoryRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiEmployeePayHistoryRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmployeePayHistoryRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmployeePayHistoryRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9ff4df35ef7e50b88c6b55ad18535cb4</Hash>
+    <Hash>e54ce07e11106fa45d71064a7d8850ad</Hash>
 </Codenesium>*/

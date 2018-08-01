@@ -6,36 +6,36 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        [Table("PhoneNumberType", Schema="Person")]
-        public partial class PhoneNumberType : AbstractEntity
-        {
-                public PhoneNumberType()
-                {
-                }
+	[Table("PhoneNumberType", Schema="Person")]
+	public partial class PhoneNumberType : AbstractEntity
+	{
+		public PhoneNumberType()
+		{
+		}
 
-                public virtual void SetProperties(
-                        DateTime modifiedDate,
-                        string name,
-                        int phoneNumberTypeID)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                        this.PhoneNumberTypeID = phoneNumberTypeID;
-                }
+		public virtual void SetProperties(
+			DateTime modifiedDate,
+			string name,
+			int phoneNumberTypeID)
+		{
+			this.ModifiedDate = modifiedDate;
+			this.Name = name;
+			this.PhoneNumberTypeID = phoneNumberTypeID;
+		}
 
-                [Column("ModifiedDate")]
-                public DateTime ModifiedDate { get; private set; }
+		[Column("ModifiedDate")]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name")]
-                public string Name { get; private set; }
+		[Column("Name")]
+		public string Name { get; private set; }
 
-                [Key]
-                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-                [Column("PhoneNumberTypeID")]
-                public int PhoneNumberTypeID { get; private set; }
-        }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("PhoneNumberTypeID")]
+		public int PhoneNumberTypeID { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>127a572675be9655732658eca0220b40</Hash>
+    <Hash>44986042f413f9a34ae06da46f6ea9af</Hash>
 </Codenesium>*/

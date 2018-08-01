@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiMachineModelMapper : AbstractApiMachineModelMapper, IApiMachineModelMapper
-        {
-                public ApiMachineModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiMachineModelMapper : AbstractApiMachineModelMapper, IApiMachineModelMapper
+	{
+		public ApiMachineModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>db6938570d05408b27aafbbe76562894</Hash>
+    <Hash>30c0900172069de4cbf4b523e6752f76</Hash>
 </Codenesium>*/

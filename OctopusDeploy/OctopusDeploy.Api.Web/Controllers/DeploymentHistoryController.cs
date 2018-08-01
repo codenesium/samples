@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/deploymentHistories")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class DeploymentHistoryController : AbstractDeploymentHistoryController
-        {
-                public DeploymentHistoryController(
-                        ApiSettings settings,
-                        ILogger<DeploymentHistoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IDeploymentHistoryService deploymentHistoryService,
-                        IApiDeploymentHistoryModelMapper deploymentHistoryModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               deploymentHistoryService,
-                               deploymentHistoryModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/deploymentHistories")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class DeploymentHistoryController : AbstractDeploymentHistoryController
+	{
+		public DeploymentHistoryController(
+			ApiSettings settings,
+			ILogger<DeploymentHistoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IDeploymentHistoryService deploymentHistoryService,
+			IApiDeploymentHistoryModelMapper deploymentHistoryModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       deploymentHistoryService,
+			       deploymentHistoryModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a561f32fa7ee8c483602d2fc90183435</Hash>
+    <Hash>a928c7ad35cae6098d1cc697711b0586</Hash>
 </Codenesium>*/

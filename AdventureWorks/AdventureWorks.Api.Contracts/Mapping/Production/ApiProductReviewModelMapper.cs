@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductReviewModelMapper : AbstractApiProductReviewModelMapper, IApiProductReviewModelMapper
-        {
-                public ApiProductReviewModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiProductReviewModelMapper : AbstractApiProductReviewModelMapper, IApiProductReviewModelMapper
+	{
+		public ApiProductReviewModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dcb99d6542d88655d768a816bec98ec5</Hash>
+    <Hash>2c131859451ac78e3344c3777fff5311</Hash>
 </Codenesium>*/

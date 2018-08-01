@@ -15,67 +15,67 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PersonCreditCard")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPersonCreditCardRequestModelValidatorTest
-        {
-                public ApiPersonCreditCardRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PersonCreditCard")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPersonCreditCardRequestModelValidatorTest
+	{
+		public ApiPersonCreditCardRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CreditCardID_Create_Valid_Reference()
-                {
-                        Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
-                        personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+		[Fact]
+		public async void CreditCardID_Create_Valid_Reference()
+		{
+			Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
+			personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
-                        var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPersonCreditCardRequestModel());
+			var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPersonCreditCardRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
+		}
 
-                [Fact]
-                public async void CreditCardID_Create_Invalid_Reference()
-                {
-                        Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
-                        personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
+		[Fact]
+		public async void CreditCardID_Create_Invalid_Reference()
+		{
+			Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
+			personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
 
-                        var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
+			var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiPersonCreditCardRequestModel());
+			await validator.ValidateCreateAsync(new ApiPersonCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
+		}
 
-                [Fact]
-                public async void CreditCardID_Update_Valid_Reference()
-                {
-                        Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
-                        personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+		[Fact]
+		public async void CreditCardID_Update_Valid_Reference()
+		{
+			Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
+			personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
-                        var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
+			var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
+		}
 
-                [Fact]
-                public async void CreditCardID_Update_Invalid_Reference()
-                {
-                        Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
-                        personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
+		[Fact]
+		public async void CreditCardID_Update_Invalid_Reference()
+		{
+			Mock<IPersonCreditCardRepository> personCreditCardRepository = new Mock<IPersonCreditCardRepository>();
+			personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
 
-                        var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
+			var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9fc228a2a246bcf28f8c47433109893b</Hash>
+    <Hash>1f520ce2a972c138190465bb39fc56c0</Hash>
 </Codenesium>*/

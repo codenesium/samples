@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public interface IMachineRefTeamRepository
-        {
-                Task<MachineRefTeam> Create(MachineRefTeam item);
+	public interface IMachineRefTeamRepository
+	{
+		Task<MachineRefTeam> Create(MachineRefTeam item);
 
-                Task Update(MachineRefTeam item);
+		Task Update(MachineRefTeam item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<MachineRefTeam> Get(int id);
+		Task<MachineRefTeam> Get(int id);
 
-                Task<List<MachineRefTeam>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<MachineRefTeam>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Machine> GetMachine(int machineId);
+		Task<Machine> GetMachine(int machineId);
 
-                Task<Team> GetTeam(int teamId);
-        }
+		Task<Team> GetTeam(int teamId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>d70f9d9d93428a16a79ab12044a87bde</Hash>
+    <Hash>f4f2b3c305e95069fa21049e192620ee</Hash>
 </Codenesium>*/

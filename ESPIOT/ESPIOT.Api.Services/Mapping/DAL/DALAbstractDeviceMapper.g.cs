@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class DALAbstractDeviceMapper
-        {
-                public virtual Device MapBOToEF(
-                        BODevice bo)
-                {
-                        Device efDevice = new Device();
-                        efDevice.SetProperties(
-                                bo.Id,
-                                bo.Name,
-                                bo.PublicId);
-                        return efDevice;
-                }
+	public abstract class DALAbstractDeviceMapper
+	{
+		public virtual Device MapBOToEF(
+			BODevice bo)
+		{
+			Device efDevice = new Device();
+			efDevice.SetProperties(
+				bo.Id,
+				bo.Name,
+				bo.PublicId);
+			return efDevice;
+		}
 
-                public virtual BODevice MapEFToBO(
-                        Device ef)
-                {
-                        var bo = new BODevice();
+		public virtual BODevice MapEFToBO(
+			Device ef)
+		{
+			var bo = new BODevice();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Name,
-                                ef.PublicId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Name,
+				ef.PublicId);
+			return bo;
+		}
 
-                public virtual List<BODevice> MapEFToBO(
-                        List<Device> records)
-                {
-                        List<BODevice> response = new List<BODevice>();
+		public virtual List<BODevice> MapEFToBO(
+			List<Device> records)
+		{
+			List<BODevice> response = new List<BODevice>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ec1542dade50e3ae0c4ca201582cc9f9</Hash>
+    <Hash>9a4fa2f41f14142898ecccf8438000aa</Hash>
 </Codenesium>*/

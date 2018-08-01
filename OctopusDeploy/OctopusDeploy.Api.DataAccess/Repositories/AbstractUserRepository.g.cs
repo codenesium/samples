@@ -11,130 +11,130 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractUserRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractUserRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractUserRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractUserRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<User> Get(string id)
-                {
-                        return await this.GetById(id);
-                }
+		public async virtual Task<User> Get(string id)
+		{
+			return await this.GetById(id);
+		}
 
-                public async virtual Task<User> Create(User item)
-                {
-                        this.Context.Set<User>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<User> Create(User item)
+		{
+			this.Context.Set<User>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(User item)
-                {
-                        var entity = this.Context.Set<User>().Local.FirstOrDefault(x => x.Id == item.Id);
-                        if (entity == null)
-                        {
-                                this.Context.Set<User>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(User item)
+		{
+			var entity = this.Context.Set<User>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<User>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        string id)
-                {
-                        User record = await this.GetById(id);
+		public async virtual Task Delete(
+			string id)
+		{
+			User record = await this.GetById(id);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<User>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<User>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<User> ByUsername(string username)
-                {
-                        var records = await this.Where(x => x.Username == username);
+		public async Task<User> ByUsername(string username)
+		{
+			var records = await this.Where(x => x.Username == username);
 
-                        return records.FirstOrDefault();
-                }
+			return records.FirstOrDefault();
+		}
 
-                public async Task<List<User>> ByDisplayName(string displayName)
-                {
-                        var records = await this.Where(x => x.DisplayName == displayName);
+		public async Task<List<User>> ByDisplayName(string displayName)
+		{
+			var records = await this.Where(x => x.DisplayName == displayName);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<User>> ByEmailAddress(string emailAddress)
-                {
-                        var records = await this.Where(x => x.EmailAddress == emailAddress);
+		public async Task<List<User>> ByEmailAddress(string emailAddress)
+		{
+			var records = await this.Where(x => x.EmailAddress == emailAddress);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<User>> ByExternalId(string externalId)
-                {
-                        var records = await this.Where(x => x.ExternalId == externalId);
+		public async Task<List<User>> ByExternalId(string externalId)
+		{
+			var records = await this.Where(x => x.ExternalId == externalId);
 
-                        return records;
-                }
+			return records;
+		}
 
-                protected async Task<List<User>> Where(
-                        Expression<Func<User, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<User, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.Id;
-                        }
+		protected async Task<List<User>> Where(
+			Expression<Func<User, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<User, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Id;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+			}
+			else
+			{
+				return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+			}
+		}
 
-                private async Task<User> GetById(string id)
-                {
-                        List<User> records = await this.Where(x => x.Id == id);
+		private async Task<User> GetById(string id)
+		{
+			List<User> records = await this.Where(x => x.Id == id);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3776dd677485fa5f657a9818051d2839</Hash>
+    <Hash>7c15b049b9fd4abf9e312389edd1093f</Hash>
 </Codenesium>*/

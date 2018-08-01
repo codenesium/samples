@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public interface IPostHistoryTypesRepository
-        {
-                Task<PostHistoryTypes> Create(PostHistoryTypes item);
+	public interface IPostHistoryTypesRepository
+	{
+		Task<PostHistoryTypes> Create(PostHistoryTypes item);
 
-                Task Update(PostHistoryTypes item);
+		Task Update(PostHistoryTypes item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<PostHistoryTypes> Get(int id);
+		Task<PostHistoryTypes> Get(int id);
 
-                Task<List<PostHistoryTypes>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<PostHistoryTypes>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>73704718894fe2ebd83265717d435cd1</Hash>
+    <Hash>6f31603601346105050b59f5f2e3f2ae</Hash>
 </Codenesium>*/

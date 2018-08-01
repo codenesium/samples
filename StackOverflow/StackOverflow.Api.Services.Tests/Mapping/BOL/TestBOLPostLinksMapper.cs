@@ -8,53 +8,53 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PostLinks")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPostLinksMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPostLinksMapper();
-                        ApiPostLinksRequestModel model = new ApiPostLinksRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-                        BOPostLinks response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PostLinks")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPostLinksMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPostLinksMapper();
+			ApiPostLinksRequestModel model = new ApiPostLinksRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			BOPostLinks response = mapper.MapModelToBO(1, model);
 
-                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.LinkTypeId.Should().Be(1);
-                        response.PostId.Should().Be(1);
-                        response.RelatedPostId.Should().Be(1);
-                }
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.LinkTypeId.Should().Be(1);
+			response.PostId.Should().Be(1);
+			response.RelatedPostId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPostLinksMapper();
-                        BOPostLinks bo = new BOPostLinks();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-                        ApiPostLinksResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPostLinksMapper();
+			BOPostLinks bo = new BOPostLinks();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			ApiPostLinksResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Id.Should().Be(1);
-                        response.LinkTypeId.Should().Be(1);
-                        response.PostId.Should().Be(1);
-                        response.RelatedPostId.Should().Be(1);
-                }
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Id.Should().Be(1);
+			response.LinkTypeId.Should().Be(1);
+			response.PostId.Should().Be(1);
+			response.RelatedPostId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPostLinksMapper();
-                        BOPostLinks bo = new BOPostLinks();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-                        List<ApiPostLinksResponseModel> response = mapper.MapBOToModel(new List<BOPostLinks>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPostLinksMapper();
+			BOPostLinks bo = new BOPostLinks();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			List<ApiPostLinksResponseModel> response = mapper.MapBOToModel(new List<BOPostLinks>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f9a59ee6f613d7207c4aefb0e64dcae</Hash>
+    <Hash>551c9ec2eef22a15715e46c65733788f</Hash>
 </Codenesium>*/

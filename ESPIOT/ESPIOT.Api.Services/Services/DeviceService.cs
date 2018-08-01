@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Services
 {
-        public partial class DeviceService : AbstractDeviceService, IDeviceService
-        {
-                public DeviceService(
-                        ILogger<IDeviceRepository> logger,
-                        IDeviceRepository deviceRepository,
-                        IApiDeviceRequestModelValidator deviceModelValidator,
-                        IBOLDeviceMapper boldeviceMapper,
-                        IDALDeviceMapper daldeviceMapper,
-                        IBOLDeviceActionMapper bolDeviceActionMapper,
-                        IDALDeviceActionMapper dalDeviceActionMapper
-                        )
-                        : base(logger,
-                               deviceRepository,
-                               deviceModelValidator,
-                               boldeviceMapper,
-                               daldeviceMapper,
-                               bolDeviceActionMapper,
-                               dalDeviceActionMapper)
-                {
-                }
-        }
+	public partial class DeviceService : AbstractDeviceService, IDeviceService
+	{
+		public DeviceService(
+			ILogger<IDeviceRepository> logger,
+			IDeviceRepository deviceRepository,
+			IApiDeviceRequestModelValidator deviceModelValidator,
+			IBOLDeviceMapper boldeviceMapper,
+			IDALDeviceMapper daldeviceMapper,
+			IBOLDeviceActionMapper bolDeviceActionMapper,
+			IDALDeviceActionMapper dalDeviceActionMapper
+			)
+			: base(logger,
+			       deviceRepository,
+			       deviceModelValidator,
+			       boldeviceMapper,
+			       daldeviceMapper,
+			       bolDeviceActionMapper,
+			       dalDeviceActionMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1129c473c68dc74838e321596fbce911</Hash>
+    <Hash>d05310d8e87007eaabe664a8dbd214b6</Hash>
 </Codenesium>*/

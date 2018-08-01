@@ -15,65 +15,65 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Person")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPersonRequestModelValidatorTest
-        {
-                public ApiPersonRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Person")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPersonRequestModelValidatorTest
+	{
+		public ApiPersonRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void PersonName_Create_null()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
+		[Fact]
+		public async void PersonName_Create_null()
+		{
+			Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
+			personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPersonRequestModel());
+			var validator = new ApiPersonRequestModelValidator(personRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PersonName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PersonName, null as string);
+		}
 
-                [Fact]
-                public async void PersonName_Update_null()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
+		[Fact]
+		public async void PersonName_Update_null()
+		{
+			Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
+			personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
+			var validator = new ApiPersonRequestModelValidator(personRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PersonName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PersonName, null as string);
+		}
 
-                [Fact]
-                public async void PersonName_Create_length()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
+		[Fact]
+		public async void PersonName_Create_length()
+		{
+			Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
+			personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPersonRequestModel());
+			var validator = new ApiPersonRequestModelValidator(personRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PersonName, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PersonName, new string('A', 51));
+		}
 
-                [Fact]
-                public async void PersonName_Update_length()
-                {
-                        Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
-                        personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
+		[Fact]
+		public async void PersonName_Update_length()
+		{
+			Mock<IPersonRepository> personRepository = new Mock<IPersonRepository>();
+			personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
-                        var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
+			var validator = new ApiPersonRequestModelValidator(personRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PersonName, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PersonName, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6d1d6b5170fc87092addb18fabafdb19</Hash>
+    <Hash>05011c14f25e07ee7c84fe8bcd30e8c9</Hash>
 </Codenesium>*/

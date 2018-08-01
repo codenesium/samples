@@ -6,58 +6,58 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class DALAbstractPostHistoryMapper
-        {
-                public virtual PostHistory MapBOToEF(
-                        BOPostHistory bo)
-                {
-                        PostHistory efPostHistory = new PostHistory();
-                        efPostHistory.SetProperties(
-                                bo.Comment,
-                                bo.CreationDate,
-                                bo.Id,
-                                bo.PostHistoryTypeId,
-                                bo.PostId,
-                                bo.RevisionGUID,
-                                bo.Text,
-                                bo.UserDisplayName,
-                                bo.UserId);
-                        return efPostHistory;
-                }
+	public abstract class DALAbstractPostHistoryMapper
+	{
+		public virtual PostHistory MapBOToEF(
+			BOPostHistory bo)
+		{
+			PostHistory efPostHistory = new PostHistory();
+			efPostHistory.SetProperties(
+				bo.Comment,
+				bo.CreationDate,
+				bo.Id,
+				bo.PostHistoryTypeId,
+				bo.PostId,
+				bo.RevisionGUID,
+				bo.Text,
+				bo.UserDisplayName,
+				bo.UserId);
+			return efPostHistory;
+		}
 
-                public virtual BOPostHistory MapEFToBO(
-                        PostHistory ef)
-                {
-                        var bo = new BOPostHistory();
+		public virtual BOPostHistory MapEFToBO(
+			PostHistory ef)
+		{
+			var bo = new BOPostHistory();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Comment,
-                                ef.CreationDate,
-                                ef.PostHistoryTypeId,
-                                ef.PostId,
-                                ef.RevisionGUID,
-                                ef.Text,
-                                ef.UserDisplayName,
-                                ef.UserId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Comment,
+				ef.CreationDate,
+				ef.PostHistoryTypeId,
+				ef.PostId,
+				ef.RevisionGUID,
+				ef.Text,
+				ef.UserDisplayName,
+				ef.UserId);
+			return bo;
+		}
 
-                public virtual List<BOPostHistory> MapEFToBO(
-                        List<PostHistory> records)
-                {
-                        List<BOPostHistory> response = new List<BOPostHistory>();
+		public virtual List<BOPostHistory> MapEFToBO(
+			List<PostHistory> records)
+		{
+			List<BOPostHistory> response = new List<BOPostHistory>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d91f9190f93c0e8f118557b62899efe4</Hash>
+    <Hash>aa998d09efdbf9b03bebd13b696e2581</Hash>
 </Codenesium>*/

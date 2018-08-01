@@ -9,44 +9,44 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSpecialOfferProductRequestModelValidator : AbstractValidator<ApiSpecialOfferProductRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSpecialOfferProductRequestModelValidator : AbstractValidator<ApiSpecialOfferProductRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISpecialOfferProductRepository specialOfferProductRepository;
+		private ISpecialOfferProductRepository specialOfferProductRepository;
 
-                public AbstractApiSpecialOfferProductRequestModelValidator(ISpecialOfferProductRepository specialOfferProductRepository)
-                {
-                        this.specialOfferProductRepository = specialOfferProductRepository;
-                }
+		public AbstractApiSpecialOfferProductRequestModelValidator(ISpecialOfferProductRepository specialOfferProductRepository)
+		{
+			this.specialOfferProductRepository = specialOfferProductRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSpecialOfferProductRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSpecialOfferProductRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void ProductIDRules()
-                {
-                }
+		public virtual void ProductIDRules()
+		{
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
+		public virtual void RowguidRules()
+		{
+		}
 
-                private async Task<bool> BeValidSpecialOffer(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.specialOfferProductRepository.GetSpecialOffer(id);
+		private async Task<bool> BeValidSpecialOffer(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.specialOfferProductRepository.GetSpecialOffer(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a10b57062faf35a7ee28d07c10f22092</Hash>
+    <Hash>0bfad339db957ceea8950bcfee15e553</Hash>
 </Codenesium>*/

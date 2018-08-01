@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ContactType")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiContactTypeRequestModelValidatorTest
-        {
-                public ApiContactTypeRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ContactType")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiContactTypeRequestModelValidatorTest
+	{
+		public ApiContactTypeRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
 
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+			await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
 
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
 
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+			await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
 
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(new ContactType()));
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(new ContactType()));
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
+			await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(null));
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(null));
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
+			await validator.ValidateCreateAsync(new ApiContactTypeRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(new ContactType()));
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(new ContactType()));
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
-                        contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(null));
-                        var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IContactTypeRepository> contactTypeRepository = new Mock<IContactTypeRepository>();
+			contactTypeRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ContactType>(null));
+			var validator = new ApiContactTypeRequestModelValidator(contactTypeRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiContactTypeRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0ff2f2b67490118bdce1078189f524a0</Hash>
+    <Hash>09d9cbe61415c8b052e67541f1208076</Hash>
 </Codenesium>*/

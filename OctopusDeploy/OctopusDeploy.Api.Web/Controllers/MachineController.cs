@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/machines")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class MachineController : AbstractMachineController
-        {
-                public MachineController(
-                        ApiSettings settings,
-                        ILogger<MachineController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IMachineService machineService,
-                        IApiMachineModelMapper machineModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               machineService,
-                               machineModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/machines")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class MachineController : AbstractMachineController
+	{
+		public MachineController(
+			ApiSettings settings,
+			ILogger<MachineController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IMachineService machineService,
+			IApiMachineModelMapper machineModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       machineService,
+			       machineModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c21226b7fb6aab57086e6f980e761a75</Hash>
+    <Hash>ada4439ee680920001cb85f4e7664f8b</Hash>
 </Codenesium>*/

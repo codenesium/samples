@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOAddressType : AbstractBOAddressType
-        {
-                public BOAddressType()
-                        : base()
-                {
-                }
-        }
+	public partial class BOAddressType : AbstractBOAddressType
+	{
+		public BOAddressType()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>188b3c5a431ce861d71a96025cb49de8</Hash>
+    <Hash>9d09ef3f700a0dd5e2bdd0948c0f730b</Hash>
 </Codenesium>*/

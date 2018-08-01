@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Culture")]
-        [Trait("Area", "Integration")]
-        public class CultureIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public CultureIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Culture")]
+	[Trait("Area", "Integration")]
+	public class CultureIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public CultureIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiCultureModelMapper mapper = new ApiCultureModelMapper();
+			ApiCultureModelMapper mapper = new ApiCultureModelMapper();
 
-                        UpdateResponse<ApiCultureResponseModel> updateResponse = await this.Client.CultureUpdateAsync(model.CultureID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCultureResponseModel> updateResponse = await this.Client.CultureUpdateAsync(model.CultureID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.CultureDeleteAsync(model.CultureID);
+			await this.Client.CultureDeleteAsync(model.CultureID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiCultureResponseModel response = await this.Client.CultureGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiCultureResponseModel response = await this.Client.CultureGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiCultureResponseModel> response = await this.Client.CultureAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiCultureResponseModel> response = await this.Client.CultureAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiCultureResponseModel> CreateRecord()
-                {
-                        var model = new ApiCultureRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-                        CreateResponse<ApiCultureResponseModel> result = await this.Client.CultureCreateAsync(model);
+		private async Task<ApiCultureResponseModel> CreateRecord()
+		{
+			var model = new ApiCultureRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiCultureResponseModel> result = await this.Client.CultureCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.CultureDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.CultureDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df62f7f32a0c98b34ca5e9388fb4f21c</Hash>
+    <Hash>5038a7bf28e8183ca7e6952f4d34a19e</Hash>
 </Codenesium>*/

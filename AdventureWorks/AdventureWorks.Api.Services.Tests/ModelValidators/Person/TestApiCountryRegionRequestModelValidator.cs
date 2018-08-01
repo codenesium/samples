@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "CountryRegion")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCountryRegionRequestModelValidatorTest
-        {
-                public ApiCountryRegionRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "CountryRegion")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCountryRegionRequestModelValidatorTest
+	{
+		public ApiCountryRegionRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
+			await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
+			await validator.ValidateCreateAsync(new ApiCountryRegionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
-                        countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
-                        var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ICountryRegionRepository> countryRegionRepository = new Mock<ICountryRegionRepository>();
+			countryRegionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
+			var validator = new ApiCountryRegionRequestModelValidator(countryRegionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d572d46542f650464b3e147a0bbd57b8</Hash>
+    <Hash>5d1c6c884f14ab3d9d238a784fc1bc6d</Hash>
 </Codenesium>*/

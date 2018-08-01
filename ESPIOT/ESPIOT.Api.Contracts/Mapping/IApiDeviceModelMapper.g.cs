@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public interface IApiDeviceModelMapper
-        {
-                ApiDeviceResponseModel MapRequestToResponse(
-                        int id,
-                        ApiDeviceRequestModel request);
+	public interface IApiDeviceModelMapper
+	{
+		ApiDeviceResponseModel MapRequestToResponse(
+			int id,
+			ApiDeviceRequestModel request);
 
-                ApiDeviceRequestModel MapResponseToRequest(
-                        ApiDeviceResponseModel response);
+		ApiDeviceRequestModel MapResponseToRequest(
+			ApiDeviceResponseModel response);
 
-                JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model);
-        }
+		JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>357e1cbb58664ef6668dbb74b63e589e</Hash>
+    <Hash>49d4746175c60006b3ccdfe54ce4f3af</Hash>
 </Codenesium>*/

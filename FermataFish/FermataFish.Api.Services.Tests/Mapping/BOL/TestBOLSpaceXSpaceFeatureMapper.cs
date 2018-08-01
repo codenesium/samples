@@ -8,49 +8,49 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpaceXSpaceFeature")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLSpaceXSpaceFeatureMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLSpaceXSpaceFeatureMapper();
-                        ApiSpaceXSpaceFeatureRequestModel model = new ApiSpaceXSpaceFeatureRequestModel();
-                        model.SetProperties(1, 1);
-                        BOSpaceXSpaceFeature response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpaceXSpaceFeature")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLSpaceXSpaceFeatureMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLSpaceXSpaceFeatureMapper();
+			ApiSpaceXSpaceFeatureRequestModel model = new ApiSpaceXSpaceFeatureRequestModel();
+			model.SetProperties(1, 1);
+			BOSpaceXSpaceFeature response = mapper.MapModelToBO(1, model);
 
-                        response.SpaceFeatureId.Should().Be(1);
-                        response.SpaceId.Should().Be(1);
-                }
+			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLSpaceXSpaceFeatureMapper();
-                        BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
-                        bo.SetProperties(1, 1, 1);
-                        ApiSpaceXSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLSpaceXSpaceFeatureMapper();
+			BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
+			bo.SetProperties(1, 1, 1);
+			ApiSpaceXSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.SpaceFeatureId.Should().Be(1);
-                        response.SpaceId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLSpaceXSpaceFeatureMapper();
-                        BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
-                        bo.SetProperties(1, 1, 1);
-                        List<ApiSpaceXSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceXSpaceFeature>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLSpaceXSpaceFeatureMapper();
+			BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
+			bo.SetProperties(1, 1, 1);
+			List<ApiSpaceXSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceXSpaceFeature>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a9059a6f06ea6bd9f8aa92d3a5ee2f40</Hash>
+    <Hash>a6e51c236763367658f9460212adcc85</Hash>
 </Codenesium>*/

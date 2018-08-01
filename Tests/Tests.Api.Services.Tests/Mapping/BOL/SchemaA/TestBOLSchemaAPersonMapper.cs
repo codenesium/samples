@@ -8,47 +8,47 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SchemaAPerson")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLSchemaAPersonMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLSchemaAPersonMapper();
-                        ApiSchemaAPersonRequestModel model = new ApiSchemaAPersonRequestModel();
-                        model.SetProperties("A");
-                        BOSchemaAPerson response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SchemaAPerson")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLSchemaAPersonMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLSchemaAPersonMapper();
+			ApiSchemaAPersonRequestModel model = new ApiSchemaAPersonRequestModel();
+			model.SetProperties("A");
+			BOSchemaAPerson response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLSchemaAPersonMapper();
-                        BOSchemaAPerson bo = new BOSchemaAPerson();
-                        bo.SetProperties(1, "A");
-                        ApiSchemaAPersonResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLSchemaAPersonMapper();
+			BOSchemaAPerson bo = new BOSchemaAPerson();
+			bo.SetProperties(1, "A");
+			ApiSchemaAPersonResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLSchemaAPersonMapper();
-                        BOSchemaAPerson bo = new BOSchemaAPerson();
-                        bo.SetProperties(1, "A");
-                        List<ApiSchemaAPersonResponseModel> response = mapper.MapBOToModel(new List<BOSchemaAPerson>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLSchemaAPersonMapper();
+			BOSchemaAPerson bo = new BOSchemaAPerson();
+			bo.SetProperties(1, "A");
+			List<ApiSchemaAPersonResponseModel> response = mapper.MapBOToModel(new List<BOSchemaAPerson>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8224e3818bd42a873e4d9eea43dc34e1</Hash>
+    <Hash>f62db2534bfa82397f23da648a34848b</Hash>
 </Codenesium>*/

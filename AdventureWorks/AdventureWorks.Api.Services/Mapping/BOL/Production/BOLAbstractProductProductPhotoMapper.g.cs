@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductProductPhotoMapper
-        {
-                public virtual BOProductProductPhoto MapModelToBO(
-                        int productID,
-                        ApiProductProductPhotoRequestModel model
-                        )
-                {
-                        BOProductProductPhoto boProductProductPhoto = new BOProductProductPhoto();
-                        boProductProductPhoto.SetProperties(
-                                productID,
-                                model.ModifiedDate,
-                                model.Primary,
-                                model.ProductPhotoID);
-                        return boProductProductPhoto;
-                }
+	public abstract class BOLAbstractProductProductPhotoMapper
+	{
+		public virtual BOProductProductPhoto MapModelToBO(
+			int productID,
+			ApiProductProductPhotoRequestModel model
+			)
+		{
+			BOProductProductPhoto boProductProductPhoto = new BOProductProductPhoto();
+			boProductProductPhoto.SetProperties(
+				productID,
+				model.ModifiedDate,
+				model.Primary,
+				model.ProductPhotoID);
+			return boProductProductPhoto;
+		}
 
-                public virtual ApiProductProductPhotoResponseModel MapBOToModel(
-                        BOProductProductPhoto boProductProductPhoto)
-                {
-                        var model = new ApiProductProductPhotoResponseModel();
+		public virtual ApiProductProductPhotoResponseModel MapBOToModel(
+			BOProductProductPhoto boProductProductPhoto)
+		{
+			var model = new ApiProductProductPhotoResponseModel();
 
-                        model.SetProperties(boProductProductPhoto.ProductID, boProductProductPhoto.ModifiedDate, boProductProductPhoto.Primary, boProductProductPhoto.ProductPhotoID);
+			model.SetProperties(boProductProductPhoto.ProductID, boProductProductPhoto.ModifiedDate, boProductProductPhoto.Primary, boProductProductPhoto.ProductPhotoID);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductProductPhotoResponseModel> MapBOToModel(
-                        List<BOProductProductPhoto> items)
-                {
-                        List<ApiProductProductPhotoResponseModel> response = new List<ApiProductProductPhotoResponseModel>();
+		public virtual List<ApiProductProductPhotoResponseModel> MapBOToModel(
+			List<BOProductProductPhoto> items)
+		{
+			List<ApiProductProductPhotoResponseModel> response = new List<ApiProductProductPhotoResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>269f526b70f81a54f97030cee94e9463</Hash>
+    <Hash>12658bf786462237fb3f41dd681559c9</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/channels")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ChannelController : AbstractChannelController
-        {
-                public ChannelController(
-                        ApiSettings settings,
-                        ILogger<ChannelController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IChannelService channelService,
-                        IApiChannelModelMapper channelModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               channelService,
-                               channelModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/channels")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ChannelController : AbstractChannelController
+	{
+		public ChannelController(
+			ApiSettings settings,
+			ILogger<ChannelController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IChannelService channelService,
+			IApiChannelModelMapper channelModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       channelService,
+			       channelModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7ab8dcab568a549d1cfce1aa0680a8d9</Hash>
+    <Hash>a1a6e56be77b2a98cac9aa36ca07353b</Hash>
 </Codenesium>*/

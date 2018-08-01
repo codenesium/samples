@@ -1,14 +1,14 @@
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiChainModelMapper : AbstractApiChainModelMapper, IApiChainModelMapper
-        {
-                public ApiChainModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiChainModelMapper : AbstractApiChainModelMapper, IApiChainModelMapper
+	{
+		public ApiChainModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7e17b0295733b881d66cf1abf678e1a3</Hash>
+    <Hash>6d111461e042a490b2351175b49100f6</Hash>
 </Codenesium>*/

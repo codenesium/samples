@@ -6,34 +6,34 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonCreditCardResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int businessEntityID,
-                        int creditCardID,
-                        DateTime modifiedDate)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.CreditCardID = creditCardID;
-                        this.ModifiedDate = modifiedDate;
+	public partial class ApiPersonCreditCardResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int businessEntityID,
+			int creditCardID,
+			DateTime modifiedDate)
+		{
+			this.BusinessEntityID = businessEntityID;
+			this.CreditCardID = creditCardID;
+			this.ModifiedDate = modifiedDate;
 
-                        this.CreditCardIDEntity = nameof(ApiResponse.CreditCards);
-                }
+			this.CreditCardIDEntity = nameof(ApiResponse.CreditCards);
+		}
 
-                [JsonProperty]
-                public int BusinessEntityID { get; private set; }
+		[JsonProperty]
+		public int BusinessEntityID { get; private set; }
 
-                [JsonProperty]
-                public int CreditCardID { get; private set; }
+		[JsonProperty]
+		public int CreditCardID { get; private set; }
 
-                [JsonProperty]
-                public string CreditCardIDEntity { get; set; }
+		[JsonProperty]
+		public string CreditCardIDEntity { get; set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
-        }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>c796bb51474c383d88e4f16a917397e6</Hash>
+    <Hash>a235cb950b1b45d975b56a1bc041aa31</Hash>
 </Codenesium>*/

@@ -15,185 +15,185 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Machine")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiMachineRequestModelValidatorTest
-        {
-                public ApiMachineRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Machine")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiMachineRequestModelValidatorTest
+	{
+		public ApiMachineRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CommunicationStyle_Create_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void CommunicationStyle_Create_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
+		}
 
-                [Fact]
-                public async void CommunicationStyle_Update_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void CommunicationStyle_Update_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CommunicationStyle, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Fingerprint_Create_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Fingerprint_Create_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Fingerprint_Update_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Fingerprint_Update_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Fingerprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void MachinePolicyId_Create_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void MachinePolicyId_Create_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void MachinePolicyId_Update_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void MachinePolicyId_Update_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachinePolicyId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Thumbprint_Create_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Thumbprint_Create_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Thumbprint_Update_length()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
+		[Fact]
+		public async void Thumbprint_Update_length()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Machine()));
 
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Thumbprint, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachineRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(new Machine()));
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
-                        machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
-                        var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IMachineRepository> machineRepository = new Mock<IMachineRepository>();
+			machineRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Machine>(null));
+			var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiMachineRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c963e7f09192ac7d808367b7ba6d9c8a</Hash>
+    <Hash>f819419770e54ec3866a2f2e20fc52ab</Hash>
 </Codenesium>*/

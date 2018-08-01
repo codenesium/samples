@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALApiKeyMapper
-        {
-                ApiKey MapBOToEF(
-                        BOApiKey bo);
+	public interface IDALApiKeyMapper
+	{
+		ApiKey MapBOToEF(
+			BOApiKey bo);
 
-                BOApiKey MapEFToBO(
-                        ApiKey efApiKey);
+		BOApiKey MapEFToBO(
+			ApiKey efApiKey);
 
-                List<BOApiKey> MapEFToBO(
-                        List<ApiKey> records);
-        }
+		List<BOApiKey> MapEFToBO(
+			List<ApiKey> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7c5da65fe042737762340111352a665f</Hash>
+    <Hash>b9c6079805b76077b4854bbf1d25d6fa</Hash>
 </Codenesium>*/

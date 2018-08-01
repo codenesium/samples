@@ -3,15 +3,15 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOMachine : AbstractBOMachine
-        {
-                public BOMachine()
-                        : base()
-                {
-                }
-        }
+	public partial class BOMachine : AbstractBOMachine
+	{
+		public BOMachine()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8991bbe29aced01abde383db53318e83</Hash>
+    <Hash>14972b178f6041b7c420c05f4ad84905</Hash>
 </Codenesium>*/

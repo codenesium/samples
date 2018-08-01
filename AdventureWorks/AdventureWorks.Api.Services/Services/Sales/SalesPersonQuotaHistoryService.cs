@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class SalesPersonQuotaHistoryService : AbstractSalesPersonQuotaHistoryService, ISalesPersonQuotaHistoryService
-        {
-                public SalesPersonQuotaHistoryService(
-                        ILogger<ISalesPersonQuotaHistoryRepository> logger,
-                        ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
-                        IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
-                        IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
-                        IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper
-                        )
-                        : base(logger,
-                               salesPersonQuotaHistoryRepository,
-                               salesPersonQuotaHistoryModelValidator,
-                               bolsalesPersonQuotaHistoryMapper,
-                               dalsalesPersonQuotaHistoryMapper)
-                {
-                }
-        }
+	public partial class SalesPersonQuotaHistoryService : AbstractSalesPersonQuotaHistoryService, ISalesPersonQuotaHistoryService
+	{
+		public SalesPersonQuotaHistoryService(
+			ILogger<ISalesPersonQuotaHistoryRepository> logger,
+			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
+			IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
+			IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
+			IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper
+			)
+			: base(logger,
+			       salesPersonQuotaHistoryRepository,
+			       salesPersonQuotaHistoryModelValidator,
+			       bolsalesPersonQuotaHistoryMapper,
+			       dalsalesPersonQuotaHistoryMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e5292bb542da4866e7d35bcfd685d4f6</Hash>
+    <Hash>a6275e833da23cc28467434c08ac1aa9</Hash>
 </Codenesium>*/

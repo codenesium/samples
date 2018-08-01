@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface IDALSaleMapper
-        {
-                Sale MapBOToEF(
-                        BOSale bo);
+	public interface IDALSaleMapper
+	{
+		Sale MapBOToEF(
+			BOSale bo);
 
-                BOSale MapEFToBO(
-                        Sale efSale);
+		BOSale MapEFToBO(
+			Sale efSale);
 
-                List<BOSale> MapEFToBO(
-                        List<Sale> records);
-        }
+		List<BOSale> MapEFToBO(
+			List<Sale> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>f6a67bd6af3288d21af1e636069e99b6</Hash>
+    <Hash>b64e7d580d4d9e06fd4860f51a6c74a1</Hash>
 </Codenesium>*/

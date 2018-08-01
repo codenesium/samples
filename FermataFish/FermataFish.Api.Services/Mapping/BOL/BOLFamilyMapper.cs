@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOLFamilyMapper : BOLAbstractFamilyMapper, IBOLFamilyMapper
-        {
-                public BOLFamilyMapper()
-                {
-                }
-        }
+	public partial class BOLFamilyMapper : BOLAbstractFamilyMapper, IBOLFamilyMapper
+	{
+		public BOLFamilyMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6916f7c34f0a213c55a00526dd6d51df</Hash>
+    <Hash>747722d403ca3025d199da8e165e6384</Hash>
 </Codenesium>*/

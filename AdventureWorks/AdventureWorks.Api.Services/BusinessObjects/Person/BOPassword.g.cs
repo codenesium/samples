@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOPassword : AbstractBOPassword
-        {
-                public BOPassword()
-                        : base()
-                {
-                }
-        }
+	public partial class BOPassword : AbstractBOPassword
+	{
+		public BOPassword()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5bcee85bc3739646b2910ed387842d92</Hash>
+    <Hash>a7b2a93dd56d26aa5d4dfdf6277ffb78</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class TeacherSkillRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class TeacherSkillRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<TeacherSkillRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<TeacherSkillRepository>>();
-                }
-        }
+		public static Mock<ILogger<TeacherSkillRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<TeacherSkillRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TeacherSkill")]
-        [Trait("Area", "Repositories")]
-        public partial class TeacherSkillRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TeacherSkill")]
+	[Trait("Area", "Repositories")]
+	public partial class TeacherSkillRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 
-                        TeacherSkill entity = new TeacherSkill();
-                        context.Set<TeacherSkill>().Add(entity);
-                        await context.SaveChangesAsync();
+			TeacherSkill entity = new TeacherSkill();
+			context.Set<TeacherSkill>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 
-                        TeacherSkill entity = new TeacherSkill();
-                        context.Set<TeacherSkill>().Add(entity);
-                        await context.SaveChangesAsync();
+			TeacherSkill entity = new TeacherSkill();
+			context.Set<TeacherSkill>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 
-                        var entity = new TeacherSkill();
-                        await repository.Create(entity);
+			var entity = new TeacherSkill();
+			await repository.Create(entity);
 
-                        var record = await context.Set<TeacherSkill>().FirstOrDefaultAsync();
+			var record = await context.Set<TeacherSkill>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
-                        TeacherSkill entity = new TeacherSkill();
-                        context.Set<TeacherSkill>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+			TeacherSkill entity = new TeacherSkill();
+			context.Set<TeacherSkill>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<TeacherSkill>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TeacherSkill>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
-                        TeacherSkill entity = new TeacherSkill();
-                        context.Set<TeacherSkill>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+			TeacherSkill entity = new TeacherSkill();
+			context.Set<TeacherSkill>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new TeacherSkill());
+			await repository.Update(new TeacherSkill());
 
-                        var modifiedRecord = context.Set<TeacherSkill>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TeacherSkill>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
-                        var repository = new TeacherSkillRepository(loggerMoc.Object, context);
-                        TeacherSkill entity = new TeacherSkill();
-                        context.Set<TeacherSkill>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+			TeacherSkill entity = new TeacherSkill();
+			context.Set<TeacherSkill>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        TeacherSkill modifiedRecord = await context.Set<TeacherSkill>().FirstOrDefaultAsync();
+			TeacherSkill modifiedRecord = await context.Set<TeacherSkill>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>694ff08dae965eafc0d51da3c768ce93</Hash>
+    <Hash>34add69eb42e8cb7f7d9fa19021a1f49</Hash>
 </Codenesium>*/

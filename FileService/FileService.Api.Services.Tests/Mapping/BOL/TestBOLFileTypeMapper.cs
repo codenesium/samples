@@ -8,47 +8,47 @@ using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "FileType")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLFileTypeMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLFileTypeMapper();
-                        ApiFileTypeRequestModel model = new ApiFileTypeRequestModel();
-                        model.SetProperties("A");
-                        BOFileType response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "FileType")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLFileTypeMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLFileTypeMapper();
+			ApiFileTypeRequestModel model = new ApiFileTypeRequestModel();
+			model.SetProperties("A");
+			BOFileType response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLFileTypeMapper();
-                        BOFileType bo = new BOFileType();
-                        bo.SetProperties(1, "A");
-                        ApiFileTypeResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLFileTypeMapper();
+			BOFileType bo = new BOFileType();
+			bo.SetProperties(1, "A");
+			ApiFileTypeResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLFileTypeMapper();
-                        BOFileType bo = new BOFileType();
-                        bo.SetProperties(1, "A");
-                        List<ApiFileTypeResponseModel> response = mapper.MapBOToModel(new List<BOFileType>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLFileTypeMapper();
+			BOFileType bo = new BOFileType();
+			bo.SetProperties(1, "A");
+			List<ApiFileTypeResponseModel> response = mapper.MapBOToModel(new List<BOFileType>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c979dcbfdde34a62f4c999f87518f950</Hash>
+    <Hash>bd68e3586d28e53234846c5fc68514e0</Hash>
 </Codenesium>*/

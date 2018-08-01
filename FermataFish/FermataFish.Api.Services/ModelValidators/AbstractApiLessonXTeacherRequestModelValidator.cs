@@ -9,49 +9,49 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiLessonXTeacherRequestModelValidator : AbstractValidator<ApiLessonXTeacherRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiLessonXTeacherRequestModelValidator : AbstractValidator<ApiLessonXTeacherRequestModel>
+	{
+		private int existingRecordId;
 
-                private ILessonXTeacherRepository lessonXTeacherRepository;
+		private ILessonXTeacherRepository lessonXTeacherRepository;
 
-                public AbstractApiLessonXTeacherRequestModelValidator(ILessonXTeacherRepository lessonXTeacherRepository)
-                {
-                        this.lessonXTeacherRepository = lessonXTeacherRepository;
-                }
+		public AbstractApiLessonXTeacherRequestModelValidator(ILessonXTeacherRepository lessonXTeacherRepository)
+		{
+			this.lessonXTeacherRepository = lessonXTeacherRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiLessonXTeacherRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiLessonXTeacherRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void LessonIdRules()
-                {
-                        this.RuleFor(x => x.LessonId).MustAsync(this.BeValidLesson).When(x => x?.LessonId != null).WithMessage("Invalid reference");
-                }
+		public virtual void LessonIdRules()
+		{
+			this.RuleFor(x => x.LessonId).MustAsync(this.BeValidLesson).When(x => x?.LessonId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void StudentIdRules()
-                {
-                        this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
-                }
+		public virtual void StudentIdRules()
+		{
+			this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidLesson(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.lessonXTeacherRepository.GetLesson(id);
+		private async Task<bool> BeValidLesson(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.lessonXTeacherRepository.GetLesson(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.lessonXTeacherRepository.GetStudent(id);
+		private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.lessonXTeacherRepository.GetStudent(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>abc1a580432b17aa323993ba1f893043</Hash>
+    <Hash>15f9a65d623d57d5c2bf8cd7a154727d</Hash>
 </Codenesium>*/

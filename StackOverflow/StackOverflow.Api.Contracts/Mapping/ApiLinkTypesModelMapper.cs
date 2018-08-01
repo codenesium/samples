@@ -1,14 +1,14 @@
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiLinkTypesModelMapper : AbstractApiLinkTypesModelMapper, IApiLinkTypesModelMapper
-        {
-                public ApiLinkTypesModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiLinkTypesModelMapper : AbstractApiLinkTypesModelMapper, IApiLinkTypesModelMapper
+	{
+		public ApiLinkTypesModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0c89721447af4b2d501c056f9c13ddec</Hash>
+    <Hash>3f7df96e99402ef0469dad33b9e1cf9d</Hash>
 </Codenesium>*/

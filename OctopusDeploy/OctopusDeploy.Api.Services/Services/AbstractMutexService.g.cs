@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractMutexService : AbstractService
-        {
-                private IMutexRepository mutexRepository;
+	public abstract class AbstractMutexService : AbstractService
+	{
+		private IMutexRepository mutexRepository;
 
-                private IApiMutexRequestModelValidator mutexModelValidator;
+		private IApiMutexRequestModelValidator mutexModelValidator;
 
-                private IBOLMutexMapper bolMutexMapper;
+		private IBOLMutexMapper bolMutexMapper;
 
-                private IDALMutexMapper dalMutexMapper;
+		private IDALMutexMapper dalMutexMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractMutexService(
-                        ILogger logger,
-                        IMutexRepository mutexRepository,
-                        IApiMutexRequestModelValidator mutexModelValidator,
-                        IBOLMutexMapper bolMutexMapper,
-                        IDALMutexMapper dalMutexMapper)
-                        : base()
-                {
-                        this.mutexRepository = mutexRepository;
-                        this.mutexModelValidator = mutexModelValidator;
-                        this.bolMutexMapper = bolMutexMapper;
-                        this.dalMutexMapper = dalMutexMapper;
-                        this.logger = logger;
-                }
+		public AbstractMutexService(
+			ILogger logger,
+			IMutexRepository mutexRepository,
+			IApiMutexRequestModelValidator mutexModelValidator,
+			IBOLMutexMapper bolMutexMapper,
+			IDALMutexMapper dalMutexMapper)
+			: base()
+		{
+			this.mutexRepository = mutexRepository;
+			this.mutexModelValidator = mutexModelValidator;
+			this.bolMutexMapper = bolMutexMapper;
+			this.dalMutexMapper = dalMutexMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.mutexRepository.All(limit, offset);
+		public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.mutexRepository.All(limit, offset);
 
-                        return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(records));
-                }
+			return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiMutexResponseModel> Get(string id)
-                {
-                        var record = await this.mutexRepository.Get(id);
+		public virtual async Task<ApiMutexResponseModel> Get(string id)
+		{
+			var record = await this.mutexRepository.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiMutexResponseModel>> Create(
-                        ApiMutexRequestModel model)
-                {
-                        CreateResponse<ApiMutexResponseModel> response = new CreateResponse<ApiMutexResponseModel>(await this.mutexModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolMutexMapper.MapModelToBO(default(string), model);
-                                var record = await this.mutexRepository.Create(this.dalMutexMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiMutexResponseModel>> Create(
+			ApiMutexRequestModel model)
+		{
+			CreateResponse<ApiMutexResponseModel> response = new CreateResponse<ApiMutexResponseModel>(await this.mutexModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolMutexMapper.MapModelToBO(default(string), model);
+				var record = await this.mutexRepository.Create(this.dalMutexMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiMutexResponseModel>> Update(
-                        string id,
-                        ApiMutexRequestModel model)
-                {
-                        var validationResult = await this.mutexModelValidator.ValidateUpdateAsync(id, model);
+		public virtual async Task<UpdateResponse<ApiMutexResponseModel>> Update(
+			string id,
+			ApiMutexRequestModel model)
+		{
+			var validationResult = await this.mutexModelValidator.ValidateUpdateAsync(id, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolMutexMapper.MapModelToBO(id, model);
-                                await this.mutexRepository.Update(this.dalMutexMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolMutexMapper.MapModelToBO(id, model);
+				await this.mutexRepository.Update(this.dalMutexMapper.MapBOToEF(bo));
 
-                                var record = await this.mutexRepository.Get(id);
+				var record = await this.mutexRepository.Get(id);
 
-                                return new UpdateResponse<ApiMutexResponseModel>(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiMutexResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiMutexResponseModel>(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiMutexResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        string id)
-                {
-                        ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateDeleteAsync(id));
-                        if (response.Success)
-                        {
-                                await this.mutexRepository.Delete(id);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			string id)
+		{
+			ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateDeleteAsync(id));
+			if (response.Success)
+			{
+				await this.mutexRepository.Delete(id);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>16c7dafd19b71cb4f008229cb0b202bb</Hash>
+    <Hash>d42d1163d873419567f0eb30ae778c5a</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiProxyModelMapper
-        {
-                ApiProxyResponseModel MapRequestToResponse(
-                        string id,
-                        ApiProxyRequestModel request);
+	public interface IApiProxyModelMapper
+	{
+		ApiProxyResponseModel MapRequestToResponse(
+			string id,
+			ApiProxyRequestModel request);
 
-                ApiProxyRequestModel MapResponseToRequest(
-                        ApiProxyResponseModel response);
+		ApiProxyRequestModel MapResponseToRequest(
+			ApiProxyResponseModel response);
 
-                JsonPatchDocument<ApiProxyRequestModel> CreatePatch(ApiProxyRequestModel model);
-        }
+		JsonPatchDocument<ApiProxyRequestModel> CreatePatch(ApiProxyRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4f275dc27aa8ecc774de99164499ccfd</Hash>
+    <Hash>0b50d66634c9a51294cc85787f88b5da</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class LocationRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class LocationRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<LocationRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<LocationRepository>>();
-                }
-        }
+		public static Mock<ILogger<LocationRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<LocationRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Location")]
-        [Trait("Area", "Repositories")]
-        public partial class LocationRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Location")]
+	[Trait("Area", "Repositories")]
+	public partial class LocationRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
 
-                        Location entity = new Location();
-                        context.Set<Location>().Add(entity);
-                        await context.SaveChangesAsync();
+			Location entity = new Location();
+			context.Set<Location>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
 
-                        Location entity = new Location();
-                        context.Set<Location>().Add(entity);
-                        await context.SaveChangesAsync();
+			Location entity = new Location();
+			context.Set<Location>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.LocationID);
+			var record = await repository.Get(entity.LocationID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
 
-                        var entity = new Location();
-                        await repository.Create(entity);
+			var entity = new Location();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Location>().FirstOrDefaultAsync();
+			var record = await context.Set<Location>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
-                        Location entity = new Location();
-                        context.Set<Location>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
+			Location entity = new Location();
+			context.Set<Location>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.LocationID);
+			var record = await repository.Get(entity.LocationID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
-                        Location entity = new Location();
-                        context.Set<Location>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
+			Location entity = new Location();
+			context.Set<Location>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Location());
+			await repository.Update(new Location());
 
-                        var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LocationRepositoryMoc.GetContext();
-                        var repository = new LocationRepository(loggerMoc.Object, context);
-                        Location entity = new Location();
-                        context.Set<Location>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
+			Location entity = new Location();
+			context.Set<Location>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.LocationID);
+			await repository.Delete(entity.LocationID);
 
-                        Location modifiedRecord = await context.Set<Location>().FirstOrDefaultAsync();
+			Location modifiedRecord = await context.Set<Location>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>086df680fe31286b6d33ac24549127b8</Hash>
+    <Hash>8a25b343d349802747c98abad11bf275</Hash>
 </Codenesium>*/

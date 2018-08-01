@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IBOLVersionInfoMapper
-        {
-                BOVersionInfo MapModelToBO(
-                        long version,
-                        ApiVersionInfoRequestModel model);
+	public interface IBOLVersionInfoMapper
+	{
+		BOVersionInfo MapModelToBO(
+			long version,
+			ApiVersionInfoRequestModel model);
 
-                ApiVersionInfoResponseModel MapBOToModel(
-                        BOVersionInfo boVersionInfo);
+		ApiVersionInfoResponseModel MapBOToModel(
+			BOVersionInfo boVersionInfo);
 
-                List<ApiVersionInfoResponseModel> MapBOToModel(
-                        List<BOVersionInfo> items);
-        }
+		List<ApiVersionInfoResponseModel> MapBOToModel(
+			List<BOVersionInfo> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>bf3ad1058fe313c9a9cb220f43783a3b</Hash>
+    <Hash>635f005aa2572ffa6f135ea647583849</Hash>
 </Codenesium>*/

@@ -7,34 +7,34 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IProductModelService
-        {
-                Task<CreateResponse<ApiProductModelResponseModel>> Create(
-                        ApiProductModelRequestModel model);
+	public interface IProductModelService
+	{
+		Task<CreateResponse<ApiProductModelResponseModel>> Create(
+			ApiProductModelRequestModel model);
 
-                Task<UpdateResponse<ApiProductModelResponseModel>> Update(int productModelID,
-                                                                           ApiProductModelRequestModel model);
+		Task<UpdateResponse<ApiProductModelResponseModel>> Update(int productModelID,
+		                                                           ApiProductModelRequestModel model);
 
-                Task<ActionResponse> Delete(int productModelID);
+		Task<ActionResponse> Delete(int productModelID);
 
-                Task<ApiProductModelResponseModel> Get(int productModelID);
+		Task<ApiProductModelResponseModel> Get(int productModelID);
 
-                Task<List<ApiProductModelResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductModelResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProductModelResponseModel> ByName(string name);
+		Task<ApiProductModelResponseModel> ByName(string name);
 
-                Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription);
+		Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription);
 
-                Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction);
+		Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction);
 
-                Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6003e44b8f9d5a2c83e29a4093750df4</Hash>
+    <Hash>4b208fc515790b9451862ddb8e215d72</Hash>
 </Codenesium>*/

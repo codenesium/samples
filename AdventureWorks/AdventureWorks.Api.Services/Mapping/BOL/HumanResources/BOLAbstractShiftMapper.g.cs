@@ -5,48 +5,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractShiftMapper
-        {
-                public virtual BOShift MapModelToBO(
-                        int shiftID,
-                        ApiShiftRequestModel model
-                        )
-                {
-                        BOShift boShift = new BOShift();
-                        boShift.SetProperties(
-                                shiftID,
-                                model.EndTime,
-                                model.ModifiedDate,
-                                model.Name,
-                                model.StartTime);
-                        return boShift;
-                }
+	public abstract class BOLAbstractShiftMapper
+	{
+		public virtual BOShift MapModelToBO(
+			int shiftID,
+			ApiShiftRequestModel model
+			)
+		{
+			BOShift boShift = new BOShift();
+			boShift.SetProperties(
+				shiftID,
+				model.EndTime,
+				model.ModifiedDate,
+				model.Name,
+				model.StartTime);
+			return boShift;
+		}
 
-                public virtual ApiShiftResponseModel MapBOToModel(
-                        BOShift boShift)
-                {
-                        var model = new ApiShiftResponseModel();
+		public virtual ApiShiftResponseModel MapBOToModel(
+			BOShift boShift)
+		{
+			var model = new ApiShiftResponseModel();
 
-                        model.SetProperties(boShift.ShiftID, boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.StartTime);
+			model.SetProperties(boShift.ShiftID, boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.StartTime);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiShiftResponseModel> MapBOToModel(
-                        List<BOShift> items)
-                {
-                        List<ApiShiftResponseModel> response = new List<ApiShiftResponseModel>();
+		public virtual List<ApiShiftResponseModel> MapBOToModel(
+			List<BOShift> items)
+		{
+			List<ApiShiftResponseModel> response = new List<ApiShiftResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f077504ea22106cfc7950c3393a4b63f</Hash>
+    <Hash>4a4d80ab2e6a8813012631d58a64b4d3</Hash>
 </Codenesium>*/

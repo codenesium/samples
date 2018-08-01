@@ -3,15 +3,15 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOCountryRequirement : AbstractBOCountryRequirement
-        {
-                public BOCountryRequirement()
-                        : base()
-                {
-                }
-        }
+	public partial class BOCountryRequirement : AbstractBOCountryRequirement
+	{
+		public BOCountryRequirement()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b598bcfc52c721a44678be92c63f369c</Hash>
+    <Hash>af385726987ce76c265a60e81737e40b</Hash>
 </Codenesium>*/

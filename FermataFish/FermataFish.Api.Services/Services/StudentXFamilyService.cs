@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class StudentXFamilyService : AbstractStudentXFamilyService, IStudentXFamilyService
-        {
-                public StudentXFamilyService(
-                        ILogger<IStudentXFamilyRepository> logger,
-                        IStudentXFamilyRepository studentXFamilyRepository,
-                        IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
-                        IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
-                        IDALStudentXFamilyMapper dalstudentXFamilyMapper
-                        )
-                        : base(logger,
-                               studentXFamilyRepository,
-                               studentXFamilyModelValidator,
-                               bolstudentXFamilyMapper,
-                               dalstudentXFamilyMapper)
-                {
-                }
-        }
+	public partial class StudentXFamilyService : AbstractStudentXFamilyService, IStudentXFamilyService
+	{
+		public StudentXFamilyService(
+			ILogger<IStudentXFamilyRepository> logger,
+			IStudentXFamilyRepository studentXFamilyRepository,
+			IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
+			IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
+			IDALStudentXFamilyMapper dalstudentXFamilyMapper
+			)
+			: base(logger,
+			       studentXFamilyRepository,
+			       studentXFamilyModelValidator,
+			       bolstudentXFamilyMapper,
+			       dalstudentXFamilyMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ad8c668ad1b10a8ae32c53f67d20d8df</Hash>
+    <Hash>48f055043b027437daa4aeb8e1a106a6</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiProxyModelMapper : AbstractApiProxyModelMapper, IApiProxyModelMapper
-        {
-                public ApiProxyModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiProxyModelMapper : AbstractApiProxyModelMapper, IApiProxyModelMapper
+	{
+		public ApiProxyModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>283f96994ee80e97cc873a1b24d8b7ba</Hash>
+    <Hash>51ded64642275df2a3b038ea08b8d9eb</Hash>
 </Codenesium>*/

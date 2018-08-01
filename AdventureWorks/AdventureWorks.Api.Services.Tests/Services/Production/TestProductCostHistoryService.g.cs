@@ -13,125 +13,125 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductCostHistory")]
-        [Trait("Area", "Services")]
-        public partial class ProductCostHistoryServiceTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        var records = new List<ProductCostHistory>();
-                        records.Add(new ProductCostHistory());
-                        mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductCostHistory")]
+	[Trait("Area", "Services")]
+	public partial class ProductCostHistoryServiceTests
+	{
+		[Fact]
+		public async void All()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			var records = new List<ProductCostHistory>();
+			records.Add(new ProductCostHistory());
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        List<ApiProductCostHistoryResponseModel> response = await service.All();
+			List<ApiProductCostHistoryResponseModel> response = await service.All();
 
-                        response.Should().HaveCount(1);
-                        mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().HaveCount(1);
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        var record = new ProductCostHistory();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+		[Fact]
+		public async void Get()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			var record = new ProductCostHistory();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        ApiProductCostHistoryResponseModel response = await service.Get(default(int));
+			ApiProductCostHistoryResponseModel response = await service.Get(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_null_record()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ProductCostHistory>(null));
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+		[Fact]
+		public async void Get_null_record()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ProductCostHistory>(null));
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        ApiProductCostHistoryResponseModel response = await service.Get(default(int));
+			ApiProductCostHistoryResponseModel response = await service.Get(default(int));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        var model = new ApiProductCostHistoryRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCostHistory>())).Returns(Task.FromResult(new ProductCostHistory()));
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			var model = new ApiProductCostHistoryRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCostHistory>())).Returns(Task.FromResult(new ProductCostHistory()));
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        CreateResponse<ApiProductCostHistoryResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProductCostHistoryResponseModel> response = await service.Create(model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductCostHistoryRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductCostHistory>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductCostHistoryRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductCostHistory>()));
+		}
 
-                [Fact]
-                public async void Update()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        var model = new ApiProductCostHistoryRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCostHistory>())).Returns(Task.FromResult(new ProductCostHistory()));
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductCostHistory()));
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			var model = new ApiProductCostHistoryRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCostHistory>())).Returns(Task.FromResult(new ProductCostHistory()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductCostHistory()));
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        UpdateResponse<ApiProductCostHistoryResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiProductCostHistoryResponseModel> response = await service.Update(default(int), model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductCostHistoryRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductCostHistory>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductCostHistoryRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductCostHistory>()));
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
-                        var model = new ApiProductCostHistoryRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
-                        var service = new ProductCostHistoryService(mock.LoggerMock.Object,
-                                                                    mock.RepositoryMock.Object,
-                                                                    mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
-                                                                    mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
-                                                                    mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<IProductCostHistoryRepository>();
+			var model = new ApiProductCostHistoryRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
+			var service = new ProductCostHistoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductCostHistoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductCostHistoryMapperMock);
 
-                        ActionResponse response = await service.Delete(default(int));
+			ActionResponse response = await service.Delete(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
-                        mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-                }
-        }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
+			mock.ModelValidatorMockFactory.ProductCostHistoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4663df35f83658be3a81b0ba6069c665</Hash>
+    <Hash>ec8864d2c7875c37684300764eded0ea</Hash>
 </Codenesium>*/

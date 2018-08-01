@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class SpeciesService : AbstractSpeciesService, ISpeciesService
-        {
-                public SpeciesService(
-                        ILogger<ISpeciesRepository> logger,
-                        ISpeciesRepository speciesRepository,
-                        IApiSpeciesRequestModelValidator speciesModelValidator,
-                        IBOLSpeciesMapper bolspeciesMapper,
-                        IDALSpeciesMapper dalspeciesMapper,
-                        IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper
-                        )
-                        : base(logger,
-                               speciesRepository,
-                               speciesModelValidator,
-                               bolspeciesMapper,
-                               dalspeciesMapper,
-                               bolPetMapper,
-                               dalPetMapper)
-                {
-                }
-        }
+	public partial class SpeciesService : AbstractSpeciesService, ISpeciesService
+	{
+		public SpeciesService(
+			ILogger<ISpeciesRepository> logger,
+			ISpeciesRepository speciesRepository,
+			IApiSpeciesRequestModelValidator speciesModelValidator,
+			IBOLSpeciesMapper bolspeciesMapper,
+			IDALSpeciesMapper dalspeciesMapper,
+			IBOLPetMapper bolPetMapper,
+			IDALPetMapper dalPetMapper
+			)
+			: base(logger,
+			       speciesRepository,
+			       speciesModelValidator,
+			       bolspeciesMapper,
+			       dalspeciesMapper,
+			       bolPetMapper,
+			       dalPetMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ae400b53bf25e5ba884ebc294cb81857</Hash>
+    <Hash>88260ae3e50f6b945dd384f078318e25</Hash>
 </Codenesium>*/

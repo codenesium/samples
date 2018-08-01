@@ -7,57 +7,57 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TagSet")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALTagSetMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALTagSetMapper();
-                        var bo = new BOTagSet();
-                        bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TagSet")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALTagSetMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALTagSetMapper();
+			var bo = new BOTagSet();
+			bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
 
-                        TagSet response = mapper.MapBOToEF(bo);
+			TagSet response = mapper.MapBOToEF(bo);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALTagSetMapper();
-                        TagSet entity = new TagSet();
-                        entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALTagSetMapper();
+			TagSet entity = new TagSet();
+			entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
-                        BOTagSet response = mapper.MapEFToBO(entity);
+			BOTagSet response = mapper.MapEFToBO(entity);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALTagSetMapper();
-                        TagSet entity = new TagSet();
-                        entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALTagSetMapper();
+			TagSet entity = new TagSet();
+			entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
-                        List<BOTagSet> response = mapper.MapEFToBO(new List<TagSet>() { entity });
+			List<BOTagSet> response = mapper.MapEFToBO(new List<TagSet>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dac3627e01c09ce5f6ecb0302844221d</Hash>
+    <Hash>d1cdf749b768c1709b0151b778a37ddb</Hash>
 </Codenesium>*/

@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UnitMeasure")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiUnitMeasureRequestModelValidatorTest
-        {
-                public ApiUnitMeasureRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UnitMeasure")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiUnitMeasureRequestModelValidatorTest
+	{
+		public ApiUnitMeasureRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
+			await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
+			await validator.ValidateCreateAsync(new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
-                        unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
-                        var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IUnitMeasureRepository> unitMeasureRepository = new Mock<IUnitMeasureRepository>();
+			unitMeasureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+			var validator = new ApiUnitMeasureRequestModelValidator(unitMeasureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiUnitMeasureRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>86cb9ff21cd8bf669b8dd04395146c7e</Hash>
+    <Hash>d081f3bb3498682541583d245884db0f</Hash>
 </Codenesium>*/

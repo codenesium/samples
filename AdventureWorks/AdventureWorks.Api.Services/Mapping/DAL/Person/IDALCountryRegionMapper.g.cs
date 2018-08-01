@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALCountryRegionMapper
-        {
-                CountryRegion MapBOToEF(
-                        BOCountryRegion bo);
+	public interface IDALCountryRegionMapper
+	{
+		CountryRegion MapBOToEF(
+			BOCountryRegion bo);
 
-                BOCountryRegion MapEFToBO(
-                        CountryRegion efCountryRegion);
+		BOCountryRegion MapEFToBO(
+			CountryRegion efCountryRegion);
 
-                List<BOCountryRegion> MapEFToBO(
-                        List<CountryRegion> records);
-        }
+		List<BOCountryRegion> MapEFToBO(
+			List<CountryRegion> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>22bbeaa29ac571a2d23bfa0f24e639ee</Hash>
+    <Hash>ac36e3e9a822ee294776131daa9a1072</Hash>
 </Codenesium>*/

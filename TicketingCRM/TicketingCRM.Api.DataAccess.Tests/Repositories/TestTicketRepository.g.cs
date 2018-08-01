@@ -9,127 +9,127 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public partial class TicketRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class TicketRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<TicketRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<TicketRepository>>();
-                }
-        }
+		public static Mock<ILogger<TicketRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<TicketRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Ticket")]
-        [Trait("Area", "Repositories")]
-        public partial class TicketRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Ticket")]
+	[Trait("Area", "Repositories")]
+	public partial class TicketRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
 
-                        Ticket entity = new Ticket();
-                        context.Set<Ticket>().Add(entity);
-                        await context.SaveChangesAsync();
+			Ticket entity = new Ticket();
+			context.Set<Ticket>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
 
-                        Ticket entity = new Ticket();
-                        context.Set<Ticket>().Add(entity);
-                        await context.SaveChangesAsync();
+			Ticket entity = new Ticket();
+			context.Set<Ticket>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
 
-                        var entity = new Ticket();
-                        await repository.Create(entity);
+			var entity = new Ticket();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Ticket>().FirstOrDefaultAsync();
+			var record = await context.Set<Ticket>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
-                        Ticket entity = new Ticket();
-                        context.Set<Ticket>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
+			Ticket entity = new Ticket();
+			context.Set<Ticket>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Ticket>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Ticket>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
-                        Ticket entity = new Ticket();
-                        context.Set<Ticket>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
+			Ticket entity = new Ticket();
+			context.Set<Ticket>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Ticket());
+			await repository.Update(new Ticket());
 
-                        var modifiedRecord = context.Set<Ticket>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Ticket>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TicketRepositoryMoc.GetContext();
-                        var repository = new TicketRepository(loggerMoc.Object, context);
-                        Ticket entity = new Ticket();
-                        context.Set<Ticket>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<TicketRepository>> loggerMoc = TicketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketRepositoryMoc.GetContext();
+			var repository = new TicketRepository(loggerMoc.Object, context);
+			Ticket entity = new Ticket();
+			context.Set<Ticket>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Ticket modifiedRecord = await context.Set<Ticket>().FirstOrDefaultAsync();
+			Ticket modifiedRecord = await context.Set<Ticket>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>be1ab885f842065b0f50dc8f855252ad</Hash>
+    <Hash>e972e19c9c95810067107e06e84a0ade</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/spaces")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SpaceController : AbstractSpaceController
-        {
-                public SpaceController(
-                        ApiSettings settings,
-                        ILogger<SpaceController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISpaceService spaceService,
-                        IApiSpaceModelMapper spaceModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               spaceService,
-                               spaceModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/spaces")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SpaceController : AbstractSpaceController
+	{
+		public SpaceController(
+			ApiSettings settings,
+			ILogger<SpaceController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISpaceService spaceService,
+			IApiSpaceModelMapper spaceModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       spaceService,
+			       spaceModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1b2568ba8cece1bffc4dc3cf948ea753</Hash>
+    <Hash>bcad308f6041792c0dc2985b1e74437b</Hash>
 </Codenesium>*/

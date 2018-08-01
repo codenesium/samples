@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PipelineStepDestinationService : AbstractPipelineStepDestinationService, IPipelineStepDestinationService
-        {
-                public PipelineStepDestinationService(
-                        ILogger<IPipelineStepDestinationRepository> logger,
-                        IPipelineStepDestinationRepository pipelineStepDestinationRepository,
-                        IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator,
-                        IBOLPipelineStepDestinationMapper bolpipelineStepDestinationMapper,
-                        IDALPipelineStepDestinationMapper dalpipelineStepDestinationMapper
-                        )
-                        : base(logger,
-                               pipelineStepDestinationRepository,
-                               pipelineStepDestinationModelValidator,
-                               bolpipelineStepDestinationMapper,
-                               dalpipelineStepDestinationMapper)
-                {
-                }
-        }
+	public partial class PipelineStepDestinationService : AbstractPipelineStepDestinationService, IPipelineStepDestinationService
+	{
+		public PipelineStepDestinationService(
+			ILogger<IPipelineStepDestinationRepository> logger,
+			IPipelineStepDestinationRepository pipelineStepDestinationRepository,
+			IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator,
+			IBOLPipelineStepDestinationMapper bolpipelineStepDestinationMapper,
+			IDALPipelineStepDestinationMapper dalpipelineStepDestinationMapper
+			)
+			: base(logger,
+			       pipelineStepDestinationRepository,
+			       pipelineStepDestinationModelValidator,
+			       bolpipelineStepDestinationMapper,
+			       dalpipelineStepDestinationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a81ad37165fa6ac49b2fad33f362a37d</Hash>
+    <Hash>fe78adf39578b47f0e3126fee567768a</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CountryRegionCurrencyRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class CountryRegionCurrencyRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<CountryRegionCurrencyRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<CountryRegionCurrencyRepository>>();
-                }
-        }
+		public static Mock<ILogger<CountryRegionCurrencyRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<CountryRegionCurrencyRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "CountryRegionCurrency")]
-        [Trait("Area", "Repositories")]
-        public partial class CountryRegionCurrencyRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "CountryRegionCurrency")]
+	[Trait("Area", "Repositories")]
+	public partial class CountryRegionCurrencyRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
-                        CountryRegionCurrency entity = new CountryRegionCurrency();
-                        context.Set<CountryRegionCurrency>().Add(entity);
-                        await context.SaveChangesAsync();
+			CountryRegionCurrency entity = new CountryRegionCurrency();
+			context.Set<CountryRegionCurrency>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
-                        CountryRegionCurrency entity = new CountryRegionCurrency();
-                        context.Set<CountryRegionCurrency>().Add(entity);
-                        await context.SaveChangesAsync();
+			CountryRegionCurrency entity = new CountryRegionCurrency();
+			context.Set<CountryRegionCurrency>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CountryRegionCode);
+			var record = await repository.Get(entity.CountryRegionCode);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
-                        var entity = new CountryRegionCurrency();
-                        await repository.Create(entity);
+			var entity = new CountryRegionCurrency();
+			await repository.Create(entity);
 
-                        var record = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+			var record = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-                        CountryRegionCurrency entity = new CountryRegionCurrency();
-                        context.Set<CountryRegionCurrency>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+			CountryRegionCurrency entity = new CountryRegionCurrency();
+			context.Set<CountryRegionCurrency>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CountryRegionCode);
+			var record = await repository.Get(entity.CountryRegionCode);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-                        CountryRegionCurrency entity = new CountryRegionCurrency();
-                        context.Set<CountryRegionCurrency>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+			CountryRegionCurrency entity = new CountryRegionCurrency();
+			context.Set<CountryRegionCurrency>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new CountryRegionCurrency());
+			await repository.Update(new CountryRegionCurrency());
 
-                        var modifiedRecord = context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
-                        var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-                        CountryRegionCurrency entity = new CountryRegionCurrency();
-                        context.Set<CountryRegionCurrency>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
+			var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
+			CountryRegionCurrency entity = new CountryRegionCurrency();
+			context.Set<CountryRegionCurrency>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.CountryRegionCode);
+			await repository.Delete(entity.CountryRegionCode);
 
-                        CountryRegionCurrency modifiedRecord = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+			CountryRegionCurrency modifiedRecord = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7c20323152e8f03d62b94dbc22742814</Hash>
+    <Hash>09936042da2cc66012a99c80e00ae3e0</Hash>
 </Codenesium>*/

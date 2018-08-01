@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IBOLVariableSetMapper
-        {
-                BOVariableSet MapModelToBO(
-                        string id,
-                        ApiVariableSetRequestModel model);
+	public interface IBOLVariableSetMapper
+	{
+		BOVariableSet MapModelToBO(
+			string id,
+			ApiVariableSetRequestModel model);
 
-                ApiVariableSetResponseModel MapBOToModel(
-                        BOVariableSet boVariableSet);
+		ApiVariableSetResponseModel MapBOToModel(
+			BOVariableSet boVariableSet);
 
-                List<ApiVariableSetResponseModel> MapBOToModel(
-                        List<BOVariableSet> items);
-        }
+		List<ApiVariableSetResponseModel> MapBOToModel(
+			List<BOVariableSet> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>699af527309005f85870388012ba47ee</Hash>
+    <Hash>601bfb71290eaa05d775d15b405f8bfe</Hash>
 </Codenesium>*/

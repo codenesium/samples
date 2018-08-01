@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "WorkerPool")]
-        [Trait("Area", "Integration")]
-        public class WorkerPoolIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public WorkerPoolIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "WorkerPool")]
+	[Trait("Area", "Integration")]
+	public class WorkerPoolIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public WorkerPoolIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiWorkerPoolModelMapper mapper = new ApiWorkerPoolModelMapper();
+			ApiWorkerPoolModelMapper mapper = new ApiWorkerPoolModelMapper();
 
-                        UpdateResponse<ApiWorkerPoolResponseModel> updateResponse = await this.Client.WorkerPoolUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiWorkerPoolResponseModel> updateResponse = await this.Client.WorkerPoolUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.WorkerPoolDeleteAsync(model.Id);
+			await this.Client.WorkerPoolDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiWorkerPoolResponseModel response = await this.Client.WorkerPoolGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiWorkerPoolResponseModel response = await this.Client.WorkerPoolGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiWorkerPoolResponseModel> response = await this.Client.WorkerPoolAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiWorkerPoolResponseModel> response = await this.Client.WorkerPoolAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiWorkerPoolResponseModel> CreateRecord()
-                {
-                        var model = new ApiWorkerPoolRequestModel();
-                        model.SetProperties(true, "B", "B", 2);
-                        CreateResponse<ApiWorkerPoolResponseModel> result = await this.Client.WorkerPoolCreateAsync(model);
+		private async Task<ApiWorkerPoolResponseModel> CreateRecord()
+		{
+			var model = new ApiWorkerPoolRequestModel();
+			model.SetProperties(true, "B", "B", 2);
+			CreateResponse<ApiWorkerPoolResponseModel> result = await this.Client.WorkerPoolCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.WorkerPoolDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.WorkerPoolDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>de10e67662fc6410d6d434e79a88a9d2</Hash>
+    <Hash>9d568c759933b7cc1f0e5b4a57bac5ea</Hash>
 </Codenesium>*/

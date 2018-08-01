@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class StoreService : AbstractStoreService, IStoreService
-        {
-                public StoreService(
-                        ILogger<IStoreRepository> logger,
-                        IStoreRepository storeRepository,
-                        IApiStoreRequestModelValidator storeModelValidator,
-                        IBOLStoreMapper bolstoreMapper,
-                        IDALStoreMapper dalstoreMapper,
-                        IBOLCustomerMapper bolCustomerMapper,
-                        IDALCustomerMapper dalCustomerMapper
-                        )
-                        : base(logger,
-                               storeRepository,
-                               storeModelValidator,
-                               bolstoreMapper,
-                               dalstoreMapper,
-                               bolCustomerMapper,
-                               dalCustomerMapper)
-                {
-                }
-        }
+	public partial class StoreService : AbstractStoreService, IStoreService
+	{
+		public StoreService(
+			ILogger<IStoreRepository> logger,
+			IStoreRepository storeRepository,
+			IApiStoreRequestModelValidator storeModelValidator,
+			IBOLStoreMapper bolstoreMapper,
+			IDALStoreMapper dalstoreMapper,
+			IBOLCustomerMapper bolCustomerMapper,
+			IDALCustomerMapper dalCustomerMapper
+			)
+			: base(logger,
+			       storeRepository,
+			       storeModelValidator,
+			       bolstoreMapper,
+			       dalstoreMapper,
+			       bolCustomerMapper,
+			       dalCustomerMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ef1824e48a60a0ab502ac6c68dcc90f8</Hash>
+    <Hash>c10da19519a15d84f63aab7a7a97d418</Hash>
 </Codenesium>*/

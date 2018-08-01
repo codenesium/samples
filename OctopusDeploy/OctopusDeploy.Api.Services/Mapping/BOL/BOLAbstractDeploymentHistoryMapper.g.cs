@@ -5,64 +5,64 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractDeploymentHistoryMapper
-        {
-                public virtual BODeploymentHistory MapModelToBO(
-                        string deploymentId,
-                        ApiDeploymentHistoryRequestModel model
-                        )
-                {
-                        BODeploymentHistory boDeploymentHistory = new BODeploymentHistory();
-                        boDeploymentHistory.SetProperties(
-                                deploymentId,
-                                model.ChannelId,
-                                model.ChannelName,
-                                model.CompletedTime,
-                                model.Created,
-                                model.DeployedBy,
-                                model.DeploymentName,
-                                model.DurationSeconds,
-                                model.EnvironmentId,
-                                model.EnvironmentName,
-                                model.ProjectId,
-                                model.ProjectName,
-                                model.ProjectSlug,
-                                model.QueueTime,
-                                model.ReleaseId,
-                                model.ReleaseVersion,
-                                model.StartTime,
-                                model.TaskId,
-                                model.TaskState,
-                                model.TenantId,
-                                model.TenantName);
-                        return boDeploymentHistory;
-                }
+	public abstract class BOLAbstractDeploymentHistoryMapper
+	{
+		public virtual BODeploymentHistory MapModelToBO(
+			string deploymentId,
+			ApiDeploymentHistoryRequestModel model
+			)
+		{
+			BODeploymentHistory boDeploymentHistory = new BODeploymentHistory();
+			boDeploymentHistory.SetProperties(
+				deploymentId,
+				model.ChannelId,
+				model.ChannelName,
+				model.CompletedTime,
+				model.Created,
+				model.DeployedBy,
+				model.DeploymentName,
+				model.DurationSeconds,
+				model.EnvironmentId,
+				model.EnvironmentName,
+				model.ProjectId,
+				model.ProjectName,
+				model.ProjectSlug,
+				model.QueueTime,
+				model.ReleaseId,
+				model.ReleaseVersion,
+				model.StartTime,
+				model.TaskId,
+				model.TaskState,
+				model.TenantId,
+				model.TenantName);
+			return boDeploymentHistory;
+		}
 
-                public virtual ApiDeploymentHistoryResponseModel MapBOToModel(
-                        BODeploymentHistory boDeploymentHistory)
-                {
-                        var model = new ApiDeploymentHistoryResponseModel();
+		public virtual ApiDeploymentHistoryResponseModel MapBOToModel(
+			BODeploymentHistory boDeploymentHistory)
+		{
+			var model = new ApiDeploymentHistoryResponseModel();
 
-                        model.SetProperties(boDeploymentHistory.DeploymentId, boDeploymentHistory.ChannelId, boDeploymentHistory.ChannelName, boDeploymentHistory.CompletedTime, boDeploymentHistory.Created, boDeploymentHistory.DeployedBy, boDeploymentHistory.DeploymentName, boDeploymentHistory.DurationSeconds, boDeploymentHistory.EnvironmentId, boDeploymentHistory.EnvironmentName, boDeploymentHistory.ProjectId, boDeploymentHistory.ProjectName, boDeploymentHistory.ProjectSlug, boDeploymentHistory.QueueTime, boDeploymentHistory.ReleaseId, boDeploymentHistory.ReleaseVersion, boDeploymentHistory.StartTime, boDeploymentHistory.TaskId, boDeploymentHistory.TaskState, boDeploymentHistory.TenantId, boDeploymentHistory.TenantName);
+			model.SetProperties(boDeploymentHistory.DeploymentId, boDeploymentHistory.ChannelId, boDeploymentHistory.ChannelName, boDeploymentHistory.CompletedTime, boDeploymentHistory.Created, boDeploymentHistory.DeployedBy, boDeploymentHistory.DeploymentName, boDeploymentHistory.DurationSeconds, boDeploymentHistory.EnvironmentId, boDeploymentHistory.EnvironmentName, boDeploymentHistory.ProjectId, boDeploymentHistory.ProjectName, boDeploymentHistory.ProjectSlug, boDeploymentHistory.QueueTime, boDeploymentHistory.ReleaseId, boDeploymentHistory.ReleaseVersion, boDeploymentHistory.StartTime, boDeploymentHistory.TaskId, boDeploymentHistory.TaskState, boDeploymentHistory.TenantId, boDeploymentHistory.TenantName);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiDeploymentHistoryResponseModel> MapBOToModel(
-                        List<BODeploymentHistory> items)
-                {
-                        List<ApiDeploymentHistoryResponseModel> response = new List<ApiDeploymentHistoryResponseModel>();
+		public virtual List<ApiDeploymentHistoryResponseModel> MapBOToModel(
+			List<BODeploymentHistory> items)
+		{
+			List<ApiDeploymentHistoryResponseModel> response = new List<ApiDeploymentHistoryResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b735c26436cb6bd1f180a0f4f2ce18f5</Hash>
+    <Hash>264ce2f3a6a35328e50bf161e749bc1b</Hash>
 </Codenesium>*/

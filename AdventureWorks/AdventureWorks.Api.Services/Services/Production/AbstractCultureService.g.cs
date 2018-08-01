@@ -12,133 +12,133 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCultureService : AbstractService
-        {
-                private ICultureRepository cultureRepository;
+	public abstract class AbstractCultureService : AbstractService
+	{
+		private ICultureRepository cultureRepository;
 
-                private IApiCultureRequestModelValidator cultureModelValidator;
+		private IApiCultureRequestModelValidator cultureModelValidator;
 
-                private IBOLCultureMapper bolCultureMapper;
+		private IBOLCultureMapper bolCultureMapper;
 
-                private IDALCultureMapper dalCultureMapper;
+		private IDALCultureMapper dalCultureMapper;
 
-                private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+		private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
 
-                private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
+		private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractCultureService(
-                        ILogger logger,
-                        ICultureRepository cultureRepository,
-                        IApiCultureRequestModelValidator cultureModelValidator,
-                        IBOLCultureMapper bolCultureMapper,
-                        IDALCultureMapper dalCultureMapper,
-                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
-                        : base()
-                {
-                        this.cultureRepository = cultureRepository;
-                        this.cultureModelValidator = cultureModelValidator;
-                        this.bolCultureMapper = bolCultureMapper;
-                        this.dalCultureMapper = dalCultureMapper;
-                        this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
-                        this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
-                        this.logger = logger;
-                }
+		public AbstractCultureService(
+			ILogger logger,
+			ICultureRepository cultureRepository,
+			IApiCultureRequestModelValidator cultureModelValidator,
+			IBOLCultureMapper bolCultureMapper,
+			IDALCultureMapper dalCultureMapper,
+			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
+			: base()
+		{
+			this.cultureRepository = cultureRepository;
+			this.cultureModelValidator = cultureModelValidator;
+			this.bolCultureMapper = bolCultureMapper;
+			this.dalCultureMapper = dalCultureMapper;
+			this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+			this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.cultureRepository.All(limit, offset);
+		public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.cultureRepository.All(limit, offset);
 
-                        return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(records));
-                }
+			return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiCultureResponseModel> Get(string cultureID)
-                {
-                        var record = await this.cultureRepository.Get(cultureID);
+		public virtual async Task<ApiCultureResponseModel> Get(string cultureID)
+		{
+			var record = await this.cultureRepository.Get(cultureID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiCultureResponseModel>> Create(
-                        ApiCultureRequestModel model)
-                {
-                        CreateResponse<ApiCultureResponseModel> response = new CreateResponse<ApiCultureResponseModel>(await this.cultureModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolCultureMapper.MapModelToBO(default(string), model);
-                                var record = await this.cultureRepository.Create(this.dalCultureMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiCultureResponseModel>> Create(
+			ApiCultureRequestModel model)
+		{
+			CreateResponse<ApiCultureResponseModel> response = new CreateResponse<ApiCultureResponseModel>(await this.cultureModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolCultureMapper.MapModelToBO(default(string), model);
+				var record = await this.cultureRepository.Create(this.dalCultureMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiCultureResponseModel>> Update(
-                        string cultureID,
-                        ApiCultureRequestModel model)
-                {
-                        var validationResult = await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model);
+		public virtual async Task<UpdateResponse<ApiCultureResponseModel>> Update(
+			string cultureID,
+			ApiCultureRequestModel model)
+		{
+			var validationResult = await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolCultureMapper.MapModelToBO(cultureID, model);
-                                await this.cultureRepository.Update(this.dalCultureMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolCultureMapper.MapModelToBO(cultureID, model);
+				await this.cultureRepository.Update(this.dalCultureMapper.MapBOToEF(bo));
 
-                                var record = await this.cultureRepository.Get(cultureID);
+				var record = await this.cultureRepository.Get(cultureID);
 
-                                return new UpdateResponse<ApiCultureResponseModel>(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiCultureResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiCultureResponseModel>(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiCultureResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        string cultureID)
-                {
-                        ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateDeleteAsync(cultureID));
-                        if (response.Success)
-                        {
-                                await this.cultureRepository.Delete(cultureID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			string cultureID)
+		{
+			ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateDeleteAsync(cultureID));
+			if (response.Success)
+			{
+				await this.cultureRepository.Delete(cultureID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiCultureResponseModel> ByName(string name)
-                {
-                        Culture record = await this.cultureRepository.ByName(name);
+		public async Task<ApiCultureResponseModel> ByName(string name)
+		{
+			Culture record = await this.cultureRepository.ByName(name);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+			}
+		}
 
-                public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<ProductModelProductDescriptionCulture> records = await this.cultureRepository.ProductModelProductDescriptionCultures(cultureID, limit, offset);
+		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<ProductModelProductDescriptionCulture> records = await this.cultureRepository.ProductModelProductDescriptionCultures(cultureID, limit, offset);
 
-                        return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0d492c52c733ec7f78b31a519bf4dd10</Hash>
+    <Hash>9a5a76388d69d11049e75b3fdbdfaf21</Hash>
 </Codenesium>*/

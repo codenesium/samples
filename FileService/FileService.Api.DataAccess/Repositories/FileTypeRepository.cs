@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public partial class FileTypeRepository : AbstractFileTypeRepository, IFileTypeRepository
-        {
-                public FileTypeRepository(
-                        ILogger<FileTypeRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class FileTypeRepository : AbstractFileTypeRepository, IFileTypeRepository
+	{
+		public FileTypeRepository(
+			ILogger<FileTypeRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>497696996d68a4f3bdba6e4222fab40c</Hash>
+    <Hash>cc342e1530b6ea7f18992511a5652b2e</Hash>
 </Codenesium>*/

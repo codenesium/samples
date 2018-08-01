@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiWorkOrderRoutingModelMapper : AbstractApiWorkOrderRoutingModelMapper, IApiWorkOrderRoutingModelMapper
-        {
-                public ApiWorkOrderRoutingModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiWorkOrderRoutingModelMapper : AbstractApiWorkOrderRoutingModelMapper, IApiWorkOrderRoutingModelMapper
+	{
+		public ApiWorkOrderRoutingModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0313adb74f7d0e72eede65f914571fa0</Hash>
+    <Hash>43fed505300fae3ffb320c54866f9d79</Hash>
 </Codenesium>*/

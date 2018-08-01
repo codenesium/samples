@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLPersonPhoneMapper : BOLAbstractPersonPhoneMapper, IBOLPersonPhoneMapper
-        {
-                public BOLPersonPhoneMapper()
-                {
-                }
-        }
+	public partial class BOLPersonPhoneMapper : BOLAbstractPersonPhoneMapper, IBOLPersonPhoneMapper
+	{
+		public BOLPersonPhoneMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>44d40f39396e2b1b5a5240b268a3b061</Hash>
+    <Hash>c96e899019524bc3fa000664dc726b27</Hash>
 </Codenesium>*/

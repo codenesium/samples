@@ -9,53 +9,53 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiLifecycleRequestModelValidator : AbstractValidator<ApiLifecycleRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiLifecycleRequestModelValidator : AbstractValidator<ApiLifecycleRequestModel>
+	{
+		private string existingRecordId;
 
-                private ILifecycleRepository lifecycleRepository;
+		private ILifecycleRepository lifecycleRepository;
 
-                public AbstractApiLifecycleRequestModelValidator(ILifecycleRepository lifecycleRepository)
-                {
-                        this.lifecycleRepository = lifecycleRepository;
-                }
+		public AbstractApiLifecycleRequestModelValidator(ILifecycleRepository lifecycleRepository)
+		{
+			this.lifecycleRepository = lifecycleRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiLifecycleRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiLifecycleRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void DataVersionRules()
-                {
-                }
+		public virtual void DataVersionRules()
+		{
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                private async Task<bool> BeUniqueByName(ApiLifecycleRequestModel model,  CancellationToken cancellationToken)
-                {
-                        Lifecycle record = await this.lifecycleRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiLifecycleRequestModel model,  CancellationToken cancellationToken)
+		{
+			Lifecycle record = await this.lifecycleRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f58ec88db0830ad4160ffb9c1586855c</Hash>
+    <Hash>c9475d54a4c177e9f2039a16d57a9800</Hash>
 </Codenesium>*/

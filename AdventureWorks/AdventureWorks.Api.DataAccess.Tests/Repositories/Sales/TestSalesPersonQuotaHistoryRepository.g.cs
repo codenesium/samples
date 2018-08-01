@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class SalesPersonQuotaHistoryRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class SalesPersonQuotaHistoryRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<SalesPersonQuotaHistoryRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<SalesPersonQuotaHistoryRepository>>();
-                }
-        }
+		public static Mock<ILogger<SalesPersonQuotaHistoryRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<SalesPersonQuotaHistoryRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SalesPersonQuotaHistory")]
-        [Trait("Area", "Repositories")]
-        public partial class SalesPersonQuotaHistoryRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SalesPersonQuotaHistory")]
+	[Trait("Area", "Repositories")]
+	public partial class SalesPersonQuotaHistoryRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
-                        SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-                        context.Set<SalesPersonQuotaHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
+			context.Set<SalesPersonQuotaHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
-                        SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-                        context.Set<SalesPersonQuotaHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
+			context.Set<SalesPersonQuotaHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
-                        var entity = new SalesPersonQuotaHistory();
-                        await repository.Create(entity);
+			var entity = new SalesPersonQuotaHistory();
+			await repository.Create(entity);
 
-                        var record = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+			var record = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-                        SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-                        context.Set<SalesPersonQuotaHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+			SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
+			context.Set<SalesPersonQuotaHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-                        SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-                        context.Set<SalesPersonQuotaHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+			SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
+			context.Set<SalesPersonQuotaHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new SalesPersonQuotaHistory());
+			await repository.Update(new SalesPersonQuotaHistory());
 
-                        var modifiedRecord = context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
-                        var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-                        SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-                        context.Set<SalesPersonQuotaHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
+			var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
+			SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
+			context.Set<SalesPersonQuotaHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.BusinessEntityID);
+			await repository.Delete(entity.BusinessEntityID);
 
-                        SalesPersonQuotaHistory modifiedRecord = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+			SalesPersonQuotaHistory modifiedRecord = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>402edbaba7c6ebf0ef195062a87cc78e</Hash>
+    <Hash>2e734f2f739145e46fb46e437322c360</Hash>
 </Codenesium>*/

@@ -7,59 +7,58 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "WorkerPool")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiWorkerPoolModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiWorkerPoolModelMapper();
-                        var model = new ApiWorkerPoolRequestModel();
-                        model.SetProperties(true, "A", "A", 1);
-                        ApiWorkerPoolResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "WorkerPool")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiWorkerPoolModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiWorkerPoolModelMapper();
+			var model = new ApiWorkerPoolRequestModel();
+			model.SetProperties(true, "A", "A", 1);
+			ApiWorkerPoolResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.Id.Should().Be("A");
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.Id.Should().Be("A");
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiWorkerPoolModelMapper();
-                        var model = new ApiWorkerPoolResponseModel();
-                        model.SetProperties("A", true, "A", "A", 1);
-                        ApiWorkerPoolRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiWorkerPoolModelMapper();
+			var model = new ApiWorkerPoolResponseModel();
+			model.SetProperties("A", true, "A", "A", 1);
+			ApiWorkerPoolRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiWorkerPoolModelMapper();
-                        var model = new ApiWorkerPoolRequestModel();
-                        model.SetProperties(true, "A", "A", 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiWorkerPoolModelMapper();
+			var model = new ApiWorkerPoolRequestModel();
+			model.SetProperties(true, "A", "A", 1);
 
-                        JsonPatchDocument<ApiWorkerPoolRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiWorkerPoolRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiWorkerPoolRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiWorkerPoolRequestModel();
+			patch.ApplyTo(response);
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6d902cd7bd9a8323b1845dccf41d09f2</Hash>
+    <Hash>687ab74f23d5965e493f7f05189e2009</Hash>
 </Codenesium>*/

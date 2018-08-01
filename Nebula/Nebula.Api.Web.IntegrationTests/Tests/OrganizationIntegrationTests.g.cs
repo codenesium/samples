@@ -12,86 +12,86 @@ using Xunit;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Organization")]
-        [Trait("Area", "Integration")]
-        public class OrganizationIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public OrganizationIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Organization")]
+	[Trait("Area", "Integration")]
+	public class OrganizationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public OrganizationIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiOrganizationModelMapper mapper = new ApiOrganizationModelMapper();
+			ApiOrganizationModelMapper mapper = new ApiOrganizationModelMapper();
 
-                        UpdateResponse<ApiOrganizationResponseModel> updateResponse = await this.Client.OrganizationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiOrganizationResponseModel> updateResponse = await this.Client.OrganizationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.OrganizationDeleteAsync(model.Id);
+			await this.Client.OrganizationDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiOrganizationResponseModel response = await this.Client.OrganizationGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiOrganizationResponseModel response = await this.Client.OrganizationGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiOrganizationResponseModel> response = await this.Client.OrganizationAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiOrganizationResponseModel> response = await this.Client.OrganizationAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiOrganizationResponseModel> CreateRecord()
-                {
-                        var model = new ApiOrganizationRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiOrganizationResponseModel> result = await this.Client.OrganizationCreateAsync(model);
+		private async Task<ApiOrganizationResponseModel> CreateRecord()
+		{
+			var model = new ApiOrganizationRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiOrganizationResponseModel> result = await this.Client.OrganizationCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.OrganizationDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.OrganizationDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>60825206fbb7de2f33d2b4bef15ffb82</Hash>
+    <Hash>3b2d45d7833d8c7aa157389f0b06058e</Hash>
 </Codenesium>*/

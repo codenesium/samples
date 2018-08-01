@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public interface IApiBadgesModelMapper
-        {
-                ApiBadgesResponseModel MapRequestToResponse(
-                        int id,
-                        ApiBadgesRequestModel request);
+	public interface IApiBadgesModelMapper
+	{
+		ApiBadgesResponseModel MapRequestToResponse(
+			int id,
+			ApiBadgesRequestModel request);
 
-                ApiBadgesRequestModel MapResponseToRequest(
-                        ApiBadgesResponseModel response);
+		ApiBadgesRequestModel MapResponseToRequest(
+			ApiBadgesResponseModel response);
 
-                JsonPatchDocument<ApiBadgesRequestModel> CreatePatch(ApiBadgesRequestModel model);
-        }
+		JsonPatchDocument<ApiBadgesRequestModel> CreatePatch(ApiBadgesRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>845bb8cd83fbd974ff8800b4bb9d13b5</Hash>
+    <Hash>396a2a714e17a6dfb752d9e71f860995</Hash>
 </Codenesium>*/

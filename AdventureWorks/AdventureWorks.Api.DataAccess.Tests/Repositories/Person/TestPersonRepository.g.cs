@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class PersonRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class PersonRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<PersonRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<PersonRepository>>();
-                }
-        }
+		public static Mock<ILogger<PersonRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<PersonRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Person")]
-        [Trait("Area", "Repositories")]
-        public partial class PersonRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Person")]
+	[Trait("Area", "Repositories")]
+	public partial class PersonRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
 
-                        Person entity = new Person();
-                        context.Set<Person>().Add(entity);
-                        await context.SaveChangesAsync();
+			Person entity = new Person();
+			context.Set<Person>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
 
-                        Person entity = new Person();
-                        context.Set<Person>().Add(entity);
-                        await context.SaveChangesAsync();
+			Person entity = new Person();
+			context.Set<Person>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
 
-                        var entity = new Person();
-                        await repository.Create(entity);
+			var entity = new Person();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Person>().FirstOrDefaultAsync();
+			var record = await context.Set<Person>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
-                        Person entity = new Person();
-                        context.Set<Person>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
+			Person entity = new Person();
+			context.Set<Person>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Person>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Person>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
-                        Person entity = new Person();
-                        context.Set<Person>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
+			Person entity = new Person();
+			context.Set<Person>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Person());
+			await repository.Update(new Person());
 
-                        var modifiedRecord = context.Set<Person>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Person>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PersonRepositoryMoc.GetContext();
-                        var repository = new PersonRepository(loggerMoc.Object, context);
-                        Person entity = new Person();
-                        context.Set<Person>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
+			Person entity = new Person();
+			context.Set<Person>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.BusinessEntityID);
+			await repository.Delete(entity.BusinessEntityID);
 
-                        Person modifiedRecord = await context.Set<Person>().FirstOrDefaultAsync();
+			Person modifiedRecord = await context.Set<Person>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5b4f42dc0d7c2b551e7f4df94a72913c</Hash>
+    <Hash>dc9611afe3a1c73431ddad655164b04d</Hash>
 </Codenesium>*/

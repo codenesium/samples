@@ -6,52 +6,52 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class DALAbstractCommentsMapper
-        {
-                public virtual Comments MapBOToEF(
-                        BOComments bo)
-                {
-                        Comments efComments = new Comments();
-                        efComments.SetProperties(
-                                bo.CreationDate,
-                                bo.Id,
-                                bo.PostId,
-                                bo.Score,
-                                bo.Text,
-                                bo.UserId);
-                        return efComments;
-                }
+	public abstract class DALAbstractCommentsMapper
+	{
+		public virtual Comments MapBOToEF(
+			BOComments bo)
+		{
+			Comments efComments = new Comments();
+			efComments.SetProperties(
+				bo.CreationDate,
+				bo.Id,
+				bo.PostId,
+				bo.Score,
+				bo.Text,
+				bo.UserId);
+			return efComments;
+		}
 
-                public virtual BOComments MapEFToBO(
-                        Comments ef)
-                {
-                        var bo = new BOComments();
+		public virtual BOComments MapEFToBO(
+			Comments ef)
+		{
+			var bo = new BOComments();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.CreationDate,
-                                ef.PostId,
-                                ef.Score,
-                                ef.Text,
-                                ef.UserId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.CreationDate,
+				ef.PostId,
+				ef.Score,
+				ef.Text,
+				ef.UserId);
+			return bo;
+		}
 
-                public virtual List<BOComments> MapEFToBO(
-                        List<Comments> records)
-                {
-                        List<BOComments> response = new List<BOComments>();
+		public virtual List<BOComments> MapEFToBO(
+			List<Comments> records)
+		{
+			List<BOComments> response = new List<BOComments>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c431bf638204f91908c3b9795f5ce903</Hash>
+    <Hash>2394f46e6b9006473ec38fffd850952d</Hash>
 </Codenesium>*/

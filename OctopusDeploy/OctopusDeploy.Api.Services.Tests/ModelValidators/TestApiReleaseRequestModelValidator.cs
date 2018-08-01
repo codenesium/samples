@@ -15,185 +15,185 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Release")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiReleaseRequestModelValidatorTest
-        {
-                public ApiReleaseRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Release")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiReleaseRequestModelValidatorTest
+	{
+		public ApiReleaseRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ChannelId_Create_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ChannelId_Create_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ChannelId_Update_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ChannelId_Update_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ProjectDeploymentProcessSnapshotId_Create_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectDeploymentProcessSnapshotId_Create_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void ProjectDeploymentProcessSnapshotId_Update_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectDeploymentProcessSnapshotId_Update_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void ProjectId_Create_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectId_Create_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void ProjectId_Update_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectId_Update_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void ProjectVariableSetSnapshotId_Create_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectVariableSetSnapshotId_Create_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void ProjectVariableSetSnapshotId_Update_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void ProjectVariableSetSnapshotId_Update_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
+		}
 
-                [Fact]
-                public async void Version_Create_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void Version_Create_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
+		}
 
-                [Fact]
-                public async void Version_Update_length()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
+		[Fact]
+		public async void Version_Update_length()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
+		}
 
-                [Fact]
-                private async void BeUniqueByVersionProjectId_Create_Exists()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+		[Fact]
+		private async void BeUniqueByVersionProjectId_Create_Exists()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByVersionProjectId_Create_Not_Exists()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+		[Fact]
+		private async void BeUniqueByVersionProjectId_Create_Not_Exists()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
+			await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProjectId, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProjectId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByVersionProjectId_Update_Exists()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+		[Fact]
+		private async void BeUniqueByVersionProjectId_Update_Exists()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ProjectId, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ProjectId, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByVersionProjectId_Update_Not_Exists()
-                {
-                        Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
-                        releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
-                        var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
+		[Fact]
+		private async void BeUniqueByVersionProjectId_Update_Not_Exists()
+		{
+			Mock<IReleaseRepository> releaseRepository = new Mock<IReleaseRepository>();
+			releaseRepository.Setup(x => x.ByVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
+			var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ProjectId, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProjectId, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dc7c3c7bb9a8eded24c0c18b4d7dc869</Hash>
+    <Hash>9d7c7bce99b8a1cbcce174264dcc67e0</Hash>
 </Codenesium>*/

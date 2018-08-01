@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class StateProvinceService : AbstractStateProvinceService, IStateProvinceService
-        {
-                public StateProvinceService(
-                        ILogger<IStateProvinceRepository> logger,
-                        IStateProvinceRepository stateProvinceRepository,
-                        IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
-                        IBOLStateProvinceMapper bolstateProvinceMapper,
-                        IDALStateProvinceMapper dalstateProvinceMapper,
-                        IBOLAddressMapper bolAddressMapper,
-                        IDALAddressMapper dalAddressMapper
-                        )
-                        : base(logger,
-                               stateProvinceRepository,
-                               stateProvinceModelValidator,
-                               bolstateProvinceMapper,
-                               dalstateProvinceMapper,
-                               bolAddressMapper,
-                               dalAddressMapper)
-                {
-                }
-        }
+	public partial class StateProvinceService : AbstractStateProvinceService, IStateProvinceService
+	{
+		public StateProvinceService(
+			ILogger<IStateProvinceRepository> logger,
+			IStateProvinceRepository stateProvinceRepository,
+			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
+			IBOLStateProvinceMapper bolstateProvinceMapper,
+			IDALStateProvinceMapper dalstateProvinceMapper,
+			IBOLAddressMapper bolAddressMapper,
+			IDALAddressMapper dalAddressMapper
+			)
+			: base(logger,
+			       stateProvinceRepository,
+			       stateProvinceModelValidator,
+			       bolstateProvinceMapper,
+			       dalstateProvinceMapper,
+			       bolAddressMapper,
+			       dalAddressMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>64d2ff0c5a18565ac7e3c3162df93fd1</Hash>
+    <Hash>3c6f8cd5b61102c599b1119581786510</Hash>
 </Codenesium>*/

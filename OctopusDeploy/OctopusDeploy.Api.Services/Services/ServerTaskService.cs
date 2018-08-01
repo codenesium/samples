@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class ServerTaskService : AbstractServerTaskService, IServerTaskService
-        {
-                public ServerTaskService(
-                        ILogger<IServerTaskRepository> logger,
-                        IServerTaskRepository serverTaskRepository,
-                        IApiServerTaskRequestModelValidator serverTaskModelValidator,
-                        IBOLServerTaskMapper bolserverTaskMapper,
-                        IDALServerTaskMapper dalserverTaskMapper
-                        )
-                        : base(logger,
-                               serverTaskRepository,
-                               serverTaskModelValidator,
-                               bolserverTaskMapper,
-                               dalserverTaskMapper)
-                {
-                }
-        }
+	public partial class ServerTaskService : AbstractServerTaskService, IServerTaskService
+	{
+		public ServerTaskService(
+			ILogger<IServerTaskRepository> logger,
+			IServerTaskRepository serverTaskRepository,
+			IApiServerTaskRequestModelValidator serverTaskModelValidator,
+			IBOLServerTaskMapper bolserverTaskMapper,
+			IDALServerTaskMapper dalserverTaskMapper
+			)
+			: base(logger,
+			       serverTaskRepository,
+			       serverTaskModelValidator,
+			       bolserverTaskMapper,
+			       dalserverTaskMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ecbe6aab5cf5fa90f40f1016a53dbfa5</Hash>
+    <Hash>14fa682fc3b8daa73bee3c61430ae6d0</Hash>
 </Codenesium>*/

@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class DALAbstractDestinationMapper
-        {
-                public virtual Destination MapBOToEF(
-                        BODestination bo)
-                {
-                        Destination efDestination = new Destination();
-                        efDestination.SetProperties(
-                                bo.CountryId,
-                                bo.Id,
-                                bo.Name,
-                                bo.Order);
-                        return efDestination;
-                }
+	public abstract class DALAbstractDestinationMapper
+	{
+		public virtual Destination MapBOToEF(
+			BODestination bo)
+		{
+			Destination efDestination = new Destination();
+			efDestination.SetProperties(
+				bo.CountryId,
+				bo.Id,
+				bo.Name,
+				bo.Order);
+			return efDestination;
+		}
 
-                public virtual BODestination MapEFToBO(
-                        Destination ef)
-                {
-                        var bo = new BODestination();
+		public virtual BODestination MapEFToBO(
+			Destination ef)
+		{
+			var bo = new BODestination();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.CountryId,
-                                ef.Name,
-                                ef.Order);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.CountryId,
+				ef.Name,
+				ef.Order);
+			return bo;
+		}
 
-                public virtual List<BODestination> MapEFToBO(
-                        List<Destination> records)
-                {
-                        List<BODestination> response = new List<BODestination>();
+		public virtual List<BODestination> MapEFToBO(
+			List<Destination> records)
+		{
+			List<BODestination> response = new List<BODestination>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7d7b528619ea7226ecae278bf85dceaf</Hash>
+    <Hash>67e9bba4f7c04ca995a6d788aa6db636</Hash>
 </Codenesium>*/

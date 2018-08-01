@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractBusinessEntityMapper
-        {
-                public virtual BOBusinessEntity MapModelToBO(
-                        int businessEntityID,
-                        ApiBusinessEntityRequestModel model
-                        )
-                {
-                        BOBusinessEntity boBusinessEntity = new BOBusinessEntity();
-                        boBusinessEntity.SetProperties(
-                                businessEntityID,
-                                model.ModifiedDate,
-                                model.Rowguid);
-                        return boBusinessEntity;
-                }
+	public abstract class BOLAbstractBusinessEntityMapper
+	{
+		public virtual BOBusinessEntity MapModelToBO(
+			int businessEntityID,
+			ApiBusinessEntityRequestModel model
+			)
+		{
+			BOBusinessEntity boBusinessEntity = new BOBusinessEntity();
+			boBusinessEntity.SetProperties(
+				businessEntityID,
+				model.ModifiedDate,
+				model.Rowguid);
+			return boBusinessEntity;
+		}
 
-                public virtual ApiBusinessEntityResponseModel MapBOToModel(
-                        BOBusinessEntity boBusinessEntity)
-                {
-                        var model = new ApiBusinessEntityResponseModel();
+		public virtual ApiBusinessEntityResponseModel MapBOToModel(
+			BOBusinessEntity boBusinessEntity)
+		{
+			var model = new ApiBusinessEntityResponseModel();
 
-                        model.SetProperties(boBusinessEntity.BusinessEntityID, boBusinessEntity.ModifiedDate, boBusinessEntity.Rowguid);
+			model.SetProperties(boBusinessEntity.BusinessEntityID, boBusinessEntity.ModifiedDate, boBusinessEntity.Rowguid);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiBusinessEntityResponseModel> MapBOToModel(
-                        List<BOBusinessEntity> items)
-                {
-                        List<ApiBusinessEntityResponseModel> response = new List<ApiBusinessEntityResponseModel>();
+		public virtual List<ApiBusinessEntityResponseModel> MapBOToModel(
+			List<BOBusinessEntity> items)
+		{
+			List<ApiBusinessEntityResponseModel> response = new List<ApiBusinessEntityResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d4e5f3743ed15ee2ea3ea633c448b1f</Hash>
+    <Hash>13d4caab16fcda028339cca6148ff443</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IDALLessonMapper
-        {
-                Lesson MapBOToEF(
-                        BOLesson bo);
+	public interface IDALLessonMapper
+	{
+		Lesson MapBOToEF(
+			BOLesson bo);
 
-                BOLesson MapEFToBO(
-                        Lesson efLesson);
+		BOLesson MapEFToBO(
+			Lesson efLesson);
 
-                List<BOLesson> MapEFToBO(
-                        List<Lesson> records);
-        }
+		List<BOLesson> MapEFToBO(
+			List<Lesson> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>37a7389e6188575d7d0b4d5dd8d797e1</Hash>
+    <Hash>ca3a0ffac51076ae63ff0d1190e880da</Hash>
 </Codenesium>*/

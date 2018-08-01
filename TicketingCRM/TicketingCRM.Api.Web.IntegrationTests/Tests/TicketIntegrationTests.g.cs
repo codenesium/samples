@@ -12,86 +12,86 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Ticket")]
-        [Trait("Area", "Integration")]
-        public class TicketIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TicketIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Ticket")]
+	[Trait("Area", "Integration")]
+	public class TicketIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TicketIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTicketModelMapper mapper = new ApiTicketModelMapper();
+			ApiTicketModelMapper mapper = new ApiTicketModelMapper();
 
-                        UpdateResponse<ApiTicketResponseModel> updateResponse = await this.Client.TicketUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTicketResponseModel> updateResponse = await this.Client.TicketUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TicketDeleteAsync(model.Id);
+			await this.Client.TicketDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTicketResponseModel response = await this.Client.TicketGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTicketResponseModel response = await this.Client.TicketGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTicketResponseModel> response = await this.Client.TicketAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTicketResponseModel> response = await this.Client.TicketAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTicketResponseModel> CreateRecord()
-                {
-                        var model = new ApiTicketRequestModel();
-                        model.SetProperties("B", 1);
-                        CreateResponse<ApiTicketResponseModel> result = await this.Client.TicketCreateAsync(model);
+		private async Task<ApiTicketResponseModel> CreateRecord()
+		{
+			var model = new ApiTicketRequestModel();
+			model.SetProperties("B", 1);
+			CreateResponse<ApiTicketResponseModel> result = await this.Client.TicketCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TicketDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TicketDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>49dff1bb43cd4b8b7426c3c024dbb9c4</Hash>
+    <Hash>03d9e1d92f1948a2d8786c1420d0e661</Hash>
 </Codenesium>*/

@@ -7,50 +7,49 @@ using Xunit;
 
 namespace PetShippingNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Country")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiCountryModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiCountryModelMapper();
-                        var model = new ApiCountryRequestModel();
-                        model.SetProperties("A");
-                        ApiCountryResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Country")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiCountryModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiCountryModelMapper();
+			var model = new ApiCountryRequestModel();
+			model.SetProperties("A");
+			ApiCountryResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiCountryModelMapper();
-                        var model = new ApiCountryResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiCountryRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiCountryModelMapper();
+			var model = new ApiCountryResponseModel();
+			model.SetProperties(1, "A");
+			ApiCountryRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiCountryModelMapper();
-                        var model = new ApiCountryRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiCountryModelMapper();
+			var model = new ApiCountryRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiCountryRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiCountryRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiCountryRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiCountryRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>685be7a99c93ff2d3c8fc5b9597fc87d</Hash>
+    <Hash>52ab82a5a304139e9a6b22f3a9dad330</Hash>
 </Codenesium>*/

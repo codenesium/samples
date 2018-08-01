@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALSalesTaxRateMapper
-        {
-                SalesTaxRate MapBOToEF(
-                        BOSalesTaxRate bo);
+	public interface IDALSalesTaxRateMapper
+	{
+		SalesTaxRate MapBOToEF(
+			BOSalesTaxRate bo);
 
-                BOSalesTaxRate MapEFToBO(
-                        SalesTaxRate efSalesTaxRate);
+		BOSalesTaxRate MapEFToBO(
+			SalesTaxRate efSalesTaxRate);
 
-                List<BOSalesTaxRate> MapEFToBO(
-                        List<SalesTaxRate> records);
-        }
+		List<BOSalesTaxRate> MapEFToBO(
+			List<SalesTaxRate> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>83ca1cff6ae9ff6ada107f522e25ab9a</Hash>
+    <Hash>535998ed4241c1580cba0aaea76181f0</Hash>
 </Codenesium>*/

@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractEmployeePayHistoryService : AbstractService
-        {
-                private IEmployeePayHistoryRepository employeePayHistoryRepository;
+	public abstract class AbstractEmployeePayHistoryService : AbstractService
+	{
+		private IEmployeePayHistoryRepository employeePayHistoryRepository;
 
-                private IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator;
+		private IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator;
 
-                private IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper;
+		private IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper;
 
-                private IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper;
+		private IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractEmployeePayHistoryService(
-                        ILogger logger,
-                        IEmployeePayHistoryRepository employeePayHistoryRepository,
-                        IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
-                        IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
-                        IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper)
-                        : base()
-                {
-                        this.employeePayHistoryRepository = employeePayHistoryRepository;
-                        this.employeePayHistoryModelValidator = employeePayHistoryModelValidator;
-                        this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
-                        this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
-                        this.logger = logger;
-                }
+		public AbstractEmployeePayHistoryService(
+			ILogger logger,
+			IEmployeePayHistoryRepository employeePayHistoryRepository,
+			IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
+			IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
+			IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper)
+			: base()
+		{
+			this.employeePayHistoryRepository = employeePayHistoryRepository;
+			this.employeePayHistoryModelValidator = employeePayHistoryModelValidator;
+			this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
+			this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.employeePayHistoryRepository.All(limit, offset);
+		public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.employeePayHistoryRepository.All(limit, offset);
 
-                        return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
-                }
+			return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiEmployeePayHistoryResponseModel> Get(int businessEntityID)
-                {
-                        var record = await this.employeePayHistoryRepository.Get(businessEntityID);
+		public virtual async Task<ApiEmployeePayHistoryResponseModel> Get(int businessEntityID)
+		{
+			var record = await this.employeePayHistoryRepository.Get(businessEntityID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiEmployeePayHistoryResponseModel>> Create(
-                        ApiEmployeePayHistoryRequestModel model)
-                {
-                        CreateResponse<ApiEmployeePayHistoryResponseModel> response = new CreateResponse<ApiEmployeePayHistoryResponseModel>(await this.employeePayHistoryModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolEmployeePayHistoryMapper.MapModelToBO(default(int), model);
-                                var record = await this.employeePayHistoryRepository.Create(this.dalEmployeePayHistoryMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiEmployeePayHistoryResponseModel>> Create(
+			ApiEmployeePayHistoryRequestModel model)
+		{
+			CreateResponse<ApiEmployeePayHistoryResponseModel> response = new CreateResponse<ApiEmployeePayHistoryResponseModel>(await this.employeePayHistoryModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolEmployeePayHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.employeePayHistoryRepository.Create(this.dalEmployeePayHistoryMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiEmployeePayHistoryResponseModel>> Update(
-                        int businessEntityID,
-                        ApiEmployeePayHistoryRequestModel model)
-                {
-                        var validationResult = await this.employeePayHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+		public virtual async Task<UpdateResponse<ApiEmployeePayHistoryResponseModel>> Update(
+			int businessEntityID,
+			ApiEmployeePayHistoryRequestModel model)
+		{
+			var validationResult = await this.employeePayHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolEmployeePayHistoryMapper.MapModelToBO(businessEntityID, model);
-                                await this.employeePayHistoryRepository.Update(this.dalEmployeePayHistoryMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolEmployeePayHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.employeePayHistoryRepository.Update(this.dalEmployeePayHistoryMapper.MapBOToEF(bo));
 
-                                var record = await this.employeePayHistoryRepository.Get(businessEntityID);
+				var record = await this.employeePayHistoryRepository.Get(businessEntityID);
 
-                                return new UpdateResponse<ApiEmployeePayHistoryResponseModel>(this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiEmployeePayHistoryResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiEmployeePayHistoryResponseModel>(this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiEmployeePayHistoryResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int businessEntityID)
-                {
-                        ActionResponse response = new ActionResponse(await this.employeePayHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
-                        if (response.Success)
-                        {
-                                await this.employeePayHistoryRepository.Delete(businessEntityID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int businessEntityID)
+		{
+			ActionResponse response = new ActionResponse(await this.employeePayHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
+			if (response.Success)
+			{
+				await this.employeePayHistoryRepository.Delete(businessEntityID);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>91df9b33000e340bb2c5c690e0344323</Hash>
+    <Hash>234775985c19a3882005fcd71e3078de</Hash>
 </Codenesium>*/

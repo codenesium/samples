@@ -15,91 +15,91 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Breed")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiBreedRequestModelValidatorTest
-        {
-                public ApiBreedRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Breed")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiBreedRequestModelValidatorTest
+	{
+		public ApiBreedRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBreedRequestModel());
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBreedRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void SpeciesId_Create_Valid_Reference()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+		[Fact]
+		public async void SpeciesId_Create_Valid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBreedRequestModel());
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBreedRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
 
-                [Fact]
-                public async void SpeciesId_Create_Invalid_Reference()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+		[Fact]
+		public async void SpeciesId_Create_Invalid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiBreedRequestModel());
+			await validator.ValidateCreateAsync(new ApiBreedRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
 
-                [Fact]
-                public async void SpeciesId_Update_Valid_Reference()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+		[Fact]
+		public async void SpeciesId_Update_Valid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
 
-                [Fact]
-                public async void SpeciesId_Update_Invalid_Reference()
-                {
-                        Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-                        breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+		[Fact]
+		public async void SpeciesId_Update_Invalid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
 
-                        var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
+			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6c87d35aa6ef2bb3e27e1df05fa83a68</Hash>
+    <Hash>6ab9083de6a82200688355419c53a03f</Hash>
 </Codenesium>*/

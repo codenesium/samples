@@ -15,65 +15,65 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SchemaBPerson")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSchemaBPersonRequestModelValidatorTest
-        {
-                public ApiSchemaBPersonRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SchemaBPerson")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSchemaBPersonRequestModelValidatorTest
+	{
+		public ApiSchemaBPersonRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
-                        schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
+			schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
 
-                        var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSchemaBPersonRequestModel());
+			var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSchemaBPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
-                        schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
+			schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
 
-                        var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSchemaBPersonRequestModel());
+			var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSchemaBPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
-                        schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
+			schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
 
-                        var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSchemaBPersonRequestModel());
+			var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSchemaBPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
-                        schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISchemaBPersonRepository> schemaBPersonRepository = new Mock<ISchemaBPersonRepository>();
+			schemaBPersonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaBPerson()));
 
-                        var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSchemaBPersonRequestModel());
+			var validator = new ApiSchemaBPersonRequestModelValidator(schemaBPersonRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSchemaBPersonRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>06caa824a693f58e1013c481bc17a8f7</Hash>
+    <Hash>89ec091433cb705f2aac910e40f2a4bc</Hash>
 </Codenesium>*/

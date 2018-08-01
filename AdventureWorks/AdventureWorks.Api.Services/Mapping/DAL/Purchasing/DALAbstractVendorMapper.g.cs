@@ -6,56 +6,56 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractVendorMapper
-        {
-                public virtual Vendor MapBOToEF(
-                        BOVendor bo)
-                {
-                        Vendor efVendor = new Vendor();
-                        efVendor.SetProperties(
-                                bo.AccountNumber,
-                                bo.ActiveFlag,
-                                bo.BusinessEntityID,
-                                bo.CreditRating,
-                                bo.ModifiedDate,
-                                bo.Name,
-                                bo.PreferredVendorStatu,
-                                bo.PurchasingWebServiceURL);
-                        return efVendor;
-                }
+	public abstract class DALAbstractVendorMapper
+	{
+		public virtual Vendor MapBOToEF(
+			BOVendor bo)
+		{
+			Vendor efVendor = new Vendor();
+			efVendor.SetProperties(
+				bo.AccountNumber,
+				bo.ActiveFlag,
+				bo.BusinessEntityID,
+				bo.CreditRating,
+				bo.ModifiedDate,
+				bo.Name,
+				bo.PreferredVendorStatu,
+				bo.PurchasingWebServiceURL);
+			return efVendor;
+		}
 
-                public virtual BOVendor MapEFToBO(
-                        Vendor ef)
-                {
-                        var bo = new BOVendor();
+		public virtual BOVendor MapEFToBO(
+			Vendor ef)
+		{
+			var bo = new BOVendor();
 
-                        bo.SetProperties(
-                                ef.BusinessEntityID,
-                                ef.AccountNumber,
-                                ef.ActiveFlag,
-                                ef.CreditRating,
-                                ef.ModifiedDate,
-                                ef.Name,
-                                ef.PreferredVendorStatu,
-                                ef.PurchasingWebServiceURL);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.BusinessEntityID,
+				ef.AccountNumber,
+				ef.ActiveFlag,
+				ef.CreditRating,
+				ef.ModifiedDate,
+				ef.Name,
+				ef.PreferredVendorStatu,
+				ef.PurchasingWebServiceURL);
+			return bo;
+		}
 
-                public virtual List<BOVendor> MapEFToBO(
-                        List<Vendor> records)
-                {
-                        List<BOVendor> response = new List<BOVendor>();
+		public virtual List<BOVendor> MapEFToBO(
+			List<Vendor> records)
+		{
+			List<BOVendor> response = new List<BOVendor>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c0b44a5a71d162e4683a2ca0039d7c6a</Hash>
+    <Hash>3e2e5d56533078259a869d3dd811eeb4</Hash>
 </Codenesium>*/

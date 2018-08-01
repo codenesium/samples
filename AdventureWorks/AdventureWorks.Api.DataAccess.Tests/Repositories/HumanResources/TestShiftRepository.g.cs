@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ShiftRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ShiftRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ShiftRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ShiftRepository>>();
-                }
-        }
+		public static Mock<ILogger<ShiftRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ShiftRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Shift")]
-        [Trait("Area", "Repositories")]
-        public partial class ShiftRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Shift")]
+	[Trait("Area", "Repositories")]
+	public partial class ShiftRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
 
-                        Shift entity = new Shift();
-                        context.Set<Shift>().Add(entity);
-                        await context.SaveChangesAsync();
+			Shift entity = new Shift();
+			context.Set<Shift>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
 
-                        Shift entity = new Shift();
-                        context.Set<Shift>().Add(entity);
-                        await context.SaveChangesAsync();
+			Shift entity = new Shift();
+			context.Set<Shift>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ShiftID);
+			var record = await repository.Get(entity.ShiftID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
 
-                        var entity = new Shift();
-                        await repository.Create(entity);
+			var entity = new Shift();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Shift>().FirstOrDefaultAsync();
+			var record = await context.Set<Shift>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
-                        Shift entity = new Shift();
-                        context.Set<Shift>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
+			Shift entity = new Shift();
+			context.Set<Shift>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ShiftID);
+			var record = await repository.Get(entity.ShiftID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Shift>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Shift>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
-                        Shift entity = new Shift();
-                        context.Set<Shift>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
+			Shift entity = new Shift();
+			context.Set<Shift>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Shift());
+			await repository.Update(new Shift());
 
-                        var modifiedRecord = context.Set<Shift>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Shift>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
-                        var repository = new ShiftRepository(loggerMoc.Object, context);
-                        Shift entity = new Shift();
-                        context.Set<Shift>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
+			var repository = new ShiftRepository(loggerMoc.Object, context);
+			Shift entity = new Shift();
+			context.Set<Shift>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ShiftID);
+			await repository.Delete(entity.ShiftID);
 
-                        Shift modifiedRecord = await context.Set<Shift>().FirstOrDefaultAsync();
+			Shift modifiedRecord = await context.Set<Shift>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e71be1736f2b0c2f1f01afd3bbb6e825</Hash>
+    <Hash>5593dd0cc9fbc29bfde3a82593078080</Hash>
 </Codenesium>*/

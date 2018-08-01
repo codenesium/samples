@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class KeyAllocationRepository : AbstractKeyAllocationRepository, IKeyAllocationRepository
-        {
-                public KeyAllocationRepository(
-                        ILogger<KeyAllocationRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class KeyAllocationRepository : AbstractKeyAllocationRepository, IKeyAllocationRepository
+	{
+		public KeyAllocationRepository(
+			ILogger<KeyAllocationRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1de0e0e9ed9320e8ed364343b7b28254</Hash>
+    <Hash>9a0bf7701cba4f424b2d24652e14df8c</Hash>
 </Codenesium>*/

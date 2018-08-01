@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Password")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPasswordRequestModelValidatorTest
-        {
-                public ApiPasswordRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Password")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPasswordRequestModelValidatorTest
+	{
+		public ApiPasswordRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void PasswordHash_Create_null()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordHash_Create_null()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
+		}
 
-                [Fact]
-                public async void PasswordHash_Update_null()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordHash_Update_null()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
+		}
 
-                [Fact]
-                public async void PasswordHash_Create_length()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordHash_Create_length()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
+		}
 
-                [Fact]
-                public async void PasswordHash_Update_length()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordHash_Update_length()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
+		}
 
-                [Fact]
-                public async void PasswordSalt_Create_null()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordSalt_Create_null()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
+		}
 
-                [Fact]
-                public async void PasswordSalt_Update_null()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordSalt_Update_null()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
+		}
 
-                [Fact]
-                public async void PasswordSalt_Create_length()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordSalt_Create_length()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
+		}
 
-                [Fact]
-                public async void PasswordSalt_Update_length()
-                {
-                        Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
-                        passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
+		[Fact]
+		public async void PasswordSalt_Update_length()
+		{
+			Mock<IPasswordRepository> passwordRepository = new Mock<IPasswordRepository>();
+			passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
-                        var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
+			var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>18edad86ad4b5b78b70071fb90e776a2</Hash>
+    <Hash>bda9988cc95f22011f01099d1eb536fa</Hash>
 </Codenesium>*/

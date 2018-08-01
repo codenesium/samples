@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiCultureRequestModelValidator : AbstractApiCultureRequestModelValidator, IApiCultureRequestModelValidator
-        {
-                public ApiCultureRequestModelValidator(ICultureRepository cultureRepository)
-                        : base(cultureRepository)
-                {
-                }
+	public class ApiCultureRequestModelValidator : AbstractApiCultureRequestModelValidator, IApiCultureRequestModelValidator
+	{
+		public ApiCultureRequestModelValidator(ICultureRepository cultureRepository)
+			: base(cultureRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model)
-                {
-                        this.ModifiedDateRules();
-                        this.NameRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model)
+		{
+			this.ModifiedDateRules();
+			this.NameRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureRequestModel model)
-                {
-                        this.ModifiedDateRules();
-                        this.NameRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureRequestModel model)
+		{
+			this.ModifiedDateRules();
+			this.NameRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(string id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(string id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c4fe2cef5595b17199697d2099618d53</Hash>
+    <Hash>6d5618b9d124ae02aea5c2721fc489f4</Hash>
 </Codenesium>*/

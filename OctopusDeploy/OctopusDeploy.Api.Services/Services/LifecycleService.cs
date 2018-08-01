@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class LifecycleService : AbstractLifecycleService, ILifecycleService
-        {
-                public LifecycleService(
-                        ILogger<ILifecycleRepository> logger,
-                        ILifecycleRepository lifecycleRepository,
-                        IApiLifecycleRequestModelValidator lifecycleModelValidator,
-                        IBOLLifecycleMapper bollifecycleMapper,
-                        IDALLifecycleMapper dallifecycleMapper
-                        )
-                        : base(logger,
-                               lifecycleRepository,
-                               lifecycleModelValidator,
-                               bollifecycleMapper,
-                               dallifecycleMapper)
-                {
-                }
-        }
+	public partial class LifecycleService : AbstractLifecycleService, ILifecycleService
+	{
+		public LifecycleService(
+			ILogger<ILifecycleRepository> logger,
+			ILifecycleRepository lifecycleRepository,
+			IApiLifecycleRequestModelValidator lifecycleModelValidator,
+			IBOLLifecycleMapper bollifecycleMapper,
+			IDALLifecycleMapper dallifecycleMapper
+			)
+			: base(logger,
+			       lifecycleRepository,
+			       lifecycleModelValidator,
+			       bollifecycleMapper,
+			       dallifecycleMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5a4e90fe10eca7ead2c778d85a676000</Hash>
+    <Hash>fec646c8af4c6cea8725036cad799e3a</Hash>
 </Codenesium>*/

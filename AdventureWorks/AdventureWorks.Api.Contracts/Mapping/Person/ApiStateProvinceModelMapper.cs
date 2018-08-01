@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiStateProvinceModelMapper : AbstractApiStateProvinceModelMapper, IApiStateProvinceModelMapper
-        {
-                public ApiStateProvinceModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiStateProvinceModelMapper : AbstractApiStateProvinceModelMapper, IApiStateProvinceModelMapper
+	{
+		public ApiStateProvinceModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>42be170962f158d0dabdcee78f6485ef</Hash>
+    <Hash>e1cc52f631aecd3782e97c6ef316bb83</Hash>
 </Codenesium>*/

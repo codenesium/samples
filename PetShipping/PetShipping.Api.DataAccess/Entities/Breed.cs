@@ -6,38 +6,38 @@ using System.Linq;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        [Table("Breed", Schema="dbo")]
-        public partial class Breed : AbstractEntity
-        {
-                public Breed()
-                {
-                }
+	[Table("Breed", Schema="dbo")]
+	public partial class Breed : AbstractEntity
+	{
+		public Breed()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string name,
-                        int speciesId)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                        this.SpeciesId = speciesId;
-                }
+		public virtual void SetProperties(
+			int id,
+			string name,
+			int speciesId)
+		{
+			this.Id = id;
+			this.Name = name;
+			this.SpeciesId = speciesId;
+		}
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
+		[Column("name")]
+		public string Name { get; private set; }
 
-                [Column("speciesId")]
-                public int SpeciesId { get; private set; }
+		[Column("speciesId")]
+		public int SpeciesId { get; private set; }
 
-                [ForeignKey("SpeciesId")]
-                public virtual Species SpeciesNavigation { get; private set; }
-        }
+		[ForeignKey("SpeciesId")]
+		public virtual Species SpeciesNavigation { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a597776c0ac622ae37732d474827ecf4</Hash>
+    <Hash>1a14a7593b17351bb2fc87429a6d42aa</Hash>
 </Codenesium>*/

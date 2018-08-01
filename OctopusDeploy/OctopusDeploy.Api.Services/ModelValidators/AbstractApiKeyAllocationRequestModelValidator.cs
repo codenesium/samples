@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiKeyAllocationRequestModelValidator : AbstractValidator<ApiKeyAllocationRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiKeyAllocationRequestModelValidator : AbstractValidator<ApiKeyAllocationRequestModel>
+	{
+		private string existingRecordId;
 
-                private IKeyAllocationRepository keyAllocationRepository;
+		private IKeyAllocationRepository keyAllocationRepository;
 
-                public AbstractApiKeyAllocationRequestModelValidator(IKeyAllocationRepository keyAllocationRepository)
-                {
-                        this.keyAllocationRepository = keyAllocationRepository;
-                }
+		public AbstractApiKeyAllocationRequestModelValidator(IKeyAllocationRepository keyAllocationRepository)
+		{
+			this.keyAllocationRepository = keyAllocationRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiKeyAllocationRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiKeyAllocationRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void AllocatedRules()
-                {
-                }
-        }
+		public virtual void AllocatedRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>730089719d22f3bd1e2677c08289344b</Hash>
+    <Hash>24a577661f0e3dff4e27795c20c99c4c</Hash>
 </Codenesium>*/

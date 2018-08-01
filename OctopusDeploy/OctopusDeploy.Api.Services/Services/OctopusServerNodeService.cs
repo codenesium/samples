@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class OctopusServerNodeService : AbstractOctopusServerNodeService, IOctopusServerNodeService
-        {
-                public OctopusServerNodeService(
-                        ILogger<IOctopusServerNodeRepository> logger,
-                        IOctopusServerNodeRepository octopusServerNodeRepository,
-                        IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
-                        IBOLOctopusServerNodeMapper boloctopusServerNodeMapper,
-                        IDALOctopusServerNodeMapper daloctopusServerNodeMapper
-                        )
-                        : base(logger,
-                               octopusServerNodeRepository,
-                               octopusServerNodeModelValidator,
-                               boloctopusServerNodeMapper,
-                               daloctopusServerNodeMapper)
-                {
-                }
-        }
+	public partial class OctopusServerNodeService : AbstractOctopusServerNodeService, IOctopusServerNodeService
+	{
+		public OctopusServerNodeService(
+			ILogger<IOctopusServerNodeRepository> logger,
+			IOctopusServerNodeRepository octopusServerNodeRepository,
+			IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
+			IBOLOctopusServerNodeMapper boloctopusServerNodeMapper,
+			IDALOctopusServerNodeMapper daloctopusServerNodeMapper
+			)
+			: base(logger,
+			       octopusServerNodeRepository,
+			       octopusServerNodeModelValidator,
+			       boloctopusServerNodeMapper,
+			       daloctopusServerNodeMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bdf770fa84f25e1d7855fd9c51c2e454</Hash>
+    <Hash>e161782045fdc431ade43f07b27d8604</Hash>
 </Codenesium>*/

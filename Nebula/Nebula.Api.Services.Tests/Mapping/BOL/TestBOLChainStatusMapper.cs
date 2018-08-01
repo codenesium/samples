@@ -8,47 +8,47 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ChainStatus")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLChainStatusMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLChainStatusMapper();
-                        ApiChainStatusRequestModel model = new ApiChainStatusRequestModel();
-                        model.SetProperties("A");
-                        BOChainStatus response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ChainStatus")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLChainStatusMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLChainStatusMapper();
+			ApiChainStatusRequestModel model = new ApiChainStatusRequestModel();
+			model.SetProperties("A");
+			BOChainStatus response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLChainStatusMapper();
-                        BOChainStatus bo = new BOChainStatus();
-                        bo.SetProperties(1, "A");
-                        ApiChainStatusResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLChainStatusMapper();
+			BOChainStatus bo = new BOChainStatus();
+			bo.SetProperties(1, "A");
+			ApiChainStatusResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLChainStatusMapper();
-                        BOChainStatus bo = new BOChainStatus();
-                        bo.SetProperties(1, "A");
-                        List<ApiChainStatusResponseModel> response = mapper.MapBOToModel(new List<BOChainStatus>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLChainStatusMapper();
+			BOChainStatus bo = new BOChainStatus();
+			bo.SetProperties(1, "A");
+			List<ApiChainStatusResponseModel> response = mapper.MapBOToModel(new List<BOChainStatus>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cc02cc66ab39974b904c964ec3ed8a4c</Hash>
+    <Hash>74d1602b1254abae2d2b6e25472d1783</Hash>
 </Codenesium>*/

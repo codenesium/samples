@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-        public interface IApiPersonRefModelMapper
-        {
-                ApiPersonRefResponseModel MapRequestToResponse(
-                        int id,
-                        ApiPersonRefRequestModel request);
+	public interface IApiPersonRefModelMapper
+	{
+		ApiPersonRefResponseModel MapRequestToResponse(
+			int id,
+			ApiPersonRefRequestModel request);
 
-                ApiPersonRefRequestModel MapResponseToRequest(
-                        ApiPersonRefResponseModel response);
+		ApiPersonRefRequestModel MapResponseToRequest(
+			ApiPersonRefResponseModel response);
 
-                JsonPatchDocument<ApiPersonRefRequestModel> CreatePatch(ApiPersonRefRequestModel model);
-        }
+		JsonPatchDocument<ApiPersonRefRequestModel> CreatePatch(ApiPersonRefRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c9e598fe19aae3df9ba28ea550c2faf</Hash>
+    <Hash>74ab264fe9ce3c4d01beafdc910062e9</Hash>
 </Codenesium>*/

@@ -8,73 +8,73 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Employee")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLEmployeeMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLEmployeeMapper();
-                        ApiEmployeeRequestModel model = new ApiEmployeeRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-                        BOEmployee response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Employee")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLEmployeeMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLEmployeeMapper();
+			ApiEmployeeRequestModel model = new ApiEmployeeRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
+			BOEmployee response = mapper.MapModelToBO(1, model);
 
-                        response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.CurrentFlag.Should().Be(true);
-                        response.Gender.Should().Be("A");
-                        response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.JobTitle.Should().Be("A");
-                        response.LoginID.Should().Be("A");
-                        response.MaritalStatu.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.NationalIDNumber.Should().Be("A");
-                        response.OrganizationLevel.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalariedFlag.Should().Be(true);
-                        response.SickLeaveHour.Should().Be(1);
-                        response.VacationHour.Should().Be(1);
-                }
+			response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.CurrentFlag.Should().Be(true);
+			response.Gender.Should().Be("A");
+			response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.JobTitle.Should().Be("A");
+			response.LoginID.Should().Be("A");
+			response.MaritalStatu.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.NationalIDNumber.Should().Be("A");
+			response.OrganizationLevel.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.SalariedFlag.Should().Be(true);
+			response.SickLeaveHour.Should().Be(1);
+			response.VacationHour.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLEmployeeMapper();
-                        BOEmployee bo = new BOEmployee();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-                        ApiEmployeeResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLEmployeeMapper();
+			BOEmployee bo = new BOEmployee();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
+			ApiEmployeeResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.BusinessEntityID.Should().Be(1);
-                        response.CurrentFlag.Should().Be(true);
-                        response.Gender.Should().Be("A");
-                        response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.JobTitle.Should().Be("A");
-                        response.LoginID.Should().Be("A");
-                        response.MaritalStatu.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.NationalIDNumber.Should().Be("A");
-                        response.OrganizationLevel.Should().Be(1);
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SalariedFlag.Should().Be(true);
-                        response.SickLeaveHour.Should().Be(1);
-                        response.VacationHour.Should().Be(1);
-                }
+			response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.BusinessEntityID.Should().Be(1);
+			response.CurrentFlag.Should().Be(true);
+			response.Gender.Should().Be("A");
+			response.HireDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.JobTitle.Should().Be("A");
+			response.LoginID.Should().Be("A");
+			response.MaritalStatu.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.NationalIDNumber.Should().Be("A");
+			response.OrganizationLevel.Should().Be(1);
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.SalariedFlag.Should().Be(true);
+			response.SickLeaveHour.Should().Be(1);
+			response.VacationHour.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLEmployeeMapper();
-                        BOEmployee bo = new BOEmployee();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-                        List<ApiEmployeeResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLEmployeeMapper();
+			BOEmployee bo = new BOEmployee();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
+			List<ApiEmployeeResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0a96e0915d65c62a915c6af9e4641111</Hash>
+    <Hash>d41746e9ecd78720663205de5500e400</Hash>
 </Codenesium>*/

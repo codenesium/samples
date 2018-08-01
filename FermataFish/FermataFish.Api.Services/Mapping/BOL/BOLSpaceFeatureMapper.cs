@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOLSpaceFeatureMapper : BOLAbstractSpaceFeatureMapper, IBOLSpaceFeatureMapper
-        {
-                public BOLSpaceFeatureMapper()
-                {
-                }
-        }
+	public partial class BOLSpaceFeatureMapper : BOLAbstractSpaceFeatureMapper, IBOLSpaceFeatureMapper
+	{
+		public BOLSpaceFeatureMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0210e52009a03fc7f6f4ca5a6ed47ca9</Hash>
+    <Hash>c8f89d15283bda4baf14561df6d81aa3</Hash>
 </Codenesium>*/

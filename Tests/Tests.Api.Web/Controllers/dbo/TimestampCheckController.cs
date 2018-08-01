@@ -12,31 +12,31 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Web
 {
-        [Route("api/timestampChecks")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TimestampCheckController : AbstractTimestampCheckController
-        {
-                public TimestampCheckController(
-                        ApiSettings settings,
-                        ILogger<TimestampCheckController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITimestampCheckService timestampCheckService,
-                        IApiTimestampCheckModelMapper timestampCheckModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               timestampCheckService,
-                               timestampCheckModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/timestampChecks")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TimestampCheckController : AbstractTimestampCheckController
+	{
+		public TimestampCheckController(
+			ApiSettings settings,
+			ILogger<TimestampCheckController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITimestampCheckService timestampCheckService,
+			IApiTimestampCheckModelMapper timestampCheckModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       timestampCheckService,
+			       timestampCheckModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7f400481dc61b0087222160775534f3c</Hash>
+    <Hash>d66622f6cb25a6361a4045536b2cd18c</Hash>
 </Codenesium>*/

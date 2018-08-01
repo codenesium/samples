@@ -5,16 +5,16 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-        public interface IApiSelfReferenceRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiSelfReferenceRequestModel model);
+	public interface IApiSelfReferenceRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSelfReferenceRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiSelfReferenceRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSelfReferenceRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>408a1b2f3dce535e2d88bf10e33482e8</Hash>
+    <Hash>dbb43950431f6ac3de0ca29c3cbc0531</Hash>
 </Codenesium>*/

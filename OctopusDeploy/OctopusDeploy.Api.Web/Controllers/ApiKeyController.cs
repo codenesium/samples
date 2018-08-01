@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/apiKeys")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ApiKeyController : AbstractApiKeyController
-        {
-                public ApiKeyController(
-                        ApiSettings settings,
-                        ILogger<ApiKeyController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IApiKeyService apiKeyService,
-                        IApiApiKeyModelMapper apiKeyModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               apiKeyService,
-                               apiKeyModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/apiKeys")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ApiKeyController : AbstractApiKeyController
+	{
+		public ApiKeyController(
+			ApiSettings settings,
+			ILogger<ApiKeyController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IApiKeyService apiKeyService,
+			IApiApiKeyModelMapper apiKeyModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       apiKeyService,
+			       apiKeyModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b783dbb42231b4ad614e29334af0f782</Hash>
+    <Hash>e87ec25cea60b382a95c8d08cbf4c5b8</Hash>
 </Codenesium>*/

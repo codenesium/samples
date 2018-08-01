@@ -15,161 +15,161 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpecialOffer")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSpecialOfferRequestModelValidatorTest
-        {
-                public ApiSpecialOfferRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpecialOffer")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSpecialOfferRequestModelValidatorTest
+	{
+		public ApiSpecialOfferRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Category_Create_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Category_Create_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
+		}
 
-                [Fact]
-                public async void Category_Update_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Category_Update_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
+		}
 
-                [Fact]
-                public async void Category_Create_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Category_Create_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Category_Update_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Category_Update_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Description_Create_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Description_Create_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
 
-                [Fact]
-                public async void Description_Update_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Description_Update_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
 
-                [Fact]
-                public async void Description_Create_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Description_Create_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
+		}
 
-                [Fact]
-                public async void Description_Update_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Description_Update_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
+		}
 
-                [Fact]
-                public async void Type_Create_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Type_Create_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+		}
 
-                [Fact]
-                public async void Type_Update_null()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Type_Update_null()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+		}
 
-                [Fact]
-                public async void Type_Create_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Type_Create_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Type_Update_length()
-                {
-                        Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-                        specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
+		[Fact]
+		public async void Type_Update_length()
+		{
+			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
+			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 
-                        var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
+			var validator = new ApiSpecialOfferRequestModelValidator(specialOfferRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>643919a83efdd00ed94d91326c27c68a</Hash>
+    <Hash>17d39266bfc9036d52cf78ab3ddafde2</Hash>
 </Codenesium>*/

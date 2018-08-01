@@ -7,30 +7,30 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IProjectService
-        {
-                Task<CreateResponse<ApiProjectResponseModel>> Create(
-                        ApiProjectRequestModel model);
+	public interface IProjectService
+	{
+		Task<CreateResponse<ApiProjectResponseModel>> Create(
+			ApiProjectRequestModel model);
 
-                Task<UpdateResponse<ApiProjectResponseModel>> Update(string id,
-                                                                      ApiProjectRequestModel model);
+		Task<UpdateResponse<ApiProjectResponseModel>> Update(string id,
+		                                                      ApiProjectRequestModel model);
 
-                Task<ActionResponse> Delete(string id);
+		Task<ActionResponse> Delete(string id);
 
-                Task<ApiProjectResponseModel> Get(string id);
+		Task<ApiProjectResponseModel> Get(string id);
 
-                Task<List<ApiProjectResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProjectResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProjectResponseModel> ByName(string name);
+		Task<ApiProjectResponseModel> ByName(string name);
 
-                Task<ApiProjectResponseModel> BySlug(string slug);
+		Task<ApiProjectResponseModel> BySlug(string slug);
 
-                Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion);
+		Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion);
 
-                Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
-        }
+		Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>d5779e531bd7267ade7ae1ceebec2566</Hash>
+    <Hash>25d59d3c947813fa1697e8156e6c407b</Hash>
 </Codenesium>*/

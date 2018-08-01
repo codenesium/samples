@@ -8,51 +8,51 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PersonPhone")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPersonPhoneMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPersonPhoneMapper();
-                        ApiPersonPhoneRequestModel model = new ApiPersonPhoneRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-                        BOPersonPhone response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PersonPhone")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPersonPhoneMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPersonPhoneMapper();
+			ApiPersonPhoneRequestModel model = new ApiPersonPhoneRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+			BOPersonPhone response = mapper.MapModelToBO(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PhoneNumber.Should().Be("A");
-                        response.PhoneNumberTypeID.Should().Be(1);
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PhoneNumber.Should().Be("A");
+			response.PhoneNumberTypeID.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPersonPhoneMapper();
-                        BOPersonPhone bo = new BOPersonPhone();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-                        ApiPersonPhoneResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPersonPhoneMapper();
+			BOPersonPhone bo = new BOPersonPhone();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+			ApiPersonPhoneResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PhoneNumber.Should().Be("A");
-                        response.PhoneNumberTypeID.Should().Be(1);
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PhoneNumber.Should().Be("A");
+			response.PhoneNumberTypeID.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPersonPhoneMapper();
-                        BOPersonPhone bo = new BOPersonPhone();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-                        List<ApiPersonPhoneResponseModel> response = mapper.MapBOToModel(new List<BOPersonPhone>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPersonPhoneMapper();
+			BOPersonPhone bo = new BOPersonPhone();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+			List<ApiPersonPhoneResponseModel> response = mapper.MapBOToModel(new List<BOPersonPhone>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>01aa46c01be9fd9f165b0a799fceadf8</Hash>
+    <Hash>2bbb32fc46126017cc5367b0cb2a762e</Hash>
 </Codenesium>*/

@@ -8,53 +8,53 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Password")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPasswordMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPasswordMapper();
-                        ApiPasswordRequestModel model = new ApiPasswordRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        BOPassword response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Password")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPasswordMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPasswordMapper();
+			ApiPasswordRequestModel model = new ApiPasswordRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			BOPassword response = mapper.MapModelToBO(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PasswordHash.Should().Be("A");
-                        response.PasswordSalt.Should().Be("A");
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PasswordHash.Should().Be("A");
+			response.PasswordSalt.Should().Be("A");
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPasswordMapper();
-                        BOPassword bo = new BOPassword();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        ApiPasswordResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPasswordMapper();
+			BOPassword bo = new BOPassword();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			ApiPasswordResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PasswordHash.Should().Be("A");
-                        response.PasswordSalt.Should().Be("A");
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PasswordHash.Should().Be("A");
+			response.PasswordSalt.Should().Be("A");
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPasswordMapper();
-                        BOPassword bo = new BOPassword();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        List<ApiPasswordResponseModel> response = mapper.MapBOToModel(new List<BOPassword>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPasswordMapper();
+			BOPassword bo = new BOPassword();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			List<ApiPasswordResponseModel> response = mapper.MapBOToModel(new List<BOPassword>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f23210757220041f6d472beee4dcb7c7</Hash>
+    <Hash>5d325ea1c654a0a36c64a46f4adabfdc</Hash>
 </Codenesium>*/

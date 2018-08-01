@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PipelineService : AbstractPipelineService, IPipelineService
-        {
-                public PipelineService(
-                        ILogger<IPipelineRepository> logger,
-                        IPipelineRepository pipelineRepository,
-                        IApiPipelineRequestModelValidator pipelineModelValidator,
-                        IBOLPipelineMapper bolpipelineMapper,
-                        IDALPipelineMapper dalpipelineMapper
-                        )
-                        : base(logger,
-                               pipelineRepository,
-                               pipelineModelValidator,
-                               bolpipelineMapper,
-                               dalpipelineMapper)
-                {
-                }
-        }
+	public partial class PipelineService : AbstractPipelineService, IPipelineService
+	{
+		public PipelineService(
+			ILogger<IPipelineRepository> logger,
+			IPipelineRepository pipelineRepository,
+			IApiPipelineRequestModelValidator pipelineModelValidator,
+			IBOLPipelineMapper bolpipelineMapper,
+			IDALPipelineMapper dalpipelineMapper
+			)
+			: base(logger,
+			       pipelineRepository,
+			       pipelineModelValidator,
+			       bolpipelineMapper,
+			       dalpipelineMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f6a31c74e5ad95df687d1cf71395c1e</Hash>
+    <Hash>8a420df3b743bb998400f6b07a417522</Hash>
 </Codenesium>*/

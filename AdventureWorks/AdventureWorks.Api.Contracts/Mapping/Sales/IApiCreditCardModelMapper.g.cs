@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiCreditCardModelMapper
-        {
-                ApiCreditCardResponseModel MapRequestToResponse(
-                        int creditCardID,
-                        ApiCreditCardRequestModel request);
+	public interface IApiCreditCardModelMapper
+	{
+		ApiCreditCardResponseModel MapRequestToResponse(
+			int creditCardID,
+			ApiCreditCardRequestModel request);
 
-                ApiCreditCardRequestModel MapResponseToRequest(
-                        ApiCreditCardResponseModel response);
+		ApiCreditCardRequestModel MapResponseToRequest(
+			ApiCreditCardResponseModel response);
 
-                JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model);
-        }
+		JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8f304ccd4c69db01688518a435dbeeff</Hash>
+    <Hash>d3592c7878727df36aff9b47cb7ed2d4</Hash>
 </Codenesium>*/

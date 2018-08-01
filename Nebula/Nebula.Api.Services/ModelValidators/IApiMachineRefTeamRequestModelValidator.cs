@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IApiMachineRefTeamRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiMachineRefTeamRequestModel model);
+	public interface IApiMachineRefTeamRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiMachineRefTeamRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiMachineRefTeamRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiMachineRefTeamRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4a4a8f8c131fea511cde8361060a894c</Hash>
+    <Hash>a094756b989d26b6ab57922e3ef992c4</Hash>
 </Codenesium>*/

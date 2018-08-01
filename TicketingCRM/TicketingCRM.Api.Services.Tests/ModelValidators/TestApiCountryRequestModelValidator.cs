@@ -15,41 +15,41 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Country")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCountryRequestModelValidatorTest
-        {
-                public ApiCountryRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Country")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCountryRequestModelValidatorTest
+	{
+		public ApiCountryRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
+			countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
 
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCountryRequestModel());
+			var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCountryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
-                        countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ICountryRepository> countryRepository = new Mock<ICountryRepository>();
+			countryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
 
-                        var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCountryRequestModel());
+			var validator = new ApiCountryRequestModelValidator(countryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCountryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>40d33f9c78e78a6bfc45aeba46e6ec63</Hash>
+    <Hash>0d2788d9d42c2d7c1ba22c5135587977</Hash>
 </Codenesium>*/

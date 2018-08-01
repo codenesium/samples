@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface ILibraryVariableSetRepository
-        {
-                Task<LibraryVariableSet> Create(LibraryVariableSet item);
+	public interface ILibraryVariableSetRepository
+	{
+		Task<LibraryVariableSet> Create(LibraryVariableSet item);
 
-                Task Update(LibraryVariableSet item);
+		Task Update(LibraryVariableSet item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<LibraryVariableSet> Get(string id);
+		Task<LibraryVariableSet> Get(string id);
 
-                Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<LibraryVariableSet> ByName(string name);
-        }
+		Task<LibraryVariableSet> ByName(string name);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2865392b81b5ecb8848a070318935af1</Hash>
+    <Hash>1fb7507d7f6c069f58f87b0cc75f16ad</Hash>
 </Codenesium>*/

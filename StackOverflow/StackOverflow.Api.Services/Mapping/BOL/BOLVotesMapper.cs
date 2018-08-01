@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLVotesMapper : BOLAbstractVotesMapper, IBOLVotesMapper
-        {
-                public BOLVotesMapper()
-                {
-                }
-        }
+	public partial class BOLVotesMapper : BOLAbstractVotesMapper, IBOLVotesMapper
+	{
+		public BOLVotesMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a673ba9035e30727c284a819c03ac24d</Hash>
+    <Hash>090b68521af6cf1d0cbc3bfcea4e8244</Hash>
 </Codenesium>*/

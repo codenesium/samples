@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class ClaspService : AbstractClaspService, IClaspService
-        {
-                public ClaspService(
-                        ILogger<IClaspRepository> logger,
-                        IClaspRepository claspRepository,
-                        IApiClaspRequestModelValidator claspModelValidator,
-                        IBOLClaspMapper bolclaspMapper,
-                        IDALClaspMapper dalclaspMapper
-                        )
-                        : base(logger,
-                               claspRepository,
-                               claspModelValidator,
-                               bolclaspMapper,
-                               dalclaspMapper)
-                {
-                }
-        }
+	public partial class ClaspService : AbstractClaspService, IClaspService
+	{
+		public ClaspService(
+			ILogger<IClaspRepository> logger,
+			IClaspRepository claspRepository,
+			IApiClaspRequestModelValidator claspModelValidator,
+			IBOLClaspMapper bolclaspMapper,
+			IDALClaspMapper dalclaspMapper
+			)
+			: base(logger,
+			       claspRepository,
+			       claspModelValidator,
+			       bolclaspMapper,
+			       dalclaspMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3e5b1d6067e5c756370eba0b397c7838</Hash>
+    <Hash>b23c7b131e0bb3a06b7e875ca606c40d</Hash>
 </Codenesium>*/

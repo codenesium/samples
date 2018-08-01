@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALActionTemplateVersionMapper
-        {
-                ActionTemplateVersion MapBOToEF(
-                        BOActionTemplateVersion bo);
+	public interface IDALActionTemplateVersionMapper
+	{
+		ActionTemplateVersion MapBOToEF(
+			BOActionTemplateVersion bo);
 
-                BOActionTemplateVersion MapEFToBO(
-                        ActionTemplateVersion efActionTemplateVersion);
+		BOActionTemplateVersion MapEFToBO(
+			ActionTemplateVersion efActionTemplateVersion);
 
-                List<BOActionTemplateVersion> MapEFToBO(
-                        List<ActionTemplateVersion> records);
-        }
+		List<BOActionTemplateVersion> MapEFToBO(
+			List<ActionTemplateVersion> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>54cbd3a3632b9f6a65eb14cf6819cd27</Hash>
+    <Hash>4405b1021f5f6919ba7afe413e587772</Hash>
 </Codenesium>*/

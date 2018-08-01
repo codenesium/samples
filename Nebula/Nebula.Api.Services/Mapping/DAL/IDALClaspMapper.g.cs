@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IDALClaspMapper
-        {
-                Clasp MapBOToEF(
-                        BOClasp bo);
+	public interface IDALClaspMapper
+	{
+		Clasp MapBOToEF(
+			BOClasp bo);
 
-                BOClasp MapEFToBO(
-                        Clasp efClasp);
+		BOClasp MapEFToBO(
+			Clasp efClasp);
 
-                List<BOClasp> MapEFToBO(
-                        List<Clasp> records);
-        }
+		List<BOClasp> MapEFToBO(
+			List<Clasp> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8eaba12f8cfcb91e469189c6c334f165</Hash>
+    <Hash>f1c48a70aff51b059982f2cde3d0cec8</Hash>
 </Codenesium>*/

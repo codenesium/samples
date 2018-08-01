@@ -7,56 +7,55 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductModelProductDescriptionCulture")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiProductModelProductDescriptionCultureModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
-                        var model = new ApiProductModelProductDescriptionCultureRequestModel();
-                        model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-                        ApiProductModelProductDescriptionCultureResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductModelProductDescriptionCulture")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiProductModelProductDescriptionCultureModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
+			var model = new ApiProductModelProductDescriptionCultureRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+			ApiProductModelProductDescriptionCultureResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.CultureID.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductDescriptionID.Should().Be(1);
-                        response.ProductModelID.Should().Be(1);
-                }
+			response.CultureID.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductDescriptionID.Should().Be(1);
+			response.ProductModelID.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
-                        var model = new ApiProductModelProductDescriptionCultureResponseModel();
-                        model.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-                        ApiProductModelProductDescriptionCultureRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
+			var model = new ApiProductModelProductDescriptionCultureResponseModel();
+			model.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+			ApiProductModelProductDescriptionCultureRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.CultureID.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductDescriptionID.Should().Be(1);
-                }
+			response.CultureID.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductDescriptionID.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
-                        var model = new ApiProductModelProductDescriptionCultureRequestModel();
-                        model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiProductModelProductDescriptionCultureModelMapper();
+			var model = new ApiProductModelProductDescriptionCultureRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
-                        JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiProductModelProductDescriptionCultureRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.CultureID.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductDescriptionID.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiProductModelProductDescriptionCultureRequestModel();
+			patch.ApplyTo(response);
+			response.CultureID.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductDescriptionID.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d211766fdf1416e92fcc3d98cd4d4be4</Hash>
+    <Hash>b46526840bf5eeb8897cd14b03fd1c71</Hash>
 </Codenesium>*/

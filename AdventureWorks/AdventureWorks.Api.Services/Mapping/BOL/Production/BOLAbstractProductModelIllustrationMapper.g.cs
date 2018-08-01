@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductModelIllustrationMapper
-        {
-                public virtual BOProductModelIllustration MapModelToBO(
-                        int productModelID,
-                        ApiProductModelIllustrationRequestModel model
-                        )
-                {
-                        BOProductModelIllustration boProductModelIllustration = new BOProductModelIllustration();
-                        boProductModelIllustration.SetProperties(
-                                productModelID,
-                                model.IllustrationID,
-                                model.ModifiedDate);
-                        return boProductModelIllustration;
-                }
+	public abstract class BOLAbstractProductModelIllustrationMapper
+	{
+		public virtual BOProductModelIllustration MapModelToBO(
+			int productModelID,
+			ApiProductModelIllustrationRequestModel model
+			)
+		{
+			BOProductModelIllustration boProductModelIllustration = new BOProductModelIllustration();
+			boProductModelIllustration.SetProperties(
+				productModelID,
+				model.IllustrationID,
+				model.ModifiedDate);
+			return boProductModelIllustration;
+		}
 
-                public virtual ApiProductModelIllustrationResponseModel MapBOToModel(
-                        BOProductModelIllustration boProductModelIllustration)
-                {
-                        var model = new ApiProductModelIllustrationResponseModel();
+		public virtual ApiProductModelIllustrationResponseModel MapBOToModel(
+			BOProductModelIllustration boProductModelIllustration)
+		{
+			var model = new ApiProductModelIllustrationResponseModel();
 
-                        model.SetProperties(boProductModelIllustration.ProductModelID, boProductModelIllustration.IllustrationID, boProductModelIllustration.ModifiedDate);
+			model.SetProperties(boProductModelIllustration.ProductModelID, boProductModelIllustration.IllustrationID, boProductModelIllustration.ModifiedDate);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductModelIllustrationResponseModel> MapBOToModel(
-                        List<BOProductModelIllustration> items)
-                {
-                        List<ApiProductModelIllustrationResponseModel> response = new List<ApiProductModelIllustrationResponseModel>();
+		public virtual List<ApiProductModelIllustrationResponseModel> MapBOToModel(
+			List<BOProductModelIllustration> items)
+		{
+			List<ApiProductModelIllustrationResponseModel> response = new List<ApiProductModelIllustrationResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed91197857c2fd16aa5195a954fe9c1d</Hash>
+    <Hash>87844ddece36ff96c457e0d96a274ca5</Hash>
 </Codenesium>*/

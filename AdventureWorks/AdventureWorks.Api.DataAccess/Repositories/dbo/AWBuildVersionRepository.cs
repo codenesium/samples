@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class AWBuildVersionRepository : AbstractAWBuildVersionRepository, IAWBuildVersionRepository
-        {
-                public AWBuildVersionRepository(
-                        ILogger<AWBuildVersionRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class AWBuildVersionRepository : AbstractAWBuildVersionRepository, IAWBuildVersionRepository
+	{
+		public AWBuildVersionRepository(
+			ILogger<AWBuildVersionRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>af01ab69c1172a4afa06aac59f2886eb</Hash>
+    <Hash>a136dd3ba1446a75d0242298c0aec405</Hash>
 </Codenesium>*/

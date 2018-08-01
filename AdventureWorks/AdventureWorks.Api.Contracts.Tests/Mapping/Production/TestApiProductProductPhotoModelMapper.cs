@@ -7,56 +7,55 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductProductPhoto")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiProductProductPhotoModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiProductProductPhotoModelMapper();
-                        var model = new ApiProductProductPhotoRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
-                        ApiProductProductPhotoResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductProductPhoto")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiProductProductPhotoModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiProductProductPhotoModelMapper();
+			var model = new ApiProductProductPhotoRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
+			ApiProductProductPhotoResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Primary.Should().Be(true);
-                        response.ProductID.Should().Be(1);
-                        response.ProductPhotoID.Should().Be(1);
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Primary.Should().Be(true);
+			response.ProductID.Should().Be(1);
+			response.ProductPhotoID.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiProductProductPhotoModelMapper();
-                        var model = new ApiProductProductPhotoResponseModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
-                        ApiProductProductPhotoRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiProductProductPhotoModelMapper();
+			var model = new ApiProductProductPhotoResponseModel();
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
+			ApiProductProductPhotoRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Primary.Should().Be(true);
-                        response.ProductPhotoID.Should().Be(1);
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Primary.Should().Be(true);
+			response.ProductPhotoID.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiProductProductPhotoModelMapper();
-                        var model = new ApiProductProductPhotoRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiProductProductPhotoModelMapper();
+			var model = new ApiProductProductPhotoRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
 
-                        JsonPatchDocument<ApiProductProductPhotoRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiProductProductPhotoRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Primary.Should().Be(true);
-                        response.ProductPhotoID.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiProductProductPhotoRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiProductProductPhotoRequestModel();
+			patch.ApplyTo(response);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Primary.Should().Be(true);
+			response.ProductPhotoID.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b91290c66f1a2d3f67cb7b6f82b69774</Hash>
+    <Hash>9632b33db184c42c47e5160ac69ae359</Hash>
 </Codenesium>*/

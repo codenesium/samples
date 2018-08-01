@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class DeploymentEnvironmentRepository : AbstractDeploymentEnvironmentRepository, IDeploymentEnvironmentRepository
-        {
-                public DeploymentEnvironmentRepository(
-                        ILogger<DeploymentEnvironmentRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class DeploymentEnvironmentRepository : AbstractDeploymentEnvironmentRepository, IDeploymentEnvironmentRepository
+	{
+		public DeploymentEnvironmentRepository(
+			ILogger<DeploymentEnvironmentRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a60b35f8e0476ea0792fc19df1f05f93</Hash>
+    <Hash>261e249da7c9ce8040557a97b269e431</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALConfigurationMapper
-        {
-                Configuration MapBOToEF(
-                        BOConfiguration bo);
+	public interface IDALConfigurationMapper
+	{
+		Configuration MapBOToEF(
+			BOConfiguration bo);
 
-                BOConfiguration MapEFToBO(
-                        Configuration efConfiguration);
+		BOConfiguration MapEFToBO(
+			Configuration efConfiguration);
 
-                List<BOConfiguration> MapEFToBO(
-                        List<Configuration> records);
-        }
+		List<BOConfiguration> MapEFToBO(
+			List<Configuration> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f2307da18d6f0b3b5349b993076eebe</Hash>
+    <Hash>9cf0b219655d2b9acb905e9a751d056c</Hash>
 </Codenesium>*/

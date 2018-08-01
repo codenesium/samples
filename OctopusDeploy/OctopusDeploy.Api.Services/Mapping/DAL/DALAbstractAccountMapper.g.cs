@@ -6,54 +6,54 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractAccountMapper
-        {
-                public virtual Account MapBOToEF(
-                        BOAccount bo)
-                {
-                        Account efAccount = new Account();
-                        efAccount.SetProperties(
-                                bo.AccountType,
-                                bo.EnvironmentIds,
-                                bo.Id,
-                                bo.JSON,
-                                bo.Name,
-                                bo.TenantIds,
-                                bo.TenantTags);
-                        return efAccount;
-                }
+	public abstract class DALAbstractAccountMapper
+	{
+		public virtual Account MapBOToEF(
+			BOAccount bo)
+		{
+			Account efAccount = new Account();
+			efAccount.SetProperties(
+				bo.AccountType,
+				bo.EnvironmentIds,
+				bo.Id,
+				bo.JSON,
+				bo.Name,
+				bo.TenantIds,
+				bo.TenantTags);
+			return efAccount;
+		}
 
-                public virtual BOAccount MapEFToBO(
-                        Account ef)
-                {
-                        var bo = new BOAccount();
+		public virtual BOAccount MapEFToBO(
+			Account ef)
+		{
+			var bo = new BOAccount();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.AccountType,
-                                ef.EnvironmentIds,
-                                ef.JSON,
-                                ef.Name,
-                                ef.TenantIds,
-                                ef.TenantTags);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.AccountType,
+				ef.EnvironmentIds,
+				ef.JSON,
+				ef.Name,
+				ef.TenantIds,
+				ef.TenantTags);
+			return bo;
+		}
 
-                public virtual List<BOAccount> MapEFToBO(
-                        List<Account> records)
-                {
-                        List<BOAccount> response = new List<BOAccount>();
+		public virtual List<BOAccount> MapEFToBO(
+			List<Account> records)
+		{
+			List<BOAccount> response = new List<BOAccount>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9d75471602c8acfa6a4a7eab855e994a</Hash>
+    <Hash>5f4f1b8707faa1406d004bd6f10cfc60</Hash>
 </Codenesium>*/

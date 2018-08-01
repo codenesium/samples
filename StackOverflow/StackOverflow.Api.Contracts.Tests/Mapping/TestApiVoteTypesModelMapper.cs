@@ -7,50 +7,49 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VoteTypes")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiVoteTypesModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiVoteTypesModelMapper();
-                        var model = new ApiVoteTypesRequestModel();
-                        model.SetProperties("A");
-                        ApiVoteTypesResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VoteTypes")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiVoteTypesModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiVoteTypesModelMapper();
+			var model = new ApiVoteTypesRequestModel();
+			model.SetProperties("A");
+			ApiVoteTypesResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiVoteTypesModelMapper();
-                        var model = new ApiVoteTypesResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiVoteTypesRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiVoteTypesModelMapper();
+			var model = new ApiVoteTypesResponseModel();
+			model.SetProperties(1, "A");
+			ApiVoteTypesRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiVoteTypesModelMapper();
-                        var model = new ApiVoteTypesRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiVoteTypesModelMapper();
+			var model = new ApiVoteTypesRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiVoteTypesRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiVoteTypesRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiVoteTypesRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiVoteTypesRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a8368251d9964c4b9551cd0a35db7384</Hash>
+    <Hash>2e54b87d8b778162f4f7ee1638e005a6</Hash>
 </Codenesium>*/

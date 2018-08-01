@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CultureRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class CultureRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<CultureRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<CultureRepository>>();
-                }
-        }
+		public static Mock<ILogger<CultureRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<CultureRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Culture")]
-        [Trait("Area", "Repositories")]
-        public partial class CultureRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Culture")]
+	[Trait("Area", "Repositories")]
+	public partial class CultureRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
 
-                        Culture entity = new Culture();
-                        context.Set<Culture>().Add(entity);
-                        await context.SaveChangesAsync();
+			Culture entity = new Culture();
+			context.Set<Culture>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
 
-                        Culture entity = new Culture();
-                        context.Set<Culture>().Add(entity);
-                        await context.SaveChangesAsync();
+			Culture entity = new Culture();
+			context.Set<Culture>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CultureID);
+			var record = await repository.Get(entity.CultureID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
 
-                        var entity = new Culture();
-                        await repository.Create(entity);
+			var entity = new Culture();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Culture>().FirstOrDefaultAsync();
+			var record = await context.Set<Culture>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
-                        Culture entity = new Culture();
-                        context.Set<Culture>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
+			Culture entity = new Culture();
+			context.Set<Culture>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CultureID);
+			var record = await repository.Get(entity.CultureID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Culture>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Culture>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
-                        Culture entity = new Culture();
-                        context.Set<Culture>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
+			Culture entity = new Culture();
+			context.Set<Culture>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Culture());
+			await repository.Update(new Culture());
 
-                        var modifiedRecord = context.Set<Culture>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Culture>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CultureRepositoryMoc.GetContext();
-                        var repository = new CultureRepository(loggerMoc.Object, context);
-                        Culture entity = new Culture();
-                        context.Set<Culture>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
+			var repository = new CultureRepository(loggerMoc.Object, context);
+			Culture entity = new Culture();
+			context.Set<Culture>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.CultureID);
+			await repository.Delete(entity.CultureID);
 
-                        Culture modifiedRecord = await context.Set<Culture>().FirstOrDefaultAsync();
+			Culture modifiedRecord = await context.Set<Culture>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cbd6d716aa03c7a094c48f281740d5d6</Hash>
+    <Hash>fcaae5abff9713ce4aea705475ba5fee</Hash>
 </Codenesium>*/

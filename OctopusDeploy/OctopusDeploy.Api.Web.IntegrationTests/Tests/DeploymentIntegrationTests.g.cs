@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Deployment")]
-        [Trait("Area", "Integration")]
-        public class DeploymentIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public DeploymentIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Deployment")]
+	[Trait("Area", "Integration")]
+	public class DeploymentIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public DeploymentIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiDeploymentModelMapper mapper = new ApiDeploymentModelMapper();
+			ApiDeploymentModelMapper mapper = new ApiDeploymentModelMapper();
 
-                        UpdateResponse<ApiDeploymentResponseModel> updateResponse = await this.Client.DeploymentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDeploymentResponseModel> updateResponse = await this.Client.DeploymentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.DeploymentDeleteAsync(model.Id);
+			await this.Client.DeploymentDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiDeploymentResponseModel response = await this.Client.DeploymentGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiDeploymentResponseModel response = await this.Client.DeploymentGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiDeploymentResponseModel> response = await this.Client.DeploymentAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiDeploymentResponseModel> response = await this.Client.DeploymentAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiDeploymentResponseModel> CreateRecord()
-                {
-                        var model = new ApiDeploymentRequestModel();
-                        model.SetProperties("B", DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", "B", "B", "B", "B", "B");
-                        CreateResponse<ApiDeploymentResponseModel> result = await this.Client.DeploymentCreateAsync(model);
+		private async Task<ApiDeploymentResponseModel> CreateRecord()
+		{
+			var model = new ApiDeploymentRequestModel();
+			model.SetProperties("B", DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", "B", "B", "B", "B", "B");
+			CreateResponse<ApiDeploymentResponseModel> result = await this.Client.DeploymentCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.DeploymentDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.DeploymentDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9f690a178a24c9a82b3e511809a55f25</Hash>
+    <Hash>95a5d2e2c4e302b042b51f18a282c2b4</Hash>
 </Codenesium>*/

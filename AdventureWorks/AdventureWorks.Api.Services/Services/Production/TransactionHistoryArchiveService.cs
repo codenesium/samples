@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class TransactionHistoryArchiveService : AbstractTransactionHistoryArchiveService, ITransactionHistoryArchiveService
-        {
-                public TransactionHistoryArchiveService(
-                        ILogger<ITransactionHistoryArchiveRepository> logger,
-                        ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-                        IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
-                        IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
-                        IDALTransactionHistoryArchiveMapper daltransactionHistoryArchiveMapper
-                        )
-                        : base(logger,
-                               transactionHistoryArchiveRepository,
-                               transactionHistoryArchiveModelValidator,
-                               boltransactionHistoryArchiveMapper,
-                               daltransactionHistoryArchiveMapper)
-                {
-                }
-        }
+	public partial class TransactionHistoryArchiveService : AbstractTransactionHistoryArchiveService, ITransactionHistoryArchiveService
+	{
+		public TransactionHistoryArchiveService(
+			ILogger<ITransactionHistoryArchiveRepository> logger,
+			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
+			IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
+			IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
+			IDALTransactionHistoryArchiveMapper daltransactionHistoryArchiveMapper
+			)
+			: base(logger,
+			       transactionHistoryArchiveRepository,
+			       transactionHistoryArchiveModelValidator,
+			       boltransactionHistoryArchiveMapper,
+			       daltransactionHistoryArchiveMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>573eaa4aafa016e12bff6cd98f511699</Hash>
+    <Hash>b7ed1bdc40a34335f683c2fe848ef263</Hash>
 </Codenesium>*/

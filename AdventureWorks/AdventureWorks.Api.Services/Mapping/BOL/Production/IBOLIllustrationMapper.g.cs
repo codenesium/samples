@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLIllustrationMapper
-        {
-                BOIllustration MapModelToBO(
-                        int illustrationID,
-                        ApiIllustrationRequestModel model);
+	public interface IBOLIllustrationMapper
+	{
+		BOIllustration MapModelToBO(
+			int illustrationID,
+			ApiIllustrationRequestModel model);
 
-                ApiIllustrationResponseModel MapBOToModel(
-                        BOIllustration boIllustration);
+		ApiIllustrationResponseModel MapBOToModel(
+			BOIllustration boIllustration);
 
-                List<ApiIllustrationResponseModel> MapBOToModel(
-                        List<BOIllustration> items);
-        }
+		List<ApiIllustrationResponseModel> MapBOToModel(
+			List<BOIllustration> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f82d55bdd1b7ada3dbee3fb5549f1d3</Hash>
+    <Hash>1d809ebe52c335ab8c2866b979a49b9b</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class DALAirlineMapper : DALAbstractAirlineMapper, IDALAirlineMapper
-        {
-                public DALAirlineMapper()
-                {
-                }
-        }
+	public partial class DALAirlineMapper : DALAbstractAirlineMapper, IDALAirlineMapper
+	{
+		public DALAirlineMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a6ee8511a7d8662c8f3f080323f40245</Hash>
+    <Hash>4297489fd5c16fe15208ad7184901f33</Hash>
 </Codenesium>*/

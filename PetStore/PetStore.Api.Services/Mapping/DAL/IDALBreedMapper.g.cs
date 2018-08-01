@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface IDALBreedMapper
-        {
-                Breed MapBOToEF(
-                        BOBreed bo);
+	public interface IDALBreedMapper
+	{
+		Breed MapBOToEF(
+			BOBreed bo);
 
-                BOBreed MapEFToBO(
-                        Breed efBreed);
+		BOBreed MapEFToBO(
+			Breed efBreed);
 
-                List<BOBreed> MapEFToBO(
-                        List<Breed> records);
-        }
+		List<BOBreed> MapEFToBO(
+			List<Breed> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3047a55d53900d9f67f847893d54ff64</Hash>
+    <Hash>c4feb559413b7793f45f8ad159f0a683</Hash>
 </Codenesium>*/

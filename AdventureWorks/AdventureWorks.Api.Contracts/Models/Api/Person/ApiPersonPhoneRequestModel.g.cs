@@ -7,37 +7,37 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonPhoneRequestModel : AbstractApiRequestModel
-        {
-                public ApiPersonPhoneRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiPersonPhoneRequestModel : AbstractApiRequestModel
+	{
+		public ApiPersonPhoneRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        DateTime modifiedDate,
-                        string phoneNumber,
-                        int phoneNumberTypeID)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.PhoneNumber = phoneNumber;
-                        this.PhoneNumberTypeID = phoneNumberTypeID;
-                }
+		public virtual void SetProperties(
+			DateTime modifiedDate,
+			string phoneNumber,
+			int phoneNumberTypeID)
+		{
+			this.ModifiedDate = modifiedDate;
+			this.PhoneNumber = phoneNumber;
+			this.PhoneNumberTypeID = phoneNumberTypeID;
+		}
 
-                [Required]
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string PhoneNumber { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string PhoneNumber { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int PhoneNumberTypeID { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public int PhoneNumberTypeID { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>5f4009110ed7fd581f501d3a9eb9ff39</Hash>
+    <Hash>7acb64e61cce3e6bd5f4f2ac1278f861</Hash>
 </Codenesium>*/

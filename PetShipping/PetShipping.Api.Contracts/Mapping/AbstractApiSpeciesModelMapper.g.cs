@@ -5,36 +5,36 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public abstract class AbstractApiSpeciesModelMapper
-        {
-                public virtual ApiSpeciesResponseModel MapRequestToResponse(
-                        int id,
-                        ApiSpeciesRequestModel request)
-                {
-                        var response = new ApiSpeciesResponseModel();
-                        response.SetProperties(id,
-                                               request.Name);
-                        return response;
-                }
+	public abstract class AbstractApiSpeciesModelMapper
+	{
+		public virtual ApiSpeciesResponseModel MapRequestToResponse(
+			int id,
+			ApiSpeciesRequestModel request)
+		{
+			var response = new ApiSpeciesResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
 
-                public virtual ApiSpeciesRequestModel MapResponseToRequest(
-                        ApiSpeciesResponseModel response)
-                {
-                        var request = new ApiSpeciesRequestModel();
-                        request.SetProperties(
-                                response.Name);
-                        return request;
-                }
+		public virtual ApiSpeciesRequestModel MapResponseToRequest(
+			ApiSpeciesResponseModel response)
+		{
+			var request = new ApiSpeciesRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiSpeciesRequestModel> CreatePatch(ApiSpeciesRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiSpeciesRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiSpeciesRequestModel> CreatePatch(ApiSpeciesRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiSpeciesRequestModel>();
+			patch.Replace(x => x.Name, model.Name);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>75eb770802cc4c6af40f4634d72aef38</Hash>
+    <Hash>384ffb7377054daef6dc61fd92a72435</Hash>
 </Codenesium>*/

@@ -7,56 +7,55 @@ using Xunit;
 
 namespace PetShippingNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PipelineStepStepRequirement")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiPipelineStepStepRequirementModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiPipelineStepStepRequirementModelMapper();
-                        var model = new ApiPipelineStepStepRequirementRequestModel();
-                        model.SetProperties("A", 1, true);
-                        ApiPipelineStepStepRequirementResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PipelineStepStepRequirement")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiPipelineStepStepRequirementModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiPipelineStepStepRequirementModelMapper();
+			var model = new ApiPipelineStepStepRequirementRequestModel();
+			model.SetProperties("A", 1, true);
+			ApiPipelineStepStepRequirementResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Details.Should().Be("A");
-                        response.Id.Should().Be(1);
-                        response.PipelineStepId.Should().Be(1);
-                        response.RequirementMet.Should().Be(true);
-                }
+			response.Details.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.PipelineStepId.Should().Be(1);
+			response.RequirementMet.Should().Be(true);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiPipelineStepStepRequirementModelMapper();
-                        var model = new ApiPipelineStepStepRequirementResponseModel();
-                        model.SetProperties(1, "A", 1, true);
-                        ApiPipelineStepStepRequirementRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiPipelineStepStepRequirementModelMapper();
+			var model = new ApiPipelineStepStepRequirementResponseModel();
+			model.SetProperties(1, "A", 1, true);
+			ApiPipelineStepStepRequirementRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Details.Should().Be("A");
-                        response.PipelineStepId.Should().Be(1);
-                        response.RequirementMet.Should().Be(true);
-                }
+			response.Details.Should().Be("A");
+			response.PipelineStepId.Should().Be(1);
+			response.RequirementMet.Should().Be(true);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiPipelineStepStepRequirementModelMapper();
-                        var model = new ApiPipelineStepStepRequirementRequestModel();
-                        model.SetProperties("A", 1, true);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiPipelineStepStepRequirementModelMapper();
+			var model = new ApiPipelineStepStepRequirementRequestModel();
+			model.SetProperties("A", 1, true);
 
-                        JsonPatchDocument<ApiPipelineStepStepRequirementRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiPipelineStepStepRequirementRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Details.Should().Be("A");
-                        response.PipelineStepId.Should().Be(1);
-                        response.RequirementMet.Should().Be(true);
-                }
-        }
+			JsonPatchDocument<ApiPipelineStepStepRequirementRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiPipelineStepStepRequirementRequestModel();
+			patch.ApplyTo(response);
+			response.Details.Should().Be("A");
+			response.PipelineStepId.Should().Be(1);
+			response.RequirementMet.Should().Be(true);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>056b17bd8092b92b300e2cd20d75ca74</Hash>
+    <Hash>339d2f2732c4830ee8bbf9ab9d51d139</Hash>
 </Codenesium>*/

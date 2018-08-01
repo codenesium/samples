@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ErrorLogRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ErrorLogRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ErrorLogRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ErrorLogRepository>>();
-                }
-        }
+		public static Mock<ILogger<ErrorLogRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ErrorLogRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ErrorLog")]
-        [Trait("Area", "Repositories")]
-        public partial class ErrorLogRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ErrorLog")]
+	[Trait("Area", "Repositories")]
+	public partial class ErrorLogRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
-                        ErrorLog entity = new ErrorLog();
-                        context.Set<ErrorLog>().Add(entity);
-                        await context.SaveChangesAsync();
+			ErrorLog entity = new ErrorLog();
+			context.Set<ErrorLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
-                        ErrorLog entity = new ErrorLog();
-                        context.Set<ErrorLog>().Add(entity);
-                        await context.SaveChangesAsync();
+			ErrorLog entity = new ErrorLog();
+			context.Set<ErrorLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ErrorLogID);
+			var record = await repository.Get(entity.ErrorLogID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
-                        var entity = new ErrorLog();
-                        await repository.Create(entity);
+			var entity = new ErrorLog();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ErrorLog>().FirstOrDefaultAsync();
+			var record = await context.Set<ErrorLog>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
-                        ErrorLog entity = new ErrorLog();
-                        context.Set<ErrorLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
+			ErrorLog entity = new ErrorLog();
+			context.Set<ErrorLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ErrorLogID);
+			var record = await repository.Get(entity.ErrorLogID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ErrorLog>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ErrorLog>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
-                        ErrorLog entity = new ErrorLog();
-                        context.Set<ErrorLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
+			ErrorLog entity = new ErrorLog();
+			context.Set<ErrorLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ErrorLog());
+			await repository.Update(new ErrorLog());
 
-                        var modifiedRecord = context.Set<ErrorLog>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ErrorLog>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
-                        var repository = new ErrorLogRepository(loggerMoc.Object, context);
-                        ErrorLog entity = new ErrorLog();
-                        context.Set<ErrorLog>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
+			var repository = new ErrorLogRepository(loggerMoc.Object, context);
+			ErrorLog entity = new ErrorLog();
+			context.Set<ErrorLog>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ErrorLogID);
+			await repository.Delete(entity.ErrorLogID);
 
-                        ErrorLog modifiedRecord = await context.Set<ErrorLog>().FirstOrDefaultAsync();
+			ErrorLog modifiedRecord = await context.Set<ErrorLog>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed3b29c5f83f1afd4ea05d2904337a94</Hash>
+    <Hash>6f0db6c679f1c3646a8087ce22d84ad2</Hash>
 </Codenesium>*/

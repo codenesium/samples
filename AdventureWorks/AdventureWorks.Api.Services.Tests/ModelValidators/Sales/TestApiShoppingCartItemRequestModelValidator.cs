@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ShoppingCartItem")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiShoppingCartItemRequestModelValidatorTest
-        {
-                public ApiShoppingCartItemRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ShoppingCartItem")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiShoppingCartItemRequestModelValidatorTest
+	{
+		public ApiShoppingCartItemRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ShoppingCartID_Create_null()
-                {
-                        Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
-                        shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
+		[Fact]
+		public async void ShoppingCartID_Create_null()
+		{
+			Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
+			shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
-                        var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
+			var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
+		}
 
-                [Fact]
-                public async void ShoppingCartID_Update_null()
-                {
-                        Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
-                        shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
+		[Fact]
+		public async void ShoppingCartID_Update_null()
+		{
+			Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
+			shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
-                        var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
+			var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
+		}
 
-                [Fact]
-                public async void ShoppingCartID_Create_length()
-                {
-                        Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
-                        shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
+		[Fact]
+		public async void ShoppingCartID_Create_length()
+		{
+			Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
+			shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
-                        var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
+			var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
+		}
 
-                [Fact]
-                public async void ShoppingCartID_Update_length()
-                {
-                        Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
-                        shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
+		[Fact]
+		public async void ShoppingCartID_Update_length()
+		{
+			Mock<IShoppingCartItemRepository> shoppingCartItemRepository = new Mock<IShoppingCartItemRepository>();
+			shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
-                        var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
+			var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dd6708a6eae4b178c9e6984b87ce4b29</Hash>
+    <Hash>74c90fef146c227ff5e545edae1d00eb</Hash>
 </Codenesium>*/

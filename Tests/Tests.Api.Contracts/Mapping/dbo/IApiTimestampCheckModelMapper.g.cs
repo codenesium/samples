@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-        public interface IApiTimestampCheckModelMapper
-        {
-                ApiTimestampCheckResponseModel MapRequestToResponse(
-                        int id,
-                        ApiTimestampCheckRequestModel request);
+	public interface IApiTimestampCheckModelMapper
+	{
+		ApiTimestampCheckResponseModel MapRequestToResponse(
+			int id,
+			ApiTimestampCheckRequestModel request);
 
-                ApiTimestampCheckRequestModel MapResponseToRequest(
-                        ApiTimestampCheckResponseModel response);
+		ApiTimestampCheckRequestModel MapResponseToRequest(
+			ApiTimestampCheckResponseModel response);
 
-                JsonPatchDocument<ApiTimestampCheckRequestModel> CreatePatch(ApiTimestampCheckRequestModel model);
-        }
+		JsonPatchDocument<ApiTimestampCheckRequestModel> CreatePatch(ApiTimestampCheckRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>f1094b8f07711cabbd82f9bdad4704bd</Hash>
+    <Hash>f5b45f1bd12661b094b795e2ec107b87</Hash>
 </Codenesium>*/

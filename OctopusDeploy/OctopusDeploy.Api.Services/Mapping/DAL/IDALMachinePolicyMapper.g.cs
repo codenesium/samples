@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALMachinePolicyMapper
-        {
-                MachinePolicy MapBOToEF(
-                        BOMachinePolicy bo);
+	public interface IDALMachinePolicyMapper
+	{
+		MachinePolicy MapBOToEF(
+			BOMachinePolicy bo);
 
-                BOMachinePolicy MapEFToBO(
-                        MachinePolicy efMachinePolicy);
+		BOMachinePolicy MapEFToBO(
+			MachinePolicy efMachinePolicy);
 
-                List<BOMachinePolicy> MapEFToBO(
-                        List<MachinePolicy> records);
-        }
+		List<BOMachinePolicy> MapEFToBO(
+			List<MachinePolicy> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ad8c874de9820da0bd2a8f30535e2e1d</Hash>
+    <Hash>189efce1e854514ed169b830c737b584</Hash>
 </Codenesium>*/

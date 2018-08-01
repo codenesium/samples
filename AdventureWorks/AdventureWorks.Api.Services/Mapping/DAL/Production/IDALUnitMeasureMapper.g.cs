@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALUnitMeasureMapper
-        {
-                UnitMeasure MapBOToEF(
-                        BOUnitMeasure bo);
+	public interface IDALUnitMeasureMapper
+	{
+		UnitMeasure MapBOToEF(
+			BOUnitMeasure bo);
 
-                BOUnitMeasure MapEFToBO(
-                        UnitMeasure efUnitMeasure);
+		BOUnitMeasure MapEFToBO(
+			UnitMeasure efUnitMeasure);
 
-                List<BOUnitMeasure> MapEFToBO(
-                        List<UnitMeasure> records);
-        }
+		List<BOUnitMeasure> MapEFToBO(
+			List<UnitMeasure> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>301f8134e29d678f40edf9c798b8b73f</Hash>
+    <Hash>a83bf393a8763a03e7a244ae63501db7</Hash>
 </Codenesium>*/

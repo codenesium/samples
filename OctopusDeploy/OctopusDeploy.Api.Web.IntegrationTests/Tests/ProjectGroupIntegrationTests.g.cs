@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ProjectGroup")]
-        [Trait("Area", "Integration")]
-        public class ProjectGroupIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ProjectGroupIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ProjectGroup")]
+	[Trait("Area", "Integration")]
+	public class ProjectGroupIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ProjectGroupIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiProjectGroupModelMapper mapper = new ApiProjectGroupModelMapper();
+			ApiProjectGroupModelMapper mapper = new ApiProjectGroupModelMapper();
 
-                        UpdateResponse<ApiProjectGroupResponseModel> updateResponse = await this.Client.ProjectGroupUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProjectGroupResponseModel> updateResponse = await this.Client.ProjectGroupUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ProjectGroupDeleteAsync(model.Id);
+			await this.Client.ProjectGroupDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiProjectGroupResponseModel response = await this.Client.ProjectGroupGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiProjectGroupResponseModel response = await this.Client.ProjectGroupGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiProjectGroupResponseModel> response = await this.Client.ProjectGroupAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiProjectGroupResponseModel> response = await this.Client.ProjectGroupAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiProjectGroupResponseModel> CreateRecord()
-                {
-                        var model = new ApiProjectGroupRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(2), "B", "B");
-                        CreateResponse<ApiProjectGroupResponseModel> result = await this.Client.ProjectGroupCreateAsync(model);
+		private async Task<ApiProjectGroupResponseModel> CreateRecord()
+		{
+			var model = new ApiProjectGroupRequestModel();
+			model.SetProperties(BitConverter.GetBytes(2), "B", "B");
+			CreateResponse<ApiProjectGroupResponseModel> result = await this.Client.ProjectGroupCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ProjectGroupDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ProjectGroupDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>26e84d00e0c3afca5eb6bf7cb2936cae</Hash>
+    <Hash>fc9bc9da3acd04c37e6884d7e84527f7</Hash>
 </Codenesium>*/

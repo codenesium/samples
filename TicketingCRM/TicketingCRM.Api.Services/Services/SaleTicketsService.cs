@@ -10,25 +10,25 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class SaleTicketsService : AbstractSaleTicketsService, ISaleTicketsService
-        {
-                public SaleTicketsService(
-                        ILogger<ISaleTicketsRepository> logger,
-                        ISaleTicketsRepository saleTicketsRepository,
-                        IApiSaleTicketsRequestModelValidator saleTicketsModelValidator,
-                        IBOLSaleTicketsMapper bolsaleTicketsMapper,
-                        IDALSaleTicketsMapper dalsaleTicketsMapper
-                        )
-                        : base(logger,
-                               saleTicketsRepository,
-                               saleTicketsModelValidator,
-                               bolsaleTicketsMapper,
-                               dalsaleTicketsMapper)
-                {
-                }
-        }
+	public partial class SaleTicketsService : AbstractSaleTicketsService, ISaleTicketsService
+	{
+		public SaleTicketsService(
+			ILogger<ISaleTicketsRepository> logger,
+			ISaleTicketsRepository saleTicketsRepository,
+			IApiSaleTicketsRequestModelValidator saleTicketsModelValidator,
+			IBOLSaleTicketsMapper bolsaleTicketsMapper,
+			IDALSaleTicketsMapper dalsaleTicketsMapper
+			)
+			: base(logger,
+			       saleTicketsRepository,
+			       saleTicketsModelValidator,
+			       bolsaleTicketsMapper,
+			       dalsaleTicketsMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>809d8397926ff124680af09c13b254b9</Hash>
+    <Hash>cd42f4206addc8bf63207cd90225da75</Hash>
 </Codenesium>*/

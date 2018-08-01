@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "TagSet")]
-        [Trait("Area", "Integration")]
-        public class TagSetIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TagSetIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "TagSet")]
+	[Trait("Area", "Integration")]
+	public class TagSetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TagSetIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTagSetModelMapper mapper = new ApiTagSetModelMapper();
+			ApiTagSetModelMapper mapper = new ApiTagSetModelMapper();
 
-                        UpdateResponse<ApiTagSetResponseModel> updateResponse = await this.Client.TagSetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTagSetResponseModel> updateResponse = await this.Client.TagSetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TagSetDeleteAsync(model.Id);
+			await this.Client.TagSetDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTagSetResponseModel response = await this.Client.TagSetGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTagSetResponseModel response = await this.Client.TagSetGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTagSetResponseModel> response = await this.Client.TagSetAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTagSetResponseModel> response = await this.Client.TagSetAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTagSetResponseModel> CreateRecord()
-                {
-                        var model = new ApiTagSetRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(2), "B", "B", 2);
-                        CreateResponse<ApiTagSetResponseModel> result = await this.Client.TagSetCreateAsync(model);
+		private async Task<ApiTagSetResponseModel> CreateRecord()
+		{
+			var model = new ApiTagSetRequestModel();
+			model.SetProperties(BitConverter.GetBytes(2), "B", "B", 2);
+			CreateResponse<ApiTagSetResponseModel> result = await this.Client.TagSetCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TagSetDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TagSetDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fe97668e3dff117e059b941cf616e981</Hash>
+    <Hash>25bcd032885bbbfa846018364c80cf96</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiAirTransportModelMapper : AbstractApiAirTransportModelMapper, IApiAirTransportModelMapper
-        {
-                public ApiAirTransportModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiAirTransportModelMapper : AbstractApiAirTransportModelMapper, IApiAirTransportModelMapper
+	{
+		public ApiAirTransportModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed9ee485965a6a8f88b386e894ba26b1</Hash>
+    <Hash>9dc431bea395912482001e88a71da318</Hash>
 </Codenesium>*/

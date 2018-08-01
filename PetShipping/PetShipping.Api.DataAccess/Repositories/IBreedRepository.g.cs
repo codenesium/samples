@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public interface IBreedRepository
-        {
-                Task<Breed> Create(Breed item);
+	public interface IBreedRepository
+	{
+		Task<Breed> Create(Breed item);
 
-                Task Update(Breed item);
+		Task Update(Breed item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Breed> Get(int id);
+		Task<Breed> Get(int id);
 
-                Task<List<Breed>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Breed>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0);
 
-                Task<Species> GetSpecies(int speciesId);
-        }
+		Task<Species> GetSpecies(int speciesId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>88a4b3e006bc5c4d63c8cc8eff4e7df1</Hash>
+    <Hash>b7f1b90c3b28ffc94f457de02cec4bd6</Hash>
 </Codenesium>*/

@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetShippingNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "PipelineStep")]
-        [Trait("Area", "Integration")]
-        public class PipelineStepIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PipelineStepIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "PipelineStep")]
+	[Trait("Area", "Integration")]
+	public class PipelineStepIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PipelineStepIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPipelineStepModelMapper mapper = new ApiPipelineStepModelMapper();
+			ApiPipelineStepModelMapper mapper = new ApiPipelineStepModelMapper();
 
-                        UpdateResponse<ApiPipelineStepResponseModel> updateResponse = await this.Client.PipelineStepUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPipelineStepResponseModel> updateResponse = await this.Client.PipelineStepUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PipelineStepDeleteAsync(model.Id);
+			await this.Client.PipelineStepDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPipelineStepResponseModel response = await this.Client.PipelineStepGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPipelineStepResponseModel response = await this.Client.PipelineStepGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPipelineStepResponseModel> response = await this.Client.PipelineStepAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPipelineStepResponseModel> response = await this.Client.PipelineStepAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPipelineStepResponseModel> CreateRecord()
-                {
-                        var model = new ApiPipelineStepRequestModel();
-                        model.SetProperties("B", 1, 1);
-                        CreateResponse<ApiPipelineStepResponseModel> result = await this.Client.PipelineStepCreateAsync(model);
+		private async Task<ApiPipelineStepResponseModel> CreateRecord()
+		{
+			var model = new ApiPipelineStepRequestModel();
+			model.SetProperties("B", 1, 1);
+			CreateResponse<ApiPipelineStepResponseModel> result = await this.Client.PipelineStepCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PipelineStepDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PipelineStepDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>879aa2e3d44294d76fe889a292126fa0</Hash>
+    <Hash>dab46c2b1576a24eb0afc651eb5a00a1</Hash>
 </Codenesium>*/

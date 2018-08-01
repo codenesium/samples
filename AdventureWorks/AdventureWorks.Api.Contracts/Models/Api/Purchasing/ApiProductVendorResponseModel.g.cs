@@ -6,72 +6,72 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductVendorResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int productID,
-                        int averageLeadTime,
-                        int businessEntityID,
-                        decimal? lastReceiptCost,
-                        DateTime? lastReceiptDate,
-                        int maxOrderQty,
-                        int minOrderQty,
-                        DateTime modifiedDate,
-                        int? onOrderQty,
-                        decimal standardPrice,
-                        string unitMeasureCode)
-                {
-                        this.ProductID = productID;
-                        this.AverageLeadTime = averageLeadTime;
-                        this.BusinessEntityID = businessEntityID;
-                        this.LastReceiptCost = lastReceiptCost;
-                        this.LastReceiptDate = lastReceiptDate;
-                        this.MaxOrderQty = maxOrderQty;
-                        this.MinOrderQty = minOrderQty;
-                        this.ModifiedDate = modifiedDate;
-                        this.OnOrderQty = onOrderQty;
-                        this.StandardPrice = standardPrice;
-                        this.UnitMeasureCode = unitMeasureCode;
-                }
+	public partial class ApiProductVendorResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int productID,
+			int averageLeadTime,
+			int businessEntityID,
+			decimal? lastReceiptCost,
+			DateTime? lastReceiptDate,
+			int maxOrderQty,
+			int minOrderQty,
+			DateTime modifiedDate,
+			int? onOrderQty,
+			decimal standardPrice,
+			string unitMeasureCode)
+		{
+			this.ProductID = productID;
+			this.AverageLeadTime = averageLeadTime;
+			this.BusinessEntityID = businessEntityID;
+			this.LastReceiptCost = lastReceiptCost;
+			this.LastReceiptDate = lastReceiptDate;
+			this.MaxOrderQty = maxOrderQty;
+			this.MinOrderQty = minOrderQty;
+			this.ModifiedDate = modifiedDate;
+			this.OnOrderQty = onOrderQty;
+			this.StandardPrice = standardPrice;
+			this.UnitMeasureCode = unitMeasureCode;
+		}
 
-                [JsonProperty]
-                public int AverageLeadTime { get; private set; }
+		[JsonProperty]
+		public int AverageLeadTime { get; private set; }
 
-                [JsonProperty]
-                public int BusinessEntityID { get; private set; }
+		[JsonProperty]
+		public int BusinessEntityID { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public decimal? LastReceiptCost { get; private set; }
+		[Required]
+		[JsonProperty]
+		public decimal? LastReceiptCost { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime? LastReceiptDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime? LastReceiptDate { get; private set; }
 
-                [JsonProperty]
-                public int MaxOrderQty { get; private set; }
+		[JsonProperty]
+		public int MaxOrderQty { get; private set; }
 
-                [JsonProperty]
-                public int MinOrderQty { get; private set; }
+		[JsonProperty]
+		public int MinOrderQty { get; private set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int? OnOrderQty { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int? OnOrderQty { get; private set; }
 
-                [JsonProperty]
-                public int ProductID { get; private set; }
+		[JsonProperty]
+		public int ProductID { get; private set; }
 
-                [JsonProperty]
-                public decimal StandardPrice { get; private set; }
+		[JsonProperty]
+		public decimal StandardPrice { get; private set; }
 
-                [JsonProperty]
-                public string UnitMeasureCode { get; private set; }
-        }
+		[JsonProperty]
+		public string UnitMeasureCode { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>aa76386794a65e93acc0f13f292f5ff5</Hash>
+    <Hash>1fadfa85b3bf821b469763a83132146f</Hash>
 </Codenesium>*/

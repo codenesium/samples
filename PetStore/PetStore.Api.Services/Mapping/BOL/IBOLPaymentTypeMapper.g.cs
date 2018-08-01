@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface IBOLPaymentTypeMapper
-        {
-                BOPaymentType MapModelToBO(
-                        int id,
-                        ApiPaymentTypeRequestModel model);
+	public interface IBOLPaymentTypeMapper
+	{
+		BOPaymentType MapModelToBO(
+			int id,
+			ApiPaymentTypeRequestModel model);
 
-                ApiPaymentTypeResponseModel MapBOToModel(
-                        BOPaymentType boPaymentType);
+		ApiPaymentTypeResponseModel MapBOToModel(
+			BOPaymentType boPaymentType);
 
-                List<ApiPaymentTypeResponseModel> MapBOToModel(
-                        List<BOPaymentType> items);
-        }
+		List<ApiPaymentTypeResponseModel> MapBOToModel(
+			List<BOPaymentType> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0a7261e6e7432bb9508479ffd22aa723</Hash>
+    <Hash>27eeceb2836d05f1aad7bdcdd8bbcfea</Hash>
 </Codenesium>*/

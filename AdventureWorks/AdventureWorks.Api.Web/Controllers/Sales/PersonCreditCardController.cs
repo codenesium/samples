@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/personCreditCards")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PersonCreditCardController : AbstractPersonCreditCardController
-        {
-                public PersonCreditCardController(
-                        ApiSettings settings,
-                        ILogger<PersonCreditCardController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPersonCreditCardService personCreditCardService,
-                        IApiPersonCreditCardModelMapper personCreditCardModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               personCreditCardService,
-                               personCreditCardModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/personCreditCards")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PersonCreditCardController : AbstractPersonCreditCardController
+	{
+		public PersonCreditCardController(
+			ApiSettings settings,
+			ILogger<PersonCreditCardController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPersonCreditCardService personCreditCardService,
+			IApiPersonCreditCardModelMapper personCreditCardModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       personCreditCardService,
+			       personCreditCardModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>62a2331cf85b9c899e74415a13a50931</Hash>
+    <Hash>767bf606f98c09e1ec0db1f2b548819e</Hash>
 </Codenesium>*/

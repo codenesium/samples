@@ -15,211 +15,211 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Studio")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiStudioRequestModelValidatorTest
-        {
-                public ApiStudioRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Studio")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiStudioRequestModelValidatorTest
+	{
+		public ApiStudioRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Address1_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Address1_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address1_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Address1_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Address2_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Address2_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void City_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void City_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 129));
+		}
 
-                [Fact]
-                public async void City_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void City_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void StateId_Create_Valid_Reference()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(new State()));
+		[Fact]
+		public async void StateId_Create_Valid_Reference()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(new State()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StateId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateId, 1);
+		}
 
-                [Fact]
-                public async void StateId_Create_Invalid_Reference()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(null));
+		[Fact]
+		public async void StateId_Create_Invalid_Reference()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(null));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StateId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StateId, 1);
+		}
 
-                [Fact]
-                public async void StateId_Update_Valid_Reference()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(new State()));
+		[Fact]
+		public async void StateId_Update_Valid_Reference()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(new State()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StateId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateId, 1);
+		}
 
-                [Fact]
-                public async void StateId_Update_Invalid_Reference()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(null));
+		[Fact]
+		public async void StateId_Update_Invalid_Reference()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.GetState(It.IsAny<int>())).Returns(Task.FromResult<State>(null));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StateId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StateId, 1);
+		}
 
-                [Fact]
-                public async void Website_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Website_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Website_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Website_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Zip_Create_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Zip_Create_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Zip, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Zip, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Zip_Update_length()
-                {
-                        Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
-                        studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+		[Fact]
+		public async void Zip_Update_length()
+		{
+			Mock<IStudioRepository> studioRepository = new Mock<IStudioRepository>();
+			studioRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 
-                        var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
+			var validator = new ApiStudioRequestModelValidator(studioRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudioRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Zip, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Zip, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c7d92794ec2a66cabac4793c949fbd46</Hash>
+    <Hash>7c86ae98897f562bc70a4e1cc82cc8ae</Hash>
 </Codenesium>*/

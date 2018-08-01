@@ -3,38 +3,38 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOProductSubcategory : AbstractBusinessObject
-        {
-                public AbstractBOProductSubcategory()
-                        : base()
-                {
-                }
+	public abstract class AbstractBOProductSubcategory : AbstractBusinessObject
+	{
+		public AbstractBOProductSubcategory()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(int productSubcategoryID,
-                                                  DateTime modifiedDate,
-                                                  string name,
-                                                  int productCategoryID,
-                                                  Guid rowguid)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                        this.ProductCategoryID = productCategoryID;
-                        this.ProductSubcategoryID = productSubcategoryID;
-                        this.Rowguid = rowguid;
-                }
+		public virtual void SetProperties(int productSubcategoryID,
+		                                  DateTime modifiedDate,
+		                                  string name,
+		                                  int productCategoryID,
+		                                  Guid rowguid)
+		{
+			this.ModifiedDate = modifiedDate;
+			this.Name = name;
+			this.ProductCategoryID = productCategoryID;
+			this.ProductSubcategoryID = productSubcategoryID;
+			this.Rowguid = rowguid;
+		}
 
-                public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; }
 
-                public string Name { get; private set; }
+		public string Name { get; private set; }
 
-                public int ProductCategoryID { get; private set; }
+		public int ProductCategoryID { get; private set; }
 
-                public int ProductSubcategoryID { get; private set; }
+		public int ProductSubcategoryID { get; private set; }
 
-                public Guid Rowguid { get; private set; }
-        }
+		public Guid Rowguid { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a8f223688f220c08fe4c7830f9d61131</Hash>
+    <Hash>a4bcf22e18e2414e7ffe208f5f1714f6</Hash>
 </Codenesium>*/

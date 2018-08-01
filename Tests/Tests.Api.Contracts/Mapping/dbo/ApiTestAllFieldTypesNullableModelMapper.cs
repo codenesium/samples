@@ -1,14 +1,14 @@
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiTestAllFieldTypesNullableModelMapper : AbstractApiTestAllFieldTypesNullableModelMapper, IApiTestAllFieldTypesNullableModelMapper
-        {
-                public ApiTestAllFieldTypesNullableModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTestAllFieldTypesNullableModelMapper : AbstractApiTestAllFieldTypesNullableModelMapper, IApiTestAllFieldTypesNullableModelMapper
+	{
+		public ApiTestAllFieldTypesNullableModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5454b803c06d7c40a71dd788ccfebf68</Hash>
+    <Hash>819c8c2eb476aeee96d6dcd1ad061dc0</Hash>
 </Codenesium>*/

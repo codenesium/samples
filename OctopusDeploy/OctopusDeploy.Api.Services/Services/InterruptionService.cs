@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class InterruptionService : AbstractInterruptionService, IInterruptionService
-        {
-                public InterruptionService(
-                        ILogger<IInterruptionRepository> logger,
-                        IInterruptionRepository interruptionRepository,
-                        IApiInterruptionRequestModelValidator interruptionModelValidator,
-                        IBOLInterruptionMapper bolinterruptionMapper,
-                        IDALInterruptionMapper dalinterruptionMapper
-                        )
-                        : base(logger,
-                               interruptionRepository,
-                               interruptionModelValidator,
-                               bolinterruptionMapper,
-                               dalinterruptionMapper)
-                {
-                }
-        }
+	public partial class InterruptionService : AbstractInterruptionService, IInterruptionService
+	{
+		public InterruptionService(
+			ILogger<IInterruptionRepository> logger,
+			IInterruptionRepository interruptionRepository,
+			IApiInterruptionRequestModelValidator interruptionModelValidator,
+			IBOLInterruptionMapper bolinterruptionMapper,
+			IDALInterruptionMapper dalinterruptionMapper
+			)
+			: base(logger,
+			       interruptionRepository,
+			       interruptionModelValidator,
+			       bolinterruptionMapper,
+			       dalinterruptionMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f39c96d6eb1fe1280c317ac8814343a6</Hash>
+    <Hash>73b0bd54333c2e66d46070dcf1ec2491</Hash>
 </Codenesium>*/

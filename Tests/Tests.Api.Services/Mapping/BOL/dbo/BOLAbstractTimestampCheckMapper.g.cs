@@ -5,46 +5,46 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class BOLAbstractTimestampCheckMapper
-        {
-                public virtual BOTimestampCheck MapModelToBO(
-                        int id,
-                        ApiTimestampCheckRequestModel model
-                        )
-                {
-                        BOTimestampCheck boTimestampCheck = new BOTimestampCheck();
-                        boTimestampCheck.SetProperties(
-                                id,
-                                model.Name,
-                                model.Timestamp);
-                        return boTimestampCheck;
-                }
+	public abstract class BOLAbstractTimestampCheckMapper
+	{
+		public virtual BOTimestampCheck MapModelToBO(
+			int id,
+			ApiTimestampCheckRequestModel model
+			)
+		{
+			BOTimestampCheck boTimestampCheck = new BOTimestampCheck();
+			boTimestampCheck.SetProperties(
+				id,
+				model.Name,
+				model.Timestamp);
+			return boTimestampCheck;
+		}
 
-                public virtual ApiTimestampCheckResponseModel MapBOToModel(
-                        BOTimestampCheck boTimestampCheck)
-                {
-                        var model = new ApiTimestampCheckResponseModel();
+		public virtual ApiTimestampCheckResponseModel MapBOToModel(
+			BOTimestampCheck boTimestampCheck)
+		{
+			var model = new ApiTimestampCheckResponseModel();
 
-                        model.SetProperties(boTimestampCheck.Id, boTimestampCheck.Name, boTimestampCheck.Timestamp);
+			model.SetProperties(boTimestampCheck.Id, boTimestampCheck.Name, boTimestampCheck.Timestamp);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiTimestampCheckResponseModel> MapBOToModel(
-                        List<BOTimestampCheck> items)
-                {
-                        List<ApiTimestampCheckResponseModel> response = new List<ApiTimestampCheckResponseModel>();
+		public virtual List<ApiTimestampCheckResponseModel> MapBOToModel(
+			List<BOTimestampCheck> items)
+		{
+			List<ApiTimestampCheckResponseModel> response = new List<ApiTimestampCheckResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2fe2971b6e8b50d761702a017eb7660f</Hash>
+    <Hash>12aa44f44aefd8d9caece5525926d8ac</Hash>
 </Codenesium>*/

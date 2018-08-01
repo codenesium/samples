@@ -15,17 +15,17 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmployeePayHistory")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiEmployeePayHistoryRequestModelValidatorTest
-        {
-                public ApiEmployeePayHistoryRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmployeePayHistory")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiEmployeePayHistoryRequestModelValidatorTest
+	{
+		public ApiEmployeePayHistoryRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fcb9fe0dbf2b54efd17240246d824ef0</Hash>
+    <Hash>458ecb1371bcd5cb325ad89090e4925f</Hash>
 </Codenesium>*/

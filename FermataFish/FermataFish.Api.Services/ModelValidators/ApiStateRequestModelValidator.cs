@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiStateRequestModelValidator : AbstractApiStateRequestModelValidator, IApiStateRequestModelValidator
-        {
-                public ApiStateRequestModelValidator(IStateRepository stateRepository)
-                        : base(stateRepository)
-                {
-                }
+	public class ApiStateRequestModelValidator : AbstractApiStateRequestModelValidator, IApiStateRequestModelValidator
+	{
+		public ApiStateRequestModelValidator(IStateRepository stateRepository)
+			: base(stateRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiStateRequestModel model)
-                {
-                        this.NameRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiStateRequestModel model)
+		{
+			this.NameRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateRequestModel model)
-                {
-                        this.NameRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateRequestModel model)
+		{
+			this.NameRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aa75b973d2eb42f415f78874a9bb47f6</Hash>
+    <Hash>600ce77ea28f7f0ff96d0c1162c95dea</Hash>
 </Codenesium>*/

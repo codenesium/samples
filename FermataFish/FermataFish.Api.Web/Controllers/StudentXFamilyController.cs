@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/studentXFamilies")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class StudentXFamilyController : AbstractStudentXFamilyController
-        {
-                public StudentXFamilyController(
-                        ApiSettings settings,
-                        ILogger<StudentXFamilyController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IStudentXFamilyService studentXFamilyService,
-                        IApiStudentXFamilyModelMapper studentXFamilyModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               studentXFamilyService,
-                               studentXFamilyModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/studentXFamilies")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class StudentXFamilyController : AbstractStudentXFamilyController
+	{
+		public StudentXFamilyController(
+			ApiSettings settings,
+			ILogger<StudentXFamilyController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IStudentXFamilyService studentXFamilyService,
+			IApiStudentXFamilyModelMapper studentXFamilyModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       studentXFamilyService,
+			       studentXFamilyModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fae01340f94d2d8d2b57b86b1ee04465</Hash>
+    <Hash>998f859aca1728aa8373a3f71956a6ac</Hash>
 </Codenesium>*/

@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractProductDescriptionMapper
-        {
-                public virtual ProductDescription MapBOToEF(
-                        BOProductDescription bo)
-                {
-                        ProductDescription efProductDescription = new ProductDescription();
-                        efProductDescription.SetProperties(
-                                bo.Description,
-                                bo.ModifiedDate,
-                                bo.ProductDescriptionID,
-                                bo.Rowguid);
-                        return efProductDescription;
-                }
+	public abstract class DALAbstractProductDescriptionMapper
+	{
+		public virtual ProductDescription MapBOToEF(
+			BOProductDescription bo)
+		{
+			ProductDescription efProductDescription = new ProductDescription();
+			efProductDescription.SetProperties(
+				bo.Description,
+				bo.ModifiedDate,
+				bo.ProductDescriptionID,
+				bo.Rowguid);
+			return efProductDescription;
+		}
 
-                public virtual BOProductDescription MapEFToBO(
-                        ProductDescription ef)
-                {
-                        var bo = new BOProductDescription();
+		public virtual BOProductDescription MapEFToBO(
+			ProductDescription ef)
+		{
+			var bo = new BOProductDescription();
 
-                        bo.SetProperties(
-                                ef.ProductDescriptionID,
-                                ef.Description,
-                                ef.ModifiedDate,
-                                ef.Rowguid);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.ProductDescriptionID,
+				ef.Description,
+				ef.ModifiedDate,
+				ef.Rowguid);
+			return bo;
+		}
 
-                public virtual List<BOProductDescription> MapEFToBO(
-                        List<ProductDescription> records)
-                {
-                        List<BOProductDescription> response = new List<BOProductDescription>();
+		public virtual List<BOProductDescription> MapEFToBO(
+			List<ProductDescription> records)
+		{
+			List<BOProductDescription> response = new List<BOProductDescription>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>99067de050e4699cab85d7542fbfa041</Hash>
+    <Hash>01141cb781e2b28f7c9bac75d49a9f28</Hash>
 </Codenesium>*/

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
-        {
-                public BOLVersionInfoMapper()
-                {
-                }
-        }
+	public partial class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
+	{
+		public BOLVersionInfoMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>30f1083a3fd24a8f3291d4bcc57ce7ce</Hash>
+    <Hash>a98f08cfd5aa486319bb361ae96a37c3</Hash>
 </Codenesium>*/

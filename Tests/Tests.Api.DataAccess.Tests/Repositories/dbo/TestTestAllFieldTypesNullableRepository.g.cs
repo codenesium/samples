@@ -9,127 +9,127 @@ using Xunit;
 
 namespace TestsNS.Api.DataAccess
 {
-        public partial class TestAllFieldTypesNullableRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class TestAllFieldTypesNullableRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<TestAllFieldTypesNullableRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<TestAllFieldTypesNullableRepository>>();
-                }
-        }
+		public static Mock<ILogger<TestAllFieldTypesNullableRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<TestAllFieldTypesNullableRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TestAllFieldTypesNullable")]
-        [Trait("Area", "Repositories")]
-        public partial class TestAllFieldTypesNullableRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TestAllFieldTypesNullable")]
+	[Trait("Area", "Repositories")]
+	public partial class TestAllFieldTypesNullableRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
-                        TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-                        context.Set<TestAllFieldTypesNullable>().Add(entity);
-                        await context.SaveChangesAsync();
+			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			context.Set<TestAllFieldTypesNullable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
-                        TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-                        context.Set<TestAllFieldTypesNullable>().Add(entity);
-                        await context.SaveChangesAsync();
+			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			context.Set<TestAllFieldTypesNullable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
-                        var entity = new TestAllFieldTypesNullable();
-                        await repository.Create(entity);
+			var entity = new TestAllFieldTypesNullable();
+			await repository.Create(entity);
 
-                        var record = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			var record = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
-                        TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-                        context.Set<TestAllFieldTypesNullable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			context.Set<TestAllFieldTypesNullable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
-                        TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-                        context.Set<TestAllFieldTypesNullable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			context.Set<TestAllFieldTypesNullable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new TestAllFieldTypesNullable());
+			await repository.Update(new TestAllFieldTypesNullable());
 
-                        var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
-                        var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
-                        TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-                        context.Set<TestAllFieldTypesNullable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<TestAllFieldTypesNullableRepository>> loggerMoc = TestAllFieldTypesNullableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
+			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
+			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			context.Set<TestAllFieldTypesNullable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        TestAllFieldTypesNullable modifiedRecord = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			TestAllFieldTypesNullable modifiedRecord = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6bb9f31a2e7625a2dbfa38319078263c</Hash>
+    <Hash>4dec1e8dd4f4345f3231db89d8fb6b62</Hash>
 </Codenesium>*/

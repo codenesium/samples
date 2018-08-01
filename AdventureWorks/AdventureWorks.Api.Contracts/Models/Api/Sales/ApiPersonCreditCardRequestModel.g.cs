@@ -7,31 +7,31 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonCreditCardRequestModel : AbstractApiRequestModel
-        {
-                public ApiPersonCreditCardRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiPersonCreditCardRequestModel : AbstractApiRequestModel
+	{
+		public ApiPersonCreditCardRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int creditCardID,
-                        DateTime modifiedDate)
-                {
-                        this.CreditCardID = creditCardID;
-                        this.ModifiedDate = modifiedDate;
-                }
+		public virtual void SetProperties(
+			int creditCardID,
+			DateTime modifiedDate)
+		{
+			this.CreditCardID = creditCardID;
+			this.ModifiedDate = modifiedDate;
+		}
 
-                [Required]
-                [JsonProperty]
-                public int CreditCardID { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int CreditCardID { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>53d097d2c7179cf11d41e7e9ede7833d</Hash>
+    <Hash>f54567c1913c2ceaed74ebeee20c0b5f</Hash>
 </Codenesium>*/

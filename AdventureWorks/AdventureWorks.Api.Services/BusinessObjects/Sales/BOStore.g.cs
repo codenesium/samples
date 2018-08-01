@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOStore : AbstractBOStore
-        {
-                public BOStore()
-                        : base()
-                {
-                }
-        }
+	public partial class BOStore : AbstractBOStore
+	{
+		public BOStore()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e8f64ebe124f81052460ed32e40a3073</Hash>
+    <Hash>b93591e654619cf73cacc491456f55fa</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class AdminRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class AdminRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<AdminRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<AdminRepository>>();
-                }
-        }
+		public static Mock<ILogger<AdminRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<AdminRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Admin")]
-        [Trait("Area", "Repositories")]
-        public partial class AdminRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Admin")]
+	[Trait("Area", "Repositories")]
+	public partial class AdminRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
 
-                        Admin entity = new Admin();
-                        context.Set<Admin>().Add(entity);
-                        await context.SaveChangesAsync();
+			Admin entity = new Admin();
+			context.Set<Admin>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
 
-                        Admin entity = new Admin();
-                        context.Set<Admin>().Add(entity);
-                        await context.SaveChangesAsync();
+			Admin entity = new Admin();
+			context.Set<Admin>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
 
-                        var entity = new Admin();
-                        await repository.Create(entity);
+			var entity = new Admin();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Admin>().FirstOrDefaultAsync();
+			var record = await context.Set<Admin>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
-                        Admin entity = new Admin();
-                        context.Set<Admin>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
+			Admin entity = new Admin();
+			context.Set<Admin>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Admin>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Admin>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
-                        Admin entity = new Admin();
-                        context.Set<Admin>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
+			Admin entity = new Admin();
+			context.Set<Admin>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Admin());
+			await repository.Update(new Admin());
 
-                        var modifiedRecord = context.Set<Admin>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Admin>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = AdminRepositoryMoc.GetContext();
-                        var repository = new AdminRepository(loggerMoc.Object, context);
-                        Admin entity = new Admin();
-                        context.Set<Admin>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
+			Admin entity = new Admin();
+			context.Set<Admin>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Admin modifiedRecord = await context.Set<Admin>().FirstOrDefaultAsync();
+			Admin modifiedRecord = await context.Set<Admin>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5e653ad49e1eb2adb8cb212cab5a141a</Hash>
+    <Hash>032a7ee194b1dcf6cc77441f586b1387</Hash>
 </Codenesium>*/

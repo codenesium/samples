@@ -6,41 +6,41 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiSaleTicketsResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        int saleId,
-                        int ticketId)
-                {
-                        this.Id = id;
-                        this.SaleId = saleId;
-                        this.TicketId = ticketId;
+	public partial class ApiSaleTicketsResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			int saleId,
+			int ticketId)
+		{
+			this.Id = id;
+			this.SaleId = saleId;
+			this.TicketId = ticketId;
 
-                        this.SaleIdEntity = nameof(ApiResponse.Sales);
-                        this.TicketIdEntity = nameof(ApiResponse.Tickets);
-                }
+			this.SaleIdEntity = nameof(ApiResponse.Sales);
+			this.TicketIdEntity = nameof(ApiResponse.Tickets);
+		}
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int SaleId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int SaleId { get; private set; }
 
-                [JsonProperty]
-                public string SaleIdEntity { get; set; }
+		[JsonProperty]
+		public string SaleIdEntity { get; set; }
 
-                [Required]
-                [JsonProperty]
-                public int TicketId { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int TicketId { get; private set; }
 
-                [JsonProperty]
-                public string TicketIdEntity { get; set; }
-        }
+		[JsonProperty]
+		public string TicketIdEntity { get; set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>76a51ba81106a09889105005e875ca44</Hash>
+    <Hash>cd304467e20470927903bf6da330fc13</Hash>
 </Codenesium>*/

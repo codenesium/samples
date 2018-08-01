@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IDALTeacherXTeacherSkillMapper
-        {
-                TeacherXTeacherSkill MapBOToEF(
-                        BOTeacherXTeacherSkill bo);
+	public interface IDALTeacherXTeacherSkillMapper
+	{
+		TeacherXTeacherSkill MapBOToEF(
+			BOTeacherXTeacherSkill bo);
 
-                BOTeacherXTeacherSkill MapEFToBO(
-                        TeacherXTeacherSkill efTeacherXTeacherSkill);
+		BOTeacherXTeacherSkill MapEFToBO(
+			TeacherXTeacherSkill efTeacherXTeacherSkill);
 
-                List<BOTeacherXTeacherSkill> MapEFToBO(
-                        List<TeacherXTeacherSkill> records);
-        }
+		List<BOTeacherXTeacherSkill> MapEFToBO(
+			List<TeacherXTeacherSkill> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>24d55239bbda2af36845f9c678a8a458</Hash>
+    <Hash>ddc5f18b322ecb70dceb51ef75ae99d9</Hash>
 </Codenesium>*/

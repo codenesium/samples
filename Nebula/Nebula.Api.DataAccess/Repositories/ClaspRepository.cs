@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public partial class ClaspRepository : AbstractClaspRepository, IClaspRepository
-        {
-                public ClaspRepository(
-                        ILogger<ClaspRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class ClaspRepository : AbstractClaspRepository, IClaspRepository
+	{
+		public ClaspRepository(
+			ILogger<ClaspRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d5e006d197b15baf087b040949af31bf</Hash>
+    <Hash>fa0f2590da5c08de0ef790528372afce</Hash>
 </Codenesium>*/

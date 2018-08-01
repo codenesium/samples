@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class AccountService : AbstractAccountService, IAccountService
-        {
-                public AccountService(
-                        ILogger<IAccountRepository> logger,
-                        IAccountRepository accountRepository,
-                        IApiAccountRequestModelValidator accountModelValidator,
-                        IBOLAccountMapper bolaccountMapper,
-                        IDALAccountMapper dalaccountMapper
-                        )
-                        : base(logger,
-                               accountRepository,
-                               accountModelValidator,
-                               bolaccountMapper,
-                               dalaccountMapper)
-                {
-                }
-        }
+	public partial class AccountService : AbstractAccountService, IAccountService
+	{
+		public AccountService(
+			ILogger<IAccountRepository> logger,
+			IAccountRepository accountRepository,
+			IApiAccountRequestModelValidator accountModelValidator,
+			IBOLAccountMapper bolaccountMapper,
+			IDALAccountMapper dalaccountMapper
+			)
+			: base(logger,
+			       accountRepository,
+			       accountModelValidator,
+			       bolaccountMapper,
+			       dalaccountMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bce7b7c9d4a5928737e9a18940c840f4</Hash>
+    <Hash>82c7781e1122ab717018387a8e49c9a3</Hash>
 </Codenesium>*/

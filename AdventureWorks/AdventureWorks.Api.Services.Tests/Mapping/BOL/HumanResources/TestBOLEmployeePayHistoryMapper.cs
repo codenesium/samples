@@ -8,53 +8,53 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmployeePayHistory")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLEmployeePayHistoryMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLEmployeePayHistoryMapper();
-                        ApiEmployeePayHistoryRequestModel model = new ApiEmployeePayHistoryRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        BOEmployeePayHistory response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmployeePayHistory")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLEmployeePayHistoryMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLEmployeePayHistoryMapper();
+			ApiEmployeePayHistoryRequestModel model = new ApiEmployeePayHistoryRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			BOEmployeePayHistory response = mapper.MapModelToBO(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1m);
-                        response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PayFrequency.Should().Be(1);
+			response.Rate.Should().Be(1m);
+			response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLEmployeePayHistoryMapper();
-                        BOEmployeePayHistory bo = new BOEmployeePayHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        ApiEmployeePayHistoryResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLEmployeePayHistoryMapper();
+			BOEmployeePayHistory bo = new BOEmployeePayHistory();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			ApiEmployeePayHistoryResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PayFrequency.Should().Be(1);
-                        response.Rate.Should().Be(1m);
-                        response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PayFrequency.Should().Be(1);
+			response.Rate.Should().Be(1m);
+			response.RateChangeDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLEmployeePayHistoryMapper();
-                        BOEmployeePayHistory bo = new BOEmployeePayHistory();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        List<ApiEmployeePayHistoryResponseModel> response = mapper.MapBOToModel(new List<BOEmployeePayHistory>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLEmployeePayHistoryMapper();
+			BOEmployeePayHistory bo = new BOEmployeePayHistory();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			List<ApiEmployeePayHistoryResponseModel> response = mapper.MapBOToModel(new List<BOEmployeePayHistory>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>17bb2f67b7125fb203dd092d1703ed6d</Hash>
+    <Hash>0fdc069df135d1197446c552e026f049</Hash>
 </Codenesium>*/

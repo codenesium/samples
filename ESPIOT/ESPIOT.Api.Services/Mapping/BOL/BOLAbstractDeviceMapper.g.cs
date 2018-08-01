@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class BOLAbstractDeviceMapper
-        {
-                public virtual BODevice MapModelToBO(
-                        int id,
-                        ApiDeviceRequestModel model
-                        )
-                {
-                        BODevice boDevice = new BODevice();
-                        boDevice.SetProperties(
-                                id,
-                                model.Name,
-                                model.PublicId);
-                        return boDevice;
-                }
+	public abstract class BOLAbstractDeviceMapper
+	{
+		public virtual BODevice MapModelToBO(
+			int id,
+			ApiDeviceRequestModel model
+			)
+		{
+			BODevice boDevice = new BODevice();
+			boDevice.SetProperties(
+				id,
+				model.Name,
+				model.PublicId);
+			return boDevice;
+		}
 
-                public virtual ApiDeviceResponseModel MapBOToModel(
-                        BODevice boDevice)
-                {
-                        var model = new ApiDeviceResponseModel();
+		public virtual ApiDeviceResponseModel MapBOToModel(
+			BODevice boDevice)
+		{
+			var model = new ApiDeviceResponseModel();
 
-                        model.SetProperties(boDevice.Id, boDevice.Name, boDevice.PublicId);
+			model.SetProperties(boDevice.Id, boDevice.Name, boDevice.PublicId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiDeviceResponseModel> MapBOToModel(
-                        List<BODevice> items)
-                {
-                        List<ApiDeviceResponseModel> response = new List<ApiDeviceResponseModel>();
+		public virtual List<ApiDeviceResponseModel> MapBOToModel(
+			List<BODevice> items)
+		{
+			List<ApiDeviceResponseModel> response = new List<ApiDeviceResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>68d09f09af91a3355e5ea94b6b1ff351</Hash>
+    <Hash>4badd75ac31da76a534a7d73551ed900</Hash>
 </Codenesium>*/

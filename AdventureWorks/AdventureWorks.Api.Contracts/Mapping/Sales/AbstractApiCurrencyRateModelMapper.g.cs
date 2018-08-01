@@ -5,51 +5,51 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiCurrencyRateModelMapper
-        {
-                public virtual ApiCurrencyRateResponseModel MapRequestToResponse(
-                        int currencyRateID,
-                        ApiCurrencyRateRequestModel request)
-                {
-                        var response = new ApiCurrencyRateResponseModel();
-                        response.SetProperties(currencyRateID,
-                                               request.AverageRate,
-                                               request.CurrencyRateDate,
-                                               request.EndOfDayRate,
-                                               request.FromCurrencyCode,
-                                               request.ModifiedDate,
-                                               request.ToCurrencyCode);
-                        return response;
-                }
+	public abstract class AbstractApiCurrencyRateModelMapper
+	{
+		public virtual ApiCurrencyRateResponseModel MapRequestToResponse(
+			int currencyRateID,
+			ApiCurrencyRateRequestModel request)
+		{
+			var response = new ApiCurrencyRateResponseModel();
+			response.SetProperties(currencyRateID,
+			                       request.AverageRate,
+			                       request.CurrencyRateDate,
+			                       request.EndOfDayRate,
+			                       request.FromCurrencyCode,
+			                       request.ModifiedDate,
+			                       request.ToCurrencyCode);
+			return response;
+		}
 
-                public virtual ApiCurrencyRateRequestModel MapResponseToRequest(
-                        ApiCurrencyRateResponseModel response)
-                {
-                        var request = new ApiCurrencyRateRequestModel();
-                        request.SetProperties(
-                                response.AverageRate,
-                                response.CurrencyRateDate,
-                                response.EndOfDayRate,
-                                response.FromCurrencyCode,
-                                response.ModifiedDate,
-                                response.ToCurrencyCode);
-                        return request;
-                }
+		public virtual ApiCurrencyRateRequestModel MapResponseToRequest(
+			ApiCurrencyRateResponseModel response)
+		{
+			var request = new ApiCurrencyRateRequestModel();
+			request.SetProperties(
+				response.AverageRate,
+				response.CurrencyRateDate,
+				response.EndOfDayRate,
+				response.FromCurrencyCode,
+				response.ModifiedDate,
+				response.ToCurrencyCode);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
-                        patch.Replace(x => x.AverageRate, model.AverageRate);
-                        patch.Replace(x => x.CurrencyRateDate, model.CurrencyRateDate);
-                        patch.Replace(x => x.EndOfDayRate, model.EndOfDayRate);
-                        patch.Replace(x => x.FromCurrencyCode, model.FromCurrencyCode);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        patch.Replace(x => x.ToCurrencyCode, model.ToCurrencyCode);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiCurrencyRateRequestModel> CreatePatch(ApiCurrencyRateRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
+			patch.Replace(x => x.AverageRate, model.AverageRate);
+			patch.Replace(x => x.CurrencyRateDate, model.CurrencyRateDate);
+			patch.Replace(x => x.EndOfDayRate, model.EndOfDayRate);
+			patch.Replace(x => x.FromCurrencyCode, model.FromCurrencyCode);
+			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+			patch.Replace(x => x.ToCurrencyCode, model.ToCurrencyCode);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c93f6254f8a25e62fae4db8654da9dda</Hash>
+    <Hash>10cc7e67f7925cc4ae593d36f150e056</Hash>
 </Codenesium>*/

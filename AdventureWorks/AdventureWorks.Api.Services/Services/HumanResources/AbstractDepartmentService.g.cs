@@ -12,133 +12,133 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractDepartmentService : AbstractService
-        {
-                private IDepartmentRepository departmentRepository;
+	public abstract class AbstractDepartmentService : AbstractService
+	{
+		private IDepartmentRepository departmentRepository;
 
-                private IApiDepartmentRequestModelValidator departmentModelValidator;
+		private IApiDepartmentRequestModelValidator departmentModelValidator;
 
-                private IBOLDepartmentMapper bolDepartmentMapper;
+		private IBOLDepartmentMapper bolDepartmentMapper;
 
-                private IDALDepartmentMapper dalDepartmentMapper;
+		private IDALDepartmentMapper dalDepartmentMapper;
 
-                private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+		private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
 
-                private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+		private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractDepartmentService(
-                        ILogger logger,
-                        IDepartmentRepository departmentRepository,
-                        IApiDepartmentRequestModelValidator departmentModelValidator,
-                        IBOLDepartmentMapper bolDepartmentMapper,
-                        IDALDepartmentMapper dalDepartmentMapper,
-                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
-                        : base()
-                {
-                        this.departmentRepository = departmentRepository;
-                        this.departmentModelValidator = departmentModelValidator;
-                        this.bolDepartmentMapper = bolDepartmentMapper;
-                        this.dalDepartmentMapper = dalDepartmentMapper;
-                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
-                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
-                        this.logger = logger;
-                }
+		public AbstractDepartmentService(
+			ILogger logger,
+			IDepartmentRepository departmentRepository,
+			IApiDepartmentRequestModelValidator departmentModelValidator,
+			IBOLDepartmentMapper bolDepartmentMapper,
+			IDALDepartmentMapper dalDepartmentMapper,
+			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
+			: base()
+		{
+			this.departmentRepository = departmentRepository;
+			this.departmentModelValidator = departmentModelValidator;
+			this.bolDepartmentMapper = bolDepartmentMapper;
+			this.dalDepartmentMapper = dalDepartmentMapper;
+			this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+			this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiDepartmentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.departmentRepository.All(limit, offset);
+		public virtual async Task<List<ApiDepartmentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.departmentRepository.All(limit, offset);
 
-                        return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(records));
-                }
+			return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiDepartmentResponseModel> Get(short departmentID)
-                {
-                        var record = await this.departmentRepository.Get(departmentID);
+		public virtual async Task<ApiDepartmentResponseModel> Get(short departmentID)
+		{
+			var record = await this.departmentRepository.Get(departmentID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiDepartmentResponseModel>> Create(
-                        ApiDepartmentRequestModel model)
-                {
-                        CreateResponse<ApiDepartmentResponseModel> response = new CreateResponse<ApiDepartmentResponseModel>(await this.departmentModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolDepartmentMapper.MapModelToBO(default(short), model);
-                                var record = await this.departmentRepository.Create(this.dalDepartmentMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiDepartmentResponseModel>> Create(
+			ApiDepartmentRequestModel model)
+		{
+			CreateResponse<ApiDepartmentResponseModel> response = new CreateResponse<ApiDepartmentResponseModel>(await this.departmentModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolDepartmentMapper.MapModelToBO(default(short), model);
+				var record = await this.departmentRepository.Create(this.dalDepartmentMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiDepartmentResponseModel>> Update(
-                        short departmentID,
-                        ApiDepartmentRequestModel model)
-                {
-                        var validationResult = await this.departmentModelValidator.ValidateUpdateAsync(departmentID, model);
+		public virtual async Task<UpdateResponse<ApiDepartmentResponseModel>> Update(
+			short departmentID,
+			ApiDepartmentRequestModel model)
+		{
+			var validationResult = await this.departmentModelValidator.ValidateUpdateAsync(departmentID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolDepartmentMapper.MapModelToBO(departmentID, model);
-                                await this.departmentRepository.Update(this.dalDepartmentMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolDepartmentMapper.MapModelToBO(departmentID, model);
+				await this.departmentRepository.Update(this.dalDepartmentMapper.MapBOToEF(bo));
 
-                                var record = await this.departmentRepository.Get(departmentID);
+				var record = await this.departmentRepository.Get(departmentID);
 
-                                return new UpdateResponse<ApiDepartmentResponseModel>(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiDepartmentResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiDepartmentResponseModel>(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiDepartmentResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        short departmentID)
-                {
-                        ActionResponse response = new ActionResponse(await this.departmentModelValidator.ValidateDeleteAsync(departmentID));
-                        if (response.Success)
-                        {
-                                await this.departmentRepository.Delete(departmentID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			short departmentID)
+		{
+			ActionResponse response = new ActionResponse(await this.departmentModelValidator.ValidateDeleteAsync(departmentID));
+			if (response.Success)
+			{
+				await this.departmentRepository.Delete(departmentID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiDepartmentResponseModel> ByName(string name)
-                {
-                        Department record = await this.departmentRepository.ByName(name);
+		public async Task<ApiDepartmentResponseModel> ByName(string name)
+		{
+			Department record = await this.departmentRepository.ByName(name);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
+			}
+		}
 
-                public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<EmployeeDepartmentHistory> records = await this.departmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
+		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EmployeeDepartmentHistory> records = await this.departmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
 
-                        return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7ec734cf13557c7ee958742aa4fdab92</Hash>
+    <Hash>8081aafb4ac8b1d5c41782eb381949cc</Hash>
 </Codenesium>*/

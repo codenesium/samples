@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOSalesTaxRate : AbstractBOSalesTaxRate
-        {
-                public BOSalesTaxRate()
-                        : base()
-                {
-                }
-        }
+	public partial class BOSalesTaxRate : AbstractBOSalesTaxRate
+	{
+		public BOSalesTaxRate()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a03626df3c8ce1e2309958cba50733fc</Hash>
+    <Hash>1273dec48f03b9b381b76bb19934cb5d</Hash>
 </Codenesium>*/

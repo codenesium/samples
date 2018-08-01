@@ -11,109 +11,109 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractProxyRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractProxyRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractProxyRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractProxyRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<Proxy>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<Proxy>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<Proxy> Get(string id)
-                {
-                        return await this.GetById(id);
-                }
+		public async virtual Task<Proxy> Get(string id)
+		{
+			return await this.GetById(id);
+		}
 
-                public async virtual Task<Proxy> Create(Proxy item)
-                {
-                        this.Context.Set<Proxy>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<Proxy> Create(Proxy item)
+		{
+			this.Context.Set<Proxy>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(Proxy item)
-                {
-                        var entity = this.Context.Set<Proxy>().Local.FirstOrDefault(x => x.Id == item.Id);
-                        if (entity == null)
-                        {
-                                this.Context.Set<Proxy>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(Proxy item)
+		{
+			var entity = this.Context.Set<Proxy>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<Proxy>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        string id)
-                {
-                        Proxy record = await this.GetById(id);
+		public async virtual Task Delete(
+			string id)
+		{
+			Proxy record = await this.GetById(id);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<Proxy>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<Proxy>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<Proxy> ByName(string name)
-                {
-                        var records = await this.Where(x => x.Name == name);
+		public async Task<Proxy> ByName(string name)
+		{
+			var records = await this.Where(x => x.Name == name);
 
-                        return records.FirstOrDefault();
-                }
+			return records.FirstOrDefault();
+		}
 
-                protected async Task<List<Proxy>> Where(
-                        Expression<Func<Proxy, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<Proxy, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.Id;
-                        }
+		protected async Task<List<Proxy>> Where(
+			Expression<Func<Proxy, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<Proxy, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Id;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Proxy>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Proxy>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Proxy>();
+			}
+			else
+			{
+				return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Proxy>();
+			}
+		}
 
-                private async Task<Proxy> GetById(string id)
-                {
-                        List<Proxy> records = await this.Where(x => x.Id == id);
+		private async Task<Proxy> GetById(string id)
+		{
+			List<Proxy> records = await this.Where(x => x.Id == id);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1c4afdfd501b096928b20eceddd9094e</Hash>
+    <Hash>d1d299c9a10f50409ca730216c8123b9</Hash>
 </Codenesium>*/

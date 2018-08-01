@@ -6,50 +6,50 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiMachineResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        string description,
-                        string jwtKey,
-                        string lastIpAddress,
-                        Guid machineGuid,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Description = description;
-                        this.JwtKey = jwtKey;
-                        this.LastIpAddress = lastIpAddress;
-                        this.MachineGuid = machineGuid;
-                        this.Name = name;
-                }
+	public partial class ApiMachineResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			string description,
+			string jwtKey,
+			string lastIpAddress,
+			Guid machineGuid,
+			string name)
+		{
+			this.Id = id;
+			this.Description = description;
+			this.JwtKey = jwtKey;
+			this.LastIpAddress = lastIpAddress;
+			this.MachineGuid = machineGuid;
+			this.Name = name;
+		}
 
-                [Required]
-                [JsonProperty]
-                public string Description { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string Description { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int Id { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string JwtKey { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string JwtKey { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string LastIpAddress { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string LastIpAddress { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public Guid MachineGuid { get; private set; }
+		[Required]
+		[JsonProperty]
+		public Guid MachineGuid { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>ba3a42fb6e28cee8035820b9db4a90f9</Hash>
+    <Hash>66acbf236cc36071004f6f6b5d0ec7fa</Hash>
 </Codenesium>*/

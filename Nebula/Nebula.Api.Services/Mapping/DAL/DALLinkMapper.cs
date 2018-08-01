@@ -4,14 +4,14 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class DALLinkMapper : DALAbstractLinkMapper, IDALLinkMapper
-        {
-                public DALLinkMapper()
-                {
-                }
-        }
+	public partial class DALLinkMapper : DALAbstractLinkMapper, IDALLinkMapper
+	{
+		public DALLinkMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2ae86531645ba52747885ac40c3f20d5</Hash>
+    <Hash>e6e05c7e007c50519ee7fd2ada703280</Hash>
 </Codenesium>*/

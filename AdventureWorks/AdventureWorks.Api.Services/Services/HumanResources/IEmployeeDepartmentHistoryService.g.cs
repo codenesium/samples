@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IEmployeeDepartmentHistoryService
-        {
-                Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
-                        ApiEmployeeDepartmentHistoryRequestModel model);
+	public interface IEmployeeDepartmentHistoryService
+	{
+		Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
+			ApiEmployeeDepartmentHistoryRequestModel model);
 
-                Task<UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Update(int businessEntityID,
-                                                                                        ApiEmployeeDepartmentHistoryRequestModel model);
+		Task<UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Update(int businessEntityID,
+		                                                                        ApiEmployeeDepartmentHistoryRequestModel model);
 
-                Task<ActionResponse> Delete(int businessEntityID);
+		Task<ActionResponse> Delete(int businessEntityID);
 
-                Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID);
+		Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByDepartmentID(short departmentID);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByDepartmentID(short departmentID);
 
-                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID);
-        }
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c7d278faac874d2d3170bb8dff5f0fdf</Hash>
+    <Hash>1374efac408f90a585a5fb3c53c28f3a</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALDeploymentHistoryMapper
-        {
-                DeploymentHistory MapBOToEF(
-                        BODeploymentHistory bo);
+	public interface IDALDeploymentHistoryMapper
+	{
+		DeploymentHistory MapBOToEF(
+			BODeploymentHistory bo);
 
-                BODeploymentHistory MapEFToBO(
-                        DeploymentHistory efDeploymentHistory);
+		BODeploymentHistory MapEFToBO(
+			DeploymentHistory efDeploymentHistory);
 
-                List<BODeploymentHistory> MapEFToBO(
-                        List<DeploymentHistory> records);
-        }
+		List<BODeploymentHistory> MapEFToBO(
+			List<DeploymentHistory> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>71c91b2ae9b7de7a7524835852467c40</Hash>
+    <Hash>46c22a0578225479efe1e18231e6b608</Hash>
 </Codenesium>*/

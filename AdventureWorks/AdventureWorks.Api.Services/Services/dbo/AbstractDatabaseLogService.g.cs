@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractDatabaseLogService : AbstractService
-        {
-                private IDatabaseLogRepository databaseLogRepository;
+	public abstract class AbstractDatabaseLogService : AbstractService
+	{
+		private IDatabaseLogRepository databaseLogRepository;
 
-                private IApiDatabaseLogRequestModelValidator databaseLogModelValidator;
+		private IApiDatabaseLogRequestModelValidator databaseLogModelValidator;
 
-                private IBOLDatabaseLogMapper bolDatabaseLogMapper;
+		private IBOLDatabaseLogMapper bolDatabaseLogMapper;
 
-                private IDALDatabaseLogMapper dalDatabaseLogMapper;
+		private IDALDatabaseLogMapper dalDatabaseLogMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractDatabaseLogService(
-                        ILogger logger,
-                        IDatabaseLogRepository databaseLogRepository,
-                        IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
-                        IBOLDatabaseLogMapper bolDatabaseLogMapper,
-                        IDALDatabaseLogMapper dalDatabaseLogMapper)
-                        : base()
-                {
-                        this.databaseLogRepository = databaseLogRepository;
-                        this.databaseLogModelValidator = databaseLogModelValidator;
-                        this.bolDatabaseLogMapper = bolDatabaseLogMapper;
-                        this.dalDatabaseLogMapper = dalDatabaseLogMapper;
-                        this.logger = logger;
-                }
+		public AbstractDatabaseLogService(
+			ILogger logger,
+			IDatabaseLogRepository databaseLogRepository,
+			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+			IBOLDatabaseLogMapper bolDatabaseLogMapper,
+			IDALDatabaseLogMapper dalDatabaseLogMapper)
+			: base()
+		{
+			this.databaseLogRepository = databaseLogRepository;
+			this.databaseLogModelValidator = databaseLogModelValidator;
+			this.bolDatabaseLogMapper = bolDatabaseLogMapper;
+			this.dalDatabaseLogMapper = dalDatabaseLogMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.databaseLogRepository.All(limit, offset);
+		public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.databaseLogRepository.All(limit, offset);
 
-                        return this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(records));
-                }
+			return this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiDatabaseLogResponseModel> Get(int databaseLogID)
-                {
-                        var record = await this.databaseLogRepository.Get(databaseLogID);
+		public virtual async Task<ApiDatabaseLogResponseModel> Get(int databaseLogID)
+		{
+			var record = await this.databaseLogRepository.Get(databaseLogID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
-                        ApiDatabaseLogRequestModel model)
-                {
-                        CreateResponse<ApiDatabaseLogResponseModel> response = new CreateResponse<ApiDatabaseLogResponseModel>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolDatabaseLogMapper.MapModelToBO(default(int), model);
-                                var record = await this.databaseLogRepository.Create(this.dalDatabaseLogMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
+			ApiDatabaseLogRequestModel model)
+		{
+			CreateResponse<ApiDatabaseLogResponseModel> response = new CreateResponse<ApiDatabaseLogResponseModel>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolDatabaseLogMapper.MapModelToBO(default(int), model);
+				var record = await this.databaseLogRepository.Create(this.dalDatabaseLogMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(
-                        int databaseLogID,
-                        ApiDatabaseLogRequestModel model)
-                {
-                        var validationResult = await this.databaseLogModelValidator.ValidateUpdateAsync(databaseLogID, model);
+		public virtual async Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(
+			int databaseLogID,
+			ApiDatabaseLogRequestModel model)
+		{
+			var validationResult = await this.databaseLogModelValidator.ValidateUpdateAsync(databaseLogID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolDatabaseLogMapper.MapModelToBO(databaseLogID, model);
-                                await this.databaseLogRepository.Update(this.dalDatabaseLogMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolDatabaseLogMapper.MapModelToBO(databaseLogID, model);
+				await this.databaseLogRepository.Update(this.dalDatabaseLogMapper.MapBOToEF(bo));
 
-                                var record = await this.databaseLogRepository.Get(databaseLogID);
+				var record = await this.databaseLogRepository.Get(databaseLogID);
 
-                                return new UpdateResponse<ApiDatabaseLogResponseModel>(this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiDatabaseLogResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiDatabaseLogResponseModel>(this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiDatabaseLogResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int databaseLogID)
-                {
-                        ActionResponse response = new ActionResponse(await this.databaseLogModelValidator.ValidateDeleteAsync(databaseLogID));
-                        if (response.Success)
-                        {
-                                await this.databaseLogRepository.Delete(databaseLogID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int databaseLogID)
+		{
+			ActionResponse response = new ActionResponse(await this.databaseLogModelValidator.ValidateDeleteAsync(databaseLogID));
+			if (response.Success)
+			{
+				await this.databaseLogRepository.Delete(databaseLogID);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ec2d1a65689f5e9617777485f6a0b029</Hash>
+    <Hash>9ed5730b8a1d6cb5b7542c7cca07a3d2</Hash>
 </Codenesium>*/

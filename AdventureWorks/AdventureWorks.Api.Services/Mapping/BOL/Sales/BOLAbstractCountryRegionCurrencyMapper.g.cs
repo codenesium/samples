@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractCountryRegionCurrencyMapper
-        {
-                public virtual BOCountryRegionCurrency MapModelToBO(
-                        string countryRegionCode,
-                        ApiCountryRegionCurrencyRequestModel model
-                        )
-                {
-                        BOCountryRegionCurrency boCountryRegionCurrency = new BOCountryRegionCurrency();
-                        boCountryRegionCurrency.SetProperties(
-                                countryRegionCode,
-                                model.CurrencyCode,
-                                model.ModifiedDate);
-                        return boCountryRegionCurrency;
-                }
+	public abstract class BOLAbstractCountryRegionCurrencyMapper
+	{
+		public virtual BOCountryRegionCurrency MapModelToBO(
+			string countryRegionCode,
+			ApiCountryRegionCurrencyRequestModel model
+			)
+		{
+			BOCountryRegionCurrency boCountryRegionCurrency = new BOCountryRegionCurrency();
+			boCountryRegionCurrency.SetProperties(
+				countryRegionCode,
+				model.CurrencyCode,
+				model.ModifiedDate);
+			return boCountryRegionCurrency;
+		}
 
-                public virtual ApiCountryRegionCurrencyResponseModel MapBOToModel(
-                        BOCountryRegionCurrency boCountryRegionCurrency)
-                {
-                        var model = new ApiCountryRegionCurrencyResponseModel();
+		public virtual ApiCountryRegionCurrencyResponseModel MapBOToModel(
+			BOCountryRegionCurrency boCountryRegionCurrency)
+		{
+			var model = new ApiCountryRegionCurrencyResponseModel();
 
-                        model.SetProperties(boCountryRegionCurrency.CountryRegionCode, boCountryRegionCurrency.CurrencyCode, boCountryRegionCurrency.ModifiedDate);
+			model.SetProperties(boCountryRegionCurrency.CountryRegionCode, boCountryRegionCurrency.CurrencyCode, boCountryRegionCurrency.ModifiedDate);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiCountryRegionCurrencyResponseModel> MapBOToModel(
-                        List<BOCountryRegionCurrency> items)
-                {
-                        List<ApiCountryRegionCurrencyResponseModel> response = new List<ApiCountryRegionCurrencyResponseModel>();
+		public virtual List<ApiCountryRegionCurrencyResponseModel> MapBOToModel(
+			List<BOCountryRegionCurrency> items)
+		{
+			List<ApiCountryRegionCurrencyResponseModel> response = new List<ApiCountryRegionCurrencyResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c8366051c2b66caa2a18b09f6c43672f</Hash>
+    <Hash>daa153aeae7e985b857fb09dbcea4ff2</Hash>
 </Codenesium>*/

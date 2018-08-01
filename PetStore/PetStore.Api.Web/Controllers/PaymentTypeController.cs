@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetStoreNS.Api.Web
 {
-        [Route("api/paymentTypes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PaymentTypeController : AbstractPaymentTypeController
-        {
-                public PaymentTypeController(
-                        ApiSettings settings,
-                        ILogger<PaymentTypeController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPaymentTypeService paymentTypeService,
-                        IApiPaymentTypeModelMapper paymentTypeModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               paymentTypeService,
-                               paymentTypeModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/paymentTypes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PaymentTypeController : AbstractPaymentTypeController
+	{
+		public PaymentTypeController(
+			ApiSettings settings,
+			ILogger<PaymentTypeController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPaymentTypeService paymentTypeService,
+			IApiPaymentTypeModelMapper paymentTypeModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       paymentTypeService,
+			       paymentTypeModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e9e3b45d8fae42fc6fa579fad5c0092f</Hash>
+    <Hash>3e253aeefb8052f29df45209b8dc8b6f</Hash>
 </Codenesium>*/

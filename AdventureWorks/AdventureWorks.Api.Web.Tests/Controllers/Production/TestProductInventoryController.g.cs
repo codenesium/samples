@@ -15,328 +15,328 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductInventory")]
-        [Trait("Area", "Controllers")]
-        public partial class ProductInventoryControllerTests
-        {
-                [Fact]
-                public async void All_Exists()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var record = new ApiProductInventoryResponseModel();
-                        var records = new List<ApiProductInventoryResponseModel>();
-                        records.Add(record);
-                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductInventory")]
+	[Trait("Area", "Controllers")]
+	public partial class ProductInventoryControllerTests
+	{
+		[Fact]
+		public async void All_Exists()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var record = new ApiProductInventoryResponseModel();
+			var records = new List<ApiProductInventoryResponseModel>();
+			records.Add(record);
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var items = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
-                        items.Count.Should().Be(1);
-                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var items = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
+			items.Count.Should().Be(1);
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void All_Not_Exists()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiProductInventoryResponseModel>>(new List<ApiProductInventoryResponseModel>()));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void All_Not_Exists()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiProductInventoryResponseModel>>(new List<ApiProductInventoryResponseModel>()));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var items = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
-                        items.Should().BeEmpty();
-                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var items = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
+			items.Should().BeEmpty();
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_Exists()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Get_Exists()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Get(default(int));
+			IActionResult response = await controller.Get(default(int));
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var record = (response as OkObjectResult).Value as ApiProductInventoryResponseModel;
-                        record.Should().NotBeNull();
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var record = (response as OkObjectResult).Value as ApiProductInventoryResponseModel;
+			record.Should().NotBeNull();
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_Not_Exists()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Get_Not_Exists()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Get(default(int));
+			IActionResult response = await controller.Get(default(int));
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void BulkInsert_No_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+		[Fact]
+		public async void BulkInsert_No_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
 
-                        var mockResponse = new CreateResponse<ApiProductInventoryResponseModel>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetRecord(new ApiProductInventoryResponseModel());
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			var mockResponse = new CreateResponse<ApiProductInventoryResponseModel>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetRecord(new ApiProductInventoryResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var records = new List<ApiProductInventoryRequestModel>();
-                        records.Add(new ApiProductInventoryRequestModel());
-                        IActionResult response = await controller.BulkInsert(records);
+			var records = new List<ApiProductInventoryRequestModel>();
+			records.Add(new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.BulkInsert(records);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        var result = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
-                        result.Should().NotBeEmpty();
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			var result = (response as OkObjectResult).Value as List<ApiProductInventoryResponseModel>;
+			result.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void BulkInsert_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+		[Fact]
+		public async void BulkInsert_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
 
-                        var mockResponse = new Mock<CreateResponse<ApiProductInventoryResponseModel>>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetupGet(x => x.Success).Returns(false);
+			var mockResponse = new Mock<CreateResponse<ApiProductInventoryResponseModel>>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse.Object));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse.Object));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var records = new List<ApiProductInventoryRequestModel>();
-                        records.Add(new ApiProductInventoryRequestModel());
-                        IActionResult response = await controller.BulkInsert(records);
+			var records = new List<ApiProductInventoryRequestModel>();
+			records.Add(new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.BulkInsert(records);
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Create_No_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+		[Fact]
+		public async void Create_No_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
 
-                        var mockResponse = new CreateResponse<ApiProductInventoryResponseModel>(new FluentValidation.Results.ValidationResult());
-                        mockResponse.SetRecord(new ApiProductInventoryResponseModel());
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			var mockResponse = new CreateResponse<ApiProductInventoryResponseModel>(new FluentValidation.Results.ValidationResult());
+			mockResponse.SetRecord(new ApiProductInventoryResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Create(new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.Create(new ApiProductInventoryRequestModel());
 
-                        response.Should().BeOfType<CreatedResult>();
-                        (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-                        var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProductInventoryResponseModel>;
-                        createResponse.Record.Should().NotBeNull();
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<CreatedResult>();
+			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProductInventoryResponseModel>;
+			createResponse.Record.Should().NotBeNull();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Create_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+		[Fact]
+		public async void Create_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
 
-                        var mockResponse = new Mock<CreateResponse<ApiProductInventoryResponseModel>>(new FluentValidation.Results.ValidationResult());
-                        var mockRecord = new ApiProductInventoryResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiProductInventoryResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockRecord = new ApiProductInventoryResponseModel();
 
-                        mockResponse.SetupGet(x => x.Success).Returns(false);
+			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse.Object));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProductInventoryResponseModel>>(mockResponse.Object));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Create(new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.Create(new ApiProductInventoryRequestModel());
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Patch_No_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()))
-                        .Callback<int, ApiProductInventoryRequestModel>(
-                                (id, model) => model.Bin.Should().Be(1)
-                                )
-                        .Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(new ApiProductInventoryResponseModel()));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Patch_No_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()))
+			.Callback<int, ApiProductInventoryRequestModel>(
+				(id, model) => model.Bin.Should().Be(1)
+				)
+			.Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(new ApiProductInventoryResponseModel()));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
-                        patch.Replace(x => x.Bin, 1);
+			var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
+			patch.Replace(x => x.Bin, 1);
 
-                        IActionResult response = await controller.Patch(default(int), patch);
+			IActionResult response = await controller.Patch(default(int), patch);
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Patch_Record_Not_Found()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Patch_Record_Not_Found()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
-                        patch.Replace(x => x.Bin, 1);
+			var patch = new JsonPatchDocument<ApiProductInventoryRequestModel>();
+			patch.Replace(x => x.Bin, 1);
 
-                        IActionResult response = await controller.Patch(default(int), patch);
+			IActionResult response = await controller.Patch(default(int), patch);
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Update_No_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_No_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
 
-                        response.Should().BeOfType<OkObjectResult>();
-                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<OkObjectResult>();
+			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Update_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProductInventoryResponseModel()));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
-                }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
+		}
 
-                [Fact]
-                public async void Update_NotFound()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
-                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Update_NotFound()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<UpdateResponse<ApiProductInventoryResponseModel>>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProductInventoryResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductInventoryResponseModel>(null));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProductInventoryModelMapper());
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProductInventoryRequestModel());
 
-                        response.Should().BeOfType<StatusCodeResult>();
-                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
-                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeOfType<StatusCodeResult>();
+			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Delete_No_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mockResult.SetupGet(x => x.Success).Returns(true);
-                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Delete_No_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mockResult.SetupGet(x => x.Success).Returns(true);
+			mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Delete(default(int));
+			IActionResult response = await controller.Delete(default(int));
 
-                        response.Should().BeOfType<NoContentResult>();
-                        (response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
-                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
-                }
+			response.Should().BeOfType<NoContentResult>();
+			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Delete_Errors()
-                {
-                        ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
-                        var mockResult = new Mock<ActionResponse>();
-                        mockResult.SetupGet(x => x.Success).Returns(false);
-                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
-                        ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
-                        controller.ControllerContext = new ControllerContext();
-                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+		[Fact]
+		public async void Delete_Errors()
+		{
+			ProductInventoryControllerMockFacade mock = new ProductInventoryControllerMockFacade();
+			var mockResult = new Mock<ActionResponse>();
+			mockResult.SetupGet(x => x.Success).Returns(false);
+			mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+			ProductInventoryController controller = new ProductInventoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
+			controller.ControllerContext = new ControllerContext();
+			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-                        IActionResult response = await controller.Delete(default(int));
+			IActionResult response = await controller.Delete(default(int));
 
-                        response.Should().BeOfType<ObjectResult>();
-                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
-                }
-        }
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
+		}
+	}
 
-        public class ProductInventoryControllerMockFacade
-        {
-                public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
+	public class ProductInventoryControllerMockFacade
+	{
+		public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
 
-                public Mock<ILogger<ProductInventoryController>> LoggerMock { get; set; } = new Mock<ILogger<ProductInventoryController>>();
+		public Mock<ILogger<ProductInventoryController>> LoggerMock { get; set; } = new Mock<ILogger<ProductInventoryController>>();
 
-                public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
+		public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
 
-                public Mock<IProductInventoryService> ServiceMock { get; set; } = new Mock<IProductInventoryService>();
+		public Mock<IProductInventoryService> ServiceMock { get; set; } = new Mock<IProductInventoryService>();
 
-                public Mock<IApiProductInventoryModelMapper> ModelMapperMock { get; set; } = new Mock<IApiProductInventoryModelMapper>();
-        }
+		public Mock<IApiProductInventoryModelMapper> ModelMapperMock { get; set; } = new Mock<IApiProductInventoryModelMapper>();
+	}
 }
 
 /*<Codenesium>
-    <Hash>7919004adc4d4145194559cde174b4e9</Hash>
+    <Hash>37ffbb81719f4e479f045b23f22f36dc</Hash>
 </Codenesium>*/

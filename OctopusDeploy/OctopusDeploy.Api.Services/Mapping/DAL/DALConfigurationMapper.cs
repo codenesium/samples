@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALConfigurationMapper : DALAbstractConfigurationMapper, IDALConfigurationMapper
-        {
-                public DALConfigurationMapper()
-                {
-                }
-        }
+	public partial class DALConfigurationMapper : DALAbstractConfigurationMapper, IDALConfigurationMapper
+	{
+		public DALConfigurationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6171d5a1717c0b19a7e38985ca797469</Hash>
+    <Hash>867fe989f07a2475fe2de58384d8544d</Hash>
 </Codenesium>*/

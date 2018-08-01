@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class EmailAddressRepository : AbstractEmailAddressRepository, IEmailAddressRepository
-        {
-                public EmailAddressRepository(
-                        ILogger<EmailAddressRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class EmailAddressRepository : AbstractEmailAddressRepository, IEmailAddressRepository
+	{
+		public EmailAddressRepository(
+			ILogger<EmailAddressRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>41905dc4b7cd845d18a3bc474dd6cea1</Hash>
+    <Hash>591f7e2e310981d59e5558396d7ac8f4</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/workers")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class WorkerController : AbstractWorkerController
-        {
-                public WorkerController(
-                        ApiSettings settings,
-                        ILogger<WorkerController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IWorkerService workerService,
-                        IApiWorkerModelMapper workerModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               workerService,
-                               workerModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/workers")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class WorkerController : AbstractWorkerController
+	{
+		public WorkerController(
+			ApiSettings settings,
+			ILogger<WorkerController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IWorkerService workerService,
+			IApiWorkerModelMapper workerModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       workerService,
+			       workerModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>59a25b1aabcc8bfe3b782c513496cbc9</Hash>
+    <Hash>2e0fc83656b708ca2e1213f3f6e42bde</Hash>
 </Codenesium>*/

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IDALBucketMapper
-        {
-                Bucket MapBOToEF(
-                        BOBucket bo);
+	public interface IDALBucketMapper
+	{
+		Bucket MapBOToEF(
+			BOBucket bo);
 
-                BOBucket MapEFToBO(
-                        Bucket efBucket);
+		BOBucket MapEFToBO(
+			Bucket efBucket);
 
-                List<BOBucket> MapEFToBO(
-                        List<Bucket> records);
-        }
+		List<BOBucket> MapEFToBO(
+			List<Bucket> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>5d39ab629a0e357e4adcc228e477de00</Hash>
+    <Hash>29e63051d291860befa98fb57e134c63</Hash>
 </Codenesium>*/

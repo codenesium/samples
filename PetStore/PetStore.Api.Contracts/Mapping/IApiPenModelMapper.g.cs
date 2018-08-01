@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public interface IApiPenModelMapper
-        {
-                ApiPenResponseModel MapRequestToResponse(
-                        int id,
-                        ApiPenRequestModel request);
+	public interface IApiPenModelMapper
+	{
+		ApiPenResponseModel MapRequestToResponse(
+			int id,
+			ApiPenRequestModel request);
 
-                ApiPenRequestModel MapResponseToRequest(
-                        ApiPenResponseModel response);
+		ApiPenRequestModel MapResponseToRequest(
+			ApiPenResponseModel response);
 
-                JsonPatchDocument<ApiPenRequestModel> CreatePatch(ApiPenRequestModel model);
-        }
+		JsonPatchDocument<ApiPenRequestModel> CreatePatch(ApiPenRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>77aaf2f846af06f3cf4832bcbef17fa7</Hash>
+    <Hash>2c9123d4cde3ad5dfffa68541740c889</Hash>
 </Codenesium>*/

@@ -15,91 +15,91 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Province")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProvinceRequestModelValidatorTest
-        {
-                public ApiProvinceRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Province")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProvinceRequestModelValidatorTest
+	{
+		public ApiProvinceRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CountryId_Create_Valid_Reference()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+		[Fact]
+		public async void CountryId_Create_Valid_Reference()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Create_Invalid_Reference()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+		[Fact]
+		public async void CountryId_Create_Invalid_Reference()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
+			await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Update_Valid_Reference()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+		[Fact]
+		public async void CountryId_Update_Valid_Reference()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void CountryId_Update_Invalid_Reference()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+		[Fact]
+		public async void CountryId_Update_Invalid_Reference()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
-                        provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
-                        var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>20833f8be440a0f28a43b4a2a1a6f229</Hash>
+    <Hash>769cc20d645ea77e6ac3ed0ae813dd3f</Hash>
 </Codenesium>*/

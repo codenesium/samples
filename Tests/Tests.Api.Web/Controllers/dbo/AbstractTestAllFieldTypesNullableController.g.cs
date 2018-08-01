@@ -15,210 +15,210 @@ using TestsNS.Api.Services;
 
 namespace TestsNS.Api.Web
 {
-        public abstract class AbstractTestAllFieldTypesNullableController : AbstractApiController
-        {
-                protected ITestAllFieldTypesNullableService TestAllFieldTypesNullableService { get; private set; }
+	public abstract class AbstractTestAllFieldTypesNullableController : AbstractApiController
+	{
+		protected ITestAllFieldTypesNullableService TestAllFieldTypesNullableService { get; private set; }
 
-                protected IApiTestAllFieldTypesNullableModelMapper TestAllFieldTypesNullableModelMapper { get; private set; }
+		protected IApiTestAllFieldTypesNullableModelMapper TestAllFieldTypesNullableModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractTestAllFieldTypesNullableController(
-                        ApiSettings settings,
-                        ILogger<AbstractTestAllFieldTypesNullableController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITestAllFieldTypesNullableService testAllFieldTypesNullableService,
-                        IApiTestAllFieldTypesNullableModelMapper testAllFieldTypesNullableModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.TestAllFieldTypesNullableService = testAllFieldTypesNullableService;
-                        this.TestAllFieldTypesNullableModelMapper = testAllFieldTypesNullableModelMapper;
-                }
+		public AbstractTestAllFieldTypesNullableController(
+			ApiSettings settings,
+			ILogger<AbstractTestAllFieldTypesNullableController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITestAllFieldTypesNullableService testAllFieldTypesNullableService,
+			IApiTestAllFieldTypesNullableModelMapper testAllFieldTypesNullableModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.TestAllFieldTypesNullableService = testAllFieldTypesNullableService;
+			this.TestAllFieldTypesNullableModelMapper = testAllFieldTypesNullableModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiTestAllFieldTypesNullableResponseModel> response = await this.TestAllFieldTypesNullableService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiTestAllFieldTypesNullableResponseModel> response = await this.TestAllFieldTypesNullableService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiTestAllFieldTypesNullableResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiTestAllFieldTypesNullableResponseModel response = await this.TestAllFieldTypesNullableService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiTestAllFieldTypesNullableResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiTestAllFieldTypesNullableResponseModel response = await this.TestAllFieldTypesNullableService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypesNullableRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypesNullableRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiTestAllFieldTypesNullableResponseModel> records = new List<ApiTestAllFieldTypesNullableResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+			List<ApiTestAllFieldTypesNullableResponseModel> records = new List<ApiTestAllFieldTypesNullableResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypesNullableResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypesNullableRequestModel model)
-                {
-                        CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypesNullableResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypesNullableRequestModel model)
+		{
+			CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TestAllFieldTypesNullables/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/TestAllFieldTypesNullables/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
-                {
-                        ApiTestAllFieldTypesNullableResponseModel record = await this.TestAllFieldTypesNullableService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
+		{
+			ApiTestAllFieldTypesNullableResponseModel record = await this.TestAllFieldTypesNullableService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiTestAllFieldTypesNullableRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiTestAllFieldTypesNullableRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, model);
+				UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypesNullableRequestModel model)
-                {
-                        ApiTestAllFieldTypesNullableRequestModel request = await this.PatchModel(id, this.TestAllFieldTypesNullableModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypesNullableRequestModel model)
+		{
+			ApiTestAllFieldTypesNullableRequestModel request = await this.PatchModel(id, this.TestAllFieldTypesNullableModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.TestAllFieldTypesNullableService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.TestAllFieldTypesNullableService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                private async Task<ApiTestAllFieldTypesNullableRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
-                {
-                        var record = await this.TestAllFieldTypesNullableService.Get(id);
+		private async Task<ApiTestAllFieldTypesNullableRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
+		{
+			var record = await this.TestAllFieldTypesNullableService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiTestAllFieldTypesNullableRequestModel request = this.TestAllFieldTypesNullableModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiTestAllFieldTypesNullableRequestModel request = this.TestAllFieldTypesNullableModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9a051ef3831fb8b5f7113c8c7b710eec</Hash>
+    <Hash>46efc162578f449e06927fbe3fdf4066</Hash>
 </Codenesium>*/

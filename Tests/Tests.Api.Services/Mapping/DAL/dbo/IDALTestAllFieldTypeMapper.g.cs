@@ -6,19 +6,19 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IDALTestAllFieldTypeMapper
-        {
-                TestAllFieldType MapBOToEF(
-                        BOTestAllFieldType bo);
+	public interface IDALTestAllFieldTypeMapper
+	{
+		TestAllFieldType MapBOToEF(
+			BOTestAllFieldType bo);
 
-                BOTestAllFieldType MapEFToBO(
-                        TestAllFieldType efTestAllFieldType);
+		BOTestAllFieldType MapEFToBO(
+			TestAllFieldType efTestAllFieldType);
 
-                List<BOTestAllFieldType> MapEFToBO(
-                        List<TestAllFieldType> records);
-        }
+		List<BOTestAllFieldType> MapEFToBO(
+			List<TestAllFieldType> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>715174af435e2ca32dd2d4aa85fe5069</Hash>
+    <Hash>a83c716cd4b27ab67d2c1eca5a664998</Hash>
 </Codenesium>*/

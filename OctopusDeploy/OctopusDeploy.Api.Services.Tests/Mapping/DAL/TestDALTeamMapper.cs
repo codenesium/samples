@@ -7,65 +7,65 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Team")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALTeamMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALTeamMapper();
-                        var bo = new BOTeam();
-                        bo.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Team")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALTeamMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALTeamMapper();
+			var bo = new BOTeam();
+			bo.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
 
-                        Team response = mapper.MapBOToEF(bo);
+			Team response = mapper.MapBOToEF(bo);
 
-                        response.EnvironmentIds.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.MemberUserIds.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.ProjectGroupIds.Should().Be("A");
-                        response.ProjectIds.Should().Be("A");
-                        response.TenantIds.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.EnvironmentIds.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.MemberUserIds.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.ProjectGroupIds.Should().Be("A");
+			response.ProjectIds.Should().Be("A");
+			response.TenantIds.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALTeamMapper();
-                        Team entity = new Team();
-                        entity.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALTeamMapper();
+			Team entity = new Team();
+			entity.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
 
-                        BOTeam response = mapper.MapEFToBO(entity);
+			BOTeam response = mapper.MapEFToBO(entity);
 
-                        response.EnvironmentIds.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.MemberUserIds.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.ProjectGroupIds.Should().Be("A");
-                        response.ProjectIds.Should().Be("A");
-                        response.TenantIds.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.EnvironmentIds.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.MemberUserIds.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.ProjectGroupIds.Should().Be("A");
+			response.ProjectIds.Should().Be("A");
+			response.TenantIds.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALTeamMapper();
-                        Team entity = new Team();
-                        entity.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALTeamMapper();
+			Team entity = new Team();
+			entity.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
 
-                        List<BOTeam> response = mapper.MapEFToBO(new List<Team>() { entity });
+			List<BOTeam> response = mapper.MapEFToBO(new List<Team>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d7d4847e49f3fb13b557df4d90bd4311</Hash>
+    <Hash>9145c4d9f3040517a13493d96afcda48</Hash>
 </Codenesium>*/

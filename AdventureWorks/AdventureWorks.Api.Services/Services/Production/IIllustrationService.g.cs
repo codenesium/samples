@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IIllustrationService
-        {
-                Task<CreateResponse<ApiIllustrationResponseModel>> Create(
-                        ApiIllustrationRequestModel model);
+	public interface IIllustrationService
+	{
+		Task<CreateResponse<ApiIllustrationResponseModel>> Create(
+			ApiIllustrationRequestModel model);
 
-                Task<UpdateResponse<ApiIllustrationResponseModel>> Update(int illustrationID,
-                                                                           ApiIllustrationRequestModel model);
+		Task<UpdateResponse<ApiIllustrationResponseModel>> Update(int illustrationID,
+		                                                           ApiIllustrationRequestModel model);
 
-                Task<ActionResponse> Delete(int illustrationID);
+		Task<ActionResponse> Delete(int illustrationID);
 
-                Task<ApiIllustrationResponseModel> Get(int illustrationID);
+		Task<ApiIllustrationResponseModel> Get(int illustrationID);
 
-                Task<List<ApiIllustrationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiIllustrationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>08b168f027b9f8a7e5513b1b5411851c</Hash>
+    <Hash>573d52a7bbb61bc7f025a5afe3894642</Hash>
 </Codenesium>*/

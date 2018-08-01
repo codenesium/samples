@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class TenantVariableRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class TenantVariableRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<TenantVariableRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<TenantVariableRepository>>();
-                }
-        }
+		public static Mock<ILogger<TenantVariableRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<TenantVariableRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TenantVariable")]
-        [Trait("Area", "Repositories")]
-        public partial class TenantVariableRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TenantVariable")]
+	[Trait("Area", "Repositories")]
+	public partial class TenantVariableRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
 
-                        TenantVariable entity = new TenantVariable();
-                        context.Set<TenantVariable>().Add(entity);
-                        await context.SaveChangesAsync();
+			TenantVariable entity = new TenantVariable();
+			context.Set<TenantVariable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
 
-                        TenantVariable entity = new TenantVariable();
-                        context.Set<TenantVariable>().Add(entity);
-                        await context.SaveChangesAsync();
+			TenantVariable entity = new TenantVariable();
+			context.Set<TenantVariable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
 
-                        var entity = new TenantVariable();
-                        await repository.Create(entity);
+			var entity = new TenantVariable();
+			await repository.Create(entity);
 
-                        var record = await context.Set<TenantVariable>().FirstOrDefaultAsync();
+			var record = await context.Set<TenantVariable>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
-                        TenantVariable entity = new TenantVariable();
-                        context.Set<TenantVariable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
+			TenantVariable entity = new TenantVariable();
+			context.Set<TenantVariable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<TenantVariable>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TenantVariable>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
-                        TenantVariable entity = new TenantVariable();
-                        context.Set<TenantVariable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
+			TenantVariable entity = new TenantVariable();
+			context.Set<TenantVariable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new TenantVariable());
+			await repository.Update(new TenantVariable());
 
-                        var modifiedRecord = context.Set<TenantVariable>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<TenantVariable>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
-                        var repository = new TenantVariableRepository(loggerMoc.Object, context);
-                        TenantVariable entity = new TenantVariable();
-                        context.Set<TenantVariable>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<TenantVariableRepository>> loggerMoc = TenantVariableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TenantVariableRepositoryMoc.GetContext();
+			var repository = new TenantVariableRepository(loggerMoc.Object, context);
+			TenantVariable entity = new TenantVariable();
+			context.Set<TenantVariable>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        TenantVariable modifiedRecord = await context.Set<TenantVariable>().FirstOrDefaultAsync();
+			TenantVariable modifiedRecord = await context.Set<TenantVariable>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e4cafcf20e4d2f74c159bd33caa0ba57</Hash>
+    <Hash>97acf51d388d7365ac5b547a55fd32cd</Hash>
 </Codenesium>*/

@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOShoppingCartItem : AbstractBOShoppingCartItem
-        {
-                public BOShoppingCartItem()
-                        : base()
-                {
-                }
-        }
+	public partial class BOShoppingCartItem : AbstractBOShoppingCartItem
+	{
+		public BOShoppingCartItem()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>671829c26b55ad68878b520d38beef4b</Hash>
+    <Hash>63b1b5a375269fd2259d797c5405efd1</Hash>
 </Codenesium>*/

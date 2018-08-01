@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiBusinessEntityRequestModelValidator : AbstractApiBusinessEntityRequestModelValidator, IApiBusinessEntityRequestModelValidator
-        {
-                public ApiBusinessEntityRequestModelValidator(IBusinessEntityRepository businessEntityRepository)
-                        : base(businessEntityRepository)
-                {
-                }
+	public class ApiBusinessEntityRequestModelValidator : AbstractApiBusinessEntityRequestModelValidator, IApiBusinessEntityRequestModelValidator
+	{
+		public ApiBusinessEntityRequestModelValidator(IBusinessEntityRepository businessEntityRepository)
+			: base(businessEntityRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiBusinessEntityRequestModel model)
-                {
-                        this.ModifiedDateRules();
-                        this.RowguidRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiBusinessEntityRequestModel model)
+		{
+			this.ModifiedDateRules();
+			this.RowguidRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBusinessEntityRequestModel model)
-                {
-                        this.ModifiedDateRules();
-                        this.RowguidRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBusinessEntityRequestModel model)
+		{
+			this.ModifiedDateRules();
+			this.RowguidRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>10ddd00c68e8587588f0cbf73dd278cc</Hash>
+    <Hash>9fb94a770f233875e19866c6c49fc7df</Hash>
 </Codenesium>*/

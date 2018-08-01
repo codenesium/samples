@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DeploymentRelatedMachineService : AbstractDeploymentRelatedMachineService, IDeploymentRelatedMachineService
-        {
-                public DeploymentRelatedMachineService(
-                        ILogger<IDeploymentRelatedMachineRepository> logger,
-                        IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
-                        IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
-                        IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
-                        IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper
-                        )
-                        : base(logger,
-                               deploymentRelatedMachineRepository,
-                               deploymentRelatedMachineModelValidator,
-                               boldeploymentRelatedMachineMapper,
-                               daldeploymentRelatedMachineMapper)
-                {
-                }
-        }
+	public partial class DeploymentRelatedMachineService : AbstractDeploymentRelatedMachineService, IDeploymentRelatedMachineService
+	{
+		public DeploymentRelatedMachineService(
+			ILogger<IDeploymentRelatedMachineRepository> logger,
+			IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
+			IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
+			IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
+			IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper
+			)
+			: base(logger,
+			       deploymentRelatedMachineRepository,
+			       deploymentRelatedMachineModelValidator,
+			       boldeploymentRelatedMachineMapper,
+			       daldeploymentRelatedMachineMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d439bf5682d82b7758b35ec6ed4d7277</Hash>
+    <Hash>2c457325ff43edcae3eb2f4da0e54d18</Hash>
 </Codenesium>*/

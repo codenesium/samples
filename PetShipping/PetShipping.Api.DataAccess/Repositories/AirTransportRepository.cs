@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public partial class AirTransportRepository : AbstractAirTransportRepository, IAirTransportRepository
-        {
-                public AirTransportRepository(
-                        ILogger<AirTransportRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class AirTransportRepository : AbstractAirTransportRepository, IAirTransportRepository
+	{
+		public AirTransportRepository(
+			ILogger<AirTransportRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8870e31054c21b8b0e527f50dc867665</Hash>
+    <Hash>9dd163847873f92a5dc487d3199f078b</Hash>
 </Codenesium>*/

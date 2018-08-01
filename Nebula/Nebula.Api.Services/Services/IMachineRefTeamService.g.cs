@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IMachineRefTeamService
-        {
-                Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
-                        ApiMachineRefTeamRequestModel model);
+	public interface IMachineRefTeamService
+	{
+		Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
+			ApiMachineRefTeamRequestModel model);
 
-                Task<UpdateResponse<ApiMachineRefTeamResponseModel>> Update(int id,
-                                                                             ApiMachineRefTeamRequestModel model);
+		Task<UpdateResponse<ApiMachineRefTeamResponseModel>> Update(int id,
+		                                                             ApiMachineRefTeamRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiMachineRefTeamResponseModel> Get(int id);
+		Task<ApiMachineRefTeamResponseModel> Get(int id);
 
-                Task<List<ApiMachineRefTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiMachineRefTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8a8f9f3f231dd290998d03222f8c8ff3</Hash>
+    <Hash>cee8817d97edcd1081d953e29ffd4ca2</Hash>
 </Codenesium>*/

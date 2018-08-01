@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractAddressTypeMapper
-        {
-                public virtual BOAddressType MapModelToBO(
-                        int addressTypeID,
-                        ApiAddressTypeRequestModel model
-                        )
-                {
-                        BOAddressType boAddressType = new BOAddressType();
-                        boAddressType.SetProperties(
-                                addressTypeID,
-                                model.ModifiedDate,
-                                model.Name,
-                                model.Rowguid);
-                        return boAddressType;
-                }
+	public abstract class BOLAbstractAddressTypeMapper
+	{
+		public virtual BOAddressType MapModelToBO(
+			int addressTypeID,
+			ApiAddressTypeRequestModel model
+			)
+		{
+			BOAddressType boAddressType = new BOAddressType();
+			boAddressType.SetProperties(
+				addressTypeID,
+				model.ModifiedDate,
+				model.Name,
+				model.Rowguid);
+			return boAddressType;
+		}
 
-                public virtual ApiAddressTypeResponseModel MapBOToModel(
-                        BOAddressType boAddressType)
-                {
-                        var model = new ApiAddressTypeResponseModel();
+		public virtual ApiAddressTypeResponseModel MapBOToModel(
+			BOAddressType boAddressType)
+		{
+			var model = new ApiAddressTypeResponseModel();
 
-                        model.SetProperties(boAddressType.AddressTypeID, boAddressType.ModifiedDate, boAddressType.Name, boAddressType.Rowguid);
+			model.SetProperties(boAddressType.AddressTypeID, boAddressType.ModifiedDate, boAddressType.Name, boAddressType.Rowguid);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiAddressTypeResponseModel> MapBOToModel(
-                        List<BOAddressType> items)
-                {
-                        List<ApiAddressTypeResponseModel> response = new List<ApiAddressTypeResponseModel>();
+		public virtual List<ApiAddressTypeResponseModel> MapBOToModel(
+			List<BOAddressType> items)
+		{
+			List<ApiAddressTypeResponseModel> response = new List<ApiAddressTypeResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>012bfc83be9188a9e91fd757d920e604</Hash>
+    <Hash>7fe03354f8c9d054c223ec85c26a3671</Hash>
 </Codenesium>*/

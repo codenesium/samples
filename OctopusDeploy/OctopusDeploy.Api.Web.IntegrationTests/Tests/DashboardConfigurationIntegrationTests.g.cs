@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "DashboardConfiguration")]
-        [Trait("Area", "Integration")]
-        public class DashboardConfigurationIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public DashboardConfigurationIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "DashboardConfiguration")]
+	[Trait("Area", "Integration")]
+	public class DashboardConfigurationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public DashboardConfigurationIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiDashboardConfigurationModelMapper mapper = new ApiDashboardConfigurationModelMapper();
+			ApiDashboardConfigurationModelMapper mapper = new ApiDashboardConfigurationModelMapper();
 
-                        UpdateResponse<ApiDashboardConfigurationResponseModel> updateResponse = await this.Client.DashboardConfigurationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDashboardConfigurationResponseModel> updateResponse = await this.Client.DashboardConfigurationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.DashboardConfigurationDeleteAsync(model.Id);
+			await this.Client.DashboardConfigurationDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiDashboardConfigurationResponseModel response = await this.Client.DashboardConfigurationGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiDashboardConfigurationResponseModel response = await this.Client.DashboardConfigurationGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiDashboardConfigurationResponseModel> response = await this.Client.DashboardConfigurationAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiDashboardConfigurationResponseModel> response = await this.Client.DashboardConfigurationAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiDashboardConfigurationResponseModel> CreateRecord()
-                {
-                        var model = new ApiDashboardConfigurationRequestModel();
-                        model.SetProperties("B", "B", "B", "B", "B");
-                        CreateResponse<ApiDashboardConfigurationResponseModel> result = await this.Client.DashboardConfigurationCreateAsync(model);
+		private async Task<ApiDashboardConfigurationResponseModel> CreateRecord()
+		{
+			var model = new ApiDashboardConfigurationRequestModel();
+			model.SetProperties("B", "B", "B", "B", "B");
+			CreateResponse<ApiDashboardConfigurationResponseModel> result = await this.Client.DashboardConfigurationCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.DashboardConfigurationDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.DashboardConfigurationDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>36ec84becdf8decd164e915866e42bc1</Hash>
+    <Hash>559b56977e729e8bf2163d48f6e1d6cc</Hash>
 </Codenesium>*/

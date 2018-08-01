@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALWorkOrderMapper : DALAbstractWorkOrderMapper, IDALWorkOrderMapper
-        {
-                public DALWorkOrderMapper()
-                {
-                }
-        }
+	public partial class DALWorkOrderMapper : DALAbstractWorkOrderMapper, IDALWorkOrderMapper
+	{
+		public DALWorkOrderMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6db12eb219b76ba5926a4f1aab472f85</Hash>
+    <Hash>e5a492f702babb71a7e839a21bf2e23a</Hash>
 </Codenesium>*/

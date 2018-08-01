@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/cultures")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class CultureController : AbstractCultureController
-        {
-                public CultureController(
-                        ApiSettings settings,
-                        ILogger<CultureController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ICultureService cultureService,
-                        IApiCultureModelMapper cultureModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               cultureService,
-                               cultureModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/cultures")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class CultureController : AbstractCultureController
+	{
+		public CultureController(
+			ApiSettings settings,
+			ILogger<CultureController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ICultureService cultureService,
+			IApiCultureModelMapper cultureModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       cultureService,
+			       cultureModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>27a3e1c7ef9696ebf319d17e67cb71d3</Hash>
+    <Hash>fb093c5404b20b4e905e0e2b3dddeef1</Hash>
 </Codenesium>*/

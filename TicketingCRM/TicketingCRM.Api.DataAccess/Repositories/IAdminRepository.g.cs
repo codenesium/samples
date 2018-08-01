@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public interface IAdminRepository
-        {
-                Task<Admin> Create(Admin item);
+	public interface IAdminRepository
+	{
+		Task<Admin> Create(Admin item);
 
-                Task Update(Admin item);
+		Task Update(Admin item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Admin> Get(int id);
+		Task<Admin> Get(int id);
 
-                Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Venue>> Venues(int adminId, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Venue>> Venues(int adminId, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>395381a08f89f01d7aa12bdf0651c4f4</Hash>
+    <Hash>6833fe19b74ea0b63eb8932bf6afee23</Hash>
 </Codenesium>*/

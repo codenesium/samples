@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public interface IApiProvinceModelMapper
-        {
-                ApiProvinceResponseModel MapRequestToResponse(
-                        int id,
-                        ApiProvinceRequestModel request);
+	public interface IApiProvinceModelMapper
+	{
+		ApiProvinceResponseModel MapRequestToResponse(
+			int id,
+			ApiProvinceRequestModel request);
 
-                ApiProvinceRequestModel MapResponseToRequest(
-                        ApiProvinceResponseModel response);
+		ApiProvinceRequestModel MapResponseToRequest(
+			ApiProvinceResponseModel response);
 
-                JsonPatchDocument<ApiProvinceRequestModel> CreatePatch(ApiProvinceRequestModel model);
-        }
+		JsonPatchDocument<ApiProvinceRequestModel> CreatePatch(ApiProvinceRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>f660269006e3ac5ec4f11f13f38acb5e</Hash>
+    <Hash>ef222ca801e7bbbfd0863bddfc51adf5</Hash>
 </Codenesium>*/

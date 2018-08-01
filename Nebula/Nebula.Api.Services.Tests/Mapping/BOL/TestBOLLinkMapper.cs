@@ -8,69 +8,69 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Link")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLLinkMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLLinkMapper();
-                        ApiLinkRequestModel model = new ApiLinkRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
-                        BOLink response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Link")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLLinkMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLLinkMapper();
+			ApiLinkRequestModel model = new ApiLinkRequestModel();
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
+			BOLink response = mapper.MapModelToBO(1, model);
 
-                        response.AssignedMachineId.Should().Be(1);
-                        response.ChainId.Should().Be(1);
-                        response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.DynamicParameters.Should().Be("A");
-                        response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.LinkStatusId.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.Order.Should().Be(1);
-                        response.Response.Should().Be("A");
-                        response.StaticParameters.Should().Be("A");
-                        response.TimeoutInSeconds.Should().Be(1);
-                }
+			response.AssignedMachineId.Should().Be(1);
+			response.ChainId.Should().Be(1);
+			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.DynamicParameters.Should().Be("A");
+			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.LinkStatusId.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Order.Should().Be(1);
+			response.Response.Should().Be("A");
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLLinkMapper();
-                        BOLink bo = new BOLink();
-                        bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
-                        ApiLinkResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLLinkMapper();
+			BOLink bo = new BOLink();
+			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
+			ApiLinkResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AssignedMachineId.Should().Be(1);
-                        response.ChainId.Should().Be(1);
-                        response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.DynamicParameters.Should().Be("A");
-                        response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.Id.Should().Be(1);
-                        response.LinkStatusId.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.Order.Should().Be(1);
-                        response.Response.Should().Be("A");
-                        response.StaticParameters.Should().Be("A");
-                        response.TimeoutInSeconds.Should().Be(1);
-                }
+			response.AssignedMachineId.Should().Be(1);
+			response.ChainId.Should().Be(1);
+			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.DynamicParameters.Should().Be("A");
+			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.Id.Should().Be(1);
+			response.LinkStatusId.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Order.Should().Be(1);
+			response.Response.Should().Be("A");
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLLinkMapper();
-                        BOLink bo = new BOLink();
-                        bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
-                        List<ApiLinkResponseModel> response = mapper.MapBOToModel(new List<BOLink>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLLinkMapper();
+			BOLink bo = new BOLink();
+			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
+			List<ApiLinkResponseModel> response = mapper.MapBOToModel(new List<BOLink>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2b5e6a8eef9ece1db92d004ac1fc9e99</Hash>
+    <Hash>4d7e87ba6a68adf4f4b8e1fa199be138</Hash>
 </Codenesium>*/

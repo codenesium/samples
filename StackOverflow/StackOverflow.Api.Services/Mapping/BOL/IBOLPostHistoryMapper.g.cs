@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IBOLPostHistoryMapper
-        {
-                BOPostHistory MapModelToBO(
-                        int id,
-                        ApiPostHistoryRequestModel model);
+	public interface IBOLPostHistoryMapper
+	{
+		BOPostHistory MapModelToBO(
+			int id,
+			ApiPostHistoryRequestModel model);
 
-                ApiPostHistoryResponseModel MapBOToModel(
-                        BOPostHistory boPostHistory);
+		ApiPostHistoryResponseModel MapBOToModel(
+			BOPostHistory boPostHistory);
 
-                List<ApiPostHistoryResponseModel> MapBOToModel(
-                        List<BOPostHistory> items);
-        }
+		List<ApiPostHistoryResponseModel> MapBOToModel(
+			List<BOPostHistory> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>edba856bcf599545f9e2fe4687a8e64d</Hash>
+    <Hash>ec006c0ac33b293bb599ea3f1a7ab4fe</Hash>
 </Codenesium>*/

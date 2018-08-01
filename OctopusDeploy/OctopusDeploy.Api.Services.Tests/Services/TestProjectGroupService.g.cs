@@ -13,196 +13,196 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProjectGroup")]
-        [Trait("Area", "Services")]
-        public partial class ProjectGroupServiceTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var records = new List<ProjectGroup>();
-                        records.Add(new ProjectGroup());
-                        mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProjectGroup")]
+	[Trait("Area", "Services")]
+	public partial class ProjectGroupServiceTests
+	{
+		[Fact]
+		public async void All()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var records = new List<ProjectGroup>();
+			records.Add(new ProjectGroup());
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        List<ApiProjectGroupResponseModel> response = await service.All();
+			List<ApiProjectGroupResponseModel> response = await service.All();
 
-                        response.Should().HaveCount(1);
-                        mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().HaveCount(1);
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var record = new ProjectGroup();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void Get()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var record = new ProjectGroup();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        ApiProjectGroupResponseModel response = await service.Get(default(string));
+			ApiProjectGroupResponseModel response = await service.Get(default(string));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Get_null_record()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void Get_null_record()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        ApiProjectGroupResponseModel response = await service.Get(default(string));
+			ApiProjectGroupResponseModel response = await service.Get(default(string));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var model = new ApiProjectGroupRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProjectGroup>())).Returns(Task.FromResult(new ProjectGroup()));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var model = new ApiProjectGroupRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProjectGroup>())).Returns(Task.FromResult(new ProjectGroup()));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        CreateResponse<ApiProjectGroupResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProjectGroupResponseModel> response = await service.Create(model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProjectGroupRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProjectGroup>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProjectGroupRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProjectGroup>()));
+		}
 
-                [Fact]
-                public async void Update()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var model = new ApiProjectGroupRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProjectGroup>())).Returns(Task.FromResult(new ProjectGroup()));
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var model = new ApiProjectGroupRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProjectGroup>())).Returns(Task.FromResult(new ProjectGroup()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        UpdateResponse<ApiProjectGroupResponseModel> response = await service.Update(default(string), model);
+			UpdateResponse<ApiProjectGroupResponseModel> response = await service.Update(default(string), model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProjectGroupRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProjectGroup>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProjectGroupRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProjectGroup>()));
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var model = new ApiProjectGroupRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var model = new ApiProjectGroupRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        ActionResponse response = await service.Delete(default(string));
+			ActionResponse response = await service.Delete(default(string));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
-                        mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
+			mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void ByName_Exists()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var record = new ProjectGroup();
-                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void ByName_Exists()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var record = new ProjectGroup();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        ApiProjectGroupResponseModel response = await service.ByName(default(string));
+			ApiProjectGroupResponseModel response = await service.ByName(default(string));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void ByName_Not_Exists()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void ByName_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        ApiProjectGroupResponseModel response = await service.ByName(default(string));
+			ApiProjectGroupResponseModel response = await service.ByName(default(string));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
 
-                [Fact]
-                public async void ByDataVersion_Exists()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        var records = new List<ProjectGroup>();
-                        records.Add(new ProjectGroup());
-                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void ByDataVersion_Exists()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			var records = new List<ProjectGroup>();
+			records.Add(new ProjectGroup());
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        List<ApiProjectGroupResponseModel> response = await service.ByDataVersion(default(byte[]));
+			List<ApiProjectGroupResponseModel> response = await service.ByDataVersion(default(byte[]));
 
-                        response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
-                }
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+		}
 
-                [Fact]
-                public async void ByDataVersion_Not_Exists()
-                {
-                        var mock = new ServiceMockFacade<IProjectGroupRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<ProjectGroup>>(new List<ProjectGroup>()));
-                        var service = new ProjectGroupService(mock.LoggerMock.Object,
-                                                              mock.RepositoryMock.Object,
-                                                              mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
-                                                              mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
-                                                              mock.DALMapperMockFactory.DALProjectGroupMapperMock);
+		[Fact]
+		public async void ByDataVersion_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IProjectGroupRepository>();
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<ProjectGroup>>(new List<ProjectGroup>()));
+			var service = new ProjectGroupService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.ProjectGroupModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProjectGroupMapperMock,
+			                                      mock.DALMapperMockFactory.DALProjectGroupMapperMock);
 
-                        List<ApiProjectGroupResponseModel> response = await service.ByDataVersion(default(byte[]));
+			List<ApiProjectGroupResponseModel> response = await service.ByDataVersion(default(byte[]));
 
-                        response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
-                }
-        }
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2b51b3964393e5d6de7fdbddbddad261</Hash>
+    <Hash>80d7ac46cd94fcc20fe5f960383986d2</Hash>
 </Codenesium>*/

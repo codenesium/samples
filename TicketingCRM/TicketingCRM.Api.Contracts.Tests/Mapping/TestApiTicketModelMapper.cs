@@ -7,53 +7,52 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Ticket")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiTicketModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiTicketModelMapper();
-                        var model = new ApiTicketRequestModel();
-                        model.SetProperties("A", 1);
-                        ApiTicketResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Ticket")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiTicketModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiTicketModelMapper();
+			var model = new ApiTicketRequestModel();
+			model.SetProperties("A", 1);
+			ApiTicketResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.PublicId.Should().Be("A");
-                        response.TicketStatusId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.PublicId.Should().Be("A");
+			response.TicketStatusId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiTicketModelMapper();
-                        var model = new ApiTicketResponseModel();
-                        model.SetProperties(1, "A", 1);
-                        ApiTicketRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiTicketModelMapper();
+			var model = new ApiTicketResponseModel();
+			model.SetProperties(1, "A", 1);
+			ApiTicketRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.PublicId.Should().Be("A");
-                        response.TicketStatusId.Should().Be(1);
-                }
+			response.PublicId.Should().Be("A");
+			response.TicketStatusId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiTicketModelMapper();
-                        var model = new ApiTicketRequestModel();
-                        model.SetProperties("A", 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiTicketModelMapper();
+			var model = new ApiTicketRequestModel();
+			model.SetProperties("A", 1);
 
-                        JsonPatchDocument<ApiTicketRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiTicketRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.PublicId.Should().Be("A");
-                        response.TicketStatusId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiTicketRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiTicketRequestModel();
+			patch.ApplyTo(response);
+			response.PublicId.Should().Be("A");
+			response.TicketStatusId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2566440a65cf942af6cee54110015073</Hash>
+    <Hash>d1e7a01017f2da98ab8f7cbef264770c</Hash>
 </Codenesium>*/

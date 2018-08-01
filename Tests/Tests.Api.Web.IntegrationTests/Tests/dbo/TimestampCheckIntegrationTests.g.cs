@@ -12,86 +12,86 @@ using Xunit;
 
 namespace TestsNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "TimestampCheck")]
-        [Trait("Area", "Integration")]
-        public class TimestampCheckIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TimestampCheckIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "TimestampCheck")]
+	[Trait("Area", "Integration")]
+	public class TimestampCheckIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TimestampCheckIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTimestampCheckModelMapper mapper = new ApiTimestampCheckModelMapper();
+			ApiTimestampCheckModelMapper mapper = new ApiTimestampCheckModelMapper();
 
-                        UpdateResponse<ApiTimestampCheckResponseModel> updateResponse = await this.Client.TimestampCheckUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTimestampCheckResponseModel> updateResponse = await this.Client.TimestampCheckUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TimestampCheckDeleteAsync(model.Id);
+			await this.Client.TimestampCheckDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTimestampCheckResponseModel response = await this.Client.TimestampCheckGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTimestampCheckResponseModel response = await this.Client.TimestampCheckGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTimestampCheckResponseModel> response = await this.Client.TimestampCheckAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTimestampCheckResponseModel> response = await this.Client.TimestampCheckAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTimestampCheckResponseModel> CreateRecord()
-                {
-                        var model = new ApiTimestampCheckRequestModel();
-                        model.SetProperties("B", BitConverter.GetBytes(2));
-                        CreateResponse<ApiTimestampCheckResponseModel> result = await this.Client.TimestampCheckCreateAsync(model);
+		private async Task<ApiTimestampCheckResponseModel> CreateRecord()
+		{
+			var model = new ApiTimestampCheckRequestModel();
+			model.SetProperties("B", BitConverter.GetBytes(2));
+			CreateResponse<ApiTimestampCheckResponseModel> result = await this.Client.TimestampCheckCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TimestampCheckDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TimestampCheckDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a260d38007f0b3ef38212a2a6e40c13b</Hash>
+    <Hash>7fa2d5ea59c6e2d3ac714a225eaf6b3d</Hash>
 </Codenesium>*/

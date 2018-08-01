@@ -8,53 +8,53 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ClientCommunication")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLClientCommunicationMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLClientCommunicationMapper();
-                        ApiClientCommunicationRequestModel model = new ApiClientCommunicationRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
-                        BOClientCommunication response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ClientCommunication")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLClientCommunicationMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLClientCommunicationMapper();
+			ApiClientCommunicationRequestModel model = new ApiClientCommunicationRequestModel();
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
+			BOClientCommunication response = mapper.MapModelToBO(1, model);
 
-                        response.ClientId.Should().Be(1);
-                        response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.EmployeeId.Should().Be(1);
-                        response.Notes.Should().Be("A");
-                }
+			response.ClientId.Should().Be(1);
+			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.EmployeeId.Should().Be(1);
+			response.Notes.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLClientCommunicationMapper();
-                        BOClientCommunication bo = new BOClientCommunication();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
-                        ApiClientCommunicationResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLClientCommunicationMapper();
+			BOClientCommunication bo = new BOClientCommunication();
+			bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
+			ApiClientCommunicationResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.ClientId.Should().Be(1);
-                        response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.EmployeeId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Notes.Should().Be("A");
-                }
+			response.ClientId.Should().Be(1);
+			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.EmployeeId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Notes.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLClientCommunicationMapper();
-                        BOClientCommunication bo = new BOClientCommunication();
-                        bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
-                        List<ApiClientCommunicationResponseModel> response = mapper.MapBOToModel(new List<BOClientCommunication>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLClientCommunicationMapper();
+			BOClientCommunication bo = new BOClientCommunication();
+			bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
+			List<ApiClientCommunicationResponseModel> response = mapper.MapBOToModel(new List<BOClientCommunication>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>21bb5d71e4d40a9c743bfffa7d456083</Hash>
+    <Hash>ce116de00773c570e28a065a95e47989</Hash>
 </Codenesium>*/

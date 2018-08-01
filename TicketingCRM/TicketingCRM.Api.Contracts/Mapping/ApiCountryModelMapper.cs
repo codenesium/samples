@@ -1,14 +1,14 @@
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiCountryModelMapper : AbstractApiCountryModelMapper, IApiCountryModelMapper
-        {
-                public ApiCountryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiCountryModelMapper : AbstractApiCountryModelMapper, IApiCountryModelMapper
+	{
+		public ApiCountryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>99fa90d5cde19499beafd0715fc4b721</Hash>
+    <Hash>ceb338e85fa4ae066eadf862c0277738</Hash>
 </Codenesium>*/

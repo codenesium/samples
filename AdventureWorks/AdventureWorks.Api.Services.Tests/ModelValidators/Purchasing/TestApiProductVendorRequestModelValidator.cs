@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductVendor")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductVendorRequestModelValidatorTest
-        {
-                public ApiProductVendorRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductVendor")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductVendorRequestModelValidatorTest
+	{
+		public ApiProductVendorRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Create_null()
-                {
-                        Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
-                        productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
+		[Fact]
+		public async void UnitMeasureCode_Create_null()
+		{
+			Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
+			productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
 
-                        var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductVendorRequestModel());
+			var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductVendorRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Update_null()
-                {
-                        Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
-                        productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
+		[Fact]
+		public async void UnitMeasureCode_Update_null()
+		{
+			Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
+			productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
 
-                        var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductVendorRequestModel());
+			var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductVendorRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Create_length()
-                {
-                        Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
-                        productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
+		[Fact]
+		public async void UnitMeasureCode_Create_length()
+		{
+			Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
+			productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
 
-                        var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductVendorRequestModel());
+			var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductVendorRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Update_length()
-                {
-                        Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
-                        productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
+		[Fact]
+		public async void UnitMeasureCode_Update_length()
+		{
+			Mock<IProductVendorRepository> productVendorRepository = new Mock<IProductVendorRepository>();
+			productVendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductVendor()));
 
-                        var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductVendorRequestModel());
+			var validator = new ApiProductVendorRequestModelValidator(productVendorRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductVendorRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>de6669c25a6745a0f13090546f895f33</Hash>
+    <Hash>d03a4d450a201138580f1ff9f311aad3</Hash>
 </Codenesium>*/

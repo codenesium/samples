@@ -9,127 +9,127 @@ using Xunit;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public partial class PetRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class PetRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<PetRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<PetRepository>>();
-                }
-        }
+		public static Mock<ILogger<PetRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<PetRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pet")]
-        [Trait("Area", "Repositories")]
-        public partial class PetRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pet")]
+	[Trait("Area", "Repositories")]
+	public partial class PetRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
 
-                        Pet entity = new Pet();
-                        context.Set<Pet>().Add(entity);
-                        await context.SaveChangesAsync();
+			Pet entity = new Pet();
+			context.Set<Pet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
 
-                        Pet entity = new Pet();
-                        context.Set<Pet>().Add(entity);
-                        await context.SaveChangesAsync();
+			Pet entity = new Pet();
+			context.Set<Pet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
 
-                        var entity = new Pet();
-                        await repository.Create(entity);
+			var entity = new Pet();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Pet>().FirstOrDefaultAsync();
+			var record = await context.Set<Pet>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
-                        Pet entity = new Pet();
-                        context.Set<Pet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
+			Pet entity = new Pet();
+			context.Set<Pet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Pet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Pet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
-                        Pet entity = new Pet();
-                        context.Set<Pet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
+			Pet entity = new Pet();
+			context.Set<Pet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Pet());
+			await repository.Update(new Pet());
 
-                        var modifiedRecord = context.Set<Pet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Pet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PetRepositoryMoc.GetContext();
-                        var repository = new PetRepository(loggerMoc.Object, context);
-                        Pet entity = new Pet();
-                        context.Set<Pet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<PetRepository>> loggerMoc = PetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PetRepositoryMoc.GetContext();
+			var repository = new PetRepository(loggerMoc.Object, context);
+			Pet entity = new Pet();
+			context.Set<Pet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Pet modifiedRecord = await context.Set<Pet>().FirstOrDefaultAsync();
+			Pet modifiedRecord = await context.Set<Pet>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8d3db2530945b357638dc49410047376</Hash>
+    <Hash>615a306996750cb948ed51ad1527eafb</Hash>
 </Codenesium>*/

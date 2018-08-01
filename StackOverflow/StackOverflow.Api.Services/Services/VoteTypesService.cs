@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class VoteTypesService : AbstractVoteTypesService, IVoteTypesService
-        {
-                public VoteTypesService(
-                        ILogger<IVoteTypesRepository> logger,
-                        IVoteTypesRepository voteTypesRepository,
-                        IApiVoteTypesRequestModelValidator voteTypesModelValidator,
-                        IBOLVoteTypesMapper bolvoteTypesMapper,
-                        IDALVoteTypesMapper dalvoteTypesMapper
-                        )
-                        : base(logger,
-                               voteTypesRepository,
-                               voteTypesModelValidator,
-                               bolvoteTypesMapper,
-                               dalvoteTypesMapper)
-                {
-                }
-        }
+	public partial class VoteTypesService : AbstractVoteTypesService, IVoteTypesService
+	{
+		public VoteTypesService(
+			ILogger<IVoteTypesRepository> logger,
+			IVoteTypesRepository voteTypesRepository,
+			IApiVoteTypesRequestModelValidator voteTypesModelValidator,
+			IBOLVoteTypesMapper bolvoteTypesMapper,
+			IDALVoteTypesMapper dalvoteTypesMapper
+			)
+			: base(logger,
+			       voteTypesRepository,
+			       voteTypesModelValidator,
+			       bolvoteTypesMapper,
+			       dalvoteTypesMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f56b408e43fb70cca3f84d7806ddc5ca</Hash>
+    <Hash>95e1023a23f1f10759bf5ed621011025</Hash>
 </Codenesium>*/

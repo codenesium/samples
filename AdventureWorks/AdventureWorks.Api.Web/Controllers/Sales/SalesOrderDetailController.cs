@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/salesOrderDetails")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SalesOrderDetailController : AbstractSalesOrderDetailController
-        {
-                public SalesOrderDetailController(
-                        ApiSettings settings,
-                        ILogger<SalesOrderDetailController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISalesOrderDetailService salesOrderDetailService,
-                        IApiSalesOrderDetailModelMapper salesOrderDetailModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               salesOrderDetailService,
-                               salesOrderDetailModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/salesOrderDetails")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SalesOrderDetailController : AbstractSalesOrderDetailController
+	{
+		public SalesOrderDetailController(
+			ApiSettings settings,
+			ILogger<SalesOrderDetailController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISalesOrderDetailService salesOrderDetailService,
+			IApiSalesOrderDetailModelMapper salesOrderDetailModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       salesOrderDetailService,
+			       salesOrderDetailModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>05264d744b7437ed7f5252a51eb54b45</Hash>
+    <Hash>4a998a2d8ef69faaa14dae2d87f349e0</Hash>
 </Codenesium>*/

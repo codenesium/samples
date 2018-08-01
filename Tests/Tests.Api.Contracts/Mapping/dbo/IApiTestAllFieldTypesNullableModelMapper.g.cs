@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-        public interface IApiTestAllFieldTypesNullableModelMapper
-        {
-                ApiTestAllFieldTypesNullableResponseModel MapRequestToResponse(
-                        int id,
-                        ApiTestAllFieldTypesNullableRequestModel request);
+	public interface IApiTestAllFieldTypesNullableModelMapper
+	{
+		ApiTestAllFieldTypesNullableResponseModel MapRequestToResponse(
+			int id,
+			ApiTestAllFieldTypesNullableRequestModel request);
 
-                ApiTestAllFieldTypesNullableRequestModel MapResponseToRequest(
-                        ApiTestAllFieldTypesNullableResponseModel response);
+		ApiTestAllFieldTypesNullableRequestModel MapResponseToRequest(
+			ApiTestAllFieldTypesNullableResponseModel response);
 
-                JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> CreatePatch(ApiTestAllFieldTypesNullableRequestModel model);
-        }
+		JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> CreatePatch(ApiTestAllFieldTypesNullableRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e471c73c9ff97bb1ee037d9da22fe22b</Hash>
+    <Hash>a169cc4238e09dafa6635ccdbbc9e60b</Hash>
 </Codenesium>*/

@@ -11,109 +11,109 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractVersionInfoRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractVersionInfoRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractVersionInfoRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractVersionInfoRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<VersionInfo> Get(long version)
-                {
-                        return await this.GetById(version);
-                }
+		public async virtual Task<VersionInfo> Get(long version)
+		{
+			return await this.GetById(version);
+		}
 
-                public async virtual Task<VersionInfo> Create(VersionInfo item)
-                {
-                        this.Context.Set<VersionInfo>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<VersionInfo> Create(VersionInfo item)
+		{
+			this.Context.Set<VersionInfo>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(VersionInfo item)
-                {
-                        var entity = this.Context.Set<VersionInfo>().Local.FirstOrDefault(x => x.Version == item.Version);
-                        if (entity == null)
-                        {
-                                this.Context.Set<VersionInfo>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(VersionInfo item)
+		{
+			var entity = this.Context.Set<VersionInfo>().Local.FirstOrDefault(x => x.Version == item.Version);
+			if (entity == null)
+			{
+				this.Context.Set<VersionInfo>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        long version)
-                {
-                        VersionInfo record = await this.GetById(version);
+		public async virtual Task Delete(
+			long version)
+		{
+			VersionInfo record = await this.GetById(version);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<VersionInfo>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<VersionInfo>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<VersionInfo> ByVersion(long version)
-                {
-                        var records = await this.Where(x => x.Version == version);
+		public async Task<VersionInfo> ByVersion(long version)
+		{
+			var records = await this.Where(x => x.Version == version);
 
-                        return records.FirstOrDefault();
-                }
+			return records.FirstOrDefault();
+		}
 
-                protected async Task<List<VersionInfo>> Where(
-                        Expression<Func<VersionInfo, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<VersionInfo, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.Version;
-                        }
+		protected async Task<List<VersionInfo>> Where(
+			Expression<Func<VersionInfo, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<VersionInfo, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Version;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
+			}
+			else
+			{
+				return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
+			}
+		}
 
-                private async Task<VersionInfo> GetById(long version)
-                {
-                        List<VersionInfo> records = await this.Where(x => x.Version == version);
+		private async Task<VersionInfo> GetById(long version)
+		{
+			List<VersionInfo> records = await this.Where(x => x.Version == version);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1e0212ae7e3b41de408f4bf956db427a</Hash>
+    <Hash>9bc70178e98b6f4bb027f6369c1f33b7</Hash>
 </Codenesium>*/

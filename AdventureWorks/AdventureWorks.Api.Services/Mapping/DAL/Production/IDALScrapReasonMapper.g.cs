@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALScrapReasonMapper
-        {
-                ScrapReason MapBOToEF(
-                        BOScrapReason bo);
+	public interface IDALScrapReasonMapper
+	{
+		ScrapReason MapBOToEF(
+			BOScrapReason bo);
 
-                BOScrapReason MapEFToBO(
-                        ScrapReason efScrapReason);
+		BOScrapReason MapEFToBO(
+			ScrapReason efScrapReason);
 
-                List<BOScrapReason> MapEFToBO(
-                        List<ScrapReason> records);
-        }
+		List<BOScrapReason> MapEFToBO(
+			List<ScrapReason> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>af6c7d313c984e213bb1e1a22adba01e</Hash>
+    <Hash>782ea1db4a06dd35c2bd0d4997bde766</Hash>
 </Codenesium>*/

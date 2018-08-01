@@ -7,50 +7,49 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Mutex")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiMutexModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiMutexModelMapper();
-                        var model = new ApiMutexRequestModel();
-                        model.SetProperties("A");
-                        ApiMutexResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Mutex")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiMutexModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiMutexModelMapper();
+			var model = new ApiMutexRequestModel();
+			model.SetProperties("A");
+			ApiMutexResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiMutexModelMapper();
-                        var model = new ApiMutexResponseModel();
-                        model.SetProperties("A", "A");
-                        ApiMutexRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiMutexModelMapper();
+			var model = new ApiMutexResponseModel();
+			model.SetProperties("A", "A");
+			ApiMutexRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.JSON.Should().Be("A");
-                }
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiMutexModelMapper();
-                        var model = new ApiMutexRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiMutexModelMapper();
+			var model = new ApiMutexRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiMutexRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiMutexRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.JSON.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiMutexRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiMutexRequestModel();
+			patch.ApplyTo(response);
+			response.JSON.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cf2217dc55eb1b9eed4c92c75765619d</Hash>
+    <Hash>308f4bc079aca9253a09a4802339e8b0</Hash>
 </Codenesium>*/

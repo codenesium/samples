@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class SalesOrderDetailService : AbstractSalesOrderDetailService, ISalesOrderDetailService
-        {
-                public SalesOrderDetailService(
-                        ILogger<ISalesOrderDetailRepository> logger,
-                        ISalesOrderDetailRepository salesOrderDetailRepository,
-                        IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
-                        IBOLSalesOrderDetailMapper bolsalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalsalesOrderDetailMapper
-                        )
-                        : base(logger,
-                               salesOrderDetailRepository,
-                               salesOrderDetailModelValidator,
-                               bolsalesOrderDetailMapper,
-                               dalsalesOrderDetailMapper)
-                {
-                }
-        }
+	public partial class SalesOrderDetailService : AbstractSalesOrderDetailService, ISalesOrderDetailService
+	{
+		public SalesOrderDetailService(
+			ILogger<ISalesOrderDetailRepository> logger,
+			ISalesOrderDetailRepository salesOrderDetailRepository,
+			IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
+			IBOLSalesOrderDetailMapper bolsalesOrderDetailMapper,
+			IDALSalesOrderDetailMapper dalsalesOrderDetailMapper
+			)
+			: base(logger,
+			       salesOrderDetailRepository,
+			       salesOrderDetailModelValidator,
+			       bolsalesOrderDetailMapper,
+			       dalsalesOrderDetailMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d4a69c1ab90fc209cc9cf9a3273e9978</Hash>
+    <Hash>bde20d63f00a8b9b4a702cc93c83218c</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class ActionTemplateVersionRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ActionTemplateVersionRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ActionTemplateVersionRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ActionTemplateVersionRepository>>();
-                }
-        }
+		public static Mock<ILogger<ActionTemplateVersionRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ActionTemplateVersionRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ActionTemplateVersion")]
-        [Trait("Area", "Repositories")]
-        public partial class ActionTemplateVersionRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ActionTemplateVersion")]
+	[Trait("Area", "Repositories")]
+	public partial class ActionTemplateVersionRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
-                        ActionTemplateVersion entity = new ActionTemplateVersion();
-                        context.Set<ActionTemplateVersion>().Add(entity);
-                        await context.SaveChangesAsync();
+			ActionTemplateVersion entity = new ActionTemplateVersion();
+			context.Set<ActionTemplateVersion>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
-                        ActionTemplateVersion entity = new ActionTemplateVersion();
-                        context.Set<ActionTemplateVersion>().Add(entity);
-                        await context.SaveChangesAsync();
+			ActionTemplateVersion entity = new ActionTemplateVersion();
+			context.Set<ActionTemplateVersion>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
-                        var entity = new ActionTemplateVersion();
-                        await repository.Create(entity);
+			var entity = new ActionTemplateVersion();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+			var record = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-                        ActionTemplateVersion entity = new ActionTemplateVersion();
-                        context.Set<ActionTemplateVersion>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+			ActionTemplateVersion entity = new ActionTemplateVersion();
+			context.Set<ActionTemplateVersion>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-                        ActionTemplateVersion entity = new ActionTemplateVersion();
-                        context.Set<ActionTemplateVersion>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+			ActionTemplateVersion entity = new ActionTemplateVersion();
+			context.Set<ActionTemplateVersion>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ActionTemplateVersion());
+			await repository.Update(new ActionTemplateVersion());
 
-                        var modifiedRecord = context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
-                        var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-                        ActionTemplateVersion entity = new ActionTemplateVersion();
-                        context.Set<ActionTemplateVersion>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
+			var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
+			ActionTemplateVersion entity = new ActionTemplateVersion();
+			context.Set<ActionTemplateVersion>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        ActionTemplateVersion modifiedRecord = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+			ActionTemplateVersion modifiedRecord = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c69231d039fdc6323a1075f03d459ca3</Hash>
+    <Hash>6fe8d05318fad2976d42391211b5f028</Hash>
 </Codenesium>*/

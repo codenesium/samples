@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class DALAbstractClaspMapper
-        {
-                public virtual Clasp MapBOToEF(
-                        BOClasp bo)
-                {
-                        Clasp efClasp = new Clasp();
-                        efClasp.SetProperties(
-                                bo.Id,
-                                bo.NextChainId,
-                                bo.PreviousChainId);
-                        return efClasp;
-                }
+	public abstract class DALAbstractClaspMapper
+	{
+		public virtual Clasp MapBOToEF(
+			BOClasp bo)
+		{
+			Clasp efClasp = new Clasp();
+			efClasp.SetProperties(
+				bo.Id,
+				bo.NextChainId,
+				bo.PreviousChainId);
+			return efClasp;
+		}
 
-                public virtual BOClasp MapEFToBO(
-                        Clasp ef)
-                {
-                        var bo = new BOClasp();
+		public virtual BOClasp MapEFToBO(
+			Clasp ef)
+		{
+			var bo = new BOClasp();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.NextChainId,
-                                ef.PreviousChainId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.NextChainId,
+				ef.PreviousChainId);
+			return bo;
+		}
 
-                public virtual List<BOClasp> MapEFToBO(
-                        List<Clasp> records)
-                {
-                        List<BOClasp> response = new List<BOClasp>();
+		public virtual List<BOClasp> MapEFToBO(
+			List<Clasp> records)
+		{
+			List<BOClasp> response = new List<BOClasp>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e8bfa75ad39203dc01796a0113bf053e</Hash>
+    <Hash>fb0147937d2079d46967e1e787189442</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class PurchaseOrderDetailRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class PurchaseOrderDetailRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<PurchaseOrderDetailRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<PurchaseOrderDetailRepository>>();
-                }
-        }
+		public static Mock<ILogger<PurchaseOrderDetailRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<PurchaseOrderDetailRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PurchaseOrderDetail")]
-        [Trait("Area", "Repositories")]
-        public partial class PurchaseOrderDetailRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PurchaseOrderDetail")]
+	[Trait("Area", "Repositories")]
+	public partial class PurchaseOrderDetailRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
 
-                        PurchaseOrderDetail entity = new PurchaseOrderDetail();
-                        context.Set<PurchaseOrderDetail>().Add(entity);
-                        await context.SaveChangesAsync();
+			PurchaseOrderDetail entity = new PurchaseOrderDetail();
+			context.Set<PurchaseOrderDetail>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
 
-                        PurchaseOrderDetail entity = new PurchaseOrderDetail();
-                        context.Set<PurchaseOrderDetail>().Add(entity);
-                        await context.SaveChangesAsync();
+			PurchaseOrderDetail entity = new PurchaseOrderDetail();
+			context.Set<PurchaseOrderDetail>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.PurchaseOrderID);
+			var record = await repository.Get(entity.PurchaseOrderID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
 
-                        var entity = new PurchaseOrderDetail();
-                        await repository.Create(entity);
+			var entity = new PurchaseOrderDetail();
+			await repository.Create(entity);
 
-                        var record = await context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
+			var record = await context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
-                        PurchaseOrderDetail entity = new PurchaseOrderDetail();
-                        context.Set<PurchaseOrderDetail>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+			PurchaseOrderDetail entity = new PurchaseOrderDetail();
+			context.Set<PurchaseOrderDetail>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.PurchaseOrderID);
+			var record = await repository.Get(entity.PurchaseOrderID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
-                        PurchaseOrderDetail entity = new PurchaseOrderDetail();
-                        context.Set<PurchaseOrderDetail>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+			PurchaseOrderDetail entity = new PurchaseOrderDetail();
+			context.Set<PurchaseOrderDetail>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new PurchaseOrderDetail());
+			await repository.Update(new PurchaseOrderDetail());
 
-                        var modifiedRecord = context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
-                        var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
-                        PurchaseOrderDetail entity = new PurchaseOrderDetail();
-                        context.Set<PurchaseOrderDetail>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<PurchaseOrderDetailRepository>> loggerMoc = PurchaseOrderDetailRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PurchaseOrderDetailRepositoryMoc.GetContext();
+			var repository = new PurchaseOrderDetailRepository(loggerMoc.Object, context);
+			PurchaseOrderDetail entity = new PurchaseOrderDetail();
+			context.Set<PurchaseOrderDetail>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.PurchaseOrderID);
+			await repository.Delete(entity.PurchaseOrderID);
 
-                        PurchaseOrderDetail modifiedRecord = await context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
+			PurchaseOrderDetail modifiedRecord = await context.Set<PurchaseOrderDetail>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3ef1f204db4672a5b23a983aca60fffa</Hash>
+    <Hash>65f304c6fa2c2925f0500519ea5b8ad9</Hash>
 </Codenesium>*/

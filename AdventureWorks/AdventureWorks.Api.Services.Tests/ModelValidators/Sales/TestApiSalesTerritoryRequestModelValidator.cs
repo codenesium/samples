@@ -15,209 +15,209 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SalesTerritory")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSalesTerritoryRequestModelValidatorTest
-        {
-                public ApiSalesTerritoryRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SalesTerritory")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSalesTerritoryRequestModelValidatorTest
+	{
+		public ApiSalesTerritoryRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CountryRegionCode_Create_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void CountryRegionCode_Create_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
+		}
 
-                [Fact]
-                public async void CountryRegionCode_Update_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void CountryRegionCode_Update_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
+		}
 
-                [Fact]
-                public async void CountryRegionCode_Create_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void CountryRegionCode_Create_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
+		}
 
-                [Fact]
-                public async void CountryRegionCode_Update_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void CountryRegionCode_Update_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
+		}
 
-                [Fact]
-                public async void @Group_Create_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void @Group_Create_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
+		}
 
-                [Fact]
-                public async void @Group_Update_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void @Group_Update_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
+		}
 
-                [Fact]
-                public async void @Group_Create_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void @Group_Create_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
+		}
 
-                [Fact]
-                public async void @Group_Update_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void @Group_Update_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
+			await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-                        salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
-                        var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
+			salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
+			var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4bba965553acf5ddb5f2bf319fad9e5f</Hash>
+    <Hash>42df2b433a8715b364bb2eb08236f10b</Hash>
 </Codenesium>*/

@@ -9,46 +9,46 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiLinkLogRequestModelValidator : AbstractValidator<ApiLinkLogRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiLinkLogRequestModelValidator : AbstractValidator<ApiLinkLogRequestModel>
+	{
+		private int existingRecordId;
 
-                private ILinkLogRepository linkLogRepository;
+		private ILinkLogRepository linkLogRepository;
 
-                public AbstractApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
-                {
-                        this.linkLogRepository = linkLogRepository;
-                }
+		public AbstractApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
+		{
+			this.linkLogRepository = linkLogRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiLinkLogRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiLinkLogRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void DateEnteredRules()
-                {
-                }
+		public virtual void DateEnteredRules()
+		{
+		}
 
-                public virtual void LinkIdRules()
-                {
-                        this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x?.LinkId != null).WithMessage("Invalid reference");
-                }
+		public virtual void LinkIdRules()
+		{
+			this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x?.LinkId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void LogRules()
-                {
-                        this.RuleFor(x => x.Log).Length(0, 2147483647);
-                }
+		public virtual void LogRules()
+		{
+			this.RuleFor(x => x.Log).Length(0, 2147483647);
+		}
 
-                private async Task<bool> BeValidLink(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.linkLogRepository.GetLink(id);
+		private async Task<bool> BeValidLink(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.linkLogRepository.GetLink(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed5578f2c93138b27a76fcf2e950c097</Hash>
+    <Hash>ccc3facbee24b8df98dbd0ffaee2c876</Hash>
 </Codenesium>*/

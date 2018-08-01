@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.DataAccess
 {
-        public partial class TimestampCheckRepository : AbstractTimestampCheckRepository, ITimestampCheckRepository
-        {
-                public TimestampCheckRepository(
-                        ILogger<TimestampCheckRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class TimestampCheckRepository : AbstractTimestampCheckRepository, ITimestampCheckRepository
+	{
+		public TimestampCheckRepository(
+			ILogger<TimestampCheckRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d3d112b89ca6749c0682ca05c8023f86</Hash>
+    <Hash>789496398e4e8e0f0d5511deb23c2f04</Hash>
 </Codenesium>*/

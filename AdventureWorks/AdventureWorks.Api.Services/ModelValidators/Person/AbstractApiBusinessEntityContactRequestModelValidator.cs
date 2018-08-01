@@ -9,41 +9,41 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiBusinessEntityContactRequestModelValidator : AbstractValidator<ApiBusinessEntityContactRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiBusinessEntityContactRequestModelValidator : AbstractValidator<ApiBusinessEntityContactRequestModel>
+	{
+		private int existingRecordId;
 
-                private IBusinessEntityContactRepository businessEntityContactRepository;
+		private IBusinessEntityContactRepository businessEntityContactRepository;
 
-                public AbstractApiBusinessEntityContactRequestModelValidator(IBusinessEntityContactRepository businessEntityContactRepository)
-                {
-                        this.businessEntityContactRepository = businessEntityContactRepository;
-                }
+		public AbstractApiBusinessEntityContactRequestModelValidator(IBusinessEntityContactRepository businessEntityContactRepository)
+		{
+			this.businessEntityContactRepository = businessEntityContactRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiBusinessEntityContactRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiBusinessEntityContactRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ContactTypeIDRules()
-                {
-                }
+		public virtual void ContactTypeIDRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void PersonIDRules()
-                {
-                }
+		public virtual void PersonIDRules()
+		{
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
-        }
+		public virtual void RowguidRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ea01751e10642f47b2d89b26ffe04d43</Hash>
+    <Hash>173aa78ad4dafd87faa464824ea8ed57</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class SpaceXSpaceFeatureRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class SpaceXSpaceFeatureRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<SpaceXSpaceFeatureRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<SpaceXSpaceFeatureRepository>>();
-                }
-        }
+		public static Mock<ILogger<SpaceXSpaceFeatureRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<SpaceXSpaceFeatureRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpaceXSpaceFeature")]
-        [Trait("Area", "Repositories")]
-        public partial class SpaceXSpaceFeatureRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpaceXSpaceFeature")]
+	[Trait("Area", "Repositories")]
+	public partial class SpaceXSpaceFeatureRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
 
-                        SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-                        context.Set<SpaceXSpaceFeature>().Add(entity);
-                        await context.SaveChangesAsync();
+			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
+			context.Set<SpaceXSpaceFeature>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
 
-                        SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-                        context.Set<SpaceXSpaceFeature>().Add(entity);
-                        await context.SaveChangesAsync();
+			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
+			context.Set<SpaceXSpaceFeature>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
 
-                        var entity = new SpaceXSpaceFeature();
-                        await repository.Create(entity);
+			var entity = new SpaceXSpaceFeature();
+			await repository.Create(entity);
 
-                        var record = await context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
+			var record = await context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
-                        SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-                        context.Set<SpaceXSpaceFeature>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
+			context.Set<SpaceXSpaceFeature>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
-                        SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-                        context.Set<SpaceXSpaceFeature>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
+			context.Set<SpaceXSpaceFeature>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new SpaceXSpaceFeature());
+			await repository.Update(new SpaceXSpaceFeature());
 
-                        var modifiedRecord = context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
-                        var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
-                        SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-                        context.Set<SpaceXSpaceFeature>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<SpaceXSpaceFeatureRepository>> loggerMoc = SpaceXSpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceXSpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceXSpaceFeatureRepository(loggerMoc.Object, context);
+			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
+			context.Set<SpaceXSpaceFeature>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        SpaceXSpaceFeature modifiedRecord = await context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
+			SpaceXSpaceFeature modifiedRecord = await context.Set<SpaceXSpaceFeature>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d3a788a24a437252599caecf1a4d304b</Hash>
+    <Hash>0a1b2fed5555b91008cfabd3e7d54420</Hash>
 </Codenesium>*/

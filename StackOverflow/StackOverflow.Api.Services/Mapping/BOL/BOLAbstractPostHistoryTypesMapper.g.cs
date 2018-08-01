@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class BOLAbstractPostHistoryTypesMapper
-        {
-                public virtual BOPostHistoryTypes MapModelToBO(
-                        int id,
-                        ApiPostHistoryTypesRequestModel model
-                        )
-                {
-                        BOPostHistoryTypes boPostHistoryTypes = new BOPostHistoryTypes();
-                        boPostHistoryTypes.SetProperties(
-                                id,
-                                model.Type);
-                        return boPostHistoryTypes;
-                }
+	public abstract class BOLAbstractPostHistoryTypesMapper
+	{
+		public virtual BOPostHistoryTypes MapModelToBO(
+			int id,
+			ApiPostHistoryTypesRequestModel model
+			)
+		{
+			BOPostHistoryTypes boPostHistoryTypes = new BOPostHistoryTypes();
+			boPostHistoryTypes.SetProperties(
+				id,
+				model.Type);
+			return boPostHistoryTypes;
+		}
 
-                public virtual ApiPostHistoryTypesResponseModel MapBOToModel(
-                        BOPostHistoryTypes boPostHistoryTypes)
-                {
-                        var model = new ApiPostHistoryTypesResponseModel();
+		public virtual ApiPostHistoryTypesResponseModel MapBOToModel(
+			BOPostHistoryTypes boPostHistoryTypes)
+		{
+			var model = new ApiPostHistoryTypesResponseModel();
 
-                        model.SetProperties(boPostHistoryTypes.Id, boPostHistoryTypes.Type);
+			model.SetProperties(boPostHistoryTypes.Id, boPostHistoryTypes.Type);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiPostHistoryTypesResponseModel> MapBOToModel(
-                        List<BOPostHistoryTypes> items)
-                {
-                        List<ApiPostHistoryTypesResponseModel> response = new List<ApiPostHistoryTypesResponseModel>();
+		public virtual List<ApiPostHistoryTypesResponseModel> MapBOToModel(
+			List<BOPostHistoryTypes> items)
+		{
+			List<ApiPostHistoryTypesResponseModel> response = new List<ApiPostHistoryTypesResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>699fe4ae0ed7d614586d33022e7c1328</Hash>
+    <Hash>b0f6fb479e4775ad28a052060a906443</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class SpaceRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class SpaceRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<SpaceRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<SpaceRepository>>();
-                }
-        }
+		public static Mock<ILogger<SpaceRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<SpaceRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Space")]
-        [Trait("Area", "Repositories")]
-        public partial class SpaceRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Space")]
+	[Trait("Area", "Repositories")]
+	public partial class SpaceRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
 
-                        Space entity = new Space();
-                        context.Set<Space>().Add(entity);
-                        await context.SaveChangesAsync();
+			Space entity = new Space();
+			context.Set<Space>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
 
-                        Space entity = new Space();
-                        context.Set<Space>().Add(entity);
-                        await context.SaveChangesAsync();
+			Space entity = new Space();
+			context.Set<Space>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
 
-                        var entity = new Space();
-                        await repository.Create(entity);
+			var entity = new Space();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Space>().FirstOrDefaultAsync();
+			var record = await context.Set<Space>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
-                        Space entity = new Space();
-                        context.Set<Space>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
+			Space entity = new Space();
+			context.Set<Space>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Space>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Space>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
-                        Space entity = new Space();
-                        context.Set<Space>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
+			Space entity = new Space();
+			context.Set<Space>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Space());
+			await repository.Update(new Space());
 
-                        var modifiedRecord = context.Set<Space>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Space>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
-                        var repository = new SpaceRepository(loggerMoc.Object, context);
-                        Space entity = new Space();
-                        context.Set<Space>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
+			Space entity = new Space();
+			context.Set<Space>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Space modifiedRecord = await context.Set<Space>().FirstOrDefaultAsync();
+			Space modifiedRecord = await context.Set<Space>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>56885b4e0f2639fecb093887e8cc9c9d</Hash>
+    <Hash>0ec4ba1bae57cec771a9e9852ccde933</Hash>
 </Codenesium>*/

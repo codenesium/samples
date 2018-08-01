@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ScrapReason")]
-        [Trait("Area", "Integration")]
-        public class ScrapReasonIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ScrapReasonIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ScrapReason")]
+	[Trait("Area", "Integration")]
+	public class ScrapReasonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ScrapReasonIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiScrapReasonModelMapper mapper = new ApiScrapReasonModelMapper();
+			ApiScrapReasonModelMapper mapper = new ApiScrapReasonModelMapper();
 
-                        UpdateResponse<ApiScrapReasonResponseModel> updateResponse = await this.Client.ScrapReasonUpdateAsync(model.ScrapReasonID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiScrapReasonResponseModel> updateResponse = await this.Client.ScrapReasonUpdateAsync(model.ScrapReasonID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ScrapReasonDeleteAsync(model.ScrapReasonID);
+			await this.Client.ScrapReasonDeleteAsync(model.ScrapReasonID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiScrapReasonResponseModel response = await this.Client.ScrapReasonGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiScrapReasonResponseModel response = await this.Client.ScrapReasonGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiScrapReasonResponseModel> response = await this.Client.ScrapReasonAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiScrapReasonResponseModel> response = await this.Client.ScrapReasonAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiScrapReasonResponseModel> CreateRecord()
-                {
-                        var model = new ApiScrapReasonRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-                        CreateResponse<ApiScrapReasonResponseModel> result = await this.Client.ScrapReasonCreateAsync(model);
+		private async Task<ApiScrapReasonResponseModel> CreateRecord()
+		{
+			var model = new ApiScrapReasonRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiScrapReasonResponseModel> result = await this.Client.ScrapReasonCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ScrapReasonDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ScrapReasonDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c9374dff3672ae14778ecf4cad55f65b</Hash>
+    <Hash>e0c3bbcc2601a435c3be32de90784911</Hash>
 </Codenesium>*/

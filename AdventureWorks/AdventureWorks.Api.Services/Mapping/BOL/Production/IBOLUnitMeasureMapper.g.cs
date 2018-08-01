@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLUnitMeasureMapper
-        {
-                BOUnitMeasure MapModelToBO(
-                        string unitMeasureCode,
-                        ApiUnitMeasureRequestModel model);
+	public interface IBOLUnitMeasureMapper
+	{
+		BOUnitMeasure MapModelToBO(
+			string unitMeasureCode,
+			ApiUnitMeasureRequestModel model);
 
-                ApiUnitMeasureResponseModel MapBOToModel(
-                        BOUnitMeasure boUnitMeasure);
+		ApiUnitMeasureResponseModel MapBOToModel(
+			BOUnitMeasure boUnitMeasure);
 
-                List<ApiUnitMeasureResponseModel> MapBOToModel(
-                        List<BOUnitMeasure> items);
-        }
+		List<ApiUnitMeasureResponseModel> MapBOToModel(
+			List<BOUnitMeasure> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>21f398bfc8654c9cbf9efaaab3e72f5e</Hash>
+    <Hash>d8333e0711259e73804c1a786a72d8fb</Hash>
 </Codenesium>*/

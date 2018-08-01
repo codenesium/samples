@@ -15,65 +15,65 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PostHistory")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPostHistoryRequestModelValidatorTest
-        {
-                public ApiPostHistoryRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PostHistory")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPostHistoryRequestModelValidatorTest
+	{
+		public ApiPostHistoryRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void RevisionGUID_Create_length()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+		[Fact]
+		public async void RevisionGUID_Create_length()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostHistoryRequestModel());
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, new string('A', 37));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, new string('A', 37));
+		}
 
-                [Fact]
-                public async void RevisionGUID_Update_length()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+		[Fact]
+		public async void RevisionGUID_Update_length()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryRequestModel());
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, new string('A', 37));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, new string('A', 37));
+		}
 
-                [Fact]
-                public async void UserDisplayName_Create_length()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+		[Fact]
+		public async void UserDisplayName_Create_length()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPostHistoryRequestModel());
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserDisplayName, new string('A', 41));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UserDisplayName, new string('A', 41));
+		}
 
-                [Fact]
-                public async void UserDisplayName_Update_length()
-                {
-                        Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-                        postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+		[Fact]
+		public async void UserDisplayName_Update_length()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 
-                        var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryRequestModel());
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserDisplayName, new string('A', 41));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.UserDisplayName, new string('A', 41));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b3fcf48019e808f1b6169a4ca0ddd5a</Hash>
+    <Hash>25476d7777bd909c9a217025d573a2a3</Hash>
 </Codenesium>*/

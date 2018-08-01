@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface IKeyAllocationRepository
-        {
-                Task<KeyAllocation> Create(KeyAllocation item);
+	public interface IKeyAllocationRepository
+	{
+		Task<KeyAllocation> Create(KeyAllocation item);
 
-                Task Update(KeyAllocation item);
+		Task Update(KeyAllocation item);
 
-                Task Delete(string collectionName);
+		Task Delete(string collectionName);
 
-                Task<KeyAllocation> Get(string collectionName);
+		Task<KeyAllocation> Get(string collectionName);
 
-                Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>36d7cc8ed4153e3a0f1054162be937a4</Hash>
+    <Hash>f26dae7ad839d8cd2a9e6ea5a85ea476</Hash>
 </Codenesium>*/

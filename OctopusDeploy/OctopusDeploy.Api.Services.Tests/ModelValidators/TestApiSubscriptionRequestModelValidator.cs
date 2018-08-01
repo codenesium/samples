@@ -15,113 +15,113 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Subscription")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSubscriptionRequestModelValidatorTest
-        {
-                public ApiSubscriptionRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Subscription")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSubscriptionRequestModelValidatorTest
+	{
+		public ApiSubscriptionRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
 
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
 
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Type_Create_length()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
+		[Fact]
+		public async void Type_Create_length()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
 
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Type_Update_length()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
+		[Fact]
+		public async void Type_Update_length()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Subscription()));
 
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
+			await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
+			await validator.ValidateCreateAsync(new ApiSubscriptionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(new Subscription()));
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
-                        subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
-                        var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ISubscriptionRepository> subscriptionRepository = new Mock<ISubscriptionRepository>();
+			subscriptionRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Subscription>(null));
+			var validator = new ApiSubscriptionRequestModelValidator(subscriptionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiSubscriptionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f4453b07a2c4ae83bea99a4e258f2cc2</Hash>
+    <Hash>aacdfc4deed1bedd4d3b99545c31cbbd</Hash>
 </Codenesium>*/

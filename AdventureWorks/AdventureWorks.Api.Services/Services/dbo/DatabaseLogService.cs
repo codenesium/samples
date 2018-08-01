@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DatabaseLogService : AbstractDatabaseLogService, IDatabaseLogService
-        {
-                public DatabaseLogService(
-                        ILogger<IDatabaseLogRepository> logger,
-                        IDatabaseLogRepository databaseLogRepository,
-                        IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
-                        IBOLDatabaseLogMapper boldatabaseLogMapper,
-                        IDALDatabaseLogMapper daldatabaseLogMapper
-                        )
-                        : base(logger,
-                               databaseLogRepository,
-                               databaseLogModelValidator,
-                               boldatabaseLogMapper,
-                               daldatabaseLogMapper)
-                {
-                }
-        }
+	public partial class DatabaseLogService : AbstractDatabaseLogService, IDatabaseLogService
+	{
+		public DatabaseLogService(
+			ILogger<IDatabaseLogRepository> logger,
+			IDatabaseLogRepository databaseLogRepository,
+			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+			IBOLDatabaseLogMapper boldatabaseLogMapper,
+			IDALDatabaseLogMapper daldatabaseLogMapper
+			)
+			: base(logger,
+			       databaseLogRepository,
+			       databaseLogModelValidator,
+			       boldatabaseLogMapper,
+			       daldatabaseLogMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d626ad06e46abbd6c09824ea76d560f2</Hash>
+    <Hash>73fc0d1575b98d17ab6420c1686d1a5a</Hash>
 </Codenesium>*/

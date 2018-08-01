@@ -5,16 +5,16 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-        public interface IApiRowVersionCheckRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiRowVersionCheckRequestModel model);
+	public interface IApiRowVersionCheckRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiRowVersionCheckRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiRowVersionCheckRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiRowVersionCheckRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>92d0fa55114dda2c37aafb34992ac01b</Hash>
+    <Hash>3da5f5b2562718ef7671aa72c47cfedb</Hash>
 </Codenesium>*/

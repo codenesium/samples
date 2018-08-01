@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class CertificateRepository : AbstractCertificateRepository, ICertificateRepository
-        {
-                public CertificateRepository(
-                        ILogger<CertificateRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class CertificateRepository : AbstractCertificateRepository, ICertificateRepository
+	{
+		public CertificateRepository(
+			ILogger<CertificateRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dc980a52f6884b8d2d1cf2db39844f8f</Hash>
+    <Hash>b01e0170f39b2c78424597733dbca6fe</Hash>
 </Codenesium>*/

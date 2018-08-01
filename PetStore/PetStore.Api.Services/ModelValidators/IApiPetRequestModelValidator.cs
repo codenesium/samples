@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface IApiPetRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiPetRequestModel model);
+	public interface IApiPetRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiPetRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiPetRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPetRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9155c6e30af053c8660be4e320015b4e</Hash>
+    <Hash>45181d26cd9abbe4b0f81fff7102afe4</Hash>
 </Codenesium>*/

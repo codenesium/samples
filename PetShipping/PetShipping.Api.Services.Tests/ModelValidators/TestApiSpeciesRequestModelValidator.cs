@@ -15,41 +15,41 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Species")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSpeciesRequestModelValidatorTest
-        {
-                public ApiSpeciesRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Species")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSpeciesRequestModelValidatorTest
+	{
+		public ApiSpeciesRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISpeciesRepository> speciesRepository = new Mock<ISpeciesRepository>();
-                        speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISpeciesRepository> speciesRepository = new Mock<ISpeciesRepository>();
+			speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
-                        var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpeciesRequestModel());
+			var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpeciesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISpeciesRepository> speciesRepository = new Mock<ISpeciesRepository>();
-                        speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISpeciesRepository> speciesRepository = new Mock<ISpeciesRepository>();
+			speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
-                        var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpeciesRequestModel());
+			var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpeciesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6c422f535970def8aa577597d6904140</Hash>
+    <Hash>05966e2acc762e3a36cf48c2513215e4</Hash>
 </Codenesium>*/

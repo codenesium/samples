@@ -15,65 +15,65 @@ using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PaymentType")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPaymentTypeRequestModelValidatorTest
-        {
-                public ApiPaymentTypeRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PaymentType")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPaymentTypeRequestModelValidatorTest
+	{
+		public ApiPaymentTypeRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
-                        paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
+			paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 
-                        var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPaymentTypeRequestModel());
+			var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPaymentTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
-                        paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
+			paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 
-                        var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPaymentTypeRequestModel());
+			var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPaymentTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
-                        paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
+			paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 
-                        var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPaymentTypeRequestModel());
+			var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPaymentTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
-                        paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IPaymentTypeRepository> paymentTypeRepository = new Mock<IPaymentTypeRepository>();
+			paymentTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 
-                        var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPaymentTypeRequestModel());
+			var validator = new ApiPaymentTypeRequestModelValidator(paymentTypeRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPaymentTypeRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0e19bbe52d50b84aa2a3b6a525000d7a</Hash>
+    <Hash>675d786d93be6ec697bfd822a694e444</Hash>
 </Codenesium>*/

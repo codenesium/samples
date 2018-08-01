@@ -5,16 +5,16 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-        public interface IApiSchemaBPersonRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiSchemaBPersonRequestModel model);
+	public interface IApiSchemaBPersonRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSchemaBPersonRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiSchemaBPersonRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSchemaBPersonRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>aba2bd9e7282cd554ea2d629e731670b</Hash>
+    <Hash>13be5302cb2219edafc0e35eec3c0152</Hash>
 </Codenesium>*/

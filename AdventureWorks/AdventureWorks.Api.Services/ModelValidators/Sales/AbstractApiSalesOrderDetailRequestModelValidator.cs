@@ -9,82 +9,82 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesOrderDetailRequestModelValidator : AbstractValidator<ApiSalesOrderDetailRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSalesOrderDetailRequestModelValidator : AbstractValidator<ApiSalesOrderDetailRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISalesOrderDetailRepository salesOrderDetailRepository;
+		private ISalesOrderDetailRepository salesOrderDetailRepository;
 
-                public AbstractApiSalesOrderDetailRequestModelValidator(ISalesOrderDetailRepository salesOrderDetailRepository)
-                {
-                        this.salesOrderDetailRepository = salesOrderDetailRepository;
-                }
+		public AbstractApiSalesOrderDetailRequestModelValidator(ISalesOrderDetailRepository salesOrderDetailRepository)
+		{
+			this.salesOrderDetailRepository = salesOrderDetailRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSalesOrderDetailRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSalesOrderDetailRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void CarrierTrackingNumberRules()
-                {
-                        this.RuleFor(x => x.CarrierTrackingNumber).Length(0, 25);
-                }
+		public virtual void CarrierTrackingNumberRules()
+		{
+			this.RuleFor(x => x.CarrierTrackingNumber).Length(0, 25);
+		}
 
-                public virtual void LineTotalRules()
-                {
-                }
+		public virtual void LineTotalRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void OrderQtyRules()
-                {
-                }
+		public virtual void OrderQtyRules()
+		{
+		}
 
-                public virtual void ProductIDRules()
-                {
-                        this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.ProductID != null).WithMessage("Invalid reference");
-                }
+		public virtual void ProductIDRules()
+		{
+			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.ProductID != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
+		public virtual void RowguidRules()
+		{
+		}
 
-                public virtual void SalesOrderDetailIDRules()
-                {
-                }
+		public virtual void SalesOrderDetailIDRules()
+		{
+		}
 
-                public virtual void SpecialOfferIDRules()
-                {
-                        this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.SpecialOfferID != null).WithMessage("Invalid reference");
-                }
+		public virtual void SpecialOfferIDRules()
+		{
+			this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.SpecialOfferID != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void UnitPriceRules()
-                {
-                }
+		public virtual void UnitPriceRules()
+		{
+		}
 
-                public virtual void UnitPriceDiscountRules()
-                {
-                }
+		public virtual void UnitPriceDiscountRules()
+		{
+		}
 
-                private async Task<bool> BeValidSpecialOfferProduct(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesOrderDetailRepository.GetSpecialOfferProduct(id);
+		private async Task<bool> BeValidSpecialOfferProduct(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesOrderDetailRepository.GetSpecialOfferProduct(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesOrderDetailRepository.GetSalesOrderHeader(id);
+		private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesOrderDetailRepository.GetSalesOrderHeader(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9a4defe5f82a0c67beb7a25de08dfda0</Hash>
+    <Hash>f5d558d88f5be0e47998102c139d2012</Hash>
 </Codenesium>*/

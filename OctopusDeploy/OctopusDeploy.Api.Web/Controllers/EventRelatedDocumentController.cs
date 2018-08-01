@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/eventRelatedDocuments")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class EventRelatedDocumentController : AbstractEventRelatedDocumentController
-        {
-                public EventRelatedDocumentController(
-                        ApiSettings settings,
-                        ILogger<EventRelatedDocumentController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IEventRelatedDocumentService eventRelatedDocumentService,
-                        IApiEventRelatedDocumentModelMapper eventRelatedDocumentModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               eventRelatedDocumentService,
-                               eventRelatedDocumentModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/eventRelatedDocuments")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class EventRelatedDocumentController : AbstractEventRelatedDocumentController
+	{
+		public EventRelatedDocumentController(
+			ApiSettings settings,
+			ILogger<EventRelatedDocumentController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IEventRelatedDocumentService eventRelatedDocumentService,
+			IApiEventRelatedDocumentModelMapper eventRelatedDocumentModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       eventRelatedDocumentService,
+			       eventRelatedDocumentModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>28f26db929cf96a1715612dd1c5edd35</Hash>
+    <Hash>26546b67a04e2e0e1ab96b7ff9ec8cfa</Hash>
 </Codenesium>*/

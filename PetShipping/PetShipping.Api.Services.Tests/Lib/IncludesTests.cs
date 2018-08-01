@@ -8,77 +8,77 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Area", "Includes")]
-        public partial class ServiceIncludesTests
-        {
-                [Fact]
-                public void Test_ValidationError()
-                {
-                        var error = new ValidationError("1", "error", "field1");
-                        error.ErrorCode.Should().Be("1");
-                        error.ErrorMessage.Should().Be("error");
-                        error.PropertyName.Should().Be("field1");
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Area", "Includes")]
+	public partial class ServiceIncludesTests
+	{
+		[Fact]
+		public void Test_ValidationError()
+		{
+			var error = new ValidationError("1", "error", "field1");
+			error.ErrorCode.Should().Be("1");
+			error.ErrorMessage.Should().Be("error");
+			error.PropertyName.Should().Be("field1");
+		}
 
-                [Fact]
-                public void ActionResponse_Error()
-                {
-                        var failures = new List<ValidationFailure>();
-                        failures.Add(new ValidationFailure("field1", "error"));
-                        var result = new ValidationResult(failures);
-                        var response = new ActionResponse(result);
-                        response.Success.Should().BeFalse();
-                        response.ValidationErrors.Count.Should().Be(1);
-                }
+		[Fact]
+		public void ActionResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			var response = new ActionResponse(result);
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
 
-                [Fact]
-                public void ActionResponse_No_Error()
-                {
-                        var failures = new List<ValidationFailure>();
-                        var result = new ValidationResult(failures);
-                        var response = new ActionResponse(result);
-                        response.Success.Should().BeTrue();
-                }
+		[Fact]
+		public void ActionResponse_No_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			var result = new ValidationResult(failures);
+			var response = new ActionResponse(result);
+			response.Success.Should().BeTrue();
+		}
 
-                [Fact]
-                public void CreateResponse_Error()
-                {
-                        var failures = new List<ValidationFailure>();
-                        failures.Add(new ValidationFailure("field1", "error"));
-                        var result = new ValidationResult(failures);
-                        CreateResponse<int> response = new CreateResponse<int>(result);
-                        response.Success.Should().BeFalse();
-                        response.ValidationErrors.Count.Should().Be(1);
-                }
+		[Fact]
+		public void CreateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			CreateResponse<int> response = new CreateResponse<int>(result);
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreateResponse_No_Error()
-                {
-                        var failures = new List<ValidationFailure>();
-                        ValidationResult result = new ValidationResult(failures);
-                        CreateResponse<int> response = new CreateResponse<int>(result);
-                        response.Success.Should().BeTrue();
-                }
+		[Fact]
+		public void CreateResponse_No_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			ValidationResult result = new ValidationResult(failures);
+			CreateResponse<int> response = new CreateResponse<int>(result);
+			response.Success.Should().BeTrue();
+		}
 
-                [Fact]
-                public void CreateResponse_SetRecord()
-                {
-                        List<ValidationFailure> failures = new List<ValidationFailure>();
-                        ValidationResult result = new ValidationResult(failures);
+		[Fact]
+		public void CreateResponse_SetRecord()
+		{
+			List<ValidationFailure> failures = new List<ValidationFailure>();
+			ValidationResult result = new ValidationResult(failures);
 
-                        var item = new
-                        {
-                                id = 1
-                        };
+			var item = new
+			{
+				id = 1
+			};
 
-                        CreateResponse<object> response = new CreateResponse<object>(result);
-                        response.SetRecord(item);
-                        response.Record.Should().NotBeNull();
-                }
-        }
+			CreateResponse<object> response = new CreateResponse<object>(result);
+			response.SetRecord(item);
+			response.Record.Should().NotBeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>70e0a76390a87119c3bd777fee547513</Hash>
+    <Hash>f23ddc0958aa712631e1a8f11ab82378</Hash>
 </Codenesium>*/

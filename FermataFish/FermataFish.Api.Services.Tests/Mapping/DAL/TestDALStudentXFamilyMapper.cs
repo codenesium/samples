@@ -7,53 +7,53 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "StudentXFamily")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALStudentXFamilyMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALStudentXFamilyMapper();
-                        var bo = new BOStudentXFamily();
-                        bo.SetProperties(1, 1, 1);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "StudentXFamily")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALStudentXFamilyMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALStudentXFamilyMapper();
+			var bo = new BOStudentXFamily();
+			bo.SetProperties(1, 1, 1);
 
-                        StudentXFamily response = mapper.MapBOToEF(bo);
+			StudentXFamily response = mapper.MapBOToEF(bo);
 
-                        response.FamilyId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.StudentId.Should().Be(1);
-                }
+			response.FamilyId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.StudentId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALStudentXFamilyMapper();
-                        StudentXFamily entity = new StudentXFamily();
-                        entity.SetProperties(1, 1, 1);
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALStudentXFamilyMapper();
+			StudentXFamily entity = new StudentXFamily();
+			entity.SetProperties(1, 1, 1);
 
-                        BOStudentXFamily response = mapper.MapEFToBO(entity);
+			BOStudentXFamily response = mapper.MapEFToBO(entity);
 
-                        response.FamilyId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.StudentId.Should().Be(1);
-                }
+			response.FamilyId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.StudentId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALStudentXFamilyMapper();
-                        StudentXFamily entity = new StudentXFamily();
-                        entity.SetProperties(1, 1, 1);
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALStudentXFamilyMapper();
+			StudentXFamily entity = new StudentXFamily();
+			entity.SetProperties(1, 1, 1);
 
-                        List<BOStudentXFamily> response = mapper.MapEFToBO(new List<StudentXFamily>() { entity });
+			List<BOStudentXFamily> response = mapper.MapEFToBO(new List<StudentXFamily>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>db919913804b89efbbc9d9f347d80dbf</Hash>
+    <Hash>8cc2009420f72952440d07c20de9d17d</Hash>
 </Codenesium>*/

@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class BOLAbstractLessonXTeacherMapper
-        {
-                public virtual BOLessonXTeacher MapModelToBO(
-                        int id,
-                        ApiLessonXTeacherRequestModel model
-                        )
-                {
-                        BOLessonXTeacher boLessonXTeacher = new BOLessonXTeacher();
-                        boLessonXTeacher.SetProperties(
-                                id,
-                                model.LessonId,
-                                model.StudentId);
-                        return boLessonXTeacher;
-                }
+	public abstract class BOLAbstractLessonXTeacherMapper
+	{
+		public virtual BOLessonXTeacher MapModelToBO(
+			int id,
+			ApiLessonXTeacherRequestModel model
+			)
+		{
+			BOLessonXTeacher boLessonXTeacher = new BOLessonXTeacher();
+			boLessonXTeacher.SetProperties(
+				id,
+				model.LessonId,
+				model.StudentId);
+			return boLessonXTeacher;
+		}
 
-                public virtual ApiLessonXTeacherResponseModel MapBOToModel(
-                        BOLessonXTeacher boLessonXTeacher)
-                {
-                        var model = new ApiLessonXTeacherResponseModel();
+		public virtual ApiLessonXTeacherResponseModel MapBOToModel(
+			BOLessonXTeacher boLessonXTeacher)
+		{
+			var model = new ApiLessonXTeacherResponseModel();
 
-                        model.SetProperties(boLessonXTeacher.Id, boLessonXTeacher.LessonId, boLessonXTeacher.StudentId);
+			model.SetProperties(boLessonXTeacher.Id, boLessonXTeacher.LessonId, boLessonXTeacher.StudentId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiLessonXTeacherResponseModel> MapBOToModel(
-                        List<BOLessonXTeacher> items)
-                {
-                        List<ApiLessonXTeacherResponseModel> response = new List<ApiLessonXTeacherResponseModel>();
+		public virtual List<ApiLessonXTeacherResponseModel> MapBOToModel(
+			List<BOLessonXTeacher> items)
+		{
+			List<ApiLessonXTeacherResponseModel> response = new List<ApiLessonXTeacherResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0a080e9dc7a33f42c2c4df816a4e5fd5</Hash>
+    <Hash>ae39d450f8cb3fbbf94e75983c37cd00</Hash>
 </Codenesium>*/

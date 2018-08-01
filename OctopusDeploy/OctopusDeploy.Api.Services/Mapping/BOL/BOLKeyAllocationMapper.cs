@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOLKeyAllocationMapper : BOLAbstractKeyAllocationMapper, IBOLKeyAllocationMapper
-        {
-                public BOLKeyAllocationMapper()
-                {
-                }
-        }
+	public partial class BOLKeyAllocationMapper : BOLAbstractKeyAllocationMapper, IBOLKeyAllocationMapper
+	{
+		public BOLKeyAllocationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a248246d4739aa38ecd12146cc108789</Hash>
+    <Hash>723448377faca8d957c57872ea43eba2</Hash>
 </Codenesium>*/

@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiSpeciesRequestModelValidator : AbstractValidator<ApiSpeciesRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSpeciesRequestModelValidator : AbstractValidator<ApiSpeciesRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISpeciesRepository speciesRepository;
+		private ISpeciesRepository speciesRepository;
 
-                public AbstractApiSpeciesRequestModelValidator(ISpeciesRepository speciesRepository)
-                {
-                        this.speciesRepository = speciesRepository;
-                }
+		public AbstractApiSpeciesRequestModelValidator(ISpeciesRepository speciesRepository)
+		{
+			this.speciesRepository = speciesRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSpeciesRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSpeciesRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2a6912a6ce9f8521af5216603316148a</Hash>
+    <Hash>3250cfde031e8b54a6cfb82b2658c74c</Hash>
 </Codenesium>*/

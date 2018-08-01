@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractPersonCreditCardMapper
-        {
-                public virtual PersonCreditCard MapBOToEF(
-                        BOPersonCreditCard bo)
-                {
-                        PersonCreditCard efPersonCreditCard = new PersonCreditCard();
-                        efPersonCreditCard.SetProperties(
-                                bo.BusinessEntityID,
-                                bo.CreditCardID,
-                                bo.ModifiedDate);
-                        return efPersonCreditCard;
-                }
+	public abstract class DALAbstractPersonCreditCardMapper
+	{
+		public virtual PersonCreditCard MapBOToEF(
+			BOPersonCreditCard bo)
+		{
+			PersonCreditCard efPersonCreditCard = new PersonCreditCard();
+			efPersonCreditCard.SetProperties(
+				bo.BusinessEntityID,
+				bo.CreditCardID,
+				bo.ModifiedDate);
+			return efPersonCreditCard;
+		}
 
-                public virtual BOPersonCreditCard MapEFToBO(
-                        PersonCreditCard ef)
-                {
-                        var bo = new BOPersonCreditCard();
+		public virtual BOPersonCreditCard MapEFToBO(
+			PersonCreditCard ef)
+		{
+			var bo = new BOPersonCreditCard();
 
-                        bo.SetProperties(
-                                ef.BusinessEntityID,
-                                ef.CreditCardID,
-                                ef.ModifiedDate);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.BusinessEntityID,
+				ef.CreditCardID,
+				ef.ModifiedDate);
+			return bo;
+		}
 
-                public virtual List<BOPersonCreditCard> MapEFToBO(
-                        List<PersonCreditCard> records)
-                {
-                        List<BOPersonCreditCard> response = new List<BOPersonCreditCard>();
+		public virtual List<BOPersonCreditCard> MapEFToBO(
+			List<PersonCreditCard> records)
+		{
+			List<BOPersonCreditCard> response = new List<BOPersonCreditCard>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d622ea643a82fabd784da97ad2c0325</Hash>
+    <Hash>fdb78c70b75355f554210372d4756db3</Hash>
 </Codenesium>*/

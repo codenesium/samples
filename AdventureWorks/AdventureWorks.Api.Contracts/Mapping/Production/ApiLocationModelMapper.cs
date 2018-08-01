@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiLocationModelMapper : AbstractApiLocationModelMapper, IApiLocationModelMapper
-        {
-                public ApiLocationModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiLocationModelMapper : AbstractApiLocationModelMapper, IApiLocationModelMapper
+	{
+		public ApiLocationModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7e5bbbedb7d54752639fbc29e3c9caea</Hash>
+    <Hash>028f7d913eb340de5ca70637630e7204</Hash>
 </Codenesium>*/

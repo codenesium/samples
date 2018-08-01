@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ProductCategoryService : AbstractProductCategoryService, IProductCategoryService
-        {
-                public ProductCategoryService(
-                        ILogger<IProductCategoryRepository> logger,
-                        IProductCategoryRepository productCategoryRepository,
-                        IApiProductCategoryRequestModelValidator productCategoryModelValidator,
-                        IBOLProductCategoryMapper bolproductCategoryMapper,
-                        IDALProductCategoryMapper dalproductCategoryMapper,
-                        IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
-                        IDALProductSubcategoryMapper dalProductSubcategoryMapper
-                        )
-                        : base(logger,
-                               productCategoryRepository,
-                               productCategoryModelValidator,
-                               bolproductCategoryMapper,
-                               dalproductCategoryMapper,
-                               bolProductSubcategoryMapper,
-                               dalProductSubcategoryMapper)
-                {
-                }
-        }
+	public partial class ProductCategoryService : AbstractProductCategoryService, IProductCategoryService
+	{
+		public ProductCategoryService(
+			ILogger<IProductCategoryRepository> logger,
+			IProductCategoryRepository productCategoryRepository,
+			IApiProductCategoryRequestModelValidator productCategoryModelValidator,
+			IBOLProductCategoryMapper bolproductCategoryMapper,
+			IDALProductCategoryMapper dalproductCategoryMapper,
+			IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
+			IDALProductSubcategoryMapper dalProductSubcategoryMapper
+			)
+			: base(logger,
+			       productCategoryRepository,
+			       productCategoryModelValidator,
+			       bolproductCategoryMapper,
+			       dalproductCategoryMapper,
+			       bolProductSubcategoryMapper,
+			       dalProductSubcategoryMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>559b3556742a9e743edc76a25d12a403</Hash>
+    <Hash>b96e9dd8bad4b8e99885a497ca4d24e8</Hash>
 </Codenesium>*/

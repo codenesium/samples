@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractProductModelProductDescriptionCultureMapper
-        {
-                public virtual ProductModelProductDescriptionCulture MapBOToEF(
-                        BOProductModelProductDescriptionCulture bo)
-                {
-                        ProductModelProductDescriptionCulture efProductModelProductDescriptionCulture = new ProductModelProductDescriptionCulture();
-                        efProductModelProductDescriptionCulture.SetProperties(
-                                bo.CultureID,
-                                bo.ModifiedDate,
-                                bo.ProductDescriptionID,
-                                bo.ProductModelID);
-                        return efProductModelProductDescriptionCulture;
-                }
+	public abstract class DALAbstractProductModelProductDescriptionCultureMapper
+	{
+		public virtual ProductModelProductDescriptionCulture MapBOToEF(
+			BOProductModelProductDescriptionCulture bo)
+		{
+			ProductModelProductDescriptionCulture efProductModelProductDescriptionCulture = new ProductModelProductDescriptionCulture();
+			efProductModelProductDescriptionCulture.SetProperties(
+				bo.CultureID,
+				bo.ModifiedDate,
+				bo.ProductDescriptionID,
+				bo.ProductModelID);
+			return efProductModelProductDescriptionCulture;
+		}
 
-                public virtual BOProductModelProductDescriptionCulture MapEFToBO(
-                        ProductModelProductDescriptionCulture ef)
-                {
-                        var bo = new BOProductModelProductDescriptionCulture();
+		public virtual BOProductModelProductDescriptionCulture MapEFToBO(
+			ProductModelProductDescriptionCulture ef)
+		{
+			var bo = new BOProductModelProductDescriptionCulture();
 
-                        bo.SetProperties(
-                                ef.ProductModelID,
-                                ef.CultureID,
-                                ef.ModifiedDate,
-                                ef.ProductDescriptionID);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.ProductModelID,
+				ef.CultureID,
+				ef.ModifiedDate,
+				ef.ProductDescriptionID);
+			return bo;
+		}
 
-                public virtual List<BOProductModelProductDescriptionCulture> MapEFToBO(
-                        List<ProductModelProductDescriptionCulture> records)
-                {
-                        List<BOProductModelProductDescriptionCulture> response = new List<BOProductModelProductDescriptionCulture>();
+		public virtual List<BOProductModelProductDescriptionCulture> MapEFToBO(
+			List<ProductModelProductDescriptionCulture> records)
+		{
+			List<BOProductModelProductDescriptionCulture> response = new List<BOProductModelProductDescriptionCulture>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>564e91b3430148124e41b8b1cab41cbb</Hash>
+    <Hash>dadfe96a209045bfb4ca053c6740859f</Hash>
 </Codenesium>*/

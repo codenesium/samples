@@ -6,55 +6,55 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        [Table("TenantVariable", Schema="dbo")]
-        public partial class TenantVariable : AbstractEntity
-        {
-                public TenantVariable()
-                {
-                }
+	[Table("TenantVariable", Schema="dbo")]
+	public partial class TenantVariable : AbstractEntity
+	{
+		public TenantVariable()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string environmentId,
-                        string id,
-                        string jSON,
-                        string ownerId,
-                        string relatedDocumentId,
-                        string tenantId,
-                        string variableTemplateId)
-                {
-                        this.EnvironmentId = environmentId;
-                        this.Id = id;
-                        this.JSON = jSON;
-                        this.OwnerId = ownerId;
-                        this.RelatedDocumentId = relatedDocumentId;
-                        this.TenantId = tenantId;
-                        this.VariableTemplateId = variableTemplateId;
-                }
+		public virtual void SetProperties(
+			string environmentId,
+			string id,
+			string jSON,
+			string ownerId,
+			string relatedDocumentId,
+			string tenantId,
+			string variableTemplateId)
+		{
+			this.EnvironmentId = environmentId;
+			this.Id = id;
+			this.JSON = jSON;
+			this.OwnerId = ownerId;
+			this.RelatedDocumentId = relatedDocumentId;
+			this.TenantId = tenantId;
+			this.VariableTemplateId = variableTemplateId;
+		}
 
-                [Column("EnvironmentId")]
-                public string EnvironmentId { get; private set; }
+		[Column("EnvironmentId")]
+		public string EnvironmentId { get; private set; }
 
-                [Key]
-                [Column("Id")]
-                public string Id { get; private set; }
+		[Key]
+		[Column("Id")]
+		public string Id { get; private set; }
 
-                [Column("JSON")]
-                public string JSON { get; private set; }
+		[Column("JSON")]
+		public string JSON { get; private set; }
 
-                [Column("OwnerId")]
-                public string OwnerId { get; private set; }
+		[Column("OwnerId")]
+		public string OwnerId { get; private set; }
 
-                [Column("RelatedDocumentId")]
-                public string RelatedDocumentId { get; private set; }
+		[Column("RelatedDocumentId")]
+		public string RelatedDocumentId { get; private set; }
 
-                [Column("TenantId")]
-                public string TenantId { get; private set; }
+		[Column("TenantId")]
+		public string TenantId { get; private set; }
 
-                [Column("VariableTemplateId")]
-                public string VariableTemplateId { get; private set; }
-        }
+		[Column("VariableTemplateId")]
+		public string VariableTemplateId { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>8add60cc88c4b27be8bd55c4506b828e</Hash>
+    <Hash>1de214f46934e47f573f694853edab28</Hash>
 </Codenesium>*/

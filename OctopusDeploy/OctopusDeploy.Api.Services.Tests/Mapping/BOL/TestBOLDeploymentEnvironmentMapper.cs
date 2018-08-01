@@ -8,53 +8,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DeploymentEnvironment")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLDeploymentEnvironmentMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLDeploymentEnvironmentMapper();
-                        ApiDeploymentEnvironmentRequestModel model = new ApiDeploymentEnvironmentRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(1), "A", "A", 1);
-                        BODeploymentEnvironment response = mapper.MapModelToBO("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DeploymentEnvironment")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLDeploymentEnvironmentMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLDeploymentEnvironmentMapper();
+			ApiDeploymentEnvironmentRequestModel model = new ApiDeploymentEnvironmentRequestModel();
+			model.SetProperties(BitConverter.GetBytes(1), "A", "A", 1);
+			BODeploymentEnvironment response = mapper.MapModelToBO("A", model);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLDeploymentEnvironmentMapper();
-                        BODeploymentEnvironment bo = new BODeploymentEnvironment();
-                        bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
-                        ApiDeploymentEnvironmentResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLDeploymentEnvironmentMapper();
+			BODeploymentEnvironment bo = new BODeploymentEnvironment();
+			bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
+			ApiDeploymentEnvironmentResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.SortOrder.Should().Be(1);
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.SortOrder.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLDeploymentEnvironmentMapper();
-                        BODeploymentEnvironment bo = new BODeploymentEnvironment();
-                        bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
-                        List<ApiDeploymentEnvironmentResponseModel> response = mapper.MapBOToModel(new List<BODeploymentEnvironment>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLDeploymentEnvironmentMapper();
+			BODeploymentEnvironment bo = new BODeploymentEnvironment();
+			bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
+			List<ApiDeploymentEnvironmentResponseModel> response = mapper.MapBOToModel(new List<BODeploymentEnvironment>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f677345b051fcbd9735a0e4dd97d1d27</Hash>
+    <Hash>5018d2105e143aab2d8403fe51115dff</Hash>
 </Codenesium>*/

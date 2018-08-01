@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class IllustrationService : AbstractIllustrationService, IIllustrationService
-        {
-                public IllustrationService(
-                        ILogger<IIllustrationRepository> logger,
-                        IIllustrationRepository illustrationRepository,
-                        IApiIllustrationRequestModelValidator illustrationModelValidator,
-                        IBOLIllustrationMapper bolillustrationMapper,
-                        IDALIllustrationMapper dalillustrationMapper,
-                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
-                        )
-                        : base(logger,
-                               illustrationRepository,
-                               illustrationModelValidator,
-                               bolillustrationMapper,
-                               dalillustrationMapper,
-                               bolProductModelIllustrationMapper,
-                               dalProductModelIllustrationMapper)
-                {
-                }
-        }
+	public partial class IllustrationService : AbstractIllustrationService, IIllustrationService
+	{
+		public IllustrationService(
+			ILogger<IIllustrationRepository> logger,
+			IIllustrationRepository illustrationRepository,
+			IApiIllustrationRequestModelValidator illustrationModelValidator,
+			IBOLIllustrationMapper bolillustrationMapper,
+			IDALIllustrationMapper dalillustrationMapper,
+			IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+			)
+			: base(logger,
+			       illustrationRepository,
+			       illustrationModelValidator,
+			       bolillustrationMapper,
+			       dalillustrationMapper,
+			       bolProductModelIllustrationMapper,
+			       dalProductModelIllustrationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dcf0e7818edaaf521abfb07fb2ca0e35</Hash>
+    <Hash>fc425244dbb276f123330b2c8a67a8d4</Hash>
 </Codenesium>*/

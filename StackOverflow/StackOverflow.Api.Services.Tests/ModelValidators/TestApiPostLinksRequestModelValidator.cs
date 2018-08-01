@@ -15,17 +15,17 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PostLinks")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPostLinksRequestModelValidatorTest
-        {
-                public ApiPostLinksRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PostLinks")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPostLinksRequestModelValidatorTest
+	{
+		public ApiPostLinksRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>179c29d6b3d9e3ba86d0bfa967b87792</Hash>
+    <Hash>9f3ba87414bba455e5ee8f3f9bf694eb</Hash>
 </Codenesium>*/

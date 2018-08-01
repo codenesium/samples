@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class TagSetRepository : AbstractTagSetRepository, ITagSetRepository
-        {
-                public TagSetRepository(
-                        ILogger<TagSetRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class TagSetRepository : AbstractTagSetRepository, ITagSetRepository
+	{
+		public TagSetRepository(
+			ILogger<TagSetRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f546f2b4d13a4d4985808fcdb9ae8fb5</Hash>
+    <Hash>04a31caa9703a6be153ea05c4db7d6c1</Hash>
 </Codenesium>*/

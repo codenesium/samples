@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DashboardConfigurationService : AbstractDashboardConfigurationService, IDashboardConfigurationService
-        {
-                public DashboardConfigurationService(
-                        ILogger<IDashboardConfigurationRepository> logger,
-                        IDashboardConfigurationRepository dashboardConfigurationRepository,
-                        IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
-                        IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
-                        IDALDashboardConfigurationMapper daldashboardConfigurationMapper
-                        )
-                        : base(logger,
-                               dashboardConfigurationRepository,
-                               dashboardConfigurationModelValidator,
-                               boldashboardConfigurationMapper,
-                               daldashboardConfigurationMapper)
-                {
-                }
-        }
+	public partial class DashboardConfigurationService : AbstractDashboardConfigurationService, IDashboardConfigurationService
+	{
+		public DashboardConfigurationService(
+			ILogger<IDashboardConfigurationRepository> logger,
+			IDashboardConfigurationRepository dashboardConfigurationRepository,
+			IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
+			IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
+			IDALDashboardConfigurationMapper daldashboardConfigurationMapper
+			)
+			: base(logger,
+			       dashboardConfigurationRepository,
+			       dashboardConfigurationModelValidator,
+			       boldashboardConfigurationMapper,
+			       daldashboardConfigurationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8bc590bb7eb0c492be3e4dba07c2791e</Hash>
+    <Hash>4ddd782725582e8670324520c8dee745</Hash>
 </Codenesium>*/

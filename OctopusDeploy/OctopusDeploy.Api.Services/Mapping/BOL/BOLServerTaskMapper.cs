@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOLServerTaskMapper : BOLAbstractServerTaskMapper, IBOLServerTaskMapper
-        {
-                public BOLServerTaskMapper()
-                {
-                }
-        }
+	public partial class BOLServerTaskMapper : BOLAbstractServerTaskMapper, IBOLServerTaskMapper
+	{
+		public BOLServerTaskMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8ec36e0889c3d955e28efb231666c7fb</Hash>
+    <Hash>d7d170dec40c82f6701666ddbfda00e8</Hash>
 </Codenesium>*/

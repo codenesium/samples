@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IApiSpaceXSpaceFeatureRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureRequestModel model);
+	public interface IApiSpaceXSpaceFeatureRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c6b7f69fe3ef2b12ca468f6ad9dc8b46</Hash>
+    <Hash>2cfac40335ac1b4ba5f9e5d92bb439c9</Hash>
 </Codenesium>*/

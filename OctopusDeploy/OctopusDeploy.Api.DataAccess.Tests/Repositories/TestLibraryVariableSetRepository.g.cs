@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class LibraryVariableSetRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class LibraryVariableSetRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<LibraryVariableSetRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<LibraryVariableSetRepository>>();
-                }
-        }
+		public static Mock<ILogger<LibraryVariableSetRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<LibraryVariableSetRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LibraryVariableSet")]
-        [Trait("Area", "Repositories")]
-        public partial class LibraryVariableSetRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LibraryVariableSet")]
+	[Trait("Area", "Repositories")]
+	public partial class LibraryVariableSetRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
-                        LibraryVariableSet entity = new LibraryVariableSet();
-                        context.Set<LibraryVariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+			LibraryVariableSet entity = new LibraryVariableSet();
+			context.Set<LibraryVariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
-                        LibraryVariableSet entity = new LibraryVariableSet();
-                        context.Set<LibraryVariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+			LibraryVariableSet entity = new LibraryVariableSet();
+			context.Set<LibraryVariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
-                        var entity = new LibraryVariableSet();
-                        await repository.Create(entity);
+			var entity = new LibraryVariableSet();
+			await repository.Create(entity);
 
-                        var record = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+			var record = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-                        LibraryVariableSet entity = new LibraryVariableSet();
-                        context.Set<LibraryVariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+			LibraryVariableSet entity = new LibraryVariableSet();
+			context.Set<LibraryVariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-                        LibraryVariableSet entity = new LibraryVariableSet();
-                        context.Set<LibraryVariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+			LibraryVariableSet entity = new LibraryVariableSet();
+			context.Set<LibraryVariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new LibraryVariableSet());
+			await repository.Update(new LibraryVariableSet());
 
-                        var modifiedRecord = context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
-                        var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-                        LibraryVariableSet entity = new LibraryVariableSet();
-                        context.Set<LibraryVariableSet>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
+			var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
+			LibraryVariableSet entity = new LibraryVariableSet();
+			context.Set<LibraryVariableSet>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        LibraryVariableSet modifiedRecord = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+			LibraryVariableSet modifiedRecord = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3614c90a5e103036eb7f7bef29a3db21</Hash>
+    <Hash>357a96fcd7ffc31b817d81c7ba4fd284</Hash>
 </Codenesium>*/

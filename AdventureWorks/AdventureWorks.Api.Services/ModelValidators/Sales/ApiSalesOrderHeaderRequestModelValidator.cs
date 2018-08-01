@@ -6,80 +6,80 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiSalesOrderHeaderRequestModelValidator : AbstractApiSalesOrderHeaderRequestModelValidator, IApiSalesOrderHeaderRequestModelValidator
-        {
-                public ApiSalesOrderHeaderRequestModelValidator(ISalesOrderHeaderRepository salesOrderHeaderRepository)
-                        : base(salesOrderHeaderRepository)
-                {
-                }
+	public class ApiSalesOrderHeaderRequestModelValidator : AbstractApiSalesOrderHeaderRequestModelValidator, IApiSalesOrderHeaderRequestModelValidator
+	{
+		public ApiSalesOrderHeaderRequestModelValidator(ISalesOrderHeaderRepository salesOrderHeaderRepository)
+			: base(salesOrderHeaderRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiSalesOrderHeaderRequestModel model)
-                {
-                        this.AccountNumberRules();
-                        this.BillToAddressIDRules();
-                        this.CommentRules();
-                        this.CreditCardApprovalCodeRules();
-                        this.CreditCardIDRules();
-                        this.CurrencyRateIDRules();
-                        this.CustomerIDRules();
-                        this.DueDateRules();
-                        this.FreightRules();
-                        this.ModifiedDateRules();
-                        this.OnlineOrderFlagRules();
-                        this.OrderDateRules();
-                        this.PurchaseOrderNumberRules();
-                        this.RevisionNumberRules();
-                        this.RowguidRules();
-                        this.SalesOrderNumberRules();
-                        this.SalesPersonIDRules();
-                        this.ShipDateRules();
-                        this.ShipMethodIDRules();
-                        this.ShipToAddressIDRules();
-                        this.StatusRules();
-                        this.SubTotalRules();
-                        this.TaxAmtRules();
-                        this.TerritoryIDRules();
-                        this.TotalDueRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiSalesOrderHeaderRequestModel model)
+		{
+			this.AccountNumberRules();
+			this.BillToAddressIDRules();
+			this.CommentRules();
+			this.CreditCardApprovalCodeRules();
+			this.CreditCardIDRules();
+			this.CurrencyRateIDRules();
+			this.CustomerIDRules();
+			this.DueDateRules();
+			this.FreightRules();
+			this.ModifiedDateRules();
+			this.OnlineOrderFlagRules();
+			this.OrderDateRules();
+			this.PurchaseOrderNumberRules();
+			this.RevisionNumberRules();
+			this.RowguidRules();
+			this.SalesOrderNumberRules();
+			this.SalesPersonIDRules();
+			this.ShipDateRules();
+			this.ShipMethodIDRules();
+			this.ShipToAddressIDRules();
+			this.StatusRules();
+			this.SubTotalRules();
+			this.TaxAmtRules();
+			this.TerritoryIDRules();
+			this.TotalDueRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesOrderHeaderRequestModel model)
-                {
-                        this.AccountNumberRules();
-                        this.BillToAddressIDRules();
-                        this.CommentRules();
-                        this.CreditCardApprovalCodeRules();
-                        this.CreditCardIDRules();
-                        this.CurrencyRateIDRules();
-                        this.CustomerIDRules();
-                        this.DueDateRules();
-                        this.FreightRules();
-                        this.ModifiedDateRules();
-                        this.OnlineOrderFlagRules();
-                        this.OrderDateRules();
-                        this.PurchaseOrderNumberRules();
-                        this.RevisionNumberRules();
-                        this.RowguidRules();
-                        this.SalesOrderNumberRules();
-                        this.SalesPersonIDRules();
-                        this.ShipDateRules();
-                        this.ShipMethodIDRules();
-                        this.ShipToAddressIDRules();
-                        this.StatusRules();
-                        this.SubTotalRules();
-                        this.TaxAmtRules();
-                        this.TerritoryIDRules();
-                        this.TotalDueRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesOrderHeaderRequestModel model)
+		{
+			this.AccountNumberRules();
+			this.BillToAddressIDRules();
+			this.CommentRules();
+			this.CreditCardApprovalCodeRules();
+			this.CreditCardIDRules();
+			this.CurrencyRateIDRules();
+			this.CustomerIDRules();
+			this.DueDateRules();
+			this.FreightRules();
+			this.ModifiedDateRules();
+			this.OnlineOrderFlagRules();
+			this.OrderDateRules();
+			this.PurchaseOrderNumberRules();
+			this.RevisionNumberRules();
+			this.RowguidRules();
+			this.SalesOrderNumberRules();
+			this.SalesPersonIDRules();
+			this.ShipDateRules();
+			this.ShipMethodIDRules();
+			this.ShipToAddressIDRules();
+			this.StatusRules();
+			this.SubTotalRules();
+			this.TaxAmtRules();
+			this.TerritoryIDRules();
+			this.TotalDueRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52cbd90a0d8fc6e2932a35c9e239d547</Hash>
+    <Hash>0f607b9f6f30fc9a281e6f61ac21afaa</Hash>
 </Codenesium>*/

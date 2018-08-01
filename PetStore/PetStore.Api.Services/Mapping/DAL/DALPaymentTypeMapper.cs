@@ -4,14 +4,14 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class DALPaymentTypeMapper : DALAbstractPaymentTypeMapper, IDALPaymentTypeMapper
-        {
-                public DALPaymentTypeMapper()
-                {
-                }
-        }
+	public partial class DALPaymentTypeMapper : DALAbstractPaymentTypeMapper, IDALPaymentTypeMapper
+	{
+		public DALPaymentTypeMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a23efb567eae0bfc93021816345567d4</Hash>
+    <Hash>73bde7fa97433fbe4905cd2e0631e31e</Hash>
 </Codenesium>*/

@@ -10,33 +10,33 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class MachineService : AbstractMachineService, IMachineService
-        {
-                public MachineService(
-                        ILogger<IMachineRepository> logger,
-                        IMachineRepository machineRepository,
-                        IApiMachineRequestModelValidator machineModelValidator,
-                        IBOLMachineMapper bolmachineMapper,
-                        IDALMachineMapper dalmachineMapper,
-                        IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper,
-                        IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
-                        )
-                        : base(logger,
-                               machineRepository,
-                               machineModelValidator,
-                               bolmachineMapper,
-                               dalmachineMapper,
-                               bolLinkMapper,
-                               dalLinkMapper,
-                               bolMachineRefTeamMapper,
-                               dalMachineRefTeamMapper)
-                {
-                }
-        }
+	public partial class MachineService : AbstractMachineService, IMachineService
+	{
+		public MachineService(
+			ILogger<IMachineRepository> logger,
+			IMachineRepository machineRepository,
+			IApiMachineRequestModelValidator machineModelValidator,
+			IBOLMachineMapper bolmachineMapper,
+			IDALMachineMapper dalmachineMapper,
+			IBOLLinkMapper bolLinkMapper,
+			IDALLinkMapper dalLinkMapper,
+			IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
+			IDALMachineRefTeamMapper dalMachineRefTeamMapper
+			)
+			: base(logger,
+			       machineRepository,
+			       machineModelValidator,
+			       bolmachineMapper,
+			       dalmachineMapper,
+			       bolLinkMapper,
+			       dalLinkMapper,
+			       bolMachineRefTeamMapper,
+			       dalMachineRefTeamMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c7b764ad39b7b0b6294d91c850c6c547</Hash>
+    <Hash>5c7485cb420c4d2cd8bd8e04e3be0092</Hash>
 </Codenesium>*/

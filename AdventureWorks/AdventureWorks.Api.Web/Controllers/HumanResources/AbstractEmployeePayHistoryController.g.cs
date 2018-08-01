@@ -15,210 +15,210 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractEmployeePayHistoryController : AbstractApiController
-        {
-                protected IEmployeePayHistoryService EmployeePayHistoryService { get; private set; }
+	public abstract class AbstractEmployeePayHistoryController : AbstractApiController
+	{
+		protected IEmployeePayHistoryService EmployeePayHistoryService { get; private set; }
 
-                protected IApiEmployeePayHistoryModelMapper EmployeePayHistoryModelMapper { get; private set; }
+		protected IApiEmployeePayHistoryModelMapper EmployeePayHistoryModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractEmployeePayHistoryController(
-                        ApiSettings settings,
-                        ILogger<AbstractEmployeePayHistoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IEmployeePayHistoryService employeePayHistoryService,
-                        IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.EmployeePayHistoryService = employeePayHistoryService;
-                        this.EmployeePayHistoryModelMapper = employeePayHistoryModelMapper;
-                }
+		public AbstractEmployeePayHistoryController(
+			ApiSettings settings,
+			ILogger<AbstractEmployeePayHistoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IEmployeePayHistoryService employeePayHistoryService,
+			IApiEmployeePayHistoryModelMapper employeePayHistoryModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.EmployeePayHistoryService = employeePayHistoryService;
+			this.EmployeePayHistoryModelMapper = employeePayHistoryModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiEmployeePayHistoryResponseModel> response = await this.EmployeePayHistoryService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiEmployeePayHistoryResponseModel> response = await this.EmployeePayHistoryService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeePayHistoryRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeePayHistoryRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiEmployeePayHistoryResponseModel> records = new List<ApiEmployeePayHistoryResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
+			List<ApiEmployeePayHistoryResponseModel> records = new List<ApiEmployeePayHistoryResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiEmployeePayHistoryResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
-                {
-                        CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiEmployeePayHistoryResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
+		{
+			CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
-                {
-                        ApiEmployeePayHistoryResponseModel record = await this.EmployeePayHistoryService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
+		{
+			ApiEmployeePayHistoryResponseModel record = await this.EmployeePayHistoryService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiEmployeePayHistoryRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiEmployeePayHistoryRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, model);
+				UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryRequestModel model)
-                {
-                        ApiEmployeePayHistoryRequestModel request = await this.PatchModel(id, this.EmployeePayHistoryModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiEmployeePayHistoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryRequestModel model)
+		{
+			ApiEmployeePayHistoryRequestModel request = await this.PatchModel(id, this.EmployeePayHistoryModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.EmployeePayHistoryService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.EmployeePayHistoryService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                private async Task<ApiEmployeePayHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
-                {
-                        var record = await this.EmployeePayHistoryService.Get(id);
+		private async Task<ApiEmployeePayHistoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
+		{
+			var record = await this.EmployeePayHistoryService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiEmployeePayHistoryRequestModel request = this.EmployeePayHistoryModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiEmployeePayHistoryRequestModel request = this.EmployeePayHistoryModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>12ca7f7c675ac2457fcb0e8c9c0f67cf</Hash>
+    <Hash>de5d58a2cc1cc3c4cb78462e47a44246</Hash>
 </Codenesium>*/

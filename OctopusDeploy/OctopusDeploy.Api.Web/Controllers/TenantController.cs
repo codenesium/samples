@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/tenants")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TenantController : AbstractTenantController
-        {
-                public TenantController(
-                        ApiSettings settings,
-                        ILogger<TenantController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITenantService tenantService,
-                        IApiTenantModelMapper tenantModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               tenantService,
-                               tenantModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/tenants")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TenantController : AbstractTenantController
+	{
+		public TenantController(
+			ApiSettings settings,
+			ILogger<TenantController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITenantService tenantService,
+			IApiTenantModelMapper tenantModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       tenantService,
+			       tenantModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>56d601fd7c10b6860753d716955fcd61</Hash>
+    <Hash>b4782ee9a44d20b4f2810bf0cb57d2ef</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class ClientCommunicationService : AbstractClientCommunicationService, IClientCommunicationService
-        {
-                public ClientCommunicationService(
-                        ILogger<IClientCommunicationRepository> logger,
-                        IClientCommunicationRepository clientCommunicationRepository,
-                        IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
-                        IBOLClientCommunicationMapper bolclientCommunicationMapper,
-                        IDALClientCommunicationMapper dalclientCommunicationMapper
-                        )
-                        : base(logger,
-                               clientCommunicationRepository,
-                               clientCommunicationModelValidator,
-                               bolclientCommunicationMapper,
-                               dalclientCommunicationMapper)
-                {
-                }
-        }
+	public partial class ClientCommunicationService : AbstractClientCommunicationService, IClientCommunicationService
+	{
+		public ClientCommunicationService(
+			ILogger<IClientCommunicationRepository> logger,
+			IClientCommunicationRepository clientCommunicationRepository,
+			IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
+			IBOLClientCommunicationMapper bolclientCommunicationMapper,
+			IDALClientCommunicationMapper dalclientCommunicationMapper
+			)
+			: base(logger,
+			       clientCommunicationRepository,
+			       clientCommunicationModelValidator,
+			       bolclientCommunicationMapper,
+			       dalclientCommunicationMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>871b1f7141ec1475cd4962cb19601700</Hash>
+    <Hash>8726266a980f1e56f791b1c00e994a76</Hash>
 </Codenesium>*/

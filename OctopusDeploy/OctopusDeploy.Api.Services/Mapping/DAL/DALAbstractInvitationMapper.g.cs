@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractInvitationMapper
-        {
-                public virtual Invitation MapBOToEF(
-                        BOInvitation bo)
-                {
-                        Invitation efInvitation = new Invitation();
-                        efInvitation.SetProperties(
-                                bo.Id,
-                                bo.InvitationCode,
-                                bo.JSON);
-                        return efInvitation;
-                }
+	public abstract class DALAbstractInvitationMapper
+	{
+		public virtual Invitation MapBOToEF(
+			BOInvitation bo)
+		{
+			Invitation efInvitation = new Invitation();
+			efInvitation.SetProperties(
+				bo.Id,
+				bo.InvitationCode,
+				bo.JSON);
+			return efInvitation;
+		}
 
-                public virtual BOInvitation MapEFToBO(
-                        Invitation ef)
-                {
-                        var bo = new BOInvitation();
+		public virtual BOInvitation MapEFToBO(
+			Invitation ef)
+		{
+			var bo = new BOInvitation();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.InvitationCode,
-                                ef.JSON);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.InvitationCode,
+				ef.JSON);
+			return bo;
+		}
 
-                public virtual List<BOInvitation> MapEFToBO(
-                        List<Invitation> records)
-                {
-                        List<BOInvitation> response = new List<BOInvitation>();
+		public virtual List<BOInvitation> MapEFToBO(
+			List<Invitation> records)
+		{
+			List<BOInvitation> response = new List<BOInvitation>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f46bae204a07089c61784742d291840</Hash>
+    <Hash>5f39d0739c25722fd548dc6813a7045a</Hash>
 </Codenesium>*/

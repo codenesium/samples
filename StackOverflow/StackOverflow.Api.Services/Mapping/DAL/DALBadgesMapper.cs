@@ -4,14 +4,14 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class DALBadgesMapper : DALAbstractBadgesMapper, IDALBadgesMapper
-        {
-                public DALBadgesMapper()
-                {
-                }
-        }
+	public partial class DALBadgesMapper : DALAbstractBadgesMapper, IDALBadgesMapper
+	{
+		public DALBadgesMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>303857c6b84a340cc4ae7203f503f255</Hash>
+    <Hash>c898e45e7be35f323fb71b62a58b802b</Hash>
 </Codenesium>*/

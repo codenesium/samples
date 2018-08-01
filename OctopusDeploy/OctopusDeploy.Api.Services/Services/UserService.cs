@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class UserService : AbstractUserService, IUserService
-        {
-                public UserService(
-                        ILogger<IUserRepository> logger,
-                        IUserRepository userRepository,
-                        IApiUserRequestModelValidator userModelValidator,
-                        IBOLUserMapper boluserMapper,
-                        IDALUserMapper daluserMapper
-                        )
-                        : base(logger,
-                               userRepository,
-                               userModelValidator,
-                               boluserMapper,
-                               daluserMapper)
-                {
-                }
-        }
+	public partial class UserService : AbstractUserService, IUserService
+	{
+		public UserService(
+			ILogger<IUserRepository> logger,
+			IUserRepository userRepository,
+			IApiUserRequestModelValidator userModelValidator,
+			IBOLUserMapper boluserMapper,
+			IDALUserMapper daluserMapper
+			)
+			: base(logger,
+			       userRepository,
+			       userModelValidator,
+			       boluserMapper,
+			       daluserMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f27fc5840ca64e4296936f3cd844508</Hash>
+    <Hash>2a3cba5bc10c33b28a1911b92b43df32</Hash>
 </Codenesium>*/

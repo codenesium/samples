@@ -12,86 +12,86 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Shift")]
-        [Trait("Area", "Integration")]
-        public class ShiftIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ShiftIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Shift")]
+	[Trait("Area", "Integration")]
+	public class ShiftIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ShiftIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiShiftModelMapper mapper = new ApiShiftModelMapper();
+			ApiShiftModelMapper mapper = new ApiShiftModelMapper();
 
-                        UpdateResponse<ApiShiftResponseModel> updateResponse = await this.Client.ShiftUpdateAsync(model.ShiftID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiShiftResponseModel> updateResponse = await this.Client.ShiftUpdateAsync(model.ShiftID, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ShiftDeleteAsync(model.ShiftID);
+			await this.Client.ShiftDeleteAsync(model.ShiftID);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiShiftResponseModel response = await this.Client.ShiftGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiShiftResponseModel response = await this.Client.ShiftGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiShiftResponseModel> response = await this.Client.ShiftAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiShiftResponseModel> response = await this.Client.ShiftAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiShiftResponseModel> CreateRecord()
-                {
-                        var model = new ApiShiftRequestModel();
-                        model.SetProperties(TimeSpan.Parse("1"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("1"));
-                        CreateResponse<ApiShiftResponseModel> result = await this.Client.ShiftCreateAsync(model);
+		private async Task<ApiShiftResponseModel> CreateRecord()
+		{
+			var model = new ApiShiftRequestModel();
+			model.SetProperties(TimeSpan.Parse("1"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("1"));
+			CreateResponse<ApiShiftResponseModel> result = await this.Client.ShiftCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ShiftDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ShiftDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b01bc536f7110f100e967d35a4558386</Hash>
+    <Hash>13760cd92bf81c1fd42715d00b5a807f</Hash>
 </Codenesium>*/

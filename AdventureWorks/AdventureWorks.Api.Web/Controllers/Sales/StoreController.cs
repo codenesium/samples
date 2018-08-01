@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/stores")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class StoreController : AbstractStoreController
-        {
-                public StoreController(
-                        ApiSettings settings,
-                        ILogger<StoreController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IStoreService storeService,
-                        IApiStoreModelMapper storeModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               storeService,
-                               storeModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/stores")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class StoreController : AbstractStoreController
+	{
+		public StoreController(
+			ApiSettings settings,
+			ILogger<StoreController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IStoreService storeService,
+			IApiStoreModelMapper storeModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       storeService,
+			       storeModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e45377687e72e9f02c0dbfd12f114f47</Hash>
+    <Hash>02d1854b351ee261d69f852089efb348</Hash>
 </Codenesium>*/

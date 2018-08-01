@@ -9,30 +9,30 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiCountryRequestModelValidator : AbstractValidator<ApiCountryRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiCountryRequestModelValidator : AbstractValidator<ApiCountryRequestModel>
+	{
+		private int existingRecordId;
 
-                private ICountryRepository countryRepository;
+		private ICountryRepository countryRepository;
 
-                public AbstractApiCountryRequestModelValidator(ICountryRepository countryRepository)
-                {
-                        this.countryRepository = countryRepository;
-                }
+		public AbstractApiCountryRequestModelValidator(ICountryRepository countryRepository)
+		{
+			this.countryRepository = countryRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiCountryRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiCountryRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c67dc2f129a29ebb79a22c9c7b5b007c</Hash>
+    <Hash>6985c73b8adf8a810976c59ebe9fafcf</Hash>
 </Codenesium>*/

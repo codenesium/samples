@@ -1,14 +1,14 @@
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiStateModelMapper : AbstractApiStateModelMapper, IApiStateModelMapper
-        {
-                public ApiStateModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiStateModelMapper : AbstractApiStateModelMapper, IApiStateModelMapper
+	{
+		public ApiStateModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df5297cb0ddefddd226b3ab97a881a5b</Hash>
+    <Hash>79333b6577e56b628bf7ca790e4e7fb5</Hash>
 </Codenesium>*/

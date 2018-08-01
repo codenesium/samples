@@ -15,221 +15,221 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractPurchaseOrderDetailController : AbstractApiController
-        {
-                protected IPurchaseOrderDetailService PurchaseOrderDetailService { get; private set; }
+	public abstract class AbstractPurchaseOrderDetailController : AbstractApiController
+	{
+		protected IPurchaseOrderDetailService PurchaseOrderDetailService { get; private set; }
 
-                protected IApiPurchaseOrderDetailModelMapper PurchaseOrderDetailModelMapper { get; private set; }
+		protected IApiPurchaseOrderDetailModelMapper PurchaseOrderDetailModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractPurchaseOrderDetailController(
-                        ApiSettings settings,
-                        ILogger<AbstractPurchaseOrderDetailController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPurchaseOrderDetailService purchaseOrderDetailService,
-                        IApiPurchaseOrderDetailModelMapper purchaseOrderDetailModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.PurchaseOrderDetailService = purchaseOrderDetailService;
-                        this.PurchaseOrderDetailModelMapper = purchaseOrderDetailModelMapper;
-                }
+		public AbstractPurchaseOrderDetailController(
+			ApiSettings settings,
+			ILogger<AbstractPurchaseOrderDetailController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPurchaseOrderDetailService purchaseOrderDetailService,
+			IApiPurchaseOrderDetailModelMapper purchaseOrderDetailModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.PurchaseOrderDetailService = purchaseOrderDetailService;
+			this.PurchaseOrderDetailModelMapper = purchaseOrderDetailModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiPurchaseOrderDetailResponseModel response = await this.PurchaseOrderDetailService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPurchaseOrderDetailRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPurchaseOrderDetailRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiPurchaseOrderDetailResponseModel> records = new List<ApiPurchaseOrderDetailResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Create(model);
+			List<ApiPurchaseOrderDetailResponseModel> records = new List<ApiPurchaseOrderDetailResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiPurchaseOrderDetailResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailRequestModel model)
-                {
-                        CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiPurchaseOrderDetailResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailRequestModel model)
+		{
+			CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
-                {
-                        ApiPurchaseOrderDetailResponseModel record = await this.PurchaseOrderDetailService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
+		{
+			ApiPurchaseOrderDetailResponseModel record = await this.PurchaseOrderDetailService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiPurchaseOrderDetailRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiPurchaseOrderDetailRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, model);
+				UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailRequestModel model)
-                {
-                        ApiPurchaseOrderDetailRequestModel request = await this.PatchModel(id, this.PurchaseOrderDetailModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPurchaseOrderDetailResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailRequestModel model)
+		{
+			ApiPurchaseOrderDetailRequestModel request = await this.PatchModel(id, this.PurchaseOrderDetailModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.PurchaseOrderDetailService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.PurchaseOrderDetailService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.PurchaseOrderDetailService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("byProductID/{productID}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByProductID(int productID)
-                {
-                        List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.ByProductID(productID);
+		[HttpGet]
+		[Route("byProductID/{productID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByProductID(int productID)
+		{
+			List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.ByProductID(productID);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiPurchaseOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
-                {
-                        var record = await this.PurchaseOrderDetailService.Get(id);
+		private async Task<ApiPurchaseOrderDetailRequestModel> PatchModel(int id, JsonPatchDocument<ApiPurchaseOrderDetailRequestModel> patch)
+		{
+			var record = await this.PurchaseOrderDetailService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiPurchaseOrderDetailRequestModel request = this.PurchaseOrderDetailModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiPurchaseOrderDetailRequestModel request = this.PurchaseOrderDetailModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>543a2d7ee5bc8b90bb3f76ef81bf0b9d</Hash>
+    <Hash>448cd145065b287e4013abd078e2c376</Hash>
 </Codenesium>*/

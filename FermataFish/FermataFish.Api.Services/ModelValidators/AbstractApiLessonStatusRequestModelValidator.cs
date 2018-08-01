@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiLessonStatusRequestModelValidator : AbstractValidator<ApiLessonStatusRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiLessonStatusRequestModelValidator : AbstractValidator<ApiLessonStatusRequestModel>
+	{
+		private int existingRecordId;
 
-                private ILessonStatusRepository lessonStatusRepository;
+		private ILessonStatusRepository lessonStatusRepository;
 
-                public AbstractApiLessonStatusRequestModelValidator(ILessonStatusRepository lessonStatusRepository)
-                {
-                        this.lessonStatusRepository = lessonStatusRepository;
-                }
+		public AbstractApiLessonStatusRequestModelValidator(ILessonStatusRepository lessonStatusRepository)
+		{
+			this.lessonStatusRepository = lessonStatusRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiLessonStatusRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiLessonStatusRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
 
-                public virtual void StudioIdRules()
-                {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
-                }
+		public virtual void StudioIdRules()
+		{
+			this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.lessonStatusRepository.GetStudio(id);
+		private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.lessonStatusRepository.GetStudio(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8cb9be0425d79bcf68514bb58f7e876f</Hash>
+    <Hash>9d5e523746afb9d8d637807a03748f72</Hash>
 </Codenesium>*/

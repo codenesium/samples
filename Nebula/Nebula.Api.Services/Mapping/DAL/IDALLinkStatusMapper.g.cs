@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IDALLinkStatusMapper
-        {
-                LinkStatus MapBOToEF(
-                        BOLinkStatus bo);
+	public interface IDALLinkStatusMapper
+	{
+		LinkStatus MapBOToEF(
+			BOLinkStatus bo);
 
-                BOLinkStatus MapEFToBO(
-                        LinkStatus efLinkStatus);
+		BOLinkStatus MapEFToBO(
+			LinkStatus efLinkStatus);
 
-                List<BOLinkStatus> MapEFToBO(
-                        List<LinkStatus> records);
-        }
+		List<BOLinkStatus> MapEFToBO(
+			List<LinkStatus> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>09e87ca208f95633865e51c83fd1d769</Hash>
+    <Hash>9380742f77294063fd0de7bfcc30a7c0</Hash>
 </Codenesium>*/

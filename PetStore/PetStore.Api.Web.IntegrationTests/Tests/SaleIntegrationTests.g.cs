@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetStoreNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Sale")]
-        [Trait("Area", "Integration")]
-        public class SaleIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public SaleIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Sale")]
+	[Trait("Area", "Integration")]
+	public class SaleIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public SaleIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiSaleModelMapper mapper = new ApiSaleModelMapper();
+			ApiSaleModelMapper mapper = new ApiSaleModelMapper();
 
-                        UpdateResponse<ApiSaleResponseModel> updateResponse = await this.Client.SaleUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSaleResponseModel> updateResponse = await this.Client.SaleUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.SaleDeleteAsync(model.Id);
+			await this.Client.SaleDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiSaleResponseModel response = await this.Client.SaleGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiSaleResponseModel response = await this.Client.SaleGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiSaleResponseModel> response = await this.Client.SaleAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiSaleResponseModel> response = await this.Client.SaleAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiSaleResponseModel> CreateRecord()
-                {
-                        var model = new ApiSaleRequestModel();
-                        model.SetProperties(2m, "B", "B", 1, 1, "B");
-                        CreateResponse<ApiSaleResponseModel> result = await this.Client.SaleCreateAsync(model);
+		private async Task<ApiSaleResponseModel> CreateRecord()
+		{
+			var model = new ApiSaleRequestModel();
+			model.SetProperties(2m, "B", "B", 1, 1, "B");
+			CreateResponse<ApiSaleResponseModel> result = await this.Client.SaleCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.SaleDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.SaleDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>413a62926aafdd14a0d19e3f039d99cd</Hash>
+    <Hash>3da203ebb863ae84b1310bb4aa1cfba8</Hash>
 </Codenesium>*/

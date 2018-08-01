@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLTableMapper
-        {
-                BOTable MapModelToBO(
-                        int id,
-                        ApiTableRequestModel model);
+	public interface IBOLTableMapper
+	{
+		BOTable MapModelToBO(
+			int id,
+			ApiTableRequestModel model);
 
-                ApiTableResponseModel MapBOToModel(
-                        BOTable boTable);
+		ApiTableResponseModel MapBOToModel(
+			BOTable boTable);
 
-                List<ApiTableResponseModel> MapBOToModel(
-                        List<BOTable> items);
-        }
+		List<ApiTableResponseModel> MapBOToModel(
+			List<BOTable> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>cc6765a3087c1dd7fb80ee992f1e087a</Hash>
+    <Hash>0e3efbe7cb9ed72317f432211fe754fc</Hash>
 </Codenesium>*/

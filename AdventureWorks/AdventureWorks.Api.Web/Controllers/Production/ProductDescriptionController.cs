@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/productDescriptions")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ProductDescriptionController : AbstractProductDescriptionController
-        {
-                public ProductDescriptionController(
-                        ApiSettings settings,
-                        ILogger<ProductDescriptionController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IProductDescriptionService productDescriptionService,
-                        IApiProductDescriptionModelMapper productDescriptionModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               productDescriptionService,
-                               productDescriptionModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/productDescriptions")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ProductDescriptionController : AbstractProductDescriptionController
+	{
+		public ProductDescriptionController(
+			ApiSettings settings,
+			ILogger<ProductDescriptionController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IProductDescriptionService productDescriptionService,
+			IApiProductDescriptionModelMapper productDescriptionModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       productDescriptionService,
+			       productDescriptionModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9dcc458d862ec208dfd4a9afcec1ba30</Hash>
+    <Hash>925232df0b4eee3eea4b4d1a8555ba3b</Hash>
 </Codenesium>*/

@@ -10,29 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class TransactionStatusService : AbstractTransactionStatusService, ITransactionStatusService
-        {
-                public TransactionStatusService(
-                        ILogger<ITransactionStatusRepository> logger,
-                        ITransactionStatusRepository transactionStatusRepository,
-                        IApiTransactionStatusRequestModelValidator transactionStatusModelValidator,
-                        IBOLTransactionStatusMapper boltransactionStatusMapper,
-                        IDALTransactionStatusMapper daltransactionStatusMapper,
-                        IBOLTransactionMapper bolTransactionMapper,
-                        IDALTransactionMapper dalTransactionMapper
-                        )
-                        : base(logger,
-                               transactionStatusRepository,
-                               transactionStatusModelValidator,
-                               boltransactionStatusMapper,
-                               daltransactionStatusMapper,
-                               bolTransactionMapper,
-                               dalTransactionMapper)
-                {
-                }
-        }
+	public partial class TransactionStatusService : AbstractTransactionStatusService, ITransactionStatusService
+	{
+		public TransactionStatusService(
+			ILogger<ITransactionStatusRepository> logger,
+			ITransactionStatusRepository transactionStatusRepository,
+			IApiTransactionStatusRequestModelValidator transactionStatusModelValidator,
+			IBOLTransactionStatusMapper boltransactionStatusMapper,
+			IDALTransactionStatusMapper daltransactionStatusMapper,
+			IBOLTransactionMapper bolTransactionMapper,
+			IDALTransactionMapper dalTransactionMapper
+			)
+			: base(logger,
+			       transactionStatusRepository,
+			       transactionStatusModelValidator,
+			       boltransactionStatusMapper,
+			       daltransactionStatusMapper,
+			       bolTransactionMapper,
+			       dalTransactionMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>63c23c78faceb2f85522f27bf5026e66</Hash>
+    <Hash>e9d3099ad803156896400b7a00213f9e</Hash>
 </Codenesium>*/

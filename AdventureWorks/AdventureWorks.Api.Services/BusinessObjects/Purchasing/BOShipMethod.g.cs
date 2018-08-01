@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOShipMethod : AbstractBOShipMethod
-        {
-                public BOShipMethod()
-                        : base()
-                {
-                }
-        }
+	public partial class BOShipMethod : AbstractBOShipMethod
+	{
+		public BOShipMethod()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e84fe430c058ab80f4df1a8c64868a72</Hash>
+    <Hash>58a19903b963c6b5518b5617ebf6e450</Hash>
 </Codenesium>*/

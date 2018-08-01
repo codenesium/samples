@@ -8,49 +8,49 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VersionInfo")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLVersionInfoMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLVersionInfoMapper();
-                        ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        BOVersionInfo response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VersionInfo")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLVersionInfoMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLVersionInfoMapper();
+			ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			BOVersionInfo response = mapper.MapModelToBO(1, model);
 
-                        response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Description.Should().Be("A");
-                }
+			response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Description.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLVersionInfoMapper();
-                        BOVersionInfo bo = new BOVersionInfo();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiVersionInfoResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLVersionInfoMapper();
+			BOVersionInfo bo = new BOVersionInfo();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiVersionInfoResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Description.Should().Be("A");
-                        response.Version.Should().Be(1);
-                }
+			response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Description.Should().Be("A");
+			response.Version.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLVersionInfoMapper();
-                        BOVersionInfo bo = new BOVersionInfo();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        List<ApiVersionInfoResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLVersionInfoMapper();
+			BOVersionInfo bo = new BOVersionInfo();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			List<ApiVersionInfoResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cce92234ad433a998a98bf6b36cd0109</Hash>
+    <Hash>8c8d24883c58ff6ad98f944c7174f3c6</Hash>
 </Codenesium>*/

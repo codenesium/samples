@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLAWBuildVersionMapper
-        {
-                BOAWBuildVersion MapModelToBO(
-                        int systemInformationID,
-                        ApiAWBuildVersionRequestModel model);
+	public interface IBOLAWBuildVersionMapper
+	{
+		BOAWBuildVersion MapModelToBO(
+			int systemInformationID,
+			ApiAWBuildVersionRequestModel model);
 
-                ApiAWBuildVersionResponseModel MapBOToModel(
-                        BOAWBuildVersion boAWBuildVersion);
+		ApiAWBuildVersionResponseModel MapBOToModel(
+			BOAWBuildVersion boAWBuildVersion);
 
-                List<ApiAWBuildVersionResponseModel> MapBOToModel(
-                        List<BOAWBuildVersion> items);
-        }
+		List<ApiAWBuildVersionResponseModel> MapBOToModel(
+			List<BOAWBuildVersion> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>03515fdd0c6d995f084e8c76f6d6727e</Hash>
+    <Hash>6966eb0e9861d2305026fb69ef33f75b</Hash>
 </Codenesium>*/

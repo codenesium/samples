@@ -3,15 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOProjectTrigger : AbstractBOProjectTrigger
-        {
-                public BOProjectTrigger()
-                        : base()
-                {
-                }
-        }
+	public partial class BOProjectTrigger : AbstractBOProjectTrigger
+	{
+		public BOProjectTrigger()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aab674aa0e270f2cf925598c05020e9b</Hash>
+    <Hash>07daf0890575ccadf1cdff7c68dd5349</Hash>
 </Codenesium>*/

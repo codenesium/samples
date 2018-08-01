@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IBOLMutexMapper
-        {
-                BOMutex MapModelToBO(
-                        string id,
-                        ApiMutexRequestModel model);
+	public interface IBOLMutexMapper
+	{
+		BOMutex MapModelToBO(
+			string id,
+			ApiMutexRequestModel model);
 
-                ApiMutexResponseModel MapBOToModel(
-                        BOMutex boMutex);
+		ApiMutexResponseModel MapBOToModel(
+			BOMutex boMutex);
 
-                List<ApiMutexResponseModel> MapBOToModel(
-                        List<BOMutex> items);
-        }
+		List<ApiMutexResponseModel> MapBOToModel(
+			List<BOMutex> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>bb48491df78da0bb2624ddb661b14955</Hash>
+    <Hash>bfc5ed8eee6a13a8fbc35867d06b5490</Hash>
 </Codenesium>*/

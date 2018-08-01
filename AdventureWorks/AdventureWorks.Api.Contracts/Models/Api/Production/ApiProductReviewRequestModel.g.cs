@@ -7,60 +7,60 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductReviewRequestModel : AbstractApiRequestModel
-        {
-                public ApiProductReviewRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiProductReviewRequestModel : AbstractApiRequestModel
+	{
+		public ApiProductReviewRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string comment,
-                        string emailAddress,
-                        DateTime modifiedDate,
-                        int productID,
-                        int rating,
-                        DateTime reviewDate,
-                        string reviewerName)
-                {
-                        this.Comment = comment;
-                        this.EmailAddress = emailAddress;
-                        this.ModifiedDate = modifiedDate;
-                        this.ProductID = productID;
-                        this.Rating = rating;
-                        this.ReviewDate = reviewDate;
-                        this.ReviewerName = reviewerName;
-                }
+		public virtual void SetProperties(
+			string comment,
+			string emailAddress,
+			DateTime modifiedDate,
+			int productID,
+			int rating,
+			DateTime reviewDate,
+			string reviewerName)
+		{
+			this.Comment = comment;
+			this.EmailAddress = emailAddress;
+			this.ModifiedDate = modifiedDate;
+			this.ProductID = productID;
+			this.Rating = rating;
+			this.ReviewDate = reviewDate;
+			this.ReviewerName = reviewerName;
+		}
 
-                [JsonProperty]
-                public string Comment { get; private set; }
+		[JsonProperty]
+		public string Comment { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string EmailAddress { get; private set; }
+		[Required]
+		[JsonProperty]
+		public string EmailAddress { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int ProductID { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int ProductID { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public int Rating { get; private set; }
+		[Required]
+		[JsonProperty]
+		public int Rating { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime ReviewDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime ReviewDate { get; private set; }
 
-                [Required]
-                [JsonProperty]
-                public string ReviewerName { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string ReviewerName { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>858ffec306d0c7e5b8fd50fa9ec55815</Hash>
+    <Hash>d97ec420a17ac472370dee7866156b9e</Hash>
 </Codenesium>*/

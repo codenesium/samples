@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALUserRoleMapper : DALAbstractUserRoleMapper, IDALUserRoleMapper
-        {
-                public DALUserRoleMapper()
-                {
-                }
-        }
+	public partial class DALUserRoleMapper : DALAbstractUserRoleMapper, IDALUserRoleMapper
+	{
+		public DALUserRoleMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>18bd3a8dc3a208625f6da7679bc7936a</Hash>
+    <Hash>b8e4fa62dfe0623c6a2010d6f9454bec</Hash>
 </Codenesium>*/

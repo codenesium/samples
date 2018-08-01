@@ -15,117 +15,117 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SaleTickets")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSaleTicketsRequestModelValidatorTest
-        {
-                public ApiSaleTicketsRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SaleTickets")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSaleTicketsRequestModelValidatorTest
+	{
+		public ApiSaleTicketsRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void SaleId_Create_Valid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
+		[Fact]
+		public async void SaleId_Create_Valid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
+		}
 
-                [Fact]
-                public async void SaleId_Create_Invalid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(null));
+		[Fact]
+		public async void SaleId_Create_Invalid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(null));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
+			await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.SaleId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.SaleId, 1);
+		}
 
-                [Fact]
-                public async void SaleId_Update_Valid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
+		[Fact]
+		public async void SaleId_Update_Valid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
+		}
 
-                [Fact]
-                public async void SaleId_Update_Invalid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(null));
+		[Fact]
+		public async void SaleId_Update_Invalid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(null));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.SaleId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.SaleId, 1);
+		}
 
-                [Fact]
-                public async void TicketId_Create_Valid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
+		[Fact]
+		public async void TicketId_Create_Valid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
+		}
 
-                [Fact]
-                public async void TicketId_Create_Invalid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(null));
+		[Fact]
+		public async void TicketId_Create_Invalid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(null));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
+			await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TicketId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TicketId, 1);
+		}
 
-                [Fact]
-                public async void TicketId_Update_Valid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
+		[Fact]
+		public async void TicketId_Update_Valid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
+		}
 
-                [Fact]
-                public async void TicketId_Update_Invalid_Reference()
-                {
-                        Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
-                        saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(null));
+		[Fact]
+		public async void TicketId_Update_Invalid_Reference()
+		{
+			Mock<ISaleTicketsRepository> saleTicketsRepository = new Mock<ISaleTicketsRepository>();
+			saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(null));
 
-                        var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
+			var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TicketId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TicketId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5a921a42a780bb446538d07c0b43674c</Hash>
+    <Hash>1338fc37f346828c602026c0e6c3d792</Hash>
 </Codenesium>*/

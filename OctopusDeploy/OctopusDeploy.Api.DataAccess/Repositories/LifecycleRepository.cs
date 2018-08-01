@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class LifecycleRepository : AbstractLifecycleRepository, ILifecycleRepository
-        {
-                public LifecycleRepository(
-                        ILogger<LifecycleRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class LifecycleRepository : AbstractLifecycleRepository, ILifecycleRepository
+	{
+		public LifecycleRepository(
+			ILogger<LifecycleRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5595ff04e2ef61ec7178a6486a78662b</Hash>
+    <Hash>831ec88c6266e369bc820d0457ef879b</Hash>
 </Codenesium>*/

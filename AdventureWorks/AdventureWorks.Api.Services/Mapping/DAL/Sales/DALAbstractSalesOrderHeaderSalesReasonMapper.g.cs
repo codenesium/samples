@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractSalesOrderHeaderSalesReasonMapper
-        {
-                public virtual SalesOrderHeaderSalesReason MapBOToEF(
-                        BOSalesOrderHeaderSalesReason bo)
-                {
-                        SalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason = new SalesOrderHeaderSalesReason();
-                        efSalesOrderHeaderSalesReason.SetProperties(
-                                bo.ModifiedDate,
-                                bo.SalesOrderID,
-                                bo.SalesReasonID);
-                        return efSalesOrderHeaderSalesReason;
-                }
+	public abstract class DALAbstractSalesOrderHeaderSalesReasonMapper
+	{
+		public virtual SalesOrderHeaderSalesReason MapBOToEF(
+			BOSalesOrderHeaderSalesReason bo)
+		{
+			SalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason = new SalesOrderHeaderSalesReason();
+			efSalesOrderHeaderSalesReason.SetProperties(
+				bo.ModifiedDate,
+				bo.SalesOrderID,
+				bo.SalesReasonID);
+			return efSalesOrderHeaderSalesReason;
+		}
 
-                public virtual BOSalesOrderHeaderSalesReason MapEFToBO(
-                        SalesOrderHeaderSalesReason ef)
-                {
-                        var bo = new BOSalesOrderHeaderSalesReason();
+		public virtual BOSalesOrderHeaderSalesReason MapEFToBO(
+			SalesOrderHeaderSalesReason ef)
+		{
+			var bo = new BOSalesOrderHeaderSalesReason();
 
-                        bo.SetProperties(
-                                ef.SalesOrderID,
-                                ef.ModifiedDate,
-                                ef.SalesReasonID);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.SalesOrderID,
+				ef.ModifiedDate,
+				ef.SalesReasonID);
+			return bo;
+		}
 
-                public virtual List<BOSalesOrderHeaderSalesReason> MapEFToBO(
-                        List<SalesOrderHeaderSalesReason> records)
-                {
-                        List<BOSalesOrderHeaderSalesReason> response = new List<BOSalesOrderHeaderSalesReason>();
+		public virtual List<BOSalesOrderHeaderSalesReason> MapEFToBO(
+			List<SalesOrderHeaderSalesReason> records)
+		{
+			List<BOSalesOrderHeaderSalesReason> response = new List<BOSalesOrderHeaderSalesReason>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>73254090345eec8947a64bd0c0de0d9d</Hash>
+    <Hash>0be3a8b776f688dd67566671f354385f</Hash>
 </Codenesium>*/

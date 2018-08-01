@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiLifecycleModelMapper : AbstractApiLifecycleModelMapper, IApiLifecycleModelMapper
-        {
-                public ApiLifecycleModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiLifecycleModelMapper : AbstractApiLifecycleModelMapper, IApiLifecycleModelMapper
+	{
+		public ApiLifecycleModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4e22d139b121696fc1fc50c2b4a10f0f</Hash>
+    <Hash>44a86a7206c6c61daecdbca6fb631397</Hash>
 </Codenesium>*/

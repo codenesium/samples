@@ -15,41 +15,41 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ChainStatus")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiChainStatusRequestModelValidatorTest
-        {
-                public ApiChainStatusRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ChainStatus")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiChainStatusRequestModelValidatorTest
+	{
+		public ApiChainStatusRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
-                        chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
+			chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
-                        var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiChainStatusRequestModel());
+			var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiChainStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
-                        chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IChainStatusRepository> chainStatusRepository = new Mock<IChainStatusRepository>();
+			chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
-                        var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiChainStatusRequestModel());
+			var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiChainStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>92249faaee83c1f1bcbd5277a9cd4df4</Hash>
+    <Hash>721fad0d62507a56a59826aae945246f</Hash>
 </Codenesium>*/

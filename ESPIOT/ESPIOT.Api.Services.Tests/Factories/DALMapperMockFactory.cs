@@ -6,18 +6,18 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALDeviceMapper DALDeviceMapperMock { get; set; } = new DALDeviceMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALDeviceMapper DALDeviceMapperMock { get; set; } = new DALDeviceMapper();
 
-                public IDALDeviceActionMapper DALDeviceActionMapperMock { get; set; } = new DALDeviceActionMapper();
+		public IDALDeviceActionMapper DALDeviceActionMapperMock { get; set; } = new DALDeviceActionMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8da770b8fb9122f29ea2e476a79f9fd0</Hash>
+    <Hash>928a60ed007203c24d979ce256e9ae0a</Hash>
 </Codenesium>*/

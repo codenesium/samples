@@ -10,25 +10,25 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class PersonRefService : AbstractPersonRefService, IPersonRefService
-        {
-                public PersonRefService(
-                        ILogger<IPersonRefRepository> logger,
-                        IPersonRefRepository personRefRepository,
-                        IApiPersonRefRequestModelValidator personRefModelValidator,
-                        IBOLPersonRefMapper bolpersonRefMapper,
-                        IDALPersonRefMapper dalpersonRefMapper
-                        )
-                        : base(logger,
-                               personRefRepository,
-                               personRefModelValidator,
-                               bolpersonRefMapper,
-                               dalpersonRefMapper)
-                {
-                }
-        }
+	public partial class PersonRefService : AbstractPersonRefService, IPersonRefService
+	{
+		public PersonRefService(
+			ILogger<IPersonRefRepository> logger,
+			IPersonRefRepository personRefRepository,
+			IApiPersonRefRequestModelValidator personRefModelValidator,
+			IBOLPersonRefMapper bolpersonRefMapper,
+			IDALPersonRefMapper dalpersonRefMapper
+			)
+			: base(logger,
+			       personRefRepository,
+			       personRefModelValidator,
+			       bolpersonRefMapper,
+			       dalpersonRefMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2f2a18a703ad2d59ebbb07c3901d37cf</Hash>
+    <Hash>2eb386f042735900b8dee468631639bf</Hash>
 </Codenesium>*/

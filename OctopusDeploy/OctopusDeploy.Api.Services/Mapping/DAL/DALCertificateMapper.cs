@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALCertificateMapper : DALAbstractCertificateMapper, IDALCertificateMapper
-        {
-                public DALCertificateMapper()
-                {
-                }
-        }
+	public partial class DALCertificateMapper : DALAbstractCertificateMapper, IDALCertificateMapper
+	{
+		public DALCertificateMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>72f539be8d32b7750c0c0a362cb6f062</Hash>
+    <Hash>8da4d70fe2f14c535cb637842b62e582</Hash>
 </Codenesium>*/

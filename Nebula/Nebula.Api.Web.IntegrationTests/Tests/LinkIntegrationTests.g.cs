@@ -12,86 +12,86 @@ using Xunit;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Link")]
-        [Trait("Area", "Integration")]
-        public class LinkIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public LinkIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Link")]
+	[Trait("Area", "Integration")]
+	public class LinkIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public LinkIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiLinkModelMapper mapper = new ApiLinkModelMapper();
+			ApiLinkModelMapper mapper = new ApiLinkModelMapper();
 
-                        UpdateResponse<ApiLinkResponseModel> updateResponse = await this.Client.LinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLinkResponseModel> updateResponse = await this.Client.LinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.LinkDeleteAsync(model.Id);
+			await this.Client.LinkDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiLinkResponseModel response = await this.Client.LinkGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiLinkResponseModel response = await this.Client.LinkGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiLinkResponseModel> response = await this.Client.LinkAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiLinkResponseModel> response = await this.Client.LinkAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiLinkResponseModel> CreateRecord()
-                {
-                        var model = new ApiLinkRequestModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
-                        CreateResponse<ApiLinkResponseModel> result = await this.Client.LinkCreateAsync(model);
+		private async Task<ApiLinkResponseModel> CreateRecord()
+		{
+			var model = new ApiLinkRequestModel();
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
+			CreateResponse<ApiLinkResponseModel> result = await this.Client.LinkCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.LinkDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.LinkDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>352ce8e8d753eb607426de922b8f84a6</Hash>
+    <Hash>5dff15e565089e0a8494a548aba0e0ea</Hash>
 </Codenesium>*/

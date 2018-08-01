@@ -6,45 +6,45 @@ using System.Linq;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        [Table("Employee", Schema="dbo")]
-        public partial class Employee : AbstractEntity
-        {
-                public Employee()
-                {
-                }
+	[Table("Employee", Schema="dbo")]
+	public partial class Employee : AbstractEntity
+	{
+		public Employee()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string firstName,
-                        int id,
-                        bool isSalesPerson,
-                        bool isShipper,
-                        string lastName)
-                {
-                        this.FirstName = firstName;
-                        this.Id = id;
-                        this.IsSalesPerson = isSalesPerson;
-                        this.IsShipper = isShipper;
-                        this.LastName = lastName;
-                }
+		public virtual void SetProperties(
+			string firstName,
+			int id,
+			bool isSalesPerson,
+			bool isShipper,
+			string lastName)
+		{
+			this.FirstName = firstName;
+			this.Id = id;
+			this.IsSalesPerson = isSalesPerson;
+			this.IsShipper = isShipper;
+			this.LastName = lastName;
+		}
 
-                [Column("firstName")]
-                public string FirstName { get; private set; }
+		[Column("firstName")]
+		public string FirstName { get; private set; }
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("isSalesPerson")]
-                public bool IsSalesPerson { get; private set; }
+		[Column("isSalesPerson")]
+		public bool IsSalesPerson { get; private set; }
 
-                [Column("isShipper")]
-                public bool IsShipper { get; private set; }
+		[Column("isShipper")]
+		public bool IsShipper { get; private set; }
 
-                [Column("lastName")]
-                public string LastName { get; private set; }
-        }
+		[Column("lastName")]
+		public string LastName { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>f8b1780b0d8407853c86abc8211c6fc0</Hash>
+    <Hash>a04cdf2dfa31179e5f9f50a9e6fa3e12</Hash>
 </Codenesium>*/

@@ -9,50 +9,50 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiClientRequestModelValidator : AbstractValidator<ApiClientRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiClientRequestModelValidator : AbstractValidator<ApiClientRequestModel>
+	{
+		private int existingRecordId;
 
-                private IClientRepository clientRepository;
+		private IClientRepository clientRepository;
 
-                public AbstractApiClientRequestModelValidator(IClientRepository clientRepository)
-                {
-                        this.clientRepository = clientRepository;
-                }
+		public AbstractApiClientRequestModelValidator(IClientRepository clientRepository)
+		{
+			this.clientRepository = clientRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiClientRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiClientRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void EmailRules()
-                {
-                        this.RuleFor(x => x.Email).Length(0, 128);
-                }
+		public virtual void EmailRules()
+		{
+			this.RuleFor(x => x.Email).Length(0, 128);
+		}
 
-                public virtual void FirstNameRules()
-                {
-                        this.RuleFor(x => x.FirstName).Length(0, 128);
-                }
+		public virtual void FirstNameRules()
+		{
+			this.RuleFor(x => x.FirstName).Length(0, 128);
+		}
 
-                public virtual void LastNameRules()
-                {
-                        this.RuleFor(x => x.LastName).Length(0, 128);
-                }
+		public virtual void LastNameRules()
+		{
+			this.RuleFor(x => x.LastName).Length(0, 128);
+		}
 
-                public virtual void NotesRules()
-                {
-                        this.RuleFor(x => x.Notes).Length(0, 2147483647);
-                }
+		public virtual void NotesRules()
+		{
+			this.RuleFor(x => x.Notes).Length(0, 2147483647);
+		}
 
-                public virtual void PhoneRules()
-                {
-                        this.RuleFor(x => x.Phone).Length(0, 10);
-                }
-        }
+		public virtual void PhoneRules()
+		{
+			this.RuleFor(x => x.Phone).Length(0, 10);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed0c2c65f2e93a3daa4cee11cb135314</Hash>
+    <Hash>8d564f46003a59a719ce82518bd7492f</Hash>
 </Codenesium>*/

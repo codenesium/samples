@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class CustomerRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class CustomerRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<CustomerRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<CustomerRepository>>();
-                }
-        }
+		public static Mock<ILogger<CustomerRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<CustomerRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Customer")]
-        [Trait("Area", "Repositories")]
-        public partial class CustomerRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Customer")]
+	[Trait("Area", "Repositories")]
+	public partial class CustomerRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
 
-                        Customer entity = new Customer();
-                        context.Set<Customer>().Add(entity);
-                        await context.SaveChangesAsync();
+			Customer entity = new Customer();
+			context.Set<Customer>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
 
-                        Customer entity = new Customer();
-                        context.Set<Customer>().Add(entity);
-                        await context.SaveChangesAsync();
+			Customer entity = new Customer();
+			context.Set<Customer>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CustomerID);
+			var record = await repository.Get(entity.CustomerID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
 
-                        var entity = new Customer();
-                        await repository.Create(entity);
+			var entity = new Customer();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Customer>().FirstOrDefaultAsync();
+			var record = await context.Set<Customer>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
-                        Customer entity = new Customer();
-                        context.Set<Customer>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
+			Customer entity = new Customer();
+			context.Set<Customer>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.CustomerID);
+			var record = await repository.Get(entity.CustomerID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Customer>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Customer>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
-                        Customer entity = new Customer();
-                        context.Set<Customer>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
+			Customer entity = new Customer();
+			context.Set<Customer>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Customer());
+			await repository.Update(new Customer());
 
-                        var modifiedRecord = context.Set<Customer>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Customer>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
-                        var repository = new CustomerRepository(loggerMoc.Object, context);
-                        Customer entity = new Customer();
-                        context.Set<Customer>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
+			var repository = new CustomerRepository(loggerMoc.Object, context);
+			Customer entity = new Customer();
+			context.Set<Customer>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.CustomerID);
+			await repository.Delete(entity.CustomerID);
 
-                        Customer modifiedRecord = await context.Set<Customer>().FirstOrDefaultAsync();
+			Customer modifiedRecord = await context.Set<Customer>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1231b446c85e050c2ac46080c8944b7d</Hash>
+    <Hash>94bc5fbd3292d7a692a2ec042d7b3707</Hash>
 </Codenesium>*/

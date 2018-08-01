@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "BillOfMaterial")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiBillOfMaterialRequestModelValidatorTest
-        {
-                public ApiBillOfMaterialRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "BillOfMaterial")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiBillOfMaterialRequestModelValidatorTest
+	{
+		public ApiBillOfMaterialRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Create_null()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
+		[Fact]
+		public async void UnitMeasureCode_Create_null()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Update_null()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
+		[Fact]
+		public async void UnitMeasureCode_Update_null()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Create_length()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
+		[Fact]
+		public async void UnitMeasureCode_Create_length()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
+		}
 
-                [Fact]
-                public async void UnitMeasureCode_Update_length()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
+		[Fact]
+		public async void UnitMeasureCode_Update_length()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
+		}
 
-                [Fact]
-                private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Exists()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(new BillOfMaterial()));
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+		[Fact]
+		private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Exists()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(new BillOfMaterial()));
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Not_Exists()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(null));
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+		[Fact]
+		private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Create_Not_Exists()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(null));
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Exists()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(new BillOfMaterial()));
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+		[Fact]
+		private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Exists()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(new BillOfMaterial()));
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Not_Exists()
-                {
-                        Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
-                        billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(null));
-                        var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
+		[Fact]
+		private async void BeUniqueByProductAssemblyIDComponentIDStartDate_Update_Not_Exists()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(null));
+			var validator = new ApiBillOfMaterialRequestModelValidator(billOfMaterialRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c80226051959fabfd948db74fdfb7bb4</Hash>
+    <Hash>c363b2a4cd33baa66a5b1d129bea687f</Hash>
 </Codenesium>*/

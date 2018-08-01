@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractCountryRegionCurrencyMapper
-        {
-                public virtual CountryRegionCurrency MapBOToEF(
-                        BOCountryRegionCurrency bo)
-                {
-                        CountryRegionCurrency efCountryRegionCurrency = new CountryRegionCurrency();
-                        efCountryRegionCurrency.SetProperties(
-                                bo.CountryRegionCode,
-                                bo.CurrencyCode,
-                                bo.ModifiedDate);
-                        return efCountryRegionCurrency;
-                }
+	public abstract class DALAbstractCountryRegionCurrencyMapper
+	{
+		public virtual CountryRegionCurrency MapBOToEF(
+			BOCountryRegionCurrency bo)
+		{
+			CountryRegionCurrency efCountryRegionCurrency = new CountryRegionCurrency();
+			efCountryRegionCurrency.SetProperties(
+				bo.CountryRegionCode,
+				bo.CurrencyCode,
+				bo.ModifiedDate);
+			return efCountryRegionCurrency;
+		}
 
-                public virtual BOCountryRegionCurrency MapEFToBO(
-                        CountryRegionCurrency ef)
-                {
-                        var bo = new BOCountryRegionCurrency();
+		public virtual BOCountryRegionCurrency MapEFToBO(
+			CountryRegionCurrency ef)
+		{
+			var bo = new BOCountryRegionCurrency();
 
-                        bo.SetProperties(
-                                ef.CountryRegionCode,
-                                ef.CurrencyCode,
-                                ef.ModifiedDate);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.CountryRegionCode,
+				ef.CurrencyCode,
+				ef.ModifiedDate);
+			return bo;
+		}
 
-                public virtual List<BOCountryRegionCurrency> MapEFToBO(
-                        List<CountryRegionCurrency> records)
-                {
-                        List<BOCountryRegionCurrency> response = new List<BOCountryRegionCurrency>();
+		public virtual List<BOCountryRegionCurrency> MapEFToBO(
+			List<CountryRegionCurrency> records)
+		{
+			List<BOCountryRegionCurrency> response = new List<BOCountryRegionCurrency>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>77163e6559431e1e9c8b03b0990d4a89</Hash>
+    <Hash>e17b66cfd4806255296e8b2db562da25</Hash>
 </Codenesium>*/

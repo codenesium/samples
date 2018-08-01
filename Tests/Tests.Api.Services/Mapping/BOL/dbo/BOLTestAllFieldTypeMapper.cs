@@ -5,14 +5,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOLTestAllFieldTypeMapper : BOLAbstractTestAllFieldTypeMapper, IBOLTestAllFieldTypeMapper
-        {
-                public BOLTestAllFieldTypeMapper()
-                {
-                }
-        }
+	public partial class BOLTestAllFieldTypeMapper : BOLAbstractTestAllFieldTypeMapper, IBOLTestAllFieldTypeMapper
+	{
+		public BOLTestAllFieldTypeMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2dae3c4d87d1f77316fbd82b7c1af7ae</Hash>
+    <Hash>dec93b784f69804ed711ee2c73bbd6b9</Hash>
 </Codenesium>*/

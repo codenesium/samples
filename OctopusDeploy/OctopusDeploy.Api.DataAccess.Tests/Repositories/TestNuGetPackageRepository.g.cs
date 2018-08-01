@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class NuGetPackageRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class NuGetPackageRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<NuGetPackageRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<NuGetPackageRepository>>();
-                }
-        }
+		public static Mock<ILogger<NuGetPackageRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<NuGetPackageRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "NuGetPackage")]
-        [Trait("Area", "Repositories")]
-        public partial class NuGetPackageRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "NuGetPackage")]
+	[Trait("Area", "Repositories")]
+	public partial class NuGetPackageRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
-                        NuGetPackage entity = new NuGetPackage();
-                        context.Set<NuGetPackage>().Add(entity);
-                        await context.SaveChangesAsync();
+			NuGetPackage entity = new NuGetPackage();
+			context.Set<NuGetPackage>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
-                        NuGetPackage entity = new NuGetPackage();
-                        context.Set<NuGetPackage>().Add(entity);
-                        await context.SaveChangesAsync();
+			NuGetPackage entity = new NuGetPackage();
+			context.Set<NuGetPackage>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
-                        var entity = new NuGetPackage();
-                        await repository.Create(entity);
+			var entity = new NuGetPackage();
+			await repository.Create(entity);
 
-                        var record = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
+			var record = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-                        NuGetPackage entity = new NuGetPackage();
-                        context.Set<NuGetPackage>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+			NuGetPackage entity = new NuGetPackage();
+			context.Set<NuGetPackage>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<NuGetPackage>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<NuGetPackage>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-                        NuGetPackage entity = new NuGetPackage();
-                        context.Set<NuGetPackage>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+			NuGetPackage entity = new NuGetPackage();
+			context.Set<NuGetPackage>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new NuGetPackage());
+			await repository.Update(new NuGetPackage());
 
-                        var modifiedRecord = context.Set<NuGetPackage>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<NuGetPackage>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
-                        var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-                        NuGetPackage entity = new NuGetPackage();
-                        context.Set<NuGetPackage>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
+			var repository = new NuGetPackageRepository(loggerMoc.Object, context);
+			NuGetPackage entity = new NuGetPackage();
+			context.Set<NuGetPackage>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        NuGetPackage modifiedRecord = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
+			NuGetPackage modifiedRecord = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>07b346b9d54c7c8791fb048ca92e1683</Hash>
+    <Hash>c4bc0d75a96678640082fe4e31b63017</Hash>
 </Codenesium>*/

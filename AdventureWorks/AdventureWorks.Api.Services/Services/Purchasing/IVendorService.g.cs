@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IVendorService
-        {
-                Task<CreateResponse<ApiVendorResponseModel>> Create(
-                        ApiVendorRequestModel model);
+	public interface IVendorService
+	{
+		Task<CreateResponse<ApiVendorResponseModel>> Create(
+			ApiVendorRequestModel model);
 
-                Task<UpdateResponse<ApiVendorResponseModel>> Update(int businessEntityID,
-                                                                     ApiVendorRequestModel model);
+		Task<UpdateResponse<ApiVendorResponseModel>> Update(int businessEntityID,
+		                                                     ApiVendorRequestModel model);
 
-                Task<ActionResponse> Delete(int businessEntityID);
+		Task<ActionResponse> Delete(int businessEntityID);
 
-                Task<ApiVendorResponseModel> Get(int businessEntityID);
+		Task<ApiVendorResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiVendorResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVendorResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber);
+		Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber);
 
-                Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>97129c1323f660d170372deb4da45f61</Hash>
+    <Hash>9ad90dc968a35e81d628301aa2962168</Hash>
 </Codenesium>*/

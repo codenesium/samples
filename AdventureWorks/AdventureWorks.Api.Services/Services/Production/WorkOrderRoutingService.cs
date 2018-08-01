@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class WorkOrderRoutingService : AbstractWorkOrderRoutingService, IWorkOrderRoutingService
-        {
-                public WorkOrderRoutingService(
-                        ILogger<IWorkOrderRoutingRepository> logger,
-                        IWorkOrderRoutingRepository workOrderRoutingRepository,
-                        IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
-                        IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
-                        IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper
-                        )
-                        : base(logger,
-                               workOrderRoutingRepository,
-                               workOrderRoutingModelValidator,
-                               bolworkOrderRoutingMapper,
-                               dalworkOrderRoutingMapper)
-                {
-                }
-        }
+	public partial class WorkOrderRoutingService : AbstractWorkOrderRoutingService, IWorkOrderRoutingService
+	{
+		public WorkOrderRoutingService(
+			ILogger<IWorkOrderRoutingRepository> logger,
+			IWorkOrderRoutingRepository workOrderRoutingRepository,
+			IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
+			IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
+			IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper
+			)
+			: base(logger,
+			       workOrderRoutingRepository,
+			       workOrderRoutingModelValidator,
+			       bolworkOrderRoutingMapper,
+			       dalworkOrderRoutingMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f2fbafb76da990617994a30ed28e92d</Hash>
+    <Hash>3a62f097d41011b9905d5df214db260d</Hash>
 </Codenesium>*/

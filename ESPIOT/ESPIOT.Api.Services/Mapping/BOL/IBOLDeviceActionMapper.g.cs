@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public interface IBOLDeviceActionMapper
-        {
-                BODeviceAction MapModelToBO(
-                        int id,
-                        ApiDeviceActionRequestModel model);
+	public interface IBOLDeviceActionMapper
+	{
+		BODeviceAction MapModelToBO(
+			int id,
+			ApiDeviceActionRequestModel model);
 
-                ApiDeviceActionResponseModel MapBOToModel(
-                        BODeviceAction boDeviceAction);
+		ApiDeviceActionResponseModel MapBOToModel(
+			BODeviceAction boDeviceAction);
 
-                List<ApiDeviceActionResponseModel> MapBOToModel(
-                        List<BODeviceAction> items);
-        }
+		List<ApiDeviceActionResponseModel> MapBOToModel(
+			List<BODeviceAction> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4531565b55823a909da689f03490a194</Hash>
+    <Hash>9f076b885a5ea5d79105b0dae90a5969</Hash>
 </Codenesium>*/

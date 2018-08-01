@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALPhoneNumberTypeMapper : DALAbstractPhoneNumberTypeMapper, IDALPhoneNumberTypeMapper
-        {
-                public DALPhoneNumberTypeMapper()
-                {
-                }
-        }
+	public partial class DALPhoneNumberTypeMapper : DALAbstractPhoneNumberTypeMapper, IDALPhoneNumberTypeMapper
+	{
+		public DALPhoneNumberTypeMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aae76f86523eeafeb00bca2819a12dc9</Hash>
+    <Hash>092b07edaa5f7af9e0396d7e18edf40f</Hash>
 </Codenesium>*/

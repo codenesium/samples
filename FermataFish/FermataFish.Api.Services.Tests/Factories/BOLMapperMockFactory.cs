@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        public class BOLMapperMockFactory
-        {
-                public IBOLAdminMapper BOLAdminMapperMock { get; set; } = new BOLAdminMapper();
+	public class BOLMapperMockFactory
+	{
+		public IBOLAdminMapper BOLAdminMapperMock { get; set; } = new BOLAdminMapper();
 
-                public IBOLFamilyMapper BOLFamilyMapperMock { get; set; } = new BOLFamilyMapper();
+		public IBOLFamilyMapper BOLFamilyMapperMock { get; set; } = new BOLFamilyMapper();
 
-                public IBOLLessonMapper BOLLessonMapperMock { get; set; } = new BOLLessonMapper();
+		public IBOLLessonMapper BOLLessonMapperMock { get; set; } = new BOLLessonMapper();
 
-                public IBOLLessonStatusMapper BOLLessonStatusMapperMock { get; set; } = new BOLLessonStatusMapper();
+		public IBOLLessonStatusMapper BOLLessonStatusMapperMock { get; set; } = new BOLLessonStatusMapper();
 
-                public IBOLLessonXStudentMapper BOLLessonXStudentMapperMock { get; set; } = new BOLLessonXStudentMapper();
+		public IBOLLessonXStudentMapper BOLLessonXStudentMapperMock { get; set; } = new BOLLessonXStudentMapper();
 
-                public IBOLLessonXTeacherMapper BOLLessonXTeacherMapperMock { get; set; } = new BOLLessonXTeacherMapper();
+		public IBOLLessonXTeacherMapper BOLLessonXTeacherMapperMock { get; set; } = new BOLLessonXTeacherMapper();
 
-                public IBOLRateMapper BOLRateMapperMock { get; set; } = new BOLRateMapper();
+		public IBOLRateMapper BOLRateMapperMock { get; set; } = new BOLRateMapper();
 
-                public IBOLSpaceMapper BOLSpaceMapperMock { get; set; } = new BOLSpaceMapper();
+		public IBOLSpaceMapper BOLSpaceMapperMock { get; set; } = new BOLSpaceMapper();
 
-                public IBOLSpaceFeatureMapper BOLSpaceFeatureMapperMock { get; set; } = new BOLSpaceFeatureMapper();
+		public IBOLSpaceFeatureMapper BOLSpaceFeatureMapperMock { get; set; } = new BOLSpaceFeatureMapper();
 
-                public IBOLSpaceXSpaceFeatureMapper BOLSpaceXSpaceFeatureMapperMock { get; set; } = new BOLSpaceXSpaceFeatureMapper();
+		public IBOLSpaceXSpaceFeatureMapper BOLSpaceXSpaceFeatureMapperMock { get; set; } = new BOLSpaceXSpaceFeatureMapper();
 
-                public IBOLStateMapper BOLStateMapperMock { get; set; } = new BOLStateMapper();
+		public IBOLStateMapper BOLStateMapperMock { get; set; } = new BOLStateMapper();
 
-                public IBOLStudentMapper BOLStudentMapperMock { get; set; } = new BOLStudentMapper();
+		public IBOLStudentMapper BOLStudentMapperMock { get; set; } = new BOLStudentMapper();
 
-                public IBOLStudentXFamilyMapper BOLStudentXFamilyMapperMock { get; set; } = new BOLStudentXFamilyMapper();
+		public IBOLStudentXFamilyMapper BOLStudentXFamilyMapperMock { get; set; } = new BOLStudentXFamilyMapper();
 
-                public IBOLStudioMapper BOLStudioMapperMock { get; set; } = new BOLStudioMapper();
+		public IBOLStudioMapper BOLStudioMapperMock { get; set; } = new BOLStudioMapper();
 
-                public IBOLTeacherMapper BOLTeacherMapperMock { get; set; } = new BOLTeacherMapper();
+		public IBOLTeacherMapper BOLTeacherMapperMock { get; set; } = new BOLTeacherMapper();
 
-                public IBOLTeacherSkillMapper BOLTeacherSkillMapperMock { get; set; } = new BOLTeacherSkillMapper();
+		public IBOLTeacherSkillMapper BOLTeacherSkillMapperMock { get; set; } = new BOLTeacherSkillMapper();
 
-                public IBOLTeacherXTeacherSkillMapper BOLTeacherXTeacherSkillMapperMock { get; set; } = new BOLTeacherXTeacherSkillMapper();
+		public IBOLTeacherXTeacherSkillMapper BOLTeacherXTeacherSkillMapperMock { get; set; } = new BOLTeacherXTeacherSkillMapper();
 
-                public BOLMapperMockFactory()
-                {
-                }
-        }
+		public BOLMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>565cdc6d23bcc2ba3166c58f60f1539d</Hash>
+    <Hash>a2d67e74c5b05d165a1a974452b1b819</Hash>
 </Codenesium>*/

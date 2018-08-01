@@ -15,41 +15,41 @@ using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "VersionInfo")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiVersionInfoRequestModelValidatorTest
-        {
-                public ApiVersionInfoRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "VersionInfo")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiVersionInfoRequestModelValidatorTest
+	{
+		public ApiVersionInfoRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Description_Create_length()
-                {
-                        Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
-                        versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
+		[Fact]
+		public async void Description_Create_length()
+		{
+			Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
+			versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
 
-                        var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiVersionInfoRequestModel());
+			var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
+			await validator.ValidateCreateAsync(new ApiVersionInfoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
+		}
 
-                [Fact]
-                public async void Description_Update_length()
-                {
-                        Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
-                        versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
+		[Fact]
+		public async void Description_Update_length()
+		{
+			Mock<IVersionInfoRepository> versionInfoRepository = new Mock<IVersionInfoRepository>();
+			versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
 
-                        var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-                        await validator.ValidateUpdateAsync(default(long), new ApiVersionInfoRequestModel());
+			var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
+			await validator.ValidateUpdateAsync(default(long), new ApiVersionInfoRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>60b8d779217e7c58e3c1ff036d223268</Hash>
+    <Hash>3e0a64534409fba4caf7cee2206dc798</Hash>
 </Codenesium>*/

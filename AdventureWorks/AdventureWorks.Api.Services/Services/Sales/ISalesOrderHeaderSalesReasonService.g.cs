@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface ISalesOrderHeaderSalesReasonService
-        {
-                Task<CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Create(
-                        ApiSalesOrderHeaderSalesReasonRequestModel model);
+	public interface ISalesOrderHeaderSalesReasonService
+	{
+		Task<CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Create(
+			ApiSalesOrderHeaderSalesReasonRequestModel model);
 
-                Task<UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Update(int salesOrderID,
-                                                                                          ApiSalesOrderHeaderSalesReasonRequestModel model);
+		Task<UpdateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Update(int salesOrderID,
+		                                                                          ApiSalesOrderHeaderSalesReasonRequestModel model);
 
-                Task<ActionResponse> Delete(int salesOrderID);
+		Task<ActionResponse> Delete(int salesOrderID);
 
-                Task<ApiSalesOrderHeaderSalesReasonResponseModel> Get(int salesOrderID);
+		Task<ApiSalesOrderHeaderSalesReasonResponseModel> Get(int salesOrderID);
 
-                Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c861730a1a00e53843bcd10c7dc824b</Hash>
+    <Hash>900b0b434ce02b6ce6746a13ccfb991e</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiLessonXStudentModelMapper : AbstractApiLessonXStudentModelMapper, IApiLessonXStudentModelMapper
-        {
-                public ApiLessonXStudentModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiLessonXStudentModelMapper : AbstractApiLessonXStudentModelMapper, IApiLessonXStudentModelMapper
+	{
+		public ApiLessonXStudentModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6c91f5e6a17a775f6261ec3e463bb434</Hash>
+    <Hash>f5558e4ed1086c73d5569373d3ee3082</Hash>
 </Codenesium>*/

@@ -12,161 +12,161 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSalesOrderHeaderService : AbstractService
-        {
-                private ISalesOrderHeaderRepository salesOrderHeaderRepository;
+	public abstract class AbstractSalesOrderHeaderService : AbstractService
+	{
+		private ISalesOrderHeaderRepository salesOrderHeaderRepository;
 
-                private IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator;
+		private IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator;
 
-                private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
+		private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
 
-                private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
+		private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
 
-                private IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper;
+		private IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper;
 
-                private IDALSalesOrderDetailMapper dalSalesOrderDetailMapper;
-                private IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper;
+		private IDALSalesOrderDetailMapper dalSalesOrderDetailMapper;
+		private IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper;
 
-                private IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper;
+		private IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractSalesOrderHeaderService(
-                        ILogger logger,
-                        ISalesOrderHeaderRepository salesOrderHeaderRepository,
-                        IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
-                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
-                        IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper,
-                        IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper)
-                        : base()
-                {
-                        this.salesOrderHeaderRepository = salesOrderHeaderRepository;
-                        this.salesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
-                        this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
-                        this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
-                        this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
-                        this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
-                        this.bolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
-                        this.dalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
-                        this.logger = logger;
-                }
+		public AbstractSalesOrderHeaderService(
+			ILogger logger,
+			ISalesOrderHeaderRepository salesOrderHeaderRepository,
+			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
+			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
+			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
+			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper,
+			IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
+			IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper)
+			: base()
+		{
+			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
+			this.salesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
+			this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
+			this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
+			this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
+			this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
+			this.bolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
+			this.dalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.salesOrderHeaderRepository.All(limit, offset);
+		public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.salesOrderHeaderRepository.All(limit, offset);
 
-                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
-                }
+			return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiSalesOrderHeaderResponseModel> Get(int salesOrderID)
-                {
-                        var record = await this.salesOrderHeaderRepository.Get(salesOrderID);
+		public virtual async Task<ApiSalesOrderHeaderResponseModel> Get(int salesOrderID)
+		{
+			var record = await this.salesOrderHeaderRepository.Get(salesOrderID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
-                        ApiSalesOrderHeaderRequestModel model)
-                {
-                        CreateResponse<ApiSalesOrderHeaderResponseModel> response = new CreateResponse<ApiSalesOrderHeaderResponseModel>(await this.salesOrderHeaderModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolSalesOrderHeaderMapper.MapModelToBO(default(int), model);
-                                var record = await this.salesOrderHeaderRepository.Create(this.dalSalesOrderHeaderMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
+			ApiSalesOrderHeaderRequestModel model)
+		{
+			CreateResponse<ApiSalesOrderHeaderResponseModel> response = new CreateResponse<ApiSalesOrderHeaderResponseModel>(await this.salesOrderHeaderModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolSalesOrderHeaderMapper.MapModelToBO(default(int), model);
+				var record = await this.salesOrderHeaderRepository.Create(this.dalSalesOrderHeaderMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiSalesOrderHeaderResponseModel>> Update(
-                        int salesOrderID,
-                        ApiSalesOrderHeaderRequestModel model)
-                {
-                        var validationResult = await this.salesOrderHeaderModelValidator.ValidateUpdateAsync(salesOrderID, model);
+		public virtual async Task<UpdateResponse<ApiSalesOrderHeaderResponseModel>> Update(
+			int salesOrderID,
+			ApiSalesOrderHeaderRequestModel model)
+		{
+			var validationResult = await this.salesOrderHeaderModelValidator.ValidateUpdateAsync(salesOrderID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolSalesOrderHeaderMapper.MapModelToBO(salesOrderID, model);
-                                await this.salesOrderHeaderRepository.Update(this.dalSalesOrderHeaderMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolSalesOrderHeaderMapper.MapModelToBO(salesOrderID, model);
+				await this.salesOrderHeaderRepository.Update(this.dalSalesOrderHeaderMapper.MapBOToEF(bo));
 
-                                var record = await this.salesOrderHeaderRepository.Get(salesOrderID);
+				var record = await this.salesOrderHeaderRepository.Get(salesOrderID);
 
-                                return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int salesOrderID)
-                {
-                        ActionResponse response = new ActionResponse(await this.salesOrderHeaderModelValidator.ValidateDeleteAsync(salesOrderID));
-                        if (response.Success)
-                        {
-                                await this.salesOrderHeaderRepository.Delete(salesOrderID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int salesOrderID)
+		{
+			ActionResponse response = new ActionResponse(await this.salesOrderHeaderModelValidator.ValidateDeleteAsync(salesOrderID));
+			if (response.Success)
+			{
+				await this.salesOrderHeaderRepository.Delete(salesOrderID);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiSalesOrderHeaderResponseModel> BySalesOrderNumber(string salesOrderNumber)
-                {
-                        SalesOrderHeader record = await this.salesOrderHeaderRepository.BySalesOrderNumber(salesOrderNumber);
+		public async Task<ApiSalesOrderHeaderResponseModel> BySalesOrderNumber(string salesOrderNumber)
+		{
+			SalesOrderHeader record = await this.salesOrderHeaderRepository.BySalesOrderNumber(salesOrderNumber);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+			}
+		}
 
-                public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID)
-                {
-                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.ByCustomerID(customerID);
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID)
+		{
+			List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.ByCustomerID(customerID);
 
-                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
-                }
+			return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+		}
 
-                public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID)
-                {
-                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.BySalesPersonID(salesPersonID);
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID)
+		{
+			List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.BySalesPersonID(salesPersonID);
 
-                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
-                }
+			return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+		}
 
-                public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<SalesOrderDetail> records = await this.salesOrderHeaderRepository.SalesOrderDetails(salesOrderID, limit, offset);
+		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SalesOrderDetail> records = await this.salesOrderHeaderRepository.SalesOrderDetails(salesOrderID, limit, offset);
 
-                        return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
-                }
+			return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
+		}
 
-                public async virtual Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasons(int salesOrderID, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<SalesOrderHeaderSalesReason> records = await this.salesOrderHeaderRepository.SalesOrderHeaderSalesReasons(salesOrderID, limit, offset);
+		public async virtual Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasons(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SalesOrderHeaderSalesReason> records = await this.salesOrderHeaderRepository.SalesOrderHeaderSalesReasons(salesOrderID, limit, offset);
 
-                        return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
-                }
-        }
+			return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b5fad0f1cbdfd0c08d6bb81bd3b55975</Hash>
+    <Hash>b89d2e6a50fceb86378b77ec1c615276</Hash>
 </Codenesium>*/

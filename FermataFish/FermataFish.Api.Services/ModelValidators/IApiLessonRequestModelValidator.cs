@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IApiLessonRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiLessonRequestModel model);
+	public interface IApiLessonRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiLessonRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7fa208339a89238a787896fa299fd595</Hash>
+    <Hash>d317bb59b876947691c40bc5614e410c</Hash>
 </Codenesium>*/

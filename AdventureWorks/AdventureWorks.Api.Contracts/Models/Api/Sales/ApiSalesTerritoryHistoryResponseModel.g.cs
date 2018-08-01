@@ -6,54 +6,54 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesTerritoryHistoryResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int businessEntityID,
-                        DateTime? endDate,
-                        DateTime modifiedDate,
-                        Guid rowguid,
-                        DateTime startDate,
-                        int territoryID)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.EndDate = endDate;
-                        this.ModifiedDate = modifiedDate;
-                        this.Rowguid = rowguid;
-                        this.StartDate = startDate;
-                        this.TerritoryID = territoryID;
+	public partial class ApiSalesTerritoryHistoryResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int businessEntityID,
+			DateTime? endDate,
+			DateTime modifiedDate,
+			Guid rowguid,
+			DateTime startDate,
+			int territoryID)
+		{
+			this.BusinessEntityID = businessEntityID;
+			this.EndDate = endDate;
+			this.ModifiedDate = modifiedDate;
+			this.Rowguid = rowguid;
+			this.StartDate = startDate;
+			this.TerritoryID = territoryID;
 
-                        this.BusinessEntityIDEntity = nameof(ApiResponse.SalesPersons);
-                        this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
-                }
+			this.BusinessEntityIDEntity = nameof(ApiResponse.SalesPersons);
+			this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
+		}
 
-                [JsonProperty]
-                public int BusinessEntityID { get; private set; }
+		[JsonProperty]
+		public int BusinessEntityID { get; private set; }
 
-                [JsonProperty]
-                public string BusinessEntityIDEntity { get; set; }
+		[JsonProperty]
+		public string BusinessEntityIDEntity { get; set; }
 
-                [Required]
-                [JsonProperty]
-                public DateTime? EndDate { get; private set; }
+		[Required]
+		[JsonProperty]
+		public DateTime? EndDate { get; private set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [JsonProperty]
-                public Guid Rowguid { get; private set; }
+		[JsonProperty]
+		public Guid Rowguid { get; private set; }
 
-                [JsonProperty]
-                public DateTime StartDate { get; private set; }
+		[JsonProperty]
+		public DateTime StartDate { get; private set; }
 
-                [JsonProperty]
-                public int TerritoryID { get; private set; }
+		[JsonProperty]
+		public int TerritoryID { get; private set; }
 
-                [JsonProperty]
-                public string TerritoryIDEntity { get; set; }
-        }
+		[JsonProperty]
+		public string TerritoryIDEntity { get; set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>fcbd1ae401cff75987ca6c18f3a5caa0</Hash>
+    <Hash>477702e84607184d5e0fed1f5e48f093</Hash>
 </Codenesium>*/

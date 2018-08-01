@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PersonPhone")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiPersonPhoneRequestModelValidatorTest
-        {
-                public ApiPersonPhoneRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PersonPhone")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiPersonPhoneRequestModelValidatorTest
+	{
+		public ApiPersonPhoneRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void PhoneNumber_Create_null()
-                {
-                        Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
-                        personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
+		[Fact]
+		public async void PhoneNumber_Create_null()
+		{
+			Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
+			personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
-                        var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
+			var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
+		}
 
-                [Fact]
-                public async void PhoneNumber_Update_null()
-                {
-                        Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
-                        personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
+		[Fact]
+		public async void PhoneNumber_Update_null()
+		{
+			Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
+			personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
-                        var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
+			var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
+		}
 
-                [Fact]
-                public async void PhoneNumber_Create_length()
-                {
-                        Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
-                        personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
+		[Fact]
+		public async void PhoneNumber_Create_length()
+		{
+			Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
+			personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
-                        var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
+			var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
+		}
 
-                [Fact]
-                public async void PhoneNumber_Update_length()
-                {
-                        Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
-                        personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
+		[Fact]
+		public async void PhoneNumber_Update_length()
+		{
+			Mock<IPersonPhoneRepository> personPhoneRepository = new Mock<IPersonPhoneRepository>();
+			personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
-                        var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
+			var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bd60e49b6eb9a3b65c3e3a6ce1a8dbbf</Hash>
+    <Hash>ee69ed33db6d054fb404e0753b1bf062</Hash>
 </Codenesium>*/

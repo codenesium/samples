@@ -7,53 +7,52 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Province")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiProvinceModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiProvinceModelMapper();
-                        var model = new ApiProvinceRequestModel();
-                        model.SetProperties(1, "A");
-                        ApiProvinceResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Province")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiProvinceModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiProvinceModelMapper();
+			var model = new ApiProvinceRequestModel();
+			model.SetProperties(1, "A");
+			ApiProvinceResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.CountryId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.CountryId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiProvinceModelMapper();
-                        var model = new ApiProvinceResponseModel();
-                        model.SetProperties(1, 1, "A");
-                        ApiProvinceRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiProvinceModelMapper();
+			var model = new ApiProvinceResponseModel();
+			model.SetProperties(1, 1, "A");
+			ApiProvinceRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.CountryId.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.CountryId.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiProvinceModelMapper();
-                        var model = new ApiProvinceRequestModel();
-                        model.SetProperties(1, "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiProvinceModelMapper();
+			var model = new ApiProvinceRequestModel();
+			model.SetProperties(1, "A");
 
-                        JsonPatchDocument<ApiProvinceRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiProvinceRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.CountryId.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiProvinceRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiProvinceRequestModel();
+			patch.ApplyTo(response);
+			response.CountryId.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>de4c8c076f6a206dc72a2536a6ef7842</Hash>
+    <Hash>b8836ad67be54ea71dfad03f80a49f44</Hash>
 </Codenesium>*/

@@ -15,187 +15,187 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Event")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiEventRequestModelValidatorTest
-        {
-                public ApiEventRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Event")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiEventRequestModelValidatorTest
+	{
+		public ApiEventRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Address1_Create_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Address1_Create_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address1_Update_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Address1_Update_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Create_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Address2_Create_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Address2_Update_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Address2_Update_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
+		}
 
-                [Fact]
-                public async void CityId_Create_Valid_Reference()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
+		[Fact]
+		public async void CityId_Create_Valid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
+		}
 
-                [Fact]
-                public async void CityId_Create_Invalid_Reference()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
+		[Fact]
+		public async void CityId_Create_Invalid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CityId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CityId, 1);
+		}
 
-                [Fact]
-                public async void CityId_Update_Valid_Reference()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
+		[Fact]
+		public async void CityId_Update_Valid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
+		}
 
-                [Fact]
-                public async void CityId_Update_Invalid_Reference()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
+		[Fact]
+		public async void CityId_Update_Invalid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CityId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CityId, 1);
+		}
 
-                [Fact]
-                public async void Facebook_Create_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Facebook_Create_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Facebook_Update_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Facebook_Update_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Website_Create_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Website_Create_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Website_Update_length()
-                {
-                        Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-                        eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
+		[Fact]
+		public async void Website_Update_length()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
-                        var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>393e0148f0ae8134454cf18045c7a0fa</Hash>
+    <Hash>f18da2ac302f863f21c823f932004ac8</Hash>
 </Codenesium>*/

@@ -5,69 +5,69 @@ using System.Linq;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public partial class ApiResponse
-        {
-                public ApiResponse()
-                {
-                }
+	public partial class ApiResponse
+	{
+		public ApiResponse()
+		{
+		}
 
-                public void Merge(ApiResponse from)
-                {
-                        from.Devices.ForEach(x => this.AddDevice(x));
-                        from.DeviceActions.ForEach(x => this.AddDeviceAction(x));
-                }
+		public void Merge(ApiResponse from)
+		{
+			from.Devices.ForEach(x => this.AddDevice(x));
+			from.DeviceActions.ForEach(x => this.AddDeviceAction(x));
+		}
 
-                public List<ApiDeviceResponseModel> Devices { get; private set; } = new List<ApiDeviceResponseModel>();
+		public List<ApiDeviceResponseModel> Devices { get; private set; } = new List<ApiDeviceResponseModel>();
 
-                public List<ApiDeviceActionResponseModel> DeviceActions { get; private set; } = new List<ApiDeviceActionResponseModel>();
+		public List<ApiDeviceActionResponseModel> DeviceActions { get; private set; } = new List<ApiDeviceActionResponseModel>();
 
-                [JsonIgnore]
-                public bool ShouldSerializeDevicesValue { get; private set; } = true;
+		[JsonIgnore]
+		public bool ShouldSerializeDevicesValue { get; private set; } = true;
 
-                public bool ShouldSerializeDevices()
-                {
-                        return this.ShouldSerializeDevicesValue;
-                }
+		public bool ShouldSerializeDevices()
+		{
+			return this.ShouldSerializeDevicesValue;
+		}
 
-                public void AddDevice(ApiDeviceResponseModel item)
-                {
-                        if (!this.Devices.Any(x => x.Id == item.Id))
-                        {
-                                this.Devices.Add(item);
-                        }
-                }
+		public void AddDevice(ApiDeviceResponseModel item)
+		{
+			if (!this.Devices.Any(x => x.Id == item.Id))
+			{
+				this.Devices.Add(item);
+			}
+		}
 
-                [JsonIgnore]
-                public bool ShouldSerializeDeviceActionsValue { get; private set; } = true;
+		[JsonIgnore]
+		public bool ShouldSerializeDeviceActionsValue { get; private set; } = true;
 
-                public bool ShouldSerializeDeviceActions()
-                {
-                        return this.ShouldSerializeDeviceActionsValue;
-                }
+		public bool ShouldSerializeDeviceActions()
+		{
+			return this.ShouldSerializeDeviceActionsValue;
+		}
 
-                public void AddDeviceAction(ApiDeviceActionResponseModel item)
-                {
-                        if (!this.DeviceActions.Any(x => x.Id == item.Id))
-                        {
-                                this.DeviceActions.Add(item);
-                        }
-                }
+		public void AddDeviceAction(ApiDeviceActionResponseModel item)
+		{
+			if (!this.DeviceActions.Any(x => x.Id == item.Id))
+			{
+				this.DeviceActions.Add(item);
+			}
+		}
 
-                public void DisableSerializationOfEmptyFields()
-                {
-                        if (this.Devices.Count == 0)
-                        {
-                                this.ShouldSerializeDevicesValue = false;
-                        }
+		public void DisableSerializationOfEmptyFields()
+		{
+			if (this.Devices.Count == 0)
+			{
+				this.ShouldSerializeDevicesValue = false;
+			}
 
-                        if (this.DeviceActions.Count == 0)
-                        {
-                                this.ShouldSerializeDeviceActionsValue = false;
-                        }
-                }
-        }
+			if (this.DeviceActions.Count == 0)
+			{
+				this.ShouldSerializeDeviceActionsValue = false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cd9ef2716e92dd3b22e104488a892bc8</Hash>
+    <Hash>58880251ed7081985a1c15f3c10d0281</Hash>
 </Codenesium>*/

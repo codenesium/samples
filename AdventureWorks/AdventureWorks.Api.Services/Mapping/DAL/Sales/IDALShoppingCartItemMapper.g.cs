@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALShoppingCartItemMapper
-        {
-                ShoppingCartItem MapBOToEF(
-                        BOShoppingCartItem bo);
+	public interface IDALShoppingCartItemMapper
+	{
+		ShoppingCartItem MapBOToEF(
+			BOShoppingCartItem bo);
 
-                BOShoppingCartItem MapEFToBO(
-                        ShoppingCartItem efShoppingCartItem);
+		BOShoppingCartItem MapEFToBO(
+			ShoppingCartItem efShoppingCartItem);
 
-                List<BOShoppingCartItem> MapEFToBO(
-                        List<ShoppingCartItem> records);
-        }
+		List<BOShoppingCartItem> MapEFToBO(
+			List<ShoppingCartItem> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>920659d79e5b632fdf45e7468b8c6397</Hash>
+    <Hash>8e72d899a70b96414cc0a05e88ad7d5b</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public partial class EventRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class EventRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<EventRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<EventRepository>>();
-                }
-        }
+		public static Mock<ILogger<EventRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<EventRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Event")]
-        [Trait("Area", "Repositories")]
-        public partial class EventRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Event")]
+	[Trait("Area", "Repositories")]
+	public partial class EventRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
 
-                        Event entity = new Event();
-                        context.Set<Event>().Add(entity);
-                        await context.SaveChangesAsync();
+			Event entity = new Event();
+			context.Set<Event>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
 
-                        Event entity = new Event();
-                        context.Set<Event>().Add(entity);
-                        await context.SaveChangesAsync();
+			Event entity = new Event();
+			context.Set<Event>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
 
-                        var entity = new Event();
-                        await repository.Create(entity);
+			var entity = new Event();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Event>().FirstOrDefaultAsync();
+			var record = await context.Set<Event>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
-                        Event entity = new Event();
-                        context.Set<Event>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
+			Event entity = new Event();
+			context.Set<Event>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Event>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Event>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
-                        Event entity = new Event();
-                        context.Set<Event>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
+			Event entity = new Event();
+			context.Set<Event>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Event());
+			await repository.Update(new Event());
 
-                        var modifiedRecord = context.Set<Event>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Event>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EventRepositoryMoc.GetContext();
-                        var repository = new EventRepository(loggerMoc.Object, context);
-                        Event entity = new Event();
-                        context.Set<Event>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventRepositoryMoc.GetContext();
+			var repository = new EventRepository(loggerMoc.Object, context);
+			Event entity = new Event();
+			context.Set<Event>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Event modifiedRecord = await context.Set<Event>().FirstOrDefaultAsync();
+			Event modifiedRecord = await context.Set<Event>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1ce95ba16e5f6f3114738c333594f9e5</Hash>
+    <Hash>42134a8e899b986ffd0a8dfaaec19dd9</Hash>
 </Codenesium>*/

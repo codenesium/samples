@@ -3,15 +3,15 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOTeacherXTeacherSkill : AbstractBOTeacherXTeacherSkill
-        {
-                public BOTeacherXTeacherSkill()
-                        : base()
-                {
-                }
-        }
+	public partial class BOTeacherXTeacherSkill : AbstractBOTeacherXTeacherSkill
+	{
+		public BOTeacherXTeacherSkill()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e75323a5976f96638653824494899a37</Hash>
+    <Hash>1ca5cb37144a4aa51b85ffec2e575d99</Hash>
 </Codenesium>*/

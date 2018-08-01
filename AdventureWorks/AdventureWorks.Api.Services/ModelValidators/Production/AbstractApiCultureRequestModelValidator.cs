@@ -9,50 +9,50 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCultureRequestModelValidator : AbstractValidator<ApiCultureRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiCultureRequestModelValidator : AbstractValidator<ApiCultureRequestModel>
+	{
+		private string existingRecordId;
 
-                private ICultureRepository cultureRepository;
+		private ICultureRepository cultureRepository;
 
-                public AbstractApiCultureRequestModelValidator(ICultureRepository cultureRepository)
-                {
-                        this.cultureRepository = cultureRepository;
-                }
+		public AbstractApiCultureRequestModelValidator(ICultureRepository cultureRepository)
+		{
+			this.cultureRepository = cultureRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiCultureRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiCultureRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 50);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
 
-                private async Task<bool> BeUniqueByName(ApiCultureRequestModel model,  CancellationToken cancellationToken)
-                {
-                        Culture record = await this.cultureRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiCultureRequestModel model,  CancellationToken cancellationToken)
+		{
+			Culture record = await this.cultureRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.CultureID == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.CultureID == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>322040e54ddcf0a4ddab7488fab6bbfd</Hash>
+    <Hash>ae90fabea96675e7aa175964fff0a949</Hash>
 </Codenesium>*/

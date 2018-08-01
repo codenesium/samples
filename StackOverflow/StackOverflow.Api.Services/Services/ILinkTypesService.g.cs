@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface ILinkTypesService
-        {
-                Task<CreateResponse<ApiLinkTypesResponseModel>> Create(
-                        ApiLinkTypesRequestModel model);
+	public interface ILinkTypesService
+	{
+		Task<CreateResponse<ApiLinkTypesResponseModel>> Create(
+			ApiLinkTypesRequestModel model);
 
-                Task<UpdateResponse<ApiLinkTypesResponseModel>> Update(int id,
-                                                                        ApiLinkTypesRequestModel model);
+		Task<UpdateResponse<ApiLinkTypesResponseModel>> Update(int id,
+		                                                        ApiLinkTypesRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiLinkTypesResponseModel> Get(int id);
+		Task<ApiLinkTypesResponseModel> Get(int id);
 
-                Task<List<ApiLinkTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiLinkTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ab4981570bca59d42218324776a66c4d</Hash>
+    <Hash>e26ef6c4053828e10434ead1e58af663</Hash>
 </Codenesium>*/

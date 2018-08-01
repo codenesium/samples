@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IDALVersionInfoMapper
-        {
-                VersionInfo MapBOToEF(
-                        BOVersionInfo bo);
+	public interface IDALVersionInfoMapper
+	{
+		VersionInfo MapBOToEF(
+			BOVersionInfo bo);
 
-                BOVersionInfo MapEFToBO(
-                        VersionInfo efVersionInfo);
+		BOVersionInfo MapEFToBO(
+			VersionInfo efVersionInfo);
 
-                List<BOVersionInfo> MapEFToBO(
-                        List<VersionInfo> records);
-        }
+		List<BOVersionInfo> MapEFToBO(
+			List<VersionInfo> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>fdcd9e887c976147b781e28fcd0613dd</Hash>
+    <Hash>11a458026ef3fd8219369efbb044f04c</Hash>
 </Codenesium>*/

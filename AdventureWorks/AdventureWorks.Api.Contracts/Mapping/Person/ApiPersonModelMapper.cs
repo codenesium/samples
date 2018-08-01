@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPersonModelMapper : AbstractApiPersonModelMapper, IApiPersonModelMapper
-        {
-                public ApiPersonModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiPersonModelMapper : AbstractApiPersonModelMapper, IApiPersonModelMapper
+	{
+		public ApiPersonModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>45cd75322122d977d7377b19cf1d3be5</Hash>
+    <Hash>b1e350586c79a9ec35e7f0e5148887db</Hash>
 </Codenesium>*/

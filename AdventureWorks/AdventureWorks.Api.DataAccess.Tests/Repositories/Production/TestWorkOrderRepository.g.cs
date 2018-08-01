@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class WorkOrderRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class WorkOrderRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<WorkOrderRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<WorkOrderRepository>>();
-                }
-        }
+		public static Mock<ILogger<WorkOrderRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<WorkOrderRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "WorkOrder")]
-        [Trait("Area", "Repositories")]
-        public partial class WorkOrderRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "WorkOrder")]
+	[Trait("Area", "Repositories")]
+	public partial class WorkOrderRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
-                        WorkOrder entity = new WorkOrder();
-                        context.Set<WorkOrder>().Add(entity);
-                        await context.SaveChangesAsync();
+			WorkOrder entity = new WorkOrder();
+			context.Set<WorkOrder>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
-                        WorkOrder entity = new WorkOrder();
-                        context.Set<WorkOrder>().Add(entity);
-                        await context.SaveChangesAsync();
+			WorkOrder entity = new WorkOrder();
+			context.Set<WorkOrder>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.WorkOrderID);
+			var record = await repository.Get(entity.WorkOrderID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
-                        var entity = new WorkOrder();
-                        await repository.Create(entity);
+			var entity = new WorkOrder();
+			await repository.Create(entity);
 
-                        var record = await context.Set<WorkOrder>().FirstOrDefaultAsync();
+			var record = await context.Set<WorkOrder>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
-                        WorkOrder entity = new WorkOrder();
-                        context.Set<WorkOrder>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
+			WorkOrder entity = new WorkOrder();
+			context.Set<WorkOrder>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.WorkOrderID);
+			var record = await repository.Get(entity.WorkOrderID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<WorkOrder>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<WorkOrder>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
-                        WorkOrder entity = new WorkOrder();
-                        context.Set<WorkOrder>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
+			WorkOrder entity = new WorkOrder();
+			context.Set<WorkOrder>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new WorkOrder());
+			await repository.Update(new WorkOrder());
 
-                        var modifiedRecord = context.Set<WorkOrder>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<WorkOrder>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
-                        var repository = new WorkOrderRepository(loggerMoc.Object, context);
-                        WorkOrder entity = new WorkOrder();
-                        context.Set<WorkOrder>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
+			var repository = new WorkOrderRepository(loggerMoc.Object, context);
+			WorkOrder entity = new WorkOrder();
+			context.Set<WorkOrder>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.WorkOrderID);
+			await repository.Delete(entity.WorkOrderID);
 
-                        WorkOrder modifiedRecord = await context.Set<WorkOrder>().FirstOrDefaultAsync();
+			WorkOrder modifiedRecord = await context.Set<WorkOrder>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fb61df57b159e856ff215324e67944b9</Hash>
+    <Hash>271e659bf6b49fae4f93cb457c0150c8</Hash>
 </Codenesium>*/

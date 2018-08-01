@@ -5,49 +5,49 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractDeploymentProcessMapper
-        {
-                public virtual BODeploymentProcess MapModelToBO(
-                        string id,
-                        ApiDeploymentProcessRequestModel model
-                        )
-                {
-                        BODeploymentProcess boDeploymentProcess = new BODeploymentProcess();
-                        boDeploymentProcess.SetProperties(
-                                id,
-                                model.IsFrozen,
-                                model.JSON,
-                                model.OwnerId,
-                                model.RelatedDocumentIds,
-                                model.Version);
-                        return boDeploymentProcess;
-                }
+	public abstract class BOLAbstractDeploymentProcessMapper
+	{
+		public virtual BODeploymentProcess MapModelToBO(
+			string id,
+			ApiDeploymentProcessRequestModel model
+			)
+		{
+			BODeploymentProcess boDeploymentProcess = new BODeploymentProcess();
+			boDeploymentProcess.SetProperties(
+				id,
+				model.IsFrozen,
+				model.JSON,
+				model.OwnerId,
+				model.RelatedDocumentIds,
+				model.Version);
+			return boDeploymentProcess;
+		}
 
-                public virtual ApiDeploymentProcessResponseModel MapBOToModel(
-                        BODeploymentProcess boDeploymentProcess)
-                {
-                        var model = new ApiDeploymentProcessResponseModel();
+		public virtual ApiDeploymentProcessResponseModel MapBOToModel(
+			BODeploymentProcess boDeploymentProcess)
+		{
+			var model = new ApiDeploymentProcessResponseModel();
 
-                        model.SetProperties(boDeploymentProcess.Id, boDeploymentProcess.IsFrozen, boDeploymentProcess.JSON, boDeploymentProcess.OwnerId, boDeploymentProcess.RelatedDocumentIds, boDeploymentProcess.Version);
+			model.SetProperties(boDeploymentProcess.Id, boDeploymentProcess.IsFrozen, boDeploymentProcess.JSON, boDeploymentProcess.OwnerId, boDeploymentProcess.RelatedDocumentIds, boDeploymentProcess.Version);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiDeploymentProcessResponseModel> MapBOToModel(
-                        List<BODeploymentProcess> items)
-                {
-                        List<ApiDeploymentProcessResponseModel> response = new List<ApiDeploymentProcessResponseModel>();
+		public virtual List<ApiDeploymentProcessResponseModel> MapBOToModel(
+			List<BODeploymentProcess> items)
+		{
+			List<ApiDeploymentProcessResponseModel> response = new List<ApiDeploymentProcessResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fdf8f81b54af2bc6446e1c9f98f0c855</Hash>
+    <Hash>a613c30d308110b40e605112054f40de</Hash>
 </Codenesium>*/

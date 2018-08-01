@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class PersonPhoneService : AbstractPersonPhoneService, IPersonPhoneService
-        {
-                public PersonPhoneService(
-                        ILogger<IPersonPhoneRepository> logger,
-                        IPersonPhoneRepository personPhoneRepository,
-                        IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
-                        IBOLPersonPhoneMapper bolpersonPhoneMapper,
-                        IDALPersonPhoneMapper dalpersonPhoneMapper
-                        )
-                        : base(logger,
-                               personPhoneRepository,
-                               personPhoneModelValidator,
-                               bolpersonPhoneMapper,
-                               dalpersonPhoneMapper)
-                {
-                }
-        }
+	public partial class PersonPhoneService : AbstractPersonPhoneService, IPersonPhoneService
+	{
+		public PersonPhoneService(
+			ILogger<IPersonPhoneRepository> logger,
+			IPersonPhoneRepository personPhoneRepository,
+			IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
+			IBOLPersonPhoneMapper bolpersonPhoneMapper,
+			IDALPersonPhoneMapper dalpersonPhoneMapper
+			)
+			: base(logger,
+			       personPhoneRepository,
+			       personPhoneModelValidator,
+			       bolpersonPhoneMapper,
+			       dalpersonPhoneMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>63b359ec1c09152f6e86a1abdadabbde</Hash>
+    <Hash>f33fdc196822ac5a51b1167fd7ec574b</Hash>
 </Codenesium>*/

@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProjectGroup")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProjectGroupRequestModelValidatorTest
-        {
-                public ApiProjectGroupRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProjectGroup")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProjectGroupRequestModelValidatorTest
+	{
+		public ApiProjectGroupRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
 
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ProjectGroup()));
 
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
+			await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
+			await validator.ValidateCreateAsync(new ApiProjectGroupRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(new ProjectGroup()));
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
-                        projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
-                        var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IProjectGroupRepository> projectGroupRepository = new Mock<IProjectGroupRepository>();
+			projectGroupRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProjectGroup>(null));
+			var validator = new ApiProjectGroupRequestModelValidator(projectGroupRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProjectGroupRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6ede8ae29796b5b0a9595614918defe1</Hash>
+    <Hash>8c68a00f6e17466c6c0c4edbec202359</Hash>
 </Codenesium>*/

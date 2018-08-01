@@ -6,19 +6,19 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IDALRowVersionCheckMapper
-        {
-                RowVersionCheck MapBOToEF(
-                        BORowVersionCheck bo);
+	public interface IDALRowVersionCheckMapper
+	{
+		RowVersionCheck MapBOToEF(
+			BORowVersionCheck bo);
 
-                BORowVersionCheck MapEFToBO(
-                        RowVersionCheck efRowVersionCheck);
+		BORowVersionCheck MapEFToBO(
+			RowVersionCheck efRowVersionCheck);
 
-                List<BORowVersionCheck> MapEFToBO(
-                        List<RowVersionCheck> records);
-        }
+		List<BORowVersionCheck> MapEFToBO(
+			List<RowVersionCheck> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>18386ec70d96643e47531a6e171a5faf</Hash>
+    <Hash>e7cef1397304e1db72a6443a33abfd5b</Hash>
 </Codenesium>*/

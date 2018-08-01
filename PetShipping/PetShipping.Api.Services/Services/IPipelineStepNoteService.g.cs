@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IPipelineStepNoteService
-        {
-                Task<CreateResponse<ApiPipelineStepNoteResponseModel>> Create(
-                        ApiPipelineStepNoteRequestModel model);
+	public interface IPipelineStepNoteService
+	{
+		Task<CreateResponse<ApiPipelineStepNoteResponseModel>> Create(
+			ApiPipelineStepNoteRequestModel model);
 
-                Task<UpdateResponse<ApiPipelineStepNoteResponseModel>> Update(int id,
-                                                                               ApiPipelineStepNoteRequestModel model);
+		Task<UpdateResponse<ApiPipelineStepNoteResponseModel>> Update(int id,
+		                                                               ApiPipelineStepNoteRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiPipelineStepNoteResponseModel> Get(int id);
+		Task<ApiPipelineStepNoteResponseModel> Get(int id);
 
-                Task<List<ApiPipelineStepNoteResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiPipelineStepNoteResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7e7df583bbd1ac72e4f1e066120aa14c</Hash>
+    <Hash>edb488c270173dffe9c25d57d6855335</Hash>
 </Codenesium>*/

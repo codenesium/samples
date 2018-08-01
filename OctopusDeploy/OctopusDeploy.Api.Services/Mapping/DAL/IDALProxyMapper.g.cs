@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALProxyMapper
-        {
-                Proxy MapBOToEF(
-                        BOProxy bo);
+	public interface IDALProxyMapper
+	{
+		Proxy MapBOToEF(
+			BOProxy bo);
 
-                BOProxy MapEFToBO(
-                        Proxy efProxy);
+		BOProxy MapEFToBO(
+			Proxy efProxy);
 
-                List<BOProxy> MapEFToBO(
-                        List<Proxy> records);
-        }
+		List<BOProxy> MapEFToBO(
+			List<Proxy> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9af5198e98c7c6c6e4c59da73ddf0d5b</Hash>
+    <Hash>7ae81e0d40cd5aeebdcb62936de5b066</Hash>
 </Codenesium>*/

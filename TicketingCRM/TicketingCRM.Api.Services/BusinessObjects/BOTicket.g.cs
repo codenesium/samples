@@ -3,15 +3,15 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOTicket : AbstractBOTicket
-        {
-                public BOTicket()
-                        : base()
-                {
-                }
-        }
+	public partial class BOTicket : AbstractBOTicket
+	{
+		public BOTicket()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f35639f35a44346972956d17e2caa325</Hash>
+    <Hash>e1240c13388ebdcb9ac337c4ebf12c68</Hash>
 </Codenesium>*/

@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IVoteTypesService
-        {
-                Task<CreateResponse<ApiVoteTypesResponseModel>> Create(
-                        ApiVoteTypesRequestModel model);
+	public interface IVoteTypesService
+	{
+		Task<CreateResponse<ApiVoteTypesResponseModel>> Create(
+			ApiVoteTypesRequestModel model);
 
-                Task<UpdateResponse<ApiVoteTypesResponseModel>> Update(int id,
-                                                                        ApiVoteTypesRequestModel model);
+		Task<UpdateResponse<ApiVoteTypesResponseModel>> Update(int id,
+		                                                        ApiVoteTypesRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiVoteTypesResponseModel> Get(int id);
+		Task<ApiVoteTypesResponseModel> Get(int id);
 
-                Task<List<ApiVoteTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiVoteTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>84d01b7ca530b177f2cc80885968eaee</Hash>
+    <Hash>5f7e87baa3830330c39849c639939e83</Hash>
 </Codenesium>*/

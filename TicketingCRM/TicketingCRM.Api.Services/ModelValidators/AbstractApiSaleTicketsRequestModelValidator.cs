@@ -9,49 +9,49 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiSaleTicketsRequestModelValidator : AbstractValidator<ApiSaleTicketsRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSaleTicketsRequestModelValidator : AbstractValidator<ApiSaleTicketsRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISaleTicketsRepository saleTicketsRepository;
+		private ISaleTicketsRepository saleTicketsRepository;
 
-                public AbstractApiSaleTicketsRequestModelValidator(ISaleTicketsRepository saleTicketsRepository)
-                {
-                        this.saleTicketsRepository = saleTicketsRepository;
-                }
+		public AbstractApiSaleTicketsRequestModelValidator(ISaleTicketsRepository saleTicketsRepository)
+		{
+			this.saleTicketsRepository = saleTicketsRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSaleTicketsRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSaleTicketsRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void SaleIdRules()
-                {
-                        this.RuleFor(x => x.SaleId).MustAsync(this.BeValidSale).When(x => x?.SaleId != null).WithMessage("Invalid reference");
-                }
+		public virtual void SaleIdRules()
+		{
+			this.RuleFor(x => x.SaleId).MustAsync(this.BeValidSale).When(x => x?.SaleId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void TicketIdRules()
-                {
-                        this.RuleFor(x => x.TicketId).MustAsync(this.BeValidTicket).When(x => x?.TicketId != null).WithMessage("Invalid reference");
-                }
+		public virtual void TicketIdRules()
+		{
+			this.RuleFor(x => x.TicketId).MustAsync(this.BeValidTicket).When(x => x?.TicketId != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidSale(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.saleTicketsRepository.GetSale(id);
+		private async Task<bool> BeValidSale(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.saleTicketsRepository.GetSale(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidTicket(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.saleTicketsRepository.GetTicket(id);
+		private async Task<bool> BeValidTicket(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.saleTicketsRepository.GetTicket(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0b26cf8742b30303509cc13d878998a9</Hash>
+    <Hash>7d4b422b334d5ab183abfdbc5d0a48de</Hash>
 </Codenesium>*/

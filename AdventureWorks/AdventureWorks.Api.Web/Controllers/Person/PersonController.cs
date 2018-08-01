@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/people")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PersonController : AbstractPersonController
-        {
-                public PersonController(
-                        ApiSettings settings,
-                        ILogger<PersonController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPersonService personService,
-                        IApiPersonModelMapper personModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               personService,
-                               personModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/people")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PersonController : AbstractPersonController
+	{
+		public PersonController(
+			ApiSettings settings,
+			ILogger<PersonController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPersonService personService,
+			IApiPersonModelMapper personModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       personService,
+			       personModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2f24e958608fa7b72b6b7e29d98a6d1b</Hash>
+    <Hash>384f0e8b164cd75407a8e2fe2dba992a</Hash>
 </Codenesium>*/

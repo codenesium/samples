@@ -15,224 +15,224 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractPhoneNumberTypeController : AbstractApiController
-        {
-                protected IPhoneNumberTypeService PhoneNumberTypeService { get; private set; }
+	public abstract class AbstractPhoneNumberTypeController : AbstractApiController
+	{
+		protected IPhoneNumberTypeService PhoneNumberTypeService { get; private set; }
 
-                protected IApiPhoneNumberTypeModelMapper PhoneNumberTypeModelMapper { get; private set; }
+		protected IApiPhoneNumberTypeModelMapper PhoneNumberTypeModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractPhoneNumberTypeController(
-                        ApiSettings settings,
-                        ILogger<AbstractPhoneNumberTypeController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPhoneNumberTypeService phoneNumberTypeService,
-                        IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.PhoneNumberTypeService = phoneNumberTypeService;
-                        this.PhoneNumberTypeModelMapper = phoneNumberTypeModelMapper;
-                }
+		public AbstractPhoneNumberTypeController(
+			ApiSettings settings,
+			ILogger<AbstractPhoneNumberTypeController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPhoneNumberTypeService phoneNumberTypeService,
+			IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.PhoneNumberTypeService = phoneNumberTypeService;
+			this.PhoneNumberTypeModelMapper = phoneNumberTypeModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPhoneNumberTypeResponseModel> response = await this.PhoneNumberTypeService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiPhoneNumberTypeResponseModel> response = await this.PhoneNumberTypeService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(int id)
-                {
-                        ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiPhoneNumberTypeResponseModel> records = new List<ApiPhoneNumberTypeResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
+			List<ApiPhoneNumberTypeResponseModel> records = new List<ApiPhoneNumberTypeResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiPhoneNumberTypeResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeRequestModel model)
-                {
-                        CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiPhoneNumberTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeRequestModel model)
+		{
+			CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PhoneNumberTypes/{result.Record.PhoneNumberTypeID}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PhoneNumberTypes/{result.Record.PhoneNumberTypeID}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
-                {
-                        ApiPhoneNumberTypeResponseModel record = await this.PhoneNumberTypeService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
+		{
+			ApiPhoneNumberTypeResponseModel record = await this.PhoneNumberTypeService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiPhoneNumberTypeRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiPhoneNumberTypeRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, model);
+				UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
-                {
-                        ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.PhoneNumberTypeModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
+		{
+			ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.PhoneNumberTypeModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(int id)
-                {
-                        ActionResponse result = await this.PhoneNumberTypeService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.PhoneNumberTypeService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("{phoneNumberTypeID}/PersonPhones")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
-                public async virtual Task<IActionResult> PersonPhones(int phoneNumberTypeID, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
+		[HttpGet]
+		[Route("{phoneNumberTypeID}/PersonPhones")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		public async virtual Task<IActionResult> PersonPhones(int phoneNumberTypeID, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
 
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPersonPhoneResponseModel> response = await this.PhoneNumberTypeService.PersonPhones(phoneNumberTypeID, query.Limit, query.Offset);
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiPersonPhoneResponseModel> response = await this.PhoneNumberTypeService.PersonPhones(phoneNumberTypeID, query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiPhoneNumberTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
-                {
-                        var record = await this.PhoneNumberTypeService.Get(id);
+		private async Task<ApiPhoneNumberTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
+		{
+			var record = await this.PhoneNumberTypeService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiPhoneNumberTypeRequestModel request = this.PhoneNumberTypeModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiPhoneNumberTypeRequestModel request = this.PhoneNumberTypeModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a7d988eac19a2039e9f6e8afd282b168</Hash>
+    <Hash>fc74d8185056ffea21c4b27455294c62</Hash>
 </Codenesium>*/

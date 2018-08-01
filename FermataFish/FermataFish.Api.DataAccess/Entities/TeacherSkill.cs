@@ -6,38 +6,38 @@ using System.Linq;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        [Table("TeacherSkill", Schema="dbo")]
-        public partial class TeacherSkill : AbstractEntity
-        {
-                public TeacherSkill()
-                {
-                }
+	[Table("TeacherSkill", Schema="dbo")]
+	public partial class TeacherSkill : AbstractEntity
+	{
+		public TeacherSkill()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string name,
-                        int studioId)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                        this.StudioId = studioId;
-                }
+		public virtual void SetProperties(
+			int id,
+			string name,
+			int studioId)
+		{
+			this.Id = id;
+			this.Name = name;
+			this.StudioId = studioId;
+		}
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
+		[Column("name")]
+		public string Name { get; private set; }
 
-                [Column("studioId")]
-                public int StudioId { get; private set; }
+		[Column("studioId")]
+		public int StudioId { get; private set; }
 
-                [ForeignKey("StudioId")]
-                public virtual Studio StudioNavigation { get; private set; }
-        }
+		[ForeignKey("StudioId")]
+		public virtual Studio StudioNavigation { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>7b220f57ba500d1d72a017bc4d3b4340</Hash>
+    <Hash>e58a47496130a73f8c1399b1d943d070</Hash>
 </Codenesium>*/

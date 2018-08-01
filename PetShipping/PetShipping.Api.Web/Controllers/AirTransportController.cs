@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/airTransports")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class AirTransportController : AbstractAirTransportController
-        {
-                public AirTransportController(
-                        ApiSettings settings,
-                        ILogger<AirTransportController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IAirTransportService airTransportService,
-                        IApiAirTransportModelMapper airTransportModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               airTransportService,
-                               airTransportModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/airTransports")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class AirTransportController : AbstractAirTransportController
+	{
+		public AirTransportController(
+			ApiSettings settings,
+			ILogger<AirTransportController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IAirTransportService airTransportService,
+			IApiAirTransportModelMapper airTransportModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       airTransportService,
+			       airTransportModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>abb26b5be851041f8c63e29f48ddef25</Hash>
+    <Hash>3be11e02af23547e95e70242953d8c44</Hash>
 </Codenesium>*/

@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IApiDeploymentHistoryRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiDeploymentHistoryRequestModel model);
+	public interface IApiDeploymentHistoryRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiDeploymentHistoryRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(string id, ApiDeploymentHistoryRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(string id, ApiDeploymentHistoryRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(string id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(string id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>36871f1f337f90f4b87d719899f6c5a6</Hash>
+    <Hash>3bffefb4cca9eb6a95175094b2967bb6</Hash>
 </Codenesium>*/

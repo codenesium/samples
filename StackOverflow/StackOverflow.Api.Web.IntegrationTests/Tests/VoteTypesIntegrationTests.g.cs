@@ -12,86 +12,86 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "VoteTypes")]
-        [Trait("Area", "Integration")]
-        public class VoteTypesIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public VoteTypesIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "VoteTypes")]
+	[Trait("Area", "Integration")]
+	public class VoteTypesIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public VoteTypesIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiVoteTypesModelMapper mapper = new ApiVoteTypesModelMapper();
+			ApiVoteTypesModelMapper mapper = new ApiVoteTypesModelMapper();
 
-                        UpdateResponse<ApiVoteTypesResponseModel> updateResponse = await this.Client.VoteTypesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiVoteTypesResponseModel> updateResponse = await this.Client.VoteTypesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.VoteTypesDeleteAsync(model.Id);
+			await this.Client.VoteTypesDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiVoteTypesResponseModel response = await this.Client.VoteTypesGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiVoteTypesResponseModel response = await this.Client.VoteTypesGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiVoteTypesResponseModel> response = await this.Client.VoteTypesAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiVoteTypesResponseModel> response = await this.Client.VoteTypesAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiVoteTypesResponseModel> CreateRecord()
-                {
-                        var model = new ApiVoteTypesRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiVoteTypesResponseModel> result = await this.Client.VoteTypesCreateAsync(model);
+		private async Task<ApiVoteTypesResponseModel> CreateRecord()
+		{
+			var model = new ApiVoteTypesRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiVoteTypesResponseModel> result = await this.Client.VoteTypesCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.VoteTypesDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.VoteTypesDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>26ac215250675474be1fa621a344c253</Hash>
+    <Hash>de462a31afd433494a7deadb07370463</Hash>
 </Codenesium>*/

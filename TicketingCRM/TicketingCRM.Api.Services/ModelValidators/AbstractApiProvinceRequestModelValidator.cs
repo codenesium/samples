@@ -9,42 +9,42 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiProvinceRequestModelValidator : AbstractValidator<ApiProvinceRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiProvinceRequestModelValidator : AbstractValidator<ApiProvinceRequestModel>
+	{
+		private int existingRecordId;
 
-                private IProvinceRepository provinceRepository;
+		private IProvinceRepository provinceRepository;
 
-                public AbstractApiProvinceRequestModelValidator(IProvinceRepository provinceRepository)
-                {
-                        this.provinceRepository = provinceRepository;
-                }
+		public AbstractApiProvinceRequestModelValidator(IProvinceRepository provinceRepository)
+		{
+			this.provinceRepository = provinceRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiProvinceRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiProvinceRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void CountryIdRules()
-                {
-                        this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
-                }
+		public virtual void CountryIdRules()
+		{
+			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
 
-                private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.provinceRepository.GetCountry(id);
+		private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.provinceRepository.GetCountry(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8dc98c55b13ced48ad5a5a32aa4623aa</Hash>
+    <Hash>ab46148e3928c5e6824b67d67e42fce4</Hash>
 </Codenesium>*/

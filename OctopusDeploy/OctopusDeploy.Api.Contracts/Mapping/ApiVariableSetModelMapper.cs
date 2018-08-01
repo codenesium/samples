@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiVariableSetModelMapper : AbstractApiVariableSetModelMapper, IApiVariableSetModelMapper
-        {
-                public ApiVariableSetModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiVariableSetModelMapper : AbstractApiVariableSetModelMapper, IApiVariableSetModelMapper
+	{
+		public ApiVariableSetModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>39ce6671f481ce7ab81fc3e68a53095e</Hash>
+    <Hash>f308128da93521e6fa84390f8f89d78d</Hash>
 </Codenesium>*/

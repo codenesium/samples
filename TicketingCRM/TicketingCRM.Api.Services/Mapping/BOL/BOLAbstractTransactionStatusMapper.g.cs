@@ -5,45 +5,45 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class BOLAbstractTransactionStatusMapper
-        {
-                public virtual BOTransactionStatus MapModelToBO(
-                        int id,
-                        ApiTransactionStatusRequestModel model
-                        )
-                {
-                        BOTransactionStatus boTransactionStatus = new BOTransactionStatus();
-                        boTransactionStatus.SetProperties(
-                                id,
-                                model.Name);
-                        return boTransactionStatus;
-                }
+	public abstract class BOLAbstractTransactionStatusMapper
+	{
+		public virtual BOTransactionStatus MapModelToBO(
+			int id,
+			ApiTransactionStatusRequestModel model
+			)
+		{
+			BOTransactionStatus boTransactionStatus = new BOTransactionStatus();
+			boTransactionStatus.SetProperties(
+				id,
+				model.Name);
+			return boTransactionStatus;
+		}
 
-                public virtual ApiTransactionStatusResponseModel MapBOToModel(
-                        BOTransactionStatus boTransactionStatus)
-                {
-                        var model = new ApiTransactionStatusResponseModel();
+		public virtual ApiTransactionStatusResponseModel MapBOToModel(
+			BOTransactionStatus boTransactionStatus)
+		{
+			var model = new ApiTransactionStatusResponseModel();
 
-                        model.SetProperties(boTransactionStatus.Id, boTransactionStatus.Name);
+			model.SetProperties(boTransactionStatus.Id, boTransactionStatus.Name);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiTransactionStatusResponseModel> MapBOToModel(
-                        List<BOTransactionStatus> items)
-                {
-                        List<ApiTransactionStatusResponseModel> response = new List<ApiTransactionStatusResponseModel>();
+		public virtual List<ApiTransactionStatusResponseModel> MapBOToModel(
+			List<BOTransactionStatus> items)
+		{
+			List<ApiTransactionStatusResponseModel> response = new List<ApiTransactionStatusResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f484d427959ae1d96f6c6ebeee2006f5</Hash>
+    <Hash>2a023bb973079b6f6f564c2ab721b06c</Hash>
 </Codenesium>*/

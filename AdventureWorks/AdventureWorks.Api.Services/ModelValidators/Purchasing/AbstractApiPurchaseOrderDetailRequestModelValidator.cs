@@ -9,65 +9,65 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPurchaseOrderDetailRequestModelValidator : AbstractValidator<ApiPurchaseOrderDetailRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiPurchaseOrderDetailRequestModelValidator : AbstractValidator<ApiPurchaseOrderDetailRequestModel>
+	{
+		private int existingRecordId;
 
-                private IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
+		private IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
 
-                public AbstractApiPurchaseOrderDetailRequestModelValidator(IPurchaseOrderDetailRepository purchaseOrderDetailRepository)
-                {
-                        this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
-                }
+		public AbstractApiPurchaseOrderDetailRequestModelValidator(IPurchaseOrderDetailRepository purchaseOrderDetailRepository)
+		{
+			this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiPurchaseOrderDetailRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiPurchaseOrderDetailRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void DueDateRules()
-                {
-                }
+		public virtual void DueDateRules()
+		{
+		}
 
-                public virtual void LineTotalRules()
-                {
-                }
+		public virtual void LineTotalRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void OrderQtyRules()
-                {
-                }
+		public virtual void OrderQtyRules()
+		{
+		}
 
-                public virtual void ProductIDRules()
-                {
-                }
+		public virtual void ProductIDRules()
+		{
+		}
 
-                public virtual void PurchaseOrderDetailIDRules()
-                {
-                }
+		public virtual void PurchaseOrderDetailIDRules()
+		{
+		}
 
-                public virtual void ReceivedQtyRules()
-                {
-                }
+		public virtual void ReceivedQtyRules()
+		{
+		}
 
-                public virtual void RejectedQtyRules()
-                {
-                }
+		public virtual void RejectedQtyRules()
+		{
+		}
 
-                public virtual void StockedQtyRules()
-                {
-                }
+		public virtual void StockedQtyRules()
+		{
+		}
 
-                public virtual void UnitPriceRules()
-                {
-                }
-        }
+		public virtual void UnitPriceRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d547aa670848a1b9ddf05f8f1c0ab8f3</Hash>
+    <Hash>40b5fd71f9428da1c97a6393a2fd2e6e</Hash>
 </Codenesium>*/

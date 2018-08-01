@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLEmailAddressMapper : BOLAbstractEmailAddressMapper, IBOLEmailAddressMapper
-        {
-                public BOLEmailAddressMapper()
-                {
-                }
-        }
+	public partial class BOLEmailAddressMapper : BOLAbstractEmailAddressMapper, IBOLEmailAddressMapper
+	{
+		public BOLEmailAddressMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5454b92d3dc6b8e10cf98cc5b53918ec</Hash>
+    <Hash>0b6f02d8843d74123761176b0b342fdc</Hash>
 </Codenesium>*/

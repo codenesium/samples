@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public partial class PostLinksRepository : AbstractPostLinksRepository, IPostLinksRepository
-        {
-                public PostLinksRepository(
-                        ILogger<PostLinksRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class PostLinksRepository : AbstractPostLinksRepository, IPostLinksRepository
+	{
+		public PostLinksRepository(
+			ILogger<PostLinksRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>47c4e833c7e393ea11d883dba7b0ec1a</Hash>
+    <Hash>7c4857ed37454b974ce63fb5a8056bef</Hash>
 </Codenesium>*/

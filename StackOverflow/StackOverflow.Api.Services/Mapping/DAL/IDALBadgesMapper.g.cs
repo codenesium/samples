@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IDALBadgesMapper
-        {
-                Badges MapBOToEF(
-                        BOBadges bo);
+	public interface IDALBadgesMapper
+	{
+		Badges MapBOToEF(
+			BOBadges bo);
 
-                BOBadges MapEFToBO(
-                        Badges efBadges);
+		BOBadges MapEFToBO(
+			Badges efBadges);
 
-                List<BOBadges> MapEFToBO(
-                        List<Badges> records);
-        }
+		List<BOBadges> MapEFToBO(
+			List<Badges> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a9aed662af173a75f4047d2c05da3346</Hash>
+    <Hash>82749a696e5dec5e280dd756466bc654</Hash>
 </Codenesium>*/

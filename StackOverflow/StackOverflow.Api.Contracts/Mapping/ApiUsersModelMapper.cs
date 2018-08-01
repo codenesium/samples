@@ -1,14 +1,14 @@
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiUsersModelMapper : AbstractApiUsersModelMapper, IApiUsersModelMapper
-        {
-                public ApiUsersModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiUsersModelMapper : AbstractApiUsersModelMapper, IApiUsersModelMapper
+	{
+		public ApiUsersModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fb2f4fb1ca51bfb0478c7ce9161f8294</Hash>
+    <Hash>65cac980a29c2a74381282f6100d924a</Hash>
 </Codenesium>*/

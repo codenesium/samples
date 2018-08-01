@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class OtherTransportService : AbstractOtherTransportService, IOtherTransportService
-        {
-                public OtherTransportService(
-                        ILogger<IOtherTransportRepository> logger,
-                        IOtherTransportRepository otherTransportRepository,
-                        IApiOtherTransportRequestModelValidator otherTransportModelValidator,
-                        IBOLOtherTransportMapper bolotherTransportMapper,
-                        IDALOtherTransportMapper dalotherTransportMapper
-                        )
-                        : base(logger,
-                               otherTransportRepository,
-                               otherTransportModelValidator,
-                               bolotherTransportMapper,
-                               dalotherTransportMapper)
-                {
-                }
-        }
+	public partial class OtherTransportService : AbstractOtherTransportService, IOtherTransportService
+	{
+		public OtherTransportService(
+			ILogger<IOtherTransportRepository> logger,
+			IOtherTransportRepository otherTransportRepository,
+			IApiOtherTransportRequestModelValidator otherTransportModelValidator,
+			IBOLOtherTransportMapper bolotherTransportMapper,
+			IDALOtherTransportMapper dalotherTransportMapper
+			)
+			: base(logger,
+			       otherTransportRepository,
+			       otherTransportModelValidator,
+			       bolotherTransportMapper,
+			       dalotherTransportMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>38cbc8547ee02b2e8272514db67e7d51</Hash>
+    <Hash>4d08f77fce6b6a567ede13db23f0ff06</Hash>
 </Codenesium>*/

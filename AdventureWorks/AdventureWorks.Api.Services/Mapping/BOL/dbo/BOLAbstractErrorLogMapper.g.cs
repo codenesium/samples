@@ -5,52 +5,52 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractErrorLogMapper
-        {
-                public virtual BOErrorLog MapModelToBO(
-                        int errorLogID,
-                        ApiErrorLogRequestModel model
-                        )
-                {
-                        BOErrorLog boErrorLog = new BOErrorLog();
-                        boErrorLog.SetProperties(
-                                errorLogID,
-                                model.ErrorLine,
-                                model.ErrorMessage,
-                                model.ErrorNumber,
-                                model.ErrorProcedure,
-                                model.ErrorSeverity,
-                                model.ErrorState,
-                                model.ErrorTime,
-                                model.UserName);
-                        return boErrorLog;
-                }
+	public abstract class BOLAbstractErrorLogMapper
+	{
+		public virtual BOErrorLog MapModelToBO(
+			int errorLogID,
+			ApiErrorLogRequestModel model
+			)
+		{
+			BOErrorLog boErrorLog = new BOErrorLog();
+			boErrorLog.SetProperties(
+				errorLogID,
+				model.ErrorLine,
+				model.ErrorMessage,
+				model.ErrorNumber,
+				model.ErrorProcedure,
+				model.ErrorSeverity,
+				model.ErrorState,
+				model.ErrorTime,
+				model.UserName);
+			return boErrorLog;
+		}
 
-                public virtual ApiErrorLogResponseModel MapBOToModel(
-                        BOErrorLog boErrorLog)
-                {
-                        var model = new ApiErrorLogResponseModel();
+		public virtual ApiErrorLogResponseModel MapBOToModel(
+			BOErrorLog boErrorLog)
+		{
+			var model = new ApiErrorLogResponseModel();
 
-                        model.SetProperties(boErrorLog.ErrorLogID, boErrorLog.ErrorLine, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
+			model.SetProperties(boErrorLog.ErrorLogID, boErrorLog.ErrorLine, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiErrorLogResponseModel> MapBOToModel(
-                        List<BOErrorLog> items)
-                {
-                        List<ApiErrorLogResponseModel> response = new List<ApiErrorLogResponseModel>();
+		public virtual List<ApiErrorLogResponseModel> MapBOToModel(
+			List<BOErrorLog> items)
+		{
+			List<ApiErrorLogResponseModel> response = new List<ApiErrorLogResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f3b8fd138d7e909584882671cb33f726</Hash>
+    <Hash>c8d286383130a04b96ad8a3373f89dda</Hash>
 </Codenesium>*/

@@ -12,86 +12,86 @@ using Xunit;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Machine")]
-        [Trait("Area", "Integration")]
-        public class MachineIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public MachineIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Machine")]
+	[Trait("Area", "Integration")]
+	public class MachineIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public MachineIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiMachineModelMapper mapper = new ApiMachineModelMapper();
+			ApiMachineModelMapper mapper = new ApiMachineModelMapper();
 
-                        UpdateResponse<ApiMachineResponseModel> updateResponse = await this.Client.MachineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiMachineResponseModel> updateResponse = await this.Client.MachineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.MachineDeleteAsync(model.Id);
+			await this.Client.MachineDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiMachineResponseModel response = await this.Client.MachineGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiMachineResponseModel response = await this.Client.MachineGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiMachineResponseModel> response = await this.Client.MachineAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiMachineResponseModel> response = await this.Client.MachineAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiMachineResponseModel> CreateRecord()
-                {
-                        var model = new ApiMachineRequestModel();
-                        model.SetProperties("B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
-                        CreateResponse<ApiMachineResponseModel> result = await this.Client.MachineCreateAsync(model);
+		private async Task<ApiMachineResponseModel> CreateRecord()
+		{
+			var model = new ApiMachineRequestModel();
+			model.SetProperties("B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			CreateResponse<ApiMachineResponseModel> result = await this.Client.MachineCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.MachineDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.MachineDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fa479d142fceb85078a9952c0d4cd33f</Hash>
+    <Hash>ff088169db18bf06f30d3228d962658f</Hash>
 </Codenesium>*/

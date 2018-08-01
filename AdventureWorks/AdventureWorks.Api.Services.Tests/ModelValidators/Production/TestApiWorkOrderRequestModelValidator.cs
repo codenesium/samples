@@ -15,17 +15,17 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "WorkOrder")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiWorkOrderRequestModelValidatorTest
-        {
-                public ApiWorkOrderRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "WorkOrder")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiWorkOrderRequestModelValidatorTest
+	{
+		public ApiWorkOrderRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a038367c4fe73b13712e04ad33ec7584</Hash>
+    <Hash>34f6fc9e824d4906ee595103691e5d11</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/links")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class LinkController : AbstractLinkController
-        {
-                public LinkController(
-                        ApiSettings settings,
-                        ILogger<LinkController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ILinkService linkService,
-                        IApiLinkModelMapper linkModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               linkService,
-                               linkModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/links")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class LinkController : AbstractLinkController
+	{
+		public LinkController(
+			ApiSettings settings,
+			ILogger<LinkController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ILinkService linkService,
+			IApiLinkModelMapper linkModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       linkService,
+			       linkModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3a0705e221b3a5ec468314a1d6e5e44e</Hash>
+    <Hash>19a7da6c0b2c6461859d057dde847d7c</Hash>
 </Codenesium>*/

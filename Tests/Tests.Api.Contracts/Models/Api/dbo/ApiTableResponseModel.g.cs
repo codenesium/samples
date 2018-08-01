@@ -6,24 +6,24 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiTableResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+	public partial class ApiTableResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public int Id { get; private set; }
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>5429987717e6b477c8a333351884fb20</Hash>
+    <Hash>5734985f42f1f7ff027e22eb9a65e243</Hash>
 </Codenesium>*/

@@ -15,17 +15,17 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Votes")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiVotesRequestModelValidatorTest
-        {
-                public ApiVotesRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Votes")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiVotesRequestModelValidatorTest
+	{
+		public ApiVotesRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ebdf3ca368c71c664cb070618e8104c5</Hash>
+    <Hash>0f904bd727e92ba8cdba471c1caf68ae</Hash>
 </Codenesium>*/

@@ -7,22 +7,22 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface ITestAllFieldTypeService
-        {
-                Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> Create(
-                        ApiTestAllFieldTypeRequestModel model);
+	public interface ITestAllFieldTypeService
+	{
+		Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> Create(
+			ApiTestAllFieldTypeRequestModel model);
 
-                Task<UpdateResponse<ApiTestAllFieldTypeResponseModel>> Update(int id,
-                                                                               ApiTestAllFieldTypeRequestModel model);
+		Task<UpdateResponse<ApiTestAllFieldTypeResponseModel>> Update(int id,
+		                                                               ApiTestAllFieldTypeRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiTestAllFieldTypeResponseModel> Get(int id);
+		Task<ApiTestAllFieldTypeResponseModel> Get(int id);
 
-                Task<List<ApiTestAllFieldTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiTestAllFieldTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9e16e1436ca51aeaeeec71dd273b9e54</Hash>
+    <Hash>749ae1df243316bcb02c0a2165d7b1a1</Hash>
 </Codenesium>*/

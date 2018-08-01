@@ -6,58 +6,58 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALAirlineMapper DALAirlineMapperMock { get; set; } = new DALAirlineMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALAirlineMapper DALAirlineMapperMock { get; set; } = new DALAirlineMapper();
 
-                public IDALAirTransportMapper DALAirTransportMapperMock { get; set; } = new DALAirTransportMapper();
+		public IDALAirTransportMapper DALAirTransportMapperMock { get; set; } = new DALAirTransportMapper();
 
-                public IDALBreedMapper DALBreedMapperMock { get; set; } = new DALBreedMapper();
+		public IDALBreedMapper DALBreedMapperMock { get; set; } = new DALBreedMapper();
 
-                public IDALClientMapper DALClientMapperMock { get; set; } = new DALClientMapper();
+		public IDALClientMapper DALClientMapperMock { get; set; } = new DALClientMapper();
 
-                public IDALClientCommunicationMapper DALClientCommunicationMapperMock { get; set; } = new DALClientCommunicationMapper();
+		public IDALClientCommunicationMapper DALClientCommunicationMapperMock { get; set; } = new DALClientCommunicationMapper();
 
-                public IDALCountryMapper DALCountryMapperMock { get; set; } = new DALCountryMapper();
+		public IDALCountryMapper DALCountryMapperMock { get; set; } = new DALCountryMapper();
 
-                public IDALCountryRequirementMapper DALCountryRequirementMapperMock { get; set; } = new DALCountryRequirementMapper();
+		public IDALCountryRequirementMapper DALCountryRequirementMapperMock { get; set; } = new DALCountryRequirementMapper();
 
-                public IDALDestinationMapper DALDestinationMapperMock { get; set; } = new DALDestinationMapper();
+		public IDALDestinationMapper DALDestinationMapperMock { get; set; } = new DALDestinationMapper();
 
-                public IDALEmployeeMapper DALEmployeeMapperMock { get; set; } = new DALEmployeeMapper();
+		public IDALEmployeeMapper DALEmployeeMapperMock { get; set; } = new DALEmployeeMapper();
 
-                public IDALHandlerMapper DALHandlerMapperMock { get; set; } = new DALHandlerMapper();
+		public IDALHandlerMapper DALHandlerMapperMock { get; set; } = new DALHandlerMapper();
 
-                public IDALHandlerPipelineStepMapper DALHandlerPipelineStepMapperMock { get; set; } = new DALHandlerPipelineStepMapper();
+		public IDALHandlerPipelineStepMapper DALHandlerPipelineStepMapperMock { get; set; } = new DALHandlerPipelineStepMapper();
 
-                public IDALOtherTransportMapper DALOtherTransportMapperMock { get; set; } = new DALOtherTransportMapper();
+		public IDALOtherTransportMapper DALOtherTransportMapperMock { get; set; } = new DALOtherTransportMapper();
 
-                public IDALPetMapper DALPetMapperMock { get; set; } = new DALPetMapper();
+		public IDALPetMapper DALPetMapperMock { get; set; } = new DALPetMapper();
 
-                public IDALPipelineMapper DALPipelineMapperMock { get; set; } = new DALPipelineMapper();
+		public IDALPipelineMapper DALPipelineMapperMock { get; set; } = new DALPipelineMapper();
 
-                public IDALPipelineStatusMapper DALPipelineStatusMapperMock { get; set; } = new DALPipelineStatusMapper();
+		public IDALPipelineStatusMapper DALPipelineStatusMapperMock { get; set; } = new DALPipelineStatusMapper();
 
-                public IDALPipelineStepMapper DALPipelineStepMapperMock { get; set; } = new DALPipelineStepMapper();
+		public IDALPipelineStepMapper DALPipelineStepMapperMock { get; set; } = new DALPipelineStepMapper();
 
-                public IDALPipelineStepDestinationMapper DALPipelineStepDestinationMapperMock { get; set; } = new DALPipelineStepDestinationMapper();
+		public IDALPipelineStepDestinationMapper DALPipelineStepDestinationMapperMock { get; set; } = new DALPipelineStepDestinationMapper();
 
-                public IDALPipelineStepNoteMapper DALPipelineStepNoteMapperMock { get; set; } = new DALPipelineStepNoteMapper();
+		public IDALPipelineStepNoteMapper DALPipelineStepNoteMapperMock { get; set; } = new DALPipelineStepNoteMapper();
 
-                public IDALPipelineStepStatusMapper DALPipelineStepStatusMapperMock { get; set; } = new DALPipelineStepStatusMapper();
+		public IDALPipelineStepStatusMapper DALPipelineStepStatusMapperMock { get; set; } = new DALPipelineStepStatusMapper();
 
-                public IDALPipelineStepStepRequirementMapper DALPipelineStepStepRequirementMapperMock { get; set; } = new DALPipelineStepStepRequirementMapper();
+		public IDALPipelineStepStepRequirementMapper DALPipelineStepStepRequirementMapperMock { get; set; } = new DALPipelineStepStepRequirementMapper();
 
-                public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
+		public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
 
-                public IDALSpeciesMapper DALSpeciesMapperMock { get; set; } = new DALSpeciesMapper();
+		public IDALSpeciesMapper DALSpeciesMapperMock { get; set; } = new DALSpeciesMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b95ed3ecdb03977be96b3aa4fcc54d95</Hash>
+    <Hash>9fb7ac5a32887e577e4c099054a0a745</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class ProxyService : AbstractProxyService, IProxyService
-        {
-                public ProxyService(
-                        ILogger<IProxyRepository> logger,
-                        IProxyRepository proxyRepository,
-                        IApiProxyRequestModelValidator proxyModelValidator,
-                        IBOLProxyMapper bolproxyMapper,
-                        IDALProxyMapper dalproxyMapper
-                        )
-                        : base(logger,
-                               proxyRepository,
-                               proxyModelValidator,
-                               bolproxyMapper,
-                               dalproxyMapper)
-                {
-                }
-        }
+	public partial class ProxyService : AbstractProxyService, IProxyService
+	{
+		public ProxyService(
+			ILogger<IProxyRepository> logger,
+			IProxyRepository proxyRepository,
+			IApiProxyRequestModelValidator proxyModelValidator,
+			IBOLProxyMapper bolproxyMapper,
+			IDALProxyMapper dalproxyMapper
+			)
+			: base(logger,
+			       proxyRepository,
+			       proxyModelValidator,
+			       bolproxyMapper,
+			       dalproxyMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d068416a5b8151e5f838579eb5725074</Hash>
+    <Hash>ba658838109b38fe2f9479bab4c44913</Hash>
 </Codenesium>*/

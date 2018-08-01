@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductModelProductDescriptionCulture")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductModelProductDescriptionCultureRequestModelValidatorTest
-        {
-                public ApiProductModelProductDescriptionCultureRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductModelProductDescriptionCulture")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductModelProductDescriptionCultureRequestModelValidatorTest
+	{
+		public ApiProductModelProductDescriptionCultureRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void CultureID_Create_null()
-                {
-                        Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
-                        productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
+		[Fact]
+		public async void CultureID_Create_null()
+		{
+			Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
+			productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
 
-                        var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductModelProductDescriptionCultureRequestModel());
+			var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductModelProductDescriptionCultureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CultureID, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CultureID, null as string);
+		}
 
-                [Fact]
-                public async void CultureID_Update_null()
-                {
-                        Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
-                        productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
+		[Fact]
+		public async void CultureID_Update_null()
+		{
+			Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
+			productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
 
-                        var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductModelProductDescriptionCultureRequestModel());
+			var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductModelProductDescriptionCultureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CultureID, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CultureID, null as string);
+		}
 
-                [Fact]
-                public async void CultureID_Create_length()
-                {
-                        Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
-                        productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
+		[Fact]
+		public async void CultureID_Create_length()
+		{
+			Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
+			productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
 
-                        var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductModelProductDescriptionCultureRequestModel());
+			var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductModelProductDescriptionCultureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CultureID, new string('A', 7));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.CultureID, new string('A', 7));
+		}
 
-                [Fact]
-                public async void CultureID_Update_length()
-                {
-                        Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
-                        productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
+		[Fact]
+		public async void CultureID_Update_length()
+		{
+			Mock<IProductModelProductDescriptionCultureRepository> productModelProductDescriptionCultureRepository = new Mock<IProductModelProductDescriptionCultureRepository>();
+			productModelProductDescriptionCultureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductModelProductDescriptionCulture()));
 
-                        var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductModelProductDescriptionCultureRequestModel());
+			var validator = new ApiProductModelProductDescriptionCultureRequestModelValidator(productModelProductDescriptionCultureRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductModelProductDescriptionCultureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.CultureID, new string('A', 7));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.CultureID, new string('A', 7));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2c6d298868fa9b304daaa56fe20e47e4</Hash>
+    <Hash>d39df0eceae44302520574919ba6a550</Hash>
 </Codenesium>*/

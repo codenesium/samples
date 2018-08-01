@@ -12,31 +12,31 @@ using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Web
 {
-        [Route("api/admins")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class AdminController : AbstractAdminController
-        {
-                public AdminController(
-                        ApiSettings settings,
-                        ILogger<AdminController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IAdminService adminService,
-                        IApiAdminModelMapper adminModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               adminService,
-                               adminModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/admins")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class AdminController : AbstractAdminController
+	{
+		public AdminController(
+			ApiSettings settings,
+			ILogger<AdminController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IAdminService adminService,
+			IApiAdminModelMapper adminModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       adminService,
+			       adminModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a394e13309d1c8cb0ab7d5aaa99d2e03</Hash>
+    <Hash>03cb04864b5330ad54c7ec50a39b4742</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class DALRowVersionCheckMapper : DALAbstractRowVersionCheckMapper, IDALRowVersionCheckMapper
-        {
-                public DALRowVersionCheckMapper()
-                {
-                }
-        }
+	public partial class DALRowVersionCheckMapper : DALAbstractRowVersionCheckMapper, IDALRowVersionCheckMapper
+	{
+		public DALRowVersionCheckMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>090b328b7adb2306acd81368f0a9a4c1</Hash>
+    <Hash>6e1621493849e89bc8b7c826355d2e16</Hash>
 </Codenesium>*/

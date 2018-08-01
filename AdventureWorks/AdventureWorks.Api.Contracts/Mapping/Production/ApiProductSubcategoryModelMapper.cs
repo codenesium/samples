@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductSubcategoryModelMapper : AbstractApiProductSubcategoryModelMapper, IApiProductSubcategoryModelMapper
-        {
-                public ApiProductSubcategoryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiProductSubcategoryModelMapper : AbstractApiProductSubcategoryModelMapper, IApiProductSubcategoryModelMapper
+	{
+		public ApiProductSubcategoryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>41b7c68144679eab527466c5935fd84b</Hash>
+    <Hash>8927e176666d782b428ff2aabe604b54</Hash>
 </Codenesium>*/

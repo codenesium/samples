@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public interface IBadgesRepository
-        {
-                Task<Badges> Create(Badges item);
+	public interface IBadgesRepository
+	{
+		Task<Badges> Create(Badges item);
 
-                Task Update(Badges item);
+		Task Update(Badges item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Badges> Get(int id);
+		Task<Badges> Get(int id);
 
-                Task<List<Badges>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Badges>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>744a3bfc01ebe6c7c723bee502c54ad1</Hash>
+    <Hash>7e89cbb930c0274a83429611b4e9bdf3</Hash>
 </Codenesium>*/

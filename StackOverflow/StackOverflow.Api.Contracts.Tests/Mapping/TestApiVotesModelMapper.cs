@@ -7,62 +7,61 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Votes")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiVotesModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiVotesModelMapper();
-                        var model = new ApiVotesRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-                        ApiVotesResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Votes")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiVotesModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiVotesModelMapper();
+			var model = new ApiVotesRequestModel();
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			ApiVotesResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.BountyAmount.Should().Be(1);
-                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Id.Should().Be(1);
-                        response.PostId.Should().Be(1);
-                        response.UserId.Should().Be(1);
-                        response.VoteTypeId.Should().Be(1);
-                }
+			response.BountyAmount.Should().Be(1);
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Id.Should().Be(1);
+			response.PostId.Should().Be(1);
+			response.UserId.Should().Be(1);
+			response.VoteTypeId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiVotesModelMapper();
-                        var model = new ApiVotesResponseModel();
-                        model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-                        ApiVotesRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiVotesModelMapper();
+			var model = new ApiVotesResponseModel();
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			ApiVotesRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.BountyAmount.Should().Be(1);
-                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PostId.Should().Be(1);
-                        response.UserId.Should().Be(1);
-                        response.VoteTypeId.Should().Be(1);
-                }
+			response.BountyAmount.Should().Be(1);
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PostId.Should().Be(1);
+			response.UserId.Should().Be(1);
+			response.VoteTypeId.Should().Be(1);
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiVotesModelMapper();
-                        var model = new ApiVotesRequestModel();
-                        model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiVotesModelMapper();
+			var model = new ApiVotesRequestModel();
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
 
-                        JsonPatchDocument<ApiVotesRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiVotesRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.BountyAmount.Should().Be(1);
-                        response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.PostId.Should().Be(1);
-                        response.UserId.Should().Be(1);
-                        response.VoteTypeId.Should().Be(1);
-                }
-        }
+			JsonPatchDocument<ApiVotesRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiVotesRequestModel();
+			patch.ApplyTo(response);
+			response.BountyAmount.Should().Be(1);
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.PostId.Should().Be(1);
+			response.UserId.Should().Be(1);
+			response.VoteTypeId.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fd86a64a1b361693749c2507f529ce09</Hash>
+    <Hash>055131078217128a1d7882b1e6b556ef</Hash>
 </Codenesium>*/

@@ -6,51 +6,51 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        [Table("CreditCard", Schema="Sales")]
-        public partial class CreditCard : AbstractEntity
-        {
-                public CreditCard()
-                {
-                }
+	[Table("CreditCard", Schema="Sales")]
+	public partial class CreditCard : AbstractEntity
+	{
+		public CreditCard()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string cardNumber,
-                        string cardType,
-                        int creditCardID,
-                        int expMonth,
-                        short expYear,
-                        DateTime modifiedDate)
-                {
-                        this.CardNumber = cardNumber;
-                        this.CardType = cardType;
-                        this.CreditCardID = creditCardID;
-                        this.ExpMonth = expMonth;
-                        this.ExpYear = expYear;
-                        this.ModifiedDate = modifiedDate;
-                }
+		public virtual void SetProperties(
+			string cardNumber,
+			string cardType,
+			int creditCardID,
+			int expMonth,
+			short expYear,
+			DateTime modifiedDate)
+		{
+			this.CardNumber = cardNumber;
+			this.CardType = cardType;
+			this.CreditCardID = creditCardID;
+			this.ExpMonth = expMonth;
+			this.ExpYear = expYear;
+			this.ModifiedDate = modifiedDate;
+		}
 
-                [Column("CardNumber")]
-                public string CardNumber { get; private set; }
+		[Column("CardNumber")]
+		public string CardNumber { get; private set; }
 
-                [Column("CardType")]
-                public string CardType { get; private set; }
+		[Column("CardType")]
+		public string CardType { get; private set; }
 
-                [Key]
-                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-                [Column("CreditCardID")]
-                public int CreditCardID { get; private set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("CreditCardID")]
+		public int CreditCardID { get; private set; }
 
-                [Column("ExpMonth")]
-                public int ExpMonth { get; private set; }
+		[Column("ExpMonth")]
+		public int ExpMonth { get; private set; }
 
-                [Column("ExpYear")]
-                public short ExpYear { get; private set; }
+		[Column("ExpYear")]
+		public short ExpYear { get; private set; }
 
-                [Column("ModifiedDate")]
-                public DateTime ModifiedDate { get; private set; }
-        }
+		[Column("ModifiedDate")]
+		public DateTime ModifiedDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>3dd9bcf2317091c0464e5a0bdb36842e</Hash>
+    <Hash>550b8d624f0a8d7ecf7445d0fc9463c3</Hash>
 </Codenesium>*/

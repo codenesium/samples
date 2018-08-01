@@ -4,14 +4,14 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class DALTagsMapper : DALAbstractTagsMapper, IDALTagsMapper
-        {
-                public DALTagsMapper()
-                {
-                }
-        }
+	public partial class DALTagsMapper : DALAbstractTagsMapper, IDALTagsMapper
+	{
+		public DALTagsMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>348dae1215100714a60e7a8fb7c3f4e6</Hash>
+    <Hash>dc3935f6c05d80cde44f7ea76a65a9dc</Hash>
 </Codenesium>*/

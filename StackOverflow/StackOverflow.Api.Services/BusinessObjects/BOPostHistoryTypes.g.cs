@@ -3,15 +3,15 @@ using System;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOPostHistoryTypes : AbstractBOPostHistoryTypes
-        {
-                public BOPostHistoryTypes()
-                        : base()
-                {
-                }
-        }
+	public partial class BOPostHistoryTypes : AbstractBOPostHistoryTypes
+	{
+		public BOPostHistoryTypes()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f4c4278c6fea5e24496615fdc9a4016d</Hash>
+    <Hash>2c49b0052b872affad56bbaf57597727</Hash>
 </Codenesium>*/

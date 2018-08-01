@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public interface IBOLFileTypeMapper
-        {
-                BOFileType MapModelToBO(
-                        int id,
-                        ApiFileTypeRequestModel model);
+	public interface IBOLFileTypeMapper
+	{
+		BOFileType MapModelToBO(
+			int id,
+			ApiFileTypeRequestModel model);
 
-                ApiFileTypeResponseModel MapBOToModel(
-                        BOFileType boFileType);
+		ApiFileTypeResponseModel MapBOToModel(
+			BOFileType boFileType);
 
-                List<ApiFileTypeResponseModel> MapBOToModel(
-                        List<BOFileType> items);
-        }
+		List<ApiFileTypeResponseModel> MapBOToModel(
+			List<BOFileType> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6381a6e9bf1118a98b042080e6bb7959</Hash>
+    <Hash>fdbee1bcc64e93e42f7d2bb38d2648bd</Hash>
 </Codenesium>*/

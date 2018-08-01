@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/invitations")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class InvitationController : AbstractInvitationController
-        {
-                public InvitationController(
-                        ApiSettings settings,
-                        ILogger<InvitationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IInvitationService invitationService,
-                        IApiInvitationModelMapper invitationModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               invitationService,
-                               invitationModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/invitations")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class InvitationController : AbstractInvitationController
+	{
+		public InvitationController(
+			ApiSettings settings,
+			ILogger<InvitationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IInvitationService invitationService,
+			IApiInvitationModelMapper invitationModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       invitationService,
+			       invitationModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>420b65ef5243bc5b559cb1b04f0573ac</Hash>
+    <Hash>a5fa67d4f0dcbf938d4709ddf727d3d5</Hash>
 </Codenesium>*/

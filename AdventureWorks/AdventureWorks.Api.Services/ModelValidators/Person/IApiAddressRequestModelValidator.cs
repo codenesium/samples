@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IApiAddressRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiAddressRequestModel model);
+	public interface IApiAddressRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiAddressRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiAddressRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiAddressRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7e35f397f98a810b49d8cfefdee1299a</Hash>
+    <Hash>199635a2d66fac32a7c3ed4afc354050</Hash>
 </Codenesium>*/

@@ -7,63 +7,63 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductReview")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALProductReviewMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALProductReviewMapper();
-                        var bo = new BOProductReview();
-                        bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductReview")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALProductReviewMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALProductReviewMapper();
+			var bo = new BOProductReview();
+			bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        ProductReview response = mapper.MapBOToEF(bo);
+			ProductReview response = mapper.MapBOToEF(bo);
 
-                        response.Comment.Should().Be("A");
-                        response.EmailAddress.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductID.Should().Be(1);
-                        response.ProductReviewID.Should().Be(1);
-                        response.Rating.Should().Be(1);
-                        response.ReviewDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ReviewerName.Should().Be("A");
-                }
+			response.Comment.Should().Be("A");
+			response.EmailAddress.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductID.Should().Be(1);
+			response.ProductReviewID.Should().Be(1);
+			response.Rating.Should().Be(1);
+			response.ReviewDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ReviewerName.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALProductReviewMapper();
-                        ProductReview entity = new ProductReview();
-                        entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALProductReviewMapper();
+			ProductReview entity = new ProductReview();
+			entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        BOProductReview response = mapper.MapEFToBO(entity);
+			BOProductReview response = mapper.MapEFToBO(entity);
 
-                        response.Comment.Should().Be("A");
-                        response.EmailAddress.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ProductID.Should().Be(1);
-                        response.ProductReviewID.Should().Be(1);
-                        response.Rating.Should().Be(1);
-                        response.ReviewDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.ReviewerName.Should().Be("A");
-                }
+			response.Comment.Should().Be("A");
+			response.EmailAddress.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ProductID.Should().Be(1);
+			response.ProductReviewID.Should().Be(1);
+			response.Rating.Should().Be(1);
+			response.ReviewDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ReviewerName.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALProductReviewMapper();
-                        ProductReview entity = new ProductReview();
-                        entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALProductReviewMapper();
+			ProductReview entity = new ProductReview();
+			entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        List<BOProductReview> response = mapper.MapEFToBO(new List<ProductReview>() { entity });
+			List<BOProductReview> response = mapper.MapEFToBO(new List<ProductReview>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bca654878c588bb1a6d06ca565dd5541</Hash>
+    <Hash>ededfbfe7bd118474d642740d32794c8</Hash>
 </Codenesium>*/

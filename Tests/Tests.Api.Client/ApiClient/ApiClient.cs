@@ -10,20 +10,20 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>037e8443268505a86a4d5ff3bfa316d2</Hash>
+    <Hash>0acd842f9957d4705344e13bcccad9f0</Hash>
 </Codenesium>*/

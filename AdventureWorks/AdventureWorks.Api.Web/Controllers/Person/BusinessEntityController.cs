@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/businessEntities")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class BusinessEntityController : AbstractBusinessEntityController
-        {
-                public BusinessEntityController(
-                        ApiSettings settings,
-                        ILogger<BusinessEntityController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IBusinessEntityService businessEntityService,
-                        IApiBusinessEntityModelMapper businessEntityModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               businessEntityService,
-                               businessEntityModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/businessEntities")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class BusinessEntityController : AbstractBusinessEntityController
+	{
+		public BusinessEntityController(
+			ApiSettings settings,
+			ILogger<BusinessEntityController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IBusinessEntityService businessEntityService,
+			IApiBusinessEntityModelMapper businessEntityModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       businessEntityService,
+			       businessEntityModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9c090b1d46c13b25b973eed6e75d4728</Hash>
+    <Hash>a6e508888fa5e75c854d592642e2cc8c</Hash>
 </Codenesium>*/

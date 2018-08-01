@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class SpaceXSpaceFeatureService : AbstractSpaceXSpaceFeatureService, ISpaceXSpaceFeatureService
-        {
-                public SpaceXSpaceFeatureService(
-                        ILogger<ISpaceXSpaceFeatureRepository> logger,
-                        ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
-                        IApiSpaceXSpaceFeatureRequestModelValidator spaceXSpaceFeatureModelValidator,
-                        IBOLSpaceXSpaceFeatureMapper bolspaceXSpaceFeatureMapper,
-                        IDALSpaceXSpaceFeatureMapper dalspaceXSpaceFeatureMapper
-                        )
-                        : base(logger,
-                               spaceXSpaceFeatureRepository,
-                               spaceXSpaceFeatureModelValidator,
-                               bolspaceXSpaceFeatureMapper,
-                               dalspaceXSpaceFeatureMapper)
-                {
-                }
-        }
+	public partial class SpaceXSpaceFeatureService : AbstractSpaceXSpaceFeatureService, ISpaceXSpaceFeatureService
+	{
+		public SpaceXSpaceFeatureService(
+			ILogger<ISpaceXSpaceFeatureRepository> logger,
+			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
+			IApiSpaceXSpaceFeatureRequestModelValidator spaceXSpaceFeatureModelValidator,
+			IBOLSpaceXSpaceFeatureMapper bolspaceXSpaceFeatureMapper,
+			IDALSpaceXSpaceFeatureMapper dalspaceXSpaceFeatureMapper
+			)
+			: base(logger,
+			       spaceXSpaceFeatureRepository,
+			       spaceXSpaceFeatureModelValidator,
+			       bolspaceXSpaceFeatureMapper,
+			       dalspaceXSpaceFeatureMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>80ba443ef53abb395136c4b9c6d91034</Hash>
+    <Hash>73ab8c50470169342e63b7aa1e0b4190</Hash>
 </Codenesium>*/

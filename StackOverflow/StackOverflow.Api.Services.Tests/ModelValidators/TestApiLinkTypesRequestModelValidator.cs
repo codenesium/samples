@@ -15,41 +15,41 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LinkTypes")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiLinkTypesRequestModelValidatorTest
-        {
-                public ApiLinkTypesRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LinkTypes")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiLinkTypesRequestModelValidatorTest
+	{
+		public ApiLinkTypesRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Type_Create_length()
-                {
-                        Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
-                        linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
+		[Fact]
+		public async void Type_Create_length()
+		{
+			Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
+			linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
 
-                        var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLinkTypesRequestModel());
+			var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLinkTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Type_Update_length()
-                {
-                        Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
-                        linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
+		[Fact]
+		public async void Type_Update_length()
+		{
+			Mock<ILinkTypesRepository> linkTypesRepository = new Mock<ILinkTypesRepository>();
+			linkTypesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkTypes()));
 
-                        var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLinkTypesRequestModel());
+			var validator = new ApiLinkTypesRequestModelValidator(linkTypesRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkTypesRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>237ce55a4677511522a2e8f6402449e0</Hash>
+    <Hash>d25eff6ef1359c1eb6c0ff9cc5337796</Hash>
 </Codenesium>*/

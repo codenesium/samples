@@ -9,60 +9,60 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesTerritoryHistoryRequestModelValidator : AbstractValidator<ApiSalesTerritoryHistoryRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSalesTerritoryHistoryRequestModelValidator : AbstractValidator<ApiSalesTerritoryHistoryRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
+		private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
 
-                public AbstractApiSalesTerritoryHistoryRequestModelValidator(ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository)
-                {
-                        this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
-                }
+		public AbstractApiSalesTerritoryHistoryRequestModelValidator(ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository)
+		{
+			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSalesTerritoryHistoryRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSalesTerritoryHistoryRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void EndDateRules()
-                {
-                }
+		public virtual void EndDateRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
+		public virtual void RowguidRules()
+		{
+		}
 
-                public virtual void StartDateRules()
-                {
-                }
+		public virtual void StartDateRules()
+		{
+		}
 
-                public virtual void TerritoryIDRules()
-                {
-                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
-                }
+		public virtual void TerritoryIDRules()
+		{
+			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesTerritoryHistoryRepository.GetSalesPerson(id);
+		private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesTerritoryHistoryRepository.GetSalesPerson(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidSalesTerritory(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesTerritoryHistoryRepository.GetSalesTerritory(id);
+		private async Task<bool> BeValidSalesTerritory(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesTerritoryHistoryRepository.GetSalesTerritory(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bdab37a7017340c31fff3ebab91ef95d</Hash>
+    <Hash>0f7ceb9b2337034fbd741624871c79e4</Hash>
 </Codenesium>*/

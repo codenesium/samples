@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class LinkTypesService : AbstractLinkTypesService, ILinkTypesService
-        {
-                public LinkTypesService(
-                        ILogger<ILinkTypesRepository> logger,
-                        ILinkTypesRepository linkTypesRepository,
-                        IApiLinkTypesRequestModelValidator linkTypesModelValidator,
-                        IBOLLinkTypesMapper bollinkTypesMapper,
-                        IDALLinkTypesMapper dallinkTypesMapper
-                        )
-                        : base(logger,
-                               linkTypesRepository,
-                               linkTypesModelValidator,
-                               bollinkTypesMapper,
-                               dallinkTypesMapper)
-                {
-                }
-        }
+	public partial class LinkTypesService : AbstractLinkTypesService, ILinkTypesService
+	{
+		public LinkTypesService(
+			ILogger<ILinkTypesRepository> logger,
+			ILinkTypesRepository linkTypesRepository,
+			IApiLinkTypesRequestModelValidator linkTypesModelValidator,
+			IBOLLinkTypesMapper bollinkTypesMapper,
+			IDALLinkTypesMapper dallinkTypesMapper
+			)
+			: base(logger,
+			       linkTypesRepository,
+			       linkTypesModelValidator,
+			       bollinkTypesMapper,
+			       dallinkTypesMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>46ffe498277915acfc903e494e259ad4</Hash>
+    <Hash>72b000cc2501aa8371f9e1488b059ada</Hash>
 </Codenesium>*/

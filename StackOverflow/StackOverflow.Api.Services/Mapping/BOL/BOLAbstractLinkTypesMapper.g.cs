@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class BOLAbstractLinkTypesMapper
-        {
-                public virtual BOLinkTypes MapModelToBO(
-                        int id,
-                        ApiLinkTypesRequestModel model
-                        )
-                {
-                        BOLinkTypes boLinkTypes = new BOLinkTypes();
-                        boLinkTypes.SetProperties(
-                                id,
-                                model.Type);
-                        return boLinkTypes;
-                }
+	public abstract class BOLAbstractLinkTypesMapper
+	{
+		public virtual BOLinkTypes MapModelToBO(
+			int id,
+			ApiLinkTypesRequestModel model
+			)
+		{
+			BOLinkTypes boLinkTypes = new BOLinkTypes();
+			boLinkTypes.SetProperties(
+				id,
+				model.Type);
+			return boLinkTypes;
+		}
 
-                public virtual ApiLinkTypesResponseModel MapBOToModel(
-                        BOLinkTypes boLinkTypes)
-                {
-                        var model = new ApiLinkTypesResponseModel();
+		public virtual ApiLinkTypesResponseModel MapBOToModel(
+			BOLinkTypes boLinkTypes)
+		{
+			var model = new ApiLinkTypesResponseModel();
 
-                        model.SetProperties(boLinkTypes.Id, boLinkTypes.Type);
+			model.SetProperties(boLinkTypes.Id, boLinkTypes.Type);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiLinkTypesResponseModel> MapBOToModel(
-                        List<BOLinkTypes> items)
-                {
-                        List<ApiLinkTypesResponseModel> response = new List<ApiLinkTypesResponseModel>();
+		public virtual List<ApiLinkTypesResponseModel> MapBOToModel(
+			List<BOLinkTypes> items)
+		{
+			List<ApiLinkTypesResponseModel> response = new List<ApiLinkTypesResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ac4dbc8aed383fbe6edc09163e94f7b6</Hash>
+    <Hash>8a5ce6ecbe047a389466782d6a5a2e0b</Hash>
 </Codenesium>*/

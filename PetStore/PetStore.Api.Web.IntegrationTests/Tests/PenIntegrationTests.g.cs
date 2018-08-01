@@ -12,86 +12,86 @@ using Xunit;
 
 namespace PetStoreNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Pen")]
-        [Trait("Area", "Integration")]
-        public class PenIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PenIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Pen")]
+	[Trait("Area", "Integration")]
+	public class PenIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PenIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPenModelMapper mapper = new ApiPenModelMapper();
+			ApiPenModelMapper mapper = new ApiPenModelMapper();
 
-                        UpdateResponse<ApiPenResponseModel> updateResponse = await this.Client.PenUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPenResponseModel> updateResponse = await this.Client.PenUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PenDeleteAsync(model.Id);
+			await this.Client.PenDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPenResponseModel response = await this.Client.PenGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPenResponseModel response = await this.Client.PenGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPenResponseModel> response = await this.Client.PenAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPenResponseModel> response = await this.Client.PenAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPenResponseModel> CreateRecord()
-                {
-                        var model = new ApiPenRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiPenResponseModel> result = await this.Client.PenCreateAsync(model);
+		private async Task<ApiPenResponseModel> CreateRecord()
+		{
+			var model = new ApiPenRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiPenResponseModel> result = await this.Client.PenCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PenDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PenDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c20a293a4682aefa2b869b589552e5a</Hash>
+    <Hash>713e59d1c8478dd2a1ecb51e5e1210d2</Hash>
 </Codenesium>*/

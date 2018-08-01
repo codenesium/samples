@@ -12,118 +12,118 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractMachinePolicyService : AbstractService
-        {
-                private IMachinePolicyRepository machinePolicyRepository;
+	public abstract class AbstractMachinePolicyService : AbstractService
+	{
+		private IMachinePolicyRepository machinePolicyRepository;
 
-                private IApiMachinePolicyRequestModelValidator machinePolicyModelValidator;
+		private IApiMachinePolicyRequestModelValidator machinePolicyModelValidator;
 
-                private IBOLMachinePolicyMapper bolMachinePolicyMapper;
+		private IBOLMachinePolicyMapper bolMachinePolicyMapper;
 
-                private IDALMachinePolicyMapper dalMachinePolicyMapper;
+		private IDALMachinePolicyMapper dalMachinePolicyMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractMachinePolicyService(
-                        ILogger logger,
-                        IMachinePolicyRepository machinePolicyRepository,
-                        IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
-                        IBOLMachinePolicyMapper bolMachinePolicyMapper,
-                        IDALMachinePolicyMapper dalMachinePolicyMapper)
-                        : base()
-                {
-                        this.machinePolicyRepository = machinePolicyRepository;
-                        this.machinePolicyModelValidator = machinePolicyModelValidator;
-                        this.bolMachinePolicyMapper = bolMachinePolicyMapper;
-                        this.dalMachinePolicyMapper = dalMachinePolicyMapper;
-                        this.logger = logger;
-                }
+		public AbstractMachinePolicyService(
+			ILogger logger,
+			IMachinePolicyRepository machinePolicyRepository,
+			IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
+			IBOLMachinePolicyMapper bolMachinePolicyMapper,
+			IDALMachinePolicyMapper dalMachinePolicyMapper)
+			: base()
+		{
+			this.machinePolicyRepository = machinePolicyRepository;
+			this.machinePolicyModelValidator = machinePolicyModelValidator;
+			this.bolMachinePolicyMapper = bolMachinePolicyMapper;
+			this.dalMachinePolicyMapper = dalMachinePolicyMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.machinePolicyRepository.All(limit, offset);
+		public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.machinePolicyRepository.All(limit, offset);
 
-                        return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(records));
-                }
+			return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiMachinePolicyResponseModel> Get(string id)
-                {
-                        var record = await this.machinePolicyRepository.Get(id);
+		public virtual async Task<ApiMachinePolicyResponseModel> Get(string id)
+		{
+			var record = await this.machinePolicyRepository.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiMachinePolicyResponseModel>> Create(
-                        ApiMachinePolicyRequestModel model)
-                {
-                        CreateResponse<ApiMachinePolicyResponseModel> response = new CreateResponse<ApiMachinePolicyResponseModel>(await this.machinePolicyModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolMachinePolicyMapper.MapModelToBO(default(string), model);
-                                var record = await this.machinePolicyRepository.Create(this.dalMachinePolicyMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiMachinePolicyResponseModel>> Create(
+			ApiMachinePolicyRequestModel model)
+		{
+			CreateResponse<ApiMachinePolicyResponseModel> response = new CreateResponse<ApiMachinePolicyResponseModel>(await this.machinePolicyModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolMachinePolicyMapper.MapModelToBO(default(string), model);
+				var record = await this.machinePolicyRepository.Create(this.dalMachinePolicyMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiMachinePolicyResponseModel>> Update(
-                        string id,
-                        ApiMachinePolicyRequestModel model)
-                {
-                        var validationResult = await this.machinePolicyModelValidator.ValidateUpdateAsync(id, model);
+		public virtual async Task<UpdateResponse<ApiMachinePolicyResponseModel>> Update(
+			string id,
+			ApiMachinePolicyRequestModel model)
+		{
+			var validationResult = await this.machinePolicyModelValidator.ValidateUpdateAsync(id, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolMachinePolicyMapper.MapModelToBO(id, model);
-                                await this.machinePolicyRepository.Update(this.dalMachinePolicyMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolMachinePolicyMapper.MapModelToBO(id, model);
+				await this.machinePolicyRepository.Update(this.dalMachinePolicyMapper.MapBOToEF(bo));
 
-                                var record = await this.machinePolicyRepository.Get(id);
+				var record = await this.machinePolicyRepository.Get(id);
 
-                                return new UpdateResponse<ApiMachinePolicyResponseModel>(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiMachinePolicyResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiMachinePolicyResponseModel>(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiMachinePolicyResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        string id)
-                {
-                        ActionResponse response = new ActionResponse(await this.machinePolicyModelValidator.ValidateDeleteAsync(id));
-                        if (response.Success)
-                        {
-                                await this.machinePolicyRepository.Delete(id);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			string id)
+		{
+			ActionResponse response = new ActionResponse(await this.machinePolicyModelValidator.ValidateDeleteAsync(id));
+			if (response.Success)
+			{
+				await this.machinePolicyRepository.Delete(id);
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public async Task<ApiMachinePolicyResponseModel> ByName(string name)
-                {
-                        MachinePolicy record = await this.machinePolicyRepository.ByName(name);
+		public async Task<ApiMachinePolicyResponseModel> ByName(string name)
+		{
+			MachinePolicy record = await this.machinePolicyRepository.ByName(name);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>749c5a47c6f2a03dddb3938e14561d03</Hash>
+    <Hash>3072e250d0be0ca65823991cc0aac9a6</Hash>
 </Codenesium>*/

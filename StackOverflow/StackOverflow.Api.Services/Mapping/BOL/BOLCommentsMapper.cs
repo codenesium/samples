@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLCommentsMapper : BOLAbstractCommentsMapper, IBOLCommentsMapper
-        {
-                public BOLCommentsMapper()
-                {
-                }
-        }
+	public partial class BOLCommentsMapper : BOLAbstractCommentsMapper, IBOLCommentsMapper
+	{
+		public BOLCommentsMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2306c412c1975c8bde64e97dbfcd9fee</Hash>
+    <Hash>0ad14e29df1a420284d55609f56948be</Hash>
 </Codenesium>*/

@@ -9,48 +9,48 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator : AbstractValidator<ApiSalesOrderHeaderSalesReasonRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator : AbstractValidator<ApiSalesOrderHeaderSalesReasonRequestModel>
+	{
+		private int existingRecordId;
 
-                private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
+		private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 
-                public AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator(ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository)
-                {
-                        this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
-                }
+		public AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator(ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository)
+		{
+			this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiSalesOrderHeaderSalesReasonRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiSalesOrderHeaderSalesReasonRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void SalesReasonIDRules()
-                {
-                        this.RuleFor(x => x.SalesReasonID).MustAsync(this.BeValidSalesReason).When(x => x?.SalesReasonID != null).WithMessage("Invalid reference");
-                }
+		public virtual void SalesReasonIDRules()
+		{
+			this.RuleFor(x => x.SalesReasonID).MustAsync(this.BeValidSalesReason).When(x => x?.SalesReasonID != null).WithMessage("Invalid reference");
+		}
 
-                private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesOrderHeader(id);
+		private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesOrderHeader(id);
 
-                        return record != null;
-                }
+			return record != null;
+		}
 
-                private async Task<bool> BeValidSalesReason(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesReason(id);
+		private async Task<bool> BeValidSalesReason(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesReason(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9f60ec820d43599f019e5fc45c76388e</Hash>
+    <Hash>5656953acc59fc5af649e14714201de9</Hash>
 </Codenesium>*/

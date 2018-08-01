@@ -5,48 +5,48 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiCreditCardModelMapper
-        {
-                public virtual ApiCreditCardResponseModel MapRequestToResponse(
-                        int creditCardID,
-                        ApiCreditCardRequestModel request)
-                {
-                        var response = new ApiCreditCardResponseModel();
-                        response.SetProperties(creditCardID,
-                                               request.CardNumber,
-                                               request.CardType,
-                                               request.ExpMonth,
-                                               request.ExpYear,
-                                               request.ModifiedDate);
-                        return response;
-                }
+	public abstract class AbstractApiCreditCardModelMapper
+	{
+		public virtual ApiCreditCardResponseModel MapRequestToResponse(
+			int creditCardID,
+			ApiCreditCardRequestModel request)
+		{
+			var response = new ApiCreditCardResponseModel();
+			response.SetProperties(creditCardID,
+			                       request.CardNumber,
+			                       request.CardType,
+			                       request.ExpMonth,
+			                       request.ExpYear,
+			                       request.ModifiedDate);
+			return response;
+		}
 
-                public virtual ApiCreditCardRequestModel MapResponseToRequest(
-                        ApiCreditCardResponseModel response)
-                {
-                        var request = new ApiCreditCardRequestModel();
-                        request.SetProperties(
-                                response.CardNumber,
-                                response.CardType,
-                                response.ExpMonth,
-                                response.ExpYear,
-                                response.ModifiedDate);
-                        return request;
-                }
+		public virtual ApiCreditCardRequestModel MapResponseToRequest(
+			ApiCreditCardResponseModel response)
+		{
+			var request = new ApiCreditCardRequestModel();
+			request.SetProperties(
+				response.CardNumber,
+				response.CardType,
+				response.ExpMonth,
+				response.ExpYear,
+				response.ModifiedDate);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiCreditCardRequestModel>();
-                        patch.Replace(x => x.CardNumber, model.CardNumber);
-                        patch.Replace(x => x.CardType, model.CardType);
-                        patch.Replace(x => x.ExpMonth, model.ExpMonth);
-                        patch.Replace(x => x.ExpYear, model.ExpYear);
-                        patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiCreditCardRequestModel> CreatePatch(ApiCreditCardRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiCreditCardRequestModel>();
+			patch.Replace(x => x.CardNumber, model.CardNumber);
+			patch.Replace(x => x.CardType, model.CardType);
+			patch.Replace(x => x.ExpMonth, model.ExpMonth);
+			patch.Replace(x => x.ExpYear, model.ExpYear);
+			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2c3152490e3944f079495f1bd5d77f45</Hash>
+    <Hash>d2ffde122044516b4539e07e467587f4</Hash>
 </Codenesium>*/

@@ -15,117 +15,117 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "MachineRefTeam")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiMachineRefTeamRequestModelValidatorTest
-        {
-                public ApiMachineRefTeamRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "MachineRefTeam")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiMachineRefTeamRequestModelValidatorTest
+	{
+		public ApiMachineRefTeamRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void MachineId_Create_Valid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
+		[Fact]
+		public async void MachineId_Create_Valid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
+		}
 
-                [Fact]
-                public async void MachineId_Create_Invalid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
+		[Fact]
+		public async void MachineId_Create_Invalid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachineId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachineId, 1);
+		}
 
-                [Fact]
-                public async void MachineId_Update_Valid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
+		[Fact]
+		public async void MachineId_Update_Valid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
+		}
 
-                [Fact]
-                public async void MachineId_Update_Invalid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
+		[Fact]
+		public async void MachineId_Update_Invalid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.MachineId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.MachineId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Create_Valid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+		[Fact]
+		public async void TeamId_Create_Valid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Create_Invalid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+		[Fact]
+		public async void TeamId_Create_Invalid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
+			await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Update_Valid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+		[Fact]
+		public async void TeamId_Update_Valid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
+		}
 
-                [Fact]
-                public async void TeamId_Update_Invalid_Reference()
-                {
-                        Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
-                        machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+		[Fact]
+		public async void TeamId_Update_Invalid_Reference()
+		{
+			Mock<IMachineRefTeamRepository> machineRefTeamRepository = new Mock<IMachineRefTeamRepository>();
+			machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
-                        var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
+			var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ea90e5f521c20fe69db144024a8fc7dd</Hash>
+    <Hash>203acba5b369fe73941aacff71637705</Hash>
 </Codenesium>*/

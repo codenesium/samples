@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/purchaseOrderHeaders")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PurchaseOrderHeaderController : AbstractPurchaseOrderHeaderController
-        {
-                public PurchaseOrderHeaderController(
-                        ApiSettings settings,
-                        ILogger<PurchaseOrderHeaderController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPurchaseOrderHeaderService purchaseOrderHeaderService,
-                        IApiPurchaseOrderHeaderModelMapper purchaseOrderHeaderModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               purchaseOrderHeaderService,
-                               purchaseOrderHeaderModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/purchaseOrderHeaders")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PurchaseOrderHeaderController : AbstractPurchaseOrderHeaderController
+	{
+		public PurchaseOrderHeaderController(
+			ApiSettings settings,
+			ILogger<PurchaseOrderHeaderController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPurchaseOrderHeaderService purchaseOrderHeaderService,
+			IApiPurchaseOrderHeaderModelMapper purchaseOrderHeaderModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       purchaseOrderHeaderService,
+			       purchaseOrderHeaderModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1eb71716723374e76ac78fc694413c89</Hash>
+    <Hash>e13c68fea6a4728382337386317e0f4a</Hash>
 </Codenesium>*/

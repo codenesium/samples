@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ActionTemplateVersion")]
-        [Trait("Area", "Integration")]
-        public class ActionTemplateVersionIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ActionTemplateVersionIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ActionTemplateVersion")]
+	[Trait("Area", "Integration")]
+	public class ActionTemplateVersionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ActionTemplateVersionIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiActionTemplateVersionModelMapper mapper = new ApiActionTemplateVersionModelMapper();
+			ApiActionTemplateVersionModelMapper mapper = new ApiActionTemplateVersionModelMapper();
 
-                        UpdateResponse<ApiActionTemplateVersionResponseModel> updateResponse = await this.Client.ActionTemplateVersionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiActionTemplateVersionResponseModel> updateResponse = await this.Client.ActionTemplateVersionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ActionTemplateVersionDeleteAsync(model.Id);
+			await this.Client.ActionTemplateVersionDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiActionTemplateVersionResponseModel response = await this.Client.ActionTemplateVersionGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiActionTemplateVersionResponseModel response = await this.Client.ActionTemplateVersionGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiActionTemplateVersionResponseModel> response = await this.Client.ActionTemplateVersionAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiActionTemplateVersionResponseModel> response = await this.Client.ActionTemplateVersionAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiActionTemplateVersionResponseModel> CreateRecord()
-                {
-                        var model = new ApiActionTemplateVersionRequestModel();
-                        model.SetProperties("B", "B", "B", "B", 2);
-                        CreateResponse<ApiActionTemplateVersionResponseModel> result = await this.Client.ActionTemplateVersionCreateAsync(model);
+		private async Task<ApiActionTemplateVersionResponseModel> CreateRecord()
+		{
+			var model = new ApiActionTemplateVersionRequestModel();
+			model.SetProperties("B", "B", "B", "B", 2);
+			CreateResponse<ApiActionTemplateVersionResponseModel> result = await this.Client.ActionTemplateVersionCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ActionTemplateVersionDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ActionTemplateVersionDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4b078b0a99032f6d90c467c8c4a9b2b1</Hash>
+    <Hash>0129d1d56891d6ff0c8588e791e55ace</Hash>
 </Codenesium>*/

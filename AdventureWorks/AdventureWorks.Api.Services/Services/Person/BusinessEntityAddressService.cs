@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BusinessEntityAddressService : AbstractBusinessEntityAddressService, IBusinessEntityAddressService
-        {
-                public BusinessEntityAddressService(
-                        ILogger<IBusinessEntityAddressRepository> logger,
-                        IBusinessEntityAddressRepository businessEntityAddressRepository,
-                        IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator,
-                        IBOLBusinessEntityAddressMapper bolbusinessEntityAddressMapper,
-                        IDALBusinessEntityAddressMapper dalbusinessEntityAddressMapper
-                        )
-                        : base(logger,
-                               businessEntityAddressRepository,
-                               businessEntityAddressModelValidator,
-                               bolbusinessEntityAddressMapper,
-                               dalbusinessEntityAddressMapper)
-                {
-                }
-        }
+	public partial class BusinessEntityAddressService : AbstractBusinessEntityAddressService, IBusinessEntityAddressService
+	{
+		public BusinessEntityAddressService(
+			ILogger<IBusinessEntityAddressRepository> logger,
+			IBusinessEntityAddressRepository businessEntityAddressRepository,
+			IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator,
+			IBOLBusinessEntityAddressMapper bolbusinessEntityAddressMapper,
+			IDALBusinessEntityAddressMapper dalbusinessEntityAddressMapper
+			)
+			: base(logger,
+			       businessEntityAddressRepository,
+			       businessEntityAddressModelValidator,
+			       bolbusinessEntityAddressMapper,
+			       dalbusinessEntityAddressMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8cf42cad94c33546d1b6e8626bad70a2</Hash>
+    <Hash>9efd8d499936f94fca544734389db479</Hash>
 </Codenesium>*/

@@ -15,91 +15,91 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpaceFeature")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSpaceFeatureRequestModelValidatorTest
-        {
-                public ApiSpaceFeatureRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpaceFeature")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSpaceFeatureRequestModelValidatorTest
+	{
+		public ApiSpaceFeatureRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void StudioId_Create_Valid_Reference()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Create_Invalid_Reference()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
+			await validator.ValidateCreateAsync(new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Valid_Reference()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Invalid_Reference()
-                {
-                        Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
-                        spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<ISpaceFeatureRepository> spaceFeatureRepository = new Mock<ISpaceFeatureRepository>();
+			spaceFeatureRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
+			var validator = new ApiSpaceFeatureRequestModelValidator(spaceFeatureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceFeatureRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f99abea8a1fe087918596f70105f9af</Hash>
+    <Hash>cd81f43a0edd472c357e8758fcf000e5</Hash>
 </Codenesium>*/

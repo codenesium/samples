@@ -12,86 +12,86 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Event")]
-        [Trait("Area", "Integration")]
-        public class EventIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public EventIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Event")]
+	[Trait("Area", "Integration")]
+	public class EventIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public EventIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiEventModelMapper mapper = new ApiEventModelMapper();
+			ApiEventModelMapper mapper = new ApiEventModelMapper();
 
-                        UpdateResponse<ApiEventResponseModel> updateResponse = await this.Client.EventUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEventResponseModel> updateResponse = await this.Client.EventUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.EventDeleteAsync(model.Id);
+			await this.Client.EventDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiEventResponseModel response = await this.Client.EventGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiEventResponseModel response = await this.Client.EventGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiEventResponseModel> response = await this.Client.EventAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiEventResponseModel> response = await this.Client.EventAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiEventResponseModel> CreateRecord()
-                {
-                        var model = new ApiEventRequestModel();
-                        model.SetProperties("B", "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-                        CreateResponse<ApiEventResponseModel> result = await this.Client.EventCreateAsync(model);
+		private async Task<ApiEventResponseModel> CreateRecord()
+		{
+			var model = new ApiEventRequestModel();
+			model.SetProperties("B", "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiEventResponseModel> result = await this.Client.EventCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.EventDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.EventDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>381cfb78c6342a205fa31a2ae6937de5</Hash>
+    <Hash>b68f74e4eaecf2f5b1e4a1bb04f6ba94</Hash>
 </Codenesium>*/

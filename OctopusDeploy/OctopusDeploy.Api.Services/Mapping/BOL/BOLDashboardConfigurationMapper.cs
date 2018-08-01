@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOLDashboardConfigurationMapper : BOLAbstractDashboardConfigurationMapper, IBOLDashboardConfigurationMapper
-        {
-                public BOLDashboardConfigurationMapper()
-                {
-                }
-        }
+	public partial class BOLDashboardConfigurationMapper : BOLAbstractDashboardConfigurationMapper, IBOLDashboardConfigurationMapper
+	{
+		public BOLDashboardConfigurationMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d8b59a24543021881464017f26a3780c</Hash>
+    <Hash>65de024c481a657a0f0397e5e5c709df</Hash>
 </Codenesium>*/

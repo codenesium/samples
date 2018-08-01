@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALCreditCardMapper
-        {
-                CreditCard MapBOToEF(
-                        BOCreditCard bo);
+	public interface IDALCreditCardMapper
+	{
+		CreditCard MapBOToEF(
+			BOCreditCard bo);
 
-                BOCreditCard MapEFToBO(
-                        CreditCard efCreditCard);
+		BOCreditCard MapEFToBO(
+			CreditCard efCreditCard);
 
-                List<BOCreditCard> MapEFToBO(
-                        List<CreditCard> records);
-        }
+		List<BOCreditCard> MapEFToBO(
+			List<CreditCard> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>fd928a41ffb0d89293ddf199f989c54e</Hash>
+    <Hash>cf0d3f1af5be3a9fc9c96b0a6ba26c8d</Hash>
 </Codenesium>*/

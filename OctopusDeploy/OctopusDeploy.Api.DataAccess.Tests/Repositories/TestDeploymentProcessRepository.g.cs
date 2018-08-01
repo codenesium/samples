@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class DeploymentProcessRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class DeploymentProcessRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<DeploymentProcessRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<DeploymentProcessRepository>>();
-                }
-        }
+		public static Mock<ILogger<DeploymentProcessRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<DeploymentProcessRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DeploymentProcess")]
-        [Trait("Area", "Repositories")]
-        public partial class DeploymentProcessRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DeploymentProcess")]
+	[Trait("Area", "Repositories")]
+	public partial class DeploymentProcessRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
 
-                        DeploymentProcess entity = new DeploymentProcess();
-                        context.Set<DeploymentProcess>().Add(entity);
-                        await context.SaveChangesAsync();
+			DeploymentProcess entity = new DeploymentProcess();
+			context.Set<DeploymentProcess>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
 
-                        DeploymentProcess entity = new DeploymentProcess();
-                        context.Set<DeploymentProcess>().Add(entity);
-                        await context.SaveChangesAsync();
+			DeploymentProcess entity = new DeploymentProcess();
+			context.Set<DeploymentProcess>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
 
-                        var entity = new DeploymentProcess();
-                        await repository.Create(entity);
+			var entity = new DeploymentProcess();
+			await repository.Create(entity);
 
-                        var record = await context.Set<DeploymentProcess>().FirstOrDefaultAsync();
+			var record = await context.Set<DeploymentProcess>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
-                        DeploymentProcess entity = new DeploymentProcess();
-                        context.Set<DeploymentProcess>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+			DeploymentProcess entity = new DeploymentProcess();
+			context.Set<DeploymentProcess>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<DeploymentProcess>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<DeploymentProcess>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
-                        DeploymentProcess entity = new DeploymentProcess();
-                        context.Set<DeploymentProcess>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+			DeploymentProcess entity = new DeploymentProcess();
+			context.Set<DeploymentProcess>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new DeploymentProcess());
+			await repository.Update(new DeploymentProcess());
 
-                        var modifiedRecord = context.Set<DeploymentProcess>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<DeploymentProcess>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
-                        var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
-                        DeploymentProcess entity = new DeploymentProcess();
-                        context.Set<DeploymentProcess>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<DeploymentProcessRepository>> loggerMoc = DeploymentProcessRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentProcessRepositoryMoc.GetContext();
+			var repository = new DeploymentProcessRepository(loggerMoc.Object, context);
+			DeploymentProcess entity = new DeploymentProcess();
+			context.Set<DeploymentProcess>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        DeploymentProcess modifiedRecord = await context.Set<DeploymentProcess>().FirstOrDefaultAsync();
+			DeploymentProcess modifiedRecord = await context.Set<DeploymentProcess>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e80adcf0bb0923c59c53ce270b50ee44</Hash>
+    <Hash>2cc50c92046e13788a79450bcf52b35c</Hash>
 </Codenesium>*/

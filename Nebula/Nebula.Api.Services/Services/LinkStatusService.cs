@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class LinkStatusService : AbstractLinkStatusService, ILinkStatusService
-        {
-                public LinkStatusService(
-                        ILogger<ILinkStatusRepository> logger,
-                        ILinkStatusRepository linkStatusRepository,
-                        IApiLinkStatusRequestModelValidator linkStatusModelValidator,
-                        IBOLLinkStatusMapper bollinkStatusMapper,
-                        IDALLinkStatusMapper dallinkStatusMapper,
-                        IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper
-                        )
-                        : base(logger,
-                               linkStatusRepository,
-                               linkStatusModelValidator,
-                               bollinkStatusMapper,
-                               dallinkStatusMapper,
-                               bolLinkMapper,
-                               dalLinkMapper)
-                {
-                }
-        }
+	public partial class LinkStatusService : AbstractLinkStatusService, ILinkStatusService
+	{
+		public LinkStatusService(
+			ILogger<ILinkStatusRepository> logger,
+			ILinkStatusRepository linkStatusRepository,
+			IApiLinkStatusRequestModelValidator linkStatusModelValidator,
+			IBOLLinkStatusMapper bollinkStatusMapper,
+			IDALLinkStatusMapper dallinkStatusMapper,
+			IBOLLinkMapper bolLinkMapper,
+			IDALLinkMapper dalLinkMapper
+			)
+			: base(logger,
+			       linkStatusRepository,
+			       linkStatusModelValidator,
+			       bollinkStatusMapper,
+			       dallinkStatusMapper,
+			       bolLinkMapper,
+			       dalLinkMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5fd516475f485ca96544a09509da0d8a</Hash>
+    <Hash>7a3ca0a3fa49a919acb15a4a1bbbe5f1</Hash>
 </Codenesium>*/

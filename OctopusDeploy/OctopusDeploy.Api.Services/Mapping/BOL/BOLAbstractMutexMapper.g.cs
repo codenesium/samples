@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractMutexMapper
-        {
-                public virtual BOMutex MapModelToBO(
-                        string id,
-                        ApiMutexRequestModel model
-                        )
-                {
-                        BOMutex boMutex = new BOMutex();
-                        boMutex.SetProperties(
-                                id,
-                                model.JSON);
-                        return boMutex;
-                }
+	public abstract class BOLAbstractMutexMapper
+	{
+		public virtual BOMutex MapModelToBO(
+			string id,
+			ApiMutexRequestModel model
+			)
+		{
+			BOMutex boMutex = new BOMutex();
+			boMutex.SetProperties(
+				id,
+				model.JSON);
+			return boMutex;
+		}
 
-                public virtual ApiMutexResponseModel MapBOToModel(
-                        BOMutex boMutex)
-                {
-                        var model = new ApiMutexResponseModel();
+		public virtual ApiMutexResponseModel MapBOToModel(
+			BOMutex boMutex)
+		{
+			var model = new ApiMutexResponseModel();
 
-                        model.SetProperties(boMutex.Id, boMutex.JSON);
+			model.SetProperties(boMutex.Id, boMutex.JSON);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiMutexResponseModel> MapBOToModel(
-                        List<BOMutex> items)
-                {
-                        List<ApiMutexResponseModel> response = new List<ApiMutexResponseModel>();
+		public virtual List<ApiMutexResponseModel> MapBOToModel(
+			List<BOMutex> items)
+		{
+			List<ApiMutexResponseModel> response = new List<ApiMutexResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b079ec729a354c974cbe3f0427c5e5b0</Hash>
+    <Hash>26224358a4493be70c290147a86ba969</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class RateService : AbstractRateService, IRateService
-        {
-                public RateService(
-                        ILogger<IRateRepository> logger,
-                        IRateRepository rateRepository,
-                        IApiRateRequestModelValidator rateModelValidator,
-                        IBOLRateMapper bolrateMapper,
-                        IDALRateMapper dalrateMapper
-                        )
-                        : base(logger,
-                               rateRepository,
-                               rateModelValidator,
-                               bolrateMapper,
-                               dalrateMapper)
-                {
-                }
-        }
+	public partial class RateService : AbstractRateService, IRateService
+	{
+		public RateService(
+			ILogger<IRateRepository> logger,
+			IRateRepository rateRepository,
+			IApiRateRequestModelValidator rateModelValidator,
+			IBOLRateMapper bolrateMapper,
+			IDALRateMapper dalrateMapper
+			)
+			: base(logger,
+			       rateRepository,
+			       rateModelValidator,
+			       bolrateMapper,
+			       dalrateMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>30f6866e37a1d78f44d02426fe14aa4a</Hash>
+    <Hash>d6afa9478970d35ecbbd748032d082aa</Hash>
 </Codenesium>*/

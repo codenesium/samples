@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALAccountMapper
-        {
-                Account MapBOToEF(
-                        BOAccount bo);
+	public interface IDALAccountMapper
+	{
+		Account MapBOToEF(
+			BOAccount bo);
 
-                BOAccount MapEFToBO(
-                        Account efAccount);
+		BOAccount MapEFToBO(
+			Account efAccount);
 
-                List<BOAccount> MapEFToBO(
-                        List<Account> records);
-        }
+		List<BOAccount> MapEFToBO(
+			List<Account> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>441bce71d2cad0569cab934b32a16216</Hash>
+    <Hash>5bddb0794d7c5158b9094a461e424d7a</Hash>
 </Codenesium>*/

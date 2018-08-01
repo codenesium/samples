@@ -5,16 +5,16 @@ using TicketingCRMNS.Api.Contracts;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public interface IApiVenueRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiVenueRequestModel model);
+	public interface IApiVenueRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiVenueRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiVenueRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiVenueRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e37f903c006dda69037564c197075427</Hash>
+    <Hash>8139bc884d16c8b6c31b3f620d597b8a</Hash>
 </Codenesium>*/

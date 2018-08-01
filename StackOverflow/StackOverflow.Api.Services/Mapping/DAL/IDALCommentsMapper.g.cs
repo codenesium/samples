@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IDALCommentsMapper
-        {
-                Comments MapBOToEF(
-                        BOComments bo);
+	public interface IDALCommentsMapper
+	{
+		Comments MapBOToEF(
+			BOComments bo);
 
-                BOComments MapEFToBO(
-                        Comments efComments);
+		BOComments MapEFToBO(
+			Comments efComments);
 
-                List<BOComments> MapEFToBO(
-                        List<Comments> records);
-        }
+		List<BOComments> MapEFToBO(
+			List<Comments> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>dbef9e01dfe51ed4db0dffa6fb4bf21d</Hash>
+    <Hash>a4b368c77e213cabb46ba7a215b9a4c1</Hash>
 </Codenesium>*/

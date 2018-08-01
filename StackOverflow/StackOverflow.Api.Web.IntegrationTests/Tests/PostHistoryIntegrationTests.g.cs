@@ -12,86 +12,86 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "PostHistory")]
-        [Trait("Area", "Integration")]
-        public class PostHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PostHistoryIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "PostHistory")]
+	[Trait("Area", "Integration")]
+	public class PostHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PostHistoryIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPostHistoryModelMapper mapper = new ApiPostHistoryModelMapper();
+			ApiPostHistoryModelMapper mapper = new ApiPostHistoryModelMapper();
 
-                        UpdateResponse<ApiPostHistoryResponseModel> updateResponse = await this.Client.PostHistoryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPostHistoryResponseModel> updateResponse = await this.Client.PostHistoryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PostHistoryDeleteAsync(model.Id);
+			await this.Client.PostHistoryDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPostHistoryResponseModel response = await this.Client.PostHistoryGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPostHistoryResponseModel response = await this.Client.PostHistoryGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPostHistoryResponseModel> response = await this.Client.PostHistoryAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPostHistoryResponseModel> response = await this.Client.PostHistoryAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPostHistoryResponseModel> CreateRecord()
-                {
-                        var model = new ApiPostHistoryRequestModel();
-                        model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
-                        CreateResponse<ApiPostHistoryResponseModel> result = await this.Client.PostHistoryCreateAsync(model);
+		private async Task<ApiPostHistoryResponseModel> CreateRecord()
+		{
+			var model = new ApiPostHistoryRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			CreateResponse<ApiPostHistoryResponseModel> result = await this.Client.PostHistoryCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PostHistoryDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PostHistoryDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1973108a6f28bdce79b3c6c610e150d9</Hash>
+    <Hash>3df3152b919dbb2483bfab3ca76ee624</Hash>
 </Codenesium>*/

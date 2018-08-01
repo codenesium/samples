@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public interface IBOLLinkLogMapper
-        {
-                BOLinkLog MapModelToBO(
-                        int id,
-                        ApiLinkLogRequestModel model);
+	public interface IBOLLinkLogMapper
+	{
+		BOLinkLog MapModelToBO(
+			int id,
+			ApiLinkLogRequestModel model);
 
-                ApiLinkLogResponseModel MapBOToModel(
-                        BOLinkLog boLinkLog);
+		ApiLinkLogResponseModel MapBOToModel(
+			BOLinkLog boLinkLog);
 
-                List<ApiLinkLogResponseModel> MapBOToModel(
-                        List<BOLinkLog> items);
-        }
+		List<ApiLinkLogResponseModel> MapBOToModel(
+			List<BOLinkLog> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>072cb4cd3b5d47d2f3437e95180108ab</Hash>
+    <Hash>c840f37ea49b4208f616617820286beb</Hash>
 </Codenesium>*/

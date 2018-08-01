@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        [Table("TransactionStatus", Schema="dbo")]
-        public partial class TransactionStatus : AbstractEntity
-        {
-                public TransactionStatus()
-                {
-                }
+	[Table("TransactionStatus", Schema="dbo")]
+	public partial class TransactionStatus : AbstractEntity
+	{
+		public TransactionStatus()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
-        }
+		[Column("name")]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>34281f6d4bbf3a12552b585502948783</Hash>
+    <Hash>981dfb26bc9ecee1e009a6d012ea569e</Hash>
 </Codenesium>*/

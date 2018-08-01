@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DocumentService : AbstractDocumentService, IDocumentService
-        {
-                public DocumentService(
-                        ILogger<IDocumentRepository> logger,
-                        IDocumentRepository documentRepository,
-                        IApiDocumentRequestModelValidator documentModelValidator,
-                        IBOLDocumentMapper boldocumentMapper,
-                        IDALDocumentMapper daldocumentMapper
-                        )
-                        : base(logger,
-                               documentRepository,
-                               documentModelValidator,
-                               boldocumentMapper,
-                               daldocumentMapper)
-                {
-                }
-        }
+	public partial class DocumentService : AbstractDocumentService, IDocumentService
+	{
+		public DocumentService(
+			ILogger<IDocumentRepository> logger,
+			IDocumentRepository documentRepository,
+			IApiDocumentRequestModelValidator documentModelValidator,
+			IBOLDocumentMapper boldocumentMapper,
+			IDALDocumentMapper daldocumentMapper
+			)
+			: base(logger,
+			       documentRepository,
+			       documentModelValidator,
+			       boldocumentMapper,
+			       daldocumentMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c3c9b82dbdbb367f3eaab3ddb717f440</Hash>
+    <Hash>6faff75bf9c49c5f11144b5e923d9e2d</Hash>
 </Codenesium>*/

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-        public interface IApiClaspModelMapper
-        {
-                ApiClaspResponseModel MapRequestToResponse(
-                        int id,
-                        ApiClaspRequestModel request);
+	public interface IApiClaspModelMapper
+	{
+		ApiClaspResponseModel MapRequestToResponse(
+			int id,
+			ApiClaspRequestModel request);
 
-                ApiClaspRequestModel MapResponseToRequest(
-                        ApiClaspResponseModel response);
+		ApiClaspRequestModel MapResponseToRequest(
+			ApiClaspResponseModel response);
 
-                JsonPatchDocument<ApiClaspRequestModel> CreatePatch(ApiClaspRequestModel model);
-        }
+		JsonPatchDocument<ApiClaspRequestModel> CreatePatch(ApiClaspRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2caccb15f2c101fdf95af68199b059c9</Hash>
+    <Hash>07a538900f7350bdfa81798e546a9588</Hash>
 </Codenesium>*/

@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "AWBuildVersion")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiAWBuildVersionRequestModelValidatorTest
-        {
-                public ApiAWBuildVersionRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "AWBuildVersion")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiAWBuildVersionRequestModelValidatorTest
+	{
+		public ApiAWBuildVersionRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Database_Version_Create_null()
-                {
-                        Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
-                        aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
+		[Fact]
+		public async void Database_Version_Create_null()
+		{
+			Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
+			aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 
-                        var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAWBuildVersionRequestModel());
+			var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAWBuildVersionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Database_Version, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Database_Version, null as string);
+		}
 
-                [Fact]
-                public async void Database_Version_Update_null()
-                {
-                        Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
-                        aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
+		[Fact]
+		public async void Database_Version_Update_null()
+		{
+			Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
+			aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 
-                        var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAWBuildVersionRequestModel());
+			var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAWBuildVersionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Database_Version, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Database_Version, null as string);
+		}
 
-                [Fact]
-                public async void Database_Version_Create_length()
-                {
-                        Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
-                        aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
+		[Fact]
+		public async void Database_Version_Create_length()
+		{
+			Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
+			aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 
-                        var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiAWBuildVersionRequestModel());
+			var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAWBuildVersionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Database_Version, new string('A', 26));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Database_Version, new string('A', 26));
+		}
 
-                [Fact]
-                public async void Database_Version_Update_length()
-                {
-                        Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
-                        aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
+		[Fact]
+		public async void Database_Version_Update_length()
+		{
+			Mock<IAWBuildVersionRepository> aWBuildVersionRepository = new Mock<IAWBuildVersionRepository>();
+			aWBuildVersionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 
-                        var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiAWBuildVersionRequestModel());
+			var validator = new ApiAWBuildVersionRequestModelValidator(aWBuildVersionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAWBuildVersionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Database_Version, new string('A', 26));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Database_Version, new string('A', 26));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>67d896646ebe0e772a4d337d2f42a860</Hash>
+    <Hash>af1b803ca6e4702e3830cbf8234ca63d</Hash>
 </Codenesium>*/

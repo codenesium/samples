@@ -7,61 +7,61 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Account")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALAccountMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALAccountMapper();
-                        var bo = new BOAccount();
-                        bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Account")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALAccountMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALAccountMapper();
+			var bo = new BOAccount();
+			bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
-                        Account response = mapper.MapBOToEF(bo);
+			Account response = mapper.MapBOToEF(bo);
 
-                        response.AccountType.Should().Be("A");
-                        response.EnvironmentIds.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.TenantIds.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.AccountType.Should().Be("A");
+			response.EnvironmentIds.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.TenantIds.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALAccountMapper();
-                        Account entity = new Account();
-                        entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALAccountMapper();
+			Account entity = new Account();
+			entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
-                        BOAccount response = mapper.MapEFToBO(entity);
+			BOAccount response = mapper.MapEFToBO(entity);
 
-                        response.AccountType.Should().Be("A");
-                        response.EnvironmentIds.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.TenantIds.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.AccountType.Should().Be("A");
+			response.EnvironmentIds.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.TenantIds.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALAccountMapper();
-                        Account entity = new Account();
-                        entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALAccountMapper();
+			Account entity = new Account();
+			entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
-                        List<BOAccount> response = mapper.MapEFToBO(new List<Account>() { entity });
+			List<BOAccount> response = mapper.MapEFToBO(new List<Account>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fa83702574abfb3b77b907de9e66d8ed</Hash>
+    <Hash>4f122f9d1630f72e010336e4f32e3e1d</Hash>
 </Codenesium>*/

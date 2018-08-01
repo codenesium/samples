@@ -5,46 +5,46 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class BOLAbstractMachineRefTeamMapper
-        {
-                public virtual BOMachineRefTeam MapModelToBO(
-                        int id,
-                        ApiMachineRefTeamRequestModel model
-                        )
-                {
-                        BOMachineRefTeam boMachineRefTeam = new BOMachineRefTeam();
-                        boMachineRefTeam.SetProperties(
-                                id,
-                                model.MachineId,
-                                model.TeamId);
-                        return boMachineRefTeam;
-                }
+	public abstract class BOLAbstractMachineRefTeamMapper
+	{
+		public virtual BOMachineRefTeam MapModelToBO(
+			int id,
+			ApiMachineRefTeamRequestModel model
+			)
+		{
+			BOMachineRefTeam boMachineRefTeam = new BOMachineRefTeam();
+			boMachineRefTeam.SetProperties(
+				id,
+				model.MachineId,
+				model.TeamId);
+			return boMachineRefTeam;
+		}
 
-                public virtual ApiMachineRefTeamResponseModel MapBOToModel(
-                        BOMachineRefTeam boMachineRefTeam)
-                {
-                        var model = new ApiMachineRefTeamResponseModel();
+		public virtual ApiMachineRefTeamResponseModel MapBOToModel(
+			BOMachineRefTeam boMachineRefTeam)
+		{
+			var model = new ApiMachineRefTeamResponseModel();
 
-                        model.SetProperties(boMachineRefTeam.Id, boMachineRefTeam.MachineId, boMachineRefTeam.TeamId);
+			model.SetProperties(boMachineRefTeam.Id, boMachineRefTeam.MachineId, boMachineRefTeam.TeamId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiMachineRefTeamResponseModel> MapBOToModel(
-                        List<BOMachineRefTeam> items)
-                {
-                        List<ApiMachineRefTeamResponseModel> response = new List<ApiMachineRefTeamResponseModel>();
+		public virtual List<ApiMachineRefTeamResponseModel> MapBOToModel(
+			List<BOMachineRefTeam> items)
+		{
+			List<ApiMachineRefTeamResponseModel> response = new List<ApiMachineRefTeamResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7a252066f41755c8283a65145b0056f6</Hash>
+    <Hash>5b96945c186555108050b08849d872a4</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiLinkModelMapper : AbstractApiLinkModelMapper, IApiLinkModelMapper
-        {
-                public ApiLinkModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiLinkModelMapper : AbstractApiLinkModelMapper, IApiLinkModelMapper
+	{
+		public ApiLinkModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52adf5503af68f25e9d45203613be5a9</Hash>
+    <Hash>3b09bbcdc441b75085381c19b62ed77c</Hash>
 </Codenesium>*/

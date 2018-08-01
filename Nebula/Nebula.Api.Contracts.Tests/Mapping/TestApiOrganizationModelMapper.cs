@@ -7,50 +7,49 @@ using Xunit;
 
 namespace NebulaNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Organization")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiOrganizationModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiOrganizationModelMapper();
-                        var model = new ApiOrganizationRequestModel();
-                        model.SetProperties("A");
-                        ApiOrganizationResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Organization")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiOrganizationModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiOrganizationModelMapper();
+			var model = new ApiOrganizationRequestModel();
+			model.SetProperties("A");
+			ApiOrganizationResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiOrganizationModelMapper();
-                        var model = new ApiOrganizationResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiOrganizationRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiOrganizationModelMapper();
+			var model = new ApiOrganizationResponseModel();
+			model.SetProperties(1, "A");
+			ApiOrganizationRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiOrganizationModelMapper();
-                        var model = new ApiOrganizationRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiOrganizationModelMapper();
+			var model = new ApiOrganizationRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiOrganizationRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiOrganizationRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiOrganizationRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiOrganizationRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>41b6e0e2df25acef6af1df2ad0040720</Hash>
+    <Hash>6930d6a5a07541d417a10b54e0bbaa4e</Hash>
 </Codenesium>*/

@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public partial class VenueRepository : AbstractVenueRepository, IVenueRepository
-        {
-                public VenueRepository(
-                        ILogger<VenueRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class VenueRepository : AbstractVenueRepository, IVenueRepository
+	{
+		public VenueRepository(
+			ILogger<VenueRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e9d8693232d9afa66228efe4342212fd</Hash>
+    <Hash>5be72ca3c9dc8d5fd0fbab5dbbde9865</Hash>
 </Codenesium>*/

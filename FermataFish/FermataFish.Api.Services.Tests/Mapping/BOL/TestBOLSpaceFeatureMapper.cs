@@ -8,49 +8,49 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpaceFeature")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLSpaceFeatureMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLSpaceFeatureMapper();
-                        ApiSpaceFeatureRequestModel model = new ApiSpaceFeatureRequestModel();
-                        model.SetProperties("A", 1);
-                        BOSpaceFeature response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpaceFeature")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLSpaceFeatureMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLSpaceFeatureMapper();
+			ApiSpaceFeatureRequestModel model = new ApiSpaceFeatureRequestModel();
+			model.SetProperties("A", 1);
+			BOSpaceFeature response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Name.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLSpaceFeatureMapper();
-                        BOSpaceFeature bo = new BOSpaceFeature();
-                        bo.SetProperties(1, "A", 1);
-                        ApiSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLSpaceFeatureMapper();
+			BOSpaceFeature bo = new BOSpaceFeature();
+			bo.SetProperties(1, "A", 1);
+			ApiSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLSpaceFeatureMapper();
-                        BOSpaceFeature bo = new BOSpaceFeature();
-                        bo.SetProperties(1, "A", 1);
-                        List<ApiSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceFeature>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLSpaceFeatureMapper();
+			BOSpaceFeature bo = new BOSpaceFeature();
+			bo.SetProperties(1, "A", 1);
+			List<ApiSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceFeature>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b2cc82854e84cfae99f8347bffde8a62</Hash>
+    <Hash>3b0470a7d338c3af27bf13cd07706445</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiDeploymentHistoryModelMapper : AbstractApiDeploymentHistoryModelMapper, IApiDeploymentHistoryModelMapper
-        {
-                public ApiDeploymentHistoryModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiDeploymentHistoryModelMapper : AbstractApiDeploymentHistoryModelMapper, IApiDeploymentHistoryModelMapper
+	{
+		public ApiDeploymentHistoryModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b71b767f0d5f3f200d965fb3d0c793b9</Hash>
+    <Hash>c634174a80a8222e4224ac86e0ac8c9f</Hash>
 </Codenesium>*/

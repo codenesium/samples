@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Subscription")]
-        [Trait("Area", "Integration")]
-        public class SubscriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public SubscriptionIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Subscription")]
+	[Trait("Area", "Integration")]
+	public class SubscriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public SubscriptionIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiSubscriptionModelMapper mapper = new ApiSubscriptionModelMapper();
+			ApiSubscriptionModelMapper mapper = new ApiSubscriptionModelMapper();
 
-                        UpdateResponse<ApiSubscriptionResponseModel> updateResponse = await this.Client.SubscriptionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSubscriptionResponseModel> updateResponse = await this.Client.SubscriptionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.SubscriptionDeleteAsync(model.Id);
+			await this.Client.SubscriptionDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiSubscriptionResponseModel response = await this.Client.SubscriptionGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiSubscriptionResponseModel response = await this.Client.SubscriptionGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiSubscriptionResponseModel> response = await this.Client.SubscriptionAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiSubscriptionResponseModel> response = await this.Client.SubscriptionAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiSubscriptionResponseModel> CreateRecord()
-                {
-                        var model = new ApiSubscriptionRequestModel();
-                        model.SetProperties(true, "B", "B", "B");
-                        CreateResponse<ApiSubscriptionResponseModel> result = await this.Client.SubscriptionCreateAsync(model);
+		private async Task<ApiSubscriptionResponseModel> CreateRecord()
+		{
+			var model = new ApiSubscriptionRequestModel();
+			model.SetProperties(true, "B", "B", "B");
+			CreateResponse<ApiSubscriptionResponseModel> result = await this.Client.SubscriptionCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.SubscriptionDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.SubscriptionDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4087c7f8060291105d3b7dd2b2c59c2d</Hash>
+    <Hash>e344a4e895172a9f618936003557b643</Hash>
 </Codenesium>*/

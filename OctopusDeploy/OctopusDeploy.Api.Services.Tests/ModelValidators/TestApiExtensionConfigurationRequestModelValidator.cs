@@ -15,65 +15,65 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ExtensionConfiguration")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiExtensionConfigurationRequestModelValidatorTest
-        {
-                public ApiExtensionConfigurationRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ExtensionConfiguration")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiExtensionConfigurationRequestModelValidatorTest
+	{
+		public ApiExtensionConfigurationRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ExtensionAuthor_Create_length()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
+		[Fact]
+		public async void ExtensionAuthor_Create_length()
+		{
+			Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
+			extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
+			var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
+		}
 
-                [Fact]
-                public async void ExtensionAuthor_Update_length()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
+		[Fact]
+		public async void ExtensionAuthor_Update_length()
+		{
+			Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
+			extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
+			var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
+			extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
+			var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
-                        extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IExtensionConfigurationRepository> extensionConfigurationRepository = new Mock<IExtensionConfigurationRepository>();
+			extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
-                        var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
+			var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6ed8ce0b769873fe4a353353dd3aedf7</Hash>
+    <Hash>fc70cb7ace438ecaa5dc22e3a57c7e47</Hash>
 </Codenesium>*/

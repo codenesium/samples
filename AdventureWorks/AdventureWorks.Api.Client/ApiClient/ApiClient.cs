@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>160200b8b98a1821e0e7d48cfb7192e4</Hash>
+    <Hash>0fc2e4d539bf720a6f437f5b6a019323</Hash>
 </Codenesium>*/

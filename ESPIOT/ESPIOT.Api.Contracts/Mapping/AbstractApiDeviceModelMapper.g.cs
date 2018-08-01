@@ -5,39 +5,39 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public abstract class AbstractApiDeviceModelMapper
-        {
-                public virtual ApiDeviceResponseModel MapRequestToResponse(
-                        int id,
-                        ApiDeviceRequestModel request)
-                {
-                        var response = new ApiDeviceResponseModel();
-                        response.SetProperties(id,
-                                               request.Name,
-                                               request.PublicId);
-                        return response;
-                }
+	public abstract class AbstractApiDeviceModelMapper
+	{
+		public virtual ApiDeviceResponseModel MapRequestToResponse(
+			int id,
+			ApiDeviceRequestModel request)
+		{
+			var response = new ApiDeviceResponseModel();
+			response.SetProperties(id,
+			                       request.Name,
+			                       request.PublicId);
+			return response;
+		}
 
-                public virtual ApiDeviceRequestModel MapResponseToRequest(
-                        ApiDeviceResponseModel response)
-                {
-                        var request = new ApiDeviceRequestModel();
-                        request.SetProperties(
-                                response.Name,
-                                response.PublicId);
-                        return request;
-                }
+		public virtual ApiDeviceRequestModel MapResponseToRequest(
+			ApiDeviceResponseModel response)
+		{
+			var request = new ApiDeviceRequestModel();
+			request.SetProperties(
+				response.Name,
+				response.PublicId);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.PublicId, model.PublicId);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiDeviceRequestModel> CreatePatch(ApiDeviceRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.PublicId, model.PublicId);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c6a071c2d020ab012f3e595398e178d5</Hash>
+    <Hash>123d3ef0fab3c503f47aede5cdcb0cc8</Hash>
 </Codenesium>*/

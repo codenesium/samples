@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOLLibraryVariableSetMapper : BOLAbstractLibraryVariableSetMapper, IBOLLibraryVariableSetMapper
-        {
-                public BOLLibraryVariableSetMapper()
-                {
-                }
-        }
+	public partial class BOLLibraryVariableSetMapper : BOLAbstractLibraryVariableSetMapper, IBOLLibraryVariableSetMapper
+	{
+		public BOLLibraryVariableSetMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d04d87eb80e28508b10f932a93d26d3b</Hash>
+    <Hash>ac19b66652678af50b862752981b502f</Hash>
 </Codenesium>*/

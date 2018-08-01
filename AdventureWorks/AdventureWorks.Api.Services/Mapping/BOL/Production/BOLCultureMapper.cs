@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLCultureMapper : BOLAbstractCultureMapper, IBOLCultureMapper
-        {
-                public BOLCultureMapper()
-                {
-                }
-        }
+	public partial class BOLCultureMapper : BOLAbstractCultureMapper, IBOLCultureMapper
+	{
+		public BOLCultureMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a416270ab271e710d52a9129c6b4be13</Hash>
+    <Hash>1416792f36dd5e00e46f2507a7f7dc57</Hash>
 </Codenesium>*/

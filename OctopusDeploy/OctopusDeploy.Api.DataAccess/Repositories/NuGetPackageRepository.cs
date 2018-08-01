@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class NuGetPackageRepository : AbstractNuGetPackageRepository, INuGetPackageRepository
-        {
-                public NuGetPackageRepository(
-                        ILogger<NuGetPackageRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class NuGetPackageRepository : AbstractNuGetPackageRepository, INuGetPackageRepository
+	{
+		public NuGetPackageRepository(
+			ILogger<NuGetPackageRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3b820c99796736c7906701dd386a1261</Hash>
+    <Hash>9bf43f52f1d3d01c60b413a22a533829</Hash>
 </Codenesium>*/

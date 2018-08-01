@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public interface ICustomerRepository
-        {
-                Task<Customer> Create(Customer item);
+	public interface ICustomerRepository
+	{
+		Task<Customer> Create(Customer item);
 
-                Task Update(Customer item);
+		Task Update(Customer item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Customer> Get(int id);
+		Task<Customer> Get(int id);
 
-                Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>51b4a883749cd9673f30090021ce688b</Hash>
+    <Hash>10dd5ca3dfa354c64d9e4e9cab048430</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class EmployeePayHistoryRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class EmployeePayHistoryRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<EmployeePayHistoryRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<EmployeePayHistoryRepository>>();
-                }
-        }
+		public static Mock<ILogger<EmployeePayHistoryRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<EmployeePayHistoryRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmployeePayHistory")]
-        [Trait("Area", "Repositories")]
-        public partial class EmployeePayHistoryRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmployeePayHistory")]
+	[Trait("Area", "Repositories")]
+	public partial class EmployeePayHistoryRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
-                        EmployeePayHistory entity = new EmployeePayHistory();
-                        context.Set<EmployeePayHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			EmployeePayHistory entity = new EmployeePayHistory();
+			context.Set<EmployeePayHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
-                        EmployeePayHistory entity = new EmployeePayHistory();
-                        context.Set<EmployeePayHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			EmployeePayHistory entity = new EmployeePayHistory();
+			context.Set<EmployeePayHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
-                        var entity = new EmployeePayHistory();
-                        await repository.Create(entity);
+			var entity = new EmployeePayHistory();
+			await repository.Create(entity);
 
-                        var record = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+			var record = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-                        EmployeePayHistory entity = new EmployeePayHistory();
-                        context.Set<EmployeePayHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+			EmployeePayHistory entity = new EmployeePayHistory();
+			context.Set<EmployeePayHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.BusinessEntityID);
+			var record = await repository.Get(entity.BusinessEntityID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-                        EmployeePayHistory entity = new EmployeePayHistory();
-                        context.Set<EmployeePayHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+			EmployeePayHistory entity = new EmployeePayHistory();
+			context.Set<EmployeePayHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new EmployeePayHistory());
+			await repository.Update(new EmployeePayHistory());
 
-                        var modifiedRecord = context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
-                        var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-                        EmployeePayHistory entity = new EmployeePayHistory();
-                        context.Set<EmployeePayHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
+			var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
+			EmployeePayHistory entity = new EmployeePayHistory();
+			context.Set<EmployeePayHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.BusinessEntityID);
+			await repository.Delete(entity.BusinessEntityID);
 
-                        EmployeePayHistory modifiedRecord = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+			EmployeePayHistory modifiedRecord = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2cb5fc20ab148cee7559f543365e8198</Hash>
+    <Hash>94fe273a1264e821365a47d082a4b320</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/databaseLogs")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class DatabaseLogController : AbstractDatabaseLogController
-        {
-                public DatabaseLogController(
-                        ApiSettings settings,
-                        ILogger<DatabaseLogController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IDatabaseLogService databaseLogService,
-                        IApiDatabaseLogModelMapper databaseLogModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               databaseLogService,
-                               databaseLogModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/databaseLogs")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class DatabaseLogController : AbstractDatabaseLogController
+	{
+		public DatabaseLogController(
+			ApiSettings settings,
+			ILogger<DatabaseLogController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IDatabaseLogService databaseLogService,
+			IApiDatabaseLogModelMapper databaseLogModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       databaseLogService,
+			       databaseLogModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b50e35e1c589bc4be0d48b902c9b2426</Hash>
+    <Hash>5fba9f90940b1d4bb2a88c02d674761a</Hash>
 </Codenesium>*/

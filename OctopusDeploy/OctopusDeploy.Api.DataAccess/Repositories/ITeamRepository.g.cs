@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface ITeamRepository
-        {
-                Task<Team> Create(Team item);
+	public interface ITeamRepository
+	{
+		Task<Team> Create(Team item);
 
-                Task Update(Team item);
+		Task Update(Team item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<Team> Get(string id);
+		Task<Team> Get(string id);
 
-                Task<List<Team>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Team>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Team> ByName(string name);
-        }
+		Task<Team> ByName(string name);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ad58c68bd6974862bc607e7a2db78ad7</Hash>
+    <Hash>eda2d3682cc832f9c2ce1a75ffcff101</Hash>
 </Codenesium>*/

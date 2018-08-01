@@ -9,69 +9,69 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiWorkOrderRoutingRequestModelValidator : AbstractValidator<ApiWorkOrderRoutingRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiWorkOrderRoutingRequestModelValidator : AbstractValidator<ApiWorkOrderRoutingRequestModel>
+	{
+		private int existingRecordId;
 
-                private IWorkOrderRoutingRepository workOrderRoutingRepository;
+		private IWorkOrderRoutingRepository workOrderRoutingRepository;
 
-                public AbstractApiWorkOrderRoutingRequestModelValidator(IWorkOrderRoutingRepository workOrderRoutingRepository)
-                {
-                        this.workOrderRoutingRepository = workOrderRoutingRepository;
-                }
+		public AbstractApiWorkOrderRoutingRequestModelValidator(IWorkOrderRoutingRepository workOrderRoutingRepository)
+		{
+			this.workOrderRoutingRepository = workOrderRoutingRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiWorkOrderRoutingRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiWorkOrderRoutingRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ActualCostRules()
-                {
-                }
+		public virtual void ActualCostRules()
+		{
+		}
 
-                public virtual void ActualEndDateRules()
-                {
-                }
+		public virtual void ActualEndDateRules()
+		{
+		}
 
-                public virtual void ActualResourceHrRules()
-                {
-                }
+		public virtual void ActualResourceHrRules()
+		{
+		}
 
-                public virtual void ActualStartDateRules()
-                {
-                }
+		public virtual void ActualStartDateRules()
+		{
+		}
 
-                public virtual void LocationIDRules()
-                {
-                }
+		public virtual void LocationIDRules()
+		{
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void OperationSequenceRules()
-                {
-                }
+		public virtual void OperationSequenceRules()
+		{
+		}
 
-                public virtual void PlannedCostRules()
-                {
-                }
+		public virtual void PlannedCostRules()
+		{
+		}
 
-                public virtual void ProductIDRules()
-                {
-                }
+		public virtual void ProductIDRules()
+		{
+		}
 
-                public virtual void ScheduledEndDateRules()
-                {
-                }
+		public virtual void ScheduledEndDateRules()
+		{
+		}
 
-                public virtual void ScheduledStartDateRules()
-                {
-                }
-        }
+		public virtual void ScheduledStartDateRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ec3eff2fcf083cc58958dd849dd1f3ca</Hash>
+    <Hash>23107a750035b23c0175655ad146e7ae</Hash>
 </Codenesium>*/

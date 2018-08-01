@@ -8,53 +8,53 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "EmailAddress")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLEmailAddressMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLEmailAddressMapper();
-                        ApiEmailAddressRequestModel model = new ApiEmailAddressRequestModel();
-                        model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        BOEmailAddress response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "EmailAddress")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLEmailAddressMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLEmailAddressMapper();
+			ApiEmailAddressRequestModel model = new ApiEmailAddressRequestModel();
+			model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			BOEmailAddress response = mapper.MapModelToBO(1, model);
 
-                        response.EmailAddress1.Should().Be("A");
-                        response.EmailAddressID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.EmailAddress1.Should().Be("A");
+			response.EmailAddressID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLEmailAddressMapper();
-                        BOEmailAddress bo = new BOEmailAddress();
-                        bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        ApiEmailAddressResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLEmailAddressMapper();
+			BOEmailAddress bo = new BOEmailAddress();
+			bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			ApiEmailAddressResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BusinessEntityID.Should().Be(1);
-                        response.EmailAddress1.Should().Be("A");
-                        response.EmailAddressID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.BusinessEntityID.Should().Be(1);
+			response.EmailAddress1.Should().Be("A");
+			response.EmailAddressID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLEmailAddressMapper();
-                        BOEmailAddress bo = new BOEmailAddress();
-                        bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        List<ApiEmailAddressResponseModel> response = mapper.MapBOToModel(new List<BOEmailAddress>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLEmailAddressMapper();
+			BOEmailAddress bo = new BOEmailAddress();
+			bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			List<ApiEmailAddressResponseModel> response = mapper.MapBOToModel(new List<BOEmailAddress>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9d6e0c5375067b4b9033ced1d760f4a8</Hash>
+    <Hash>59b06d57153abdb7d367ab285eca684d</Hash>
 </Codenesium>*/

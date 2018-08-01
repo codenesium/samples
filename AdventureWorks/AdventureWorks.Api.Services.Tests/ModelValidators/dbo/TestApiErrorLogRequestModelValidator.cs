@@ -15,137 +15,137 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ErrorLog")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiErrorLogRequestModelValidatorTest
-        {
-                public ApiErrorLogRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ErrorLog")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiErrorLogRequestModelValidatorTest
+	{
+		public ApiErrorLogRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ErrorMessage_Create_null()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorMessage_Create_null()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
+		}
 
-                [Fact]
-                public async void ErrorMessage_Update_null()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorMessage_Update_null()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
+		}
 
-                [Fact]
-                public async void ErrorMessage_Create_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorMessage_Create_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
+		}
 
-                [Fact]
-                public async void ErrorMessage_Update_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorMessage_Update_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
+		}
 
-                [Fact]
-                public async void ErrorProcedure_Create_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorProcedure_Create_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
+		}
 
-                [Fact]
-                public async void ErrorProcedure_Update_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void ErrorProcedure_Update_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
+		}
 
-                [Fact]
-                public async void UserName_Create_null()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void UserName_Create_null()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
+		}
 
-                [Fact]
-                public async void UserName_Update_null()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void UserName_Update_null()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
+		}
 
-                [Fact]
-                public async void UserName_Create_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void UserName_Create_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
+		}
 
-                [Fact]
-                public async void UserName_Update_length()
-                {
-                        Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
-                        errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
+		[Fact]
+		public async void UserName_Update_length()
+		{
+			Mock<IErrorLogRepository> errorLogRepository = new Mock<IErrorLogRepository>();
+			errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
-                        var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
+			var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a6d64f8f34817c12d15d6c0468702988</Hash>
+    <Hash>f99ec16dcfd2a23a72a9ced44d6041b0</Hash>
 </Codenesium>*/

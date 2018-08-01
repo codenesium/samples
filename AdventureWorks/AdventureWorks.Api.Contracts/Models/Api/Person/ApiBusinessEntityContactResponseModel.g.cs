@@ -6,39 +6,39 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiBusinessEntityContactResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int businessEntityID,
-                        int contactTypeID,
-                        DateTime modifiedDate,
-                        int personID,
-                        Guid rowguid)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.ContactTypeID = contactTypeID;
-                        this.ModifiedDate = modifiedDate;
-                        this.PersonID = personID;
-                        this.Rowguid = rowguid;
-                }
+	public partial class ApiBusinessEntityContactResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int businessEntityID,
+			int contactTypeID,
+			DateTime modifiedDate,
+			int personID,
+			Guid rowguid)
+		{
+			this.BusinessEntityID = businessEntityID;
+			this.ContactTypeID = contactTypeID;
+			this.ModifiedDate = modifiedDate;
+			this.PersonID = personID;
+			this.Rowguid = rowguid;
+		}
 
-                [JsonProperty]
-                public int BusinessEntityID { get; private set; }
+		[JsonProperty]
+		public int BusinessEntityID { get; private set; }
 
-                [JsonProperty]
-                public int ContactTypeID { get; private set; }
+		[JsonProperty]
+		public int ContactTypeID { get; private set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [JsonProperty]
-                public int PersonID { get; private set; }
+		[JsonProperty]
+		public int PersonID { get; private set; }
 
-                [JsonProperty]
-                public Guid Rowguid { get; private set; }
-        }
+		[JsonProperty]
+		public Guid Rowguid { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f5066f602c4ec146057cf555c6bcc8b</Hash>
+    <Hash>e79f0873f9d61ae965b7c3dc5e86142f</Hash>
 </Codenesium>*/

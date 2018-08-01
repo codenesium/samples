@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductInventory")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductInventoryRequestModelValidatorTest
-        {
-                public ApiProductInventoryRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductInventory")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductInventoryRequestModelValidatorTest
+	{
+		public ApiProductInventoryRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Shelf_Create_null()
-                {
-                        Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
-                        productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
+		[Fact]
+		public async void Shelf_Create_null()
+		{
+			Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
+			productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
 
-                        var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductInventoryRequestModel());
+			var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductInventoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Shelf, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Shelf, null as string);
+		}
 
-                [Fact]
-                public async void Shelf_Update_null()
-                {
-                        Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
-                        productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
+		[Fact]
+		public async void Shelf_Update_null()
+		{
+			Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
+			productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
 
-                        var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductInventoryRequestModel());
+			var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductInventoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Shelf, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Shelf, null as string);
+		}
 
-                [Fact]
-                public async void Shelf_Create_length()
-                {
-                        Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
-                        productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
+		[Fact]
+		public async void Shelf_Create_length()
+		{
+			Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
+			productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
 
-                        var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductInventoryRequestModel());
+			var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductInventoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Shelf, new string('A', 11));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Shelf, new string('A', 11));
+		}
 
-                [Fact]
-                public async void Shelf_Update_length()
-                {
-                        Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
-                        productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
+		[Fact]
+		public async void Shelf_Update_length()
+		{
+			Mock<IProductInventoryRepository> productInventoryRepository = new Mock<IProductInventoryRepository>();
+			productInventoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductInventory()));
 
-                        var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductInventoryRequestModel());
+			var validator = new ApiProductInventoryRequestModelValidator(productInventoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductInventoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Shelf, new string('A', 11));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Shelf, new string('A', 11));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8052d7093dd07432171b0cf28c87e80a</Hash>
+    <Hash>2add1f42970eeacf740d373d9e5ef684</Hash>
 </Codenesium>*/

@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiLessonStatusRequestModelValidator : AbstractApiLessonStatusRequestModelValidator, IApiLessonStatusRequestModelValidator
-        {
-                public ApiLessonStatusRequestModelValidator(ILessonStatusRepository lessonStatusRepository)
-                        : base(lessonStatusRepository)
-                {
-                }
+	public class ApiLessonStatusRequestModelValidator : AbstractApiLessonStatusRequestModelValidator, IApiLessonStatusRequestModelValidator
+	{
+		public ApiLessonStatusRequestModelValidator(ILessonStatusRepository lessonStatusRepository)
+			: base(lessonStatusRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiLessonStatusRequestModel model)
-                {
-                        this.NameRules();
-                        this.StudioIdRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiLessonStatusRequestModel model)
+		{
+			this.NameRules();
+			this.StudioIdRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonStatusRequestModel model)
-                {
-                        this.NameRules();
-                        this.StudioIdRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonStatusRequestModel model)
+		{
+			this.NameRules();
+			this.StudioIdRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c29c5e8e698f9c6afe298a7837e560d3</Hash>
+    <Hash>f7d3e308154c528b486f518e230161de</Hash>
 </Codenesium>*/

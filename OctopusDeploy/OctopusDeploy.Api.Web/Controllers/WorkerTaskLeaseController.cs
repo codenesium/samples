@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
-        [Route("api/workerTaskLeases")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class WorkerTaskLeaseController : AbstractWorkerTaskLeaseController
-        {
-                public WorkerTaskLeaseController(
-                        ApiSettings settings,
-                        ILogger<WorkerTaskLeaseController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IWorkerTaskLeaseService workerTaskLeaseService,
-                        IApiWorkerTaskLeaseModelMapper workerTaskLeaseModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               workerTaskLeaseService,
-                               workerTaskLeaseModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/workerTaskLeases")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class WorkerTaskLeaseController : AbstractWorkerTaskLeaseController
+	{
+		public WorkerTaskLeaseController(
+			ApiSettings settings,
+			ILogger<WorkerTaskLeaseController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IWorkerTaskLeaseService workerTaskLeaseService,
+			IApiWorkerTaskLeaseModelMapper workerTaskLeaseModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       workerTaskLeaseService,
+			       workerTaskLeaseModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>dd6b634b39136f4d428a8217dfe6637d</Hash>
+    <Hash>d819fd50c32f724d747fbc584fa85904</Hash>
 </Codenesium>*/

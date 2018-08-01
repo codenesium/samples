@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Team")]
-        [Trait("Area", "Integration")]
-        public class TeamIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TeamIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Team")]
+	[Trait("Area", "Integration")]
+	public class TeamIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TeamIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTeamModelMapper mapper = new ApiTeamModelMapper();
+			ApiTeamModelMapper mapper = new ApiTeamModelMapper();
 
-                        UpdateResponse<ApiTeamResponseModel> updateResponse = await this.Client.TeamUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTeamResponseModel> updateResponse = await this.Client.TeamUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TeamDeleteAsync(model.Id);
+			await this.Client.TeamDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTeamResponseModel response = await this.Client.TeamGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTeamResponseModel response = await this.Client.TeamGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTeamResponseModel> response = await this.Client.TeamAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTeamResponseModel> response = await this.Client.TeamAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTeamResponseModel> CreateRecord()
-                {
-                        var model = new ApiTeamRequestModel();
-                        model.SetProperties("B", "B", "B", "B", "B", "B", "B", "B");
-                        CreateResponse<ApiTeamResponseModel> result = await this.Client.TeamCreateAsync(model);
+		private async Task<ApiTeamResponseModel> CreateRecord()
+		{
+			var model = new ApiTeamRequestModel();
+			model.SetProperties("B", "B", "B", "B", "B", "B", "B", "B");
+			CreateResponse<ApiTeamResponseModel> result = await this.Client.TeamCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TeamDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TeamDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e7728515505958b3845fcc68964846cb</Hash>
+    <Hash>d1c2a2a871f57bae3ba3a962410b5484</Hash>
 </Codenesium>*/

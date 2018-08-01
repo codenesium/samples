@@ -13,197 +13,197 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TransactionHistoryArchive")]
-        [Trait("Area", "Services")]
-        public partial class TransactionHistoryArchiveServiceTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var records = new List<TransactionHistoryArchive>();
-                        records.Add(new TransactionHistoryArchive());
-                        mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TransactionHistoryArchive")]
+	[Trait("Area", "Services")]
+	public partial class TransactionHistoryArchiveServiceTests
+	{
+		[Fact]
+		public async void All()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var records = new List<TransactionHistoryArchive>();
+			records.Add(new TransactionHistoryArchive());
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await service.All();
+			List<ApiTransactionHistoryArchiveResponseModel> response = await service.All();
 
-                        response.Should().HaveCount(1);
-                        mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().HaveCount(1);
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var record = new TransactionHistoryArchive();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void Get()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var record = new TransactionHistoryArchive();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
+			ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Get_null_record()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<TransactionHistoryArchive>(null));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void Get_null_record()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<TransactionHistoryArchive>(null));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
+			ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
 
-                        response.Should().BeNull();
-                        mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
-                }
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var model = new ApiTransactionHistoryArchiveRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        CreateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Create(model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TransactionHistoryArchive>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TransactionHistoryArchive>()));
+		}
 
-                [Fact]
-                public async void Update()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var model = new ApiTransactionHistoryArchiveRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
-                        mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        UpdateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Update(default(int), model);
 
-                        response.Should().NotBeNull();
-                        mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
-                        mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TransactionHistoryArchive>()));
-                }
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TransactionHistoryArchive>()));
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var model = new ApiTransactionHistoryArchiveRequestModel();
-                        mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        ActionResponse response = await service.Delete(default(int));
+			ActionResponse response = await service.Delete(default(int));
 
-                        response.Should().NotBeNull();
-                        mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
-                        mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-                }
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
+			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void ByProductID_Exists()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var records = new List<TransactionHistoryArchive>();
-                        records.Add(new TransactionHistoryArchive());
-                        mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void ByProductID_Exists()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var records = new List<TransactionHistoryArchive>();
+			records.Add(new TransactionHistoryArchive());
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
+			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
 
-                        response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
-                }
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void ByProductID_Not_Exists()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void ByProductID_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
+			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
 
-                        response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
-                }
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void ByReferenceOrderIDReferenceOrderLineID_Exists()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        var records = new List<TransactionHistoryArchive>();
-                        records.Add(new TransactionHistoryArchive());
-                        mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void ByReferenceOrderIDReferenceOrderLineID_Exists()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var records = new List<TransactionHistoryArchive>();
+			records.Add(new TransactionHistoryArchive());
+			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
+			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
-                        response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
-                }
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
+		}
 
-                [Fact]
-                public async void ByReferenceOrderIDReferenceOrderLineID_Not_Exists()
-                {
-                        var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-                        mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
-                        var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
-                                                                           mock.RepositoryMock.Object,
-                                                                           mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-                                                                           mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
-                                                                           mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+		[Fact]
+		public async void ByReferenceOrderIDReferenceOrderLineID_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
+			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
-                        response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
-                }
-        }
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4768697f0d25b310a79a86029b416911</Hash>
+    <Hash>203d38ad643c94427fb608d810997811</Hash>
 </Codenesium>*/

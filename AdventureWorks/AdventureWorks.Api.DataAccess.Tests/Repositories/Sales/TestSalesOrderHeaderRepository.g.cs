@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class SalesOrderHeaderRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class SalesOrderHeaderRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<SalesOrderHeaderRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<SalesOrderHeaderRepository>>();
-                }
-        }
+		public static Mock<ILogger<SalesOrderHeaderRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<SalesOrderHeaderRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SalesOrderHeader")]
-        [Trait("Area", "Repositories")]
-        public partial class SalesOrderHeaderRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SalesOrderHeader")]
+	[Trait("Area", "Repositories")]
+	public partial class SalesOrderHeaderRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
-                        SalesOrderHeader entity = new SalesOrderHeader();
-                        context.Set<SalesOrderHeader>().Add(entity);
-                        await context.SaveChangesAsync();
+			SalesOrderHeader entity = new SalesOrderHeader();
+			context.Set<SalesOrderHeader>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
-                        SalesOrderHeader entity = new SalesOrderHeader();
-                        context.Set<SalesOrderHeader>().Add(entity);
-                        await context.SaveChangesAsync();
+			SalesOrderHeader entity = new SalesOrderHeader();
+			context.Set<SalesOrderHeader>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.SalesOrderID);
+			var record = await repository.Get(entity.SalesOrderID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
-                        var entity = new SalesOrderHeader();
-                        await repository.Create(entity);
+			var entity = new SalesOrderHeader();
+			await repository.Create(entity);
 
-                        var record = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			var record = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-                        SalesOrderHeader entity = new SalesOrderHeader();
-                        context.Set<SalesOrderHeader>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+			SalesOrderHeader entity = new SalesOrderHeader();
+			context.Set<SalesOrderHeader>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.SalesOrderID);
+			var record = await repository.Get(entity.SalesOrderID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-                        SalesOrderHeader entity = new SalesOrderHeader();
-                        context.Set<SalesOrderHeader>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+			SalesOrderHeader entity = new SalesOrderHeader();
+			context.Set<SalesOrderHeader>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new SalesOrderHeader());
+			await repository.Update(new SalesOrderHeader());
 
-                        var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
-                        var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-                        SalesOrderHeader entity = new SalesOrderHeader();
-                        context.Set<SalesOrderHeader>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
+			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
+			SalesOrderHeader entity = new SalesOrderHeader();
+			context.Set<SalesOrderHeader>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.SalesOrderID);
+			await repository.Delete(entity.SalesOrderID);
 
-                        SalesOrderHeader modifiedRecord = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			SalesOrderHeader modifiedRecord = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f76ead9c7190ce8013600ad050bab22c</Hash>
+    <Hash>9d7796167f1bc186ceeb56fc4c108c21</Hash>
 </Codenesium>*/

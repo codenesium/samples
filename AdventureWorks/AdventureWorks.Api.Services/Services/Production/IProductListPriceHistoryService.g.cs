@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IProductListPriceHistoryService
-        {
-                Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
-                        ApiProductListPriceHistoryRequestModel model);
+	public interface IProductListPriceHistoryService
+	{
+		Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
+			ApiProductListPriceHistoryRequestModel model);
 
-                Task<UpdateResponse<ApiProductListPriceHistoryResponseModel>> Update(int productID,
-                                                                                      ApiProductListPriceHistoryRequestModel model);
+		Task<UpdateResponse<ApiProductListPriceHistoryResponseModel>> Update(int productID,
+		                                                                      ApiProductListPriceHistoryRequestModel model);
 
-                Task<ActionResponse> Delete(int productID);
+		Task<ActionResponse> Delete(int productID);
 
-                Task<ApiProductListPriceHistoryResponseModel> Get(int productID);
+		Task<ApiProductListPriceHistoryResponseModel> Get(int productID);
 
-                Task<List<ApiProductListPriceHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiProductListPriceHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>5d086ef63b03f7f11dad292b328da756</Hash>
+    <Hash>4227491c7e1cf9ef0452e5894d1812dd</Hash>
 </Codenesium>*/

@@ -8,65 +8,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SpecialOffer")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLSpecialOfferMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLSpecialOfferMapper();
-                        ApiSpecialOfferRequestModel model = new ApiSpecialOfferRequestModel();
-                        model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        BOSpecialOffer response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SpecialOffer")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLSpecialOfferMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLSpecialOfferMapper();
+			ApiSpecialOfferRequestModel model = new ApiSpecialOfferRequestModel();
+			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			BOSpecialOffer response = mapper.MapModelToBO(1, model);
 
-                        response.Category.Should().Be("A");
-                        response.Description.Should().Be("A");
-                        response.DiscountPct.Should().Be(1m);
-                        response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.MaxQty.Should().Be(1);
-                        response.MinQty.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Type.Should().Be("A");
-                }
+			response.Category.Should().Be("A");
+			response.Description.Should().Be("A");
+			response.DiscountPct.Should().Be(1m);
+			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.MaxQty.Should().Be(1);
+			response.MinQty.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLSpecialOfferMapper();
-                        BOSpecialOffer bo = new BOSpecialOffer();
-                        bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        ApiSpecialOfferResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLSpecialOfferMapper();
+			BOSpecialOffer bo = new BOSpecialOffer();
+			bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			ApiSpecialOfferResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Category.Should().Be("A");
-                        response.Description.Should().Be("A");
-                        response.DiscountPct.Should().Be(1m);
-                        response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.MaxQty.Should().Be(1);
-                        response.MinQty.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        response.SpecialOfferID.Should().Be(1);
-                        response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Type.Should().Be("A");
-                }
+			response.Category.Should().Be("A");
+			response.Description.Should().Be("A");
+			response.DiscountPct.Should().Be(1m);
+			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.MaxQty.Should().Be(1);
+			response.MinQty.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			response.SpecialOfferID.Should().Be(1);
+			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLSpecialOfferMapper();
-                        BOSpecialOffer bo = new BOSpecialOffer();
-                        bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-                        List<ApiSpecialOfferResponseModel> response = mapper.MapBOToModel(new List<BOSpecialOffer>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLSpecialOfferMapper();
+			BOSpecialOffer bo = new BOSpecialOffer();
+			bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			List<ApiSpecialOfferResponseModel> response = mapper.MapBOToModel(new List<BOSpecialOffer>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aca003799851770a484ecb9348e22409</Hash>
+    <Hash>9495958256fb39fb684e9d4d1d181001</Hash>
 </Codenesium>*/

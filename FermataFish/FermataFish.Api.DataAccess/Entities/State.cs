@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        [Table("State", Schema="dbo")]
-        public partial class State : AbstractEntity
-        {
-                public State()
-                {
-                }
+	[Table("State", Schema="dbo")]
+	public partial class State : AbstractEntity
+	{
+		public State()
+		{
+		}
 
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
-        }
+		[Column("name")]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>ff5327702a08b587d5fc3abfa9d825e6</Hash>
+    <Hash>63dc1fbbba690df712961a7c8b7b8362</Hash>
 </Codenesium>*/

@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class DALAbstractSpaceFeatureMapper
-        {
-                public virtual SpaceFeature MapBOToEF(
-                        BOSpaceFeature bo)
-                {
-                        SpaceFeature efSpaceFeature = new SpaceFeature();
-                        efSpaceFeature.SetProperties(
-                                bo.Id,
-                                bo.Name,
-                                bo.StudioId);
-                        return efSpaceFeature;
-                }
+	public abstract class DALAbstractSpaceFeatureMapper
+	{
+		public virtual SpaceFeature MapBOToEF(
+			BOSpaceFeature bo)
+		{
+			SpaceFeature efSpaceFeature = new SpaceFeature();
+			efSpaceFeature.SetProperties(
+				bo.Id,
+				bo.Name,
+				bo.StudioId);
+			return efSpaceFeature;
+		}
 
-                public virtual BOSpaceFeature MapEFToBO(
-                        SpaceFeature ef)
-                {
-                        var bo = new BOSpaceFeature();
+		public virtual BOSpaceFeature MapEFToBO(
+			SpaceFeature ef)
+		{
+			var bo = new BOSpaceFeature();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Name,
-                                ef.StudioId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Name,
+				ef.StudioId);
+			return bo;
+		}
 
-                public virtual List<BOSpaceFeature> MapEFToBO(
-                        List<SpaceFeature> records)
-                {
-                        List<BOSpaceFeature> response = new List<BOSpaceFeature>();
+		public virtual List<BOSpaceFeature> MapEFToBO(
+			List<SpaceFeature> records)
+		{
+			List<BOSpaceFeature> response = new List<BOSpaceFeature>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2a91ccfad3d0f41b86aea70be3439337</Hash>
+    <Hash>10bfb619efa062275318efaa1296dac1</Hash>
 </Codenesium>*/

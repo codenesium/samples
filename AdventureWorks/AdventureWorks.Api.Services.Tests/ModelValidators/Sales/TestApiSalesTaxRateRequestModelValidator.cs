@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SalesTaxRate")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSalesTaxRateRequestModelValidatorTest
-        {
-                public ApiSalesTaxRateRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SalesTaxRate")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSalesTaxRateRequestModelValidatorTest
+	{
+		public ApiSalesTaxRateRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByStateProvinceIDTaxType_Create_Exists()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(new SalesTaxRate()));
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+		[Fact]
+		private async void BeUniqueByStateProvinceIDTaxType_Create_Exists()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(new SalesTaxRate()));
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
+			await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByStateProvinceIDTaxType_Create_Not_Exists()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+		[Fact]
+		private async void BeUniqueByStateProvinceIDTaxType_Create_Not_Exists()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
+			await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByStateProvinceIDTaxType_Update_Exists()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(new SalesTaxRate()));
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+		[Fact]
+		private async void BeUniqueByStateProvinceIDTaxType_Update_Exists()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(new SalesTaxRate()));
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByStateProvinceIDTaxType_Update_Not_Exists()
-                {
-                        Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
-                        salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
-                        var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
+		[Fact]
+		private async void BeUniqueByStateProvinceIDTaxType_Update_Not_Exists()
+		{
+			Mock<ISalesTaxRateRepository> salesTaxRateRepository = new Mock<ISalesTaxRateRepository>();
+			salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
+			var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>851df6566d02f28fa740b17ab426b04c</Hash>
+    <Hash>10c96b4866d0779078a8b61ba057c3d8</Hash>
 </Codenesium>*/

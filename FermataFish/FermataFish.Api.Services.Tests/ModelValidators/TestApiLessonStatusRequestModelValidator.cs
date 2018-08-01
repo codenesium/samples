@@ -15,91 +15,91 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LessonStatus")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiLessonStatusRequestModelValidatorTest
-        {
-                public ApiLessonStatusRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LessonStatus")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiLessonStatusRequestModelValidatorTest
+	{
+		public ApiLessonStatusRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LessonStatus()));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void StudioId_Create_Valid_Reference()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Create_Invalid_Reference()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
+			await validator.ValidateCreateAsync(new ApiLessonStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Valid_Reference()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Invalid_Reference()
-                {
-                        Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
-                        lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<ILessonStatusRepository> lessonStatusRepository = new Mock<ILessonStatusRepository>();
+			lessonStatusRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
+			var validator = new ApiLessonStatusRequestModelValidator(lessonStatusRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d8fa3cfba1e9667def7cfb366ca6f368</Hash>
+    <Hash>3cfcca10fe0b2d70d9c9ef713135fc8e</Hash>
 </Codenesium>*/

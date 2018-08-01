@@ -6,50 +6,50 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class DALAbstractChainMapper
-        {
-                public virtual Chain MapBOToEF(
-                        BOChain bo)
-                {
-                        Chain efChain = new Chain();
-                        efChain.SetProperties(
-                                bo.ChainStatusId,
-                                bo.ExternalId,
-                                bo.Id,
-                                bo.Name,
-                                bo.TeamId);
-                        return efChain;
-                }
+	public abstract class DALAbstractChainMapper
+	{
+		public virtual Chain MapBOToEF(
+			BOChain bo)
+		{
+			Chain efChain = new Chain();
+			efChain.SetProperties(
+				bo.ChainStatusId,
+				bo.ExternalId,
+				bo.Id,
+				bo.Name,
+				bo.TeamId);
+			return efChain;
+		}
 
-                public virtual BOChain MapEFToBO(
-                        Chain ef)
-                {
-                        var bo = new BOChain();
+		public virtual BOChain MapEFToBO(
+			Chain ef)
+		{
+			var bo = new BOChain();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.ChainStatusId,
-                                ef.ExternalId,
-                                ef.Name,
-                                ef.TeamId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.ChainStatusId,
+				ef.ExternalId,
+				ef.Name,
+				ef.TeamId);
+			return bo;
+		}
 
-                public virtual List<BOChain> MapEFToBO(
-                        List<Chain> records)
-                {
-                        List<BOChain> response = new List<BOChain>();
+		public virtual List<BOChain> MapEFToBO(
+			List<Chain> records)
+		{
+			List<BOChain> response = new List<BOChain>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8a487285dea17f744a8ecad717ca87a7</Hash>
+    <Hash>f767b691622d642d8ecee256cf4633d9</Hash>
 </Codenesium>*/

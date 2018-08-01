@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class ShiftService : AbstractShiftService, IShiftService
-        {
-                public ShiftService(
-                        ILogger<IShiftRepository> logger,
-                        IShiftRepository shiftRepository,
-                        IApiShiftRequestModelValidator shiftModelValidator,
-                        IBOLShiftMapper bolshiftMapper,
-                        IDALShiftMapper dalshiftMapper,
-                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-                        )
-                        : base(logger,
-                               shiftRepository,
-                               shiftModelValidator,
-                               bolshiftMapper,
-                               dalshiftMapper,
-                               bolEmployeeDepartmentHistoryMapper,
-                               dalEmployeeDepartmentHistoryMapper)
-                {
-                }
-        }
+	public partial class ShiftService : AbstractShiftService, IShiftService
+	{
+		public ShiftService(
+			ILogger<IShiftRepository> logger,
+			IShiftRepository shiftRepository,
+			IApiShiftRequestModelValidator shiftModelValidator,
+			IBOLShiftMapper bolshiftMapper,
+			IDALShiftMapper dalshiftMapper,
+			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+			)
+			: base(logger,
+			       shiftRepository,
+			       shiftModelValidator,
+			       bolshiftMapper,
+			       dalshiftMapper,
+			       bolEmployeeDepartmentHistoryMapper,
+			       dalEmployeeDepartmentHistoryMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f252731b5dd51cb94011b5ac12a65d9d</Hash>
+    <Hash>3c385bcbcaa423c32b4a9eaf6265cc0a</Hash>
 </Codenesium>*/

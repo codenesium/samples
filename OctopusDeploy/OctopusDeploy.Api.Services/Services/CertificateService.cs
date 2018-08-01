@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class CertificateService : AbstractCertificateService, ICertificateService
-        {
-                public CertificateService(
-                        ILogger<ICertificateRepository> logger,
-                        ICertificateRepository certificateRepository,
-                        IApiCertificateRequestModelValidator certificateModelValidator,
-                        IBOLCertificateMapper bolcertificateMapper,
-                        IDALCertificateMapper dalcertificateMapper
-                        )
-                        : base(logger,
-                               certificateRepository,
-                               certificateModelValidator,
-                               bolcertificateMapper,
-                               dalcertificateMapper)
-                {
-                }
-        }
+	public partial class CertificateService : AbstractCertificateService, ICertificateService
+	{
+		public CertificateService(
+			ILogger<ICertificateRepository> logger,
+			ICertificateRepository certificateRepository,
+			IApiCertificateRequestModelValidator certificateModelValidator,
+			IBOLCertificateMapper bolcertificateMapper,
+			IDALCertificateMapper dalcertificateMapper
+			)
+			: base(logger,
+			       certificateRepository,
+			       certificateModelValidator,
+			       bolcertificateMapper,
+			       dalcertificateMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f3216d346d05e563ff889fee941a922</Hash>
+    <Hash>a2ff3502afc53d63e4f310051380339f</Hash>
 </Codenesium>*/

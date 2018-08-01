@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/machines")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class MachineController : AbstractMachineController
-        {
-                public MachineController(
-                        ApiSettings settings,
-                        ILogger<MachineController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IMachineService machineService,
-                        IApiMachineModelMapper machineModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               machineService,
-                               machineModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/machines")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class MachineController : AbstractMachineController
+	{
+		public MachineController(
+			ApiSettings settings,
+			ILogger<MachineController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IMachineService machineService,
+			IApiMachineModelMapper machineModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       machineService,
+			       machineModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>359917a40b321b1f38c6252602d0fa86</Hash>
+    <Hash>8deea55f9f6d5b42e4cbf6a1eb996d71</Hash>
 </Codenesium>*/

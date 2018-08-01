@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Client
 {
-        public class ApiClient : AbstractApiClient
-        {
-                public ApiClient(string apiUrl)
-                        : base(apiUrl, "1.0")
-                {
-                }
+	public class ApiClient : AbstractApiClient
+	{
+		public ApiClient(string apiUrl)
+			: base(apiUrl, "1.0")
+		{
+		}
 
-                public ApiClient(HttpClient client)
-                        : base(client)
-                {
-                }
-        }
+		public ApiClient(HttpClient client)
+			: base(client)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>70d7b31efde9d45ec9318b5f6550616c</Hash>
+    <Hash>8b0b0324aa9d9e2ac9f8b70f067cf033</Hash>
 </Codenesium>*/

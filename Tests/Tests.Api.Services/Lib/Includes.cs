@@ -5,15 +5,15 @@ using System.Text;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class AbstractService
-        {
-        }
+	public abstract class AbstractService
+	{
+	}
 
-        public abstract class AbstractBusinessObject
-        {
-        }
+	public abstract class AbstractBusinessObject
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>0dcaa6e072e727724ee225dff150d6ca</Hash>
+    <Hash>f10fbfcab277c1463b61a9d2cd6e56dd</Hash>
 </Codenesium>*/

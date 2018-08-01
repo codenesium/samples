@@ -7,50 +7,49 @@ using Xunit;
 
 namespace PetStoreNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PaymentType")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiPaymentTypeModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiPaymentTypeModelMapper();
-                        var model = new ApiPaymentTypeRequestModel();
-                        model.SetProperties("A");
-                        ApiPaymentTypeResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PaymentType")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiPaymentTypeModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiPaymentTypeModelMapper();
+			var model = new ApiPaymentTypeRequestModel();
+			model.SetProperties("A");
+			ApiPaymentTypeResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiPaymentTypeModelMapper();
-                        var model = new ApiPaymentTypeResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiPaymentTypeRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiPaymentTypeModelMapper();
+			var model = new ApiPaymentTypeResponseModel();
+			model.SetProperties(1, "A");
+			ApiPaymentTypeRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiPaymentTypeModelMapper();
-                        var model = new ApiPaymentTypeRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiPaymentTypeModelMapper();
+			var model = new ApiPaymentTypeRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiPaymentTypeRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiPaymentTypeRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiPaymentTypeRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiPaymentTypeRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9d06619a4a0ea42688d491d022974595</Hash>
+    <Hash>e691613ea9f90a3619219e14f347dcf8</Hash>
 </Codenesium>*/

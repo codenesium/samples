@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class BOLUsersMapper : BOLAbstractUsersMapper, IBOLUsersMapper
-        {
-                public BOLUsersMapper()
-                {
-                }
-        }
+	public partial class BOLUsersMapper : BOLAbstractUsersMapper, IBOLUsersMapper
+	{
+		public BOLUsersMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c19afe5ed0c1b9fc086602d107611a78</Hash>
+    <Hash>0fe439ddcac1e19b2b1f3dd6ef923a73</Hash>
 </Codenesium>*/

@@ -15,117 +15,117 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "StudentXFamily")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiStudentXFamilyRequestModelValidatorTest
-        {
-                public ApiStudentXFamilyRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "StudentXFamily")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiStudentXFamilyRequestModelValidatorTest
+	{
+		public ApiStudentXFamilyRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void FamilyId_Create_Valid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+		[Fact]
+		public async void FamilyId_Create_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
 
-                [Fact]
-                public async void FamilyId_Create_Invalid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+		[Fact]
+		public async void FamilyId_Create_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
 
-                [Fact]
-                public async void FamilyId_Update_Valid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+		[Fact]
+		public async void FamilyId_Update_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
 
-                [Fact]
-                public async void FamilyId_Update_Invalid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+		[Fact]
+		public async void FamilyId_Update_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Create_Valid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
+		[Fact]
+		public async void StudentId_Create_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Create_Invalid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
+		[Fact]
+		public async void StudentId_Create_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Update_Valid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
+		[Fact]
+		public async void StudentId_Update_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
+		}
 
-                [Fact]
-                public async void StudentId_Update_Invalid_Reference()
-                {
-                        Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
-                        studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
+		[Fact]
+		public async void StudentId_Update_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
 
-                        var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>65c92e4e7a328e7ffe2191c207fa2c1e</Hash>
+    <Hash>1d9bc93ef89b12d9ad39879b7355aa20</Hash>
 </Codenesium>*/

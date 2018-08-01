@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class PetService : AbstractPetService, IPetService
-        {
-                public PetService(
-                        ILogger<IPetRepository> logger,
-                        IPetRepository petRepository,
-                        IApiPetRequestModelValidator petModelValidator,
-                        IBOLPetMapper bolpetMapper,
-                        IDALPetMapper dalpetMapper,
-                        IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-                        )
-                        : base(logger,
-                               petRepository,
-                               petModelValidator,
-                               bolpetMapper,
-                               dalpetMapper,
-                               bolSaleMapper,
-                               dalSaleMapper)
-                {
-                }
-        }
+	public partial class PetService : AbstractPetService, IPetService
+	{
+		public PetService(
+			ILogger<IPetRepository> logger,
+			IPetRepository petRepository,
+			IApiPetRequestModelValidator petModelValidator,
+			IBOLPetMapper bolpetMapper,
+			IDALPetMapper dalpetMapper,
+			IBOLSaleMapper bolSaleMapper,
+			IDALSaleMapper dalSaleMapper
+			)
+			: base(logger,
+			       petRepository,
+			       petModelValidator,
+			       bolpetMapper,
+			       dalpetMapper,
+			       bolSaleMapper,
+			       dalSaleMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b5a5eec90b9eef890a7080463b14b1d3</Hash>
+    <Hash>564dcb5a1e4c286ee46f38da7239ed8b</Hash>
 </Codenesium>*/

@@ -7,24 +7,24 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiOrganizationRequestModel : AbstractApiRequestModel
-        {
-                public ApiOrganizationRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiOrganizationRequestModel : AbstractApiRequestModel
+	{
+		public ApiOrganizationRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name)
-                {
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			string name)
+		{
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a1ae0f50d4653afe2cc6c48ba11f7f63</Hash>
+    <Hash>d96bc26dba0d97079d314c529750bda2</Hash>
 </Codenesium>*/

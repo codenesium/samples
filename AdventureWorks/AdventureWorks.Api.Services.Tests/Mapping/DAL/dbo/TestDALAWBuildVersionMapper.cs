@@ -7,55 +7,55 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "AWBuildVersion")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALAWBuildVersionMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALAWBuildVersionMapper();
-                        var bo = new BOAWBuildVersion();
-                        bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+	[Trait("Type", "Unit")]
+	[Trait("Table", "AWBuildVersion")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALAWBuildVersionMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALAWBuildVersionMapper();
+			var bo = new BOAWBuildVersion();
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        AWBuildVersion response = mapper.MapBOToEF(bo);
+			AWBuildVersion response = mapper.MapBOToEF(bo);
 
-                        response.Database_Version.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.SystemInformationID.Should().Be(1);
-                        response.VersionDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.Database_Version.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.SystemInformationID.Should().Be(1);
+			response.VersionDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALAWBuildVersionMapper();
-                        AWBuildVersion entity = new AWBuildVersion();
-                        entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALAWBuildVersionMapper();
+			AWBuildVersion entity = new AWBuildVersion();
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOAWBuildVersion response = mapper.MapEFToBO(entity);
+			BOAWBuildVersion response = mapper.MapEFToBO(entity);
 
-                        response.Database_Version.Should().Be("A");
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.SystemInformationID.Should().Be(1);
-                        response.VersionDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                }
+			response.Database_Version.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.SystemInformationID.Should().Be(1);
+			response.VersionDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALAWBuildVersionMapper();
-                        AWBuildVersion entity = new AWBuildVersion();
-                        entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALAWBuildVersionMapper();
+			AWBuildVersion entity = new AWBuildVersion();
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        List<BOAWBuildVersion> response = mapper.MapEFToBO(new List<AWBuildVersion>() { entity });
+			List<BOAWBuildVersion> response = mapper.MapEFToBO(new List<AWBuildVersion>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>38d13073fb2d73a72c48be87171b4108</Hash>
+    <Hash>61e5e8039f5a922dd6b287647c292b03</Hash>
 </Codenesium>*/

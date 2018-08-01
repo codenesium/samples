@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesTaxRateModelMapper : AbstractApiSalesTaxRateModelMapper, IApiSalesTaxRateModelMapper
-        {
-                public ApiSalesTaxRateModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSalesTaxRateModelMapper : AbstractApiSalesTaxRateModelMapper, IApiSalesTaxRateModelMapper
+	{
+		public ApiSalesTaxRateModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e35e26926192cfb88bd2a3c738ef5357</Hash>
+    <Hash>818f3b2b884f86da22a635e5173729ae</Hash>
 </Codenesium>*/

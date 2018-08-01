@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class UnitMeasureRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class UnitMeasureRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<UnitMeasureRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<UnitMeasureRepository>>();
-                }
-        }
+		public static Mock<ILogger<UnitMeasureRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<UnitMeasureRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UnitMeasure")]
-        [Trait("Area", "Repositories")]
-        public partial class UnitMeasureRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UnitMeasure")]
+	[Trait("Area", "Repositories")]
+	public partial class UnitMeasureRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
-                        UnitMeasure entity = new UnitMeasure();
-                        context.Set<UnitMeasure>().Add(entity);
-                        await context.SaveChangesAsync();
+			UnitMeasure entity = new UnitMeasure();
+			context.Set<UnitMeasure>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
-                        UnitMeasure entity = new UnitMeasure();
-                        context.Set<UnitMeasure>().Add(entity);
-                        await context.SaveChangesAsync();
+			UnitMeasure entity = new UnitMeasure();
+			context.Set<UnitMeasure>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.UnitMeasureCode);
+			var record = await repository.Get(entity.UnitMeasureCode);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
-                        var entity = new UnitMeasure();
-                        await repository.Create(entity);
+			var entity = new UnitMeasure();
+			await repository.Create(entity);
 
-                        var record = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
+			var record = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-                        UnitMeasure entity = new UnitMeasure();
-                        context.Set<UnitMeasure>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+			UnitMeasure entity = new UnitMeasure();
+			context.Set<UnitMeasure>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.UnitMeasureCode);
+			var record = await repository.Get(entity.UnitMeasureCode);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<UnitMeasure>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<UnitMeasure>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-                        UnitMeasure entity = new UnitMeasure();
-                        context.Set<UnitMeasure>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+			UnitMeasure entity = new UnitMeasure();
+			context.Set<UnitMeasure>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new UnitMeasure());
+			await repository.Update(new UnitMeasure());
 
-                        var modifiedRecord = context.Set<UnitMeasure>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<UnitMeasure>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
-                        var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-                        UnitMeasure entity = new UnitMeasure();
-                        context.Set<UnitMeasure>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
+			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
+			UnitMeasure entity = new UnitMeasure();
+			context.Set<UnitMeasure>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.UnitMeasureCode);
+			await repository.Delete(entity.UnitMeasureCode);
 
-                        UnitMeasure modifiedRecord = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
+			UnitMeasure modifiedRecord = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>deb1275007843d6ab3578397a9f405b7</Hash>
+    <Hash>8c99b4969ffbebf63314d1b5ca8421f0</Hash>
 </Codenesium>*/

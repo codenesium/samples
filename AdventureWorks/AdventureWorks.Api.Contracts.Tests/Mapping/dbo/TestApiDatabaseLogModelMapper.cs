@@ -7,68 +7,67 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DatabaseLog")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiDatabaseLogModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiDatabaseLogModelMapper();
-                        var model = new ApiDatabaseLogRequestModel();
-                        model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
-                        ApiDatabaseLogResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DatabaseLog")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiDatabaseLogModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiDatabaseLogModelMapper();
+			var model = new ApiDatabaseLogRequestModel();
+			model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			ApiDatabaseLogResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.DatabaseLogID.Should().Be(1);
-                        response.DatabaseUser.Should().Be("A");
-                        response.@Event.Should().Be("A");
-                        response.@Object.Should().Be("A");
-                        response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Schema.Should().Be("A");
-                        response.Tsql.Should().Be("A");
-                        response.XmlEvent.Should().Be("A");
-                }
+			response.DatabaseLogID.Should().Be(1);
+			response.DatabaseUser.Should().Be("A");
+			response.@Event.Should().Be("A");
+			response.@Object.Should().Be("A");
+			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Schema.Should().Be("A");
+			response.Tsql.Should().Be("A");
+			response.XmlEvent.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiDatabaseLogModelMapper();
-                        var model = new ApiDatabaseLogResponseModel();
-                        model.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
-                        ApiDatabaseLogRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiDatabaseLogModelMapper();
+			var model = new ApiDatabaseLogResponseModel();
+			model.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			ApiDatabaseLogRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.DatabaseUser.Should().Be("A");
-                        response.@Event.Should().Be("A");
-                        response.@Object.Should().Be("A");
-                        response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Schema.Should().Be("A");
-                        response.Tsql.Should().Be("A");
-                        response.XmlEvent.Should().Be("A");
-                }
+			response.DatabaseUser.Should().Be("A");
+			response.@Event.Should().Be("A");
+			response.@Object.Should().Be("A");
+			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Schema.Should().Be("A");
+			response.Tsql.Should().Be("A");
+			response.XmlEvent.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiDatabaseLogModelMapper();
-                        var model = new ApiDatabaseLogRequestModel();
-                        model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiDatabaseLogModelMapper();
+			var model = new ApiDatabaseLogRequestModel();
+			model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
-                        JsonPatchDocument<ApiDatabaseLogRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiDatabaseLogRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.DatabaseUser.Should().Be("A");
-                        response.@Event.Should().Be("A");
-                        response.@Object.Should().Be("A");
-                        response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Schema.Should().Be("A");
-                        response.Tsql.Should().Be("A");
-                        response.XmlEvent.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiDatabaseLogRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiDatabaseLogRequestModel();
+			patch.ApplyTo(response);
+			response.DatabaseUser.Should().Be("A");
+			response.@Event.Should().Be("A");
+			response.@Object.Should().Be("A");
+			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Schema.Should().Be("A");
+			response.Tsql.Should().Be("A");
+			response.XmlEvent.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b74c5f93b11cc1ecdd3f6df2ba555310</Hash>
+    <Hash>8d22f56c22f0036e260fe7b1f27f90f6</Hash>
 </Codenesium>*/

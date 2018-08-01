@@ -4,14 +4,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class DALPersonMapper : DALAbstractPersonMapper, IDALPersonMapper
-        {
-                public DALPersonMapper()
-                {
-                }
-        }
+	public partial class DALPersonMapper : DALAbstractPersonMapper, IDALPersonMapper
+	{
+		public DALPersonMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ee3f1403991372d1d710dfb1e194fc15</Hash>
+    <Hash>d9e29c0be4adab3736c6d3733b51d7ee</Hash>
 </Codenesium>*/

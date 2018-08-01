@@ -6,38 +6,38 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        [Table("DeploymentRelatedMachine", Schema="dbo")]
-        public partial class DeploymentRelatedMachine : AbstractEntity
-        {
-                public DeploymentRelatedMachine()
-                {
-                }
+	[Table("DeploymentRelatedMachine", Schema="dbo")]
+	public partial class DeploymentRelatedMachine : AbstractEntity
+	{
+		public DeploymentRelatedMachine()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string deploymentId,
-                        int id,
-                        string machineId)
-                {
-                        this.DeploymentId = deploymentId;
-                        this.Id = id;
-                        this.MachineId = machineId;
-                }
+		public virtual void SetProperties(
+			string deploymentId,
+			int id,
+			string machineId)
+		{
+			this.DeploymentId = deploymentId;
+			this.Id = id;
+			this.MachineId = machineId;
+		}
 
-                [Column("DeploymentId")]
-                public string DeploymentId { get; private set; }
+		[Column("DeploymentId")]
+		public string DeploymentId { get; private set; }
 
-                [Key]
-                [Column("Id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("Id")]
+		public int Id { get; private set; }
 
-                [Column("MachineId")]
-                public string MachineId { get; private set; }
+		[Column("MachineId")]
+		public string MachineId { get; private set; }
 
-                [ForeignKey("DeploymentId")]
-                public virtual Deployment DeploymentNavigation { get; private set; }
-        }
+		[ForeignKey("DeploymentId")]
+		public virtual Deployment DeploymentNavigation { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>e9bc13f904247421935ca79018c30751</Hash>
+    <Hash>84d8287597fc22b152a8612b68ff1731</Hash>
 </Codenesium>*/

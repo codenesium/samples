@@ -9,39 +9,39 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiAWBuildVersionRequestModelValidator : AbstractValidator<ApiAWBuildVersionRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiAWBuildVersionRequestModelValidator : AbstractValidator<ApiAWBuildVersionRequestModel>
+	{
+		private int existingRecordId;
 
-                private IAWBuildVersionRepository aWBuildVersionRepository;
+		private IAWBuildVersionRepository aWBuildVersionRepository;
 
-                public AbstractApiAWBuildVersionRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
-                {
-                        this.aWBuildVersionRepository = aWBuildVersionRepository;
-                }
+		public AbstractApiAWBuildVersionRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
+		{
+			this.aWBuildVersionRepository = aWBuildVersionRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiAWBuildVersionRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiAWBuildVersionRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void Database_VersionRules()
-                {
-                        this.RuleFor(x => x.Database_Version).NotNull();
-                        this.RuleFor(x => x.Database_Version).Length(0, 25);
-                }
+		public virtual void Database_VersionRules()
+		{
+			this.RuleFor(x => x.Database_Version).NotNull();
+			this.RuleFor(x => x.Database_Version).Length(0, 25);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void VersionDateRules()
-                {
-                }
-        }
+		public virtual void VersionDateRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>76c6fe8c536f2553e8203fb31bf64e8e</Hash>
+    <Hash>7977160108701b2367bee715c0ba66ac</Hash>
 </Codenesium>*/

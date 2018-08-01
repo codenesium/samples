@@ -9,49 +9,49 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiUserRoleRequestModelValidator : AbstractValidator<ApiUserRoleRequestModel>
-        {
-                private string existingRecordId;
+	public abstract class AbstractApiUserRoleRequestModelValidator : AbstractValidator<ApiUserRoleRequestModel>
+	{
+		private string existingRecordId;
 
-                private IUserRoleRepository userRoleRepository;
+		private IUserRoleRepository userRoleRepository;
 
-                public AbstractApiUserRoleRequestModelValidator(IUserRoleRepository userRoleRepository)
-                {
-                        this.userRoleRepository = userRoleRepository;
-                }
+		public AbstractApiUserRoleRequestModelValidator(IUserRoleRepository userRoleRepository)
+		{
+			this.userRoleRepository = userRoleRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiUserRoleRequestModel model, string id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiUserRoleRequestModel model, string id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void JSONRules()
-                {
-                }
+		public virtual void JSONRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRoleRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 200);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUserRoleRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 200);
+		}
 
-                private async Task<bool> BeUniqueByName(ApiUserRoleRequestModel model,  CancellationToken cancellationToken)
-                {
-                        UserRole record = await this.userRoleRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiUserRoleRequestModel model,  CancellationToken cancellationToken)
+		{
+			UserRole record = await this.userRoleRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ead0c2b2b3c2833835e5058c2a6c0c70</Hash>
+    <Hash>a5fbda4e454fe3a09a9cff3d3e55fce7</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/addressTypes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class AddressTypeController : AbstractAddressTypeController
-        {
-                public AddressTypeController(
-                        ApiSettings settings,
-                        ILogger<AddressTypeController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IAddressTypeService addressTypeService,
-                        IApiAddressTypeModelMapper addressTypeModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               addressTypeService,
-                               addressTypeModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/addressTypes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class AddressTypeController : AbstractAddressTypeController
+	{
+		public AddressTypeController(
+			ApiSettings settings,
+			ILogger<AddressTypeController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IAddressTypeService addressTypeService,
+			IApiAddressTypeModelMapper addressTypeModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       addressTypeService,
+			       addressTypeModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>27dcbd3f8e67c86fe1311151d49b9a5d</Hash>
+    <Hash>0b3b177dab420de77de011333b23073e</Hash>
 </Codenesium>*/

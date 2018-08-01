@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductDescription")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProductDescriptionRequestModelValidatorTest
-        {
-                public ApiProductDescriptionRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductDescription")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProductDescriptionRequestModelValidatorTest
+	{
+		public ApiProductDescriptionRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Description_Create_null()
-                {
-                        Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
-                        productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
+		[Fact]
+		public async void Description_Create_null()
+		{
+			Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
+			productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
-                        var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
+			var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
 
-                [Fact]
-                public async void Description_Update_null()
-                {
-                        Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
-                        productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
+		[Fact]
+		public async void Description_Update_null()
+		{
+			Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
+			productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
-                        var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
+			var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
 
-                [Fact]
-                public async void Description_Create_length()
-                {
-                        Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
-                        productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
+		[Fact]
+		public async void Description_Create_length()
+		{
+			Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
+			productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
-                        var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
+			var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
+		}
 
-                [Fact]
-                public async void Description_Update_length()
-                {
-                        Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
-                        productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
+		[Fact]
+		public async void Description_Update_length()
+		{
+			Mock<IProductDescriptionRepository> productDescriptionRepository = new Mock<IProductDescriptionRepository>();
+			productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
-                        var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
+			var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c08ef77d6f40d77a0001e6f9552486f8</Hash>
+    <Hash>8498d955ba797294aa3761b7106c4d1d</Hash>
 </Codenesium>*/

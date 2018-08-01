@@ -5,49 +5,49 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractWorkerTaskLeaseMapper
-        {
-                public virtual BOWorkerTaskLease MapModelToBO(
-                        string id,
-                        ApiWorkerTaskLeaseRequestModel model
-                        )
-                {
-                        BOWorkerTaskLease boWorkerTaskLease = new BOWorkerTaskLease();
-                        boWorkerTaskLease.SetProperties(
-                                id,
-                                model.Exclusive,
-                                model.JSON,
-                                model.Name,
-                                model.TaskId,
-                                model.WorkerId);
-                        return boWorkerTaskLease;
-                }
+	public abstract class BOLAbstractWorkerTaskLeaseMapper
+	{
+		public virtual BOWorkerTaskLease MapModelToBO(
+			string id,
+			ApiWorkerTaskLeaseRequestModel model
+			)
+		{
+			BOWorkerTaskLease boWorkerTaskLease = new BOWorkerTaskLease();
+			boWorkerTaskLease.SetProperties(
+				id,
+				model.Exclusive,
+				model.JSON,
+				model.Name,
+				model.TaskId,
+				model.WorkerId);
+			return boWorkerTaskLease;
+		}
 
-                public virtual ApiWorkerTaskLeaseResponseModel MapBOToModel(
-                        BOWorkerTaskLease boWorkerTaskLease)
-                {
-                        var model = new ApiWorkerTaskLeaseResponseModel();
+		public virtual ApiWorkerTaskLeaseResponseModel MapBOToModel(
+			BOWorkerTaskLease boWorkerTaskLease)
+		{
+			var model = new ApiWorkerTaskLeaseResponseModel();
 
-                        model.SetProperties(boWorkerTaskLease.Id, boWorkerTaskLease.Exclusive, boWorkerTaskLease.JSON, boWorkerTaskLease.Name, boWorkerTaskLease.TaskId, boWorkerTaskLease.WorkerId);
+			model.SetProperties(boWorkerTaskLease.Id, boWorkerTaskLease.Exclusive, boWorkerTaskLease.JSON, boWorkerTaskLease.Name, boWorkerTaskLease.TaskId, boWorkerTaskLease.WorkerId);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiWorkerTaskLeaseResponseModel> MapBOToModel(
-                        List<BOWorkerTaskLease> items)
-                {
-                        List<ApiWorkerTaskLeaseResponseModel> response = new List<ApiWorkerTaskLeaseResponseModel>();
+		public virtual List<ApiWorkerTaskLeaseResponseModel> MapBOToModel(
+			List<BOWorkerTaskLease> items)
+		{
+			List<ApiWorkerTaskLeaseResponseModel> response = new List<ApiWorkerTaskLeaseResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8fd383b24459f0aa1b0a2828f5a80ccd</Hash>
+    <Hash>57caefff07b9e0135432a77651f03173</Hash>
 </Codenesium>*/

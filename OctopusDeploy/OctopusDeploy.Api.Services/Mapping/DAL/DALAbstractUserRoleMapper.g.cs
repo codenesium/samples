@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractUserRoleMapper
-        {
-                public virtual UserRole MapBOToEF(
-                        BOUserRole bo)
-                {
-                        UserRole efUserRole = new UserRole();
-                        efUserRole.SetProperties(
-                                bo.Id,
-                                bo.JSON,
-                                bo.Name);
-                        return efUserRole;
-                }
+	public abstract class DALAbstractUserRoleMapper
+	{
+		public virtual UserRole MapBOToEF(
+			BOUserRole bo)
+		{
+			UserRole efUserRole = new UserRole();
+			efUserRole.SetProperties(
+				bo.Id,
+				bo.JSON,
+				bo.Name);
+			return efUserRole;
+		}
 
-                public virtual BOUserRole MapEFToBO(
-                        UserRole ef)
-                {
-                        var bo = new BOUserRole();
+		public virtual BOUserRole MapEFToBO(
+			UserRole ef)
+		{
+			var bo = new BOUserRole();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.JSON,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.JSON,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOUserRole> MapEFToBO(
-                        List<UserRole> records)
-                {
-                        List<BOUserRole> response = new List<BOUserRole>();
+		public virtual List<BOUserRole> MapEFToBO(
+			List<UserRole> records)
+		{
+			List<BOUserRole> response = new List<BOUserRole>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3d4ef319eb3da9517859f31c40eebca9</Hash>
+    <Hash>047640642eb72de90a4d986d20c5b547</Hash>
 </Codenesium>*/

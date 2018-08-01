@@ -10,29 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class CityService : AbstractCityService, ICityService
-        {
-                public CityService(
-                        ILogger<ICityRepository> logger,
-                        ICityRepository cityRepository,
-                        IApiCityRequestModelValidator cityModelValidator,
-                        IBOLCityMapper bolcityMapper,
-                        IDALCityMapper dalcityMapper,
-                        IBOLEventMapper bolEventMapper,
-                        IDALEventMapper dalEventMapper
-                        )
-                        : base(logger,
-                               cityRepository,
-                               cityModelValidator,
-                               bolcityMapper,
-                               dalcityMapper,
-                               bolEventMapper,
-                               dalEventMapper)
-                {
-                }
-        }
+	public partial class CityService : AbstractCityService, ICityService
+	{
+		public CityService(
+			ILogger<ICityRepository> logger,
+			ICityRepository cityRepository,
+			IApiCityRequestModelValidator cityModelValidator,
+			IBOLCityMapper bolcityMapper,
+			IDALCityMapper dalcityMapper,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper
+			)
+			: base(logger,
+			       cityRepository,
+			       cityModelValidator,
+			       bolcityMapper,
+			       dalcityMapper,
+			       bolEventMapper,
+			       dalEventMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f02b56ee5d95f764af4d272388566bc</Hash>
+    <Hash>6401faf18c4099f3914700f919986377</Hash>
 </Codenesium>*/

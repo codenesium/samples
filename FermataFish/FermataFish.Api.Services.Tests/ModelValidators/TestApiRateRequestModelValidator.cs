@@ -15,117 +15,117 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Rate")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiRateRequestModelValidatorTest
-        {
-                public ApiRateRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Rate")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiRateRequestModelValidatorTest
+	{
+		public ApiRateRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void TeacherId_Create_Valid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
+		[Fact]
+		public async void TeacherId_Create_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiRateRequestModel());
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
+		}
 
-                [Fact]
-                public async void TeacherId_Create_Invalid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
+		[Fact]
+		public async void TeacherId_Create_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiRateRequestModel());
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
+		}
 
-                [Fact]
-                public async void TeacherId_Update_Valid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
+		[Fact]
+		public async void TeacherId_Update_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
+		}
 
-                [Fact]
-                public async void TeacherId_Update_Invalid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
+		[Fact]
+		public async void TeacherId_Update_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
+		}
 
-                [Fact]
-                public async void TeacherSkillId_Create_Valid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
+		[Fact]
+		public async void TeacherSkillId_Create_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiRateRequestModel());
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
+		}
 
-                [Fact]
-                public async void TeacherSkillId_Create_Invalid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
+		[Fact]
+		public async void TeacherSkillId_Create_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiRateRequestModel());
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
+		}
 
-                [Fact]
-                public async void TeacherSkillId_Update_Valid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
+		[Fact]
+		public async void TeacherSkillId_Update_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
+		}
 
-                [Fact]
-                public async void TeacherSkillId_Update_Invalid_Reference()
-                {
-                        Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
-                        rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
+		[Fact]
+		public async void TeacherSkillId_Update_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
 
-                        var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6b07f3a4d4aa7fad11c5d0e167109a68</Hash>
+    <Hash>cf1a0ca47a982a124d895aba690f76bc</Hash>
 </Codenesium>*/

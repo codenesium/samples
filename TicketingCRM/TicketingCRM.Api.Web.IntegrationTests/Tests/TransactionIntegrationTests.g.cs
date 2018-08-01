@@ -12,86 +12,86 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Transaction")]
-        [Trait("Area", "Integration")]
-        public class TransactionIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public TransactionIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Transaction")]
+	[Trait("Area", "Integration")]
+	public class TransactionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public TransactionIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiTransactionModelMapper mapper = new ApiTransactionModelMapper();
+			ApiTransactionModelMapper mapper = new ApiTransactionModelMapper();
 
-                        UpdateResponse<ApiTransactionResponseModel> updateResponse = await this.Client.TransactionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTransactionResponseModel> updateResponse = await this.Client.TransactionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.TransactionDeleteAsync(model.Id);
+			await this.Client.TransactionDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiTransactionResponseModel response = await this.Client.TransactionGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiTransactionResponseModel response = await this.Client.TransactionGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiTransactionResponseModel> response = await this.Client.TransactionAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiTransactionResponseModel> response = await this.Client.TransactionAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiTransactionResponseModel> CreateRecord()
-                {
-                        var model = new ApiTransactionRequestModel();
-                        model.SetProperties(2m, "B", 1);
-                        CreateResponse<ApiTransactionResponseModel> result = await this.Client.TransactionCreateAsync(model);
+		private async Task<ApiTransactionResponseModel> CreateRecord()
+		{
+			var model = new ApiTransactionRequestModel();
+			model.SetProperties(2m, "B", 1);
+			CreateResponse<ApiTransactionResponseModel> result = await this.Client.TransactionCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.TransactionDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.TransactionDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0334c5311fa81b02204485469ed11d02</Hash>
+    <Hash>5c5e0c5cd798cdf930b454a3b10a5f25</Hash>
 </Codenesium>*/

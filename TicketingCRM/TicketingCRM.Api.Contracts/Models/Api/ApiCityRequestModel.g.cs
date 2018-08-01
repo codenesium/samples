@@ -7,29 +7,29 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiCityRequestModel : AbstractApiRequestModel
-        {
-                public ApiCityRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiCityRequestModel : AbstractApiRequestModel
+	{
+		public ApiCityRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name,
-                        int provinceId)
-                {
-                        this.Name = name;
-                        this.ProvinceId = provinceId;
-                }
+		public virtual void SetProperties(
+			string name,
+			int provinceId)
+		{
+			this.Name = name;
+			this.ProvinceId = provinceId;
+		}
 
-                [JsonProperty]
-                public string Name { get; private set; }
+		[JsonProperty]
+		public string Name { get; private set; }
 
-                [JsonProperty]
-                public int ProvinceId { get; private set; }
-        }
+		[JsonProperty]
+		public int ProvinceId { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>d33e4e9a7195a403fba16cb6ae7413b3</Hash>
+    <Hash>202177c5896ab4b807cd72b9d680c2bc</Hash>
 </Codenesium>*/

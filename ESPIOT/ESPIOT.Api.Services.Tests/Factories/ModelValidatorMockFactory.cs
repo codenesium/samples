@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
-        public class ModelValidatorMockFactory
-        {
-                public Mock<IApiDeviceRequestModelValidator> DeviceModelValidatorMock { get; set; } = new Mock<IApiDeviceRequestModelValidator>();
+	public class ModelValidatorMockFactory
+	{
+		public Mock<IApiDeviceRequestModelValidator> DeviceModelValidatorMock { get; set; } = new Mock<IApiDeviceRequestModelValidator>();
 
-                public Mock<IApiDeviceActionRequestModelValidator> DeviceActionModelValidatorMock { get; set; } = new Mock<IApiDeviceActionRequestModelValidator>();
+		public Mock<IApiDeviceActionRequestModelValidator> DeviceActionModelValidatorMock { get; set; } = new Mock<IApiDeviceActionRequestModelValidator>();
 
-                public ModelValidatorMockFactory()
-                {
-                        this.DeviceModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-                        this.DeviceModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-                        this.DeviceModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+		public ModelValidatorMockFactory()
+		{
+			this.DeviceModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DeviceModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DeviceModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-                        this.DeviceActionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-                        this.DeviceActionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-                        this.DeviceActionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-                }
-        }
+			this.DeviceActionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DeviceActionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DeviceActionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b115494e6fe899524052f36556f7ae28</Hash>
+    <Hash>ae231d90e98b3d24322d96eddf39d6b0</Hash>
 </Codenesium>*/

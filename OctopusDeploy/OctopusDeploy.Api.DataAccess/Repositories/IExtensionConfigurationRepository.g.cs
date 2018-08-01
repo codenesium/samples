@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public interface IExtensionConfigurationRepository
-        {
-                Task<ExtensionConfiguration> Create(ExtensionConfiguration item);
+	public interface IExtensionConfigurationRepository
+	{
+		Task<ExtensionConfiguration> Create(ExtensionConfiguration item);
 
-                Task Update(ExtensionConfiguration item);
+		Task Update(ExtensionConfiguration item);
 
-                Task Delete(string id);
+		Task Delete(string id);
 
-                Task<ExtensionConfiguration> Get(string id);
+		Task<ExtensionConfiguration> Get(string id);
 
-                Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>95291406576cc531d46d5d6c3e1056be</Hash>
+    <Hash>a35a3b7ee39d0b8a8117ff8da7d0b091</Hash>
 </Codenesium>*/

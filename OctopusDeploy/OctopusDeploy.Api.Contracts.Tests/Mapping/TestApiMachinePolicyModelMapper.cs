@@ -7,56 +7,55 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "MachinePolicy")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiMachinePolicyModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiMachinePolicyModelMapper();
-                        var model = new ApiMachinePolicyRequestModel();
-                        model.SetProperties(true, "A", "A");
-                        ApiMachinePolicyResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "MachinePolicy")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiMachinePolicyModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiMachinePolicyModelMapper();
+			var model = new ApiMachinePolicyRequestModel();
+			model.SetProperties(true, "A", "A");
+			ApiMachinePolicyResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.Id.Should().Be("A");
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiMachinePolicyModelMapper();
-                        var model = new ApiMachinePolicyResponseModel();
-                        model.SetProperties("A", true, "A", "A");
-                        ApiMachinePolicyRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiMachinePolicyModelMapper();
+			var model = new ApiMachinePolicyResponseModel();
+			model.SetProperties("A", true, "A", "A");
+			ApiMachinePolicyRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiMachinePolicyModelMapper();
-                        var model = new ApiMachinePolicyRequestModel();
-                        model.SetProperties(true, "A", "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiMachinePolicyModelMapper();
+			var model = new ApiMachinePolicyRequestModel();
+			model.SetProperties(true, "A", "A");
 
-                        JsonPatchDocument<ApiMachinePolicyRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiMachinePolicyRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.IsDefault.Should().Be(true);
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiMachinePolicyRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiMachinePolicyRequestModel();
+			patch.ApplyTo(response);
+			response.IsDefault.Should().Be(true);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ef52cccd90677fad5e5bc1dc385e8a11</Hash>
+    <Hash>f6f5b4cb97317c3d7506683a728d06ba</Hash>
 </Codenesium>*/

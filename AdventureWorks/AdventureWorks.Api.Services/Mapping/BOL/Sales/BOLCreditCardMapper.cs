@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLCreditCardMapper : BOLAbstractCreditCardMapper, IBOLCreditCardMapper
-        {
-                public BOLCreditCardMapper()
-                {
-                }
-        }
+	public partial class BOLCreditCardMapper : BOLAbstractCreditCardMapper, IBOLCreditCardMapper
+	{
+		public BOLCreditCardMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ad27524ab727e7a093d207f9a5c32cfb</Hash>
+    <Hash>84deaab22222e6d3afd8bb716de092c6</Hash>
 </Codenesium>*/

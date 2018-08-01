@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOScrapReason : AbstractBOScrapReason
-        {
-                public BOScrapReason()
-                        : base()
-                {
-                }
-        }
+	public partial class BOScrapReason : AbstractBOScrapReason
+	{
+		public BOScrapReason()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>280d38bee5ea88f90a6d554ef04e6002</Hash>
+    <Hash>d38f31be561d593a9041cf709148eae2</Hash>
 </Codenesium>*/

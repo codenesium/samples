@@ -9,127 +9,127 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public partial class VenueRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class VenueRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<VenueRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<VenueRepository>>();
-                }
-        }
+		public static Mock<ILogger<VenueRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<VenueRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Venue")]
-        [Trait("Area", "Repositories")]
-        public partial class VenueRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Venue")]
+	[Trait("Area", "Repositories")]
+	public partial class VenueRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
 
-                        Venue entity = new Venue();
-                        context.Set<Venue>().Add(entity);
-                        await context.SaveChangesAsync();
+			Venue entity = new Venue();
+			context.Set<Venue>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
 
-                        Venue entity = new Venue();
-                        context.Set<Venue>().Add(entity);
-                        await context.SaveChangesAsync();
+			Venue entity = new Venue();
+			context.Set<Venue>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
 
-                        var entity = new Venue();
-                        await repository.Create(entity);
+			var entity = new Venue();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Venue>().FirstOrDefaultAsync();
+			var record = await context.Set<Venue>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
-                        Venue entity = new Venue();
-                        context.Set<Venue>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
+			Venue entity = new Venue();
+			context.Set<Venue>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
-                        Venue entity = new Venue();
-                        context.Set<Venue>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
+			Venue entity = new Venue();
+			context.Set<Venue>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Venue());
+			await repository.Update(new Venue());
 
-                        var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VenueRepositoryMoc.GetContext();
-                        var repository = new VenueRepository(loggerMoc.Object, context);
-                        Venue entity = new Venue();
-                        context.Set<Venue>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
+			Venue entity = new Venue();
+			context.Set<Venue>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Venue modifiedRecord = await context.Set<Venue>().FirstOrDefaultAsync();
+			Venue modifiedRecord = await context.Set<Venue>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bcb5f900a0b8d2a0725e53707e310cea</Hash>
+    <Hash>9fd22366bf473305337d3b13c3fc3200</Hash>
 </Codenesium>*/

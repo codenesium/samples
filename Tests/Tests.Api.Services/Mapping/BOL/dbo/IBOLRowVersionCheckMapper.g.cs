@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLRowVersionCheckMapper
-        {
-                BORowVersionCheck MapModelToBO(
-                        int id,
-                        ApiRowVersionCheckRequestModel model);
+	public interface IBOLRowVersionCheckMapper
+	{
+		BORowVersionCheck MapModelToBO(
+			int id,
+			ApiRowVersionCheckRequestModel model);
 
-                ApiRowVersionCheckResponseModel MapBOToModel(
-                        BORowVersionCheck boRowVersionCheck);
+		ApiRowVersionCheckResponseModel MapBOToModel(
+			BORowVersionCheck boRowVersionCheck);
 
-                List<ApiRowVersionCheckResponseModel> MapBOToModel(
-                        List<BORowVersionCheck> items);
-        }
+		List<ApiRowVersionCheckResponseModel> MapBOToModel(
+			List<BORowVersionCheck> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ed91c17bb72ef1ec36f4a82b32e53b35</Hash>
+    <Hash>e7e85d2e881a7e088e058b4eb087d6b6</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class DeploymentEnvironmentRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class DeploymentEnvironmentRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<DeploymentEnvironmentRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<DeploymentEnvironmentRepository>>();
-                }
-        }
+		public static Mock<ILogger<DeploymentEnvironmentRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<DeploymentEnvironmentRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DeploymentEnvironment")]
-        [Trait("Area", "Repositories")]
-        public partial class DeploymentEnvironmentRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DeploymentEnvironment")]
+	[Trait("Area", "Repositories")]
+	public partial class DeploymentEnvironmentRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
-                        DeploymentEnvironment entity = new DeploymentEnvironment();
-                        context.Set<DeploymentEnvironment>().Add(entity);
-                        await context.SaveChangesAsync();
+			DeploymentEnvironment entity = new DeploymentEnvironment();
+			context.Set<DeploymentEnvironment>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
-                        DeploymentEnvironment entity = new DeploymentEnvironment();
-                        context.Set<DeploymentEnvironment>().Add(entity);
-                        await context.SaveChangesAsync();
+			DeploymentEnvironment entity = new DeploymentEnvironment();
+			context.Set<DeploymentEnvironment>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
-                        var entity = new DeploymentEnvironment();
-                        await repository.Create(entity);
+			var entity = new DeploymentEnvironment();
+			await repository.Create(entity);
 
-                        var record = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+			var record = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-                        DeploymentEnvironment entity = new DeploymentEnvironment();
-                        context.Set<DeploymentEnvironment>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+			DeploymentEnvironment entity = new DeploymentEnvironment();
+			context.Set<DeploymentEnvironment>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-                        DeploymentEnvironment entity = new DeploymentEnvironment();
-                        context.Set<DeploymentEnvironment>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+			DeploymentEnvironment entity = new DeploymentEnvironment();
+			context.Set<DeploymentEnvironment>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new DeploymentEnvironment());
+			await repository.Update(new DeploymentEnvironment());
 
-                        var modifiedRecord = context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
-                        var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-                        DeploymentEnvironment entity = new DeploymentEnvironment();
-                        context.Set<DeploymentEnvironment>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
+			var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
+			DeploymentEnvironment entity = new DeploymentEnvironment();
+			context.Set<DeploymentEnvironment>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        DeploymentEnvironment modifiedRecord = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+			DeploymentEnvironment modifiedRecord = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>76cc397138e683245cc97e08b4b005b0</Hash>
+    <Hash>950b1f76c47ba520f137006427ed2509</Hash>
 </Codenesium>*/

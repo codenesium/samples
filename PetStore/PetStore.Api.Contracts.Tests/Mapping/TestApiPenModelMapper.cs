@@ -7,50 +7,49 @@ using Xunit;
 
 namespace PetStoreNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pen")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiPenModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiPenModelMapper();
-                        var model = new ApiPenRequestModel();
-                        model.SetProperties("A");
-                        ApiPenResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pen")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiPenModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiPenModelMapper();
+			var model = new ApiPenRequestModel();
+			model.SetProperties("A");
+			ApiPenResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiPenModelMapper();
-                        var model = new ApiPenResponseModel();
-                        model.SetProperties(1, "A");
-                        ApiPenRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiPenModelMapper();
+			var model = new ApiPenResponseModel();
+			model.SetProperties(1, "A");
+			ApiPenRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.Name.Should().Be("A");
-                }
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiPenModelMapper();
-                        var model = new ApiPenRequestModel();
-                        model.SetProperties("A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiPenModelMapper();
+			var model = new ApiPenRequestModel();
+			model.SetProperties("A");
 
-                        JsonPatchDocument<ApiPenRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiPenRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiPenRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiPenRequestModel();
+			patch.ApplyTo(response);
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c14db70d49ad295beb2eca64085b7e05</Hash>
+    <Hash>87a8afde428d9d6f8656f7bfb9b44e24</Hash>
 </Codenesium>*/

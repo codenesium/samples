@@ -15,213 +15,213 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Customer")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiCustomerRequestModelValidatorTest
-        {
-                public ApiCustomerRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Customer")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiCustomerRequestModelValidatorTest
+	{
+		public ApiCustomerRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void AccountNumber_Create_null()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
+		[Fact]
+		public async void AccountNumber_Create_null()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
+		}
 
-                [Fact]
-                public async void AccountNumber_Update_null()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
+		[Fact]
+		public async void AccountNumber_Update_null()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
+		}
 
-                [Fact]
-                public async void AccountNumber_Create_length()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
+		[Fact]
+		public async void AccountNumber_Create_length()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 11));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 11));
+		}
 
-                [Fact]
-                public async void AccountNumber_Update_length()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
+		[Fact]
+		public async void AccountNumber_Update_length()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 11));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 11));
+		}
 
-                [Fact]
-                public async void StoreID_Create_Valid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
+		[Fact]
+		public async void StoreID_Create_Valid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StoreID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StoreID, 1);
+		}
 
-                [Fact]
-                public async void StoreID_Create_Invalid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
+		[Fact]
+		public async void StoreID_Create_Invalid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StoreID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StoreID, 1);
+		}
 
-                [Fact]
-                public async void StoreID_Update_Valid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
+		[Fact]
+		public async void StoreID_Update_Valid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StoreID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StoreID, 1);
+		}
 
-                [Fact]
-                public async void StoreID_Update_Invalid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
+		[Fact]
+		public async void StoreID_Update_Invalid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StoreID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StoreID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Create_Valid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+		[Fact]
+		public async void TerritoryID_Create_Valid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Create_Invalid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+		[Fact]
+		public async void TerritoryID_Create_Invalid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Update_Valid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+		[Fact]
+		public async void TerritoryID_Update_Valid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                public async void TerritoryID_Update_Invalid_Reference()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+		[Fact]
+		public async void TerritoryID_Update_Invalid_Reference()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
+		}
 
-                [Fact]
-                private async void BeUniqueByAccountNumber_Create_Exists()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(new Customer()));
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+		[Fact]
+		private async void BeUniqueByAccountNumber_Create_Exists()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(new Customer()));
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAccountNumber_Create_Not_Exists()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(null));
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+		[Fact]
+		private async void BeUniqueByAccountNumber_Create_Not_Exists()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(null));
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
+			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AccountNumber, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.AccountNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAccountNumber_Update_Exists()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(new Customer()));
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+		[Fact]
+		private async void BeUniqueByAccountNumber_Update_Exists()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(new Customer()));
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByAccountNumber_Update_Not_Exists()
-                {
-                        Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-                        customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(null));
-                        var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
+		[Fact]
+		private async void BeUniqueByAccountNumber_Update_Not_Exists()
+		{
+			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
+			customerRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Customer>(null));
+			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.AccountNumber, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.AccountNumber, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4babe61bfdc40de9fcade2fa2d2ce2fc</Hash>
+    <Hash>cc89834b594b54b66a2d7b20994aef65</Hash>
 </Codenesium>*/

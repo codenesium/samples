@@ -6,24 +6,24 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiPaymentTypeResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
+	public partial class ApiPaymentTypeResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			int id,
+			string name)
+		{
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public int Id { get; private set; }
+		[JsonProperty]
+		public int Id { get; private set; }
 
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a340dc2193628f3d3372d82f0a2a2e7e</Hash>
+    <Hash>5b5e11353076c49715ab274f3888b00b</Hash>
 </Codenesium>*/

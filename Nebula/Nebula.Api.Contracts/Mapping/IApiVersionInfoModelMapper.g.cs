@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-        public interface IApiVersionInfoModelMapper
-        {
-                ApiVersionInfoResponseModel MapRequestToResponse(
-                        long version,
-                        ApiVersionInfoRequestModel request);
+	public interface IApiVersionInfoModelMapper
+	{
+		ApiVersionInfoResponseModel MapRequestToResponse(
+			long version,
+			ApiVersionInfoRequestModel request);
 
-                ApiVersionInfoRequestModel MapResponseToRequest(
-                        ApiVersionInfoResponseModel response);
+		ApiVersionInfoRequestModel MapResponseToRequest(
+			ApiVersionInfoResponseModel response);
 
-                JsonPatchDocument<ApiVersionInfoRequestModel> CreatePatch(ApiVersionInfoRequestModel model);
-        }
+		JsonPatchDocument<ApiVersionInfoRequestModel> CreatePatch(ApiVersionInfoRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>5b20e4203dc7a746a3b5483b157f7e3d</Hash>
+    <Hash>4834a5c30a4b1b4ca10f32da6011f443</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public interface IBOLPersonRefMapper
-        {
-                BOPersonRef MapModelToBO(
-                        int id,
-                        ApiPersonRefRequestModel model);
+	public interface IBOLPersonRefMapper
+	{
+		BOPersonRef MapModelToBO(
+			int id,
+			ApiPersonRefRequestModel model);
 
-                ApiPersonRefResponseModel MapBOToModel(
-                        BOPersonRef boPersonRef);
+		ApiPersonRefResponseModel MapBOToModel(
+			BOPersonRef boPersonRef);
 
-                List<ApiPersonRefResponseModel> MapBOToModel(
-                        List<BOPersonRef> items);
-        }
+		List<ApiPersonRefResponseModel> MapBOToModel(
+			List<BOPersonRef> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e6c0599387c2e2e1e044812bd60ccd54</Hash>
+    <Hash>2f974269994e7378a0c400f2d7b9fd2b</Hash>
 </Codenesium>*/

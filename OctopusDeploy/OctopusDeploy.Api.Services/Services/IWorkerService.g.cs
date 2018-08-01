@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IWorkerService
-        {
-                Task<CreateResponse<ApiWorkerResponseModel>> Create(
-                        ApiWorkerRequestModel model);
+	public interface IWorkerService
+	{
+		Task<CreateResponse<ApiWorkerResponseModel>> Create(
+			ApiWorkerRequestModel model);
 
-                Task<UpdateResponse<ApiWorkerResponseModel>> Update(string id,
-                                                                     ApiWorkerRequestModel model);
+		Task<UpdateResponse<ApiWorkerResponseModel>> Update(string id,
+		                                                     ApiWorkerRequestModel model);
 
-                Task<ActionResponse> Delete(string id);
+		Task<ActionResponse> Delete(string id);
 
-                Task<ApiWorkerResponseModel> Get(string id);
+		Task<ApiWorkerResponseModel> Get(string id);
 
-                Task<List<ApiWorkerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiWorkerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiWorkerResponseModel> ByName(string name);
+		Task<ApiWorkerResponseModel> ByName(string name);
 
-                Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId);
-        }
+		Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>98b5a9d8b130b95403e8293d52cafbb7</Hash>
+    <Hash>c4853fb28cc559d36698e2e61e0af819</Hash>
 </Codenesium>*/

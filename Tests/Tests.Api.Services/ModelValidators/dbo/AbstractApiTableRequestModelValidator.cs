@@ -9,31 +9,31 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class AbstractApiTableRequestModelValidator : AbstractValidator<ApiTableRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiTableRequestModelValidator : AbstractValidator<ApiTableRequestModel>
+	{
+		private int existingRecordId;
 
-                private ITableRepository tableRepository;
+		private ITableRepository tableRepository;
 
-                public AbstractApiTableRequestModelValidator(ITableRepository tableRepository)
-                {
-                        this.tableRepository = tableRepository;
-                }
+		public AbstractApiTableRequestModelValidator(ITableRepository tableRepository)
+		{
+			this.tableRepository = tableRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiTableRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiTableRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x.Name).Length(0, 50);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>30c09e064a0b97755a9d2ec84d82c69a</Hash>
+    <Hash>a4725c5937874404de88143d61aa5354</Hash>
 </Codenesium>*/

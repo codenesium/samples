@@ -5,53 +5,53 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractUserMapper
-        {
-                public virtual BOUser MapModelToBO(
-                        string id,
-                        ApiUserRequestModel model
-                        )
-                {
-                        BOUser boUser = new BOUser();
-                        boUser.SetProperties(
-                                id,
-                                model.DisplayName,
-                                model.EmailAddress,
-                                model.ExternalId,
-                                model.ExternalIdentifiers,
-                                model.IdentificationToken,
-                                model.IsActive,
-                                model.IsService,
-                                model.JSON,
-                                model.Username);
-                        return boUser;
-                }
+	public abstract class BOLAbstractUserMapper
+	{
+		public virtual BOUser MapModelToBO(
+			string id,
+			ApiUserRequestModel model
+			)
+		{
+			BOUser boUser = new BOUser();
+			boUser.SetProperties(
+				id,
+				model.DisplayName,
+				model.EmailAddress,
+				model.ExternalId,
+				model.ExternalIdentifiers,
+				model.IdentificationToken,
+				model.IsActive,
+				model.IsService,
+				model.JSON,
+				model.Username);
+			return boUser;
+		}
 
-                public virtual ApiUserResponseModel MapBOToModel(
-                        BOUser boUser)
-                {
-                        var model = new ApiUserResponseModel();
+		public virtual ApiUserResponseModel MapBOToModel(
+			BOUser boUser)
+		{
+			var model = new ApiUserResponseModel();
 
-                        model.SetProperties(boUser.Id, boUser.DisplayName, boUser.EmailAddress, boUser.ExternalId, boUser.ExternalIdentifiers, boUser.IdentificationToken, boUser.IsActive, boUser.IsService, boUser.JSON, boUser.Username);
+			model.SetProperties(boUser.Id, boUser.DisplayName, boUser.EmailAddress, boUser.ExternalId, boUser.ExternalIdentifiers, boUser.IdentificationToken, boUser.IsActive, boUser.IsService, boUser.JSON, boUser.Username);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiUserResponseModel> MapBOToModel(
-                        List<BOUser> items)
-                {
-                        List<ApiUserResponseModel> response = new List<ApiUserResponseModel>();
+		public virtual List<ApiUserResponseModel> MapBOToModel(
+			List<BOUser> items)
+		{
+			List<ApiUserResponseModel> response = new List<ApiUserResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a7d1640133d78b5d75e4dac6859e84e0</Hash>
+    <Hash>b467ffebc1ad58346b26a2631024b4f9</Hash>
 </Codenesium>*/

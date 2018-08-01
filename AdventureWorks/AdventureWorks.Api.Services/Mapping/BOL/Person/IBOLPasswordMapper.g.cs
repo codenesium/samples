@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLPasswordMapper
-        {
-                BOPassword MapModelToBO(
-                        int businessEntityID,
-                        ApiPasswordRequestModel model);
+	public interface IBOLPasswordMapper
+	{
+		BOPassword MapModelToBO(
+			int businessEntityID,
+			ApiPasswordRequestModel model);
 
-                ApiPasswordResponseModel MapBOToModel(
-                        BOPassword boPassword);
+		ApiPasswordResponseModel MapBOToModel(
+			BOPassword boPassword);
 
-                List<ApiPasswordResponseModel> MapBOToModel(
-                        List<BOPassword> items);
-        }
+		List<ApiPasswordResponseModel> MapBOToModel(
+			List<BOPassword> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2c35846036b03f053f3e0a38c162f15b</Hash>
+    <Hash>3121a0ca4ab0a1ac1cd9861b3ed10b3d</Hash>
 </Codenesium>*/

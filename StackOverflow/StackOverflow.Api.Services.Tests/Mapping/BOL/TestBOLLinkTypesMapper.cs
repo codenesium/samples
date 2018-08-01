@@ -8,47 +8,47 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LinkTypes")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLLinkTypesMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLLinkTypesMapper();
-                        ApiLinkTypesRequestModel model = new ApiLinkTypesRequestModel();
-                        model.SetProperties("A");
-                        BOLinkTypes response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LinkTypes")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLLinkTypesMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLLinkTypesMapper();
+			ApiLinkTypesRequestModel model = new ApiLinkTypesRequestModel();
+			model.SetProperties("A");
+			BOLinkTypes response = mapper.MapModelToBO(1, model);
 
-                        response.Type.Should().Be("A");
-                }
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLLinkTypesMapper();
-                        BOLinkTypes bo = new BOLinkTypes();
-                        bo.SetProperties(1, "A");
-                        ApiLinkTypesResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLLinkTypesMapper();
+			BOLinkTypes bo = new BOLinkTypes();
+			bo.SetProperties(1, "A");
+			ApiLinkTypesResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Type.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Type.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLLinkTypesMapper();
-                        BOLinkTypes bo = new BOLinkTypes();
-                        bo.SetProperties(1, "A");
-                        List<ApiLinkTypesResponseModel> response = mapper.MapBOToModel(new List<BOLinkTypes>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLLinkTypesMapper();
+			BOLinkTypes bo = new BOLinkTypes();
+			bo.SetProperties(1, "A");
+			List<ApiLinkTypesResponseModel> response = mapper.MapBOToModel(new List<BOLinkTypes>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4c3743305b33aae62a895a2b839bcd1f</Hash>
+    <Hash>ad35a722d147fa760e6954fd7b611cb1</Hash>
 </Codenesium>*/

@@ -15,254 +15,254 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractCertificateController : AbstractApiController
-        {
-                protected ICertificateService CertificateService { get; private set; }
+	public abstract class AbstractCertificateController : AbstractApiController
+	{
+		protected ICertificateService CertificateService { get; private set; }
 
-                protected IApiCertificateModelMapper CertificateModelMapper { get; private set; }
+		protected IApiCertificateModelMapper CertificateModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractCertificateController(
-                        ApiSettings settings,
-                        ILogger<AbstractCertificateController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ICertificateService certificateService,
-                        IApiCertificateModelMapper certificateModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.CertificateService = certificateService;
-                        this.CertificateModelMapper = certificateModelMapper;
-                }
+		public AbstractCertificateController(
+			ApiSettings settings,
+			ILogger<AbstractCertificateController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ICertificateService certificateService,
+			IApiCertificateModelMapper certificateModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.CertificateService = certificateService;
+			this.CertificateModelMapper = certificateModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiCertificateResponseModel> response = await this.CertificateService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiCertificateResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(string id)
-                {
-                        ApiCertificateResponseModel response = await this.CertificateService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiCertificateResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(string id)
+		{
+			ApiCertificateResponseModel response = await this.CertificateService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCertificateRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCertificateRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiCertificateResponseModel> records = new List<ApiCertificateResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
+			List<ApiCertificateResponseModel> records = new List<ApiCertificateResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiCertificateResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiCertificateRequestModel model)
-                {
-                        CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiCertificateResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiCertificateRequestModel model)
+		{
+			CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCertificateRequestModel> patch)
-                {
-                        ApiCertificateResponseModel record = await this.CertificateService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCertificateRequestModel> patch)
+		{
+			ApiCertificateResponseModel record = await this.CertificateService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiCertificateRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiCertificateRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, model);
+				UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCertificateRequestModel model)
-                {
-                        ApiCertificateRequestModel request = await this.PatchModel(id, this.CertificateModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCertificateResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCertificateRequestModel model)
+		{
+			ApiCertificateRequestModel request = await this.PatchModel(id, this.CertificateModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(string id)
-                {
-                        ActionResponse result = await this.CertificateService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(string id)
+		{
+			ActionResponse result = await this.CertificateService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpGet]
-                [Route("byCreated/{created}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
-                {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByCreated(created);
+		[HttpGet]
+		[Route("byCreated/{created}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
+		{
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByCreated(created);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("byDataVersion/{dataVersion}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
-                {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByDataVersion(dataVersion);
+		[HttpGet]
+		[Route("byDataVersion/{dataVersion}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		{
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByDataVersion(dataVersion);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("byNotAfter/{notAfter}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByNotAfter(DateTimeOffset notAfter)
-                {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByNotAfter(notAfter);
+		[HttpGet]
+		[Route("byNotAfter/{notAfter}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByNotAfter(DateTimeOffset notAfter)
+		{
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByNotAfter(notAfter);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("byThumbprint/{thumbprint}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> ByThumbprint(string thumbprint)
-                {
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.ByThumbprint(thumbprint);
+		[HttpGet]
+		[Route("byThumbprint/{thumbprint}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByThumbprint(string thumbprint)
+		{
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByThumbprint(thumbprint);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                private async Task<ApiCertificateRequestModel> PatchModel(string id, JsonPatchDocument<ApiCertificateRequestModel> patch)
-                {
-                        var record = await this.CertificateService.Get(id);
+		private async Task<ApiCertificateRequestModel> PatchModel(string id, JsonPatchDocument<ApiCertificateRequestModel> patch)
+		{
+			var record = await this.CertificateService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiCertificateRequestModel request = this.CertificateModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiCertificateRequestModel request = this.CertificateModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e1b24030eed542ad9b7d11cbacc1f7cf</Hash>
+    <Hash>94b84ab3941caebf8442e8077bfb0fc5</Hash>
 </Codenesium>*/

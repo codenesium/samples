@@ -5,14 +5,14 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOLRowVersionCheckMapper : BOLAbstractRowVersionCheckMapper, IBOLRowVersionCheckMapper
-        {
-                public BOLRowVersionCheckMapper()
-                {
-                }
-        }
+	public partial class BOLRowVersionCheckMapper : BOLAbstractRowVersionCheckMapper, IBOLRowVersionCheckMapper
+	{
+		public BOLRowVersionCheckMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a5099d1ec29ef36fef8d13743f456b20</Hash>
+    <Hash>ff78e1c1a6e2c25228b844947112cfeb</Hash>
 </Codenesium>*/

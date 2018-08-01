@@ -6,26 +6,26 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALBreedMapper DALBreedMapperMock { get; set; } = new DALBreedMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALBreedMapper DALBreedMapperMock { get; set; } = new DALBreedMapper();
 
-                public IDALPaymentTypeMapper DALPaymentTypeMapperMock { get; set; } = new DALPaymentTypeMapper();
+		public IDALPaymentTypeMapper DALPaymentTypeMapperMock { get; set; } = new DALPaymentTypeMapper();
 
-                public IDALPenMapper DALPenMapperMock { get; set; } = new DALPenMapper();
+		public IDALPenMapper DALPenMapperMock { get; set; } = new DALPenMapper();
 
-                public IDALPetMapper DALPetMapperMock { get; set; } = new DALPetMapper();
+		public IDALPetMapper DALPetMapperMock { get; set; } = new DALPetMapper();
 
-                public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
+		public IDALSaleMapper DALSaleMapperMock { get; set; } = new DALSaleMapper();
 
-                public IDALSpeciesMapper DALSpeciesMapperMock { get; set; } = new DALSpeciesMapper();
+		public IDALSpeciesMapper DALSpeciesMapperMock { get; set; } = new DALSpeciesMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8f10fa95c980ad51272ccd8676d9ca52</Hash>
+    <Hash>c23401a12f845f09f8f14eff7c5bc80c</Hash>
 </Codenesium>*/

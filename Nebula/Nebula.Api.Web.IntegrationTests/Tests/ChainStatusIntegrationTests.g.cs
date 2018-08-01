@@ -12,86 +12,86 @@ using Xunit;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "ChainStatus")]
-        [Trait("Area", "Integration")]
-        public class ChainStatusIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ChainStatusIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "ChainStatus")]
+	[Trait("Area", "Integration")]
+	public class ChainStatusIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ChainStatusIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiChainStatusModelMapper mapper = new ApiChainStatusModelMapper();
+			ApiChainStatusModelMapper mapper = new ApiChainStatusModelMapper();
 
-                        UpdateResponse<ApiChainStatusResponseModel> updateResponse = await this.Client.ChainStatusUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiChainStatusResponseModel> updateResponse = await this.Client.ChainStatusUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ChainStatusDeleteAsync(model.Id);
+			await this.Client.ChainStatusDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiChainStatusResponseModel response = await this.Client.ChainStatusGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiChainStatusResponseModel response = await this.Client.ChainStatusGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiChainStatusResponseModel> response = await this.Client.ChainStatusAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiChainStatusResponseModel> response = await this.Client.ChainStatusAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiChainStatusResponseModel> CreateRecord()
-                {
-                        var model = new ApiChainStatusRequestModel();
-                        model.SetProperties("B");
-                        CreateResponse<ApiChainStatusResponseModel> result = await this.Client.ChainStatusCreateAsync(model);
+		private async Task<ApiChainStatusResponseModel> CreateRecord()
+		{
+			var model = new ApiChainStatusRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiChainStatusResponseModel> result = await this.Client.ChainStatusCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ChainStatusDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ChainStatusDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b93b855240aaea6d823632fbf25e1b3f</Hash>
+    <Hash>9d7e7e5a939df1cf93789bcc50779a37</Hash>
 </Codenesium>*/

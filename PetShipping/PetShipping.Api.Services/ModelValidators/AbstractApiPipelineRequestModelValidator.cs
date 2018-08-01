@@ -9,41 +9,41 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiPipelineRequestModelValidator : AbstractValidator<ApiPipelineRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiPipelineRequestModelValidator : AbstractValidator<ApiPipelineRequestModel>
+	{
+		private int existingRecordId;
 
-                private IPipelineRepository pipelineRepository;
+		private IPipelineRepository pipelineRepository;
 
-                public AbstractApiPipelineRequestModelValidator(IPipelineRepository pipelineRepository)
-                {
-                        this.pipelineRepository = pipelineRepository;
-                }
+		public AbstractApiPipelineRequestModelValidator(IPipelineRepository pipelineRepository)
+		{
+			this.pipelineRepository = pipelineRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiPipelineRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiPipelineRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void PipelineStatusIdRules()
-                {
-                        this.RuleFor(x => x.PipelineStatusId).MustAsync(this.BeValidPipelineStatus).When(x => x?.PipelineStatusId != null).WithMessage("Invalid reference");
-                }
+		public virtual void PipelineStatusIdRules()
+		{
+			this.RuleFor(x => x.PipelineStatusId).MustAsync(this.BeValidPipelineStatus).When(x => x?.PipelineStatusId != null).WithMessage("Invalid reference");
+		}
 
-                public virtual void SaleIdRules()
-                {
-                }
+		public virtual void SaleIdRules()
+		{
+		}
 
-                private async Task<bool> BeValidPipelineStatus(int id,  CancellationToken cancellationToken)
-                {
-                        var record = await this.pipelineRepository.GetPipelineStatus(id);
+		private async Task<bool> BeValidPipelineStatus(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.pipelineRepository.GetPipelineStatus(id);
 
-                        return record != null;
-                }
-        }
+			return record != null;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>75f86554e139affc8c7d306e49cfd439</Hash>
+    <Hash>f5ffd76151998a6b50e9c9ea5f582529</Hash>
 </Codenesium>*/

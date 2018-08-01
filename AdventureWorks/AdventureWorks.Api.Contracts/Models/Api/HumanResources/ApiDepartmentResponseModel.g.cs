@@ -6,34 +6,34 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiDepartmentResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        short departmentID,
-                        string groupName,
-                        DateTime modifiedDate,
-                        string name)
-                {
-                        this.DepartmentID = departmentID;
-                        this.GroupName = groupName;
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                }
+	public partial class ApiDepartmentResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			short departmentID,
+			string groupName,
+			DateTime modifiedDate,
+			string name)
+		{
+			this.DepartmentID = departmentID;
+			this.GroupName = groupName;
+			this.ModifiedDate = modifiedDate;
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public short DepartmentID { get; private set; }
+		[JsonProperty]
+		public short DepartmentID { get; private set; }
 
-                [JsonProperty]
-                public string GroupName { get; private set; }
+		[JsonProperty]
+		public string GroupName { get; private set; }
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>1adf34d28a9acb3b4c9b3579f170ac41</Hash>
+    <Hash>7e23549a2467484ab8511dba575e28db</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class MachinePolicyService : AbstractMachinePolicyService, IMachinePolicyService
-        {
-                public MachinePolicyService(
-                        ILogger<IMachinePolicyRepository> logger,
-                        IMachinePolicyRepository machinePolicyRepository,
-                        IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
-                        IBOLMachinePolicyMapper bolmachinePolicyMapper,
-                        IDALMachinePolicyMapper dalmachinePolicyMapper
-                        )
-                        : base(logger,
-                               machinePolicyRepository,
-                               machinePolicyModelValidator,
-                               bolmachinePolicyMapper,
-                               dalmachinePolicyMapper)
-                {
-                }
-        }
+	public partial class MachinePolicyService : AbstractMachinePolicyService, IMachinePolicyService
+	{
+		public MachinePolicyService(
+			ILogger<IMachinePolicyRepository> logger,
+			IMachinePolicyRepository machinePolicyRepository,
+			IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
+			IBOLMachinePolicyMapper bolmachinePolicyMapper,
+			IDALMachinePolicyMapper dalmachinePolicyMapper
+			)
+			: base(logger,
+			       machinePolicyRepository,
+			       machinePolicyModelValidator,
+			       bolmachinePolicyMapper,
+			       dalmachinePolicyMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bc920f22ab8f3b38c361c4772e705d00</Hash>
+    <Hash>168299cd2e711cf8a4d74ae13902b3de</Hash>
 </Codenesium>*/

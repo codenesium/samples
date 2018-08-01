@@ -6,48 +6,48 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractSpecialOfferProductMapper
-        {
-                public virtual SpecialOfferProduct MapBOToEF(
-                        BOSpecialOfferProduct bo)
-                {
-                        SpecialOfferProduct efSpecialOfferProduct = new SpecialOfferProduct();
-                        efSpecialOfferProduct.SetProperties(
-                                bo.ModifiedDate,
-                                bo.ProductID,
-                                bo.Rowguid,
-                                bo.SpecialOfferID);
-                        return efSpecialOfferProduct;
-                }
+	public abstract class DALAbstractSpecialOfferProductMapper
+	{
+		public virtual SpecialOfferProduct MapBOToEF(
+			BOSpecialOfferProduct bo)
+		{
+			SpecialOfferProduct efSpecialOfferProduct = new SpecialOfferProduct();
+			efSpecialOfferProduct.SetProperties(
+				bo.ModifiedDate,
+				bo.ProductID,
+				bo.Rowguid,
+				bo.SpecialOfferID);
+			return efSpecialOfferProduct;
+		}
 
-                public virtual BOSpecialOfferProduct MapEFToBO(
-                        SpecialOfferProduct ef)
-                {
-                        var bo = new BOSpecialOfferProduct();
+		public virtual BOSpecialOfferProduct MapEFToBO(
+			SpecialOfferProduct ef)
+		{
+			var bo = new BOSpecialOfferProduct();
 
-                        bo.SetProperties(
-                                ef.SpecialOfferID,
-                                ef.ModifiedDate,
-                                ef.ProductID,
-                                ef.Rowguid);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.SpecialOfferID,
+				ef.ModifiedDate,
+				ef.ProductID,
+				ef.Rowguid);
+			return bo;
+		}
 
-                public virtual List<BOSpecialOfferProduct> MapEFToBO(
-                        List<SpecialOfferProduct> records)
-                {
-                        List<BOSpecialOfferProduct> response = new List<BOSpecialOfferProduct>();
+		public virtual List<BOSpecialOfferProduct> MapEFToBO(
+			List<SpecialOfferProduct> records)
+		{
+			List<BOSpecialOfferProduct> response = new List<BOSpecialOfferProduct>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e6c536ac0dff6f561d0a319dd2743440</Hash>
+    <Hash>e4dcf26ef5752769f590f28163a7a49f</Hash>
 </Codenesium>*/

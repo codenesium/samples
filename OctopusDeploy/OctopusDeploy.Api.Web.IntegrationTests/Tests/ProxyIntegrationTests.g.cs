@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Proxy")]
-        [Trait("Area", "Integration")]
-        public class ProxyIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public ProxyIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Proxy")]
+	[Trait("Area", "Integration")]
+	public class ProxyIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public ProxyIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiProxyModelMapper mapper = new ApiProxyModelMapper();
+			ApiProxyModelMapper mapper = new ApiProxyModelMapper();
 
-                        UpdateResponse<ApiProxyResponseModel> updateResponse = await this.Client.ProxyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProxyResponseModel> updateResponse = await this.Client.ProxyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.ProxyDeleteAsync(model.Id);
+			await this.Client.ProxyDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiProxyResponseModel response = await this.Client.ProxyGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiProxyResponseModel response = await this.Client.ProxyGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiProxyResponseModel> response = await this.Client.ProxyAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiProxyResponseModel> response = await this.Client.ProxyAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiProxyResponseModel> CreateRecord()
-                {
-                        var model = new ApiProxyRequestModel();
-                        model.SetProperties("B", "B");
-                        CreateResponse<ApiProxyResponseModel> result = await this.Client.ProxyCreateAsync(model);
+		private async Task<ApiProxyResponseModel> CreateRecord()
+		{
+			var model = new ApiProxyRequestModel();
+			model.SetProperties("B", "B");
+			CreateResponse<ApiProxyResponseModel> result = await this.Client.ProxyCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.ProxyDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.ProxyDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cb178113e1b04c850ea6a23b66605ec1</Hash>
+    <Hash>767050a5f964e8124ca5205fe12437d4</Hash>
 </Codenesium>*/

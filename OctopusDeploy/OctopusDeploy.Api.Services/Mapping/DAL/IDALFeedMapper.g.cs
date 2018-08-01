@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALFeedMapper
-        {
-                Feed MapBOToEF(
-                        BOFeed bo);
+	public interface IDALFeedMapper
+	{
+		Feed MapBOToEF(
+			BOFeed bo);
 
-                BOFeed MapEFToBO(
-                        Feed efFeed);
+		BOFeed MapEFToBO(
+			Feed efFeed);
 
-                List<BOFeed> MapEFToBO(
-                        List<Feed> records);
-        }
+		List<BOFeed> MapEFToBO(
+			List<Feed> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>8b7c98cbf5131ff861158c41231f6066</Hash>
+    <Hash>a0d7a92bff4ec65d869cb29cb3a31b5b</Hash>
 </Codenesium>*/

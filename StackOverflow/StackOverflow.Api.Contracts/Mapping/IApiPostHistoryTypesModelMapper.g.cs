@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public interface IApiPostHistoryTypesModelMapper
-        {
-                ApiPostHistoryTypesResponseModel MapRequestToResponse(
-                        int id,
-                        ApiPostHistoryTypesRequestModel request);
+	public interface IApiPostHistoryTypesModelMapper
+	{
+		ApiPostHistoryTypesResponseModel MapRequestToResponse(
+			int id,
+			ApiPostHistoryTypesRequestModel request);
 
-                ApiPostHistoryTypesRequestModel MapResponseToRequest(
-                        ApiPostHistoryTypesResponseModel response);
+		ApiPostHistoryTypesRequestModel MapResponseToRequest(
+			ApiPostHistoryTypesResponseModel response);
 
-                JsonPatchDocument<ApiPostHistoryTypesRequestModel> CreatePatch(ApiPostHistoryTypesRequestModel model);
-        }
+		JsonPatchDocument<ApiPostHistoryTypesRequestModel> CreatePatch(ApiPostHistoryTypesRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>466e0d7f4a90acdc0c7fe0ef551472db</Hash>
+    <Hash>f4ba6ddf24f7e9332fbce9c828044554</Hash>
 </Codenesium>*/

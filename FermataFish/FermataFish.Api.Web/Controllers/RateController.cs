@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/rates")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class RateController : AbstractRateController
-        {
-                public RateController(
-                        ApiSettings settings,
-                        ILogger<RateController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IRateService rateService,
-                        IApiRateModelMapper rateModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               rateService,
-                               rateModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/rates")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class RateController : AbstractRateController
+	{
+		public RateController(
+			ApiSettings settings,
+			ILogger<RateController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IRateService rateService,
+			IApiRateModelMapper rateModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       rateService,
+			       rateModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>eb19e22f38eb1b1a7e9425e8ee7c3849</Hash>
+    <Hash>5cc6ba123916a8071bc4a39fe43fc7f3</Hash>
 </Codenesium>*/

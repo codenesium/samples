@@ -8,49 +8,49 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TeacherSkill")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLTeacherSkillMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLTeacherSkillMapper();
-                        ApiTeacherSkillRequestModel model = new ApiTeacherSkillRequestModel();
-                        model.SetProperties("A", 1);
-                        BOTeacherSkill response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TeacherSkill")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLTeacherSkillMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLTeacherSkillMapper();
+			ApiTeacherSkillRequestModel model = new ApiTeacherSkillRequestModel();
+			model.SetProperties("A", 1);
+			BOTeacherSkill response = mapper.MapModelToBO(1, model);
 
-                        response.Name.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Name.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLTeacherSkillMapper();
-                        BOTeacherSkill bo = new BOTeacherSkill();
-                        bo.SetProperties(1, "A", 1);
-                        ApiTeacherSkillResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLTeacherSkillMapper();
+			BOTeacherSkill bo = new BOTeacherSkill();
+			bo.SetProperties(1, "A", 1);
+			ApiTeacherSkillResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLTeacherSkillMapper();
-                        BOTeacherSkill bo = new BOTeacherSkill();
-                        bo.SetProperties(1, "A", 1);
-                        List<ApiTeacherSkillResponseModel> response = mapper.MapBOToModel(new List<BOTeacherSkill>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLTeacherSkillMapper();
+			BOTeacherSkill bo = new BOTeacherSkill();
+			bo.SetProperties(1, "A", 1);
+			List<ApiTeacherSkillResponseModel> response = mapper.MapBOToModel(new List<BOTeacherSkill>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6d355c5bf7a95f5ee56bcf059bb77ea2</Hash>
+    <Hash>a6e7f34277bdd953b121f49c63dda6a1</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/transactionHistoryArchives")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class TransactionHistoryArchiveController : AbstractTransactionHistoryArchiveController
-        {
-                public TransactionHistoryArchiveController(
-                        ApiSettings settings,
-                        ILogger<TransactionHistoryArchiveController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ITransactionHistoryArchiveService transactionHistoryArchiveService,
-                        IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               transactionHistoryArchiveService,
-                               transactionHistoryArchiveModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/transactionHistoryArchives")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class TransactionHistoryArchiveController : AbstractTransactionHistoryArchiveController
+	{
+		public TransactionHistoryArchiveController(
+			ApiSettings settings,
+			ILogger<TransactionHistoryArchiveController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ITransactionHistoryArchiveService transactionHistoryArchiveService,
+			IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       transactionHistoryArchiveService,
+			       transactionHistoryArchiveModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c854c9972684cd1718d048b3b233b4a0</Hash>
+    <Hash>12da1f967968447e46391eae791826b9</Hash>
 </Codenesium>*/

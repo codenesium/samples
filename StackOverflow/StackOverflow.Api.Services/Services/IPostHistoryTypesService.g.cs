@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IPostHistoryTypesService
-        {
-                Task<CreateResponse<ApiPostHistoryTypesResponseModel>> Create(
-                        ApiPostHistoryTypesRequestModel model);
+	public interface IPostHistoryTypesService
+	{
+		Task<CreateResponse<ApiPostHistoryTypesResponseModel>> Create(
+			ApiPostHistoryTypesRequestModel model);
 
-                Task<UpdateResponse<ApiPostHistoryTypesResponseModel>> Update(int id,
-                                                                               ApiPostHistoryTypesRequestModel model);
+		Task<UpdateResponse<ApiPostHistoryTypesResponseModel>> Update(int id,
+		                                                               ApiPostHistoryTypesRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiPostHistoryTypesResponseModel> Get(int id);
+		Task<ApiPostHistoryTypesResponseModel> Get(int id);
 
-                Task<List<ApiPostHistoryTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiPostHistoryTypesResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>5723982f651f02d021be311aa1263816</Hash>
+    <Hash>6b04ee5286b76443873118b8b86e88a9</Hash>
 </Codenesium>*/

@@ -5,45 +5,45 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractConfigurationMapper
-        {
-                public virtual BOConfiguration MapModelToBO(
-                        string id,
-                        ApiConfigurationRequestModel model
-                        )
-                {
-                        BOConfiguration boConfiguration = new BOConfiguration();
-                        boConfiguration.SetProperties(
-                                id,
-                                model.JSON);
-                        return boConfiguration;
-                }
+	public abstract class BOLAbstractConfigurationMapper
+	{
+		public virtual BOConfiguration MapModelToBO(
+			string id,
+			ApiConfigurationRequestModel model
+			)
+		{
+			BOConfiguration boConfiguration = new BOConfiguration();
+			boConfiguration.SetProperties(
+				id,
+				model.JSON);
+			return boConfiguration;
+		}
 
-                public virtual ApiConfigurationResponseModel MapBOToModel(
-                        BOConfiguration boConfiguration)
-                {
-                        var model = new ApiConfigurationResponseModel();
+		public virtual ApiConfigurationResponseModel MapBOToModel(
+			BOConfiguration boConfiguration)
+		{
+			var model = new ApiConfigurationResponseModel();
 
-                        model.SetProperties(boConfiguration.Id, boConfiguration.JSON);
+			model.SetProperties(boConfiguration.Id, boConfiguration.JSON);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiConfigurationResponseModel> MapBOToModel(
-                        List<BOConfiguration> items)
-                {
-                        List<ApiConfigurationResponseModel> response = new List<ApiConfigurationResponseModel>();
+		public virtual List<ApiConfigurationResponseModel> MapBOToModel(
+			List<BOConfiguration> items)
+		{
+			List<ApiConfigurationResponseModel> response = new List<ApiConfigurationResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ab792c79a89c5421e9d0803a6d2c1519</Hash>
+    <Hash>a4ecc78a547cbc35af30ddf91cfbd70c</Hash>
 </Codenesium>*/

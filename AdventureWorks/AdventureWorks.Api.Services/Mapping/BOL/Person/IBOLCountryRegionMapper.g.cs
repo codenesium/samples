@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLCountryRegionMapper
-        {
-                BOCountryRegion MapModelToBO(
-                        string countryRegionCode,
-                        ApiCountryRegionRequestModel model);
+	public interface IBOLCountryRegionMapper
+	{
+		BOCountryRegion MapModelToBO(
+			string countryRegionCode,
+			ApiCountryRegionRequestModel model);
 
-                ApiCountryRegionResponseModel MapBOToModel(
-                        BOCountryRegion boCountryRegion);
+		ApiCountryRegionResponseModel MapBOToModel(
+			BOCountryRegion boCountryRegion);
 
-                List<ApiCountryRegionResponseModel> MapBOToModel(
-                        List<BOCountryRegion> items);
-        }
+		List<ApiCountryRegionResponseModel> MapBOToModel(
+			List<BOCountryRegion> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3bcb6ec60d38ae644aa3bda184bbcb26</Hash>
+    <Hash>b5dec1896e078c2e7809974c54d2c6be</Hash>
 </Codenesium>*/

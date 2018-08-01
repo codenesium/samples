@@ -6,50 +6,50 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class DALAbstractClientCommunicationMapper
-        {
-                public virtual ClientCommunication MapBOToEF(
-                        BOClientCommunication bo)
-                {
-                        ClientCommunication efClientCommunication = new ClientCommunication();
-                        efClientCommunication.SetProperties(
-                                bo.ClientId,
-                                bo.DateCreated,
-                                bo.EmployeeId,
-                                bo.Id,
-                                bo.Notes);
-                        return efClientCommunication;
-                }
+	public abstract class DALAbstractClientCommunicationMapper
+	{
+		public virtual ClientCommunication MapBOToEF(
+			BOClientCommunication bo)
+		{
+			ClientCommunication efClientCommunication = new ClientCommunication();
+			efClientCommunication.SetProperties(
+				bo.ClientId,
+				bo.DateCreated,
+				bo.EmployeeId,
+				bo.Id,
+				bo.Notes);
+			return efClientCommunication;
+		}
 
-                public virtual BOClientCommunication MapEFToBO(
-                        ClientCommunication ef)
-                {
-                        var bo = new BOClientCommunication();
+		public virtual BOClientCommunication MapEFToBO(
+			ClientCommunication ef)
+		{
+			var bo = new BOClientCommunication();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.ClientId,
-                                ef.DateCreated,
-                                ef.EmployeeId,
-                                ef.Notes);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.ClientId,
+				ef.DateCreated,
+				ef.EmployeeId,
+				ef.Notes);
+			return bo;
+		}
 
-                public virtual List<BOClientCommunication> MapEFToBO(
-                        List<ClientCommunication> records)
-                {
-                        List<BOClientCommunication> response = new List<BOClientCommunication>();
+		public virtual List<BOClientCommunication> MapEFToBO(
+			List<ClientCommunication> records)
+		{
+			List<BOClientCommunication> response = new List<BOClientCommunication>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>135356c5b5e2385f504d296af68838e3</Hash>
+    <Hash>dd9eacc0089b1114051b3ebf25278158</Hash>
 </Codenesium>*/

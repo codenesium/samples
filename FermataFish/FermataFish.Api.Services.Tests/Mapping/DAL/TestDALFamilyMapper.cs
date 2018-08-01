@@ -7,61 +7,61 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Family")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALFamilyMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALFamilyMapper();
-                        var bo = new BOFamily();
-                        bo.SetProperties(1, "A", "A", "A", "A", "A", 1);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Family")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALFamilyMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALFamilyMapper();
+			var bo = new BOFamily();
+			bo.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
-                        Family response = mapper.MapBOToEF(bo);
+			Family response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Notes.Should().Be("A");
-                        response.PcEmail.Should().Be("A");
-                        response.PcFirstName.Should().Be("A");
-                        response.PcLastName.Should().Be("A");
-                        response.PcPhone.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Notes.Should().Be("A");
+			response.PcEmail.Should().Be("A");
+			response.PcFirstName.Should().Be("A");
+			response.PcLastName.Should().Be("A");
+			response.PcPhone.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALFamilyMapper();
-                        Family entity = new Family();
-                        entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALFamilyMapper();
+			Family entity = new Family();
+			entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
-                        BOFamily response = mapper.MapEFToBO(entity);
+			BOFamily response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.Notes.Should().Be("A");
-                        response.PcEmail.Should().Be("A");
-                        response.PcFirstName.Should().Be("A");
-                        response.PcLastName.Should().Be("A");
-                        response.PcPhone.Should().Be("A");
-                        response.StudioId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Notes.Should().Be("A");
+			response.PcEmail.Should().Be("A");
+			response.PcFirstName.Should().Be("A");
+			response.PcLastName.Should().Be("A");
+			response.PcPhone.Should().Be("A");
+			response.StudioId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALFamilyMapper();
-                        Family entity = new Family();
-                        entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALFamilyMapper();
+			Family entity = new Family();
+			entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
-                        List<BOFamily> response = mapper.MapEFToBO(new List<Family>() { entity });
+			List<BOFamily> response = mapper.MapEFToBO(new List<Family>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>46e71d4362e0e42cdebe7460117fee0d</Hash>
+    <Hash>59c35b5db760e034e7852edb293991e9</Hash>
 </Codenesium>*/

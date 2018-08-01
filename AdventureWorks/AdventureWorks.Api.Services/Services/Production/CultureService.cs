@@ -10,29 +10,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class CultureService : AbstractCultureService, ICultureService
-        {
-                public CultureService(
-                        ILogger<ICultureRepository> logger,
-                        ICultureRepository cultureRepository,
-                        IApiCultureRequestModelValidator cultureModelValidator,
-                        IBOLCultureMapper bolcultureMapper,
-                        IDALCultureMapper dalcultureMapper,
-                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-                        )
-                        : base(logger,
-                               cultureRepository,
-                               cultureModelValidator,
-                               bolcultureMapper,
-                               dalcultureMapper,
-                               bolProductModelProductDescriptionCultureMapper,
-                               dalProductModelProductDescriptionCultureMapper)
-                {
-                }
-        }
+	public partial class CultureService : AbstractCultureService, ICultureService
+	{
+		public CultureService(
+			ILogger<ICultureRepository> logger,
+			ICultureRepository cultureRepository,
+			IApiCultureRequestModelValidator cultureModelValidator,
+			IBOLCultureMapper bolcultureMapper,
+			IDALCultureMapper dalcultureMapper,
+			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+			)
+			: base(logger,
+			       cultureRepository,
+			       cultureModelValidator,
+			       bolcultureMapper,
+			       dalcultureMapper,
+			       bolProductModelProductDescriptionCultureMapper,
+			       dalProductModelProductDescriptionCultureMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>15bd51b5e006df486926d7dc9487c2c3</Hash>
+    <Hash>983af1c82698df33dc89ffa6ead48d1d</Hash>
 </Codenesium>*/

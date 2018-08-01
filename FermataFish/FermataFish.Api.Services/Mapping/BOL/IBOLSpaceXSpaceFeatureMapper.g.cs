@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IBOLSpaceXSpaceFeatureMapper
-        {
-                BOSpaceXSpaceFeature MapModelToBO(
-                        int id,
-                        ApiSpaceXSpaceFeatureRequestModel model);
+	public interface IBOLSpaceXSpaceFeatureMapper
+	{
+		BOSpaceXSpaceFeature MapModelToBO(
+			int id,
+			ApiSpaceXSpaceFeatureRequestModel model);
 
-                ApiSpaceXSpaceFeatureResponseModel MapBOToModel(
-                        BOSpaceXSpaceFeature boSpaceXSpaceFeature);
+		ApiSpaceXSpaceFeatureResponseModel MapBOToModel(
+			BOSpaceXSpaceFeature boSpaceXSpaceFeature);
 
-                List<ApiSpaceXSpaceFeatureResponseModel> MapBOToModel(
-                        List<BOSpaceXSpaceFeature> items);
-        }
+		List<ApiSpaceXSpaceFeatureResponseModel> MapBOToModel(
+			List<BOSpaceXSpaceFeature> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c8df3f614652e0f7a45057fcac8e4baa</Hash>
+    <Hash>e3f93113a4eabf8197960db33edccc99</Hash>
 </Codenesium>*/

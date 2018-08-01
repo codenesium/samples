@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IStudentXFamilyService
-        {
-                Task<CreateResponse<ApiStudentXFamilyResponseModel>> Create(
-                        ApiStudentXFamilyRequestModel model);
+	public interface IStudentXFamilyService
+	{
+		Task<CreateResponse<ApiStudentXFamilyResponseModel>> Create(
+			ApiStudentXFamilyRequestModel model);
 
-                Task<UpdateResponse<ApiStudentXFamilyResponseModel>> Update(int id,
-                                                                             ApiStudentXFamilyRequestModel model);
+		Task<UpdateResponse<ApiStudentXFamilyResponseModel>> Update(int id,
+		                                                             ApiStudentXFamilyRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiStudentXFamilyResponseModel> Get(int id);
+		Task<ApiStudentXFamilyResponseModel> Get(int id);
 
-                Task<List<ApiStudentXFamilyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiStudentXFamilyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7f50e117f348e76d664d5c84dc1f9114</Hash>
+    <Hash>a672b6f406a26242f83039455d000b67</Hash>
 </Codenesium>*/

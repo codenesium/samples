@@ -8,49 +8,49 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "HandlerPipelineStep")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLHandlerPipelineStepMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLHandlerPipelineStepMapper();
-                        ApiHandlerPipelineStepRequestModel model = new ApiHandlerPipelineStepRequestModel();
-                        model.SetProperties(1, 1);
-                        BOHandlerPipelineStep response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "HandlerPipelineStep")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLHandlerPipelineStepMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLHandlerPipelineStepMapper();
+			ApiHandlerPipelineStepRequestModel model = new ApiHandlerPipelineStepRequestModel();
+			model.SetProperties(1, 1);
+			BOHandlerPipelineStep response = mapper.MapModelToBO(1, model);
 
-                        response.HandlerId.Should().Be(1);
-                        response.PipelineStepId.Should().Be(1);
-                }
+			response.HandlerId.Should().Be(1);
+			response.PipelineStepId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLHandlerPipelineStepMapper();
-                        BOHandlerPipelineStep bo = new BOHandlerPipelineStep();
-                        bo.SetProperties(1, 1, 1);
-                        ApiHandlerPipelineStepResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLHandlerPipelineStepMapper();
+			BOHandlerPipelineStep bo = new BOHandlerPipelineStep();
+			bo.SetProperties(1, 1, 1);
+			ApiHandlerPipelineStepResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.HandlerId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.PipelineStepId.Should().Be(1);
-                }
+			response.HandlerId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.PipelineStepId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLHandlerPipelineStepMapper();
-                        BOHandlerPipelineStep bo = new BOHandlerPipelineStep();
-                        bo.SetProperties(1, 1, 1);
-                        List<ApiHandlerPipelineStepResponseModel> response = mapper.MapBOToModel(new List<BOHandlerPipelineStep>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLHandlerPipelineStepMapper();
+			BOHandlerPipelineStep bo = new BOHandlerPipelineStep();
+			bo.SetProperties(1, 1, 1);
+			List<ApiHandlerPipelineStepResponseModel> response = mapper.MapBOToModel(new List<BOHandlerPipelineStep>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a0a1379fa14cf0cea683f7a185be0988</Hash>
+    <Hash>1d3cd80ddb86fcf315549e28e1555fcc</Hash>
 </Codenesium>*/

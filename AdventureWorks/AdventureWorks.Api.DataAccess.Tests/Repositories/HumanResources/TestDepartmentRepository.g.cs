@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class DepartmentRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class DepartmentRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<DepartmentRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<DepartmentRepository>>();
-                }
-        }
+		public static Mock<ILogger<DepartmentRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<DepartmentRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Department")]
-        [Trait("Area", "Repositories")]
-        public partial class DepartmentRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Department")]
+	[Trait("Area", "Repositories")]
+	public partial class DepartmentRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
 
-                        Department entity = new Department();
-                        context.Set<Department>().Add(entity);
-                        await context.SaveChangesAsync();
+			Department entity = new Department();
+			context.Set<Department>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
 
-                        Department entity = new Department();
-                        context.Set<Department>().Add(entity);
-                        await context.SaveChangesAsync();
+			Department entity = new Department();
+			context.Set<Department>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.DepartmentID);
+			var record = await repository.Get(entity.DepartmentID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
 
-                        var entity = new Department();
-                        await repository.Create(entity);
+			var entity = new Department();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Department>().FirstOrDefaultAsync();
+			var record = await context.Set<Department>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
-                        Department entity = new Department();
-                        context.Set<Department>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
+			Department entity = new Department();
+			context.Set<Department>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.DepartmentID);
+			var record = await repository.Get(entity.DepartmentID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Department>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Department>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
-                        Department entity = new Department();
-                        context.Set<Department>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
+			Department entity = new Department();
+			context.Set<Department>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Department());
+			await repository.Update(new Department());
 
-                        var modifiedRecord = context.Set<Department>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Department>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
-                        var repository = new DepartmentRepository(loggerMoc.Object, context);
-                        Department entity = new Department();
-                        context.Set<Department>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
+			var repository = new DepartmentRepository(loggerMoc.Object, context);
+			Department entity = new Department();
+			context.Set<Department>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.DepartmentID);
+			await repository.Delete(entity.DepartmentID);
 
-                        Department modifiedRecord = await context.Set<Department>().FirstOrDefaultAsync();
+			Department modifiedRecord = await context.Set<Department>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>627d4d463161a98841db2495c6e31190</Hash>
+    <Hash>8a4f1b201cc3f4d1296ea08f5f75820d</Hash>
 </Codenesium>*/

@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IApiHandlerRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiHandlerRequestModel model);
+	public interface IApiHandlerRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiHandlerRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiHandlerRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiHandlerRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6004c5dd009ecdc5fe7872f09efef5b2</Hash>
+    <Hash>0375d0ac70df772861974a90a836b1db</Hash>
 </Codenesium>*/

@@ -15,41 +15,41 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Invitation")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiInvitationRequestModelValidatorTest
-        {
-                public ApiInvitationRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Invitation")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiInvitationRequestModelValidatorTest
+	{
+		public ApiInvitationRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void InvitationCode_Create_length()
-                {
-                        Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
-                        invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
+		[Fact]
+		public async void InvitationCode_Create_length()
+		{
+			Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
+			invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
-                        var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiInvitationRequestModel());
+			var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiInvitationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
+		}
 
-                [Fact]
-                public async void InvitationCode_Update_length()
-                {
-                        Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
-                        invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
+		[Fact]
+		public async void InvitationCode_Update_length()
+		{
+			Mock<IInvitationRepository> invitationRepository = new Mock<IInvitationRepository>();
+			invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
-                        var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiInvitationRequestModel());
+			var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiInvitationRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>738da8e591000bc4475107130393d649</Hash>
+    <Hash>cad4ace142294beb28bedbd294b47957</Hash>
 </Codenesium>*/

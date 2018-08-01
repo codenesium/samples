@@ -3,15 +3,15 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOClasp : AbstractBOClasp
-        {
-                public BOClasp()
-                        : base()
-                {
-                }
-        }
+	public partial class BOClasp : AbstractBOClasp
+	{
+		public BOClasp()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>01953101210b686b7e7133a3f7a8c93d</Hash>
+    <Hash>5fbd81e001ef5f4c21ed15aa18bb6d59</Hash>
 </Codenesium>*/

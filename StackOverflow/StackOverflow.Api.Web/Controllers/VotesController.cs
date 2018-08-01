@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.Web
 {
-        [Route("api/votes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class VotesController : AbstractVotesController
-        {
-                public VotesController(
-                        ApiSettings settings,
-                        ILogger<VotesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IVotesService votesService,
-                        IApiVotesModelMapper votesModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               votesService,
-                               votesModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/votes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class VotesController : AbstractVotesController
+	{
+		public VotesController(
+			ApiSettings settings,
+			ILogger<VotesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IVotesService votesService,
+			IApiVotesModelMapper votesModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       votesService,
+			       votesModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9578a20aed35267ad6fe1c0014a7294c</Hash>
+    <Hash>8b5c7845457c351e07334ed69225f80f</Hash>
 </Codenesium>*/

@@ -11,109 +11,109 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractDeploymentHistoryRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractDeploymentHistoryRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractDeploymentHistoryRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractDeploymentHistoryRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<DeploymentHistory> Get(string deploymentId)
-                {
-                        return await this.GetById(deploymentId);
-                }
+		public async virtual Task<DeploymentHistory> Get(string deploymentId)
+		{
+			return await this.GetById(deploymentId);
+		}
 
-                public async virtual Task<DeploymentHistory> Create(DeploymentHistory item)
-                {
-                        this.Context.Set<DeploymentHistory>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<DeploymentHistory> Create(DeploymentHistory item)
+		{
+			this.Context.Set<DeploymentHistory>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(DeploymentHistory item)
-                {
-                        var entity = this.Context.Set<DeploymentHistory>().Local.FirstOrDefault(x => x.DeploymentId == item.DeploymentId);
-                        if (entity == null)
-                        {
-                                this.Context.Set<DeploymentHistory>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(DeploymentHistory item)
+		{
+			var entity = this.Context.Set<DeploymentHistory>().Local.FirstOrDefault(x => x.DeploymentId == item.DeploymentId);
+			if (entity == null)
+			{
+				this.Context.Set<DeploymentHistory>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        string deploymentId)
-                {
-                        DeploymentHistory record = await this.GetById(deploymentId);
+		public async virtual Task Delete(
+			string deploymentId)
+		{
+			DeploymentHistory record = await this.GetById(deploymentId);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<DeploymentHistory>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<DeploymentHistory>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<List<DeploymentHistory>> ByCreated(DateTimeOffset created)
-                {
-                        var records = await this.Where(x => x.Created == created);
+		public async Task<List<DeploymentHistory>> ByCreated(DateTimeOffset created)
+		{
+			var records = await this.Where(x => x.Created == created);
 
-                        return records;
-                }
+			return records;
+		}
 
-                protected async Task<List<DeploymentHistory>> Where(
-                        Expression<Func<DeploymentHistory, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<DeploymentHistory, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.DeploymentId;
-                        }
+		protected async Task<List<DeploymentHistory>> Where(
+			Expression<Func<DeploymentHistory, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<DeploymentHistory, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.DeploymentId;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
+			}
+			else
+			{
+				return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
+			}
+		}
 
-                private async Task<DeploymentHistory> GetById(string deploymentId)
-                {
-                        List<DeploymentHistory> records = await this.Where(x => x.DeploymentId == deploymentId);
+		private async Task<DeploymentHistory> GetById(string deploymentId)
+		{
+			List<DeploymentHistory> records = await this.Where(x => x.DeploymentId == deploymentId);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>81a4f7d91bb0631b13fd6746f106e2af</Hash>
+    <Hash>530a36676367917fd0942f3bf9848405</Hash>
 </Codenesium>*/

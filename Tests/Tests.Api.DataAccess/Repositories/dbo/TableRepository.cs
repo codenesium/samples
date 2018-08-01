@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.DataAccess
 {
-        public partial class TableRepository : AbstractTableRepository, ITableRepository
-        {
-                public TableRepository(
-                        ILogger<TableRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class TableRepository : AbstractTableRepository, ITableRepository
+	{
+		public TableRepository(
+			ILogger<TableRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ff623b44ad06be963f508c0e9817277d</Hash>
+    <Hash>859751352261ee045ec5c8077af19707</Hash>
 </Codenesium>*/

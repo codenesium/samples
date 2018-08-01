@@ -6,35 +6,35 @@ using System.Linq;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        [Table("Bucket", Schema="dbo")]
-        public partial class Bucket : AbstractEntity
-        {
-                public Bucket()
-                {
-                }
+	[Table("Bucket", Schema="dbo")]
+	public partial class Bucket : AbstractEntity
+	{
+		public Bucket()
+		{
+		}
 
-                public virtual void SetProperties(
-                        Guid externalId,
-                        int id,
-                        string name)
-                {
-                        this.ExternalId = externalId;
-                        this.Id = id;
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			Guid externalId,
+			int id,
+			string name)
+		{
+			this.ExternalId = externalId;
+			this.Id = id;
+			this.Name = name;
+		}
 
-                [Column("externalId")]
-                public Guid ExternalId { get; private set; }
+		[Column("externalId")]
+		public Guid ExternalId { get; private set; }
 
-                [Key]
-                [Column("id")]
-                public int Id { get; private set; }
+		[Key]
+		[Column("id")]
+		public int Id { get; private set; }
 
-                [Column("name")]
-                public string Name { get; private set; }
-        }
+		[Column("name")]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>9759598ade845215bfbe8031d856afa6</Hash>
+    <Hash>4bb0c0989fb93d54ad4b751108dde4e2</Hash>
 </Codenesium>*/

@@ -12,86 +12,86 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Customer")]
-        [Trait("Area", "Integration")]
-        public class CustomerIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public CustomerIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Customer")]
+	[Trait("Area", "Integration")]
+	public class CustomerIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public CustomerIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiCustomerModelMapper mapper = new ApiCustomerModelMapper();
+			ApiCustomerModelMapper mapper = new ApiCustomerModelMapper();
 
-                        UpdateResponse<ApiCustomerResponseModel> updateResponse = await this.Client.CustomerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCustomerResponseModel> updateResponse = await this.Client.CustomerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.CustomerDeleteAsync(model.Id);
+			await this.Client.CustomerDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiCustomerResponseModel response = await this.Client.CustomerGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiCustomerResponseModel response = await this.Client.CustomerGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiCustomerResponseModel> response = await this.Client.CustomerAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiCustomerResponseModel> response = await this.Client.CustomerAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiCustomerResponseModel> CreateRecord()
-                {
-                        var model = new ApiCustomerRequestModel();
-                        model.SetProperties("B", "B", "B", "B");
-                        CreateResponse<ApiCustomerResponseModel> result = await this.Client.CustomerCreateAsync(model);
+		private async Task<ApiCustomerResponseModel> CreateRecord()
+		{
+			var model = new ApiCustomerRequestModel();
+			model.SetProperties("B", "B", "B", "B");
+			CreateResponse<ApiCustomerResponseModel> result = await this.Client.CustomerCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.CustomerDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.CustomerDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>375254a10f7553cab117b14c098ae88b</Hash>
+    <Hash>eac334d8dc4ce350e6f8ace97aaa4126</Hash>
 </Codenesium>*/

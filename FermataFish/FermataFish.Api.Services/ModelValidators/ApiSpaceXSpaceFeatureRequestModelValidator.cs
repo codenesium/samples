@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiSpaceXSpaceFeatureRequestModelValidator : AbstractApiSpaceXSpaceFeatureRequestModelValidator, IApiSpaceXSpaceFeatureRequestModelValidator
-        {
-                public ApiSpaceXSpaceFeatureRequestModelValidator(ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository)
-                        : base(spaceXSpaceFeatureRepository)
-                {
-                }
+	public class ApiSpaceXSpaceFeatureRequestModelValidator : AbstractApiSpaceXSpaceFeatureRequestModelValidator, IApiSpaceXSpaceFeatureRequestModelValidator
+	{
+		public ApiSpaceXSpaceFeatureRequestModelValidator(ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository)
+			: base(spaceXSpaceFeatureRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureRequestModel model)
-                {
-                        this.SpaceFeatureIdRules();
-                        this.SpaceIdRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureRequestModel model)
+		{
+			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureRequestModel model)
-                {
-                        this.SpaceFeatureIdRules();
-                        this.SpaceIdRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureRequestModel model)
+		{
+			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6920a5550041e7700479c1a7f827b512</Hash>
+    <Hash>20f4130fa639ddca2b5a8819ab8a3c84</Hash>
 </Codenesium>*/

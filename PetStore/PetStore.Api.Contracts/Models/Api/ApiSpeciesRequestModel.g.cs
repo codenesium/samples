@@ -7,25 +7,25 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiSpeciesRequestModel : AbstractApiRequestModel
-        {
-                public ApiSpeciesRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiSpeciesRequestModel : AbstractApiRequestModel
+	{
+		public ApiSpeciesRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name)
-                {
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			string name)
+		{
+			this.Name = name;
+		}
 
-                [Required]
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>b6234e156262b089867e53832ff12983</Hash>
+    <Hash>3f9bb3a1c5bac5551be0096b027fbb64</Hash>
 </Codenesium>*/

@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
-        [Route("api/admins")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class AdminController : AbstractAdminController
-        {
-                public AdminController(
-                        ApiSettings settings,
-                        ILogger<AdminController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IAdminService adminService,
-                        IApiAdminModelMapper adminModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               adminService,
-                               adminModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/admins")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class AdminController : AbstractAdminController
+	{
+		public AdminController(
+			ApiSettings settings,
+			ILogger<AdminController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IAdminService adminService,
+			IApiAdminModelMapper adminModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       adminService,
+			       adminModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>43a6aa90895cb9996ea4ecd557345c59</Hash>
+    <Hash>9410278589b1ea930283414f63f0d751</Hash>
 </Codenesium>*/

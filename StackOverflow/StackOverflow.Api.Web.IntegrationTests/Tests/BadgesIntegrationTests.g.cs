@@ -12,86 +12,86 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Badges")]
-        [Trait("Area", "Integration")]
-        public class BadgesIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public BadgesIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Badges")]
+	[Trait("Area", "Integration")]
+	public class BadgesIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public BadgesIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiBadgesModelMapper mapper = new ApiBadgesModelMapper();
+			ApiBadgesModelMapper mapper = new ApiBadgesModelMapper();
 
-                        UpdateResponse<ApiBadgesResponseModel> updateResponse = await this.Client.BadgesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBadgesResponseModel> updateResponse = await this.Client.BadgesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.BadgesDeleteAsync(model.Id);
+			await this.Client.BadgesDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiBadgesResponseModel response = await this.Client.BadgesGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiBadgesResponseModel response = await this.Client.BadgesGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiBadgesResponseModel> response = await this.Client.BadgesAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiBadgesResponseModel> response = await this.Client.BadgesAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiBadgesResponseModel> CreateRecord()
-                {
-                        var model = new ApiBadgesRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
-                        CreateResponse<ApiBadgesResponseModel> result = await this.Client.BadgesCreateAsync(model);
+		private async Task<ApiBadgesResponseModel> CreateRecord()
+		{
+			var model = new ApiBadgesRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			CreateResponse<ApiBadgesResponseModel> result = await this.Client.BadgesCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.BadgesDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.BadgesDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f4a5eb8ea903e22bdf112e7701ddc8a</Hash>
+    <Hash>c79919057f9ba86c9473e34ebd8c7e39</Hash>
 </Codenesium>*/

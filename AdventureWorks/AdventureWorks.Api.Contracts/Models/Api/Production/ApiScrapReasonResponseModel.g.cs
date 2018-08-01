@@ -6,29 +6,29 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiScrapReasonResponseModel : AbstractApiResponseModel
-        {
-                public virtual void SetProperties(
-                        short scrapReasonID,
-                        DateTime modifiedDate,
-                        string name)
-                {
-                        this.ScrapReasonID = scrapReasonID;
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                }
+	public partial class ApiScrapReasonResponseModel : AbstractApiResponseModel
+	{
+		public virtual void SetProperties(
+			short scrapReasonID,
+			DateTime modifiedDate,
+			string name)
+		{
+			this.ScrapReasonID = scrapReasonID;
+			this.ModifiedDate = modifiedDate;
+			this.Name = name;
+		}
 
-                [JsonProperty]
-                public DateTime ModifiedDate { get; private set; }
+		[JsonProperty]
+		public DateTime ModifiedDate { get; private set; }
 
-                [JsonProperty]
-                public string Name { get; private set; }
+		[JsonProperty]
+		public string Name { get; private set; }
 
-                [JsonProperty]
-                public short ScrapReasonID { get; private set; }
-        }
+		[JsonProperty]
+		public short ScrapReasonID { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>6ab5d39478e7d37782041d30d382ef4a</Hash>
+    <Hash>f215b652bd88d20f016a0984c31bad38</Hash>
 </Codenesium>*/

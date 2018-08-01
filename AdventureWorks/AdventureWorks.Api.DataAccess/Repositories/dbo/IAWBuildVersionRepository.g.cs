@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public interface IAWBuildVersionRepository
-        {
-                Task<AWBuildVersion> Create(AWBuildVersion item);
+	public interface IAWBuildVersionRepository
+	{
+		Task<AWBuildVersion> Create(AWBuildVersion item);
 
-                Task Update(AWBuildVersion item);
+		Task Update(AWBuildVersion item);
 
-                Task Delete(int systemInformationID);
+		Task Delete(int systemInformationID);
 
-                Task<AWBuildVersion> Get(int systemInformationID);
+		Task<AWBuildVersion> Get(int systemInformationID);
 
-                Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>bcf966c3f7cfcb9b7e2a6a1bb8a783b7</Hash>
+    <Hash>f3c4c96c60ad3679890e164be1a93519</Hash>
 </Codenesium>*/

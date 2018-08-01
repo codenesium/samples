@@ -12,86 +12,86 @@ using Xunit;
 
 namespace FermataFishNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Rate")]
-        [Trait("Area", "Integration")]
-        public class RateIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public RateIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Rate")]
+	[Trait("Area", "Integration")]
+	public class RateIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public RateIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiRateModelMapper mapper = new ApiRateModelMapper();
+			ApiRateModelMapper mapper = new ApiRateModelMapper();
 
-                        UpdateResponse<ApiRateResponseModel> updateResponse = await this.Client.RateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiRateResponseModel> updateResponse = await this.Client.RateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.RateDeleteAsync(model.Id);
+			await this.Client.RateDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiRateResponseModel response = await this.Client.RateGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiRateResponseModel response = await this.Client.RateGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiRateResponseModel> response = await this.Client.RateAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiRateResponseModel> response = await this.Client.RateAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiRateResponseModel> CreateRecord()
-                {
-                        var model = new ApiRateRequestModel();
-                        model.SetProperties(2m, 1, 1);
-                        CreateResponse<ApiRateResponseModel> result = await this.Client.RateCreateAsync(model);
+		private async Task<ApiRateResponseModel> CreateRecord()
+		{
+			var model = new ApiRateRequestModel();
+			model.SetProperties(2m, 1, 1);
+			CreateResponse<ApiRateResponseModel> result = await this.Client.RateCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.RateDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.RateDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>aa22ed0257ba066192c5904fc45ac837</Hash>
+    <Hash>3e9a7e4e1b772245d4731d14fee27825</Hash>
 </Codenesium>*/

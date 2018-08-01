@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class UserRoleRepository : AbstractUserRoleRepository, IUserRoleRepository
-        {
-                public UserRoleRepository(
-                        ILogger<UserRoleRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class UserRoleRepository : AbstractUserRoleRepository, IUserRoleRepository
+	{
+		public UserRoleRepository(
+			ILogger<UserRoleRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>718f5375982eb31a2fb505e23ec49fec</Hash>
+    <Hash>fa493558269e08365cb63c2cbd88623d</Hash>
 </Codenesium>*/

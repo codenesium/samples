@@ -5,45 +5,45 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiTagSetModelMapper
-        {
-                public virtual ApiTagSetResponseModel MapRequestToResponse(
-                        string id,
-                        ApiTagSetRequestModel request)
-                {
-                        var response = new ApiTagSetResponseModel();
-                        response.SetProperties(id,
-                                               request.DataVersion,
-                                               request.JSON,
-                                               request.Name,
-                                               request.SortOrder);
-                        return response;
-                }
+	public abstract class AbstractApiTagSetModelMapper
+	{
+		public virtual ApiTagSetResponseModel MapRequestToResponse(
+			string id,
+			ApiTagSetRequestModel request)
+		{
+			var response = new ApiTagSetResponseModel();
+			response.SetProperties(id,
+			                       request.DataVersion,
+			                       request.JSON,
+			                       request.Name,
+			                       request.SortOrder);
+			return response;
+		}
 
-                public virtual ApiTagSetRequestModel MapResponseToRequest(
-                        ApiTagSetResponseModel response)
-                {
-                        var request = new ApiTagSetRequestModel();
-                        request.SetProperties(
-                                response.DataVersion,
-                                response.JSON,
-                                response.Name,
-                                response.SortOrder);
-                        return request;
-                }
+		public virtual ApiTagSetRequestModel MapResponseToRequest(
+			ApiTagSetResponseModel response)
+		{
+			var request = new ApiTagSetRequestModel();
+			request.SetProperties(
+				response.DataVersion,
+				response.JSON,
+				response.Name,
+				response.SortOrder);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiTagSetRequestModel> CreatePatch(ApiTagSetRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiTagSetRequestModel>();
-                        patch.Replace(x => x.DataVersion, model.DataVersion);
-                        patch.Replace(x => x.JSON, model.JSON);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.SortOrder, model.SortOrder);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiTagSetRequestModel> CreatePatch(ApiTagSetRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiTagSetRequestModel>();
+			patch.Replace(x => x.DataVersion, model.DataVersion);
+			patch.Replace(x => x.JSON, model.JSON);
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.SortOrder, model.SortOrder);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2285970d4cf88e926d6d9d5aa57225b5</Hash>
+    <Hash>349bc1e6f6ba7d6ed844573cfed47a78</Hash>
 </Codenesium>*/

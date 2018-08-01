@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class StudentXFamilyRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class StudentXFamilyRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<StudentXFamilyRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<StudentXFamilyRepository>>();
-                }
-        }
+		public static Mock<ILogger<StudentXFamilyRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<StudentXFamilyRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "StudentXFamily")]
-        [Trait("Area", "Repositories")]
-        public partial class StudentXFamilyRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "StudentXFamily")]
+	[Trait("Area", "Repositories")]
+	public partial class StudentXFamilyRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
-                        StudentXFamily entity = new StudentXFamily();
-                        context.Set<StudentXFamily>().Add(entity);
-                        await context.SaveChangesAsync();
+			StudentXFamily entity = new StudentXFamily();
+			context.Set<StudentXFamily>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
-                        StudentXFamily entity = new StudentXFamily();
-                        context.Set<StudentXFamily>().Add(entity);
-                        await context.SaveChangesAsync();
+			StudentXFamily entity = new StudentXFamily();
+			context.Set<StudentXFamily>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
-                        var entity = new StudentXFamily();
-                        await repository.Create(entity);
+			var entity = new StudentXFamily();
+			await repository.Create(entity);
 
-                        var record = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
+			var record = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-                        StudentXFamily entity = new StudentXFamily();
-                        context.Set<StudentXFamily>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+			StudentXFamily entity = new StudentXFamily();
+			context.Set<StudentXFamily>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<StudentXFamily>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<StudentXFamily>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-                        StudentXFamily entity = new StudentXFamily();
-                        context.Set<StudentXFamily>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+			StudentXFamily entity = new StudentXFamily();
+			context.Set<StudentXFamily>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new StudentXFamily());
+			await repository.Update(new StudentXFamily());
 
-                        var modifiedRecord = context.Set<StudentXFamily>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<StudentXFamily>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
-                        var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-                        StudentXFamily entity = new StudentXFamily();
-                        context.Set<StudentXFamily>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
+			var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
+			StudentXFamily entity = new StudentXFamily();
+			context.Set<StudentXFamily>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        StudentXFamily modifiedRecord = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
+			StudentXFamily modifiedRecord = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1f578ac34829db2060d50ae91d7f960b</Hash>
+    <Hash>2d60b3b04e1e9d79861a9a1f192d08ce</Hash>
 </Codenesium>*/

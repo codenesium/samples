@@ -4,14 +4,14 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class DALVersionInfoMapper : DALAbstractVersionInfoMapper, IDALVersionInfoMapper
-        {
-                public DALVersionInfoMapper()
-                {
-                }
-        }
+	public partial class DALVersionInfoMapper : DALAbstractVersionInfoMapper, IDALVersionInfoMapper
+	{
+		public DALVersionInfoMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ab191b64e81cce0a28d8ec47aa189936</Hash>
+    <Hash>74c32290862c0048156ab39ae1a8957d</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBOLShiftMapper
-        {
-                BOShift MapModelToBO(
-                        int shiftID,
-                        ApiShiftRequestModel model);
+	public interface IBOLShiftMapper
+	{
+		BOShift MapModelToBO(
+			int shiftID,
+			ApiShiftRequestModel model);
 
-                ApiShiftResponseModel MapBOToModel(
-                        BOShift boShift);
+		ApiShiftResponseModel MapBOToModel(
+			BOShift boShift);
 
-                List<ApiShiftResponseModel> MapBOToModel(
-                        List<BOShift> items);
-        }
+		List<ApiShiftResponseModel> MapBOToModel(
+			List<BOShift> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>59e0d211edc11c01cd09fc6941712738</Hash>
+    <Hash>cfd10dfe44ca3a932718d1d145354d02</Hash>
 </Codenesium>*/

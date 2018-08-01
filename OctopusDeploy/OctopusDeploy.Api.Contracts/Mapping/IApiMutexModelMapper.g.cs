@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public interface IApiMutexModelMapper
-        {
-                ApiMutexResponseModel MapRequestToResponse(
-                        string id,
-                        ApiMutexRequestModel request);
+	public interface IApiMutexModelMapper
+	{
+		ApiMutexResponseModel MapRequestToResponse(
+			string id,
+			ApiMutexRequestModel request);
 
-                ApiMutexRequestModel MapResponseToRequest(
-                        ApiMutexResponseModel response);
+		ApiMutexRequestModel MapResponseToRequest(
+			ApiMutexResponseModel response);
 
-                JsonPatchDocument<ApiMutexRequestModel> CreatePatch(ApiMutexRequestModel model);
-        }
+		JsonPatchDocument<ApiMutexRequestModel> CreatePatch(ApiMutexRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a7a1b7773a800962e367288e58ef7380</Hash>
+    <Hash>a4ceaeaf9c17339d82a6f9f2c8f9d573</Hash>
 </Codenesium>*/

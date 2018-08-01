@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class LinkLogService : AbstractLinkLogService, ILinkLogService
-        {
-                public LinkLogService(
-                        ILogger<ILinkLogRepository> logger,
-                        ILinkLogRepository linkLogRepository,
-                        IApiLinkLogRequestModelValidator linkLogModelValidator,
-                        IBOLLinkLogMapper bollinkLogMapper,
-                        IDALLinkLogMapper dallinkLogMapper
-                        )
-                        : base(logger,
-                               linkLogRepository,
-                               linkLogModelValidator,
-                               bollinkLogMapper,
-                               dallinkLogMapper)
-                {
-                }
-        }
+	public partial class LinkLogService : AbstractLinkLogService, ILinkLogService
+	{
+		public LinkLogService(
+			ILogger<ILinkLogRepository> logger,
+			ILinkLogRepository linkLogRepository,
+			IApiLinkLogRequestModelValidator linkLogModelValidator,
+			IBOLLinkLogMapper bollinkLogMapper,
+			IDALLinkLogMapper dallinkLogMapper
+			)
+			: base(logger,
+			       linkLogRepository,
+			       linkLogModelValidator,
+			       bollinkLogMapper,
+			       dallinkLogMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d656771f2a743dd1c3679953b94ede90</Hash>
+    <Hash>5b4077d54995b986e7dbe23f032c60a6</Hash>
 </Codenesium>*/

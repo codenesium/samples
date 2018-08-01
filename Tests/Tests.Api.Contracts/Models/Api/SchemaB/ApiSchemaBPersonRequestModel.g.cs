@@ -7,25 +7,25 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiSchemaBPersonRequestModel : AbstractApiRequestModel
-        {
-                public ApiSchemaBPersonRequestModel()
-                        : base()
-                {
-                }
+	public partial class ApiSchemaBPersonRequestModel : AbstractApiRequestModel
+	{
+		public ApiSchemaBPersonRequestModel()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string name)
-                {
-                        this.Name = name;
-                }
+		public virtual void SetProperties(
+			string name)
+		{
+			this.Name = name;
+		}
 
-                [Required]
-                [JsonProperty]
-                public string Name { get; private set; }
-        }
+		[Required]
+		[JsonProperty]
+		public string Name { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>59c96c4c37f6e29184d9298ddc55f8f2</Hash>
+    <Hash>e92d291695acb1cbcb7ded5451b6c06e</Hash>
 </Codenesium>*/

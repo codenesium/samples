@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALCertificateMapper
-        {
-                Certificate MapBOToEF(
-                        BOCertificate bo);
+	public interface IDALCertificateMapper
+	{
+		Certificate MapBOToEF(
+			BOCertificate bo);
 
-                BOCertificate MapEFToBO(
-                        Certificate efCertificate);
+		BOCertificate MapEFToBO(
+			Certificate efCertificate);
 
-                List<BOCertificate> MapEFToBO(
-                        List<Certificate> records);
-        }
+		List<BOCertificate> MapEFToBO(
+			List<Certificate> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>e26be50f13df9c0bf08228b2c0cbff45</Hash>
+    <Hash>0fa784d01db6148db6b72354e2a3e0dd</Hash>
 </Codenesium>*/

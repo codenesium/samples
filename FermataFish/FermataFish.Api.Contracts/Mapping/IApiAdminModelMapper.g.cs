@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public interface IApiAdminModelMapper
-        {
-                ApiAdminResponseModel MapRequestToResponse(
-                        int id,
-                        ApiAdminRequestModel request);
+	public interface IApiAdminModelMapper
+	{
+		ApiAdminResponseModel MapRequestToResponse(
+			int id,
+			ApiAdminRequestModel request);
 
-                ApiAdminRequestModel MapResponseToRequest(
-                        ApiAdminResponseModel response);
+		ApiAdminRequestModel MapResponseToRequest(
+			ApiAdminResponseModel response);
 
-                JsonPatchDocument<ApiAdminRequestModel> CreatePatch(ApiAdminRequestModel model);
-        }
+		JsonPatchDocument<ApiAdminRequestModel> CreatePatch(ApiAdminRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>7d052bba4de3346d9743efb5cb515786</Hash>
+    <Hash>03bfe2fcbe9f113e14c478ff164fd770</Hash>
 </Codenesium>*/

@@ -15,41 +15,41 @@ using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LinkStatus")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiLinkStatusRequestModelValidatorTest
-        {
-                public ApiLinkStatusRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LinkStatus")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiLinkStatusRequestModelValidatorTest
+	{
+		public ApiLinkStatusRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
-                        linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
+			linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
-                        var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiLinkStatusRequestModel());
+			var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLinkStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
-                        linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ILinkStatusRepository> linkStatusRepository = new Mock<ILinkStatusRepository>();
+			linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
-                        var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiLinkStatusRequestModel());
+			var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkStatusRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d3310ef81375d43c86f2f494a37db1b0</Hash>
+    <Hash>5c276b9dcb13b6f5dcf84e78efd59459</Hash>
 </Codenesium>*/

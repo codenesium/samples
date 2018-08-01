@@ -7,55 +7,55 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ExtensionConfiguration")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALExtensionConfigurationMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALExtensionConfigurationMapper();
-                        var bo = new BOExtensionConfiguration();
-                        bo.SetProperties("A", "A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ExtensionConfiguration")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALExtensionConfigurationMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALExtensionConfigurationMapper();
+			var bo = new BOExtensionConfiguration();
+			bo.SetProperties("A", "A", "A", "A");
 
-                        ExtensionConfiguration response = mapper.MapBOToEF(bo);
+			ExtensionConfiguration response = mapper.MapBOToEF(bo);
 
-                        response.ExtensionAuthor.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.ExtensionAuthor.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALExtensionConfigurationMapper();
-                        ExtensionConfiguration entity = new ExtensionConfiguration();
-                        entity.SetProperties("A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALExtensionConfigurationMapper();
+			ExtensionConfiguration entity = new ExtensionConfiguration();
+			entity.SetProperties("A", "A", "A", "A");
 
-                        BOExtensionConfiguration response = mapper.MapEFToBO(entity);
+			BOExtensionConfiguration response = mapper.MapEFToBO(entity);
 
-                        response.ExtensionAuthor.Should().Be("A");
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.ExtensionAuthor.Should().Be("A");
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALExtensionConfigurationMapper();
-                        ExtensionConfiguration entity = new ExtensionConfiguration();
-                        entity.SetProperties("A", "A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALExtensionConfigurationMapper();
+			ExtensionConfiguration entity = new ExtensionConfiguration();
+			entity.SetProperties("A", "A", "A", "A");
 
-                        List<BOExtensionConfiguration> response = mapper.MapEFToBO(new List<ExtensionConfiguration>() { entity });
+			List<BOExtensionConfiguration> response = mapper.MapEFToBO(new List<ExtensionConfiguration>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>deef83a5712387f9d6c891d05900a5ba</Hash>
+    <Hash>8d08ceafa023cf8c43b39751289c50f2</Hash>
 </Codenesium>*/

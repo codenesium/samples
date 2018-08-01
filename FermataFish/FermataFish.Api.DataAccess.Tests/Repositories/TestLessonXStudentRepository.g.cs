@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class LessonXStudentRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class LessonXStudentRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<LessonXStudentRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<LessonXStudentRepository>>();
-                }
-        }
+		public static Mock<ILogger<LessonXStudentRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<LessonXStudentRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "LessonXStudent")]
-        [Trait("Area", "Repositories")]
-        public partial class LessonXStudentRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "LessonXStudent")]
+	[Trait("Area", "Repositories")]
+	public partial class LessonXStudentRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
 
-                        LessonXStudent entity = new LessonXStudent();
-                        context.Set<LessonXStudent>().Add(entity);
-                        await context.SaveChangesAsync();
+			LessonXStudent entity = new LessonXStudent();
+			context.Set<LessonXStudent>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
 
-                        LessonXStudent entity = new LessonXStudent();
-                        context.Set<LessonXStudent>().Add(entity);
-                        await context.SaveChangesAsync();
+			LessonXStudent entity = new LessonXStudent();
+			context.Set<LessonXStudent>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
 
-                        var entity = new LessonXStudent();
-                        await repository.Create(entity);
+			var entity = new LessonXStudent();
+			await repository.Create(entity);
 
-                        var record = await context.Set<LessonXStudent>().FirstOrDefaultAsync();
+			var record = await context.Set<LessonXStudent>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
-                        LessonXStudent entity = new LessonXStudent();
-                        context.Set<LessonXStudent>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+			LessonXStudent entity = new LessonXStudent();
+			context.Set<LessonXStudent>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<LessonXStudent>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LessonXStudent>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
-                        LessonXStudent entity = new LessonXStudent();
-                        context.Set<LessonXStudent>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+			LessonXStudent entity = new LessonXStudent();
+			context.Set<LessonXStudent>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new LessonXStudent());
+			await repository.Update(new LessonXStudent());
 
-                        var modifiedRecord = context.Set<LessonXStudent>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<LessonXStudent>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
-                        var repository = new LessonXStudentRepository(loggerMoc.Object, context);
-                        LessonXStudent entity = new LessonXStudent();
-                        context.Set<LessonXStudent>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<LessonXStudentRepository>> loggerMoc = LessonXStudentRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LessonXStudentRepositoryMoc.GetContext();
+			var repository = new LessonXStudentRepository(loggerMoc.Object, context);
+			LessonXStudent entity = new LessonXStudent();
+			context.Set<LessonXStudent>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        LessonXStudent modifiedRecord = await context.Set<LessonXStudent>().FirstOrDefaultAsync();
+			LessonXStudent modifiedRecord = await context.Set<LessonXStudent>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ff3f67c6bc832776ba286bca52d896ae</Hash>
+    <Hash>f5f8780ed79e7743ad13292989c9ab3a</Hash>
 </Codenesium>*/

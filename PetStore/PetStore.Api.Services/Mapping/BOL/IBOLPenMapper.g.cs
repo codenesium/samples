@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public interface IBOLPenMapper
-        {
-                BOPen MapModelToBO(
-                        int id,
-                        ApiPenRequestModel model);
+	public interface IBOLPenMapper
+	{
+		BOPen MapModelToBO(
+			int id,
+			ApiPenRequestModel model);
 
-                ApiPenResponseModel MapBOToModel(
-                        BOPen boPen);
+		ApiPenResponseModel MapBOToModel(
+			BOPen boPen);
 
-                List<ApiPenResponseModel> MapBOToModel(
-                        List<BOPen> items);
-        }
+		List<ApiPenResponseModel> MapBOToModel(
+			List<BOPen> items);
+	}
 }
 
 /*<Codenesium>
-    <Hash>3179bf8243e6ec00b9cf02229ee91b29</Hash>
+    <Hash>d6b7980715f8c877dcf7faef247923c8</Hash>
 </Codenesium>*/

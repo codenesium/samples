@@ -5,26 +5,26 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public interface IFamilyRepository
-        {
-                Task<Family> Create(Family item);
+	public interface IFamilyRepository
+	{
+		Task<Family> Create(Family item);
 
-                Task Update(Family item);
+		Task Update(Family item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Family> Get(int id);
+		Task<Family> Get(int id);
 
-                Task<List<Family>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Family>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Student>> Students(int familyId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Student>> Students(int familyId, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<StudentXFamily>> StudentXFamilies(int familyId, int limit = int.MaxValue, int offset = 0);
+		Task<List<StudentXFamily>> StudentXFamilies(int familyId, int limit = int.MaxValue, int offset = 0);
 
-                Task<Studio> GetStudio(int id);
-        }
+		Task<Studio> GetStudio(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>1b7e04a87a5594bc1f22e442800f201e</Hash>
+    <Hash>40282d1a27e5c1e68ee951b54a0bf9b2</Hash>
 </Codenesium>*/

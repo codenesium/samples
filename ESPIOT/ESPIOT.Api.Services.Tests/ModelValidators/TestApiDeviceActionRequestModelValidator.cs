@@ -15,115 +15,115 @@ using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "DeviceAction")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiDeviceActionRequestModelValidatorTest
-        {
-                public ApiDeviceActionRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "DeviceAction")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiDeviceActionRequestModelValidatorTest
+	{
+		public ApiDeviceActionRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void DeviceId_Create_Valid_Reference()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
+		[Fact]
+		public async void DeviceId_Create_Valid_Reference()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
+		}
 
-                [Fact]
-                public async void DeviceId_Create_Invalid_Reference()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
+		[Fact]
+		public async void DeviceId_Create_Invalid_Reference()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DeviceId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DeviceId, 1);
+		}
 
-                [Fact]
-                public async void DeviceId_Update_Valid_Reference()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
+		[Fact]
+		public async void DeviceId_Update_Valid_Reference()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
+		}
 
-                [Fact]
-                public async void DeviceId_Update_Invalid_Reference()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
+		[Fact]
+		public async void DeviceId_Update_Invalid_Reference()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.DeviceId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.DeviceId, 1);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
+		}
 
-                [Fact]
-                public async void @Value_Create_length()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+		[Fact]
+		public async void @Value_Create_length()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
+		}
 
-                [Fact]
-                public async void @Value_Update_length()
-                {
-                        Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-                        deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+		[Fact]
+		public async void @Value_Update_length()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
-                        var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>31879b1505cccf6f9e3c1ff7af435977</Hash>
+    <Hash>3b97f6a1769cfca5c0858d8943bf84ff</Hash>
 </Codenesium>*/

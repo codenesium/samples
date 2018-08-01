@@ -15,210 +15,210 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractExtensionConfigurationController : AbstractApiController
-        {
-                protected IExtensionConfigurationService ExtensionConfigurationService { get; private set; }
+	public abstract class AbstractExtensionConfigurationController : AbstractApiController
+	{
+		protected IExtensionConfigurationService ExtensionConfigurationService { get; private set; }
 
-                protected IApiExtensionConfigurationModelMapper ExtensionConfigurationModelMapper { get; private set; }
+		protected IApiExtensionConfigurationModelMapper ExtensionConfigurationModelMapper { get; private set; }
 
-                protected int BulkInsertLimit { get; set; }
+		protected int BulkInsertLimit { get; set; }
 
-                protected int MaxLimit { get; set; }
+		protected int MaxLimit { get; set; }
 
-                protected int DefaultLimit { get; set; }
+		protected int DefaultLimit { get; set; }
 
-                public AbstractExtensionConfigurationController(
-                        ApiSettings settings,
-                        ILogger<AbstractExtensionConfigurationController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IExtensionConfigurationService extensionConfigurationService,
-                        IApiExtensionConfigurationModelMapper extensionConfigurationModelMapper
-                        )
-                        : base(settings, logger, transactionCoordinator)
-                {
-                        this.ExtensionConfigurationService = extensionConfigurationService;
-                        this.ExtensionConfigurationModelMapper = extensionConfigurationModelMapper;
-                }
+		public AbstractExtensionConfigurationController(
+			ApiSettings settings,
+			ILogger<AbstractExtensionConfigurationController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IExtensionConfigurationService extensionConfigurationService,
+			IApiExtensionConfigurationModelMapper extensionConfigurationModelMapper
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.ExtensionConfigurationService = extensionConfigurationService;
+			this.ExtensionConfigurationModelMapper = extensionConfigurationModelMapper;
+		}
 
-                [HttpGet]
-                [Route("")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiExtensionConfigurationResponseModel>), 200)]
-                public async virtual Task<IActionResult> All(int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiExtensionConfigurationResponseModel> response = await this.ExtensionConfigurationService.All(query.Limit, query.Offset);
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiExtensionConfigurationResponseModel>), 200)]
+		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<ApiExtensionConfigurationResponseModel> response = await this.ExtensionConfigurationService.All(query.Limit, query.Offset);
 
-                        return this.Ok(response);
-                }
+			return this.Ok(response);
+		}
 
-                [HttpGet]
-                [Route("{id}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> Get(string id)
-                {
-                        ApiExtensionConfigurationResponseModel response = await this.ExtensionConfigurationService.Get(id);
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> Get(string id)
+		{
+			ApiExtensionConfigurationResponseModel response = await this.ExtensionConfigurationService.Get(id);
 
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 
-                [HttpPost]
-                [Route("BulkInsert")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(List<ApiExtensionConfigurationResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 413)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiExtensionConfigurationRequestModel> models)
-                {
-                        if (models.Count > this.BulkInsertLimit)
-                        {
-                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-                        }
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiExtensionConfigurationResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiExtensionConfigurationRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
 
-                        List<ApiExtensionConfigurationResponseModel> records = new List<ApiExtensionConfigurationResponseModel>();
-                        foreach (var model in models)
-                        {
-                                CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
+			List<ApiExtensionConfigurationResponseModel> records = new List<ApiExtensionConfigurationResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
 
-                                if (result.Success)
-                                {
-                                        records.Add(result.Record);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
 
-                        return this.Ok(records);
-                }
+			return this.Ok(records);
+		}
 
-                [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(CreateResponse<ApiExtensionConfigurationResponseModel>), 201)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiExtensionConfigurationRequestModel model)
-                {
-                        CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiExtensionConfigurationResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiExtensionConfigurationRequestModel model)
+		{
+			CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
 
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                [HttpPatch]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
-                {
-                        ApiExtensionConfigurationResponseModel record = await this.ExtensionConfigurationService.Get(id);
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
+		{
+			ApiExtensionConfigurationResponseModel record = await this.ExtensionConfigurationService.Get(id);
 
-                        if (record == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                ApiExtensionConfigurationRequestModel model = await this.PatchModel(id, patch);
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiExtensionConfigurationRequestModel model = await this.PatchModel(id, patch);
 
-                                UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, model);
+				UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, model);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpPut]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Update(string id, [FromBody] ApiExtensionConfigurationRequestModel model)
-                {
-                        ApiExtensionConfigurationRequestModel request = await this.PatchModel(id, this.ExtensionConfigurationModelMapper.CreatePatch(model));
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiExtensionConfigurationResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiExtensionConfigurationRequestModel model)
+		{
+			ApiExtensionConfigurationRequestModel request = await this.PatchModel(id, this.ExtensionConfigurationModelMapper.CreatePatch(model));
 
-                        if (request == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, request);
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Update(id, request);
 
-                                if (result.Success)
-                                {
-                                        return this.Ok(result);
-                                }
-                                else
-                                {
-                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                                }
-                        }
-                }
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
 
-                [HttpDelete]
-                [Route("{id}")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(void), 204)]
-                [ProducesResponseType(typeof(ActionResponse), 422)]
-                public virtual async Task<IActionResult> Delete(string id)
-                {
-                        ActionResponse result = await this.ExtensionConfigurationService.Delete(id);
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(string id)
+		{
+			ActionResponse result = await this.ExtensionConfigurationService.Delete(id);
 
-                        if (result.Success)
-                        {
-                                return this.NoContent();
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
+			if (result.Success)
+			{
+				return this.NoContent();
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
 
-                private async Task<ApiExtensionConfigurationRequestModel> PatchModel(string id, JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
-                {
-                        var record = await this.ExtensionConfigurationService.Get(id);
+		private async Task<ApiExtensionConfigurationRequestModel> PatchModel(string id, JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
+		{
+			var record = await this.ExtensionConfigurationService.Get(id);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                ApiExtensionConfigurationRequestModel request = this.ExtensionConfigurationModelMapper.MapResponseToRequest(record);
-                                patch.ApplyTo(request);
-                                return request;
-                        }
-                }
-        }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiExtensionConfigurationRequestModel request = this.ExtensionConfigurationModelMapper.MapResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9dc08a9f525e5f45cbd65fe9a28fef49</Hash>
+    <Hash>70e6d481591b0aba922d8476246e9e21</Hash>
 </Codenesium>*/

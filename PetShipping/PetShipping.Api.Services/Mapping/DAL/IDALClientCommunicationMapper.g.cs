@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IDALClientCommunicationMapper
-        {
-                ClientCommunication MapBOToEF(
-                        BOClientCommunication bo);
+	public interface IDALClientCommunicationMapper
+	{
+		ClientCommunication MapBOToEF(
+			BOClientCommunication bo);
 
-                BOClientCommunication MapEFToBO(
-                        ClientCommunication efClientCommunication);
+		BOClientCommunication MapEFToBO(
+			ClientCommunication efClientCommunication);
 
-                List<BOClientCommunication> MapEFToBO(
-                        List<ClientCommunication> records);
-        }
+		List<BOClientCommunication> MapEFToBO(
+			List<ClientCommunication> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>b7577a43e6476606623c19d757e7e89d</Hash>
+    <Hash>7fc91db3d3ee96dcb0f26e020ccd7d03</Hash>
 </Codenesium>*/

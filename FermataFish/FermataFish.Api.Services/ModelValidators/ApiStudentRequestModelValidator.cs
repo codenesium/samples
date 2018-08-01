@@ -6,50 +6,50 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiStudentRequestModelValidator : AbstractApiStudentRequestModelValidator, IApiStudentRequestModelValidator
-        {
-                public ApiStudentRequestModelValidator(IStudentRepository studentRepository)
-                        : base(studentRepository)
-                {
-                }
+	public class ApiStudentRequestModelValidator : AbstractApiStudentRequestModelValidator, IApiStudentRequestModelValidator
+	{
+		public ApiStudentRequestModelValidator(IStudentRepository studentRepository)
+			: base(studentRepository)
+		{
+		}
 
-                public async Task<ValidationResult> ValidateCreateAsync(ApiStudentRequestModel model)
-                {
-                        this.BirthdayRules();
-                        this.EmailRules();
-                        this.EmailRemindersEnabledRules();
-                        this.FamilyIdRules();
-                        this.FirstNameRules();
-                        this.IsAdultRules();
-                        this.LastNameRules();
-                        this.PhoneRules();
-                        this.SmsRemindersEnabledRules();
-                        this.StudioIdRules();
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateCreateAsync(ApiStudentRequestModel model)
+		{
+			this.BirthdayRules();
+			this.EmailRules();
+			this.EmailRemindersEnabledRules();
+			this.FamilyIdRules();
+			this.FirstNameRules();
+			this.IsAdultRules();
+			this.LastNameRules();
+			this.PhoneRules();
+			this.SmsRemindersEnabledRules();
+			this.StudioIdRules();
+			return await this.ValidateAsync(model);
+		}
 
-                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStudentRequestModel model)
-                {
-                        this.BirthdayRules();
-                        this.EmailRules();
-                        this.EmailRemindersEnabledRules();
-                        this.FamilyIdRules();
-                        this.FirstNameRules();
-                        this.IsAdultRules();
-                        this.LastNameRules();
-                        this.PhoneRules();
-                        this.SmsRemindersEnabledRules();
-                        this.StudioIdRules();
-                        return await this.ValidateAsync(model, id);
-                }
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStudentRequestModel model)
+		{
+			this.BirthdayRules();
+			this.EmailRules();
+			this.EmailRemindersEnabledRules();
+			this.FamilyIdRules();
+			this.FirstNameRules();
+			this.IsAdultRules();
+			this.LastNameRules();
+			this.PhoneRules();
+			this.SmsRemindersEnabledRules();
+			this.StudioIdRules();
+			return await this.ValidateAsync(model, id);
+		}
 
-                public async Task<ValidationResult> ValidateDeleteAsync(int id)
-                {
-                        return await Task.FromResult<ValidationResult>(new ValidationResult());
-                }
-        }
+		public async Task<ValidationResult> ValidateDeleteAsync(int id)
+		{
+			return await Task.FromResult<ValidationResult>(new ValidationResult());
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b05a1689e1965a888dbf27055eafd6de</Hash>
+    <Hash>be04d68f8e55654dd4b141cf833fc5ff</Hash>
 </Codenesium>*/

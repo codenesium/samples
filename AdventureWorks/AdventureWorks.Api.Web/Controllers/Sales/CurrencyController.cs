@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/currencies")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class CurrencyController : AbstractCurrencyController
-        {
-                public CurrencyController(
-                        ApiSettings settings,
-                        ILogger<CurrencyController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ICurrencyService currencyService,
-                        IApiCurrencyModelMapper currencyModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               currencyService,
-                               currencyModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/currencies")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class CurrencyController : AbstractCurrencyController
+	{
+		public CurrencyController(
+			ApiSettings settings,
+			ILogger<CurrencyController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ICurrencyService currencyService,
+			IApiCurrencyModelMapper currencyModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       currencyService,
+			       currencyModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>671fc3c6412efeedd937a3bdd0af37b9</Hash>
+    <Hash>607d73ce90ba5539cb6dd02438f5dee5</Hash>
 </Codenesium>*/

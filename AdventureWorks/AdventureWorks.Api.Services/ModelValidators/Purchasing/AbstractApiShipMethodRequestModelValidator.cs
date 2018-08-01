@@ -9,62 +9,62 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiShipMethodRequestModelValidator : AbstractValidator<ApiShipMethodRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiShipMethodRequestModelValidator : AbstractValidator<ApiShipMethodRequestModel>
+	{
+		private int existingRecordId;
 
-                private IShipMethodRepository shipMethodRepository;
+		private IShipMethodRepository shipMethodRepository;
 
-                public AbstractApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
-                {
-                        this.shipMethodRepository = shipMethodRepository;
-                }
+		public AbstractApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
+		{
+			this.shipMethodRepository = shipMethodRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiShipMethodRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiShipMethodRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void ModifiedDateRules()
-                {
-                }
+		public virtual void ModifiedDateRules()
+		{
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
-                        this.RuleFor(x => x.Name).Length(0, 50);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
 
-                public virtual void RowguidRules()
-                {
-                }
+		public virtual void RowguidRules()
+		{
+		}
 
-                public virtual void ShipBaseRules()
-                {
-                }
+		public virtual void ShipBaseRules()
+		{
+		}
 
-                public virtual void ShipRateRules()
-                {
-                }
+		public virtual void ShipRateRules()
+		{
+		}
 
-                private async Task<bool> BeUniqueByName(ApiShipMethodRequestModel model,  CancellationToken cancellationToken)
-                {
-                        ShipMethod record = await this.shipMethodRepository.ByName(model.Name);
+		private async Task<bool> BeUniqueByName(ApiShipMethodRequestModel model,  CancellationToken cancellationToken)
+		{
+			ShipMethod record = await this.shipMethodRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default(int) && record.ShipMethodID == this.existingRecordId))
-                        {
-                                return true;
-                        }
-                        else
-                        {
-                                return false;
-                        }
-                }
-        }
+			if (record == null || (this.existingRecordId != default(int) && record.ShipMethodID == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>351bba582903ab5f010ddd158f7e10a8</Hash>
+    <Hash>f65fec178843c697d0f710507cdf989f</Hash>
 </Codenesium>*/

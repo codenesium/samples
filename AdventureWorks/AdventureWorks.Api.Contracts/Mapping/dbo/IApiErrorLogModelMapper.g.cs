@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiErrorLogModelMapper
-        {
-                ApiErrorLogResponseModel MapRequestToResponse(
-                        int errorLogID,
-                        ApiErrorLogRequestModel request);
+	public interface IApiErrorLogModelMapper
+	{
+		ApiErrorLogResponseModel MapRequestToResponse(
+			int errorLogID,
+			ApiErrorLogRequestModel request);
 
-                ApiErrorLogRequestModel MapResponseToRequest(
-                        ApiErrorLogResponseModel response);
+		ApiErrorLogRequestModel MapResponseToRequest(
+			ApiErrorLogResponseModel response);
 
-                JsonPatchDocument<ApiErrorLogRequestModel> CreatePatch(ApiErrorLogRequestModel model);
-        }
+		JsonPatchDocument<ApiErrorLogRequestModel> CreatePatch(ApiErrorLogRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>215050c95ae2bf5d5805698e5e7db1e9</Hash>
+    <Hash>0c975ec1a580545824674c02adf6e013</Hash>
 </Codenesium>*/

@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public interface IVotesRepository
-        {
-                Task<Votes> Create(Votes item);
+	public interface IVotesRepository
+	{
+		Task<Votes> Create(Votes item);
 
-                Task Update(Votes item);
+		Task Update(Votes item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Votes> Get(int id);
+		Task<Votes> Get(int id);
 
-                Task<List<Votes>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Votes>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9c1ed96a1312398e13d3c4b18bab384e</Hash>
+    <Hash>1b456ee36d92e0f1c85626cc4203f6e3</Hash>
 </Codenesium>*/

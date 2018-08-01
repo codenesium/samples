@@ -6,50 +6,50 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractPasswordMapper
-        {
-                public virtual Password MapBOToEF(
-                        BOPassword bo)
-                {
-                        Password efPassword = new Password();
-                        efPassword.SetProperties(
-                                bo.BusinessEntityID,
-                                bo.ModifiedDate,
-                                bo.PasswordHash,
-                                bo.PasswordSalt,
-                                bo.Rowguid);
-                        return efPassword;
-                }
+	public abstract class DALAbstractPasswordMapper
+	{
+		public virtual Password MapBOToEF(
+			BOPassword bo)
+		{
+			Password efPassword = new Password();
+			efPassword.SetProperties(
+				bo.BusinessEntityID,
+				bo.ModifiedDate,
+				bo.PasswordHash,
+				bo.PasswordSalt,
+				bo.Rowguid);
+			return efPassword;
+		}
 
-                public virtual BOPassword MapEFToBO(
-                        Password ef)
-                {
-                        var bo = new BOPassword();
+		public virtual BOPassword MapEFToBO(
+			Password ef)
+		{
+			var bo = new BOPassword();
 
-                        bo.SetProperties(
-                                ef.BusinessEntityID,
-                                ef.ModifiedDate,
-                                ef.PasswordHash,
-                                ef.PasswordSalt,
-                                ef.Rowguid);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.BusinessEntityID,
+				ef.ModifiedDate,
+				ef.PasswordHash,
+				ef.PasswordSalt,
+				ef.Rowguid);
+			return bo;
+		}
 
-                public virtual List<BOPassword> MapEFToBO(
-                        List<Password> records)
-                {
-                        List<BOPassword> response = new List<BOPassword>();
+		public virtual List<BOPassword> MapEFToBO(
+			List<Password> records)
+		{
+			List<BOPassword> response = new List<BOPassword>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>871e6058390251f2894139e1055d6980</Hash>
+    <Hash>59878344ee87ee628d85b54f2cd9434c</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using StackOverflowNS.Api.DataAccess;
 
 namespace StackOverflowNS.Api.Services
 {
-        public partial class DALCommentsMapper : DALAbstractCommentsMapper, IDALCommentsMapper
-        {
-                public DALCommentsMapper()
-                {
-                }
-        }
+	public partial class DALCommentsMapper : DALAbstractCommentsMapper, IDALCommentsMapper
+	{
+		public DALCommentsMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c358458a25a7a04b76403e37b5e272cc</Hash>
+    <Hash>0813c32141380d0239edadbb8aee450f</Hash>
 </Codenesium>*/

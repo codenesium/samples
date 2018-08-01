@@ -3,15 +3,15 @@ using System;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BORowVersionCheck : AbstractBORowVersionCheck
-        {
-                public BORowVersionCheck()
-                        : base()
-                {
-                }
-        }
+	public partial class BORowVersionCheck : AbstractBORowVersionCheck
+	{
+		public BORowVersionCheck()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>78ec6ae00784dabe6946818daeb8c5f5</Hash>
+    <Hash>88c6e2449488ace8c505afa0aa044f81</Hash>
 </Codenesium>*/

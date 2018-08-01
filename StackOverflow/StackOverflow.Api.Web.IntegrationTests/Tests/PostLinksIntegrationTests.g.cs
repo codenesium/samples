@@ -12,86 +12,86 @@ using Xunit;
 
 namespace StackOverflowNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "PostLinks")]
-        [Trait("Area", "Integration")]
-        public class PostLinksIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public PostLinksIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "PostLinks")]
+	[Trait("Area", "Integration")]
+	public class PostLinksIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public PostLinksIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiPostLinksModelMapper mapper = new ApiPostLinksModelMapper();
+			ApiPostLinksModelMapper mapper = new ApiPostLinksModelMapper();
 
-                        UpdateResponse<ApiPostLinksResponseModel> updateResponse = await this.Client.PostLinksUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPostLinksResponseModel> updateResponse = await this.Client.PostLinksUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.PostLinksDeleteAsync(model.Id);
+			await this.Client.PostLinksDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiPostLinksResponseModel response = await this.Client.PostLinksGetAsync(1);
+		[Fact]
+		public async void TestGet()
+		{
+			ApiPostLinksResponseModel response = await this.Client.PostLinksGetAsync(1);
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiPostLinksResponseModel> response = await this.Client.PostLinksAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiPostLinksResponseModel> response = await this.Client.PostLinksAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiPostLinksResponseModel> CreateRecord()
-                {
-                        var model = new ApiPostLinksRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
-                        CreateResponse<ApiPostLinksResponseModel> result = await this.Client.PostLinksCreateAsync(model);
+		private async Task<ApiPostLinksResponseModel> CreateRecord()
+		{
+			var model = new ApiPostLinksRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
+			CreateResponse<ApiPostLinksResponseModel> result = await this.Client.PostLinksCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.PostLinksDeleteAsync(2);
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.PostLinksDeleteAsync(2);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8c6c7863bb96cf3c40dff92fd80f11c2</Hash>
+    <Hash>a8505f9bbce58cb447848a0cba319000</Hash>
 </Codenesium>*/

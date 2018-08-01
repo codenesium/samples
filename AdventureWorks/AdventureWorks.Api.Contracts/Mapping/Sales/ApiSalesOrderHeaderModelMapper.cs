@@ -1,14 +1,14 @@
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesOrderHeaderModelMapper : AbstractApiSalesOrderHeaderModelMapper, IApiSalesOrderHeaderModelMapper
-        {
-                public ApiSalesOrderHeaderModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiSalesOrderHeaderModelMapper : AbstractApiSalesOrderHeaderModelMapper, IApiSalesOrderHeaderModelMapper
+	{
+		public ApiSalesOrderHeaderModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>ce97c8e979ed9c2514b231e797346c7d</Hash>
+    <Hash>6641118a230b871865ad7cef17d33a1c</Hash>
 </Codenesium>*/

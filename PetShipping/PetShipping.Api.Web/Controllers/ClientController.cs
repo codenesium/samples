@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
-        [Route("api/clients")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ClientController : AbstractClientController
-        {
-                public ClientController(
-                        ApiSettings settings,
-                        ILogger<ClientController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IClientService clientService,
-                        IApiClientModelMapper clientModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               clientService,
-                               clientModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/clients")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ClientController : AbstractClientController
+	{
+		public ClientController(
+			ApiSettings settings,
+			ILogger<ClientController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IClientService clientService,
+			IApiClientModelMapper clientModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       clientService,
+			       clientModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a4597f4b95d68b756ff537fd6ca225ba</Hash>
+    <Hash>752591cb192a6e1639366d0e51740ea9</Hash>
 </Codenesium>*/

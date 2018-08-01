@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class DALUnitMeasureMapper : DALAbstractUnitMeasureMapper, IDALUnitMeasureMapper
-        {
-                public DALUnitMeasureMapper()
-                {
-                }
-        }
+	public partial class DALUnitMeasureMapper : DALAbstractUnitMeasureMapper, IDALUnitMeasureMapper
+	{
+		public DALUnitMeasureMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>efe77548e8f750c72c80d402ca4bf92c</Hash>
+    <Hash>cde740830e436fb841401490038c8ec6</Hash>
 </Codenesium>*/

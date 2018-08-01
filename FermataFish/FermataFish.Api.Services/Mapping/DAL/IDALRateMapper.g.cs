@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public interface IDALRateMapper
-        {
-                Rate MapBOToEF(
-                        BORate bo);
+	public interface IDALRateMapper
+	{
+		Rate MapBOToEF(
+			BORate bo);
 
-                BORate MapEFToBO(
-                        Rate efRate);
+		BORate MapEFToBO(
+			Rate efRate);
 
-                List<BORate> MapEFToBO(
-                        List<Rate> records);
-        }
+		List<BORate> MapEFToBO(
+			List<Rate> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>11fb21ca15a303a897f3ea79e613912e</Hash>
+    <Hash>42ba93c05fee71ee01b1ea98bcd521ba</Hash>
 </Codenesium>*/

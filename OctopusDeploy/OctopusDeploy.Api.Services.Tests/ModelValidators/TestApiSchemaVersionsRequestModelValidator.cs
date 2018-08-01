@@ -15,41 +15,41 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SchemaVersions")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSchemaVersionsRequestModelValidatorTest
-        {
-                public ApiSchemaVersionsRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SchemaVersions")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSchemaVersionsRequestModelValidatorTest
+	{
+		public ApiSchemaVersionsRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void ScriptName_Create_length()
-                {
-                        Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
-                        schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
+		[Fact]
+		public async void ScriptName_Create_length()
+		{
+			Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
+			schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
 
-                        var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSchemaVersionsRequestModel());
+			var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSchemaVersionsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ScriptName, new string('A', 256));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.ScriptName, new string('A', 256));
+		}
 
-                [Fact]
-                public async void ScriptName_Update_length()
-                {
-                        Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
-                        schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
+		[Fact]
+		public async void ScriptName_Update_length()
+		{
+			Mock<ISchemaVersionsRepository> schemaVersionsRepository = new Mock<ISchemaVersionsRepository>();
+			schemaVersionsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaVersions()));
 
-                        var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSchemaVersionsRequestModel());
+			var validator = new ApiSchemaVersionsRequestModelValidator(schemaVersionsRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSchemaVersionsRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.ScriptName, new string('A', 256));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.ScriptName, new string('A', 256));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52cd6771c0aefe3b3562e82bf9885673</Hash>
+    <Hash>ef2d902be3bc7be8471e705bda74c2ae</Hash>
 </Codenesium>*/

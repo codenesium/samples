@@ -6,44 +6,44 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class DALAbstractLinkStatusMapper
-        {
-                public virtual LinkStatus MapBOToEF(
-                        BOLinkStatus bo)
-                {
-                        LinkStatus efLinkStatus = new LinkStatus();
-                        efLinkStatus.SetProperties(
-                                bo.Id,
-                                bo.Name);
-                        return efLinkStatus;
-                }
+	public abstract class DALAbstractLinkStatusMapper
+	{
+		public virtual LinkStatus MapBOToEF(
+			BOLinkStatus bo)
+		{
+			LinkStatus efLinkStatus = new LinkStatus();
+			efLinkStatus.SetProperties(
+				bo.Id,
+				bo.Name);
+			return efLinkStatus;
+		}
 
-                public virtual BOLinkStatus MapEFToBO(
-                        LinkStatus ef)
-                {
-                        var bo = new BOLinkStatus();
+		public virtual BOLinkStatus MapEFToBO(
+			LinkStatus ef)
+		{
+			var bo = new BOLinkStatus();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOLinkStatus> MapEFToBO(
-                        List<LinkStatus> records)
-                {
-                        List<BOLinkStatus> response = new List<BOLinkStatus>();
+		public virtual List<BOLinkStatus> MapEFToBO(
+			List<LinkStatus> records)
+		{
+			List<BOLinkStatus> response = new List<BOLinkStatus>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3052f554e0025c30ac58473656754a2e</Hash>
+    <Hash>8743634149d1d18a1842afd31af52160</Hash>
 </Codenesium>*/

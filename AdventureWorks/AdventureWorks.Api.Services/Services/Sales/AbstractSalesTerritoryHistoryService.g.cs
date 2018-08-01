@@ -12,104 +12,104 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSalesTerritoryHistoryService : AbstractService
-        {
-                private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
+	public abstract class AbstractSalesTerritoryHistoryService : AbstractService
+	{
+		private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
 
-                private IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator;
+		private IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator;
 
-                private IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper;
+		private IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper;
 
-                private IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper;
+		private IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper;
 
-                private ILogger logger;
+		private ILogger logger;
 
-                public AbstractSalesTerritoryHistoryService(
-                        ILogger logger,
-                        ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-                        IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
-                        IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
-                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper)
-                        : base()
-                {
-                        this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
-                        this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
-                        this.bolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
-                        this.dalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
-                        this.logger = logger;
-                }
+		public AbstractSalesTerritoryHistoryService(
+			ILogger logger,
+			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
+			IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
+			IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
+			IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper)
+			: base()
+		{
+			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
+			this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
+			this.bolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
+			this.dalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
+			this.logger = logger;
+		}
 
-                public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
-                {
-                        var records = await this.salesTerritoryHistoryRepository.All(limit, offset);
+		public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		{
+			var records = await this.salesTerritoryHistoryRepository.All(limit, offset);
 
-                        return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
-                }
+			return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
+		}
 
-                public virtual async Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID)
-                {
-                        var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
+		public virtual async Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID)
+		{
+			var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
 
-                        if (record == null)
-                        {
-                                return null;
-                        }
-                        else
-                        {
-                                return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record));
-                        }
-                }
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record));
+			}
+		}
 
-                public virtual async Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
-                        ApiSalesTerritoryHistoryRequestModel model)
-                {
-                        CreateResponse<ApiSalesTerritoryHistoryResponseModel> response = new CreateResponse<ApiSalesTerritoryHistoryResponseModel>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
-                        if (response.Success)
-                        {
-                                var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(default(int), model);
-                                var record = await this.salesTerritoryHistoryRepository.Create(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
+		public virtual async Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
+			ApiSalesTerritoryHistoryRequestModel model)
+		{
+			CreateResponse<ApiSalesTerritoryHistoryResponseModel> response = new CreateResponse<ApiSalesTerritoryHistoryResponseModel>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
+			if (response.Success)
+			{
+				var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.salesTerritoryHistoryRepository.Create(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
 
-                                response.SetRecord(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
-                        }
+				response.SetRecord(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
+			}
 
-                        return response;
-                }
+			return response;
+		}
 
-                public virtual async Task<UpdateResponse<ApiSalesTerritoryHistoryResponseModel>> Update(
-                        int businessEntityID,
-                        ApiSalesTerritoryHistoryRequestModel model)
-                {
-                        var validationResult = await this.salesTerritoryHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+		public virtual async Task<UpdateResponse<ApiSalesTerritoryHistoryResponseModel>> Update(
+			int businessEntityID,
+			ApiSalesTerritoryHistoryRequestModel model)
+		{
+			var validationResult = await this.salesTerritoryHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
-                        if (validationResult.IsValid)
-                        {
-                                var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(businessEntityID, model);
-                                await this.salesTerritoryHistoryRepository.Update(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
+			if (validationResult.IsValid)
+			{
+				var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.salesTerritoryHistoryRepository.Update(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
 
-                                var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
+				var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
 
-                                return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
-                        }
-                        else
-                        {
-                                return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(validationResult);
-                        }
-                }
+				return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(validationResult);
+			}
+		}
 
-                public virtual async Task<ActionResponse> Delete(
-                        int businessEntityID)
-                {
-                        ActionResponse response = new ActionResponse(await this.salesTerritoryHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
-                        if (response.Success)
-                        {
-                                await this.salesTerritoryHistoryRepository.Delete(businessEntityID);
-                        }
+		public virtual async Task<ActionResponse> Delete(
+			int businessEntityID)
+		{
+			ActionResponse response = new ActionResponse(await this.salesTerritoryHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
+			if (response.Success)
+			{
+				await this.salesTerritoryHistoryRepository.Delete(businessEntityID);
+			}
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4db1e39962f3fb12fc8cf0c214ae43e4</Hash>
+    <Hash>1ca70f011affe6a15756474bedcdfe2b</Hash>
 </Codenesium>*/

@@ -5,54 +5,54 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class BOLAbstractInterruptionMapper
-        {
-                public virtual BOInterruption MapModelToBO(
-                        string id,
-                        ApiInterruptionRequestModel model
-                        )
-                {
-                        BOInterruption boInterruption = new BOInterruption();
-                        boInterruption.SetProperties(
-                                id,
-                                model.Created,
-                                model.EnvironmentId,
-                                model.JSON,
-                                model.ProjectId,
-                                model.RelatedDocumentIds,
-                                model.ResponsibleTeamIds,
-                                model.Status,
-                                model.TaskId,
-                                model.TenantId,
-                                model.Title);
-                        return boInterruption;
-                }
+	public abstract class BOLAbstractInterruptionMapper
+	{
+		public virtual BOInterruption MapModelToBO(
+			string id,
+			ApiInterruptionRequestModel model
+			)
+		{
+			BOInterruption boInterruption = new BOInterruption();
+			boInterruption.SetProperties(
+				id,
+				model.Created,
+				model.EnvironmentId,
+				model.JSON,
+				model.ProjectId,
+				model.RelatedDocumentIds,
+				model.ResponsibleTeamIds,
+				model.Status,
+				model.TaskId,
+				model.TenantId,
+				model.Title);
+			return boInterruption;
+		}
 
-                public virtual ApiInterruptionResponseModel MapBOToModel(
-                        BOInterruption boInterruption)
-                {
-                        var model = new ApiInterruptionResponseModel();
+		public virtual ApiInterruptionResponseModel MapBOToModel(
+			BOInterruption boInterruption)
+		{
+			var model = new ApiInterruptionResponseModel();
 
-                        model.SetProperties(boInterruption.Id, boInterruption.Created, boInterruption.EnvironmentId, boInterruption.JSON, boInterruption.ProjectId, boInterruption.RelatedDocumentIds, boInterruption.ResponsibleTeamIds, boInterruption.Status, boInterruption.TaskId, boInterruption.TenantId, boInterruption.Title);
+			model.SetProperties(boInterruption.Id, boInterruption.Created, boInterruption.EnvironmentId, boInterruption.JSON, boInterruption.ProjectId, boInterruption.RelatedDocumentIds, boInterruption.ResponsibleTeamIds, boInterruption.Status, boInterruption.TaskId, boInterruption.TenantId, boInterruption.Title);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiInterruptionResponseModel> MapBOToModel(
-                        List<BOInterruption> items)
-                {
-                        List<ApiInterruptionResponseModel> response = new List<ApiInterruptionResponseModel>();
+		public virtual List<ApiInterruptionResponseModel> MapBOToModel(
+			List<BOInterruption> items)
+		{
+			List<ApiInterruptionResponseModel> response = new List<ApiInterruptionResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c3cc25965eedcb68b66b9fe29631f61a</Hash>
+    <Hash>932e32d31858e22807876f953107bd69</Hash>
 </Codenesium>*/

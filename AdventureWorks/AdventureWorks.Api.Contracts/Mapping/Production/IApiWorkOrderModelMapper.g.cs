@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public interface IApiWorkOrderModelMapper
-        {
-                ApiWorkOrderResponseModel MapRequestToResponse(
-                        int workOrderID,
-                        ApiWorkOrderRequestModel request);
+	public interface IApiWorkOrderModelMapper
+	{
+		ApiWorkOrderResponseModel MapRequestToResponse(
+			int workOrderID,
+			ApiWorkOrderRequestModel request);
 
-                ApiWorkOrderRequestModel MapResponseToRequest(
-                        ApiWorkOrderResponseModel response);
+		ApiWorkOrderRequestModel MapResponseToRequest(
+			ApiWorkOrderResponseModel response);
 
-                JsonPatchDocument<ApiWorkOrderRequestModel> CreatePatch(ApiWorkOrderRequestModel model);
-        }
+		JsonPatchDocument<ApiWorkOrderRequestModel> CreatePatch(ApiWorkOrderRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>0593a78d32b897fedd055b5150a39db8</Hash>
+    <Hash>296fdfa45fd92e288e90379fe1f15cf1</Hash>
 </Codenesium>*/

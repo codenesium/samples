@@ -7,26 +7,26 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public interface IVenueService
-        {
-                Task<CreateResponse<ApiVenueResponseModel>> Create(
-                        ApiVenueRequestModel model);
+	public interface IVenueService
+	{
+		Task<CreateResponse<ApiVenueResponseModel>> Create(
+			ApiVenueRequestModel model);
 
-                Task<UpdateResponse<ApiVenueResponseModel>> Update(int id,
-                                                                    ApiVenueRequestModel model);
+		Task<UpdateResponse<ApiVenueResponseModel>> Update(int id,
+		                                                    ApiVenueRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiVenueResponseModel> Get(int id);
+		Task<ApiVenueResponseModel> Get(int id);
 
-                Task<List<ApiVenueResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiVenueResponseModel>> ByAdminId(int adminId);
+		Task<List<ApiVenueResponseModel>> ByAdminId(int adminId);
 
-                Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId);
-        }
+		Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>080a6bb94e64eeb7ed13ff4f81e2951a</Hash>
+    <Hash>05d335077f533c3fe187db0f62e88875</Hash>
 </Codenesium>*/

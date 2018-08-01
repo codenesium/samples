@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLCountryRegionMapper : BOLAbstractCountryRegionMapper, IBOLCountryRegionMapper
-        {
-                public BOLCountryRegionMapper()
-                {
-                }
-        }
+	public partial class BOLCountryRegionMapper : BOLAbstractCountryRegionMapper, IBOLCountryRegionMapper
+	{
+		public BOLCountryRegionMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>02f87c2dcd0dbc41e35b6b22cd886de6</Hash>
+    <Hash>af83e7ffed8158e5ef701ad631f5eeb6</Hash>
 </Codenesium>*/

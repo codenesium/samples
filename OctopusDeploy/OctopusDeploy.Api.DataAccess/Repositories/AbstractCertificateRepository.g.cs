@@ -11,130 +11,130 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractCertificateRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractCertificateRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractCertificateRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractCertificateRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<Certificate>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<Certificate>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<Certificate> Get(string id)
-                {
-                        return await this.GetById(id);
-                }
+		public async virtual Task<Certificate> Get(string id)
+		{
+			return await this.GetById(id);
+		}
 
-                public async virtual Task<Certificate> Create(Certificate item)
-                {
-                        this.Context.Set<Certificate>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<Certificate> Create(Certificate item)
+		{
+			this.Context.Set<Certificate>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(Certificate item)
-                {
-                        var entity = this.Context.Set<Certificate>().Local.FirstOrDefault(x => x.Id == item.Id);
-                        if (entity == null)
-                        {
-                                this.Context.Set<Certificate>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(Certificate item)
+		{
+			var entity = this.Context.Set<Certificate>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<Certificate>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        string id)
-                {
-                        Certificate record = await this.GetById(id);
+		public async virtual Task Delete(
+			string id)
+		{
+			Certificate record = await this.GetById(id);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<Certificate>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<Certificate>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                public async Task<List<Certificate>> ByCreated(DateTimeOffset created)
-                {
-                        var records = await this.Where(x => x.Created == created);
+		public async Task<List<Certificate>> ByCreated(DateTimeOffset created)
+		{
+			var records = await this.Where(x => x.Created == created);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<Certificate>> ByDataVersion(byte[] dataVersion)
-                {
-                        var records = await this.Where(x => x.DataVersion == dataVersion);
+		public async Task<List<Certificate>> ByDataVersion(byte[] dataVersion)
+		{
+			var records = await this.Where(x => x.DataVersion == dataVersion);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter)
-                {
-                        var records = await this.Where(x => x.NotAfter == notAfter);
+		public async Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter)
+		{
+			var records = await this.Where(x => x.NotAfter == notAfter);
 
-                        return records;
-                }
+			return records;
+		}
 
-                public async Task<List<Certificate>> ByThumbprint(string thumbprint)
-                {
-                        var records = await this.Where(x => x.Thumbprint == thumbprint);
+		public async Task<List<Certificate>> ByThumbprint(string thumbprint)
+		{
+			var records = await this.Where(x => x.Thumbprint == thumbprint);
 
-                        return records;
-                }
+			return records;
+		}
 
-                protected async Task<List<Certificate>> Where(
-                        Expression<Func<Certificate, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<Certificate, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.Id;
-                        }
+		protected async Task<List<Certificate>> Where(
+			Expression<Func<Certificate, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<Certificate, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Id;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<Certificate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Certificate>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<Certificate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Certificate>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<Certificate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Certificate>();
+			}
+			else
+			{
+				return await this.Context.Set<Certificate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Certificate>();
+			}
+		}
 
-                private async Task<Certificate> GetById(string id)
-                {
-                        List<Certificate> records = await this.Where(x => x.Id == id);
+		private async Task<Certificate> GetById(string id)
+		{
+			List<Certificate> records = await this.Where(x => x.Id == id);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>346fea44c570c5b2c815eff4b74038f3</Hash>
+    <Hash>8e364e5951e543399fd02b8b93777e71</Hash>
 </Codenesium>*/

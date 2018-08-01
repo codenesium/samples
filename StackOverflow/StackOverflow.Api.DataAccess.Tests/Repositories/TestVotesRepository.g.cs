@@ -9,127 +9,127 @@ using Xunit;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-        public partial class VotesRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class VotesRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<VotesRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<VotesRepository>>();
-                }
-        }
+		public static Mock<ILogger<VotesRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<VotesRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Votes")]
-        [Trait("Area", "Repositories")]
-        public partial class VotesRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Votes")]
+	[Trait("Area", "Repositories")]
+	public partial class VotesRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
 
-                        Votes entity = new Votes();
-                        context.Set<Votes>().Add(entity);
-                        await context.SaveChangesAsync();
+			Votes entity = new Votes();
+			context.Set<Votes>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
 
-                        Votes entity = new Votes();
-                        context.Set<Votes>().Add(entity);
-                        await context.SaveChangesAsync();
+			Votes entity = new Votes();
+			context.Set<Votes>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
 
-                        var entity = new Votes();
-                        await repository.Create(entity);
+			var entity = new Votes();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Votes>().FirstOrDefaultAsync();
+			var record = await context.Set<Votes>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
-                        Votes entity = new Votes();
-                        context.Set<Votes>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
+			Votes entity = new Votes();
+			context.Set<Votes>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Votes>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Votes>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
-                        Votes entity = new Votes();
-                        context.Set<Votes>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
+			Votes entity = new Votes();
+			context.Set<Votes>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Votes());
+			await repository.Update(new Votes());
 
-                        var modifiedRecord = context.Set<Votes>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Votes>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = VotesRepositoryMoc.GetContext();
-                        var repository = new VotesRepository(loggerMoc.Object, context);
-                        Votes entity = new Votes();
-                        context.Set<Votes>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<VotesRepository>> loggerMoc = VotesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VotesRepositoryMoc.GetContext();
+			var repository = new VotesRepository(loggerMoc.Object, context);
+			Votes entity = new Votes();
+			context.Set<Votes>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Votes modifiedRecord = await context.Set<Votes>().FirstOrDefaultAsync();
+			Votes modifiedRecord = await context.Set<Votes>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4a2d3fe34366c32721f6606c94fdf932</Hash>
+    <Hash>75bfd2eef41e3f8ce21c55f5f4ff8cff</Hash>
 </Codenesium>*/

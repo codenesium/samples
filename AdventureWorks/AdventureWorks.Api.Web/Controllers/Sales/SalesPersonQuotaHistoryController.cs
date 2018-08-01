@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/salesPersonQuotaHistories")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SalesPersonQuotaHistoryController : AbstractSalesPersonQuotaHistoryController
-        {
-                public SalesPersonQuotaHistoryController(
-                        ApiSettings settings,
-                        ILogger<SalesPersonQuotaHistoryController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService,
-                        IApiSalesPersonQuotaHistoryModelMapper salesPersonQuotaHistoryModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               salesPersonQuotaHistoryService,
-                               salesPersonQuotaHistoryModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/salesPersonQuotaHistories")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SalesPersonQuotaHistoryController : AbstractSalesPersonQuotaHistoryController
+	{
+		public SalesPersonQuotaHistoryController(
+			ApiSettings settings,
+			ILogger<SalesPersonQuotaHistoryController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService,
+			IApiSalesPersonQuotaHistoryModelMapper salesPersonQuotaHistoryModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       salesPersonQuotaHistoryService,
+			       salesPersonQuotaHistoryModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0425b430d4f4204b8a67c3371d62d24a</Hash>
+    <Hash>4537835c121ecde501cfab417b9139fb</Hash>
 </Codenesium>*/

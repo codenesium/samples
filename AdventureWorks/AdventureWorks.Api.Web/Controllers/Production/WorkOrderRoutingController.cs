@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
-        [Route("api/workOrderRoutings")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class WorkOrderRoutingController : AbstractWorkOrderRoutingController
-        {
-                public WorkOrderRoutingController(
-                        ApiSettings settings,
-                        ILogger<WorkOrderRoutingController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IWorkOrderRoutingService workOrderRoutingService,
-                        IApiWorkOrderRoutingModelMapper workOrderRoutingModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               workOrderRoutingService,
-                               workOrderRoutingModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/workOrderRoutings")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class WorkOrderRoutingController : AbstractWorkOrderRoutingController
+	{
+		public WorkOrderRoutingController(
+			ApiSettings settings,
+			ILogger<WorkOrderRoutingController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IWorkOrderRoutingService workOrderRoutingService,
+			IApiWorkOrderRoutingModelMapper workOrderRoutingModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       workOrderRoutingService,
+			       workOrderRoutingModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>759b8efd92593d16276bc062bbd8d533</Hash>
+    <Hash>43cc75ea8174896b990b9192b965a472</Hash>
 </Codenesium>*/

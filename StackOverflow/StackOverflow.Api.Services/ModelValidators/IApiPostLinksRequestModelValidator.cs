@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface IApiPostLinksRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiPostLinksRequestModel model);
+	public interface IApiPostLinksRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiPostLinksRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiPostLinksRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPostLinksRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a967ab1865370229ee514f33790c5077</Hash>
+    <Hash>d0943dde43c5aaba32bdaab005964d88</Hash>
 </Codenesium>*/

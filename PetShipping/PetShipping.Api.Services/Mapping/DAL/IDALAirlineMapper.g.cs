@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public interface IDALAirlineMapper
-        {
-                Airline MapBOToEF(
-                        BOAirline bo);
+	public interface IDALAirlineMapper
+	{
+		Airline MapBOToEF(
+			BOAirline bo);
 
-                BOAirline MapEFToBO(
-                        Airline efAirline);
+		BOAirline MapEFToBO(
+			Airline efAirline);
 
-                List<BOAirline> MapEFToBO(
-                        List<Airline> records);
-        }
+		List<BOAirline> MapEFToBO(
+			List<Airline> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>1b1ba7c71ebca4ec0d0c8a9e9c24ae24</Hash>
+    <Hash>9620e4b496f67de6046c4748ef42dc4b</Hash>
 </Codenesium>*/

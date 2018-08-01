@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDatabaseLogService
-        {
-                Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
-                        ApiDatabaseLogRequestModel model);
+	public interface IDatabaseLogService
+	{
+		Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
+			ApiDatabaseLogRequestModel model);
 
-                Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(int databaseLogID,
-                                                                          ApiDatabaseLogRequestModel model);
+		Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(int databaseLogID,
+		                                                          ApiDatabaseLogRequestModel model);
 
-                Task<ActionResponse> Delete(int databaseLogID);
+		Task<ActionResponse> Delete(int databaseLogID);
 
-                Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
+		Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
 
-                Task<List<ApiDatabaseLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiDatabaseLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>c2af15ac38b3fa3569c101901514e587</Hash>
+    <Hash>ddc4409c27a064d13247b75df4434fa3</Hash>
 </Codenesium>*/

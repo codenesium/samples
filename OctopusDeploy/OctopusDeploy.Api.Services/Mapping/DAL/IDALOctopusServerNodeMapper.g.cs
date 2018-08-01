@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public interface IDALOctopusServerNodeMapper
-        {
-                OctopusServerNode MapBOToEF(
-                        BOOctopusServerNode bo);
+	public interface IDALOctopusServerNodeMapper
+	{
+		OctopusServerNode MapBOToEF(
+			BOOctopusServerNode bo);
 
-                BOOctopusServerNode MapEFToBO(
-                        OctopusServerNode efOctopusServerNode);
+		BOOctopusServerNode MapEFToBO(
+			OctopusServerNode efOctopusServerNode);
 
-                List<BOOctopusServerNode> MapEFToBO(
-                        List<OctopusServerNode> records);
-        }
+		List<BOOctopusServerNode> MapEFToBO(
+			List<OctopusServerNode> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>494513daec11667fb905aa704d923b1c</Hash>
+    <Hash>b94eb30c0edefc1b498375329e16b3cf</Hash>
 </Codenesium>*/

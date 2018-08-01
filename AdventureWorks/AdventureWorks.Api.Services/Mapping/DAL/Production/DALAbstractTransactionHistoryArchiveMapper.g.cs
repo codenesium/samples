@@ -6,58 +6,58 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractTransactionHistoryArchiveMapper
-        {
-                public virtual TransactionHistoryArchive MapBOToEF(
-                        BOTransactionHistoryArchive bo)
-                {
-                        TransactionHistoryArchive efTransactionHistoryArchive = new TransactionHistoryArchive();
-                        efTransactionHistoryArchive.SetProperties(
-                                bo.ActualCost,
-                                bo.ModifiedDate,
-                                bo.ProductID,
-                                bo.Quantity,
-                                bo.ReferenceOrderID,
-                                bo.ReferenceOrderLineID,
-                                bo.TransactionDate,
-                                bo.TransactionID,
-                                bo.TransactionType);
-                        return efTransactionHistoryArchive;
-                }
+	public abstract class DALAbstractTransactionHistoryArchiveMapper
+	{
+		public virtual TransactionHistoryArchive MapBOToEF(
+			BOTransactionHistoryArchive bo)
+		{
+			TransactionHistoryArchive efTransactionHistoryArchive = new TransactionHistoryArchive();
+			efTransactionHistoryArchive.SetProperties(
+				bo.ActualCost,
+				bo.ModifiedDate,
+				bo.ProductID,
+				bo.Quantity,
+				bo.ReferenceOrderID,
+				bo.ReferenceOrderLineID,
+				bo.TransactionDate,
+				bo.TransactionID,
+				bo.TransactionType);
+			return efTransactionHistoryArchive;
+		}
 
-                public virtual BOTransactionHistoryArchive MapEFToBO(
-                        TransactionHistoryArchive ef)
-                {
-                        var bo = new BOTransactionHistoryArchive();
+		public virtual BOTransactionHistoryArchive MapEFToBO(
+			TransactionHistoryArchive ef)
+		{
+			var bo = new BOTransactionHistoryArchive();
 
-                        bo.SetProperties(
-                                ef.TransactionID,
-                                ef.ActualCost,
-                                ef.ModifiedDate,
-                                ef.ProductID,
-                                ef.Quantity,
-                                ef.ReferenceOrderID,
-                                ef.ReferenceOrderLineID,
-                                ef.TransactionDate,
-                                ef.TransactionType);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.TransactionID,
+				ef.ActualCost,
+				ef.ModifiedDate,
+				ef.ProductID,
+				ef.Quantity,
+				ef.ReferenceOrderID,
+				ef.ReferenceOrderLineID,
+				ef.TransactionDate,
+				ef.TransactionType);
+			return bo;
+		}
 
-                public virtual List<BOTransactionHistoryArchive> MapEFToBO(
-                        List<TransactionHistoryArchive> records)
-                {
-                        List<BOTransactionHistoryArchive> response = new List<BOTransactionHistoryArchive>();
+		public virtual List<BOTransactionHistoryArchive> MapEFToBO(
+			List<TransactionHistoryArchive> records)
+		{
+			List<BOTransactionHistoryArchive> response = new List<BOTransactionHistoryArchive>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>a7ef520f054fbe522573a2796b15d866</Hash>
+    <Hash>c03a4770a2d92a87cc6e4aa818ed6333</Hash>
 </Codenesium>*/

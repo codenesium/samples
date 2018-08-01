@@ -6,54 +6,54 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class DALAbstractTenantVariableMapper
-        {
-                public virtual TenantVariable MapBOToEF(
-                        BOTenantVariable bo)
-                {
-                        TenantVariable efTenantVariable = new TenantVariable();
-                        efTenantVariable.SetProperties(
-                                bo.EnvironmentId,
-                                bo.Id,
-                                bo.JSON,
-                                bo.OwnerId,
-                                bo.RelatedDocumentId,
-                                bo.TenantId,
-                                bo.VariableTemplateId);
-                        return efTenantVariable;
-                }
+	public abstract class DALAbstractTenantVariableMapper
+	{
+		public virtual TenantVariable MapBOToEF(
+			BOTenantVariable bo)
+		{
+			TenantVariable efTenantVariable = new TenantVariable();
+			efTenantVariable.SetProperties(
+				bo.EnvironmentId,
+				bo.Id,
+				bo.JSON,
+				bo.OwnerId,
+				bo.RelatedDocumentId,
+				bo.TenantId,
+				bo.VariableTemplateId);
+			return efTenantVariable;
+		}
 
-                public virtual BOTenantVariable MapEFToBO(
-                        TenantVariable ef)
-                {
-                        var bo = new BOTenantVariable();
+		public virtual BOTenantVariable MapEFToBO(
+			TenantVariable ef)
+		{
+			var bo = new BOTenantVariable();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.EnvironmentId,
-                                ef.JSON,
-                                ef.OwnerId,
-                                ef.RelatedDocumentId,
-                                ef.TenantId,
-                                ef.VariableTemplateId);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.EnvironmentId,
+				ef.JSON,
+				ef.OwnerId,
+				ef.RelatedDocumentId,
+				ef.TenantId,
+				ef.VariableTemplateId);
+			return bo;
+		}
 
-                public virtual List<BOTenantVariable> MapEFToBO(
-                        List<TenantVariable> records)
-                {
-                        List<BOTenantVariable> response = new List<BOTenantVariable>();
+		public virtual List<BOTenantVariable> MapEFToBO(
+			List<TenantVariable> records)
+		{
+			List<BOTenantVariable> response = new List<BOTenantVariable>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6f80f8a3cafe38300ebf0867efd0be3a</Hash>
+    <Hash>d1725c65f93133e72f56b003ca890295</Hash>
 </Codenesium>*/

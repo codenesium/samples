@@ -15,91 +15,91 @@ using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Sale")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSaleRequestModelValidatorTest
-        {
-                public ApiSaleRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Sale")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSaleRequestModelValidatorTest
+	{
+		public ApiSaleRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void IpAddress_Create_length()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+		[Fact]
+		public async void IpAddress_Create_length()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.IpAddress, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.IpAddress, new string('A', 129));
+		}
 
-                [Fact]
-                public async void IpAddress_Update_length()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+		[Fact]
+		public async void IpAddress_Update_length()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.IpAddress, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.IpAddress, new string('A', 129));
+		}
 
-                [Fact]
-                public async void TransactionId_Create_Valid_Reference()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
+		[Fact]
+		public async void TransactionId_Create_Valid_Reference()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TransactionId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TransactionId, 1);
+		}
 
-                [Fact]
-                public async void TransactionId_Create_Invalid_Reference()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
+		[Fact]
+		public async void TransactionId_Create_Invalid_Reference()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionId, 1);
+		}
 
-                [Fact]
-                public async void TransactionId_Update_Valid_Reference()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
+		[Fact]
+		public async void TransactionId_Update_Valid_Reference()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.TransactionId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.TransactionId, 1);
+		}
 
-                [Fact]
-                public async void TransactionId_Update_Invalid_Reference()
-                {
-                        Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-                        saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
+		[Fact]
+		public async void TransactionId_Update_Invalid_Reference()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
 
-                        var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4d5cde9dc7579258ba4f5a77cf80bb59</Hash>
+    <Hash>e626b83c8cd47338258c6af6a9c4fff1</Hash>
 </Codenesium>*/

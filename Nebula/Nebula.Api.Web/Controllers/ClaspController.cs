@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
-        [Route("api/clasps")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class ClaspController : AbstractClaspController
-        {
-                public ClaspController(
-                        ApiSettings settings,
-                        ILogger<ClaspController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IClaspService claspService,
-                        IApiClaspModelMapper claspModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               claspService,
-                               claspModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/clasps")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class ClaspController : AbstractClaspController
+	{
+		public ClaspController(
+			ApiSettings settings,
+			ILogger<ClaspController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IClaspService claspService,
+			IApiClaspModelMapper claspModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       claspService,
+			       claspModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>5adeb97249568a6ec1ccf1e5cb809ef2</Hash>
+    <Hash>07ebf2ffeaf3780a526837640688a37c</Hash>
 </Codenesium>*/

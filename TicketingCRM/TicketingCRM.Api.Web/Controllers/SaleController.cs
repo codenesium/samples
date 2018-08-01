@@ -12,31 +12,31 @@ using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Web
 {
-        [Route("api/sales")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class SaleController : AbstractSaleController
-        {
-                public SaleController(
-                        ApiSettings settings,
-                        ILogger<SaleController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        ISaleService saleService,
-                        IApiSaleModelMapper saleModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               saleService,
-                               saleModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/sales")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class SaleController : AbstractSaleController
+	{
+		public SaleController(
+			ApiSettings settings,
+			ILogger<SaleController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			ISaleService saleService,
+			IApiSaleModelMapper saleModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       saleService,
+			       saleModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>171633358e9f7e1437a76054d90bf970</Hash>
+    <Hash>d0a248725b3bebd1f28912d8658eb835</Hash>
 </Codenesium>*/

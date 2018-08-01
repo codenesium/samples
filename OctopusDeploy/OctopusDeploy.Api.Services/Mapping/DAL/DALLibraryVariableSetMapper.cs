@@ -4,14 +4,14 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class DALLibraryVariableSetMapper : DALAbstractLibraryVariableSetMapper, IDALLibraryVariableSetMapper
-        {
-                public DALLibraryVariableSetMapper()
-                {
-                }
-        }
+	public partial class DALLibraryVariableSetMapper : DALAbstractLibraryVariableSetMapper, IDALLibraryVariableSetMapper
+	{
+		public DALLibraryVariableSetMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>072fcb0a424f1e4ac31cc6cd51256da8</Hash>
+    <Hash>9c7c3fc31da458c3673715cbaf748439</Hash>
 </Codenesium>*/

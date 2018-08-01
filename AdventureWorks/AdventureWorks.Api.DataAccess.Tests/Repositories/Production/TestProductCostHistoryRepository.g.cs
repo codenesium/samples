@@ -9,127 +9,127 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public partial class ProductCostHistoryRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ProductCostHistoryRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ProductCostHistoryRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ProductCostHistoryRepository>>();
-                }
-        }
+		public static Mock<ILogger<ProductCostHistoryRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ProductCostHistoryRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ProductCostHistory")]
-        [Trait("Area", "Repositories")]
-        public partial class ProductCostHistoryRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ProductCostHistory")]
+	[Trait("Area", "Repositories")]
+	public partial class ProductCostHistoryRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
-                        ProductCostHistory entity = new ProductCostHistory();
-                        context.Set<ProductCostHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductCostHistory entity = new ProductCostHistory();
+			context.Set<ProductCostHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
-                        ProductCostHistory entity = new ProductCostHistory();
-                        context.Set<ProductCostHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+			ProductCostHistory entity = new ProductCostHistory();
+			context.Set<ProductCostHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
-                        var entity = new ProductCostHistory();
-                        await repository.Create(entity);
+			var entity = new ProductCostHistory();
+			await repository.Create(entity);
 
-                        var record = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+			var record = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-                        ProductCostHistory entity = new ProductCostHistory();
-                        context.Set<ProductCostHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+			ProductCostHistory entity = new ProductCostHistory();
+			context.Set<ProductCostHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.ProductID);
+			var record = await repository.Get(entity.ProductID);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<ProductCostHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-                        ProductCostHistory entity = new ProductCostHistory();
-                        context.Set<ProductCostHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+			ProductCostHistory entity = new ProductCostHistory();
+			context.Set<ProductCostHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new ProductCostHistory());
+			await repository.Update(new ProductCostHistory());
 
-                        var modifiedRecord = context.Set<ProductCostHistory>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
-                        var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-                        ProductCostHistory entity = new ProductCostHistory();
-                        context.Set<ProductCostHistory>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
+			var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
+			ProductCostHistory entity = new ProductCostHistory();
+			context.Set<ProductCostHistory>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.ProductID);
+			await repository.Delete(entity.ProductID);
 
-                        ProductCostHistory modifiedRecord = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+			ProductCostHistory modifiedRecord = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>c4252b489c2e41448e772536450cde1a</Hash>
+    <Hash>ae40e333bf510f61a0e6335a926428b6</Hash>
 </Codenesium>*/

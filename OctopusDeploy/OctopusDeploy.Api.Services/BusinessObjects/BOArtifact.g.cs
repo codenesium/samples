@@ -3,15 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOArtifact : AbstractBOArtifact
-        {
-                public BOArtifact()
-                        : base()
-                {
-                }
-        }
+	public partial class BOArtifact : AbstractBOArtifact
+	{
+		public BOArtifact()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fa1d94466d9f78f9f2a110ee560095fc</Hash>
+    <Hash>9d40d4714b56b3baa8b6b84bc1a05ccd</Hash>
 </Codenesium>*/

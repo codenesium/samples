@@ -7,65 +7,64 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Channel")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiChannelModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiChannelModelMapper();
-                        var model = new ApiChannelRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
-                        ApiChannelResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Channel")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiChannelModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiChannelModelMapper();
+			var model = new ApiChannelRequestModel();
+			model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
+			ApiChannelResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.LifecycleId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.ProjectId.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.LifecycleId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.ProjectId.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiChannelModelMapper();
-                        var model = new ApiChannelResponseModel();
-                        model.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
-                        ApiChannelRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiChannelModelMapper();
+			var model = new ApiChannelResponseModel();
+			model.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
+			ApiChannelRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.JSON.Should().Be("A");
-                        response.LifecycleId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.ProjectId.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.JSON.Should().Be("A");
+			response.LifecycleId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.ProjectId.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiChannelModelMapper();
-                        var model = new ApiChannelRequestModel();
-                        model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiChannelModelMapper();
+			var model = new ApiChannelRequestModel();
+			model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
 
-                        JsonPatchDocument<ApiChannelRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiChannelRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
-                        response.JSON.Should().Be("A");
-                        response.LifecycleId.Should().Be("A");
-                        response.Name.Should().Be("A");
-                        response.ProjectId.Should().Be("A");
-                        response.TenantTags.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiChannelRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiChannelRequestModel();
+			patch.ApplyTo(response);
+			response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
+			response.JSON.Should().Be("A");
+			response.LifecycleId.Should().Be("A");
+			response.Name.Should().Be("A");
+			response.ProjectId.Should().Be("A");
+			response.TenantTags.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>08ef9c77f164d88335c7ab7fba872b28</Hash>
+    <Hash>24757988944a814d24024dd08026ae8a</Hash>
 </Codenesium>*/

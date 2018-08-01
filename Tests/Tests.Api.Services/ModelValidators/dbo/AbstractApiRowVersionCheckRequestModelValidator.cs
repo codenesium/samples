@@ -9,35 +9,35 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-        public abstract class AbstractApiRowVersionCheckRequestModelValidator : AbstractValidator<ApiRowVersionCheckRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiRowVersionCheckRequestModelValidator : AbstractValidator<ApiRowVersionCheckRequestModel>
+	{
+		private int existingRecordId;
 
-                private IRowVersionCheckRepository rowVersionCheckRepository;
+		private IRowVersionCheckRepository rowVersionCheckRepository;
 
-                public AbstractApiRowVersionCheckRequestModelValidator(IRowVersionCheckRepository rowVersionCheckRepository)
-                {
-                        this.rowVersionCheckRepository = rowVersionCheckRepository;
-                }
+		public AbstractApiRowVersionCheckRequestModelValidator(IRowVersionCheckRepository rowVersionCheckRepository)
+		{
+			this.rowVersionCheckRepository = rowVersionCheckRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiRowVersionCheckRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiRowVersionCheckRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x.Name).Length(0, 50);
-                }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
 
-                public virtual void RowVersionRules()
-                {
-                }
-        }
+		public virtual void RowVersionRules()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3b9c6da86a1f8e0da0fae51dc645183b</Hash>
+    <Hash>de11d16ad9deead2182c6d79b88ed513</Hash>
 </Codenesium>*/

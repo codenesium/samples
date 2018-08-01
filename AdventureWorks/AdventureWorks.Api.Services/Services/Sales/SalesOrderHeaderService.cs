@@ -10,33 +10,33 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class SalesOrderHeaderService : AbstractSalesOrderHeaderService, ISalesOrderHeaderService
-        {
-                public SalesOrderHeaderService(
-                        ILogger<ISalesOrderHeaderRepository> logger,
-                        ISalesOrderHeaderRepository salesOrderHeaderRepository,
-                        IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
-                        IBOLSalesOrderHeaderMapper bolsalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalsalesOrderHeaderMapper,
-                        IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper,
-                        IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper
-                        )
-                        : base(logger,
-                               salesOrderHeaderRepository,
-                               salesOrderHeaderModelValidator,
-                               bolsalesOrderHeaderMapper,
-                               dalsalesOrderHeaderMapper,
-                               bolSalesOrderDetailMapper,
-                               dalSalesOrderDetailMapper,
-                               bolSalesOrderHeaderSalesReasonMapper,
-                               dalSalesOrderHeaderSalesReasonMapper)
-                {
-                }
-        }
+	public partial class SalesOrderHeaderService : AbstractSalesOrderHeaderService, ISalesOrderHeaderService
+	{
+		public SalesOrderHeaderService(
+			ILogger<ISalesOrderHeaderRepository> logger,
+			ISalesOrderHeaderRepository salesOrderHeaderRepository,
+			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
+			IBOLSalesOrderHeaderMapper bolsalesOrderHeaderMapper,
+			IDALSalesOrderHeaderMapper dalsalesOrderHeaderMapper,
+			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
+			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper,
+			IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
+			IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper
+			)
+			: base(logger,
+			       salesOrderHeaderRepository,
+			       salesOrderHeaderModelValidator,
+			       bolsalesOrderHeaderMapper,
+			       dalsalesOrderHeaderMapper,
+			       bolSalesOrderDetailMapper,
+			       dalSalesOrderDetailMapper,
+			       bolSalesOrderHeaderSalesReasonMapper,
+			       dalSalesOrderHeaderSalesReasonMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b3c33ffc4df23e14e7703f9b786f0c05</Hash>
+    <Hash>0c7815beb3915b5cca003bdca5c80d14</Hash>
 </Codenesium>*/

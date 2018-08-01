@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Proxy")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiProxyRequestModelValidatorTest
-        {
-                public ApiProxyRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Proxy")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiProxyRequestModelValidatorTest
+	{
+		public ApiProxyRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
 
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiProxyRequestModel());
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProxyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Proxy()));
 
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProxyRequestModel());
+			await validator.ValidateCreateAsync(new ApiProxyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiProxyRequestModel());
+			await validator.ValidateCreateAsync(new ApiProxyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(new Proxy()));
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
-                        proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
-                        var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IProxyRepository> proxyRepository = new Mock<IProxyRepository>();
+			proxyRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Proxy>(null));
+			var validator = new ApiProxyRequestModelValidator(proxyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiProxyRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bcbcbd40048285a235a1ca2f9c403961</Hash>
+    <Hash>df5dc95fcef31ca8c4b2ef715bc76a18</Hash>
 </Codenesium>*/

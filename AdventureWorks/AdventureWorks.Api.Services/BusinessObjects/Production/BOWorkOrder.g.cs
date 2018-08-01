@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOWorkOrder : AbstractBOWorkOrder
-        {
-                public BOWorkOrder()
-                        : base()
-                {
-                }
-        }
+	public partial class BOWorkOrder : AbstractBOWorkOrder
+	{
+		public BOWorkOrder()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>73682f15d29144ece1b3a5020d54517b</Hash>
+    <Hash>dc2b1ec0f5f01e9019331a8819fc55b7</Hash>
 </Codenesium>*/

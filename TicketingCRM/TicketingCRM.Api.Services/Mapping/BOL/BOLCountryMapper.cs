@@ -5,14 +5,14 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOLCountryMapper : BOLAbstractCountryMapper, IBOLCountryMapper
-        {
-                public BOLCountryMapper()
-                {
-                }
-        }
+	public partial class BOLCountryMapper : BOLAbstractCountryMapper, IBOLCountryMapper
+	{
+		public BOLCountryMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f5533a72d3e2641356d71dbbb804312c</Hash>
+    <Hash>78d4a394d025b0a5b9d0ee70c4dd1641</Hash>
 </Codenesium>*/

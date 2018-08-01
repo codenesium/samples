@@ -5,47 +5,47 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class BOLAbstractProductCategoryMapper
-        {
-                public virtual BOProductCategory MapModelToBO(
-                        int productCategoryID,
-                        ApiProductCategoryRequestModel model
-                        )
-                {
-                        BOProductCategory boProductCategory = new BOProductCategory();
-                        boProductCategory.SetProperties(
-                                productCategoryID,
-                                model.ModifiedDate,
-                                model.Name,
-                                model.Rowguid);
-                        return boProductCategory;
-                }
+	public abstract class BOLAbstractProductCategoryMapper
+	{
+		public virtual BOProductCategory MapModelToBO(
+			int productCategoryID,
+			ApiProductCategoryRequestModel model
+			)
+		{
+			BOProductCategory boProductCategory = new BOProductCategory();
+			boProductCategory.SetProperties(
+				productCategoryID,
+				model.ModifiedDate,
+				model.Name,
+				model.Rowguid);
+			return boProductCategory;
+		}
 
-                public virtual ApiProductCategoryResponseModel MapBOToModel(
-                        BOProductCategory boProductCategory)
-                {
-                        var model = new ApiProductCategoryResponseModel();
+		public virtual ApiProductCategoryResponseModel MapBOToModel(
+			BOProductCategory boProductCategory)
+		{
+			var model = new ApiProductCategoryResponseModel();
 
-                        model.SetProperties(boProductCategory.ProductCategoryID, boProductCategory.ModifiedDate, boProductCategory.Name, boProductCategory.Rowguid);
+			model.SetProperties(boProductCategory.ProductCategoryID, boProductCategory.ModifiedDate, boProductCategory.Name, boProductCategory.Rowguid);
 
-                        return model;
-                }
+			return model;
+		}
 
-                public virtual List<ApiProductCategoryResponseModel> MapBOToModel(
-                        List<BOProductCategory> items)
-                {
-                        List<ApiProductCategoryResponseModel> response = new List<ApiProductCategoryResponseModel>();
+		public virtual List<ApiProductCategoryResponseModel> MapBOToModel(
+			List<BOProductCategory> items)
+		{
+			List<ApiProductCategoryResponseModel> response = new List<ApiProductCategoryResponseModel>();
 
-                        items.ForEach(d =>
-                        {
-                                response.Add(this.MapBOToModel(d));
-                        });
+			items.ForEach(d =>
+			{
+				response.Add(this.MapBOToModel(d));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>6545616b96f35b6d094b455b2ce2a9a6</Hash>
+    <Hash>08824b658fc39d5594f9045e2c552b05</Hash>
 </Codenesium>*/

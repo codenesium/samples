@@ -12,31 +12,31 @@ using System.Linq;
 
 namespace StackOverflowNS.Api.Web
 {
-        [Route("api/postTypes")]
-        [ApiController]
-        [ApiVersion("1.0")]
-        public class PostTypesController : AbstractPostTypesController
-        {
-                public PostTypesController(
-                        ApiSettings settings,
-                        ILogger<PostTypesController> logger,
-                        ITransactionCoordinator transactionCoordinator,
-                        IPostTypesService postTypesService,
-                        IApiPostTypesModelMapper postTypesModelMapper
-                        )
-                        : base(settings,
-                               logger,
-                               transactionCoordinator,
-                               postTypesService,
-                               postTypesModelMapper)
-                {
-                        this.BulkInsertLimit = 250;
-                        this.MaxLimit = 1000;
-                        this.DefaultLimit = 250;
-                }
-        }
+	[Route("api/postTypes")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	public class PostTypesController : AbstractPostTypesController
+	{
+		public PostTypesController(
+			ApiSettings settings,
+			ILogger<PostTypesController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IPostTypesService postTypesService,
+			IApiPostTypesModelMapper postTypesModelMapper
+			)
+			: base(settings,
+			       logger,
+			       transactionCoordinator,
+			       postTypesService,
+			       postTypesModelMapper)
+		{
+			this.BulkInsertLimit = 250;
+			this.MaxLimit = 1000;
+			this.DefaultLimit = 250;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>712778ed33e4eb9740e8eb0b8ebc7045</Hash>
+    <Hash>a8e3943280c8fcc931e1e8fab421dd00</Hash>
 </Codenesium>*/

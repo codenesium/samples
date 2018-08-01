@@ -9,127 +9,127 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class WorkerPoolRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class WorkerPoolRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<WorkerPoolRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<WorkerPoolRepository>>();
-                }
-        }
+		public static Mock<ILogger<WorkerPoolRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<WorkerPoolRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "WorkerPool")]
-        [Trait("Area", "Repositories")]
-        public partial class WorkerPoolRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "WorkerPool")]
+	[Trait("Area", "Repositories")]
+	public partial class WorkerPoolRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
-                        WorkerPool entity = new WorkerPool();
-                        context.Set<WorkerPool>().Add(entity);
-                        await context.SaveChangesAsync();
+			WorkerPool entity = new WorkerPool();
+			context.Set<WorkerPool>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
-                        WorkerPool entity = new WorkerPool();
-                        context.Set<WorkerPool>().Add(entity);
-                        await context.SaveChangesAsync();
+			WorkerPool entity = new WorkerPool();
+			context.Set<WorkerPool>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
-                        var entity = new WorkerPool();
-                        await repository.Create(entity);
+			var entity = new WorkerPool();
+			await repository.Create(entity);
 
-                        var record = await context.Set<WorkerPool>().FirstOrDefaultAsync();
+			var record = await context.Set<WorkerPool>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-                        WorkerPool entity = new WorkerPool();
-                        context.Set<WorkerPool>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+			WorkerPool entity = new WorkerPool();
+			context.Set<WorkerPool>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<WorkerPool>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<WorkerPool>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-                        WorkerPool entity = new WorkerPool();
-                        context.Set<WorkerPool>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+			WorkerPool entity = new WorkerPool();
+			context.Set<WorkerPool>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new WorkerPool());
+			await repository.Update(new WorkerPool());
 
-                        var modifiedRecord = context.Set<WorkerPool>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<WorkerPool>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
-                        var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-                        WorkerPool entity = new WorkerPool();
-                        context.Set<WorkerPool>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
+			var repository = new WorkerPoolRepository(loggerMoc.Object, context);
+			WorkerPool entity = new WorkerPool();
+			context.Set<WorkerPool>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        WorkerPool modifiedRecord = await context.Set<WorkerPool>().FirstOrDefaultAsync();
+			WorkerPool modifiedRecord = await context.Set<WorkerPool>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>05f7caa09ac489021dc5b1fc1cf006d3</Hash>
+    <Hash>e71ad7ac6f4fbaae226f0052602d26a1</Hash>
 </Codenesium>*/

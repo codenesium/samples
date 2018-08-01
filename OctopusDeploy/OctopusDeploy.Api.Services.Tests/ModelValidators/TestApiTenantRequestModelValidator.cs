@@ -15,89 +15,89 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Tenant")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTenantRequestModelValidatorTest
-        {
-                public ApiTenantRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Tenant")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTenantRequestModelValidatorTest
+	{
+		public ApiTenantRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Tenant()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Tenant()));
 
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTenantRequestModel());
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTenantRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Tenant()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Tenant()));
 
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTenantRequestModel());
+			await validator.ValidateCreateAsync(new ApiTenantRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiTenantRequestModel());
+			await validator.ValidateCreateAsync(new ApiTenantRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(new Tenant()));
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
-                        tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
-                        var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ITenantRepository> tenantRepository = new Mock<ITenantRepository>();
+			tenantRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Tenant>(null));
+			var validator = new ApiTenantRequestModelValidator(tenantRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
+			await validator.ValidateUpdateAsync(default(string), new ApiTenantRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>de313d137503876389d6c9fde195b370</Hash>
+    <Hash>bb4ea9c1eae3360955a6ff190d436767</Hash>
 </Codenesium>*/

@@ -6,54 +6,54 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class DALAbstractAirTransportMapper
-        {
-                public virtual AirTransport MapBOToEF(
-                        BOAirTransport bo)
-                {
-                        AirTransport efAirTransport = new AirTransport();
-                        efAirTransport.SetProperties(
-                                bo.AirlineId,
-                                bo.FlightNumber,
-                                bo.HandlerId,
-                                bo.Id,
-                                bo.LandDate,
-                                bo.PipelineStepId,
-                                bo.TakeoffDate);
-                        return efAirTransport;
-                }
+	public abstract class DALAbstractAirTransportMapper
+	{
+		public virtual AirTransport MapBOToEF(
+			BOAirTransport bo)
+		{
+			AirTransport efAirTransport = new AirTransport();
+			efAirTransport.SetProperties(
+				bo.AirlineId,
+				bo.FlightNumber,
+				bo.HandlerId,
+				bo.Id,
+				bo.LandDate,
+				bo.PipelineStepId,
+				bo.TakeoffDate);
+			return efAirTransport;
+		}
 
-                public virtual BOAirTransport MapEFToBO(
-                        AirTransport ef)
-                {
-                        var bo = new BOAirTransport();
+		public virtual BOAirTransport MapEFToBO(
+			AirTransport ef)
+		{
+			var bo = new BOAirTransport();
 
-                        bo.SetProperties(
-                                ef.AirlineId,
-                                ef.FlightNumber,
-                                ef.HandlerId,
-                                ef.Id,
-                                ef.LandDate,
-                                ef.PipelineStepId,
-                                ef.TakeoffDate);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.AirlineId,
+				ef.FlightNumber,
+				ef.HandlerId,
+				ef.Id,
+				ef.LandDate,
+				ef.PipelineStepId,
+				ef.TakeoffDate);
+			return bo;
+		}
 
-                public virtual List<BOAirTransport> MapEFToBO(
-                        List<AirTransport> records)
-                {
-                        List<BOAirTransport> response = new List<BOAirTransport>();
+		public virtual List<BOAirTransport> MapEFToBO(
+			List<AirTransport> records)
+		{
+			List<BOAirTransport> response = new List<BOAirTransport>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>98e754b198a0521979e4f4b6550529f5</Hash>
+    <Hash>57b257e98ca1a0b0e4a7de933d494d03</Hash>
 </Codenesium>*/

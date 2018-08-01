@@ -15,115 +15,115 @@ using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Space")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSpaceRequestModelValidatorTest
-        {
-                public ApiSpaceRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Space")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSpaceRequestModelValidatorTest
+	{
+		public ApiSpaceRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Description_Create_length()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+		[Fact]
+		public async void Description_Create_length()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Description_Update_length()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+		[Fact]
+		public async void Description_Update_length()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
+		}
 
-                [Fact]
-                public async void StudioId_Create_Valid_Reference()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Create_Invalid_Reference()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Valid_Reference()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 
-                [Fact]
-                public async void StudioId_Update_Invalid_Reference()
-                {
-                        Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
-                        spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
 
-                        var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>eb0a6c1d28bce1a0e491f2b6fd254a5d</Hash>
+    <Hash>3a0de83a60ed2dc8f1bec5365513887a</Hash>
 </Codenesium>*/

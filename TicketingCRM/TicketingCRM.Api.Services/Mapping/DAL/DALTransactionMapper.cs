@@ -4,14 +4,14 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class DALTransactionMapper : DALAbstractTransactionMapper, IDALTransactionMapper
-        {
-                public DALTransactionMapper()
-                {
-                }
-        }
+	public partial class DALTransactionMapper : DALAbstractTransactionMapper, IDALTransactionMapper
+	{
+		public DALTransactionMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>365ba4d609689ee7e340cdf322d1b805</Hash>
+    <Hash>1d6ddbcc675d7044fe7d872e6e08b276</Hash>
 </Codenesium>*/

@@ -1,14 +1,14 @@
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiWorkerPoolModelMapper : AbstractApiWorkerPoolModelMapper, IApiWorkerPoolModelMapper
-        {
-                public ApiWorkerPoolModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiWorkerPoolModelMapper : AbstractApiWorkerPoolModelMapper, IApiWorkerPoolModelMapper
+	{
+		public ApiWorkerPoolModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e832777d3d91ba33f80e9136cc3e9f6c</Hash>
+    <Hash>860e9b47d105b415492007e73137b108</Hash>
 </Codenesium>*/

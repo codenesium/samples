@@ -7,53 +7,52 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UserRole")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiUserRoleModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiUserRoleModelMapper();
-                        var model = new ApiUserRoleRequestModel();
-                        model.SetProperties("A", "A");
-                        ApiUserRoleResponseModel response = mapper.MapRequestToResponse("A", model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UserRole")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiUserRoleModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiUserRoleModelMapper();
+			var model = new ApiUserRoleRequestModel();
+			model.SetProperties("A", "A");
+			ApiUserRoleResponseModel response = mapper.MapRequestToResponse("A", model);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiUserRoleModelMapper();
-                        var model = new ApiUserRoleResponseModel();
-                        model.SetProperties("A", "A", "A");
-                        ApiUserRoleRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiUserRoleModelMapper();
+			var model = new ApiUserRoleResponseModel();
+			model.SetProperties("A", "A", "A");
+			ApiUserRoleRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiUserRoleModelMapper();
-                        var model = new ApiUserRoleRequestModel();
-                        model.SetProperties("A", "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiUserRoleModelMapper();
+			var model = new ApiUserRoleRequestModel();
+			model.SetProperties("A", "A");
 
-                        JsonPatchDocument<ApiUserRoleRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiUserRoleRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiUserRoleRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiUserRoleRequestModel();
+			patch.ApplyTo(response);
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>e867996582157aedd6c0991bb79ccf4b</Hash>
+    <Hash>7a61f1b8d52fbee794f11994530ae7cd</Hash>
 </Codenesium>*/

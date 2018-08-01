@@ -15,65 +15,65 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "TransactionHistory")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiTransactionHistoryRequestModelValidatorTest
-        {
-                public ApiTransactionHistoryRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "TransactionHistory")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiTransactionHistoryRequestModelValidatorTest
+	{
+		public ApiTransactionHistoryRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void TransactionType_Create_null()
-                {
-                        Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
-                        transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
+		[Fact]
+		public async void TransactionType_Create_null()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
 
-                        var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTransactionHistoryRequestModel());
+			var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTransactionHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
+		}
 
-                [Fact]
-                public async void TransactionType_Update_null()
-                {
-                        Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
-                        transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
+		[Fact]
+		public async void TransactionType_Update_null()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
 
-                        var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryRequestModel());
+			var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
+		}
 
-                [Fact]
-                public async void TransactionType_Create_length()
-                {
-                        Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
-                        transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
+		[Fact]
+		public async void TransactionType_Create_length()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
 
-                        var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiTransactionHistoryRequestModel());
+			var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTransactionHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
+		}
 
-                [Fact]
-                public async void TransactionType_Update_length()
-                {
-                        Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
-                        transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
+		[Fact]
+		public async void TransactionType_Update_length()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistory()));
 
-                        var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryRequestModel());
+			var validator = new ApiTransactionHistoryRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
-                }
-        }
+			validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>717748ad5a58cf18cc726f643bd12ca2</Hash>
+    <Hash>f5d0dd287857d5984f86cd7fb38e5d64</Hash>
 </Codenesium>*/

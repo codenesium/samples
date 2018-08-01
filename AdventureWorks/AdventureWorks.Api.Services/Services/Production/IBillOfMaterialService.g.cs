@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IBillOfMaterialService
-        {
-                Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
-                        ApiBillOfMaterialRequestModel model);
+	public interface IBillOfMaterialService
+	{
+		Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
+			ApiBillOfMaterialRequestModel model);
 
-                Task<UpdateResponse<ApiBillOfMaterialResponseModel>> Update(int billOfMaterialsID,
-                                                                             ApiBillOfMaterialRequestModel model);
+		Task<UpdateResponse<ApiBillOfMaterialResponseModel>> Update(int billOfMaterialsID,
+		                                                             ApiBillOfMaterialRequestModel model);
 
-                Task<ActionResponse> Delete(int billOfMaterialsID);
+		Task<ActionResponse> Delete(int billOfMaterialsID);
 
-                Task<ApiBillOfMaterialResponseModel> Get(int billOfMaterialsID);
+		Task<ApiBillOfMaterialResponseModel> Get(int billOfMaterialsID);
 
-                Task<List<ApiBillOfMaterialResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiBillOfMaterialResponseModel> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate);
+		Task<ApiBillOfMaterialResponseModel> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate);
 
-                Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode);
-        }
+		Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode);
+	}
 }
 
 /*<Codenesium>
-    <Hash>50e1b03d99996eff216562c37b0e68f1</Hash>
+    <Hash>57d4a23fa41b9056834b56657d9a5101</Hash>
 </Codenesium>*/

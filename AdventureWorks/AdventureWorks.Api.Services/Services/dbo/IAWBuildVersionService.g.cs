@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IAWBuildVersionService
-        {
-                Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
-                        ApiAWBuildVersionRequestModel model);
+	public interface IAWBuildVersionService
+	{
+		Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
+			ApiAWBuildVersionRequestModel model);
 
-                Task<UpdateResponse<ApiAWBuildVersionResponseModel>> Update(int systemInformationID,
-                                                                             ApiAWBuildVersionRequestModel model);
+		Task<UpdateResponse<ApiAWBuildVersionResponseModel>> Update(int systemInformationID,
+		                                                             ApiAWBuildVersionRequestModel model);
 
-                Task<ActionResponse> Delete(int systemInformationID);
+		Task<ActionResponse> Delete(int systemInformationID);
 
-                Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID);
+		Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID);
 
-                Task<List<ApiAWBuildVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiAWBuildVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>6e7354e38caa9c18cd83682b61e31ce9</Hash>
+    <Hash>8f812e6f2e3154971de7e3340c1c89db</Hash>
 </Codenesium>*/

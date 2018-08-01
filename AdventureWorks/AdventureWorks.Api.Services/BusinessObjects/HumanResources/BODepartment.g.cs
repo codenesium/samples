@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BODepartment : AbstractBODepartment
-        {
-                public BODepartment()
-                        : base()
-                {
-                }
-        }
+	public partial class BODepartment : AbstractBODepartment
+	{
+		public BODepartment()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2ee58307af79845858d6545845b39a1b</Hash>
+    <Hash>958463efd5c3960f38a7bd294e6de88c</Hash>
 </Codenesium>*/

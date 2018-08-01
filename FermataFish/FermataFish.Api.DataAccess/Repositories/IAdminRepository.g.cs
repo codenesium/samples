@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public interface IAdminRepository
-        {
-                Task<Admin> Create(Admin item);
+	public interface IAdminRepository
+	{
+		Task<Admin> Create(Admin item);
 
-                Task Update(Admin item);
+		Task Update(Admin item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Admin> Get(int id);
+		Task<Admin> Get(int id);
 
-                Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Studio> GetStudio(int studioId);
-        }
+		Task<Studio> GetStudio(int studioId);
+	}
 }
 
 /*<Codenesium>
-    <Hash>9e11a1752e2c642c76f8ddfeea6924fe</Hash>
+    <Hash>5a648928d3f16e2a60c7b21306273285</Hash>
 </Codenesium>*/

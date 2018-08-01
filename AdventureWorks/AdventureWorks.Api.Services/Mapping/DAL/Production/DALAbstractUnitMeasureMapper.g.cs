@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class DALAbstractUnitMeasureMapper
-        {
-                public virtual UnitMeasure MapBOToEF(
-                        BOUnitMeasure bo)
-                {
-                        UnitMeasure efUnitMeasure = new UnitMeasure();
-                        efUnitMeasure.SetProperties(
-                                bo.ModifiedDate,
-                                bo.Name,
-                                bo.UnitMeasureCode);
-                        return efUnitMeasure;
-                }
+	public abstract class DALAbstractUnitMeasureMapper
+	{
+		public virtual UnitMeasure MapBOToEF(
+			BOUnitMeasure bo)
+		{
+			UnitMeasure efUnitMeasure = new UnitMeasure();
+			efUnitMeasure.SetProperties(
+				bo.ModifiedDate,
+				bo.Name,
+				bo.UnitMeasureCode);
+			return efUnitMeasure;
+		}
 
-                public virtual BOUnitMeasure MapEFToBO(
-                        UnitMeasure ef)
-                {
-                        var bo = new BOUnitMeasure();
+		public virtual BOUnitMeasure MapEFToBO(
+			UnitMeasure ef)
+		{
+			var bo = new BOUnitMeasure();
 
-                        bo.SetProperties(
-                                ef.UnitMeasureCode,
-                                ef.ModifiedDate,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.UnitMeasureCode,
+				ef.ModifiedDate,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOUnitMeasure> MapEFToBO(
-                        List<UnitMeasure> records)
-                {
-                        List<BOUnitMeasure> response = new List<BOUnitMeasure>();
+		public virtual List<BOUnitMeasure> MapEFToBO(
+			List<UnitMeasure> records)
+		{
+			List<BOUnitMeasure> response = new List<BOUnitMeasure>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>be2de76a369fa878c12eeef9318ffa88</Hash>
+    <Hash>9d63ec2e3f85b96fee7ad57dcef914ec</Hash>
 </Codenesium>*/

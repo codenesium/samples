@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class TeacherXTeacherSkillService : AbstractTeacherXTeacherSkillService, ITeacherXTeacherSkillService
-        {
-                public TeacherXTeacherSkillService(
-                        ILogger<ITeacherXTeacherSkillRepository> logger,
-                        ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-                        IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
-                        IBOLTeacherXTeacherSkillMapper bolteacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalteacherXTeacherSkillMapper
-                        )
-                        : base(logger,
-                               teacherXTeacherSkillRepository,
-                               teacherXTeacherSkillModelValidator,
-                               bolteacherXTeacherSkillMapper,
-                               dalteacherXTeacherSkillMapper)
-                {
-                }
-        }
+	public partial class TeacherXTeacherSkillService : AbstractTeacherXTeacherSkillService, ITeacherXTeacherSkillService
+	{
+		public TeacherXTeacherSkillService(
+			ILogger<ITeacherXTeacherSkillRepository> logger,
+			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
+			IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
+			IBOLTeacherXTeacherSkillMapper bolteacherXTeacherSkillMapper,
+			IDALTeacherXTeacherSkillMapper dalteacherXTeacherSkillMapper
+			)
+			: base(logger,
+			       teacherXTeacherSkillRepository,
+			       teacherXTeacherSkillModelValidator,
+			       bolteacherXTeacherSkillMapper,
+			       dalteacherXTeacherSkillMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>fda14d296305f5c6b771ea9817b2a3b8</Hash>
+    <Hash>474aa6ffe24ea12be361f553402deba6</Hash>
 </Codenesium>*/

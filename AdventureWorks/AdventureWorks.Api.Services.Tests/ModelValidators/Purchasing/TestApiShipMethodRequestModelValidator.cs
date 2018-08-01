@@ -15,113 +15,113 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "ShipMethod")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiShipMethodRequestModelValidatorTest
-        {
-                public ApiShipMethodRequestModelValidatorTest()
-                {
-                }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "ShipMethod")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiShipMethodRequestModelValidatorTest
+	{
+		public ApiShipMethodRequestModelValidatorTest()
+		{
+		}
 
-                [Fact]
-                public async void Name_Create_null()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Update_null()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
 
-                [Fact]
-                public async void Name_Create_length()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
-                        await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+			await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                public async void Name_Update_length()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
-                        await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Exists()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(new ShipMethod()));
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(new ShipMethod()));
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
+			await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Create_Not_Exists()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(null));
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(null));
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
 
-                        await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
+			await validator.ValidateCreateAsync(new ApiShipMethodRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Exists()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(new ShipMethod()));
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(new ShipMethod()));
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
 
-                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
-                }
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
 
-                [Fact]
-                private async void BeUniqueByName_Update_Not_Exists()
-                {
-                        Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
-                        shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(null));
-                        var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<IShipMethodRepository> shipMethodRepository = new Mock<IShipMethodRepository>();
+			shipMethodRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(null));
+			var validator = new ApiShipMethodRequestModelValidator(shipMethodRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
+			await validator.ValidateUpdateAsync(default(int), new ApiShipMethodRequestModel());
 
-                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
-                }
-        }
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>809b3497d0e2f6513ebcf40e178193b4</Hash>
+    <Hash>717677f33befa23c137668312b458ab2</Hash>
 </Codenesium>*/

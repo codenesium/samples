@@ -6,46 +6,46 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class DALAbstractBucketMapper
-        {
-                public virtual Bucket MapBOToEF(
-                        BOBucket bo)
-                {
-                        Bucket efBucket = new Bucket();
-                        efBucket.SetProperties(
-                                bo.ExternalId,
-                                bo.Id,
-                                bo.Name);
-                        return efBucket;
-                }
+	public abstract class DALAbstractBucketMapper
+	{
+		public virtual Bucket MapBOToEF(
+			BOBucket bo)
+		{
+			Bucket efBucket = new Bucket();
+			efBucket.SetProperties(
+				bo.ExternalId,
+				bo.Id,
+				bo.Name);
+			return efBucket;
+		}
 
-                public virtual BOBucket MapEFToBO(
-                        Bucket ef)
-                {
-                        var bo = new BOBucket();
+		public virtual BOBucket MapEFToBO(
+			Bucket ef)
+		{
+			var bo = new BOBucket();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.ExternalId,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.ExternalId,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOBucket> MapEFToBO(
-                        List<Bucket> records)
-                {
-                        List<BOBucket> response = new List<BOBucket>();
+		public virtual List<BOBucket> MapEFToBO(
+			List<Bucket> records)
+		{
+			List<BOBucket> response = new List<BOBucket>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4892b926124c27a034d00bf34625f7fe</Hash>
+    <Hash>f9601a3c3a888baf43160ce18e82a244</Hash>
 </Codenesium>*/

@@ -7,51 +7,51 @@ using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PaymentType")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALPaymentTypeMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALPaymentTypeMapper();
-                        var bo = new BOPaymentType();
-                        bo.SetProperties(1, "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PaymentType")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALPaymentTypeMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALPaymentTypeMapper();
+			var bo = new BOPaymentType();
+			bo.SetProperties(1, "A");
 
-                        PaymentType response = mapper.MapBOToEF(bo);
+			PaymentType response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALPaymentTypeMapper();
-                        PaymentType entity = new PaymentType();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALPaymentTypeMapper();
+			PaymentType entity = new PaymentType();
+			entity.SetProperties(1, "A");
 
-                        BOPaymentType response = mapper.MapEFToBO(entity);
+			BOPaymentType response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALPaymentTypeMapper();
-                        PaymentType entity = new PaymentType();
-                        entity.SetProperties(1, "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALPaymentTypeMapper();
+			PaymentType entity = new PaymentType();
+			entity.SetProperties(1, "A");
 
-                        List<BOPaymentType> response = mapper.MapEFToBO(new List<PaymentType>() { entity });
+			List<BOPaymentType> response = mapper.MapEFToBO(new List<PaymentType>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2195b8226b6c444ab6fbe91081b5050f</Hash>
+    <Hash>aa47c883193b529c6367d7f5ab8241dd</Hash>
 </Codenesium>*/

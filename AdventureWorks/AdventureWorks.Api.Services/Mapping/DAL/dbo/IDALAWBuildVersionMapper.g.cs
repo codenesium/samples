@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALAWBuildVersionMapper
-        {
-                AWBuildVersion MapBOToEF(
-                        BOAWBuildVersion bo);
+	public interface IDALAWBuildVersionMapper
+	{
+		AWBuildVersion MapBOToEF(
+			BOAWBuildVersion bo);
 
-                BOAWBuildVersion MapEFToBO(
-                        AWBuildVersion efAWBuildVersion);
+		BOAWBuildVersion MapEFToBO(
+			AWBuildVersion efAWBuildVersion);
 
-                List<BOAWBuildVersion> MapEFToBO(
-                        List<AWBuildVersion> records);
-        }
+		List<BOAWBuildVersion> MapEFToBO(
+			List<AWBuildVersion> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>746fa1ba56e09b616b33e0a38ba59abc</Hash>
+    <Hash>a4af9c27dc6c0f38c878c12cf6431b71</Hash>
 </Codenesium>*/

@@ -9,127 +9,127 @@ using Xunit;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public partial class ClaspRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class ClaspRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<ClaspRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<ClaspRepository>>();
-                }
-        }
+		public static Mock<ILogger<ClaspRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<ClaspRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Clasp")]
-        [Trait("Area", "Repositories")]
-        public partial class ClaspRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Clasp")]
+	[Trait("Area", "Repositories")]
+	public partial class ClaspRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
 
-                        Clasp entity = new Clasp();
-                        context.Set<Clasp>().Add(entity);
-                        await context.SaveChangesAsync();
+			Clasp entity = new Clasp();
+			context.Set<Clasp>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
 
-                        Clasp entity = new Clasp();
-                        context.Set<Clasp>().Add(entity);
-                        await context.SaveChangesAsync();
+			Clasp entity = new Clasp();
+			context.Set<Clasp>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
 
-                        var entity = new Clasp();
-                        await repository.Create(entity);
+			var entity = new Clasp();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Clasp>().FirstOrDefaultAsync();
+			var record = await context.Set<Clasp>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
-                        Clasp entity = new Clasp();
-                        context.Set<Clasp>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
+			Clasp entity = new Clasp();
+			context.Set<Clasp>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Clasp>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Clasp>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
-                        Clasp entity = new Clasp();
-                        context.Set<Clasp>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
+			Clasp entity = new Clasp();
+			context.Set<Clasp>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Clasp());
+			await repository.Update(new Clasp());
 
-                        var modifiedRecord = context.Set<Clasp>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Clasp>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
-                        var repository = new ClaspRepository(loggerMoc.Object, context);
-                        Clasp entity = new Clasp();
-                        context.Set<Clasp>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
+			Clasp entity = new Clasp();
+			context.Set<Clasp>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Clasp modifiedRecord = await context.Set<Clasp>().FirstOrDefaultAsync();
+			Clasp modifiedRecord = await context.Set<Clasp>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>96510bb1c18e0ba6371612d27d5adf6b</Hash>
+    <Hash>4b72cc9d9235d580521a078e7c4ed04a</Hash>
 </Codenesium>*/

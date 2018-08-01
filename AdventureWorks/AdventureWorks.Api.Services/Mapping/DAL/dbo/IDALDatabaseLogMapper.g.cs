@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public interface IDALDatabaseLogMapper
-        {
-                DatabaseLog MapBOToEF(
-                        BODatabaseLog bo);
+	public interface IDALDatabaseLogMapper
+	{
+		DatabaseLog MapBOToEF(
+			BODatabaseLog bo);
 
-                BODatabaseLog MapEFToBO(
-                        DatabaseLog efDatabaseLog);
+		BODatabaseLog MapEFToBO(
+			DatabaseLog efDatabaseLog);
 
-                List<BODatabaseLog> MapEFToBO(
-                        List<DatabaseLog> records);
-        }
+		List<BODatabaseLog> MapEFToBO(
+			List<DatabaseLog> records);
+	}
 }
 
 /*<Codenesium>
-    <Hash>a67b0dd98079cc450919ad4c72abfc6e</Hash>
+    <Hash>8a0480bad32797c05bfe3d50444d153d</Hash>
 </Codenesium>*/

@@ -7,53 +7,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Proxy")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALProxyMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALProxyMapper();
-                        var bo = new BOProxy();
-                        bo.SetProperties("A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Proxy")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALProxyMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALProxyMapper();
+			var bo = new BOProxy();
+			bo.SetProperties("A", "A", "A");
 
-                        Proxy response = mapper.MapBOToEF(bo);
+			Proxy response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALProxyMapper();
-                        Proxy entity = new Proxy();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALProxyMapper();
+			Proxy entity = new Proxy();
+			entity.SetProperties("A", "A", "A");
 
-                        BOProxy response = mapper.MapEFToBO(entity);
+			BOProxy response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALProxyMapper();
-                        Proxy entity = new Proxy();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALProxyMapper();
+			Proxy entity = new Proxy();
+			entity.SetProperties("A", "A", "A");
 
-                        List<BOProxy> response = mapper.MapEFToBO(new List<Proxy>() { entity });
+			List<BOProxy> response = mapper.MapEFToBO(new List<Proxy>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>877ac4db6076735e4deb486605e5cc12</Hash>
+    <Hash>42bc9f9b32cc0026e860b83545849ce8</Hash>
 </Codenesium>*/

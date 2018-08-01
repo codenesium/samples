@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace TestsNS.Api.DataAccess
 {
-        public partial class TestAllFieldTypesNullableRepository : AbstractTestAllFieldTypesNullableRepository, ITestAllFieldTypesNullableRepository
-        {
-                public TestAllFieldTypesNullableRepository(
-                        ILogger<TestAllFieldTypesNullableRepository> logger,
-                        ApplicationDbContext context)
-                        : base(logger, context)
-                {
-                }
-        }
+	public partial class TestAllFieldTypesNullableRepository : AbstractTestAllFieldTypesNullableRepository, ITestAllFieldTypesNullableRepository
+	{
+		public TestAllFieldTypesNullableRepository(
+			ILogger<TestAllFieldTypesNullableRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>d9eec84f45d788721b4d66a313227cae</Hash>
+    <Hash>965b6a8515079bbf54e3d5edcd0c454f</Hash>
 </Codenesium>*/

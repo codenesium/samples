@@ -5,45 +5,45 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-        public abstract class AbstractApiChainModelMapper
-        {
-                public virtual ApiChainResponseModel MapRequestToResponse(
-                        int id,
-                        ApiChainRequestModel request)
-                {
-                        var response = new ApiChainResponseModel();
-                        response.SetProperties(id,
-                                               request.ChainStatusId,
-                                               request.ExternalId,
-                                               request.Name,
-                                               request.TeamId);
-                        return response;
-                }
+	public abstract class AbstractApiChainModelMapper
+	{
+		public virtual ApiChainResponseModel MapRequestToResponse(
+			int id,
+			ApiChainRequestModel request)
+		{
+			var response = new ApiChainResponseModel();
+			response.SetProperties(id,
+			                       request.ChainStatusId,
+			                       request.ExternalId,
+			                       request.Name,
+			                       request.TeamId);
+			return response;
+		}
 
-                public virtual ApiChainRequestModel MapResponseToRequest(
-                        ApiChainResponseModel response)
-                {
-                        var request = new ApiChainRequestModel();
-                        request.SetProperties(
-                                response.ChainStatusId,
-                                response.ExternalId,
-                                response.Name,
-                                response.TeamId);
-                        return request;
-                }
+		public virtual ApiChainRequestModel MapResponseToRequest(
+			ApiChainResponseModel response)
+		{
+			var request = new ApiChainRequestModel();
+			request.SetProperties(
+				response.ChainStatusId,
+				response.ExternalId,
+				response.Name,
+				response.TeamId);
+			return request;
+		}
 
-                public JsonPatchDocument<ApiChainRequestModel> CreatePatch(ApiChainRequestModel model)
-                {
-                        var patch = new JsonPatchDocument<ApiChainRequestModel>();
-                        patch.Replace(x => x.ChainStatusId, model.ChainStatusId);
-                        patch.Replace(x => x.ExternalId, model.ExternalId);
-                        patch.Replace(x => x.Name, model.Name);
-                        patch.Replace(x => x.TeamId, model.TeamId);
-                        return patch;
-                }
-        }
+		public JsonPatchDocument<ApiChainRequestModel> CreatePatch(ApiChainRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiChainRequestModel>();
+			patch.Replace(x => x.ChainStatusId, model.ChainStatusId);
+			patch.Replace(x => x.ExternalId, model.ExternalId);
+			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.TeamId, model.TeamId);
+			return patch;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b0ad199e4856c4faf344110762592c98</Hash>
+    <Hash>0393a94c6d88f1c03a5a8f964a79028a</Hash>
 </Codenesium>*/

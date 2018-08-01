@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class FeedService : AbstractFeedService, IFeedService
-        {
-                public FeedService(
-                        ILogger<IFeedRepository> logger,
-                        IFeedRepository feedRepository,
-                        IApiFeedRequestModelValidator feedModelValidator,
-                        IBOLFeedMapper bolfeedMapper,
-                        IDALFeedMapper dalfeedMapper
-                        )
-                        : base(logger,
-                               feedRepository,
-                               feedModelValidator,
-                               bolfeedMapper,
-                               dalfeedMapper)
-                {
-                }
-        }
+	public partial class FeedService : AbstractFeedService, IFeedService
+	{
+		public FeedService(
+			ILogger<IFeedRepository> logger,
+			IFeedRepository feedRepository,
+			IApiFeedRequestModelValidator feedModelValidator,
+			IBOLFeedMapper bolfeedMapper,
+			IDALFeedMapper dalfeedMapper
+			)
+			: base(logger,
+			       feedRepository,
+			       feedModelValidator,
+			       bolfeedMapper,
+			       dalfeedMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7e80efe9619acec57e7743c95b807a07</Hash>
+    <Hash>d99265d6b649502634aa563866627379</Hash>
 </Codenesium>*/

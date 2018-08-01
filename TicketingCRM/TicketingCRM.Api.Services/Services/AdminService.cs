@@ -10,29 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class AdminService : AbstractAdminService, IAdminService
-        {
-                public AdminService(
-                        ILogger<IAdminRepository> logger,
-                        IAdminRepository adminRepository,
-                        IApiAdminRequestModelValidator adminModelValidator,
-                        IBOLAdminMapper boladminMapper,
-                        IDALAdminMapper daladminMapper,
-                        IBOLVenueMapper bolVenueMapper,
-                        IDALVenueMapper dalVenueMapper
-                        )
-                        : base(logger,
-                               adminRepository,
-                               adminModelValidator,
-                               boladminMapper,
-                               daladminMapper,
-                               bolVenueMapper,
-                               dalVenueMapper)
-                {
-                }
-        }
+	public partial class AdminService : AbstractAdminService, IAdminService
+	{
+		public AdminService(
+			ILogger<IAdminRepository> logger,
+			IAdminRepository adminRepository,
+			IApiAdminRequestModelValidator adminModelValidator,
+			IBOLAdminMapper boladminMapper,
+			IDALAdminMapper daladminMapper,
+			IBOLVenueMapper bolVenueMapper,
+			IDALVenueMapper dalVenueMapper
+			)
+			: base(logger,
+			       adminRepository,
+			       adminModelValidator,
+			       boladminMapper,
+			       daladminMapper,
+			       bolVenueMapper,
+			       dalVenueMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8243f632e4683b20ad01f78ba90a00c6</Hash>
+    <Hash>bfc8db595ce87ad7ebf2d3fc22bf1389</Hash>
 </Codenesium>*/

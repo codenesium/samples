@@ -3,15 +3,15 @@ using System;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOTestAllFieldType : AbstractBOTestAllFieldType
-        {
-                public BOTestAllFieldType()
-                        : base()
-                {
-                }
-        }
+	public partial class BOTestAllFieldType : AbstractBOTestAllFieldType
+	{
+		public BOTestAllFieldType()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1c36928fa721e9e7e1a0dbca5033c812</Hash>
+    <Hash>935ff0bc47c093e85f4d15bfa8fb88f0</Hash>
 </Codenesium>*/

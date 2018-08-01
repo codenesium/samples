@@ -9,127 +9,127 @@ using Xunit;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public partial class MachineRefTeamRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class MachineRefTeamRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<MachineRefTeamRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<MachineRefTeamRepository>>();
-                }
-        }
+		public static Mock<ILogger<MachineRefTeamRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<MachineRefTeamRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "MachineRefTeam")]
-        [Trait("Area", "Repositories")]
-        public partial class MachineRefTeamRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "MachineRefTeam")]
+	[Trait("Area", "Repositories")]
+	public partial class MachineRefTeamRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
-                        MachineRefTeam entity = new MachineRefTeam();
-                        context.Set<MachineRefTeam>().Add(entity);
-                        await context.SaveChangesAsync();
+			MachineRefTeam entity = new MachineRefTeam();
+			context.Set<MachineRefTeam>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
-                        MachineRefTeam entity = new MachineRefTeam();
-                        context.Set<MachineRefTeam>().Add(entity);
-                        await context.SaveChangesAsync();
+			MachineRefTeam entity = new MachineRefTeam();
+			context.Set<MachineRefTeam>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
-                        var entity = new MachineRefTeam();
-                        await repository.Create(entity);
+			var entity = new MachineRefTeam();
+			await repository.Create(entity);
 
-                        var record = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+			var record = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-                        MachineRefTeam entity = new MachineRefTeam();
-                        context.Set<MachineRefTeam>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+			MachineRefTeam entity = new MachineRefTeam();
+			context.Set<MachineRefTeam>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<MachineRefTeam>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-                        MachineRefTeam entity = new MachineRefTeam();
-                        context.Set<MachineRefTeam>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+			MachineRefTeam entity = new MachineRefTeam();
+			context.Set<MachineRefTeam>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new MachineRefTeam());
+			await repository.Update(new MachineRefTeam());
 
-                        var modifiedRecord = context.Set<MachineRefTeam>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
-                        var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-                        MachineRefTeam entity = new MachineRefTeam();
-                        context.Set<MachineRefTeam>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
+			var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
+			MachineRefTeam entity = new MachineRefTeam();
+			context.Set<MachineRefTeam>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        MachineRefTeam modifiedRecord = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+			MachineRefTeam modifiedRecord = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>972211e1fa86a65fd4f47582609e887c</Hash>
+    <Hash>2e27cc7ca3893fe0f21fa8b318bd0e34</Hash>
 </Codenesium>*/

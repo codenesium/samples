@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
-        {
-                public VersionInfoService(
-                        ILogger<IVersionInfoRepository> logger,
-                        IVersionInfoRepository versionInfoRepository,
-                        IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-                        IBOLVersionInfoMapper bolversionInfoMapper,
-                        IDALVersionInfoMapper dalversionInfoMapper
-                        )
-                        : base(logger,
-                               versionInfoRepository,
-                               versionInfoModelValidator,
-                               bolversionInfoMapper,
-                               dalversionInfoMapper)
-                {
-                }
-        }
+	public partial class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
+	{
+		public VersionInfoService(
+			ILogger<IVersionInfoRepository> logger,
+			IVersionInfoRepository versionInfoRepository,
+			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+			IBOLVersionInfoMapper bolversionInfoMapper,
+			IDALVersionInfoMapper dalversionInfoMapper
+			)
+			: base(logger,
+			       versionInfoRepository,
+			       versionInfoModelValidator,
+			       bolversionInfoMapper,
+			       dalversionInfoMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b7fe60f8a2c90a443efaf9a39790e44b</Hash>
+    <Hash>5164613bba2fc88fa66c5f9b041f98aa</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class SalesOrderHeaderSalesReasonService : AbstractSalesOrderHeaderSalesReasonService, ISalesOrderHeaderSalesReasonService
-        {
-                public SalesOrderHeaderSalesReasonService(
-                        ILogger<ISalesOrderHeaderSalesReasonRepository> logger,
-                        ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
-                        IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
-                        IBOLSalesOrderHeaderSalesReasonMapper bolsalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper
-                        )
-                        : base(logger,
-                               salesOrderHeaderSalesReasonRepository,
-                               salesOrderHeaderSalesReasonModelValidator,
-                               bolsalesOrderHeaderSalesReasonMapper,
-                               dalsalesOrderHeaderSalesReasonMapper)
-                {
-                }
-        }
+	public partial class SalesOrderHeaderSalesReasonService : AbstractSalesOrderHeaderSalesReasonService, ISalesOrderHeaderSalesReasonService
+	{
+		public SalesOrderHeaderSalesReasonService(
+			ILogger<ISalesOrderHeaderSalesReasonRepository> logger,
+			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
+			IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
+			IBOLSalesOrderHeaderSalesReasonMapper bolsalesOrderHeaderSalesReasonMapper,
+			IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper
+			)
+			: base(logger,
+			       salesOrderHeaderSalesReasonRepository,
+			       salesOrderHeaderSalesReasonModelValidator,
+			       bolsalesOrderHeaderSalesReasonMapper,
+			       dalsalesOrderHeaderSalesReasonMapper)
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f8dae2d83d0f17c0f6ee065ad1aacbf0</Hash>
+    <Hash>fcd023d4a2daba85b3ae68b75cf69fb2</Hash>
 </Codenesium>*/

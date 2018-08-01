@@ -11,102 +11,102 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractProductProductPhotoRepository : AbstractRepository
-        {
-                protected ApplicationDbContext Context { get; }
+	public abstract class AbstractProductProductPhotoRepository : AbstractRepository
+	{
+		protected ApplicationDbContext Context { get; }
 
-                protected ILogger Logger { get; }
+		protected ILogger Logger { get; }
 
-                public AbstractProductProductPhotoRepository(
-                        ILogger logger,
-                        ApplicationDbContext context)
-                        : base()
-                {
-                        this.Logger = logger;
-                        this.Context = context;
-                }
+		public AbstractProductProductPhotoRepository(
+			ILogger logger,
+			ApplicationDbContext context)
+			: base()
+		{
+			this.Logger = logger;
+			this.Context = context;
+		}
 
-                public virtual Task<List<ProductProductPhoto>> All(int limit = int.MaxValue, int offset = 0)
-                {
-                        return this.Where(x => true, limit, offset);
-                }
+		public virtual Task<List<ProductProductPhoto>> All(int limit = int.MaxValue, int offset = 0)
+		{
+			return this.Where(x => true, limit, offset);
+		}
 
-                public async virtual Task<ProductProductPhoto> Get(int productID)
-                {
-                        return await this.GetById(productID);
-                }
+		public async virtual Task<ProductProductPhoto> Get(int productID)
+		{
+			return await this.GetById(productID);
+		}
 
-                public async virtual Task<ProductProductPhoto> Create(ProductProductPhoto item)
-                {
-                        this.Context.Set<ProductProductPhoto>().Add(item);
-                        await this.Context.SaveChangesAsync();
+		public async virtual Task<ProductProductPhoto> Create(ProductProductPhoto item)
+		{
+			this.Context.Set<ProductProductPhoto>().Add(item);
+			await this.Context.SaveChangesAsync();
 
-                        this.Context.Entry(item).State = EntityState.Detached;
-                        return item;
-                }
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
 
-                public async virtual Task Update(ProductProductPhoto item)
-                {
-                        var entity = this.Context.Set<ProductProductPhoto>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
-                        if (entity == null)
-                        {
-                                this.Context.Set<ProductProductPhoto>().Attach(item);
-                        }
-                        else
-                        {
-                                this.Context.Entry(entity).CurrentValues.SetValues(item);
-                        }
+		public async virtual Task Update(ProductProductPhoto item)
+		{
+			var entity = this.Context.Set<ProductProductPhoto>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+			if (entity == null)
+			{
+				this.Context.Set<ProductProductPhoto>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
 
-                        await this.Context.SaveChangesAsync();
-                }
+			await this.Context.SaveChangesAsync();
+		}
 
-                public async virtual Task Delete(
-                        int productID)
-                {
-                        ProductProductPhoto record = await this.GetById(productID);
+		public async virtual Task Delete(
+			int productID)
+		{
+			ProductProductPhoto record = await this.GetById(productID);
 
-                        if (record == null)
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                this.Context.Set<ProductProductPhoto>().Remove(record);
-                                await this.Context.SaveChangesAsync();
-                        }
-                }
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<ProductProductPhoto>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
 
-                protected async Task<List<ProductProductPhoto>> Where(
-                        Expression<Func<ProductProductPhoto, bool>> predicate,
-                        int limit = int.MaxValue,
-                        int offset = 0,
-                        Expression<Func<ProductProductPhoto, dynamic>> orderBy = null,
-                        ListSortDirection sortDirection = ListSortDirection.Ascending)
-                {
-                        if (orderBy == null)
-                        {
-                                orderBy = x => x.ProductID;
-                        }
+		protected async Task<List<ProductProductPhoto>> Where(
+			Expression<Func<ProductProductPhoto, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<ProductProductPhoto, dynamic>> orderBy = null,
+			ListSortDirection sortDirection = ListSortDirection.Ascending)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.ProductID;
+			}
 
-                        if (sortDirection == ListSortDirection.Ascending)
-                        {
-                                return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
-                        }
-                        else
-                        {
-                                return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
-                        }
-                }
+			if (sortDirection == ListSortDirection.Ascending)
+			{
+				return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
+			}
+			else
+			{
+				return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
+			}
+		}
 
-                private async Task<ProductProductPhoto> GetById(int productID)
-                {
-                        List<ProductProductPhoto> records = await this.Where(x => x.ProductID == productID);
+		private async Task<ProductProductPhoto> GetById(int productID)
+		{
+			List<ProductProductPhoto> records = await this.Where(x => x.ProductID == productID);
 
-                        return records.FirstOrDefault();
-                }
-        }
+			return records.FirstOrDefault();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f5d5526940b1218579685ae3e1951803</Hash>
+    <Hash>9464932b23ddb3e273b917a8ad463d03</Hash>
 </Codenesium>*/

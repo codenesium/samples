@@ -9,127 +9,127 @@ using Xunit;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public partial class FamilyRepositoryMoc
-        {
-                public static ApplicationDbContext GetContext()
-                {
-                        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                      .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                                      .Options;
-                        return new ApplicationDbContext(options);
-                }
+	public partial class FamilyRepositoryMoc
+	{
+		public static ApplicationDbContext GetContext()
+		{
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+			              .Options;
+			return new ApplicationDbContext(options);
+		}
 
-                public static Mock<ILogger<FamilyRepository>> GetLoggerMoc()
-                {
-                        return new Mock<ILogger<FamilyRepository>>();
-                }
-        }
+		public static Mock<ILogger<FamilyRepository>> GetLoggerMoc()
+		{
+			return new Mock<ILogger<FamilyRepository>>();
+		}
+	}
 
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Family")]
-        [Trait("Area", "Repositories")]
-        public partial class FamilyRepositoryTests
-        {
-                [Fact]
-                public async void All()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Family")]
+	[Trait("Area", "Repositories")]
+	public partial class FamilyRepositoryTests
+	{
+		[Fact]
+		public async void All()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
 
-                        Family entity = new Family();
-                        context.Set<Family>().Add(entity);
-                        await context.SaveChangesAsync();
+			Family entity = new Family();
+			context.Set<Family>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.All();
+			var record = await repository.All();
 
-                        record.Should().NotBeEmpty();
-                }
+			record.Should().NotBeEmpty();
+		}
 
-                [Fact]
-                public async void Get()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Get()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
 
-                        Family entity = new Family();
-                        context.Set<Family>().Add(entity);
-                        await context.SaveChangesAsync();
+			Family entity = new Family();
+			context.Set<Family>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Create()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
 
-                        var entity = new Family();
-                        await repository.Create(entity);
+			var entity = new Family();
+			await repository.Create(entity);
 
-                        var record = await context.Set<Family>().FirstOrDefaultAsync();
+			var record = await context.Set<Family>().FirstOrDefaultAsync();
 
-                        record.Should().NotBeNull();
-                }
+			record.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Tracked()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
-                        Family entity = new Family();
-                        context.Set<Family>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
+			Family entity = new Family();
+			context.Set<Family>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.Id);
 
-                        await repository.Update(record);
+			await repository.Update(record);
 
-                        var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Update_Entity_Is_Not_Tracked()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
-                        Family entity = new Family();
-                        context.Set<Family>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
+			Family entity = new Family();
+			context.Set<Family>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Update(new Family());
+			await repository.Update(new Family());
 
-                        var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
-                        modifiedRecord.Should().NotBeNull();
-                }
+			var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void Delete()
-                {
-                        Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
-                        ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
-                        var repository = new FamilyRepository(loggerMoc.Object, context);
-                        Family entity = new Family();
-                        context.Set<Family>().Add(entity);
-                        await context.SaveChangesAsync();
+		[Fact]
+		public async void Delete()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
+			Family entity = new Family();
+			context.Set<Family>().Add(entity);
+			await context.SaveChangesAsync();
 
-                        await repository.Delete(entity.Id);
+			await repository.Delete(entity.Id);
 
-                        Family modifiedRecord = await context.Set<Family>().FirstOrDefaultAsync();
+			Family modifiedRecord = await context.Set<Family>().FirstOrDefaultAsync();
 
-                        modifiedRecord.Should().BeNull();
-                }
-        }
+			modifiedRecord.Should().BeNull();
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bf194b2c61d2c7ac241946f10f0a37fe</Hash>
+    <Hash>d8f54e104ac0fb1f3e63c95396a9f22a</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class DALTeacherMapper : DALAbstractTeacherMapper, IDALTeacherMapper
-        {
-                public DALTeacherMapper()
-                {
-                }
-        }
+	public partial class DALTeacherMapper : DALAbstractTeacherMapper, IDALTeacherMapper
+	{
+		public DALTeacherMapper()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>8886e473cf40da243d2e81a6104463f1</Hash>
+    <Hash>0edf44df2566f44a55e40f6affc553c8</Hash>
 </Codenesium>*/

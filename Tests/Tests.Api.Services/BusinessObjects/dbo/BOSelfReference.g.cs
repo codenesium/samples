@@ -3,15 +3,15 @@ using System;
 
 namespace TestsNS.Api.Services
 {
-        public partial class BOSelfReference : AbstractBOSelfReference
-        {
-                public BOSelfReference()
-                        : base()
-                {
-                }
-        }
+	public partial class BOSelfReference : AbstractBOSelfReference
+	{
+		public BOSelfReference()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f02221a7cf4fdd73b4c840ac0f3a06b</Hash>
+    <Hash>0a932e7e53a1879112dfc9964410e755</Hash>
 </Codenesium>*/

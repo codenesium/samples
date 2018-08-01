@@ -7,51 +7,51 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Configuration")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALConfigurationMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALConfigurationMapper();
-                        var bo = new BOConfiguration();
-                        bo.SetProperties("A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Configuration")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALConfigurationMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALConfigurationMapper();
+			var bo = new BOConfiguration();
+			bo.SetProperties("A", "A");
 
-                        Configuration response = mapper.MapBOToEF(bo);
+			Configuration response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALConfigurationMapper();
-                        Configuration entity = new Configuration();
-                        entity.SetProperties("A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALConfigurationMapper();
+			Configuration entity = new Configuration();
+			entity.SetProperties("A", "A");
 
-                        BOConfiguration response = mapper.MapEFToBO(entity);
+			BOConfiguration response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALConfigurationMapper();
-                        Configuration entity = new Configuration();
-                        entity.SetProperties("A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALConfigurationMapper();
+			Configuration entity = new Configuration();
+			entity.SetProperties("A", "A");
 
-                        List<BOConfiguration> response = mapper.MapEFToBO(new List<Configuration>() { entity });
+			List<BOConfiguration> response = mapper.MapEFToBO(new List<Configuration>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>2b1425bc135b68ac33971bb11186957c</Hash>
+    <Hash>3466e0f91c6fd452b691d7595c11885d</Hash>
 </Codenesium>*/

@@ -7,53 +7,53 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "UserRole")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALUserRoleMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALUserRoleMapper();
-                        var bo = new BOUserRole();
-                        bo.SetProperties("A", "A", "A");
+	[Trait("Type", "Unit")]
+	[Trait("Table", "UserRole")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALUserRoleMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALUserRoleMapper();
+			var bo = new BOUserRole();
+			bo.SetProperties("A", "A", "A");
 
-                        UserRole response = mapper.MapBOToEF(bo);
+			UserRole response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALUserRoleMapper();
-                        UserRole entity = new UserRole();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALUserRoleMapper();
+			UserRole entity = new UserRole();
+			entity.SetProperties("A", "A", "A");
 
-                        BOUserRole response = mapper.MapEFToBO(entity);
+			BOUserRole response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be("A");
-                        response.JSON.Should().Be("A");
-                        response.Name.Should().Be("A");
-                }
+			response.Id.Should().Be("A");
+			response.JSON.Should().Be("A");
+			response.Name.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALUserRoleMapper();
-                        UserRole entity = new UserRole();
-                        entity.SetProperties("A", "A", "A");
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALUserRoleMapper();
+			UserRole entity = new UserRole();
+			entity.SetProperties("A", "A", "A");
 
-                        List<BOUserRole> response = mapper.MapEFToBO(new List<UserRole>() { entity });
+			List<BOUserRole> response = mapper.MapEFToBO(new List<UserRole>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>7ed09556c9503345e0fd02197851c915</Hash>
+    <Hash>2a8e62ec706ae2b5f9475eb2d30c0ac1</Hash>
 </Codenesium>*/

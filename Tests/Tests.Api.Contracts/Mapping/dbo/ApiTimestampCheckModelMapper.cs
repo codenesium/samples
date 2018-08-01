@@ -1,14 +1,14 @@
 namespace TestsNS.Api.Contracts
 {
-        public partial class ApiTimestampCheckModelMapper : AbstractApiTimestampCheckModelMapper, IApiTimestampCheckModelMapper
-        {
-                public ApiTimestampCheckModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTimestampCheckModelMapper : AbstractApiTimestampCheckModelMapper, IApiTimestampCheckModelMapper
+	{
+		public ApiTimestampCheckModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>f863adf54b3c284947b5edae36b84723</Hash>
+    <Hash>7fc088202d2d82852e3df1c72daeee1f</Hash>
 </Codenesium>*/

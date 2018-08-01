@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public interface ICountryRepository
-        {
-                Task<Country> Create(Country item);
+	public interface ICountryRepository
+	{
+		Task<Country> Create(Country item);
 
-                Task Update(Country item);
+		Task Update(Country item);
 
-                Task Delete(int id);
+		Task Delete(int id);
 
-                Task<Country> Get(int id);
+		Task<Country> Get(int id);
 
-                Task<List<Country>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Country>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0);
 
-                Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>2d908a82183f6aa29af1b0bee844e612</Hash>
+    <Hash>26c8eba44e9a1966395103d9e60d99e5</Hash>
 </Codenesium>*/

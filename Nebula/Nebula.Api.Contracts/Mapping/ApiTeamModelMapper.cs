@@ -1,14 +1,14 @@
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiTeamModelMapper : AbstractApiTeamModelMapper, IApiTeamModelMapper
-        {
-                public ApiTeamModelMapper()
-                        : base()
-                {
-                }
-        }
+	public partial class ApiTeamModelMapper : AbstractApiTeamModelMapper, IApiTeamModelMapper
+	{
+		public ApiTeamModelMapper()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>cbee9d123d7773c1075bc3037bd0a652</Hash>
+    <Hash>ca1faf1427ac05d4b309271b24609259</Hash>
 </Codenesium>*/

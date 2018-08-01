@@ -7,55 +7,55 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "PipelineStep")]
-        [Trait("Area", "DALMapper")]
-        public class TestDALPipelineStepMapper
-        {
-                [Fact]
-                public void MapBOToEF()
-                {
-                        var mapper = new DALPipelineStepMapper();
-                        var bo = new BOPipelineStep();
-                        bo.SetProperties(1, "A", 1, 1);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "PipelineStep")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALPipelineStepMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALPipelineStepMapper();
+			var bo = new BOPipelineStep();
+			bo.SetProperties(1, "A", 1, 1);
 
-                        PipelineStep response = mapper.MapBOToEF(bo);
+			PipelineStep response = mapper.MapBOToEF(bo);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.PipelineStepStatusId.Should().Be(1);
-                        response.ShipperId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.PipelineStepStatusId.Should().Be(1);
+			response.ShipperId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBO()
-                {
-                        var mapper = new DALPipelineStepMapper();
-                        PipelineStep entity = new PipelineStep();
-                        entity.SetProperties(1, "A", 1, 1);
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALPipelineStepMapper();
+			PipelineStep entity = new PipelineStep();
+			entity.SetProperties(1, "A", 1, 1);
 
-                        BOPipelineStep response = mapper.MapEFToBO(entity);
+			BOPipelineStep response = mapper.MapEFToBO(entity);
 
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.PipelineStepStatusId.Should().Be(1);
-                        response.ShipperId.Should().Be(1);
-                }
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.PipelineStepStatusId.Should().Be(1);
+			response.ShipperId.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapEFToBOList()
-                {
-                        var mapper = new DALPipelineStepMapper();
-                        PipelineStep entity = new PipelineStep();
-                        entity.SetProperties(1, "A", 1, 1);
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALPipelineStepMapper();
+			PipelineStep entity = new PipelineStep();
+			entity.SetProperties(1, "A", 1, 1);
 
-                        List<BOPipelineStep> response = mapper.MapEFToBO(new List<PipelineStep>() { entity });
+			List<BOPipelineStep> response = mapper.MapEFToBO(new List<PipelineStep>() { entity });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>28501f4161f069170d0206afebd30438</Hash>
+    <Hash>9df215819639c041d8cb7917c0e541f8</Hash>
 </Codenesium>*/

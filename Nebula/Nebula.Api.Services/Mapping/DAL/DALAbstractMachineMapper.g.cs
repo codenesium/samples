@@ -6,52 +6,52 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class DALAbstractMachineMapper
-        {
-                public virtual Machine MapBOToEF(
-                        BOMachine bo)
-                {
-                        Machine efMachine = new Machine();
-                        efMachine.SetProperties(
-                                bo.Description,
-                                bo.Id,
-                                bo.JwtKey,
-                                bo.LastIpAddress,
-                                bo.MachineGuid,
-                                bo.Name);
-                        return efMachine;
-                }
+	public abstract class DALAbstractMachineMapper
+	{
+		public virtual Machine MapBOToEF(
+			BOMachine bo)
+		{
+			Machine efMachine = new Machine();
+			efMachine.SetProperties(
+				bo.Description,
+				bo.Id,
+				bo.JwtKey,
+				bo.LastIpAddress,
+				bo.MachineGuid,
+				bo.Name);
+			return efMachine;
+		}
 
-                public virtual BOMachine MapEFToBO(
-                        Machine ef)
-                {
-                        var bo = new BOMachine();
+		public virtual BOMachine MapEFToBO(
+			Machine ef)
+		{
+			var bo = new BOMachine();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.Description,
-                                ef.JwtKey,
-                                ef.LastIpAddress,
-                                ef.MachineGuid,
-                                ef.Name);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.Description,
+				ef.JwtKey,
+				ef.LastIpAddress,
+				ef.MachineGuid,
+				ef.Name);
+			return bo;
+		}
 
-                public virtual List<BOMachine> MapEFToBO(
-                        List<Machine> records)
-                {
-                        List<BOMachine> response = new List<BOMachine>();
+		public virtual List<BOMachine> MapEFToBO(
+			List<Machine> records)
+		{
+			List<BOMachine> response = new List<BOMachine>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1541f3a5417b42e4e346195893ef96e0</Hash>
+    <Hash>9fe9c526b4709f539f0473f424bcd817</Hash>
 </Codenesium>*/

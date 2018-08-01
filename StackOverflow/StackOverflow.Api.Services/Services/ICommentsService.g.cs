@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-        public interface ICommentsService
-        {
-                Task<CreateResponse<ApiCommentsResponseModel>> Create(
-                        ApiCommentsRequestModel model);
+	public interface ICommentsService
+	{
+		Task<CreateResponse<ApiCommentsResponseModel>> Create(
+			ApiCommentsRequestModel model);
 
-                Task<UpdateResponse<ApiCommentsResponseModel>> Update(int id,
-                                                                       ApiCommentsRequestModel model);
+		Task<UpdateResponse<ApiCommentsResponseModel>> Update(int id,
+		                                                       ApiCommentsRequestModel model);
 
-                Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int id);
 
-                Task<ApiCommentsResponseModel> Get(int id);
+		Task<ApiCommentsResponseModel> Get(int id);
 
-                Task<List<ApiCommentsResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-        }
+		Task<List<ApiCommentsResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+	}
 }
 
 /*<Codenesium>
-    <Hash>47069e456c3859910d75562bebf2f8b4</Hash>
+    <Hash>694a2f3f091c93ece88fe2511564fa61</Hash>
 </Codenesium>*/

@@ -3,15 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOUserRole : AbstractBOUserRole
-        {
-                public BOUserRole()
-                        : base()
-                {
-                }
-        }
+	public partial class BOUserRole : AbstractBOUserRole
+	{
+		public BOUserRole()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>3bc7200863235bcee4ea4ee537b0fb3f</Hash>
+    <Hash>e6e6d2477a46ae4f14c1006b7f0c0f11</Hash>
 </Codenesium>*/

@@ -6,38 +6,38 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALBadgesMapper DALBadgesMapperMock { get; set; } = new DALBadgesMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALBadgesMapper DALBadgesMapperMock { get; set; } = new DALBadgesMapper();
 
-                public IDALCommentsMapper DALCommentsMapperMock { get; set; } = new DALCommentsMapper();
+		public IDALCommentsMapper DALCommentsMapperMock { get; set; } = new DALCommentsMapper();
 
-                public IDALLinkTypesMapper DALLinkTypesMapperMock { get; set; } = new DALLinkTypesMapper();
+		public IDALLinkTypesMapper DALLinkTypesMapperMock { get; set; } = new DALLinkTypesMapper();
 
-                public IDALPostHistoryMapper DALPostHistoryMapperMock { get; set; } = new DALPostHistoryMapper();
+		public IDALPostHistoryMapper DALPostHistoryMapperMock { get; set; } = new DALPostHistoryMapper();
 
-                public IDALPostHistoryTypesMapper DALPostHistoryTypesMapperMock { get; set; } = new DALPostHistoryTypesMapper();
+		public IDALPostHistoryTypesMapper DALPostHistoryTypesMapperMock { get; set; } = new DALPostHistoryTypesMapper();
 
-                public IDALPostLinksMapper DALPostLinksMapperMock { get; set; } = new DALPostLinksMapper();
+		public IDALPostLinksMapper DALPostLinksMapperMock { get; set; } = new DALPostLinksMapper();
 
-                public IDALPostsMapper DALPostsMapperMock { get; set; } = new DALPostsMapper();
+		public IDALPostsMapper DALPostsMapperMock { get; set; } = new DALPostsMapper();
 
-                public IDALPostTypesMapper DALPostTypesMapperMock { get; set; } = new DALPostTypesMapper();
+		public IDALPostTypesMapper DALPostTypesMapperMock { get; set; } = new DALPostTypesMapper();
 
-                public IDALTagsMapper DALTagsMapperMock { get; set; } = new DALTagsMapper();
+		public IDALTagsMapper DALTagsMapperMock { get; set; } = new DALTagsMapper();
 
-                public IDALUsersMapper DALUsersMapperMock { get; set; } = new DALUsersMapper();
+		public IDALUsersMapper DALUsersMapperMock { get; set; } = new DALUsersMapper();
 
-                public IDALVotesMapper DALVotesMapperMock { get; set; } = new DALVotesMapper();
+		public IDALVotesMapper DALVotesMapperMock { get; set; } = new DALVotesMapper();
 
-                public IDALVoteTypesMapper DALVoteTypesMapperMock { get; set; } = new DALVoteTypesMapper();
+		public IDALVoteTypesMapper DALVoteTypesMapperMock { get; set; } = new DALVoteTypesMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>35758accfa633c9d32c60aadd34d1641</Hash>
+    <Hash>89606b6f3603dad13c0de2df26e27bbd</Hash>
 </Codenesium>*/

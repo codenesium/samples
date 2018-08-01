@@ -6,66 +6,66 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class DALAbstractLinkMapper
-        {
-                public virtual Link MapBOToEF(
-                        BOLink bo)
-                {
-                        Link efLink = new Link();
-                        efLink.SetProperties(
-                                bo.AssignedMachineId,
-                                bo.ChainId,
-                                bo.DateCompleted,
-                                bo.DateStarted,
-                                bo.DynamicParameters,
-                                bo.ExternalId,
-                                bo.Id,
-                                bo.LinkStatusId,
-                                bo.Name,
-                                bo.Order,
-                                bo.Response,
-                                bo.StaticParameters,
-                                bo.TimeoutInSeconds);
-                        return efLink;
-                }
+	public abstract class DALAbstractLinkMapper
+	{
+		public virtual Link MapBOToEF(
+			BOLink bo)
+		{
+			Link efLink = new Link();
+			efLink.SetProperties(
+				bo.AssignedMachineId,
+				bo.ChainId,
+				bo.DateCompleted,
+				bo.DateStarted,
+				bo.DynamicParameters,
+				bo.ExternalId,
+				bo.Id,
+				bo.LinkStatusId,
+				bo.Name,
+				bo.Order,
+				bo.Response,
+				bo.StaticParameters,
+				bo.TimeoutInSeconds);
+			return efLink;
+		}
 
-                public virtual BOLink MapEFToBO(
-                        Link ef)
-                {
-                        var bo = new BOLink();
+		public virtual BOLink MapEFToBO(
+			Link ef)
+		{
+			var bo = new BOLink();
 
-                        bo.SetProperties(
-                                ef.Id,
-                                ef.AssignedMachineId,
-                                ef.ChainId,
-                                ef.DateCompleted,
-                                ef.DateStarted,
-                                ef.DynamicParameters,
-                                ef.ExternalId,
-                                ef.LinkStatusId,
-                                ef.Name,
-                                ef.Order,
-                                ef.Response,
-                                ef.StaticParameters,
-                                ef.TimeoutInSeconds);
-                        return bo;
-                }
+			bo.SetProperties(
+				ef.Id,
+				ef.AssignedMachineId,
+				ef.ChainId,
+				ef.DateCompleted,
+				ef.DateStarted,
+				ef.DynamicParameters,
+				ef.ExternalId,
+				ef.LinkStatusId,
+				ef.Name,
+				ef.Order,
+				ef.Response,
+				ef.StaticParameters,
+				ef.TimeoutInSeconds);
+			return bo;
+		}
 
-                public virtual List<BOLink> MapEFToBO(
-                        List<Link> records)
-                {
-                        List<BOLink> response = new List<BOLink>();
+		public virtual List<BOLink> MapEFToBO(
+			List<Link> records)
+		{
+			List<BOLink> response = new List<BOLink>();
 
-                        records.ForEach(r =>
-                        {
-                                response.Add(this.MapEFToBO(r));
-                        });
+			records.ForEach(r =>
+			{
+				response.Add(this.MapEFToBO(r));
+			});
 
-                        return response;
-                }
-        }
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>1934297bb47ed2da7840007ff465c00d</Hash>
+    <Hash>aa6d9594632bde01442f5289477a7ef5</Hash>
 </Codenesium>*/

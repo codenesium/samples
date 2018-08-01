@@ -3,15 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOEmployeePayHistory : AbstractBOEmployeePayHistory
-        {
-                public BOEmployeePayHistory()
-                        : base()
-                {
-                }
-        }
+	public partial class BOEmployeePayHistory : AbstractBOEmployeePayHistory
+	{
+		public BOEmployeePayHistory()
+			: base()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>52091682826e7e9801707bfba35f4c22</Hash>
+    <Hash>457363c7f7bc3abfa1607bd2934295d6</Hash>
 </Codenesium>*/

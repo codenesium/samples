@@ -7,68 +7,67 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Contracts.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Vendor")]
-        [Trait("Area", "ApiModel")]
-        public class TestApiVendorModelMapper
-        {
-                [Fact]
-                public void MapRequestToResponse()
-                {
-                        var mapper = new ApiVendorModelMapper();
-                        var model = new ApiVendorRequestModel();
-                        model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
-                        ApiVendorResponseModel response = mapper.MapRequestToResponse(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Vendor")]
+	[Trait("Area", "ApiModel")]
+	public class TestApiVendorModelMapper
+	{
+		[Fact]
+		public void MapRequestToResponse()
+		{
+			var mapper = new ApiVendorModelMapper();
+			var model = new ApiVendorRequestModel();
+			model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
+			ApiVendorResponseModel response = mapper.MapRequestToResponse(1, model);
 
-                        response.AccountNumber.Should().Be("A");
-                        response.ActiveFlag.Should().Be(true);
-                        response.BusinessEntityID.Should().Be(1);
-                        response.CreditRating.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.PreferredVendorStatu.Should().Be(true);
-                        response.PurchasingWebServiceURL.Should().Be("A");
-                }
+			response.AccountNumber.Should().Be("A");
+			response.ActiveFlag.Should().Be(true);
+			response.BusinessEntityID.Should().Be(1);
+			response.CreditRating.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.PreferredVendorStatu.Should().Be(true);
+			response.PurchasingWebServiceURL.Should().Be("A");
+		}
 
-                [Fact]
-                public void MapResponseToRequest()
-                {
-                        var mapper = new ApiVendorModelMapper();
-                        var model = new ApiVendorResponseModel();
-                        model.SetProperties(1, "A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
-                        ApiVendorRequestModel response = mapper.MapResponseToRequest(model);
+		[Fact]
+		public void MapResponseToRequest()
+		{
+			var mapper = new ApiVendorModelMapper();
+			var model = new ApiVendorResponseModel();
+			model.SetProperties(1, "A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
+			ApiVendorRequestModel response = mapper.MapResponseToRequest(model);
 
-                        response.AccountNumber.Should().Be("A");
-                        response.ActiveFlag.Should().Be(true);
-                        response.CreditRating.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.PreferredVendorStatu.Should().Be(true);
-                        response.PurchasingWebServiceURL.Should().Be("A");
-                }
+			response.AccountNumber.Should().Be("A");
+			response.ActiveFlag.Should().Be(true);
+			response.CreditRating.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.PreferredVendorStatu.Should().Be(true);
+			response.PurchasingWebServiceURL.Should().Be("A");
+		}
 
-                [Fact]
-                public void CreatePatch()
-                {
-                        var mapper = new ApiVendorModelMapper();
-                        var model = new ApiVendorRequestModel();
-                        model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
+		[Fact]
+		public void CreatePatch()
+		{
+			var mapper = new ApiVendorModelMapper();
+			var model = new ApiVendorRequestModel();
+			model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
 
-                        JsonPatchDocument<ApiVendorRequestModel> patch = mapper.CreatePatch(model);
-                        var response = new ApiVendorRequestModel();
-                        patch.ApplyTo(response);
-
-                        response.AccountNumber.Should().Be("A");
-                        response.ActiveFlag.Should().Be(true);
-                        response.CreditRating.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.PreferredVendorStatu.Should().Be(true);
-                        response.PurchasingWebServiceURL.Should().Be("A");
-                }
-        }
+			JsonPatchDocument<ApiVendorRequestModel> patch = mapper.CreatePatch(model);
+			var response = new ApiVendorRequestModel();
+			patch.ApplyTo(response);
+			response.AccountNumber.Should().Be("A");
+			response.ActiveFlag.Should().Be(true);
+			response.CreditRating.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.PreferredVendorStatu.Should().Be(true);
+			response.PurchasingWebServiceURL.Should().Be("A");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>68201d982601357a60d99bebe6ec1fbd</Hash>
+    <Hash>2c09f78f09e9271baa6ec27097a14080</Hash>
 </Codenesium>*/

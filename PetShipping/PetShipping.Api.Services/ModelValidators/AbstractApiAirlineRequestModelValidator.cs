@@ -9,30 +9,30 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiAirlineRequestModelValidator : AbstractValidator<ApiAirlineRequestModel>
-        {
-                private int existingRecordId;
+	public abstract class AbstractApiAirlineRequestModelValidator : AbstractValidator<ApiAirlineRequestModel>
+	{
+		private int existingRecordId;
 
-                private IAirlineRepository airlineRepository;
+		private IAirlineRepository airlineRepository;
 
-                public AbstractApiAirlineRequestModelValidator(IAirlineRepository airlineRepository)
-                {
-                        this.airlineRepository = airlineRepository;
-                }
+		public AbstractApiAirlineRequestModelValidator(IAirlineRepository airlineRepository)
+		{
+			this.airlineRepository = airlineRepository;
+		}
 
-                public async Task<ValidationResult> ValidateAsync(ApiAirlineRequestModel model, int id)
-                {
-                        this.existingRecordId = id;
-                        return await this.ValidateAsync(model);
-                }
+		public async Task<ValidationResult> ValidateAsync(ApiAirlineRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
+		}
 
-                public virtual void NameRules()
-                {
-                        this.RuleFor(x => x.Name).Length(0, 128);
-                }
-        }
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b621a8596c3d2c4671315164bdb1460a</Hash>
+    <Hash>ceaba5e0d80f6ca0510f963b35221352</Hash>
 </Codenesium>*/

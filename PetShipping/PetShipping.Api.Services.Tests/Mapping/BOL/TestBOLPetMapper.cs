@@ -8,53 +8,53 @@ using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "Pet")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLPetMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLPetMapper();
-                        ApiPetRequestModel model = new ApiPetRequestModel();
-                        model.SetProperties(1, 1, "A", 1);
-                        BOPet response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Pet")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLPetMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLPetMapper();
+			ApiPetRequestModel model = new ApiPetRequestModel();
+			model.SetProperties(1, 1, "A", 1);
+			BOPet response = mapper.MapModelToBO(1, model);
 
-                        response.BreedId.Should().Be(1);
-                        response.ClientId.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.Weight.Should().Be(1);
-                }
+			response.BreedId.Should().Be(1);
+			response.ClientId.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Weight.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLPetMapper();
-                        BOPet bo = new BOPet();
-                        bo.SetProperties(1, 1, 1, "A", 1);
-                        ApiPetResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLPetMapper();
+			BOPet bo = new BOPet();
+			bo.SetProperties(1, 1, 1, "A", 1);
+			ApiPetResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.BreedId.Should().Be(1);
-                        response.ClientId.Should().Be(1);
-                        response.Id.Should().Be(1);
-                        response.Name.Should().Be("A");
-                        response.Weight.Should().Be(1);
-                }
+			response.BreedId.Should().Be(1);
+			response.ClientId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Weight.Should().Be(1);
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLPetMapper();
-                        BOPet bo = new BOPet();
-                        bo.SetProperties(1, 1, 1, "A", 1);
-                        List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLPetMapper();
+			BOPet bo = new BOPet();
+			bo.SetProperties(1, 1, 1, "A", 1);
+			List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9f6cd7500e9933d8b0951b47df248f94</Hash>
+    <Hash>9745833994df5cb3e37f91eefec91474</Hash>
 </Codenesium>*/

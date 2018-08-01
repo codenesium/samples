@@ -12,86 +12,86 @@ using Xunit;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Type", "Integration")]
-        [Trait("Table", "Worker")]
-        [Trait("Area", "Integration")]
-        public class WorkerIntegrationTests : IClassFixture<TestWebApplicationFactory>
-        {
-                public WorkerIntegrationTests(TestWebApplicationFactory fixture)
-                {
-                        this.Client = new ApiClient(fixture.CreateClient());
-                }
+	[Trait("Type", "Integration")]
+	[Trait("Table", "Worker")]
+	[Trait("Area", "Integration")]
+	public class WorkerIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	{
+		public WorkerIntegrationTests(TestWebApplicationFactory fixture)
+		{
+			this.Client = new ApiClient(fixture.CreateClient());
+		}
 
-                public ApiClient Client { get; }
+		public ApiClient Client { get; }
 
-                [Fact]
-                public async void TestCreate()
-                {
-                        var response = await this.CreateRecord();
+		[Fact]
+		public async void TestCreate()
+		{
+			var response = await this.CreateRecord();
 
-                        response.Should().NotBeNull();
+			response.Should().NotBeNull();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestUpdate()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestUpdate()
+		{
+			var model = await this.CreateRecord();
 
-                        ApiWorkerModelMapper mapper = new ApiWorkerModelMapper();
+			ApiWorkerModelMapper mapper = new ApiWorkerModelMapper();
 
-                        UpdateResponse<ApiWorkerResponseModel> updateResponse = await this.Client.WorkerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiWorkerResponseModel> updateResponse = await this.Client.WorkerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
-                        updateResponse.Record.Should().NotBeNull();
-                        updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestDelete()
-                {
-                        var model = await this.CreateRecord();
+		[Fact]
+		public async void TestDelete()
+		{
+			var model = await this.CreateRecord();
 
-                        await this.Client.WorkerDeleteAsync(model.Id);
+			await this.Client.WorkerDeleteAsync(model.Id);
 
-                        await this.Cleanup();
-                }
+			await this.Cleanup();
+		}
 
-                [Fact]
-                public async void TestGet()
-                {
-                        ApiWorkerResponseModel response = await this.Client.WorkerGetAsync("A");
+		[Fact]
+		public async void TestGet()
+		{
+			ApiWorkerResponseModel response = await this.Client.WorkerGetAsync("A");
 
-                        response.Should().NotBeNull();
-                }
+			response.Should().NotBeNull();
+		}
 
-                [Fact]
-                public async void TestAll()
-                {
-                        List<ApiWorkerResponseModel> response = await this.Client.WorkerAllAsync();
+		[Fact]
+		public async void TestAll()
+		{
+			List<ApiWorkerResponseModel> response = await this.Client.WorkerAllAsync();
 
-                        response.Count.Should().BeGreaterThan(0);
-                }
+			response.Count.Should().BeGreaterThan(0);
+		}
 
-                private async Task<ApiWorkerResponseModel> CreateRecord()
-                {
-                        var model = new ApiWorkerRequestModel();
-                        model.SetProperties("B", "B", true, "B", "B", "B", "B", "B", "B");
-                        CreateResponse<ApiWorkerResponseModel> result = await this.Client.WorkerCreateAsync(model);
+		private async Task<ApiWorkerResponseModel> CreateRecord()
+		{
+			var model = new ApiWorkerRequestModel();
+			model.SetProperties("B", "B", true, "B", "B", "B", "B", "B", "B");
+			CreateResponse<ApiWorkerResponseModel> result = await this.Client.WorkerCreateAsync(model);
 
-                        result.Success.Should().BeTrue();
-                        return result.Record;
-                }
+			result.Success.Should().BeTrue();
+			return result.Record;
+		}
 
-                private async Task Cleanup()
-                {
-                        await this.Client.WorkerDeleteAsync("B");
-                }
-        }
+		private async Task Cleanup()
+		{
+			await this.Client.WorkerDeleteAsync("B");
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>10471a22cc7178934b1f7f076ecf8466</Hash>
+    <Hash>b01a70d9e697cc5878281583410bed68</Hash>
 </Codenesium>*/

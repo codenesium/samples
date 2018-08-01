@@ -8,51 +8,51 @@ using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "AddressType")]
-        [Trait("Area", "BOLMapper")]
-        public class TestBOLAddressTypeMapper
-        {
-                [Fact]
-                public void MapModelToBO()
-                {
-                        var mapper = new BOLAddressTypeMapper();
-                        ApiAddressTypeRequestModel model = new ApiAddressTypeRequestModel();
-                        model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        BOAddressType response = mapper.MapModelToBO(1, model);
+	[Trait("Type", "Unit")]
+	[Trait("Table", "AddressType")]
+	[Trait("Area", "BOLMapper")]
+	public class TestBOLAddressTypeMapper
+	{
+		[Fact]
+		public void MapModelToBO()
+		{
+			var mapper = new BOLAddressTypeMapper();
+			ApiAddressTypeRequestModel model = new ApiAddressTypeRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			BOAddressType response = mapper.MapModelToBO(1, model);
 
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModel()
-                {
-                        var mapper = new BOLAddressTypeMapper();
-                        BOAddressType bo = new BOAddressType();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        ApiAddressTypeResponseModel response = mapper.MapBOToModel(bo);
+		[Fact]
+		public void MapBOToModel()
+		{
+			var mapper = new BOLAddressTypeMapper();
+			BOAddressType bo = new BOAddressType();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			ApiAddressTypeResponseModel response = mapper.MapBOToModel(bo);
 
-                        response.AddressTypeID.Should().Be(1);
-                        response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-                        response.Name.Should().Be("A");
-                        response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                }
+			response.AddressTypeID.Should().Be(1);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 
-                [Fact]
-                public void MapBOToModelList()
-                {
-                        var mapper = new BOLAddressTypeMapper();
-                        BOAddressType bo = new BOAddressType();
-                        bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-                        List<ApiAddressTypeResponseModel> response = mapper.MapBOToModel(new List<BOAddressType>() { { bo } });
+		[Fact]
+		public void MapBOToModelList()
+		{
+			var mapper = new BOLAddressTypeMapper();
+			BOAddressType bo = new BOAddressType();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			List<ApiAddressTypeResponseModel> response = mapper.MapBOToModel(new List<BOAddressType>() { { bo } });
 
-                        response.Count.Should().Be(1);
-                }
-        }
+			response.Count.Should().Be(1);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>9b92c4c16421f9ff98a7255f0a683208</Hash>
+    <Hash>fd51b2eeb7a2e61bbbc28d4f7d694371</Hash>
 </Codenesium>*/

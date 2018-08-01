@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-        public interface IApiDeviceRequestModelValidator
-        {
-                Task<ValidationResult> ValidateCreateAsync(ApiDeviceRequestModel model);
+	public interface IApiDeviceRequestModelValidator
+	{
+		Task<ValidationResult> ValidateCreateAsync(ApiDeviceRequestModel model);
 
-                Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceRequestModel model);
 
-                Task<ValidationResult> ValidateDeleteAsync(int id);
-        }
+		Task<ValidationResult> ValidateDeleteAsync(int id);
+	}
 }
 
 /*<Codenesium>
-    <Hash>f8f20f0555dc54a6a42a03fdf8985a04</Hash>
+    <Hash>ca8fabb78ba1058f1ba0933966b9441d</Hash>
 </Codenesium>*/

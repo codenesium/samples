@@ -6,36 +6,36 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services.Tests
 {
-        public class DALMapperMockFactory
-        {
-                public IDALChainMapper DALChainMapperMock { get; set; } = new DALChainMapper();
+	public class DALMapperMockFactory
+	{
+		public IDALChainMapper DALChainMapperMock { get; set; } = new DALChainMapper();
 
-                public IDALChainStatusMapper DALChainStatusMapperMock { get; set; } = new DALChainStatusMapper();
+		public IDALChainStatusMapper DALChainStatusMapperMock { get; set; } = new DALChainStatusMapper();
 
-                public IDALClaspMapper DALClaspMapperMock { get; set; } = new DALClaspMapper();
+		public IDALClaspMapper DALClaspMapperMock { get; set; } = new DALClaspMapper();
 
-                public IDALLinkMapper DALLinkMapperMock { get; set; } = new DALLinkMapper();
+		public IDALLinkMapper DALLinkMapperMock { get; set; } = new DALLinkMapper();
 
-                public IDALLinkLogMapper DALLinkLogMapperMock { get; set; } = new DALLinkLogMapper();
+		public IDALLinkLogMapper DALLinkLogMapperMock { get; set; } = new DALLinkLogMapper();
 
-                public IDALLinkStatusMapper DALLinkStatusMapperMock { get; set; } = new DALLinkStatusMapper();
+		public IDALLinkStatusMapper DALLinkStatusMapperMock { get; set; } = new DALLinkStatusMapper();
 
-                public IDALMachineMapper DALMachineMapperMock { get; set; } = new DALMachineMapper();
+		public IDALMachineMapper DALMachineMapperMock { get; set; } = new DALMachineMapper();
 
-                public IDALMachineRefTeamMapper DALMachineRefTeamMapperMock { get; set; } = new DALMachineRefTeamMapper();
+		public IDALMachineRefTeamMapper DALMachineRefTeamMapperMock { get; set; } = new DALMachineRefTeamMapper();
 
-                public IDALOrganizationMapper DALOrganizationMapperMock { get; set; } = new DALOrganizationMapper();
+		public IDALOrganizationMapper DALOrganizationMapperMock { get; set; } = new DALOrganizationMapper();
 
-                public IDALTeamMapper DALTeamMapperMock { get; set; } = new DALTeamMapper();
+		public IDALTeamMapper DALTeamMapperMock { get; set; } = new DALTeamMapper();
 
-                public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
+		public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
 
-                public DALMapperMockFactory()
-                {
-                }
-        }
+		public DALMapperMockFactory()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bb90888ef21aa618643f0b60d87f11ab</Hash>
+    <Hash>120169fd943feeaacc5eb75d1f4a0e79</Hash>
 </Codenesium>*/

@@ -6,41 +6,41 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        [Table("AWBuildVersion", Schema="dbo")]
-        public partial class AWBuildVersion : AbstractEntity
-        {
-                public AWBuildVersion()
-                {
-                }
+	[Table("AWBuildVersion", Schema="dbo")]
+	public partial class AWBuildVersion : AbstractEntity
+	{
+		public AWBuildVersion()
+		{
+		}
 
-                public virtual void SetProperties(
-                        string database_Version,
-                        DateTime modifiedDate,
-                        int systemInformationID,
-                        DateTime versionDate)
-                {
-                        this.Database_Version = database_Version;
-                        this.ModifiedDate = modifiedDate;
-                        this.SystemInformationID = systemInformationID;
-                        this.VersionDate = versionDate;
-                }
+		public virtual void SetProperties(
+			string database_Version,
+			DateTime modifiedDate,
+			int systemInformationID,
+			DateTime versionDate)
+		{
+			this.Database_Version = database_Version;
+			this.ModifiedDate = modifiedDate;
+			this.SystemInformationID = systemInformationID;
+			this.VersionDate = versionDate;
+		}
 
-                [Column("Database Version")]
-                public string Database_Version { get; private set; }
+		[Column("Database Version")]
+		public string Database_Version { get; private set; }
 
-                [Column("ModifiedDate")]
-                public DateTime ModifiedDate { get; private set; }
+		[Column("ModifiedDate")]
+		public DateTime ModifiedDate { get; private set; }
 
-                [Key]
-                [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-                [Column("SystemInformationID")]
-                public int SystemInformationID { get; private set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SystemInformationID")]
+		public int SystemInformationID { get; private set; }
 
-                [Column("VersionDate")]
-                public DateTime VersionDate { get; private set; }
-        }
+		[Column("VersionDate")]
+		public DateTime VersionDate { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>3f784d606229dd80246f0ebfa7e84f40</Hash>
+    <Hash>3608b85457b0011ea653a5da4d4a90e1</Hash>
 </Codenesium>*/

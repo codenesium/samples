@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public interface IApiTagsModelMapper
-        {
-                ApiTagsResponseModel MapRequestToResponse(
-                        int id,
-                        ApiTagsRequestModel request);
+	public interface IApiTagsModelMapper
+	{
+		ApiTagsResponseModel MapRequestToResponse(
+			int id,
+			ApiTagsRequestModel request);
 
-                ApiTagsRequestModel MapResponseToRequest(
-                        ApiTagsResponseModel response);
+		ApiTagsRequestModel MapResponseToRequest(
+			ApiTagsResponseModel response);
 
-                JsonPatchDocument<ApiTagsRequestModel> CreatePatch(ApiTagsRequestModel model);
-        }
+		JsonPatchDocument<ApiTagsRequestModel> CreatePatch(ApiTagsRequestModel model);
+	}
 }
 
 /*<Codenesium>
-    <Hash>ba964246077cf938bf9230d734568bf5</Hash>
+    <Hash>febb4dc60ca089540706290355e8c439</Hash>
 </Codenesium>*/

@@ -15,17 +15,17 @@ using Xunit;
 
 namespace TestsNS.Api.Services.Tests
 {
-        [Trait("Type", "Unit")]
-        [Trait("Table", "SelfReference")]
-        [Trait("Area", "ModelValidators")]
-        public partial class ApiSelfReferenceRequestModelValidatorTest
-        {
-                public ApiSelfReferenceRequestModelValidatorTest()
-                {
-                }
-        }
+	[Trait("Type", "Unit")]
+	[Trait("Table", "SelfReference")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiSelfReferenceRequestModelValidatorTest
+	{
+		public ApiSelfReferenceRequestModelValidatorTest()
+		{
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>bc2f26401496f4553dc986fed3360b46</Hash>
+    <Hash>f4a23e58eb5a505c46dcd6f869a4a3cc</Hash>
 </Codenesium>*/

@@ -3,26 +3,26 @@ using System;
 
 namespace StackOverflowNS.Api.Services
 {
-        public abstract class AbstractBOLinkTypes : AbstractBusinessObject
-        {
-                public AbstractBOLinkTypes()
-                        : base()
-                {
-                }
+	public abstract class AbstractBOLinkTypes : AbstractBusinessObject
+	{
+		public AbstractBOLinkTypes()
+			: base()
+		{
+		}
 
-                public virtual void SetProperties(int id,
-                                                  string type)
-                {
-                        this.Id = id;
-                        this.Type = type;
-                }
+		public virtual void SetProperties(int id,
+		                                  string type)
+		{
+			this.Id = id;
+			this.Type = type;
+		}
 
-                public int Id { get; private set; }
+		public int Id { get; private set; }
 
-                public string Type { get; private set; }
-        }
+		public string Type { get; private set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>78e70342bfa601a191ba5fae0467b729</Hash>
+    <Hash>6a5f595054efdd2cac73b6befc756182</Hash>
 </Codenesium>*/
