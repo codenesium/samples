@@ -226,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{storeID}/Customers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
 		public async virtual Task<IActionResult> Customers(int storeID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5f7ccdd2c4641d3f8a45ec491f5d44f1</Hash>
+    <Hash>80e405885570dd56514eb855a7bab3a3</Hash>
 </Codenesium>*/

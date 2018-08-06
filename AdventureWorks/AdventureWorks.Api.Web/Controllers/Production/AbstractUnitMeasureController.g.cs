@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{unitMeasureCode}/BillOfMaterials")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
 		public async virtual Task<IActionResult> BillOfMaterials(string unitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{sizeUnitMeasureCode}/Products")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
 		public async virtual Task<IActionResult> Products(string sizeUnitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a8a6a59089688e224e807cb40fd6d935</Hash>
+    <Hash>9872a1c36b0e10d3b193a02f2884ccaf</Hash>
 </Codenesium>*/

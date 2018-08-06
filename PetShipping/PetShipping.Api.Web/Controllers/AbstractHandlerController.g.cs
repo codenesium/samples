@@ -204,7 +204,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{handlerId}/AirTransports")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAirTransportResponseModel>), 200)]
 		public async virtual Task<IActionResult> AirTransports(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{handlerId}/HandlerPipelineSteps")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
 		public async virtual Task<IActionResult> HandlerPipelineSteps(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{handlerId}/OtherTransports")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiOtherTransportResponseModel>), 200)]
 		public async virtual Task<IActionResult> OtherTransports(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -262,5 +262,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e1b613d09f86a3d096abdd702ef365c1</Hash>
+    <Hash>351d0a0dfcca0af63d2bd3780f31c63e</Hash>
 </Codenesium>*/

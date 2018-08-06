@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{currencyRateID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeaders(int currencyRateID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fbaa6f3bb9c58af0955bd1c526cd2a59</Hash>
+    <Hash>ecac066280b6a0b3c4847245e913be31</Hash>
 </Codenesium>*/

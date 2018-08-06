@@ -226,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{workOrderID}/WorkOrderRoutings")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
 		public async virtual Task<IActionResult> WorkOrderRoutings(int workOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>af6fd9e523fe32016d7ccc217bab3544</Hash>
+    <Hash>0d492fc6afb4df070511836997b9ce23</Hash>
 </Codenesium>*/

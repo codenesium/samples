@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{creditCardID}/PersonCreditCards")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonCreditCardResponseModel>), 200)]
 		public async virtual Task<IActionResult> PersonCreditCards(int creditCardID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{creditCardID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeaders(int creditCardID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>431b533e394deacbd71efc4debcc363b</Hash>
+    <Hash>da38b2306446d4a16d8f5d315b35b1f5</Hash>
 </Codenesium>*/

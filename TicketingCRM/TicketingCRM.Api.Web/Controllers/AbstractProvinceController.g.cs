@@ -215,7 +215,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{provinceId}/Cities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
 		public async virtual Task<IActionResult> Cities(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -229,7 +229,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{provinceId}/Venues")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
 		public async virtual Task<IActionResult> Venues(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -259,5 +259,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1027ed76457238f2c209d4a8f32a91b</Hash>
+    <Hash>ebe3cb27621208d7e85a87387ef9b46f</Hash>
 </Codenesium>*/

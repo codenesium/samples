@@ -204,7 +204,7 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{paymentTypeId}/Sales")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
 		public async virtual Task<IActionResult> Sales(int paymentTypeId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c775655673ef29025fb54a0c21d32fa9</Hash>
+    <Hash>e4460c1e3a89fc91332db2c94702466a</Hash>
 </Codenesium>*/

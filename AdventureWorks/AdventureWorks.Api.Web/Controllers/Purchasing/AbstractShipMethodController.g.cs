@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{shipMethodID}/PurchaseOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> PurchaseOrderHeaders(int shipMethodID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1018688ebb73a4a55dfb32e968804f4</Hash>
+    <Hash>b957b9320caad6c7583154de27f18954</Hash>
 </Codenesium>*/

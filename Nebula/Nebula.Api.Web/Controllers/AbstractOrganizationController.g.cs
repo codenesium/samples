@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{organizationId}/Teams")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
 		public async virtual Task<IActionResult> Teams(int organizationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5b81c0e070b0bee9ef99d48de77641f9</Hash>
+    <Hash>436b90983a0dae1d62569df832ab7259</Hash>
 </Codenesium>*/

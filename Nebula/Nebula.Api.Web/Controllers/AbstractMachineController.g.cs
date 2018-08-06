@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{assignedMachineId}/Links")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
 		public async virtual Task<IActionResult> Links(int assignedMachineId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{machineId}/MachineRefTeams")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineRefTeamResponseModel>), 200)]
 		public async virtual Task<IActionResult> MachineRefTeams(int machineId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -248,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce3547bfa0a47a795878641d4f60daf9</Hash>
+    <Hash>061ae76ee8ad877e95b318ad5a9db0e5</Hash>
 </Codenesium>*/

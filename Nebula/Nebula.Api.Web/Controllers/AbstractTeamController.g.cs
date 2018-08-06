@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{teamId}/Chains")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
 		public async virtual Task<IActionResult> Chains(int teamId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{teamId}/MachineRefTeams")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineRefTeamResponseModel>), 200)]
 		public async virtual Task<IActionResult> MachineRefTeams(int teamId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -248,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>97187be807d16d0fafec71c7779d79a3</Hash>
+    <Hash>a8dad5382bf1fd07f6a9bd5d58d8c48a</Hash>
 </Codenesium>*/

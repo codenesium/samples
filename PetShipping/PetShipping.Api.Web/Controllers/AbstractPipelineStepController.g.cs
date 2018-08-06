@@ -204,7 +204,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{pipelineStepId}/HandlerPipelineSteps")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
 		public async virtual Task<IActionResult> HandlerPipelineSteps(int pipelineStepId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{pipelineStepId}/OtherTransports")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiOtherTransportResponseModel>), 200)]
 		public async virtual Task<IActionResult> OtherTransports(int pipelineStepId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{pipelineStepId}/PipelineStepDestinations")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPipelineStepDestinationResponseModel>), 200)]
 		public async virtual Task<IActionResult> PipelineStepDestinations(int pipelineStepId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -246,7 +246,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{pipelineStepId}/PipelineStepNotes")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
 		public async virtual Task<IActionResult> PipelineStepNotes(int pipelineStepId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -260,7 +260,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{pipelineStepId}/PipelineStepStepRequirements")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPipelineStepStepRequirementResponseModel>), 200)]
 		public async virtual Task<IActionResult> PipelineStepStepRequirements(int pipelineStepId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -290,5 +290,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1fcc45a924049c9170055cf4821f58de</Hash>
+    <Hash>5b8fbafd3c3105aa8ad5f8d8ccf929ba</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{clientId}/ClientCommunications")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiClientCommunicationResponseModel>), 200)]
 		public async virtual Task<IActionResult> ClientCommunications(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{clientId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
 		public async virtual Task<IActionResult> Pets(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{clientId}/Sales")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
 		public async virtual Task<IActionResult> Sales(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -262,5 +262,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e8bcd2537ded0ca62916febafd7fc08e</Hash>
+    <Hash>2fccbc8b1b12cd7bc8ea7d956e73ccfe</Hash>
 </Codenesium>*/

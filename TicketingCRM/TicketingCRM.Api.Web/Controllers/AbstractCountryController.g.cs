@@ -204,7 +204,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{countryId}/Provinces")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
 		public async virtual Task<IActionResult> Provinces(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5879266597080d2b42cac6908361f954</Hash>
+    <Hash>9464a94b4bcffcbe563be2491735e7ee</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productDescriptionID}/ProductModelProductDescriptionCultures")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductModelProductDescriptionCultures(int productDescriptionID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b3901162444b4c77e0f7c303bc06d4bf</Hash>
+    <Hash>9efe81297a5cd9c763e10ea23e0f1d3e</Hash>
 </Codenesium>*/

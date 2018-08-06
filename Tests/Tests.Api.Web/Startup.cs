@@ -130,7 +130,17 @@ namespace TestsNS.Api.Web
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-		    services.Configure<ApiSettings>(this.Configuration);
+		   services.Configure<ApiSettings>(this.Configuration);
+
+		   services.AddCors(config =>
+           {
+                var policy = new CorsPolicy();
+                policy.Headers.Add("*");
+                policy.Methods.Add("*");
+                policy.Origins.Add("*");
+                policy.SupportsCredentials = true;
+                config.AddPolicy("AllowAll", policy);
+            });
 
 			services.AddMvcCore(config =>
             {
@@ -197,16 +207,6 @@ namespace TestsNS.Api.Web
                    o.AddSecurityRequirement(security);
 			       o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
 				}
-            });
-
-           services.AddCors(config =>
-           {
-                var policy = new CorsPolicy();
-                policy.Headers.Add("*");
-                policy.Methods.Add("*");
-                policy.Origins.Add("*");
-                policy.SupportsCredentials = true;
-                config.AddPolicy("policy", policy);
             });
 
 			this.SetupLogging(services);
@@ -304,6 +304,8 @@ namespace TestsNS.Api.Web
 				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "Tests");
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "Tests");
             });
+
+			app.UseCors("AllowAll");
 
             app.UseMvc();
 

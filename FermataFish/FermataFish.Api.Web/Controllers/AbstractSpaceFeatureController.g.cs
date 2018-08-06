@@ -204,7 +204,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{spaceFeatureId}/SpaceXSpaceFeatures")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceFeatureResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceXSpaceFeatureResponseModel>), 200)]
 		public async virtual Task<IActionResult> SpaceXSpaceFeatures(int spaceFeatureId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cfa3cfa57545a2224903bac23d42d53f</Hash>
+    <Hash>dbcc0661dc5b03a98520772470210397</Hash>
 </Codenesium>*/

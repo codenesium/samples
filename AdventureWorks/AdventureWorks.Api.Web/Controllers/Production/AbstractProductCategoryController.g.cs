@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productCategoryID}/ProductSubcategories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductCategoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductSubcategoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductSubcategories(int productCategoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>928717c105dd5dcf94233e4c568be542</Hash>
+    <Hash>9433a1068a804aa9bcd7453004fb0fe9</Hash>
 </Codenesium>*/

@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{currencyCode}/CountryRegionCurrencies")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
 		public async virtual Task<IActionResult> CountryRegionCurrencies(string currencyCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{fromCurrencyCode}/CurrencyRates")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
 		public async virtual Task<IActionResult> CurrencyRates(string fromCurrencyCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e2ad9146dcac97aa32c1a208d1ce4ed5</Hash>
+    <Hash>e60ae0c1abd2df002ce27039ec36994d</Hash>
 </Codenesium>*/

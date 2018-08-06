@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{specialOfferID}/SpecialOfferProducts")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
 		public async virtual Task<IActionResult> SpecialOfferProducts(int specialOfferID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fd6d7ca9e76affd34c7210b482092d0c</Hash>
+    <Hash>dc27a83a5d5967bfb1a016fea729d54e</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{phoneNumberTypeID}/PersonPhones")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
 		public async virtual Task<IActionResult> PersonPhones(int phoneNumberTypeID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fc74d8185056ffea21c4b27455294c62</Hash>
+    <Hash>eabf5162b1af43e20543906332c9ca14</Hash>
 </Codenesium>*/

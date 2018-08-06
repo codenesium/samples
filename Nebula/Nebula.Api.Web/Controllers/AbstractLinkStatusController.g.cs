@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{linkStatusId}/Links")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
 		public async virtual Task<IActionResult> Links(int linkStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a561dc3e8f62bb47644c74e96d0b13c4</Hash>
+    <Hash>1c3b02dba36c80a27f54cd8d25f234be</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{ticketStatusId}/Tickets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTicketStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTicketResponseModel>), 200)]
 		public async virtual Task<IActionResult> Tickets(int ticketStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>56aa8d785efbba6f4ed85d7319266379</Hash>
+    <Hash>111fb071ad1f761c68341b2b43791f09</Hash>
 </Codenesium>*/

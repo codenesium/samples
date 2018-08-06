@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{nextChainId}/Clasps")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiClaspResponseModel>), 200)]
 		public async virtual Task<IActionResult> Clasps(int nextChainId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{chainId}/Links")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
 		public async virtual Task<IActionResult> Links(int chainId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -248,5 +248,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e74516f10b608726d9ecb1a3d9bfe7aa</Hash>
+    <Hash>2c478b43887085f96635cd7448d0026c</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/Admins")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
 		public async virtual Task<IActionResult> Admins(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{id}/Families")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
 		public async virtual Task<IActionResult> Families(int id, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/Lessons")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonResponseModel>), 200)]
 		public async virtual Task<IActionResult> Lessons(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -246,7 +246,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{id}/LessonStatus")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
 		public async virtual Task<IActionResult> LessonStatus(int id, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -260,7 +260,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/Spaces")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
 		public async virtual Task<IActionResult> Spaces(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -274,7 +274,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/SpaceFeatures")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceFeatureResponseModel>), 200)]
 		public async virtual Task<IActionResult> SpaceFeatures(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -288,7 +288,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/Students")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
 		public async virtual Task<IActionResult> Students(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -302,7 +302,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/Teachers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
 		public async virtual Task<IActionResult> Teachers(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -316,7 +316,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{studioId}/TeacherSkills")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
 		public async virtual Task<IActionResult> TeacherSkills(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -346,5 +346,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>873cc8ffacd9d3b95c8afa8554920353</Hash>
+    <Hash>f1dbd3c76d914dcbac350d68abdb5f5b</Hash>
 </Codenesium>*/

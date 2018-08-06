@@ -242,7 +242,7 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("{bucketId}/Files")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileResponseModel>), 200)]
 		public async virtual Task<IActionResult> Files(int bucketId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -272,5 +272,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>284a06c077a199a226e23da3eaccf0be</Hash>
+    <Hash>a6d733013d1c83939ec4ae397547e2b9</Hash>
 </Codenesium>*/

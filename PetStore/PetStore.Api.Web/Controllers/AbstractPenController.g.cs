@@ -204,7 +204,7 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{penId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
 		public async virtual Task<IActionResult> Pets(int penId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ad04be2386c129f7d53f90cc6e479b7a</Hash>
+    <Hash>e2a8e3e145c086964df68c62d764fec0</Hash>
 </Codenesium>*/

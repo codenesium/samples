@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{departmentID}/EmployeeDepartmentHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> EmployeeDepartmentHistories(short departmentID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9538ffb3e893ba62bfe38b6ec739cf2b</Hash>
+    <Hash>72678a21e8e0951390285089d77f9342</Hash>
 </Codenesium>*/

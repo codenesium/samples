@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{illustrationID}/ProductModelIllustrations")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelIllustrationResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductModelIllustrations(int illustrationID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8cbd2d844f0063044cb869b05953432a</Hash>
+    <Hash>286b7ce4efabb68cc1cc797bfa85ec28</Hash>
 </Codenesium>*/

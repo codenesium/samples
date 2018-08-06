@@ -242,7 +242,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{componentID}/BillOfMaterials")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
 		public async virtual Task<IActionResult> BillOfMaterials(int componentID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,7 +256,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/ProductCostHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductCostHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductCostHistories(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -270,7 +270,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/ProductInventories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductInventoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductInventories(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -284,7 +284,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/ProductListPriceHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductListPriceHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductListPriceHistories(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -298,7 +298,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/ProductProductPhotoes")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductProductPhotoResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductProductPhotoes(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -312,7 +312,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/ProductReviews")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductReviews(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -326,7 +326,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/TransactionHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> TransactionHistories(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -340,7 +340,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productID}/WorkOrders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
 		public async virtual Task<IActionResult> WorkOrders(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -370,5 +370,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2156833690405c979960252af1ef457e</Hash>
+    <Hash>6213c1dad9bf8c0d5c9a4a83ceb17d97</Hash>
 </Codenesium>*/

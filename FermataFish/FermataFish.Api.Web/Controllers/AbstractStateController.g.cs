@@ -204,7 +204,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{stateId}/Studios")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
 		public async virtual Task<IActionResult> Studios(int stateId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4819e7eec6356ba688eba780082a8ce4</Hash>
+    <Hash>5d2a8ce6c097ca05df736193842e7a50</Hash>
 </Codenesium>*/

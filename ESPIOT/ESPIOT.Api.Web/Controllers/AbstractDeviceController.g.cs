@@ -223,7 +223,7 @@ namespace ESPIOTNS.Api.Web
 		[HttpGet]
 		[Route("{deviceId}/DeviceActions")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDeviceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
 		public async virtual Task<IActionResult> DeviceActions(int deviceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>90df1515590d2d57995234bd776a88de</Hash>
+    <Hash>57069ba65767aa34e72f49ef59b854e6</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{personBId}/PersonRefs")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSchemaBPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonRefResponseModel>), 200)]
 		public async virtual Task<IActionResult> PersonRefs(int personBId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>489954c4fb89710b9bcb2b368cd7a447</Hash>
+    <Hash>71c6ee118882419b833f30e6ddfe4ea5</Hash>
 </Codenesium>*/

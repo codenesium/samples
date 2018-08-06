@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/BusinessEntityAddresses")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> BusinessEntityAddresses(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/BusinessEntityContacts")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		public async virtual Task<IActionResult> BusinessEntityContacts(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/People")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
 		public async virtual Task<IActionResult> People(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -262,5 +262,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ab75ce17e20bef94b5a4c0ac1f842273</Hash>
+    <Hash>cd800df534dc30e4691e4f2bff7ca991</Hash>
 </Codenesium>*/

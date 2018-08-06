@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/ProductVendors")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductVendors(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{vendorID}/PurchaseOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> PurchaseOrderHeaders(int vendorID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>adf761951f03888499f08db8311e93eb</Hash>
+    <Hash>52afffe2070bc70ed93265664dcb62b3</Hash>
 </Codenesium>*/

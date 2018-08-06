@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{personID}/BusinessEntityContacts")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		public async virtual Task<IActionResult> BusinessEntityContacts(int personID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -251,7 +251,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/EmailAddresses")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> EmailAddresses(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -265,7 +265,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/Passwords")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPasswordResponseModel>), 200)]
 		public async virtual Task<IActionResult> Passwords(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -279,7 +279,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/PersonPhones")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
 		public async virtual Task<IActionResult> PersonPhones(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -309,5 +309,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ac537d6cb70dd4b57f12269cb31bbf7</Hash>
+    <Hash>5804a4134fe672c5cab52d56aa8dfae8</Hash>
 </Codenesium>*/

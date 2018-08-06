@@ -204,7 +204,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{petId}/Sales")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
 		public async virtual Task<IActionResult> Sales(int petId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>61b248e14710b1de658ba412245dee8a</Hash>
+    <Hash>39034b717257348faa5a97950e56f461</Hash>
 </Codenesium>*/

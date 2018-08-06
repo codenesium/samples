@@ -242,7 +242,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/EmployeeDepartmentHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> EmployeeDepartmentHistories(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,7 +256,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/EmployeePayHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> EmployeePayHistories(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -270,7 +270,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/JobCandidates")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
 		public async virtual Task<IActionResult> JobCandidates(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -300,5 +300,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>93f7fc7559cfa1a20327cb03af0d9cee</Hash>
+    <Hash>08dd68f6493869f6bce13a2f6d434a6d</Hash>
 </Codenesium>*/

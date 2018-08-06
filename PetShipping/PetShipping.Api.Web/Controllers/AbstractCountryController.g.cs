@@ -204,7 +204,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{countryId}/CountryRequirements")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRequirementResponseModel>), 200)]
 		public async virtual Task<IActionResult> CountryRequirements(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{countryId}/Destinations")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDestinationResponseModel>), 200)]
 		public async virtual Task<IActionResult> Destinations(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -248,5 +248,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4ba349f61b20babbe0c0969397bf9c6b</Hash>
+    <Hash>e226c2d37309c709f577aa8dd1bb0f7a</Hash>
 </Codenesium>*/

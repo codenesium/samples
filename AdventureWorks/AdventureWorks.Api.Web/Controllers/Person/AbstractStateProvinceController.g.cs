@@ -242,7 +242,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{stateProvinceID}/Addresses")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> Addresses(int stateProvinceID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -272,5 +272,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>05508e58958f5f47d17736c6380d579a</Hash>
+    <Hash>ff7b214564313f79c3b7571df4bf9265</Hash>
 </Codenesium>*/

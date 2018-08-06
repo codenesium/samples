@@ -204,7 +204,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{lessonStatusId}/Lessons")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonResponseModel>), 200)]
 		public async virtual Task<IActionResult> Lessons(int lessonStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a5911a189e7c382357ae8528b4a750df</Hash>
+    <Hash>8e8d866d6068666ee25fd01d4a36c9cd</Hash>
 </Codenesium>*/

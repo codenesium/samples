@@ -237,7 +237,7 @@ namespace OctopusDeployNS.Api.Web
 		[HttpGet]
 		[Route("{deploymentId}/DeploymentRelatedMachines")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
 		public async virtual Task<IActionResult> DeploymentRelatedMachines(string deploymentId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed2dd9d8c8bce6aca8dfb8338a27942b</Hash>
+    <Hash>f54388d6a8de69d007891c613f0f49a6</Hash>
 </Codenesium>*/

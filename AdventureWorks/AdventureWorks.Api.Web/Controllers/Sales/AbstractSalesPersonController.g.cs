@@ -204,7 +204,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{salesPersonID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeaders(int salesPersonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/SalesPersonQuotaHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonQuotaHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesPersonQuotaHistories(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -232,7 +232,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{businessEntityID}/SalesTerritoryHistories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesTerritoryHistories(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -246,7 +246,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{salesPersonID}/Stores")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
 		public async virtual Task<IActionResult> Stores(int salesPersonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -276,5 +276,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c480b507a5c0cd666396bbc030373b8d</Hash>
+    <Hash>bc9a7018ff8cf1045a812e17645fa8e1</Hash>
 </Codenesium>*/

@@ -226,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{purchaseOrderID}/PurchaseOrderDetails")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
 		public async virtual Task<IActionResult> PurchaseOrderDetails(int purchaseOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,5 +256,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c47bc0265209d4f20843cd38cfe4c90d</Hash>
+    <Hash>779714dbcc400f7e5e00bc4e745837f3</Hash>
 </Codenesium>*/

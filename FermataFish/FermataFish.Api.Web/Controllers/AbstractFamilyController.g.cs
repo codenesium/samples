@@ -204,7 +204,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{familyId}/Students")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
 		public async virtual Task<IActionResult> Students(int familyId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +218,7 @@ namespace FermataFishNS.Api.Web
 		[HttpGet]
 		[Route("{familyId}/StudentXFamilies")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentXFamilyResponseModel>), 200)]
 		public async virtual Task<IActionResult> StudentXFamilies(int familyId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -248,5 +248,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b90ea1fec1b579ec3a7680b174f81780</Hash>
+    <Hash>afad6365ed5be04c78b1d6484fd5671d</Hash>
 </Codenesium>*/

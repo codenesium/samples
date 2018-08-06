@@ -204,7 +204,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{adminId}/Venues")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
 		public async virtual Task<IActionResult> Venues(int adminId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>08c8f8b9007dd61e2099bea1e45b2ead</Hash>
+    <Hash>11c2811d3d812197a15814375045405d</Hash>
 </Codenesium>*/

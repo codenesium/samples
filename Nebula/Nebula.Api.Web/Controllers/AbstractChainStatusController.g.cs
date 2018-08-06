@@ -204,7 +204,7 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{chainStatusId}/Chains")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
 		public async virtual Task<IActionResult> Chains(int chainStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -234,5 +234,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5eb990cc14fa4a863b00f82c47d8fc1d</Hash>
+    <Hash>6b9e2103eee3c824cdf662df7f884046</Hash>
 </Codenesium>*/

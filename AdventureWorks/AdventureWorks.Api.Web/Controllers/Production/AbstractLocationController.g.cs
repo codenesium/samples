@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{locationID}/ProductInventories")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductInventoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductInventories(short locationID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{locationID}/WorkOrderRoutings")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
 		public async virtual Task<IActionResult> WorkOrderRoutings(short locationID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -267,5 +267,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bdbf11e9c91b064d25973c94b41ef780</Hash>
+    <Hash>63b6575d1e2c298cbb14b6f69f601f7f</Hash>
 </Codenesium>*/

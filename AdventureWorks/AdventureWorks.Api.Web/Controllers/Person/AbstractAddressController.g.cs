@@ -234,7 +234,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{addressID}/BusinessEntityAddresses")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> BusinessEntityAddresses(int addressID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -264,5 +264,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>08dd9c346e0a26fbdf8b015b6dff4326</Hash>
+    <Hash>6cde5b10fee32b02aaf906740688eccf</Hash>
 </Codenesium>*/

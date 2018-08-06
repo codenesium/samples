@@ -248,7 +248,7 @@ namespace OctopusDeployNS.Api.Web
 		[HttpGet]
 		[Route("{eventId}/EventRelatedDocuments")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
 		public async virtual Task<IActionResult> EventRelatedDocuments(string eventId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -278,5 +278,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>13a72423d73526e9624c9b5f5e6b677a</Hash>
+    <Hash>da24056c41245b224d64f2c7ffe49f71</Hash>
 </Codenesium>*/

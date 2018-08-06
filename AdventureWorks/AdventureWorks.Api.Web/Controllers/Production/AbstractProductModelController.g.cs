@@ -245,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productModelID}/Products")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
 		public async virtual Task<IActionResult> Products(int productModelID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -259,7 +259,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productModelID}/ProductModelIllustrations")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelIllustrationResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductModelIllustrations(int productModelID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -273,7 +273,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{productModelID}/ProductModelProductDescriptionCultures")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductModelProductDescriptionCultures(int productModelID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -303,5 +303,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3422e96c0c74fc3b7e2959209a254287</Hash>
+    <Hash>84c4c704467a994d981ac0e9ddc30a00</Hash>
 </Codenesium>*/

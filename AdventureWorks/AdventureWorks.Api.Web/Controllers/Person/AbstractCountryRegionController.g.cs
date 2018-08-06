@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{countryRegionCode}/StateProvinces")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryRegionResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
 		public async virtual Task<IActionResult> StateProvinces(string countryRegionCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aa30fcf277f068887c6272e1d105d003</Hash>
+    <Hash>d61b2e1c3b9a2851a46ffe74c85514ae</Hash>
 </Codenesium>*/

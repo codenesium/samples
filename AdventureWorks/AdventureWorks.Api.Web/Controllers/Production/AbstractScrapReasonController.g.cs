@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{scrapReasonID}/WorkOrders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
 		public async virtual Task<IActionResult> WorkOrders(short scrapReasonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -253,5 +253,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bc7c5b22505a5641658e4f426324d3ff</Hash>
+    <Hash>342e5321961b55bec87b2545f4ee569b</Hash>
 </Codenesium>*/
