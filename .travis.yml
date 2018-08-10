@@ -55,4 +55,4 @@ script:
    -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
    -  dotnet test OctopusDeploy/OctopusDeploy.Api.Web.Tests/OctopusDeploy.Api.Web.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.Web.Tests/StackOverflows.Api.Web.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.Web.Tests/StackOverflow.Api.Web.Tests.csproj
